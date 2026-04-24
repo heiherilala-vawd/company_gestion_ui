@@ -11,7 +11,7 @@ export default function CompanyCreate() {
       })}
     >
       <SimpleForm>
-        <TextInput source="id" disabled defaultValue={generateId()} />
+        <TextInput source="id" readOnly defaultValue={generateId()} />
         <TextInput source="name" label="Nom" validate={[required()]} />
         <TextInput source="rib" label="RIB" />
         <TextInput source="description" label="Description" multiline rows={3} />

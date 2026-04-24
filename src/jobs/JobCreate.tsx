@@ -3,9 +3,9 @@ import generateId from '../utili/utils.tsx'
 
 export default function JobCreate() {
   return (
-    <Create transform={(data) => ({ ...data, id: generateId() })}>
+    <Create>
       <SimpleForm>
-        <TextInput source="id" disabled defaultValue={generateId()} />
+        <TextInput source="id" readOnly defaultValue={generateId()} />
         <TextInput source="company_id" label="ID Entreprise" validate={[required()]} />
         <TextInput source="description" label="Description" multiline rows={3} />
         <DateInput

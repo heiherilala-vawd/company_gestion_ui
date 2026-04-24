@@ -4,14 +4,9 @@ import generateId from '../utili/utils.tsx'
 // ⚠️ Ajouter 'export default'
 export default function UserCreate() {
   return (
-    <Create
-      transform={(data) => ({
-        ...data,
-        id: data.id || generateId(), // Générer un ID si non fourni
-      })}
-    >
+    <Create>
       <SimpleForm>
-        <TextInput source="id" disabled defaultValue={generateId()} />
+        <TextInput source="id" readOnly defaultValue={generateId()} />
         <TextInput source="email" validate={[required(), email()]} />
         <TextInput source="first_name" label="Prénom" validate={[required()]} />
         <TextInput source="last_name" label="Nom" validate={[required()]} />

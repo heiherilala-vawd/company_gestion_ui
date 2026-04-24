@@ -4,7 +4,7 @@ export default function JobEdit() {
   return (
     <Edit>
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput source="id" readOnly />
         <TextInput source="company_id" label="ID Entreprise" validate={[required()]} />
         <TextInput source="description" label="Description" multiline rows={3} />
         <DateInput source="contract_signature_date" label="Date signature contrat" />

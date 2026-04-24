@@ -4,7 +4,7 @@ export default function IncomeEdit() {
   return (
     <Edit>
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput source="id" readOnly />
         <TextInput
           source="source_organization"
           label="Organisation source"

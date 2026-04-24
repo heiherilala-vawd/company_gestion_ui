@@ -7,6 +7,7 @@ import EquipmentResource from './equipment'
 import UserResource from './usersSetup'
 import CompanyResource from './companies'
 import JobResource from './jobs'
+import MaterialsResource from './materials'
 
 import { CompanyProvider } from './companies/CompanyContext.tsx'
 import { CompanySelector } from './companies/CompanySelector'
@@ -40,6 +41,7 @@ export const App = () => (
       <Resource name="users" {...UserResource} />
       <Resource name="warehouses" {...WarehousesResource} />
       <Resource name="equipment" {...EquipmentResource} />
+      <Resource name="materials" {...MaterialsResource} />
     </Admin>
   </CompanyProvider>
 )

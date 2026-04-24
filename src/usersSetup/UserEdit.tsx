@@ -5,7 +5,7 @@ export default function UserEdit() {
   return (
     <Edit>
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput source="id" readOnly />
         <TextInput source="email" validate={[required(), email()]} />
         <TextInput source="first_name" label="Prénom" validate={[required()]} />
         <TextInput source="last_name" label="Nom" validate={[required()]} />

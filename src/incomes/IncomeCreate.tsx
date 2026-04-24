@@ -1,16 +1,11 @@
 import { Create, SimpleForm, TextInput, NumberInput, required } from 'react-admin'
+import generateId from '../utili/utils.tsx'
 
-const generateId = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0
-    const v = c === 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
 
 export default function IncomeCreate() {
   return (
-    <Create transform={(data) => ({ ...data, id: generateId() })}>
+    <Create>
+      <TextInput source="id" readOnly defaultValue={generateId()} />
       <SimpleForm>
         <TextInput
           source="source_organization"
