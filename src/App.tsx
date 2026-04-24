@@ -1,4 +1,4 @@
-import { Admin, AppBar, Resource } from 'react-admin'
+import { Admin, Resource } from 'react-admin'
 import { Layout } from './Layout'
 import { dataProvider } from './dataProvider'
 import authProvider from './authProvider.tsx'
@@ -7,19 +7,35 @@ import CompanyResource from './companies'
 import JobResource from './jobs'
 
 import { CompanyProvider } from './companies/CompanyContext.tsx'
-import { CompanySelector } from './companies/CompanySelector.tsx'
+import { CompanySelector } from './companies/CompanySelector'
+import { AppBar as RAppBar, TitlePortal, Menu } from 'react-admin'
+import { Box, Typography } from '@mui/material'
+import { useState } from 'react'
 
-const MyAppBar = (props: any) => (
-  <AppBar {...props}>
-    <div style={{ flex: 1 }} />
+const MyAppBar = () => (
+  <RAppBar>
+    <TitlePortal />
+    <Box sx={{ flex: 1 }} />
+    <Typography variant="h6" sx={{ mr: 2 }}>🏢</Typography>
     <CompanySelector />
-  </AppBar>
+  </RAppBar>
 )
-const MyLayout = (props: any) => <Layout {...props} appBar={MyAppBar} />
+
+const MyMenu = () => <Menu />
+
+const myLayout = ({ children }: { children?: React.ReactNode }) => (
+  <Layout appBar={MyAppBar} menu={MyMenu}>
+    {children}
+  </Layout>
+)
 
 export const App = () => (
   <CompanyProvider>
-    <Admin layout={MyLayout} dataProvider={dataProvider} authProvider={authProvider}>
+    <Admin
+      layout={myLayout}
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+    >
       <Resource name="users" {...UserResource} />
       <Resource name="jobs" {...JobResource} />
       <Resource name="companies" {...CompanyResource} />

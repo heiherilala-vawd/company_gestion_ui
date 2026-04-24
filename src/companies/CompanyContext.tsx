@@ -3,8 +3,8 @@ import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 // Définition du type du contexte
 interface CompanyContextType {
-  currentCompanyId: number | null
-  selectCompany: (companyId: number | null) => void
+  currentCompanyId: string | null
+  selectCompany: (companyId: string) => void
   clearCompany: () => void
 }
 
@@ -17,15 +17,14 @@ interface CompanyProviderProps {
 const CompanyContext = createContext<CompanyContextType | undefined>(undefined)
 
 export const CompanyProvider: React.FC<CompanyProviderProps> = ({ children }) => {
-  const [currentCompanyId, setCurrentCompanyId] = useState<number | null>(() => {
-    const saved = localStorage.getItem('currentCompanyId')
-    return saved ? parseInt(saved, 10) : null
+  const [currentCompanyId, setCurrentCompanyId] = useState<string | null>(() => {
+    return localStorage.getItem('currentCompanyId')
   })
 
-  const selectCompany = (companyId: number | null): void => {
+  const selectCompany = (companyId: string | null): void => {
     setCurrentCompanyId(companyId)
     if (companyId !== null) {
-      localStorage.setItem('currentCompanyId', companyId.toString())
+      localStorage.setItem('currentCompanyId', companyId)
     } else {
       localStorage.removeItem('currentCompanyId')
     }

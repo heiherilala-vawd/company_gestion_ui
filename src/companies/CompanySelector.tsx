@@ -1,8 +1,9 @@
 // CompanySelector.tsx
 import React, { useEffect, useState } from 'react'
-import { SelectInput, useNotify, useRefresh, Loading } from 'react-admin'
+import { useNotify, useRefresh, Loading } from 'react-admin'
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import { useCompany } from './CompanyContext'
-import { Company } from './types'
+import { Company } from '../../gen-ts'
 
 // Props optionnelles pour le composant
 interface CompanySelectorProps {
@@ -37,15 +38,14 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
           throw new Error('Non authentifié')
         }
 
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:3000/api'}/companies`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
+        const apiBase = import.meta.env.VITE_API_URL ?? ''
+        const url = apiBase ? `${apiBase}/companies` : '/companies'
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
-        )
+        })
 
         if (!response.ok) {
           throw new Error(`Erreur HTTP: ${response.status}`)
@@ -56,10 +56,13 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
 
         // Si aucune company sélectionnée et qu'il y a des companies
         if (!currentCompanyId && data.length > 0) {
-          selectCompany(data[0].id)
-          notify(`Company "${data[0].name}" sélectionnée par défaut`, {
-            type: 'info',
-          })
+          const selectionId = data[0].id ?? ''
+          if (selectionId) {
+            selectCompany(selectionId)
+            notify(`Company ${data[0].name} sélectionnée par défaut`, {
+              type: 'info',
+            })
+          }
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue'
@@ -75,7 +78,7 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
   }, []) // Seulement au montage
 
   const handleCompanyChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const newCompanyId = event.target.value as number
+    const newCompanyId = event.target.value as string
     const selectedCompany = companies.find((c) => c.id === newCompanyId)
 
     if (selectedCompany) {
@@ -101,24 +104,41 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
   }
 
   return (
-    <SelectInput
-      source="companyId"
-      label="🏢 Company"
-      choices={companies.map((company) => ({
-        id: company.id,
-        name: company.name,
-      }))}
-      value={currentCompanyId ?? ''}
-      onChange={handleCompanyChange}
+    <FormControl
+      variant="outlined"
+      size="small"
       className={className}
       style={{
         minWidth: 250,
         backgroundColor: 'white',
         ...style,
       }}
-      fullWidth={fullWidth}
-      variant="outlined"
-      size="small"
-    />
+    >
+      <InputLabel id="company-selector-label">🏢 Company</InputLabel>
+      <Select
+        labelId="company-selector-label"
+        label="🏢 Company"
+        value={currentCompanyId ?? ''}
+        onChange={(event: any) => {
+          const newCompanyId = event.target.value as string
+          const selectedCompany = companies.find((c) => c.id === newCompanyId)
+
+          if (selectedCompany) {
+            selectCompany(newCompanyId)
+            notify(`Company changée pour "${selectedCompany.name}"`, {
+              type: 'success',
+              autoHideDuration: 3000,
+            })
+            refresh()
+          }
+        }}
+      >
+        {companies.map((company) => (
+          <MenuItem key={company.id} value={company.id}>
+            {company.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   )
 }

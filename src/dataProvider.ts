@@ -1,6 +1,13 @@
 // dataProvider.ts
 import { stringify } from 'query-string'
-import { GetListParams } from 'react-admin'
+import {
+  CreateParams,
+  DeleteParams,
+  GetListParams,
+  GetManyParams,
+  GetOneParams,
+  UpdateParams
+} from 'react-admin'
 
 // Configuration
 const API_URL = import.meta.env.VITE_API_URL ?? ''
@@ -11,9 +18,8 @@ const getToken = (): string | null => {
 }
 
 // Fonction pour obtenir l'ID de la company
-const getCurrentCompanyId = (): number | null => {
-  const saved = localStorage.getItem('currentCompanyId')
-  return saved ? parseInt(saved, 10) : null
+const getCurrentCompanyId = (): string | null => {
+  return localStorage.getItem('currentCompanyId')
 }
 
 // Fonction fetch avec token
@@ -61,10 +67,10 @@ const buildQueryString = (params: Record<string, any>): string => {
 
 export const dataProvider = {
   // GET LIST
-  getList: async <T = any>(
+  getList: async (
     resource: string,
     params: GetListParams,
-  ): Promise<GetListResponse<T>> => {
+  ) => {
     console.log(`📋 getList: ${resource}`, params)
 
     // Cas spécial pour les jobs (dépendent de companyId)
@@ -123,7 +129,7 @@ export const dataProvider = {
   },
 
   // GET ONE
-  getOne: async <T = any>(resource: string, params: GetOneParams): Promise<GetOneResponse<T>> => {
+  getOne: async (resource: string, params: GetOneParams) => {
     console.log(`🔍 getOne: ${resource}/${params.id}`)
 
     if (resource === 'jobs') {
@@ -146,10 +152,10 @@ export const dataProvider = {
   },
 
   // GET MANY
-  getMany: async <T = any>(
+  getMany: async (
     resource: string,
     params: GetManyParams,
-  ): Promise<GetManyResponse<T>> => {
+  )=> {
     console.log(`📚 getMany: ${resource}`, params.ids)
 
     if (resource === 'jobs') {
@@ -180,10 +186,10 @@ export const dataProvider = {
   },
 
   // CREATE
-  create: async <T = any>(
+  create: async (
     resource: string,
-    params: CreateParams<T>,
-  ): Promise<CreateResponse<T>> => {
+    params: CreateParams<any>,
+  )=> {
     console.log(`➕ create: ${resource}`, params.data)
 
     if (resource === 'jobs') {
@@ -212,10 +218,10 @@ export const dataProvider = {
   },
 
   // UPDATE
-  update: async <T = any>(
+  update: async (
     resource: string,
-    params: UpdateParams<T>,
-  ): Promise<UpdateResponse<T>> => {
+    params: UpdateParams<any>,
+  )=> {
     console.log(`✏️ update: ${resource}/${params.id}`, params.data)
 
     if (resource === 'jobs') {
@@ -244,7 +250,7 @@ export const dataProvider = {
   },
 
   // DELETE ONE
-  deleteOne: async (resource: string, params: DeleteParams): Promise<DeleteResponse> => {
+  deleteOne: async (resource: string, params: DeleteParams)=> {
     console.log(`🗑️ deleteOne: ${resource}/${params.id}`)
 
     if (resource === 'jobs') {
