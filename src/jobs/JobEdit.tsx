@@ -1,11 +1,11 @@
-import { Edit, SimpleForm, TextInput, DateInput, SelectInput, required } from 'react-admin'
+import { Edit, SimpleForm, TextInput, DateInput, SelectInput } from 'react-admin'
 
 export default function JobEdit() {
   return (
     <Edit>
       <SimpleForm>
         <TextInput source="id" readOnly />
-        <TextInput source="company_id" label="ID Entreprise" validate={[required()]} />
+        <TextInput source="company.id" label="ID Entreprise" />
         <TextInput source="description" label="Description" multiline rows={3} />
         <DateInput source="contract_signature_date" label="Date signature contrat" />
         <DateInput source="start_date" label="Date début" />

@@ -26,7 +26,6 @@ export default function UserList() {
       <Datagrid rowClick="show">
         {' '}
         {/* ← Garde "edit" ou enlève pour pas de clic */}
-        <TextField source="id" />
         <EmailField source="email" />
         <TextField source="first_name" label="Prénom" />
         <TextField source="last_name" label="Nom" />

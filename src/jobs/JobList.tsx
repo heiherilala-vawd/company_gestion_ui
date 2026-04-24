@@ -9,6 +9,7 @@ import {
   useListContext,
   EditButton,
   DeleteButton,
+  FunctionField,
 } from 'react-admin'
 import { useEffect } from 'react'
 import { useCompany } from '../companies/CompanyContext'
@@ -31,8 +32,7 @@ function JobListContent() {
 
   return (
     <Datagrid>
-      <TextField source="id" />
-      <TextField source="company_id" label="ID Entreprise" />
+      <TextField source="company.name" label="Nom Entreprise" />
       <TextField source="description" label="Description" />
       <DateField source="contract_signature_date" label="Signature contrat" />
       <DateField source="start_date" label="Date début" />
@@ -48,8 +48,25 @@ function JobListContent() {
       />
       <DateField source="created_at" label="Créé le" showTime />
       <DateField source="updated_at" label="Modifié le" showTime />
-      <TextField source="created_by" label="Créé par" />
-      <TextField source="updated_by" label="Modifié par" />
+      {/* Nom complet du créateur */}
+      <FunctionField
+        label="Créé par"
+        render={(record) => (
+          <span>
+            {record.created_by?.first_name} {record.created_by?.last_name}
+          </span>
+        )}
+      />
+
+      {/* Nom complet du modificateur */}
+      <FunctionField
+        label="Modifié par"
+        render={(record) => (
+          <span>
+            {record.updated_by?.first_name} {record.updated_by?.last_name}
+          </span>
+        )}
+      />
       <EditButton />
       <DeleteButton />
     </Datagrid>

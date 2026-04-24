@@ -1,4 +1,11 @@
-import { Show, SimpleShowLayout, TextField, NumberField, DateField } from 'react-admin'
+import {
+  Show,
+  SimpleShowLayout,
+  TextField,
+  NumberField,
+  DateField,
+  FunctionField,
+} from 'react-admin'
 
 export default function EquipmentShow() {
   return (
@@ -12,8 +19,25 @@ export default function EquipmentShow() {
         <NumberField source="storage_number" label="Emplacement" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        <TextField source="created_by" label="Créé par" />
-        <TextField source="updated_by" label="Modifié par" />
+        {/* Nom complet du créateur */}
+        <FunctionField
+          label="Créé par"
+          render={(record) => (
+            <span>
+              {record.created_by?.first_name} {record.created_by?.last_name}
+            </span>
+          )}
+        />
+
+        {/* Nom complet du modificateur */}
+        <FunctionField
+          label="Modifié par"
+          render={(record) => (
+            <span>
+              {record.updated_by?.first_name} {record.updated_by?.last_name}
+            </span>
+          )}
+        />
       </SimpleShowLayout>
     </Show>
   )

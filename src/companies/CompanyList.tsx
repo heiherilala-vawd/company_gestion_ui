@@ -7,6 +7,9 @@ import {
   SelectField,
   SearchInput,
   TextInput,
+  FunctionField,
+  EditButton,
+  DeleteButton,
 } from 'react-admin'
 
 const CompanyFilters = [
@@ -19,8 +22,7 @@ const CompanyFilters = [
 export default function CompanyList() {
   return (
     <List filters={CompanyFilters}>
-      <Datagrid rowClick="edit">
-        <TextField source="id" />
+      <Datagrid rowClick="show">
         <TextField source="name" label="Nom" />
         <TextField source="rib" label="RIB" />
         <TextField source="description" label="Description" />
@@ -34,8 +36,26 @@ export default function CompanyList() {
         />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        <TextField source="created_by" label="Créé par" />
-        <TextField source="updated_by" label="Modifié par" />
+        {/* Nom complet du créateur */}
+        <FunctionField
+          label="Créé par"
+          render={(record) => (
+            <span>
+              {record.created_by?.first_name} {record.created_by?.last_name}
+            </span>
+          )}
+        />
+        {/* Nom complet du modificateur */}
+        <FunctionField
+          label="Modifié par"
+          render={(record) => (
+            <span>
+              {record.updated_by?.first_name} {record.updated_by?.last_name}
+            </span>
+          )}
+        />
+        <EditButton />
+        <DeleteButton />
       </Datagrid>
     </List>
   )
