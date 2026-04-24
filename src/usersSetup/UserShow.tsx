@@ -1,5 +1,13 @@
 // users/UserShow.tsx
-import { Show, SimpleShowLayout, TextField, EmailField, DateField, SelectField } from 'react-admin'
+import {
+  Show,
+  SimpleShowLayout,
+  TextField,
+  EmailField,
+  DateField,
+  SelectField,
+  FunctionField,
+} from 'react-admin'
 
 // ⚠️ Ajouter 'export default'
 export default function UserShow() {
@@ -25,6 +33,25 @@ export default function UserShow() {
             { id: 'M', name: 'Homme' },
             { id: 'F', name: 'Femme' },
           ]}
+        />
+        {/* Nom complet du créateur */}
+        <FunctionField
+          label="Créé par"
+          render={(record) => (
+            <span>
+              {record.created_by?.first_name} {record.created_by?.last_name}
+            </span>
+          )}
+        />
+
+        {/* Nom complet du modificateur */}
+        <FunctionField
+          label="Modifié par"
+          render={(record) => (
+            <span>
+              {record.updated_by?.first_name} {record.updated_by?.last_name}
+            </span>
+          )}
         />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />

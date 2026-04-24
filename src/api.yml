@@ -12,9 +12,10 @@ servers:
   - url: 'https://api-prod.company.com'
 
 security:
-  - BearerAuth: []
+  - BearerAuth: [ ]
 
 paths:
+
   # =========================
   # USERS
   # =========================
@@ -46,6 +47,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # USERS
@@ -106,6 +108,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # USERS
@@ -180,22 +183,22 @@ paths:
             $ref: '#/components/schemas/PageSize'
         - name: first_name
           in: query
-          description: 'Filter users by first name, case is ignored'
+          description: "Filter users by first name, case is ignored"
           schema:
             type: string
         - name: last_name
           in: query
-          description: 'Filter users by last name, case is ignored'
+          description: "Filter users by last name, case is ignored"
           schema:
             type: string
         - name: email
           in: query
-          description: 'Filter users by email, case is ignored'
+          description: "Filter users by email, case is ignored"
           schema:
             type: string
         - name: role
           in: query
-          description: 'Filter users by role'
+          description: "Filter users by role"
           schema:
             $ref: '#/components/schemas/Role'
       responses:
@@ -250,6 +253,8 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
+
 
   # =========================
   # COMPANY
@@ -324,22 +329,22 @@ paths:
             $ref: '#/components/schemas/PageSize'
         - name: name
           in: query
-          description: 'Filter companies by name, case is ignored'
+          description: "Filter companies by name, case is ignored"
           schema:
             type: string
         - name: rib
           in: query
-          description: 'Filter companies by RIB, case is ignored'
+          description: "Filter companies by RIB, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter companies by description, case is ignored'
+          description: "Filter companies by description, case is ignored"
           schema:
             type: string
         - name: company_type
           in: query
-          description: 'Filter by company type'
+          description: "Filter by company type"
           schema:
             $ref: '#/components/schemas/CompanyType'
       responses:
@@ -393,6 +398,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # JOB
@@ -486,7 +492,7 @@ paths:
             $ref: '#/components/schemas/JobStatus'
         - name: description
           in: query
-          description: 'Filter jobs by description, case is ignored'
+          description: "Filter jobs by description, case is ignored"
           schema:
             type: string
       responses:
@@ -653,6 +659,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
+
   # =========================
   # WAREHOUSE
   # =========================
@@ -745,12 +752,12 @@ paths:
             type: string
         - name: name
           in: query
-          description: 'Filter warehouses by name, case is ignored'
+          description: "Filter warehouses by name, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter warehouses by description, case is ignored'
+          description: "Filter warehouses by description, case is ignored"
           schema:
             type: string
       responses:
@@ -810,6 +817,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # EQUIPMENT
@@ -903,12 +911,12 @@ paths:
             type: string
         - name: name
           in: query
-          description: 'Filter equipment by name, case is ignored'
+          description: "Filter equipment by name, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter equipment by description, case is ignored'
+          description: "Filter equipment by description, case is ignored"
           schema:
             type: string
         - name: floor_number
@@ -976,6 +984,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # MATERIAL
@@ -1048,28 +1057,20 @@ paths:
           in: query
           schema:
             $ref: '#/components/schemas/PageSize'
-        - name: warehouse_id
-          in: query
-          schema:
-            type: string
         - name: name
           in: query
-          description: 'Filter materials by name, case is ignored'
+          description: "Filter materials by name, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter materials by description, case is ignored'
+          description: "Filter materials by description, case is ignored"
           schema:
             type: string
-        - name: floor_number
+        - name: unit
           in: query
           schema:
-            type: integer
-        - name: storage_number
-          in: query
-          schema:
-            type: integer
+            $ref: '#/components/schemas/MaterialUnit'
       responses:
         '200':
           description: List of materials
@@ -1121,6 +1122,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # EXPENSE
@@ -1240,7 +1242,7 @@ paths:
             $ref: '#/components/schemas/PageSize'
         - name: description
           in: query
-          description: 'Filter expenses by description, case is ignored'
+          description: "Filter expenses by description, case is ignored"
           schema:
             type: string
         - name: amount
@@ -1314,6 +1316,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # INCOME
@@ -1433,17 +1436,17 @@ paths:
             $ref: '#/components/schemas/PageSize'
         - name: source_organization
           in: query
-          description: 'Filter incomes by source organization, case is ignored'
+          description: "Filter incomes by source organization, case is ignored"
           schema:
             type: string
         - name: invoice_reference
           in: query
-          description: 'Filter incomes by invoice reference, case is ignored'
+          description: "Filter incomes by invoice reference, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter incomes by description, case is ignored'
+          description: "Filter incomes by description, case is ignored"
           schema:
             type: string
         - name: amount
@@ -1517,6 +1520,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # TRAVEL EXPENSE
@@ -1655,12 +1659,12 @@ paths:
             type: string
         - name: departure_location
           in: query
-          description: 'Filter travel expenses by departure location, case is ignored'
+          description: "Filter travel expenses by departure location, case is ignored"
           schema:
             type: string
         - name: arrival_location
           in: query
-          description: 'Filter travel expenses by arrival location, case is ignored'
+          description: "Filter travel expenses by arrival location, case is ignored"
           schema:
             type: string
       responses:
@@ -1735,6 +1739,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # PURCHASE
@@ -1873,7 +1878,7 @@ paths:
             type: string
         - name: supplier
           in: query
-          description: 'Filter purchases by supplier, case is ignored'
+          description: "Filter purchases by supplier, case is ignored"
           schema:
             type: string
         - name: is_equipment
@@ -1952,6 +1957,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # BANK FEE
@@ -2090,12 +2096,12 @@ paths:
             type: string
         - name: bank_name
           in: query
-          description: 'Filter bank fees by bank name, case is ignored'
+          description: "Filter bank fees by bank name, case is ignored"
           schema:
             type: string
         - name: description
           in: query
-          description: 'Filter bank fees by description, case is ignored'
+          description: "Filter bank fees by description, case is ignored"
           schema:
             type: string
       responses:
@@ -2170,6 +2176,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # OTHER EXPENSE
@@ -2308,7 +2315,7 @@ paths:
             type: string
         - name: description
           in: query
-          description: 'Filter other expenses by description, case is ignored'
+          description: "Filter other expenses by description, case is ignored"
           schema:
             type: string
       responses:
@@ -2383,6 +2390,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # EMPLOYEE PAYMENT
@@ -2525,7 +2533,7 @@ paths:
             type: string
         - name: payment_description
           in: query
-          description: 'Filter employee payments by description, case is ignored'
+          description: "Filter employee payments by description, case is ignored"
           schema:
             type: string
         - name: payment_type
@@ -2604,6 +2612,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # TRAVEL PEOPLE
@@ -2755,9 +2764,9 @@ paths:
           in: query
           schema:
             type: string
-        - name: person_name
+        - name: user_id
           in: query
-          description: 'Filter travel people by person name, case is ignored'
+          description: "Filter travel people by user id"
           schema:
             type: string
       responses:
@@ -2837,6 +2846,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # TRAVEL MATERIALS
@@ -3078,6 +3088,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
+
   # =========================
   # HISTORY
   # =========================
@@ -3099,28 +3110,28 @@ paths:
             $ref: '#/components/schemas/PageSize'
         - name: user_id
           in: query
-          description: 'Filter by user who made the modification'
+          description: "Filter by user who made the modification"
           schema:
             type: string
         - name: entity_type
           in: query
-          description: 'Filter by entity type'
+          description: "Filter by entity type"
           schema:
             $ref: '#/components/schemas/EntityType'
         - name: entity_id
           in: query
-          description: 'Filter by entity identifier'
+          description: "Filter by entity identifier"
           schema:
             type: string
         - name: date_from
           in: query
-          description: 'Filter modifications from this date (inclusive)'
+          description: "Filter modifications from this date (inclusive)"
           schema:
             type: string
             format: date-time
         - name: date_to
           in: query
-          description: 'Filter modifications until this date (inclusive)'
+          description: "Filter modifications until this date (inclusive)"
           schema:
             type: string
             format: date-time
@@ -3143,6 +3154,7 @@ paths:
           $ref: '#/components/responses/429'
         '500':
           $ref: '#/components/responses/500'
+
 
   # =========================
   # TRAVEL EQUIPMENT
@@ -3384,6 +3396,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
+
 components:
   securitySchemes:
     BearerAuth:
@@ -3488,6 +3501,20 @@ components:
       properties:
         comment:
           type: string
+    AuditUser:
+      properties:
+        id:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        first_name:
+          type: string
+        last_name:
+          type: string
+        sex:
+          $ref: '#/components/schemas/Sex'
+        email:
+          type: string
     AuditFields:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -3499,9 +3526,9 @@ components:
           type: string
           format: date-time
         created_by:
-          type: string
+          $ref: '#/components/schemas/AuditUser'
         updated_by:
-          type: string
+          $ref: '#/components/schemas/AuditUser'
 
     # =========================
     # USER
@@ -3582,8 +3609,8 @@ components:
       properties:
         id:
           type: string
-        company_id:
-          type: string
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
         description:
           type: string
         contract_signature_date:
@@ -3632,8 +3659,8 @@ components:
           type: string
         description:
           type: string
-        job_id:
-          type: string
+        job:
+          $ref: '#/components/schemas/CrupdateJob'
     CrupdateWarehouse:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -3660,8 +3687,8 @@ components:
           type: string
         description:
           type: string
-        warehouse_id:
-          type: string
+        warehouse:
+          $ref: '#/components/schemas/CrupdateWarehouse'
         floor_number:
           type: integer
         storage_number:
@@ -3686,6 +3713,23 @@ components:
     # =========================
     # MATERIAL
     # =========================
+    MaterialUnit:
+      type: string
+      enum:
+        - SAC
+        - L
+        - KG
+        - M2
+        - M3
+        - KIT
+        - POT
+        - PNL
+        - FEU
+        - BAR
+        - T
+        - M
+        - FFT
+        - U
     Material:
       allOf:
         - $ref: '#/components/schemas/AuditFields'
@@ -3696,12 +3740,8 @@ components:
           type: string
         description:
           type: string
-        warehouse_id:
-          type: string
-        floor_number:
-          type: integer
-        storage_number:
-          type: integer
+        unit:
+          $ref: '#/components/schemas/MaterialUnit'
     CrupdateMaterial:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -3712,12 +3752,8 @@ components:
           type: string
         description:
           type: string
-        warehouse_id:
-          type: string
-        floor_number:
-          type: integer
-        storage_number:
-          type: integer
+        unit:
+          $ref: '#/components/schemas/MaterialUnit'
 
     # =========================
     # MONETARY MOVEMENT
@@ -3752,9 +3788,10 @@ components:
           type: string
         invoice_reference:
           type: string
-        job_id:
-          type: string
-          description: 'ID of the job this income is related to'
+        job:
+          allOf:
+            - $ref: '#/components/schemas/CrupdateJob'
+          description: "Job this income is related to"
     CrupdateIncomeMoney:
       allOf:
         - $ref: '#/components/schemas/CrupdateMonetaryMovement'
@@ -3767,7 +3804,7 @@ components:
           type: string
         job_id:
           type: string
-          description: 'ID of the job this income is related to'
+          description: "ID of the job this income is related to"
 
     # =========================
     # EXPENSE
@@ -3778,9 +3815,10 @@ components:
       properties:
         id:
           type: string
-        job_id:
-          type: string
-          description: 'ID of the job this expense is related to'
+        job:
+          allOf:
+            - $ref: '#/components/schemas/CrupdateJob'
+          description: "Job this expense is related to"
     CrupdateExpenseMoney:
       allOf:
         - $ref: '#/components/schemas/CrupdateMonetaryMovement'
@@ -3789,7 +3827,7 @@ components:
           type: string
         job_id:
           type: string
-          description: 'ID of the job this expense is related to'
+          description: "ID of the job this expense is related to"
 
     # =========================
     # EMPLOYEE PAYMENT
@@ -3798,10 +3836,10 @@ components:
       properties:
         id:
           type: string
-        expense_id:
-          type: string
-        employee_id:
-          type: string
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
+        employee:
+          $ref: '#/components/schemas/User'
         payment_description:
           type: string
         payment_type:
@@ -3826,8 +3864,8 @@ components:
       properties:
         id:
           type: string
-        expense_id:
-          type: string
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         departure_location:
           type: string
         arrival_location:
@@ -3864,10 +3902,10 @@ components:
       properties:
         id:
           type: string
-        travel_id:
-          type: string
-        person_name:
-          type: string
+        travel:
+          $ref: '#/components/schemas/CrupdateTravelExpense'
+        user:
+          $ref: '#/components/schemas/User'
     CrupdateTravelPeople:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -3876,7 +3914,7 @@ components:
           type: string
         travel_id:
           type: string
-        person_name:
+        user_id:
           type: string
 
     # =========================
@@ -3888,10 +3926,10 @@ components:
       properties:
         id:
           type: string
-        travel_id:
-          type: string
+        travel:
+          $ref: '#/components/schemas/CrupdateTravelExpense'
         material:
-          type: string
+          $ref: '#/components/schemas/CrupdateMaterial'
         quantity:
           type: integer
         quantity_received:
@@ -3920,10 +3958,10 @@ components:
       properties:
         id:
           type: string
-        travel_id:
-          type: string
+        travel:
+          $ref: '#/components/schemas/CrupdateTravelExpense'
         equipment:
-          type: string
+          $ref: '#/components/schemas/CrupdateEquipment'
         quantity:
           type: integer
         status:
@@ -3950,14 +3988,14 @@ components:
       properties:
         id:
           type: string
-        expense_id:
-          type: string
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         supplier:
           type: string
         equipment:
-          type: string
+          $ref: '#/components/schemas/CrupdateEquipment'
         material:
-          type: string
+          $ref: '#/components/schemas/CrupdateMaterial'
         quantity:
           type: integer
         is_equipment:
@@ -3986,8 +4024,8 @@ components:
       properties:
         id:
           type: string
-        expense_id:
-          type: string
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         bank_name:
           type: string
         description:
@@ -4010,8 +4048,8 @@ components:
       properties:
         id:
           type: string
-        expense_id:
-          type: string
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         description:
           type: string
     CrupdateOtherExpense:
@@ -4033,22 +4071,22 @@ components:
           type: string
         previous_value:
           type: string
-          description: 'Serialized previous value of the entity'
+          description: "Serialized previous value of the entity"
         new_value:
           type: string
-          description: 'Serialized new value of the entity'
+          description: "Serialized new value of the entity"
         user_id:
           type: string
-          description: 'ID of the user who made the modification'
+          description: "ID of the user who made the modification"
         modified_at:
           type: string
           format: date-time
-          description: 'Date and time of the modification'
+          description: "Date and time of the modification"
         entity_type:
           $ref: '#/components/schemas/EntityType'
         entity_id:
           type: string
-          description: 'ID of the modified entity'
+          description: "ID of the modified entity"
 
     # =========================
     # AuthResponse

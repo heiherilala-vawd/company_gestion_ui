@@ -5,7 +5,6 @@ import {
   EmailField,
   DateField,
   SelectField,
-  Filter,
   SearchInput,
   TextInput,
   EditButton,
@@ -24,7 +23,6 @@ export default function UserList() {
   return (
     <List filters={UserFilters}>
       <Datagrid rowClick="show">
-        {' '}
         {/* ← Garde "edit" ou enlève pour pas de clic */}
         <EmailField source="email" />
         <TextField source="first_name" label="Prénom" />
