@@ -108,17 +108,21 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
       variant="outlined"
       size="small"
       className={className}
-      style={{
-        minWidth: 250,
+      sx={{
+        minWidth: 150,
+        maxWidth: 200,
         backgroundColor: 'white',
         ...style,
       }}
     >
-      <InputLabel id="company-selector-label">🏢 Company</InputLabel>
+      <InputLabel id="company-selector-label" sx={{ fontSize: 12 }}>
+        Company
+      </InputLabel>
       <Select
         labelId="company-selector-label"
-        label="🏢 Company"
+        label="Company"
         value={currentCompanyId ?? ''}
+        sx={{ fontSize: 12, height: 36 }}
         onChange={(event: any) => {
           const newCompanyId = event.target.value as string
           const selectedCompany = companies.find((c) => c.id === newCompanyId)
@@ -134,7 +138,7 @@ export const CompanySelector: React.FC<CompanySelectorProps> = ({
         }}
       >
         {companies.map((company) => (
-          <MenuItem key={company.id} value={company.id}>
+          <MenuItem key={company.id} value={company.id} sx={{ fontSize: 12 }}>
             {company.name}
           </MenuItem>
         ))}

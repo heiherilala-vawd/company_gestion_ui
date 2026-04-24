@@ -18,10 +18,12 @@ const MyAppBar = () => (
   <RAppBar>
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
-    <Typography variant="h6" sx={{ mr: 2 }}>
-      🏢
-    </Typography>
-    <CompanySelector />
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Typography variant="caption" sx={{ color: 'white' }}>
+        🏢
+      </Typography>
+      <CompanySelector />
+    </Box>
   </RAppBar>
 )
 
