@@ -1,10 +1,4 @@
-import {
-  Show,
-  SimpleShowLayout,
-  TextField,
-  DateField,
-  FunctionField,
-} from 'react-admin'
+import { Show, SimpleShowLayout, TextField, DateField, FunctionField } from 'react-admin'
 
 export default function WarehouseShow() {
   return (

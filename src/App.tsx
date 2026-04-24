@@ -17,10 +17,12 @@ import EmployerPaymentResource from './employer_payments'
 import TravelPeopleResource from './travel_people'
 import TravelMaterialResource from './travel_materials'
 import TravelEquipmentResource from './travel_equipment'
+import IncomeResource from './incomes'
 
 import { CompanyProvider } from './companies/CompanyContext.tsx'
 import { CompanySelector } from './companies/CompanySelector'
-import { AppBar as RAppBar, TitlePortal, Menu } from 'react-admin'
+import { AppBar as RAppBar, TitlePortal } from 'react-admin'
+import MyMenuComponent from './Menu'
 import { Box, Typography } from '@mui/material'
 
 const MyAppBar = () => (
@@ -36,7 +38,7 @@ const MyAppBar = () => (
   </RAppBar>
 )
 
-const MyMenu = () => <Menu />
+const MyMenu = () => <MyMenuComponent />
 
 const myLayout = ({ children }: { children?: React.ReactNode }) => (
   <Layout appBar={MyAppBar} menu={MyMenu}>
@@ -62,6 +64,7 @@ export const App = () => (
       <Resource name="travel_people" {...TravelPeopleResource} />
       <Resource name="travel_materials" {...TravelMaterialResource} />
       <Resource name="travel_equipment" {...TravelEquipmentResource} />
+      <Resource name="incomes" {...IncomeResource} />
     </Admin>
   </CompanyProvider>
 )
