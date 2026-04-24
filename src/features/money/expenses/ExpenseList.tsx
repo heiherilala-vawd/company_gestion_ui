@@ -10,7 +10,7 @@ import {
   DeleteButton,
   FunctionField,
 } from 'react-admin'
-import { useCompany } from '../companies/CompanyContext'
+import { useCompany } from '../../transversal/companies/CompanyContext'
 
 const ExpenseFilters = [
   <SearchInput source="description" alwaysOn />,

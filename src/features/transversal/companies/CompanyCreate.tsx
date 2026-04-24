@@ -1,6 +1,6 @@
 // companies/CompanyCreate.tsx
 import { Create, SimpleForm, TextInput, SelectInput, required } from 'react-admin'
-import generateId from '../utili/utils.tsx'
+import generateId from '../../../utili/utils.tsx'
 
 export default function CompanyCreate() {
   return (

@@ -1,5 +1,5 @@
 import { Create, SimpleForm, TextInput, required, SelectInput } from 'react-admin'
-import generateId from '../utili/utils.tsx'
+import generateId from '../../../utili/utils.tsx'
 
 export default function MaterialCreate() {
   return (

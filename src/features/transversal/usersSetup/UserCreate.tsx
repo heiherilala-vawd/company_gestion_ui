@@ -1,5 +1,5 @@
 import { Create, SimpleForm, TextInput, SelectInput, required, email } from 'react-admin'
-import generateId from '../utili/utils.tsx'
+import generateId from '../../../utili/utils.tsx'
 
 // ⚠️ Ajouter 'export default'
 export default function UserCreate() {
