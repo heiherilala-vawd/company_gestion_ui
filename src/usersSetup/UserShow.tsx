@@ -1,14 +1,5 @@
 // users/UserShow.tsx
-import {
-  Show,
-  SimpleShowLayout,
-  TextField,
-  EmailField,
-  DateField,
-  SelectField,
-  TabbedShowLayout,
-  Tab,
-} from 'react-admin'
+import { Show, SimpleShowLayout, TextField, EmailField, DateField, SelectField } from 'react-admin'
 
 // ⚠️ Ajouter 'export default'
 export default function UserShow() {

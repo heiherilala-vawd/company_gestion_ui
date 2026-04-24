@@ -1,8 +1,10 @@
 import { Admin, Resource } from 'react-admin'
 import { Layout } from './Layout'
-import { dataProvider } from './dataProvider'
-import authProvider from './authProvider.tsx'
-import UserResource from './users'
+import { dataProvider } from './auth/dataProvider.ts'
+import authProvider from './auth/authProvider.tsx'
+import WarehousesResource from './warehouses'
+import EquipmentResource from './equipment'
+import UserResource from './usersSetup'
 import CompanyResource from './companies'
 import JobResource from './jobs'
 
@@ -10,13 +12,14 @@ import { CompanyProvider } from './companies/CompanyContext.tsx'
 import { CompanySelector } from './companies/CompanySelector'
 import { AppBar as RAppBar, TitlePortal, Menu } from 'react-admin'
 import { Box, Typography } from '@mui/material'
-import { useState } from 'react'
 
 const MyAppBar = () => (
   <RAppBar>
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
-    <Typography variant="h6" sx={{ mr: 2 }}>🏢</Typography>
+    <Typography variant="h6" sx={{ mr: 2 }}>
+      🏢
+    </Typography>
     <CompanySelector />
   </RAppBar>
 )
@@ -31,14 +34,12 @@ const myLayout = ({ children }: { children?: React.ReactNode }) => (
 
 export const App = () => (
   <CompanyProvider>
-    <Admin
-      layout={myLayout}
-      dataProvider={dataProvider}
-      authProvider={authProvider}
-    >
-      <Resource name="users" {...UserResource} />
+    <Admin layout={myLayout} dataProvider={dataProvider} authProvider={authProvider}>
       <Resource name="jobs" {...JobResource} />
       <Resource name="companies" {...CompanyResource} />
+      <Resource name="users" {...UserResource} />
+      <Resource name="warehouses" {...WarehousesResource} />
+      <Resource name="equipment" {...EquipmentResource} />
     </Admin>
   </CompanyProvider>
 )

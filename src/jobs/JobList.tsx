@@ -10,50 +10,50 @@ import {
   EditButton,
   DeleteButton,
 } from 'react-admin'
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 import { useCompany } from '../companies/CompanyContext'
 
 const JobFilters = [
-    <SearchInput source="description" alwaysOn />,
-    <TextInput source="status" label="Statut" />,
-];
+  <SearchInput source="description" alwaysOn />,
+  <TextInput source="status" label="Statut" />,
+]
 
 interface JobListProps {
-    company_id?: number | string;
+  company_id?: number | string
 }
 
 function JobListContent() {
-    const { filterValues } = useListContext();
+  const { filterValues } = useListContext()
 
-    useEffect(() => {
-        console.log('🔧 JobList mounted - filterValues:', filterValues);
-    }, [filterValues]);
+  useEffect(() => {
+    console.log('🔧 JobList mounted - filterValues:', filterValues)
+  }, [filterValues])
 
-    return (
-      <Datagrid>
-        <TextField source="id" />
-        <TextField source="company_id" label="ID Entreprise" />
-        <TextField source="description" label="Description" />
-        <DateField source="contract_signature_date" label="Signature contrat" />
-        <DateField source="start_date" label="Date début" />
-        <DateField source="end_date" label="Date fin" />
-        <SelectField
-          source="status"
-          label="Statut"
-          choices={[
-            { id: 'PENDING_SIGNATURE', name: 'En attente signature' },
-            { id: 'IN_PROGRESS', name: 'En cours' },
-            { id: 'COMPLETED', name: 'Terminé' },
-          ]}
-        />
-        <DateField source="created_at" label="Créé le" showTime />
-        <DateField source="updated_at" label="Modifié le" showTime />
-        <TextField source="created_by" label="Créé par" />
-        <TextField source="updated_by" label="Modifié par" />
-        <EditButton />
-        <DeleteButton />
-      </Datagrid>
-    )
+  return (
+    <Datagrid>
+      <TextField source="id" />
+      <TextField source="company_id" label="ID Entreprise" />
+      <TextField source="description" label="Description" />
+      <DateField source="contract_signature_date" label="Signature contrat" />
+      <DateField source="start_date" label="Date début" />
+      <DateField source="end_date" label="Date fin" />
+      <SelectField
+        source="status"
+        label="Statut"
+        choices={[
+          { id: 'PENDING_SIGNATURE', name: 'En attente signature' },
+          { id: 'IN_PROGRESS', name: 'En cours' },
+          { id: 'COMPLETED', name: 'Terminé' },
+        ]}
+      />
+      <DateField source="created_at" label="Créé le" showTime />
+      <DateField source="updated_at" label="Modifié le" showTime />
+      <TextField source="created_by" label="Créé par" />
+      <TextField source="updated_by" label="Modifié par" />
+      <EditButton />
+      <DeleteButton />
+    </Datagrid>
+  )
 }
 
 export default function JobList({ company_id }: JobListProps) {
@@ -62,16 +62,16 @@ export default function JobList({ company_id }: JobListProps) {
     return <div>Veuillez sélectionner une company</div>
   }
 
-    return (
-      <List
-        key={company_id ?? 'all-jobs'}
-        resource="jobs"
-        filters={JobFilters}
-        filter={currentCompanyId ? { currentCompanyId } : undefined}
-        title={`Jobs - Company ID: ${currentCompanyId}`}
-        perPage={25}
-      >
-        <JobListContent />
-      </List>
-    )
+  return (
+    <List
+      key={company_id ?? 'all-jobs'}
+      resource="jobs"
+      filters={JobFilters}
+      filter={currentCompanyId ? { currentCompanyId } : undefined}
+      title={`Jobs - Company ID: ${currentCompanyId}`}
+      perPage={25}
+    >
+      <JobListContent />
+    </List>
+  )
 }
