@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   DateField,
   SelectField,
@@ -13,6 +12,7 @@ import {
 } from 'react-admin'
 import { useEffect } from 'react'
 import { useCompany } from '../companies/CompanyContext.tsx'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const JobFilters = [
   <SearchInput source="description" alwaysOn />,
@@ -31,7 +31,7 @@ function JobListContent() {
   }, [filterValues])
 
   return (
-    <Datagrid>
+    <ResponsiveDatagrid priorityFields={['company.name', 'description', 'status', 'start_date']}>
       <TextField source="company.name" label="Nom Entreprise" />
       <TextField source="description" label="Description" />
       <DateField source="contract_signature_date" label="Signature contrat" />
@@ -48,7 +48,6 @@ function JobListContent() {
       />
       <DateField source="created_at" label="Créé le" showTime />
       <DateField source="updated_at" label="Modifié le" showTime />
-      {/* Nom complet du créateur */}
       <FunctionField
         label="Créé par"
         render={(record) => (
@@ -58,7 +57,6 @@ function JobListContent() {
         )}
       />
 
-      {/* Nom complet du modificateur */}
       <FunctionField
         label="Modifié par"
         render={(record) => (
@@ -69,7 +67,7 @@ function JobListContent() {
       />
       <EditButton />
       <DeleteButton />
-    </Datagrid>
+    </ResponsiveDatagrid>
   )
 }
 

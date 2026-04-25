@@ -36,9 +36,16 @@ const MyAppBar = () => (
   <RAppBar>
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1,
+        flexWrap: 'wrap',
+        justifyContent: 'flex-end',
+      }}
+    >
       <CompanySelector />
-      {/* Affiche JobSelector seulement si une company est sélectionnée */}
       {localStorage.getItem('currentCompanyId') && (
         <JobSelector companyId={localStorage.getItem('currentCompanyId')} />
       )}

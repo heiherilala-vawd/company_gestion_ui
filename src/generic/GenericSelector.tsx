@@ -187,7 +187,7 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
     return <div style={{ padding: '10px', color: 'orange' }}>⚠️ Aucun {emptyLabel} disponible</div>
   }
 
-const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
+  const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
   const currentValue = currentId ?? (showAllOption ? 'all' : '')
   const prefixDisplay = labelPrefix ? labelPrefix : `${displayLabel}: `
 
@@ -206,7 +206,13 @@ const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.sl
       {prefixDisplay && (
         <Typography
           variant="caption"
-          sx={{ color: 'white', fontWeight: 600, fontSize: 11, whiteSpace: 'nowrap' }}
+          sx={{
+            color: 'white',
+            fontWeight: 600,
+            fontSize: 11,
+            whiteSpace: 'nowrap',
+            display: { xs: 'none', sm: 'block' },
+          }}
         >
           {prefixDisplay}
         </Typography>
@@ -216,8 +222,9 @@ const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.sl
         size="small"
         className={className}
         sx={{
-          minWidth: 120,
-          maxWidth: 180,
+          minWidth: 100,
+          maxWidth: 160,
+          flexGrow: 1,
           '& .MSelect-select': {
             color: 'white',
             fontSize: 12,
@@ -230,30 +237,30 @@ const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.sl
         }}
         fullWidth={fullWidth}
       >
-      <Select
-        value={currentValue}
-        sx={{
-          color: 'white',
-          fontSize: 12,
-          '& .MuiSelect-select': {
-            paddingRight: '8px !important',
-          },
-        }}
-        onChange={(event) => handleEntityChange(event.target.value as string)}
-        disableUnderline
-      >
-        {showAllOption && (
-          <MenuItem value="all" sx={{ fontSize: 12 }}>
-            {allOptionLabel}
-          </MenuItem>
-        )}
-        {entities.map((entity) => (
-          <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
-            {getDisplayText(entity)}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        <Select
+          value={currentValue}
+          sx={{
+            color: 'white',
+            fontSize: 12,
+            '& .MuiSelect-select': {
+              paddingRight: '8px !important',
+            },
+          }}
+          onChange={(event) => handleEntityChange(event.target.value as string)}
+          disableUnderline
+        >
+          {showAllOption && (
+            <MenuItem value="all" sx={{ fontSize: 12 }}>
+              {allOptionLabel}
+            </MenuItem>
+          )}
+          {entities.map((entity) => (
+            <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
+              {getDisplayText(entity)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   )
 }

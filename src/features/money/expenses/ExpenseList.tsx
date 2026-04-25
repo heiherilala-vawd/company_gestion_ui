@@ -11,6 +11,7 @@ import {
   FunctionField,
 } from 'react-admin'
 import { useCompany } from '../../transversal/companies/CompanyContext'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const ExpenseFilters = [
   <SearchInput source="description" alwaysOn />,
@@ -22,14 +23,16 @@ export default function ExpenseList() {
 
   return (
     <List resource="expenses" filters={ExpenseFilters} perPage={25}>
-      <Datagrid rowClick="show">
+      <ResponsiveDatagrid
+        priorityFields={['job.description', 'amount', 'description']}
+        rowClick="show"
+      >
         <TextField source="job.description" label="Chantier" />
 
         <NumberField source="amount" label="Montant" />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -39,7 +42,6 @@ export default function ExpenseList() {
           )}
         />
 
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -50,7 +52,7 @@ export default function ExpenseList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

@@ -1,12 +1,5 @@
-import {
-  List,
-  Datagrid,
-  TextField,
-  DateField,
-  SearchInput,
-  TextInput,
-  FunctionField,
-} from 'react-admin'
+import { List, TextField, DateField, SearchInput, TextInput, FunctionField } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const WarehouseFilters = [
   <SearchInput source="name" alwaysOn />,
@@ -17,11 +10,10 @@ const WarehouseFilters = [
 export default function WarehouseList() {
   return (
     <List filters={WarehouseFilters}>
-      <Datagrid rowClick="show">
+      <ResponsiveDatagrid priorityFields={['name', 'description', 'job.description']}>
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
         <TextField source="job.description" label="ID Chantier" />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -31,7 +23,6 @@ export default function WarehouseList() {
           )}
         />
 
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -42,7 +33,7 @@ export default function WarehouseList() {
         />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }
