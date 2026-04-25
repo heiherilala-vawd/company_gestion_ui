@@ -187,52 +187,73 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
     return <div style={{ padding: '10px', color: 'orange' }}>⚠️ Aucun {emptyLabel} disponible</div>
   }
 
-  const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
+const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
   const currentValue = currentId ?? (showAllOption ? 'all' : '')
   const prefixDisplay = labelPrefix ? labelPrefix : `${displayLabel}: `
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 1,
+        px: 1,
+        py: 0.5,
+        gap: 1,
+      }}
+    >
       {prefixDisplay && (
-        <Typography variant="caption" sx={{ color: 'white', mr: 0.5, fontSize: 12 }}>
+        <Typography
+          variant="caption"
+          sx={{ color: 'white', fontWeight: 600, fontSize: 11, whiteSpace: 'nowrap' }}
+        >
           {prefixDisplay}
         </Typography>
       )}
       <FormControl
-        variant="outlined"
+        variant="standard"
         size="small"
         className={className}
         sx={{
-          minWidth: 150,
-          maxWidth: 200,
-          backgroundColor: 'white',
+          minWidth: 120,
+          maxWidth: 180,
+          '& .MSelect-select': {
+            color: 'white',
+            fontSize: 12,
+          },
+          '& .MuiInput-input': {
+            fontSize: 12,
+          },
           ...sx,
           ...style,
         }}
         fullWidth={fullWidth}
       >
-        <InputLabel id={`${entityType}-selector-label`} sx={{ fontSize: 12 }}>
-          {displayLabel}
-        </InputLabel>
-        <Select
-          labelId={`${entityType}-selector-label`}
-          label={displayLabel}
-          value={currentValue}
-          sx={{ fontSize: 12, height: 36 }}
-          onChange={(event) => handleEntityChange(event.target.value as string)}
-        >
-          {showAllOption && (
-            <MenuItem value="all" sx={{ fontSize: 12 }}>
-              {allOptionLabel}
-            </MenuItem>
-          )}
-          {entities.map((entity) => (
-            <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
-              {getDisplayText(entity)}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <Select
+        value={currentValue}
+        sx={{
+          color: 'white',
+          fontSize: 12,
+          '& .MuiSelect-select': {
+            paddingRight: '8px !important',
+          },
+        }}
+        onChange={(event) => handleEntityChange(event.target.value as string)}
+        disableUnderline
+      >
+        {showAllOption && (
+          <MenuItem value="all" sx={{ fontSize: 12 }}>
+            {allOptionLabel}
+          </MenuItem>
+        )}
+        {entities.map((entity) => (
+          <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
+            {getDisplayText(entity)}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
     </Box>
   )
 }
