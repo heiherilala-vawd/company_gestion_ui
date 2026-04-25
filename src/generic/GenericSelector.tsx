@@ -1,7 +1,16 @@
 // generic/GenericSelector.tsx
 import React, { useEffect, useState } from 'react'
 import { useNotify, useRefresh, Loading } from 'react-admin'
-import { FormControl, InputLabel, Select, MenuItem, SxProps, Theme } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SxProps,
+  Theme,
+  Box,
+  Typography,
+} from '@mui/material'
 
 // Interface pour l'entité générique
 interface GenericEntity {
@@ -20,6 +29,7 @@ interface GenericSelectorProps {
   entityType: string // 'company', 'job', etc.
   apiEndpoint: string // URL de l'API (ex: '/companies', '/jobs')
   label?: string // Label du selecteur (ex: 'Company', 'Job')
+  labelPrefix?: string // Prefix à afficher avant le selecteur (ex: 'Company: ', 'Job: ')
   useContext: () => { currentId: string | null; selectEntity: (id: string | null) => void }
 
   // Style
@@ -44,6 +54,7 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   entityType,
   apiEndpoint,
   label,
+  labelPrefix,
   useContext,
   className = '',
   style = {},
@@ -178,42 +189,50 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
 
   const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
   const currentValue = currentId ?? (showAllOption ? 'all' : '')
+  const prefixDisplay = labelPrefix ? labelPrefix : `${displayLabel}: `
 
   return (
-    <FormControl
-      variant="outlined"
-      size="small"
-      className={className}
-      sx={{
-        minWidth: 150,
-        maxWidth: 200,
-        backgroundColor: 'white',
-        ...sx,
-        ...style,
-      }}
-      fullWidth={fullWidth}
-    >
-      <InputLabel id={`${entityType}-selector-label`} sx={{ fontSize: 12 }}>
-        {displayLabel}
-      </InputLabel>
-      <Select
-        labelId={`${entityType}-selector-label`}
-        label={displayLabel}
-        value={currentValue}
-        sx={{ fontSize: 12, height: 36 }}
-        onChange={(event) => handleEntityChange(event.target.value as string)}
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      {prefixDisplay && (
+        <Typography variant="caption" sx={{ color: 'white', mr: 0.5, fontSize: 12 }}>
+          {prefixDisplay}
+        </Typography>
+      )}
+      <FormControl
+        variant="outlined"
+        size="small"
+        className={className}
+        sx={{
+          minWidth: 150,
+          maxWidth: 200,
+          backgroundColor: 'white',
+          ...sx,
+          ...style,
+        }}
+        fullWidth={fullWidth}
       >
-        {showAllOption && (
-          <MenuItem value="all" sx={{ fontSize: 12 }}>
-            {allOptionLabel}
-          </MenuItem>
-        )}
-        {entities.map((entity) => (
-          <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
-            {getDisplayText(entity)}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        <InputLabel id={`${entityType}-selector-label`} sx={{ fontSize: 12 }}>
+          {displayLabel}
+        </InputLabel>
+        <Select
+          labelId={`${entityType}-selector-label`}
+          label={displayLabel}
+          value={currentValue}
+          sx={{ fontSize: 12, height: 36 }}
+          onChange={(event) => handleEntityChange(event.target.value as string)}
+        >
+          {showAllOption && (
+            <MenuItem value="all" sx={{ fontSize: 12 }}>
+              {allOptionLabel}
+            </MenuItem>
+          )}
+          {entities.map((entity) => (
+            <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
+              {getDisplayText(entity)}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   )
 }

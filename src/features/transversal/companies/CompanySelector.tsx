@@ -15,6 +15,7 @@ export const CompanySelector: React.FC<CompanySelectorProps> = (props) => {
       entityType="company"
       apiEndpoint="/companies"
       label="Company"
+      labelPrefix="Company: "
       {...props}
       useContext={useCompany}
     />

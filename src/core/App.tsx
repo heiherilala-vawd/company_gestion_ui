@@ -37,9 +37,6 @@ const MyAppBar = () => (
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <Typography variant="caption" sx={{ color: 'white' }}>
-        🏢
-      </Typography>
       <CompanySelector />
       {/* Affiche JobSelector seulement si une company est sélectionnée */}
       {localStorage.getItem('currentCompanyId') && (

@@ -18,6 +18,7 @@ export const JobSelector: React.FC<JobSelectorProps> = ({ companyId, ...props })
       entityType="job"
       apiEndpoint={endpoint}
       label="Job"
+      labelPrefix="Job: "
       {...props}
       useContext={useJob}
     />
