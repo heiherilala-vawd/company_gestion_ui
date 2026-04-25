@@ -27,6 +27,10 @@ import { CompanySelector } from '../features/transversal/companies/CompanySelect
 import { AppBar as RAppBar, TitlePortal } from 'react-admin'
 import MyMenuComponent from './Menu'
 import { Box, Typography } from '@mui/material'
+import { JobSelector } from '../features/transversal/jobs/JobSelector.tsx'
+import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
+
+import { isDynamicResource } from '../config/dynamicResources'
 
 const MyAppBar = () => (
   <RAppBar>
@@ -37,6 +41,10 @@ const MyAppBar = () => (
         🏢
       </Typography>
       <CompanySelector />
+      {/* Affiche JobSelector seulement si une company est sélectionnée */}
+      {localStorage.getItem('currentCompanyId') && (
+        <JobSelector companyId={localStorage.getItem('currentCompanyId')} />
+      )}
     </Box>
   </RAppBar>
 )
@@ -51,23 +59,25 @@ const myLayout = ({ children }: { children?: React.ReactNode }) => (
 
 export const App = () => (
   <CompanyProvider>
-    <Admin layout={myLayout} dataProvider={dataProvider} authProvider={authProvider}>
-      <Resource name="jobs" {...JobResource} />
-      <Resource name="companies" {...CompanyResource} />
-      <Resource name="users" {...UserResource} />
-      <Resource name="warehouses" {...WarehousesResource} />
-      <Resource name="equipment" {...EquipmentResource} />
-      <Resource name="materials" {...MaterialsResource} />
-      <Resource name="expenses" {...ExpenseResource} />
-      <Resource name="travel_expenses" {...TravelExpenseResource} />
-      <Resource name="purchases" {...PurchaseResource} />
-      <Resource name="bank_fees" {...BankFeeResource} />
-      <Resource name="other_expenses" {...OtherExpenseResource} />
-      <Resource name="employer_payments" {...EmployerPaymentResource} />
-      <Resource name="travel_people" {...TravelPeopleResource} />
-      <Resource name="travel_materials" {...TravelMaterialResource} />
-      <Resource name="travel_equipment" {...TravelEquipmentResource} />
-      <Resource name="incomes" {...IncomeResource} />
-    </Admin>
+    <JobProvider>
+      <Admin layout={myLayout} dataProvider={dataProvider} authProvider={authProvider}>
+        <Resource name="jobs" {...JobResource} />
+        <Resource name="companies" {...CompanyResource} />
+        <Resource name="users" {...UserResource} />
+        <Resource name="warehouses" {...WarehousesResource} />
+        <Resource name="equipment" {...EquipmentResource} />
+        <Resource name="materials" {...MaterialsResource} />
+        <Resource name="expenses" {...ExpenseResource} />
+        <Resource name="travel_expenses" {...TravelExpenseResource} />
+        <Resource name="purchases" {...PurchaseResource} />
+        <Resource name="bank_fees" {...BankFeeResource} />
+        <Resource name="other_expenses" {...OtherExpenseResource} />
+        <Resource name="employer_payments" {...EmployerPaymentResource} />
+        <Resource name="travel_people" {...TravelPeopleResource} />
+        <Resource name="travel_materials" {...TravelMaterialResource} />
+        <Resource name="travel_equipment" {...TravelEquipmentResource} />
+        <Resource name="incomes" {...IncomeResource} />
+      </Admin>
+    </JobProvider>
   </CompanyProvider>
 )

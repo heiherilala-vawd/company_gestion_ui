@@ -12,7 +12,7 @@ import {
   FunctionField,
 } from 'react-admin'
 import { useEffect } from 'react'
-import { useCompany } from '../companies/CompanyContext'
+import { useCompany } from '../companies/CompanyContext.tsx'
 
 const JobFilters = [
   <SearchInput source="description" alwaysOn />,
@@ -74,7 +74,7 @@ function JobListContent() {
 }
 
 export default function JobList({ company_id }: JobListProps) {
-  const { currentCompanyId } = useCompany()
+  const currentCompanyId = localStorage.getItem('currentCompanyId')
   if (!currentCompanyId) {
     return <div>Veuillez sélectionner une company</div>
   }
