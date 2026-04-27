@@ -1,18 +1,8 @@
-// generic/GenericSelector.tsx
 import React, { useEffect, useState } from 'react'
 import { useNotify, useRefresh, Loading } from 'react-admin'
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SxProps,
-  Theme,
-  Box,
-  Typography,
-} from '@mui/material'
+import { FormControl, InputLabel, Select, MenuItem, Box, Typography } from '@mui/material'
+import { formStyles } from '../style/components'
 
-// Interface pour l'entité générique
 interface GenericEntity {
   id: string
   name?: string
@@ -23,31 +13,22 @@ interface GenericEntity {
   [key: string]: any
 }
 
-// Props pour le Selector générique
 interface GenericSelectorProps {
-  // Configuration
-  entityType: string // 'company', 'job', etc.
-  apiEndpoint: string // URL de l'API (ex: '/companies', '/jobs')
-  label?: string // Label du selecteur (ex: 'Company', 'Job')
-  labelPrefix?: string // Prefix à afficher avant le selecteur (ex: 'Company: ', 'Job: ')
+  entityType: string
+  apiEndpoint: string
+  label?: string
+  labelPrefix?: string
   useContext: () => { currentId: string | null; selectEntity: (id: string | null) => void }
-
-  // Style
   className?: string
   style?: React.CSSProperties
   fullWidth?: boolean
-  sx?: SxProps<Theme>
-
-  // Callbacks
   onEntitySelected?: (entity: GenericEntity) => void
   onLoading?: (loading: boolean) => void
   onError?: (error: string | null) => void
-
-  // Options
-  autoSelectFirst?: boolean // Auto-sélectionner le premier élément
-  showAllOption?: boolean // Afficher option "Tous"
-  allOptionLabel?: string // Label pour l'option "Tous"
-  displayFields?: string[] // Ordre de priorité des champs à afficher
+  autoSelectFirst?: boolean
+  showAllOption?: boolean
+  allOptionLabel?: string
+  displayFields?: string[]
 }
 
 export const GenericSelector: React.FC<GenericSelectorProps> = ({
@@ -59,7 +40,6 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   className = '',
   style = {},
   fullWidth = true,
-  sx = {},
   onEntitySelected,
   onLoading,
   onError,
@@ -76,7 +56,6 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   const notify = useNotify()
   const refresh = useRefresh()
 
-  // Fonction pour obtenir le texte d'affichage
   const getDisplayText = (entity: GenericEntity): string => {
     for (const field of displayFields) {
       const value = entity[field]
@@ -87,7 +66,6 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
     return entity.id || '?'
   }
 
-  // Chargement des entités depuis l'API
   useEffect(() => {
     const fetchEntities = async () => {
       try {
@@ -96,10 +74,7 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
         onLoading?.(true)
 
         const token = localStorage.getItem('token')
-
-        if (!token) {
-          throw new Error('Non authentifié')
-        }
+        if (!token) throw new Error('Non authentifié')
 
         const apiBase = import.meta.env.VITE_API_URL ?? ''
         const url = apiBase ? `${apiBase}${apiEndpoint}` : apiEndpoint
@@ -110,21 +85,16 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
           },
         })
 
-        if (!response.ok) {
-          throw new Error(`Erreur HTTP: ${response.status}`)
-        }
+        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`)
 
         const data: GenericEntity[] = await response.json()
         setEntities(data)
 
-        // Auto-sélection du premier élément
         if (autoSelectFirst && !currentId && data.length > 0) {
           const selectionId = data[0].id ?? ''
           if (selectionId) {
             selectEntity(selectionId)
-            const displayLabel = label || entityType
-            const displayText = getDisplayText(data[0])
-            notify(`${displayLabel} "${displayText}" sélectionné par défaut`, {
+            notify(`${label || entityType} "${getDisplayText(data[0])}" sélectionné`, {
               type: 'info',
             })
             onEntitySelected?.(data[0])
@@ -135,7 +105,6 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
         setError(errorMessage)
         onError?.(errorMessage)
         notify(`Erreur: ${errorMessage}`, { type: 'error' })
-        console.error(`Erreur chargement ${entityType}:`, err)
       } finally {
         setLoading(false)
         onLoading?.(false)
@@ -143,30 +112,21 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
     }
 
     fetchEntities()
-  }, [apiEndpoint]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [apiEndpoint])
 
   const handleEntityChange = (entityId: string) => {
-    // Cas spécial pour "Tous"
     if (showAllOption && entityId === 'all') {
       selectEntity(null)
-      const displayLabel = label || entityType
-      notify(`Tous les ${displayLabel}s sélectionnés`, {
-        type: 'info',
-        autoHideDuration: 3000,
-      })
+      notify(`Tous les ${label || entityType}s sélectionnés`, { type: 'info' })
       refresh()
       return
     }
 
-    // Cas normal
     const selectedEntity = entities.find((e) => e.id === entityId)
     if (selectedEntity) {
       selectEntity(entityId)
-      const displayLabel = label || entityType
-      const displayText = getDisplayText(selectedEntity)
-      notify(`${displayLabel} changé pour "${displayText}"`, {
+      notify(`${label || entityType} changé pour "${getDisplayText(selectedEntity)}"`, {
         type: 'success',
-        autoHideDuration: 3000,
       })
       refresh()
       onEntitySelected?.(selectedEntity)
@@ -174,88 +134,47 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   }
 
   if (loading) {
-    const loadingLabel = label || entityType
-    return <Loading loadingSecondary={`Chargement des ${loadingLabel}s...`} />
+    return <Loading loadingSecondary={`Chargement...`} />
   }
 
   if (error) {
-    return <div style={{ color: 'red', padding: '10px' }}>⚠️ Erreur: {error}</div>
+    return <div style={{ color: 'red', padding: 10 }}>⚠️ {error}</div>
   }
 
   if (entities.length === 0) {
-    const emptyLabel = label || entityType
-    return <div style={{ padding: '10px', color: 'orange' }}>⚠️ Aucun {emptyLabel} disponible</div>
+    return <div style={{ padding: 10, color: 'orange' }}>⚠️ Aucun</div>
   }
 
   const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
-  const currentValue = currentId ?? (showAllOption ? 'all' : '')
-  const prefixDisplay = labelPrefix ? labelPrefix : `${displayLabel}: `
+  const prefixDisplay = labelPrefix || `${displayLabel}: `
+  const currentValue = currentId || (showAllOption ? 'all' : '')
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        borderRadius: 1,
-        px: 1,
-        py: 0.5,
-        gap: 1,
-      }}
-    >
+    <Box sx={formStyles.selectorBox}>
       {prefixDisplay && (
-        <Typography
-          variant="caption"
-          sx={{
-            color: 'white',
-            fontWeight: 600,
-            fontSize: 11,
-            whiteSpace: 'nowrap',
-            display: { xs: 'none', sm: 'block' },
-          }}
-        >
+        <Typography variant="caption" sx={formStyles.selectorLabel}>
           {prefixDisplay}
         </Typography>
       )}
       <FormControl
         variant="standard"
         size="small"
-        className={className}
-        sx={{
-          minWidth: 100,
-          maxWidth: 160,
-          flexGrow: 1,
-          '& .MSelect-select': {
-            color: 'white',
-            fontSize: 12,
-          },
-          '& .MuiInput-input': {
-            fontSize: 12,
-          },
-          ...sx,
-          ...style,
-        }}
+        sx={formStyles.selectorWrapper}
         fullWidth={fullWidth}
       >
         <Select
           value={currentValue}
-          sx={{
-            color: 'white',
-            fontSize: 12,
-            '& .MuiSelect-select': {
-              paddingRight: '8px !important',
-            },
-          }}
-          onChange={(event) => handleEntityChange(event.target.value as string)}
+          onChange={(e) => handleEntityChange(e.target.value as string)}
+          sx={formStyles.selectorInput}
           disableUnderline
         >
           {showAllOption && (
-            <MenuItem value="all" sx={{ fontSize: 12 }}>
+            <MenuItem value="all" sx={formStyles.input}>
               {allOptionLabel}
             </MenuItem>
           )}
           {entities.map((entity) => (
-            <MenuItem key={entity.id} value={entity.id} sx={{ fontSize: 12 }}>
+            <MenuItem key={entity.id} value={entity.id} sx={formStyles.input}>
               {getDisplayText(entity)}
             </MenuItem>
           ))}

@@ -8,7 +8,7 @@ import {
   GetOneParams,
   UpdateParams,
 } from 'react-admin'
-import { isDynamicResource } from '../config/dynamicResources'
+import { isDynamicCompanyResource } from '../config/dynamicResources'
 
 // Configuration
 const API_URL = import.meta.env.VITE_API_URL ?? ''
@@ -82,7 +82,7 @@ export const dataProvider = {
 
     const queryString = buildQueryString(query)
     let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
@@ -101,7 +101,7 @@ export const dataProvider = {
   // GET ONE
   getOne: async (resource: string, params: GetOneParams) => {
     let url = `${API_URL}/${resource}/${params.id}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
@@ -118,7 +118,7 @@ export const dataProvider = {
     const query = { id: params.ids }
     const queryString = buildQueryString(query)
     let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée')
@@ -135,7 +135,7 @@ export const dataProvider = {
   // CREATE
   create: async (resource: string, params) => {
     let url = `${API_URL}/${resource}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
@@ -154,7 +154,7 @@ export const dataProvider = {
   // UPDATE
   update: async (resource: string, params: UpdateParams<any>) => {
     let url = `${API_URL}/${resource}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée')
@@ -173,7 +173,7 @@ export const dataProvider = {
   // DELETE ONE
   deleteOne: async (resource: string, params: DeleteParams) => {
     let url = `${API_URL}/${resource}/${params.id}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
       if (!companyId) {
         throw new Error('Aucune company sélectionnée')
@@ -191,7 +191,7 @@ export const dataProvider = {
     params: { ids: Array<number | string>; data: any },
   ): Promise<{ data: Array<number | string> }> => {
     let url = `${API_URL}/${resource}`
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
 
       if (!companyId) {
@@ -216,7 +216,7 @@ export const dataProvider = {
     resource: string,
     params: { ids: Array<number | string> },
   ): Promise<{ data: Array<number | string> }> => {
-    if (isDynamicResource(resource)) {
+    if (isDynamicCompanyResource(resource)) {
       const companyId = getCurrentCompanyId()
 
       if (!companyId) {

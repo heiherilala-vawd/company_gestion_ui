@@ -25,18 +25,14 @@ import PaidIcon from '@mui/icons-material/Paid'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
+import { menuStyles } from '../style/components'
+import { commonStyles } from '../style/theme'
 
 interface ResourceItem {
   name: string
   label: string
   icon: React.ElementType
   to: string
-}
-
-interface ResourceGroup {
-  title: string
-  color: string
-  items: ResourceItem[]
 }
 
 const MenuRoot = () => {
@@ -46,18 +42,11 @@ const MenuRoot = () => {
 
   if (!sidebarOpen) return null
 
-  const handleClickStorage = () => setOpenStorage(!openStorage)
-  const handleClickExpenses = () => setOpenExpenses(!openExpenses)
-
-  const transversal: ResourceGroup = {
-    title: '⚡ Transversal',
-    color: 'primary.main',
-    items: [
-      { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs' },
-      { name: 'companies', label: '🏢 Companies', icon: BusinessIcon, to: '/companies' },
-      { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users' },
-    ],
-  }
+  const transversalItems: ResourceItem[] = [
+    { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs' },
+    { name: 'companies', label: '🏢 Companies', icon: BusinessIcon, to: '/companies' },
+    { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users' },
+  ]
 
   const storageMain: ResourceItem[] = [
     { name: 'warehouses', label: '🏭 Warehouse', icon: WarehouseIcon, to: '/warehouses' },
@@ -99,61 +88,40 @@ const MenuRoot = () => {
     { name: 'incomes', label: '💵 Revenus', icon: PaidIcon, to: '/incomes' },
   ]
 
-  return (
-    <Box sx={{ padding: '10px 0' }}>
-      <Typography
-        variant="caption"
-        sx={{
-          display: 'block',
-          padding: '8px 16px',
-          color: 'primary.main',
-          fontWeight: 600,
-          fontSize: '0.75rem',
-          textTransform: 'uppercase',
-          letterSpacing: 1,
-        }}
+  const renderItems = (items: ResourceItem[], nested = false) =>
+    items.map((item) => (
+      <ListItemButton
+        key={item.name}
+        component={Link}
+        to={item.to}
+        sx={nested ? menuStyles.nested : menuStyles.item}
       >
-        {transversal.title}
+        <ListItemIcon sx={{ minWidth: 40 }}>
+          <item.icon fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary={item.label} />
+      </ListItemButton>
+    ))
+
+  return (
+    <Box sx={commonStyles.container}>
+      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'primary.main' }}>
+        ⚡ Transversal
       </Typography>
       <List component="nav" dense>
-        {transversal.items.map((item) => (
-          <ListItemButton key={item.name} component={Link} to={item.to} sx={{ py: 0.5 }}>
-            <ListItemIcon sx={{ minWidth: 40 }}>
-              <item.icon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItemButton>
-        ))}
+        {renderItems(transversalItems)}
       </List>
 
-      <Box sx={{ my: 1, mx: 2, borderBottom: '1px solid', borderColor: 'divider' }} />
+      <Box sx={menuStyles.divider} />
 
-      <Typography
-        variant="caption"
-        sx={{
-          display: 'block',
-          padding: '8px 16px',
-          color: 'warning.main',
-          fontWeight: 600,
-          fontSize: '0.75rem',
-          textTransform: 'uppercase',
-          letterSpacing: 1,
-        }}
-      >
+      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'warning.main' }}>
         📦 Gestion de stockage
       </Typography>
       <List component="nav" dense>
-        {storageMain.map((item) => (
-          <ListItemButton key={item.name} component={Link} to={item.to} sx={{ py: 0.5 }}>
-            <ListItemIcon sx={{ minWidth: 40 }}>
-              <item.icon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItemButton>
-        ))}
+        {renderItems(storageMain)}
       </List>
 
-      <ListItemButton onClick={handleClickStorage} sx={{ py: 0.5 }}>
+      <ListItemButton onClick={() => setOpenStorage(!openStorage)} sx={menuStyles.item}>
         <ListItemIcon sx={{ minWidth: 40 }}>
           <PeopleAltIcon fontSize="small" />
         </ListItemIcon>
@@ -162,35 +130,17 @@ const MenuRoot = () => {
       </ListItemButton>
       <Collapse in={openStorage} timeout="auto" unmountOnExit>
         <List component="nav" dense disablePadding>
-          {storageSub.map((item) => (
-            <ListItemButton key={item.name} component={Link} to={item.to} sx={{ pl: 4, py: 0.5 }}>
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <item.icon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          ))}
+          {renderItems(storageSub, true)}
         </List>
       </Collapse>
 
-      <Box sx={{ my: 1, mx: 2, borderBottom: '1px solid', borderColor: 'divider' }} />
+      <Box sx={menuStyles.divider} />
 
-      <Typography
-        variant="caption"
-        sx={{
-          display: 'block',
-          padding: '8px 16px',
-          color: 'success.main',
-          fontWeight: 600,
-          fontSize: '0.75rem',
-          textTransform: 'uppercase',
-          letterSpacing: 1,
-        }}
-      >
+      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'success.main' }}>
         💰 Gestion d&apos;argent
       </Typography>
 
-      <ListItemButton onClick={handleClickExpenses} sx={{ py: 0.5 }}>
+      <ListItemButton onClick={() => setOpenExpenses(!openExpenses)} sx={menuStyles.item}>
         <ListItemIcon sx={{ minWidth: 40 }}>
           <MoneyOffIcon fontSize="small" />
         </ListItemIcon>
@@ -199,26 +149,12 @@ const MenuRoot = () => {
       </ListItemButton>
       <Collapse in={openExpenses} timeout="auto" unmountOnExit>
         <List component="nav" dense disablePadding>
-          {expenses.map((item) => (
-            <ListItemButton key={item.name} component={Link} to={item.to} sx={{ pl: 4, py: 0.5 }}>
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <item.icon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          ))}
+          {renderItems(expenses, true)}
         </List>
       </Collapse>
 
       <List component="nav" dense>
-        {incomes.map((item) => (
-          <ListItemButton key={item.name} component={Link} to={item.to} sx={{ py: 0.5 }}>
-            <ListItemIcon sx={{ minWidth: 40 }}>
-              <item.icon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItemButton>
-        ))}
+        {renderItems(incomes)}
       </List>
     </Box>
   )

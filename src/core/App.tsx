@@ -26,25 +26,16 @@ import { CompanyProvider } from '../features/transversal/companies/CompanyContex
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
 import { AppBar as RAppBar, TitlePortal } from 'react-admin'
 import MyMenuComponent from './Menu'
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { JobSelector } from '../features/transversal/jobs/JobSelector.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
-
-import { isDynamicResource } from '../config/dynamicResources'
+import { appBarStyles } from '../style/components'
 
 const MyAppBar = () => (
   <RAppBar>
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1,
-        flexWrap: 'wrap',
-        justifyContent: 'flex-end',
-      }}
-    >
+    <Box sx={appBarStyles.container}>
       <CompanySelector />
       {localStorage.getItem('currentCompanyId') && (
         <JobSelector companyId={localStorage.getItem('currentCompanyId')} />

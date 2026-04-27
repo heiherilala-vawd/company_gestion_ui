@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode, Children, isValidElement } from 'react'
 import { Datagrid, DatagridProps } from 'react-admin'
-import { useMediaQuery, useTheme, Box } from '@mui/material'
+import { useMediaQuery, useTheme } from '@mui/material'
+import { datagridStyles } from '../style/components'
 
 interface ResponsiveDatagridProps extends Omit<DatagridProps, 'children'> {
   children: ReactNode
@@ -20,41 +21,33 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
   const childArray = Children.toArray(children)
 
   const getVisibleFields = () => {
-    if (!priorityFields || priorityFields.length === 0) {
-      return childArray
-    }
+    if (!priorityFields || priorityFields.length === 0) return childArray
 
     const prioritySet = new Set(priorityFields)
     const priority = childArray.filter((child) => {
       if (isValidElement(child)) {
-        const source = child.props.source
-        return source && prioritySet.has(source)
+        return child.props.source && prioritySet.has(child.props.source)
       }
       return false
     })
 
     const others = childArray.filter((child) => {
       if (isValidElement(child)) {
-        const source = child.props.source
-        return source && !prioritySet.has(source)
+        return child.props.source && !prioritySet.has(child.props.source)
       }
       return true
     })
 
-    if (isXs) {
-      return priority.slice(0, 2)
-    }
-    if (isSm) {
-      return priority.slice(0, 3)
-    }
-    if (isMd) {
-      return priority.slice(0, 5)
-    }
+    if (isXs) return priority.slice(0, 2)
+    if (isSm) return priority.slice(0, 3)
+    if (isMd) return priority.slice(0, 5)
 
     return [...priority, ...others].slice(0, 8)
   }
 
-  const visibleChildren = getVisibleFields()
-
-  return <Datagrid {...props}>{visibleChildren}</Datagrid>
+  return (
+    <Datagrid {...props} sx={datagridStyles.container}>
+      {getVisibleFields()}
+    </Datagrid>
+  )
 }
