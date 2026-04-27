@@ -30,6 +30,7 @@ import { Box } from '@mui/material'
 import { JobSelector } from '../features/transversal/jobs/JobSelector.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { appBarStyles } from '../style/components'
+import HomePage from '../features/HomePage'
 
 const MyAppBar = () => (
   <RAppBar>
@@ -55,7 +56,12 @@ const myLayout = ({ children }: { children?: React.ReactNode }) => (
 export const App = () => (
   <CompanyProvider>
     <JobProvider>
-      <Admin layout={myLayout} dataProvider={dataProvider} authProvider={authProvider}>
+      <Admin
+        dashboard={HomePage}
+        layout={myLayout}
+        dataProvider={dataProvider}
+        authProvider={authProvider}
+      >
         <Resource name="jobs" {...JobResource} />
         <Resource name="companies" {...CompanyResource} />
         <Resource name="users" {...UserResource} />

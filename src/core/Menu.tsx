@@ -12,6 +12,7 @@ import {
 import { Link } from 'react-router-dom'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import HomeIcon from '@mui/icons-material/Home'
 import WorkIcon from '@mui/icons-material/Work'
 import BusinessIcon from '@mui/icons-material/Business'
 import PeopleIcon from '@mui/icons-material/People'
@@ -43,6 +44,7 @@ const MenuRoot = () => {
   if (!sidebarOpen) return null
 
   const transversalItems: ResourceItem[] = [
+    { name: 'home', label: '🏠 Home', icon: HomeIcon, to: '/' },
     { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs' },
     { name: 'companies', label: '🏢 Companies', icon: BusinessIcon, to: '/companies' },
     { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users' },
