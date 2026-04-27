@@ -1,4 +1,12 @@
-import { Create, SimpleForm, TextInput, DateInput, SelectInput, required } from 'react-admin'
+import {
+  Create,
+  SimpleForm,
+  TextInput,
+  DateInput,
+  SelectInput,
+  ReferenceInput,
+  required,
+} from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 
 export default function JobCreate() {
@@ -6,7 +14,9 @@ export default function JobCreate() {
     <Create>
       <SimpleForm>
         <TextInput source="id" readOnly defaultValue={generateId()} />
-        <TextInput source="company_id" label="ID Entreprise" validate={[required()]} />
+        <ReferenceInput source="company_id" reference="companies" label="Entreprise">
+          <SelectInput optionText="name" />
+        </ReferenceInput>
         <TextInput source="description" label="Description" multiline rows={3} />
         <DateInput
           source="contract_signature_date"

@@ -8,27 +8,39 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InventoryIcon from '@mui/icons-material/Inventory'
 
 const buttons = [
-  { label: 'Achats', icon: ShoppingCartIcon, to: '/purchases', color: '#1976d2', desc: 'Acheter' },
+  {
+    label: 'Achats',
+    icon: ShoppingCartIcon,
+    to: '/purchases_activity',
+    color: '#1976d2',
+    desc: 'Acheter',
+  },
   {
     label: 'Déplacements',
     icon: LocalShippingIcon,
-    to: '/travel_equipment',
+    to: '/travel_equipment_activity',
     color: '#ed6c02',
     desc: 'Déplacer',
   },
-  { label: 'Revenus', icon: PaidIcon, to: '/incomes', color: '#2e7d32', desc: 'Recevoir' },
-  { label: 'Dépenses', icon: MoneyOffIcon, to: '/expenses', color: '#9c27b0', desc: 'Payer' },
+  { label: 'Revenus', icon: PaidIcon, to: '/incomes_activity', color: '#2e7d32', desc: 'Recevoir' },
+  {
+    label: 'Dépenses',
+    icon: MoneyOffIcon,
+    to: '/expenses_activity',
+    color: '#9c27b0',
+    desc: 'Payer',
+  },
   {
     label: 'Valider Payment',
     icon: CheckCircleIcon,
-    to: '/employer_payments',
+    to: '/employer_payments_activity',
     color: '#00897b',
     desc: 'Valider',
   },
   {
     label: 'Valider Réception',
     icon: InventoryIcon,
-    to: '/travel_materials',
+    to: '/travel_materials_activity',
     color: '#c62828',
     desc: 'Réception',
   },

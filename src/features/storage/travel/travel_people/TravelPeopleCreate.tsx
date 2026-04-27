@@ -5,7 +5,7 @@ export default function TravelPeopleCreate() {
     <Create>
       <SimpleForm>
         <ReferenceInput source="travel_id" label="Voyage" reference="travel_expenses">
-          <SelectInput source="departure_location" optionText="departure_location" />
+          <SelectInput optionText="title" />
         </ReferenceInput>
         <TextInput source="person_name" label="Nom de la personne" />
         <TextInput source="comment" label="Commentaire" multiline />

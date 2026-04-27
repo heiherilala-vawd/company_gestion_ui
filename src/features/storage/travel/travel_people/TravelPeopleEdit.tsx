@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
 
 export default function TravelPeopleEdit() {
   return (
@@ -11,7 +11,9 @@ export default function TravelPeopleEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput source="travel.id" label="id deplacement" />
+        <ReferenceInput source="travel_id" reference="travel_expenses">
+          <SelectInput optionText="title" />
+        </ReferenceInput>
         <TextInput source="person_name" label="Nom de la personne" />
         <TextInput source="comment" label="Commentaire" multiline />
       </SimpleForm>

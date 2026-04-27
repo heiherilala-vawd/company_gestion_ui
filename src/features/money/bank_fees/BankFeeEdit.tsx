@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
 
 export default function BankFeeEdit() {
   return (
@@ -11,7 +11,9 @@ export default function BankFeeEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput source="expense.id" label="Dépense id" />
+        <ReferenceInput source="expense_id" reference="expenses">
+          <SelectInput optionText="description" />
+        </ReferenceInput>
         <TextInput source="bank_name" label="Nom de la banque" />
         <TextInput source="description" label="Description" multiline />
       </SimpleForm>

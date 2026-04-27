@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput, NumberInput, SelectInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, NumberInput, SelectInput, ReferenceInput } from 'react-admin'
 
 export default function TravelEquipmentEdit() {
   return (
@@ -11,7 +11,9 @@ export default function TravelEquipmentEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput source="travel.id" label="id deplacement" />
+        <ReferenceInput source="travel_id" reference="travel_expenses">
+          <SelectInput optionText="title" />
+        </ReferenceInput>
         <TextInput source="equipment" label="Équipement" />
         <NumberInput source="quantity" label="Quantité" />
         <SelectInput

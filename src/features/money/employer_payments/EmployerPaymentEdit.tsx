@@ -1,4 +1,4 @@
-import { Edit, SimpleForm, TextInput, SelectInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, SelectInput, ReferenceInput } from 'react-admin'
 
 export default function EmployerPaymentEdit() {
   return (
@@ -13,8 +13,12 @@ export default function EmployerPaymentEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput source="expense.id" label="Dépense id" />
-        <TextInput source="employee.id" label="Id de l'employé" />
+        <ReferenceInput source="expense_id" reference="expenses">
+          <SelectInput optionText="description" />
+        </ReferenceInput>
+        <ReferenceInput source="employee_id" reference="users">
+          <SelectInput optionText="email" />
+        </ReferenceInput>
         <TextInput source="payment_description" label="Description du paiement" multiline />
         <SelectInput
           source="payment_type"

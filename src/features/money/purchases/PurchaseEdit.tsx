@@ -1,4 +1,12 @@
-import { Edit, SimpleForm, TextInput, NumberInput, BooleanInput } from 'react-admin'
+import {
+  Edit,
+  SimpleForm,
+  TextInput,
+  NumberInput,
+  BooleanInput,
+  ReferenceInput,
+  SelectInput,
+} from 'react-admin'
 
 export default function PurchaseEdit() {
   return (
@@ -11,7 +19,9 @@ export default function PurchaseEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput source="expense.id" label="Dépense id" />
+        <ReferenceInput source="expense_id" reference="expenses">
+          <SelectInput optionText="description" />
+        </ReferenceInput>
         <TextInput source="supplier" label="Fournisseur" />
         <TextInput source="equipment" label="Équipement" />
         <TextInput source="material" label="Matériau" />

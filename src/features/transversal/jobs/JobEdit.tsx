@@ -1,11 +1,19 @@
-import { Edit, SimpleForm, TextInput, DateInput, SelectInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, DateInput, SelectInput, ReferenceInput } from 'react-admin'
 
 export default function JobEdit() {
   return (
-    <Edit>
+    <Edit
+      transform={(data) => ({
+        ...data,
+        company_id: data.company?.id,
+        company: undefined,
+      })}
+    >
       <SimpleForm>
         <TextInput source="id" readOnly />
-        <TextInput source="company.id" label="ID Entreprise" />
+        <ReferenceInput source="company_id" reference="companies" filter={{ _perPage: 1000 }}>
+          <SelectInput optionText="name" fullWidth />
+        </ReferenceInput>
         <TextInput source="description" label="Description" multiline rows={3} />
         <DateInput source="contract_signature_date" label="Date signature contrat" />
         <DateInput source="start_date" label="Date début" />

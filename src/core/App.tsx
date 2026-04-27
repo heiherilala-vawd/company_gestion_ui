@@ -65,12 +65,18 @@ export const App = () => (
         authProvider={authProvider}
       >
         <CustomRoutes>
-          <Route path="/purchases" element={<SimplePage title="Achats" />} />
-          <Route path="/travel_equipment" element={<SimplePage title="Déplacements" />} />
-          <Route path="/incomes" element={<SimplePage title="Revenus" />} />
-          <Route path="/expenses" element={<SimplePage title="Dépenses" />} />
-          <Route path="/employer_payments" element={<SimplePage title="Valider Payment" />} />
-          <Route path="/travel_materials" element={<SimplePage title="Valider Réception" />} />
+          <Route path="/purchases_activity" element={<SimplePage title="Achats" />} />
+          <Route path="/travel_equipment_activity" element={<SimplePage title="Déplacements" />} />
+          <Route path="/incomes_activity" element={<SimplePage title="Revenus" />} />
+          <Route path="/expenses_activity" element={<SimplePage title="Dépenses" />} />
+          <Route
+            path="/employer_payments_activity"
+            element={<SimplePage title="Valider Payment" />}
+          />
+          <Route
+            path="/travel_materials_activity"
+            element={<SimplePage title="Valider Réception" />}
+          />
         </CustomRoutes>
         <Resource name="jobs" {...JobResource} />
         <Resource name="companies" {...CompanyResource} />

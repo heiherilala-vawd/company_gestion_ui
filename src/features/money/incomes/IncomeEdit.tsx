@@ -1,4 +1,12 @@
-import { Edit, SimpleForm, TextInput, NumberInput, required } from 'react-admin'
+import {
+  Edit,
+  SimpleForm,
+  TextInput,
+  NumberInput,
+  ReferenceInput,
+  SelectInput,
+  required,
+} from 'react-admin'
 
 export default function IncomeEdit() {
   return (
@@ -19,7 +27,9 @@ export default function IncomeEdit() {
         <TextInput source="invoice_reference" label="Référence facture" />
         <NumberInput source="amount" label="Montant" validate={[required()]} />
         <TextInput source="description" label="Description" multiline rows={3} />
-        <TextInput source="job.id" label="ID Chantier" />
+        <ReferenceInput source="job_id" reference="jobs">
+          <SelectInput optionText="description" />
+        </ReferenceInput>
       </SimpleForm>
     </Edit>
   )
