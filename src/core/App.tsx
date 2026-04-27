@@ -24,13 +24,15 @@ import IncomeResource from '../features/money/incomes'
 
 import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
-import { AppBar as RAppBar, TitlePortal } from 'react-admin'
+import { AppBar as RAppBar, TitlePortal, CustomRoutes } from 'react-admin'
+import { Route } from 'react-router-dom'
 import MyMenuComponent from './Menu'
 import { Box } from '@mui/material'
 import { JobSelector } from '../features/transversal/jobs/JobSelector.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { appBarStyles } from '../style/components'
 import HomePage from '../features/HomePage'
+import SimplePage from '../features/SimplePage'
 
 const MyAppBar = () => (
   <RAppBar>
@@ -62,6 +64,14 @@ export const App = () => (
         dataProvider={dataProvider}
         authProvider={authProvider}
       >
+        <CustomRoutes>
+          <Route path="/purchases" element={<SimplePage title="Achats" />} />
+          <Route path="/travel_equipment" element={<SimplePage title="Déplacements" />} />
+          <Route path="/incomes" element={<SimplePage title="Revenus" />} />
+          <Route path="/expenses" element={<SimplePage title="Dépenses" />} />
+          <Route path="/employer_payments" element={<SimplePage title="Valider Payment" />} />
+          <Route path="/travel_materials" element={<SimplePage title="Valider Réception" />} />
+        </CustomRoutes>
         <Resource name="jobs" {...JobResource} />
         <Resource name="companies" {...CompanyResource} />
         <Resource name="users" {...UserResource} />
