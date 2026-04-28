@@ -1,17 +1,17 @@
-// components/JobSelector.tsx
 import React from 'react'
 import { GenericSelector } from '../../../generic/GenericSelector.tsx'
 import { useJob } from './JobContext.tsx'
+import { getMiddleUrlDynamicCompanyResource } from '../../../config/dynamicResources.ts'
 
 interface JobSelectorProps {
   className?: string
   style?: React.CSSProperties
   fullWidth?: boolean
-  companyId?: string // Pour filtrer les jobs par company
+  companyId?: string
 }
 
-export const JobSelector: React.FC<JobSelectorProps> = ({ companyId, ...props }) => {
-  const endpoint = companyId ? `/companies/${companyId}/jobs` : '/jobs'
+export const JobSelector: React.FC<JobSelectorProps> = ({ ...props }) => {
+  const endpoint = getMiddleUrlDynamicCompanyResource('jobs')
 
   return (
     <GenericSelector

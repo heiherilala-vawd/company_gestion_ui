@@ -10,7 +10,7 @@ import {
 } from 'react-admin'
 
 const TravelExpenseFilters = [
-  <SearchInput source="departure_location" label="Départ" alwaysOn />,
+  <SearchInput source="departure_location" alwaysOn />,
   <TextInput source="arrival_location" label="Arrivée" />,
 ]
 

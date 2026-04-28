@@ -11,7 +11,6 @@ import {
   FunctionField,
 } from 'react-admin'
 import { useEffect } from 'react'
-import { useCompany } from '../companies/CompanyContext.tsx'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const JobFilters = [

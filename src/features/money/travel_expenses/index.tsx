@@ -1,8 +1,8 @@
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
-import TravelExpenseList from './TravelExpenseList'
-import TravelExpenseCreate from './TravelExpenseCreate'
-import TravelExpenseEdit from './TravelExpenseEdit'
-import TravelExpenseShow from './TravelExpenseShow'
+import TravelExpenseList from './TravelExpenseList.tsx'
+import TravelExpenseCreate from './TravelExpenseCreate.tsx'
+import TravelExpenseEdit from './TravelExpenseEdit.tsx'
+import TravelExpenseShow from './TravelExpenseShow.tsx'
 
 export default {
   list: TravelExpenseList,

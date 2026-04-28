@@ -10,7 +10,6 @@ import {
   DeleteButton,
   FunctionField,
 } from 'react-admin'
-import { useCompany } from '../../transversal/companies/CompanyContext'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const ExpenseFilters = [
@@ -19,8 +18,6 @@ const ExpenseFilters = [
 ]
 
 export default function ExpenseList() {
-  const { currentCompanyId } = useCompany()
-
   return (
     <List resource="expenses" filters={ExpenseFilters} perPage={25}>
       <ResponsiveDatagrid

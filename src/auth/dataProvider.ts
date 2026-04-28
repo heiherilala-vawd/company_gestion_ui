@@ -8,19 +8,23 @@ import {
   GetOneParams,
   UpdateParams,
 } from 'react-admin'
-import { isDynamicCompanyResource } from '../config/dynamicResources'
-
-// Configuration
-const API_URL = import.meta.env.VITE_API_URL ?? ''
+import {
+  getMiddleUrl,
+  getMiddleUrlDynamicCompanyResource,
+  getMiddleUrlDynamicExpensesResource,
+  getMiddleUrlDynamicJobResource,
+  getMiddleUrlDynamicTravelExpensesResource,
+  getMiddleUrlWithId,
+  getMiddleUrlWithQuery,
+  isDynamicCompanyResource,
+  isDynamicExpensesResource,
+  isDynamicJobResource,
+  isDynamicTravelExpensesResource,
+} from '../config/dynamicResources'
 
 // Fonction pour obtenir le token
 const getToken = (): string | null => {
   return localStorage.getItem('token')
-}
-
-// Fonction pour obtenir l'ID de la company
-const getCurrentCompanyId = (): string | null => {
-  return localStorage.getItem('currentCompanyId')
 }
 
 // Fonction fetch avec token
@@ -69,26 +73,16 @@ const buildQueryString = (params: Record<string, any>): string => {
 export const dataProvider = {
   // GET LIST
   getList: async (resource: string, params: GetListParams) => {
-    const { page, perPage } = params.pagination
-    const { field, order } = params.sort
+    const page = params.pagination?.page ?? 1
+    const perPage = params.pagination?.perPage ?? 10
+    const filters = { ...params.filter }
+    const query = new URLSearchParams({
+      page: page.toString(),
+      page_size: perPage.toString(),
+      ...filters,
+    }).toString()
 
-    const query = {
-      _sort: field,
-      _order: order.toLowerCase(),
-      _start: ((page - 1) * perPage).toString(),
-      _end: (page * perPage).toString(),
-      ...params.filter,
-    }
-
-    const queryString = buildQueryString(query)
-    let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}${queryString ? `?${queryString}` : ''}`
-    }
+    const url = getMiddleUrlWithQuery(resource, query)
 
     const response = await fetchWithToken<{ data: T[]; total?: number }>(url)
 
@@ -100,49 +94,21 @@ export const dataProvider = {
 
   // GET ONE
   getOne: async (resource: string, params: GetOneParams) => {
-    let url = `${API_URL}/${resource}/${params.id}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}/${params.id}`
-    }
+    const url = getMiddleUrlWithId(resource, params.id)
     const data = await fetchWithToken<T>(url)
-
     return { data }
   },
 
   // GET MANY
   getMany: async (resource: string, params: GetManyParams) => {
-    const query = { id: params.ids }
-    const queryString = buildQueryString(query)
-    let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}${queryString ? `?${queryString}` : ''}`
-    }
-    const response = await fetchWithToken<{ data: T[] }>(url)
-
-    return {
-      data: Array.isArray(response) ? response : response.data || [],
-    }
+    const promises = params.ids.map((id: string) => dataProvider.getOne(resource, { id }))
+    const results = await Promise.all(promises)
+    return { data: results.map((item) => item.data) }
   },
 
   // CREATE
   create: async (resource: string, params) => {
-    let url = `${API_URL}/${resource}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée. Veuillez sélectionner une company.')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}`
-    }
-
+    const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
       body: JSON.stringify([{ ...params.data }]),
@@ -153,15 +119,7 @@ export const dataProvider = {
 
   // UPDATE
   update: async (resource: string, params: UpdateParams<any>) => {
-    let url = `${API_URL}/${resource}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}`
-    }
-
+    const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
       body: JSON.stringify([{ ...params.data, id: params.id }]),
@@ -172,14 +130,7 @@ export const dataProvider = {
 
   // DELETE ONE
   deleteOne: async (resource: string, params: DeleteParams) => {
-    let url = `${API_URL}/${resource}/${params.id}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}/${params.id}`
-    }
+    const url = getMiddleUrlWithId(resource, params.id)
     await fetchWithToken(url, { method: 'DELETE' })
 
     return { data: { id: params.id } }
@@ -188,57 +139,22 @@ export const dataProvider = {
   // UPDATE MANY (optionnel)
   updateMany: async (
     resource: string,
-    params: { ids: Array<number | string>; data: any },
-  ): Promise<{ data: Array<number | string> }> => {
-    let url = `${API_URL}/${resource}`
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée')
-      }
-      url = `${API_URL}/companies/${companyId}/${resource}`
-    }
-
-    const promises = params.ids.map((id) =>
-      fetchWithToken(url, {
-        method: 'PUT',
-        body: JSON.stringify(params.data),
-      }),
-    )
-
-    await Promise.all(promises)
-    return { data: params.ids }
+    params: { ids: Array<string>; data: any },
+  ): Promise<{ data: Array<string> }> => {
+    const url = getMiddleUrl(resource)
+    const json = await fetchWithToken<T>(url, {
+      method: 'PUT',
+      body: JSON.stringify(...params.data),
+    })
+    return { data: json.map((item: any) => item.id) }
   },
 
   // DELETE MANY (optionnel)
   deleteMany: async (
     resource: string,
-    params: { ids: Array<number | string> },
-  ): Promise<{ data: Array<number | string> }> => {
-    if (isDynamicCompanyResource(resource)) {
-      const companyId = getCurrentCompanyId()
-
-      if (!companyId) {
-        throw new Error('Aucune company sélectionnée')
-      }
-
-      const promises = params.ids.map((id) =>
-        fetchWithToken(`${API_URL}/companies/${companyId}//${resource}/${id}`, {
-          method: 'DELETE',
-        }),
-      )
-      lo
-      await Promise.all(promises)
-      return { data: params.ids }
-    }
-
-    const promises = params.ids.map((id) =>
-      fetchWithToken(`${API_URL}/${resource}/${id}`, {
-        method: 'DELETE',
-      }),
-    )
-
+    params: { ids: Array<string> },
+  ): Promise<{ data: Array<string> }> => {
+    const promises = params.ids.map((id: string) => dataProvider.deleteOne(resource, { id }))
     await Promise.all(promises)
     return { data: params.ids }
   },

@@ -1,5 +1,7 @@
-const userId: string | null = localStorage.getItem('user_id')
+const API_URL = import.meta.env.VITE_API_URL ?? ''
 
+const userId: string | null = localStorage.getItem('user_id')
+//---------------------------------------------------COMPANY-------------------------------------------------------------
 /**
  * Liste des ressources qui nécessitent un companyId dans l'URL
  */
@@ -15,14 +17,17 @@ export const isDynamicCompanyResource = (resource: string): boolean => {
   return DYNAMIC_COMPANY_RESOURCES.includes(resource as DynamicCompanyResource)
 }
 
-export const getMiddleUrlDynamicCompanyResource = (resource: string, companyId: string): string => {
+export const getMiddleUrlDynamicCompanyResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
   return '/companies/' + companyId + '/' + resource
 }
+
+//---------------------------------------------------JOB-------------------------------------------------------------
 
 /**
  * Liste des ressources qui nécessitent un JOB dans l'URL
  */
-export const DYNAMIC_JOB_RESOURCES = ['expenses', 'incomes', 'equipment'] as const
+export const DYNAMIC_JOB_RESOURCES = ['expenses', 'incomes'] as const
 
 // Type pour les ressources dynamiques (TypeScript)
 export type DynamicJobResource = (typeof DYNAMIC_JOB_RESOURCES)[number]
@@ -33,13 +38,13 @@ export type DynamicJobResource = (typeof DYNAMIC_JOB_RESOURCES)[number]
 export const isDynamicJobResource = (resource: string): boolean => {
   return DYNAMIC_JOB_RESOURCES.includes(resource as DynamicJobResource)
 }
-export const getMiddleUrlDynamicJobResource = (
-  resource: string,
-  companyId: string,
-  jobId: string,
-): string => {
+export const getMiddleUrlDynamicJobResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
   return '/companies/' + companyId + '/job/' + jobId + '/user/' + userId + '/' + resource
 }
+
+//---------------------------------------------------EXPENSE-------------------------------------------------------------
 
 /**
  * Liste des ressources qui nécessitent un EXPENSES dans l'URL
@@ -61,12 +66,10 @@ export type DynamicExpensesResource = (typeof DYNAMIC_EXPENSES_RESOURCES)[number
 export const isDynamicExpensesResource = (resource: string): boolean => {
   return DYNAMIC_EXPENSES_RESOURCES.includes(resource as DynamicExpensesResource)
 }
-export const getMiddleUrlDynamicExpensesResource = (
-  resource: string,
-  companyId: string,
-  jobId: string,
-  expenseId: string,
-): string => {
+export const getMiddleUrlDynamicExpensesResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
+  const expenseId = localStorage.getItem('currentExpenseId')
   return (
     '/companies/' +
     companyId +
@@ -81,6 +84,7 @@ export const getMiddleUrlDynamicExpensesResource = (
   )
 }
 
+//---------------------------------------------------TRAVEL_EXPENSE-------------------------------------------------------------
 /**
  * Liste des ressources qui nécessitent un EXPENSES dans l'URL
  */
@@ -99,13 +103,11 @@ export type DynamicTravelExpensesResource = (typeof DYNAMIC_TRAVEL_EXPENSES_RESO
 export const isDynamicTravelExpensesResource = (resource: string): boolean => {
   return DYNAMIC_TRAVEL_EXPENSES_RESOURCES.includes(resource as DynamicTravelExpensesResource)
 }
-export const getMiddleUrlDynamicTravelExpensesResource = (
-  resource: string,
-  companyId: string,
-  jobId: string,
-  expenseId: string,
-  travelExpenseId: string,
-): string => {
+export const getMiddleUrlDynamicTravelExpensesResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
+  const expenseId = localStorage.getItem('currentExpenseId')
+  const travelExpenseId = localStorage.getItem('currentTravelExpenseId')
   return (
     '/companies/' +
     companyId +
@@ -120,4 +122,52 @@ export const getMiddleUrlDynamicTravelExpensesResource = (
     '/' +
     resource
   )
+}
+
+//----------------------------------------------------------------------------------------------------------
+
+export const getMiddleUrl = (resource: string): string => {
+  let url = `${API_URL}/${resource}`
+  if (isDynamicCompanyResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}`
+  } else if (isDynamicJobResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}`
+  } else if (isDynamicExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}`
+  }
+  return url
+}
+
+export const getMiddleUrlWithId = (resource: string, resourceId: string): string => {
+  let url = `${API_URL}/${resource}/${resourceId}`
+  if (isDynamicCompanyResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}/${resourceId}`
+  } else if (isDynamicJobResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}/${resourceId}`
+  } else if (isDynamicExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}/${resourceId}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}/${resourceId}`
+  }
+  return url
+}
+
+export const getMiddleUrlWithQuery = (
+  resource: string,
+  queryString,
+  filterDefaultValues: any,
+): string => {
+  let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
+  if (isDynamicCompanyResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicJobResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
+  }
+  return url
 }

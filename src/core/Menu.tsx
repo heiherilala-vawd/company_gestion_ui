@@ -78,12 +78,7 @@ const MenuRoot = () => {
     { name: 'purchases', label: '🛒 Achats', icon: ShoppingCartIcon, to: '/purchases' },
     { name: 'bank_fees', label: '🏦 Frais banca', icon: AccountBalanceIcon, to: '/bank_fees' },
     { name: 'other_expenses', label: '📝 Autres', icon: MoneyOffIcon, to: '/other_expenses' },
-    {
-      name: 'employer_payments',
-      label: '💰 Salaires',
-      icon: PaymentsIcon,
-      to: '/employer_payments',
-    },
+    { name: 'incomes', label: '💰 Salaires', icon: PaidIcon, to: '/incomes' },
   ]
 
   const incomes: ResourceItem[] = [
