@@ -36,6 +36,7 @@ import SimplePage from '../features/SimplePage'
 import { ExpenseSelector } from '../features/money/expenses/ExpenseSelector.tsx'
 import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
 import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm.tsx'
+import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm.tsx'
 
 const MyAppBar = () => (
   <RAppBar>
@@ -130,12 +131,7 @@ export const App = () => (
         >
           <CustomRoutes>
             <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
-            <Route path="/purchases_activity" element={<SimplePage title="Achats" />} />
-            <Route
-              path="/travel_equipment_activity"
-              element={<SimplePage title="Déplacements" />}
-            />
-            <Route path="/incomes_activity" element={<SimplePage title="Revenus" />} />
+            <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
             <Route path="/expenses_activity" element={<SimplePage title="Dépenses" />} />
             <Route
               path="/employer_payments_activity"

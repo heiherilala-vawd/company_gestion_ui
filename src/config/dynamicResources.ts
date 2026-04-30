@@ -27,7 +27,12 @@ export const getMiddleUrlDynamicCompanyResource = (resource: string): string => 
 /**
  * Liste des ressources qui nécessitent un JOB dans l'URL
  */
-export const DYNAMIC_JOB_RESOURCES = ['expenses', 'incomes', 'purchase_operations'] as const
+export const DYNAMIC_JOB_RESOURCES = [
+  'expenses',
+  'incomes',
+  'purchase_operations',
+  'travel_operations',
+] as const
 
 // Type pour les ressources dynamiques (TypeScript)
 export type DynamicJobResource = (typeof DYNAMIC_JOB_RESOURCES)[number]

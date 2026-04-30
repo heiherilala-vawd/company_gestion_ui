@@ -244,6 +244,7 @@ const PurchaseActivityForm = () => {
                       createUrlEnd={getMiddleUrl('materials')}
                       createForm={<MaterialForm isCreateForm />}
                       sx={{ flex: 1 }}
+                      extractionPath={'material_lines'}
                     />
                     <NumberInput source="quantity" label="Quantité" sx={{ flex: 1 }} />
                     <NumberInput source="unit_price" label="Prix Unitaire" sx={{ flex: 1 }} />

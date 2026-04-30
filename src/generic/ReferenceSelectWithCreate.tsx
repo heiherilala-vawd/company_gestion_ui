@@ -24,6 +24,7 @@ interface Props {
   createUrlEnd?: string
   createForm?: React.ReactNode
   onSuccess?: (newRecord: any) => void
+  extractionPath?: string // NOUVEAU : Chemin pour extraire les données
 }
 
 export default function ReferenceSelectWithCreate({
@@ -37,15 +38,32 @@ export default function ReferenceSelectWithCreate({
   createUrlEnd,
   createForm,
   onSuccess,
+  extractionPath,
 }: Props) {
+  const refresh = useRefresh() // Initialiser useRefresh
   const [dialogOpen, setDialogOpen] = useState(false)
   const methods = useForm()
   const dataProvider = useDataProvider()
   const notify = useNotify()
 
   const onSubmit = async (data: any) => {
-    data.id = data.newId
-    delete data.newId
+    // NOUVEAU : Extraire les données selon le chemin spécifié
+    let extractedData = data
+    if (extractionPath) {
+      // Si un chemin d'extraction est spécifié, on prend le premier élément du tableau
+      if (Array.isArray(data[extractionPath]) && data[extractionPath].length > 0) {
+        extractedData = data[extractionPath][0]
+        console.log('Données extraites:', extractedData)
+      } else {
+        console.warn(`Le chemin "${extractionPath}" n'existe pas ou n'est pas un tableau`)
+        notify('Erreur: Structure de données invalide', { type: 'error' })
+        return
+      }
+    }
+
+    extractedData.id = extractedData.newId
+    delete extractedData.newId
+
     const token = localStorage.getItem('token')
     try {
       if (createUrlEnd) {
@@ -55,13 +73,13 @@ export default function ReferenceSelectWithCreate({
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify([data]),
+          body: JSON.stringify([extractedData]),
         })
         if (!response.ok) throw new Error('Erreur')
         const newRecord = await response.json()
         if (onSuccess) onSuccess(newRecord)
       } else {
-        await dataProvider.create(reference, { data })
+        await dataProvider.create(reference, { extractedData })
       }
       notify('Création réussie', { type: 'success' })
       setDialogOpen(false)
