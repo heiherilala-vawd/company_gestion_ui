@@ -1,4 +1,5 @@
-import { Edit, SimpleForm, TextInput, ReferenceInput, SelectInput, required } from 'react-admin'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import WarehouseForm from './WarehouseForm'
 
 export default function WarehouseEdit() {
   return (
@@ -11,11 +12,7 @@ export default function WarehouseEdit() {
     >
       <SimpleForm>
         <TextInput source="id" readOnly />
-        <TextInput source="name" label="Nom" validate={[required()]} />
-        <TextInput source="description" label="Description" multiline rows={3} />
-        <ReferenceInput source="job_id" reference="jobs">
-          <SelectInput optionText="description" />
-        </ReferenceInput>
+        <WarehouseForm />
       </SimpleForm>
     </Edit>
   )

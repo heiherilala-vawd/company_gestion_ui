@@ -1,26 +1,7 @@
 // dataProvider.ts
 import { stringify } from 'query-string'
-import {
-  CreateParams,
-  DeleteParams,
-  GetListParams,
-  GetManyParams,
-  GetOneParams,
-  UpdateParams,
-} from 'react-admin'
-import {
-  getMiddleUrl,
-  getMiddleUrlDynamicCompanyResource,
-  getMiddleUrlDynamicExpensesResource,
-  getMiddleUrlDynamicJobResource,
-  getMiddleUrlDynamicTravelExpensesResource,
-  getMiddleUrlWithId,
-  getMiddleUrlWithQuery,
-  isDynamicCompanyResource,
-  isDynamicExpensesResource,
-  isDynamicJobResource,
-  isDynamicTravelExpensesResource,
-} from '../config/dynamicResources'
+import { DeleteParams, GetListParams, GetManyParams, GetOneParams, UpdateParams } from 'react-admin'
+import { getMiddleUrl, getMiddleUrlWithId, getMiddleUrlWithQuery } from '../config/dynamicResources'
 
 // Fonction pour obtenir le token
 const getToken = (): string | null => {

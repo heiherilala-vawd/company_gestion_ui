@@ -1,15 +1,11 @@
-import { Create, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
-import generateId from '../../../utili/utils.tsx'
+import { Create, SimpleForm } from 'react-admin'
+import WarehouseForm from './WarehouseForm'
+
 export default function WarehouseCreate() {
   return (
     <Create>
       <SimpleForm>
-        <TextInput source="id" readOnly defaultValue={generateId()} />
-        <TextInput source="name" label="Nom" />
-        <TextInput source="description" label="Description" multiline rows={3} />
-        <ReferenceInput source="job_id" reference="jobs" label="Chantier">
-          <SelectInput optionText="description" />
-        </ReferenceInput>
+        <WarehouseForm isCreate />
       </SimpleForm>
     </Create>
   )

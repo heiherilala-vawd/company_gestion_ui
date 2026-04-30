@@ -1,4 +1,5 @@
-import { Edit, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, SelectInput } from 'react-admin'
+import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate'
 
 export default function BankFeeEdit() {
   return (
@@ -11,9 +12,12 @@ export default function BankFeeEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <ReferenceInput source="expense_id" reference="expenses">
-          <SelectInput optionText="description" />
-        </ReferenceInput>
+        <ReferenceSelectWithCreate
+          source="expense_id"
+          reference="expenses"
+          label="Dépense"
+          optionText="description"
+        />
         <TextInput source="bank_name" label="Nom de la banque" />
         <TextInput source="description" label="Description" multiline />
       </SimpleForm>

@@ -1,12 +1,5 @@
-import {
-  Edit,
-  SimpleForm,
-  TextInput,
-  NumberInput,
-  BooleanInput,
-  ReferenceInput,
-  SelectInput,
-} from 'react-admin'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import PurchaseForm from './PurchaseForm'
 
 export default function PurchaseEdit() {
   return (
@@ -15,18 +8,12 @@ export default function PurchaseEdit() {
         ...data,
         expense_id: data.expense?.id,
         expense: undefined,
+        material: data.material?.id,
       })}
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <ReferenceInput source="expense_id" reference="expenses">
-          <SelectInput optionText="description" />
-        </ReferenceInput>
-        <TextInput source="supplier" label="Fournisseur" />
-        <TextInput source="equipment" label="Équipement" />
-        <TextInput source="material" label="Matériau" />
-        <NumberInput source="quantity" label="Quantité" />
-        <BooleanInput source="is_equipment" label="Est un équipement" />
+        <PurchaseForm />
       </SimpleForm>
     </Edit>
   )

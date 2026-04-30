@@ -1,25 +1,18 @@
-import {
-  Create,
-  SimpleForm,
-  TextInput,
-  NumberInput,
-  BooleanInput,
-  ReferenceInput,
-  SelectInput,
-} from 'react-admin'
+import { Create, SimpleForm } from 'react-admin'
+import PurchaseForm from './PurchaseForm'
 
 export default function PurchaseCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        expense_id: data.expense?.id,
+        expense: undefined,
+        material: data.material?.id,
+      })}
+    >
       <SimpleForm>
-        <ReferenceInput source="expense_id" label="Dépense" reference="expenses">
-          <SelectInput source="description" optionText="description" />
-        </ReferenceInput>
-        <TextInput source="supplier" label="Fournisseur" />
-        <TextInput source="equipment" label="Équipement" />
-        <TextInput source="material" label="Matériau" />
-        <NumberInput source="quantity" label="Quantité" />
-        <BooleanInput source="is_equipment" label="Est un équipement" />
+        <PurchaseForm isCreate />
       </SimpleForm>
     </Create>
   )

@@ -27,7 +27,7 @@ import { CompanySelector } from '../features/transversal/companies/CompanySelect
 import { AppBar as RAppBar, TitlePortal, CustomRoutes } from 'react-admin'
 import { Route } from 'react-router-dom'
 import MyMenuComponent from './Menu'
-import { Box } from '@mui/material'
+import { Box, createTheme } from '@mui/material'
 import { JobSelector } from '../features/transversal/jobs/JobSelector.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { appBarStyles } from '../style/components'
@@ -35,6 +35,7 @@ import HomePage from '../features/HomePage'
 import SimplePage from '../features/SimplePage'
 import { ExpenseSelector } from '../features/money/expenses/ExpenseSelector.tsx'
 import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
+import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm.tsx'
 
 const MyAppBar = () => (
   <RAppBar>
@@ -56,6 +57,67 @@ const myLayout = ({ children }: { children?: React.ReactNode }) => (
   </Layout>
 )
 
+export const myTheme = createTheme({
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          marginBottom: '16px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '8px',
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '8px',
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '10px',
+          textTransform: 'none',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: '12px',
+          margin: '16px',
+          '@media (max-width:600px)': {
+            margin: '8px',
+          },
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h6: {
+          '@media (max-width:600px)': {
+            fontSize: '1.1rem',
+          },
+        },
+      },
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
+})
+
 export const App = () => (
   <ExpenseProvider>
     <CompanyProvider>
@@ -67,6 +129,7 @@ export const App = () => (
           authProvider={authProvider}
         >
           <CustomRoutes>
+            <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
             <Route path="/purchases_activity" element={<SimplePage title="Achats" />} />
             <Route
               path="/travel_equipment_activity"

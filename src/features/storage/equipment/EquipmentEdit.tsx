@@ -1,12 +1,5 @@
-import {
-  Edit,
-  SimpleForm,
-  TextInput,
-  NumberInput,
-  ReferenceInput,
-  SelectInput,
-  required,
-} from 'react-admin'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import EquipmentForm from './EquipmentForm'
 
 export default function EquipmentEdit() {
   return (
@@ -19,13 +12,7 @@ export default function EquipmentEdit() {
     >
       <SimpleForm>
         <TextInput source="id" readOnly />
-        <TextInput source="name" label="Nom" validate={[required()]} />
-        <TextInput source="description" label="Description" multiline rows={3} />
-        <ReferenceInput source="warehouse_id" reference="warehouses" filter={{ _perPage: 1000 }}>
-          <SelectInput optionText="name" fullWidth />
-        </ReferenceInput>
-        <NumberInput source="floor_number" label="Étage" />
-        <NumberInput source="storage_number" label="Emplacement" />
+        <EquipmentForm />
       </SimpleForm>
     </Edit>
   )

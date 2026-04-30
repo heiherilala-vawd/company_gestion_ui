@@ -1,4 +1,5 @@
-import { Edit, SimpleForm, TextInput, NumberInput, ReferenceInput, SelectInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseEdit() {
   return (
@@ -11,12 +12,7 @@ export default function ExpenseEdit() {
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <ReferenceInput source="job_id" reference="jobs" filter={{ _perPage: 1000 }}>
-          <SelectInput optionText="description" fullWidth />
-        </ReferenceInput>
-        <NumberInput source="amount" label="Montant" />
-        <TextInput source="description" label="Description" multiline />
-        <TextInput source="comment" label="Commentaire" multiline />
+        <ExpenseForm />
       </SimpleForm>
     </Edit>
   )

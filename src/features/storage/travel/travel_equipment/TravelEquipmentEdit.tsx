@@ -1,4 +1,7 @@
-import { Edit, SimpleForm, TextInput, NumberInput, SelectInput, ReferenceInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput, NumberInput, SelectInput } from 'react-admin'
+import ReferenceSelectWithCreate from '../../../../generic/ReferenceSelectWithCreate'
+import { getMiddleUrl } from '../../../../config/dynamicResources.ts'
+import EquipmentForm from '../../equipment/EquipmentForm.tsx'
 
 export default function TravelEquipmentEdit() {
   return (
@@ -7,14 +10,25 @@ export default function TravelEquipmentEdit() {
         ...data,
         travel_id: data.travel?.id,
         travel: undefined,
+        material: data.material?.id,
       })}
     >
       <SimpleForm>
         <TextInput source="id" disabled />
-        <ReferenceInput source="travel_id" reference="travel_expenses">
-          <SelectInput optionText="title" />
-        </ReferenceInput>
-        <TextInput source="equipment" label="Équipement" />
+        <ReferenceSelectWithCreate
+          source="travel_id"
+          reference="travel_expenses"
+          label="Voyage"
+          optionText="title"
+        />
+        <ReferenceSelectWithCreate
+          source="equipment"
+          reference="equipment"
+          label="Équipement"
+          optionText="name"
+          createUrlEnd={getMiddleUrl('equipment')}
+          createForm={<EquipmentForm isCreateForm />}
+        />
         <NumberInput source="quantity" label="Quantité" />
         <SelectInput
           source="status"

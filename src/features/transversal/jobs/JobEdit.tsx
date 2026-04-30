@@ -1,4 +1,5 @@
-import { Edit, SimpleForm, TextInput, DateInput, SelectInput, ReferenceInput } from 'react-admin'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import JobForm from './JobForm'
 
 export default function JobEdit() {
   return (
@@ -11,22 +12,7 @@ export default function JobEdit() {
     >
       <SimpleForm>
         <TextInput source="id" readOnly />
-        <ReferenceInput source="company_id" reference="companies" filter={{ _perPage: 1000 }}>
-          <SelectInput optionText="name" fullWidth />
-        </ReferenceInput>
-        <TextInput source="description" label="Description" multiline rows={3} />
-        <DateInput source="contract_signature_date" label="Date signature contrat" />
-        <DateInput source="start_date" label="Date début" />
-        <DateInput source="end_date" label="Date fin" />
-        <SelectInput
-          source="status"
-          label="Statut"
-          choices={[
-            { id: 'PENDING_SIGNATURE', name: 'En attente signature' },
-            { id: 'IN_PROGRESS', name: 'En cours' },
-            { id: 'COMPLETED', name: 'Terminé' },
-          ]}
-        />
+        <JobForm />
       </SimpleForm>
     </Edit>
   )

@@ -1,13 +1,11 @@
-import { Create, SimpleForm, TextInput, ReferenceInput, SelectInput } from 'react-admin'
+import { Create, SimpleForm } from 'react-admin'
+import OtherExpenseForm from './OtherExpenseForm'
 
 export default function OtherExpenseCreate() {
   return (
     <Create>
       <SimpleForm>
-        <ReferenceInput source="expense_id" label="Dépense" reference="expenses">
-          <SelectInput source="description" optionText="description" />
-        </ReferenceInput>
-        <TextInput source="description" label="Description" multiline />
+        <OtherExpenseForm isCreate />
       </SimpleForm>
     </Create>
   )
