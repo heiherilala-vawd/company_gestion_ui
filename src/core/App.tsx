@@ -1,4 +1,4 @@
-import { Admin, Resource } from 'react-admin'
+import { Admin, Resource, Sidebar } from 'react-admin'
 import { Layout } from './Layout'
 import { dataProvider } from '../auth/dataProvider.ts'
 import authProvider from '../auth/authProvider.tsx'
@@ -42,7 +42,7 @@ const MyAppBar = () => (
   <RAppBar>
     <TitlePortal />
     <Box sx={{ flex: 1 }} />
-    <Box sx={appBarStyles.container}>
+    <Box sx={appBarStyles.container} data-testid="menu-item-selector-home">
       <CompanySelector />
       <JobSelector />
       <ExpenseSelector />
@@ -52,8 +52,19 @@ const MyAppBar = () => (
 
 const MyMenu = () => <MyMenuComponent />
 
+const MySidebar = (props) => (
+  <Sidebar
+    {...props}
+    sx={{
+      '& .MuiBackdrop-root': {
+        pointerEvents: 'none',
+      },
+    }}
+  />
+)
+
 const myLayout = ({ children }: { children?: React.ReactNode }) => (
-  <Layout appBar={MyAppBar} menu={MyMenu}>
+  <Layout appBar={MyAppBar} menu={MyMenu} sidebar={MySidebar}>
     {children}
   </Layout>
 )

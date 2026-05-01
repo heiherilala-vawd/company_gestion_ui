@@ -76,7 +76,7 @@ const MenuRoot = () => {
       to: '/travel_expenses',
     },
     { name: 'purchases', label: '🛒 Achats', icon: ShoppingCartIcon, to: '/purchases' },
-    { name: 'bank_fees', label: '🏦 Frais banca', icon: AccountBalanceIcon, to: '/bank_fees' },
+    { name: 'bank_fees', label: '🏦 Frais bancaire', icon: AccountBalanceIcon, to: '/bank_fees' },
     { name: 'other_expenses', label: '📝 Autres', icon: MoneyOffIcon, to: '/other_expenses' },
     { name: 'incomes', label: '💰 Salaires', icon: PaidIcon, to: '/incomes' },
   ]
@@ -101,7 +101,7 @@ const MenuRoot = () => {
     ))
 
   return (
-    <Box sx={commonStyles.container}>
+    <Box sx={commonStyles.container} data-testid="menu-item-home">
       <Typography variant="caption" sx={{ ...menuStyles.section, color: 'primary.main' }}>
         ⚡ Transversal
       </Typography>
