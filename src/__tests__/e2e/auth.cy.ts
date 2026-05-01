@@ -1,8 +1,15 @@
 // Tests E2E d'authentification avec mocks
-// Les mocks sont définis directement ici pour éviter les erreurs de compilation
+// Utilise les helpers de src/__tests__/mocks/responses/auth-api.ts
 
-import { authResponseMock, loginRequestMock, whoamiResponseMock } from '../mocks/responses'
+import {
+  mockSuccessResponse,
+  mockErrorResponse,
+  loginRequestMock,
+  authResponseMock,
+  whoamiResponseMock,
+} from '../mocks/responses/auth-api'
 
+const failedLoginResponse = mockErrorResponse('NotAuthorizedException', 'Invalid credentials', 401)
 
 describe('E2E: Authentication', () => {
   beforeEach(() => {
@@ -12,11 +19,7 @@ describe('E2E: Authentication', () => {
   })
 
   it('remains on login page if login fails with wrong credentials', () => {
-    // Intercepter avec réponse d'échec
-    cy.intercept('POST', '**/auth/login', {
-      statusCode: 401,
-      body: { message: 'Invalid credentials' },
-    }).as('failedLogin')
+    cy.intercept('POST', '**/auth/login', failedLoginResponse).as('failedLogin')
 
     cy.url().should('include', '/login')
 
@@ -31,21 +34,16 @@ describe('E2E: Authentication', () => {
   })
 
   it('redirects to home page after successful login', () => {
-    // Intercepter avec le mock de succès
-    cy.intercept('POST', '**/auth/login', {
-      statusCode: 200,
-      body: authResponseMock,
-    }).as('successfulLogin')
-
-    cy.intercept('GET', '**/auth/whoami', {
-      statusCode: 200,
-      body: whoamiResponseMock,
-    }).as('whoamiRequest')
+    cy.intercept('POST', '**/auth/login', mockSuccessResponse(authResponseMock)).as(
+      'successfulLogin',
+    )
+    cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(whoamiResponseMock)).as(
+      'whoamiRequest',
+    )
 
     cy.visit('/', { failOnStatusCode: false })
     cy.url().should('include', '/login')
 
-    // Utiliser les données du mock
     cy.get('input[name="username"]').type(<string>loginRequestMock.email)
     cy.get('input[name="password"]').type(<string>loginRequestMock.password)
     cy.get('button[type="submit"]').click()
@@ -66,16 +64,10 @@ describe('E2E: Authentication', () => {
   })
 
   it('can logout and should be redirected to login page', () => {
-    // Login avec les mocks
-    cy.intercept('POST', '**/auth/login', {
-      statusCode: 200,
-      body: authResponseMock,
-    }).as('loginRequest')
-
-    cy.intercept('GET', '**/auth/whoami', {
-      statusCode: 200,
-      body: whoamiResponseMock,
-    }).as('whoamiRequest')
+    cy.intercept('POST', '**/auth/login', mockSuccessResponse(authResponseMock)).as('loginRequest')
+    cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(whoamiResponseMock)).as(
+      'whoamiRequest',
+    )
 
     cy.visit('/', { failOnStatusCode: false })
     cy.get('input[name="username"]').type(<string>loginRequestMock.email)
