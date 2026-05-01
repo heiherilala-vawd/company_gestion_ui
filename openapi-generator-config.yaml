@@ -1,0 +1,16 @@
+# Configuration pour OpenAPI Generator
+generatorName: typescript-fetch
+inputSpec: ./api.yml
+outputDir: ./src/gen-ts
+additionalProperties:
+  npmName: api-client
+  npmVersion: 1.0.0
+  modelPackage: models
+  apiPackage: api
+  withSeparateModelsAndApi: true
+  typescriptThreePlus: true
+  supportsES6: true
+  generateConstructor: false
+  withSeparateModelsAndApi: true
+  modelPropertyNaming: original
+  enumPropertyNaming: original
