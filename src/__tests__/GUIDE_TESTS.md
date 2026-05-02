@@ -392,7 +392,9 @@ Le composant génère automatiquement un `data-testid` : `'input-' + reference +
 
 ### Dans le test - Cliquer et sélectionner
 
-```typescript
+**Méthode 1 : Avec `data-testid` (généré automatiquement)**
+
+```types
 // 1. Cliquer sur le select pour ouvrir le dropdown
 cy.get('[data-testid="input-companies-id"]').click()
 
@@ -404,6 +406,59 @@ cy.contains(<string>company1Mock.name).click({ force: true })
 
 // 4. Attendre le chargement de la ressource liée si nécessaire
 cy.wait('@getCompany')
+```
+
+**Méthode 2 : Avec `#menu-` + `source` (recommandé pour `ReferenceSelectWithCreate`)**
+
+Le `data-testid` généré suit le pattern : `'input-' + reference + '-id'`
+Pour sélectionner une option, utilisez toujours `#menu-` + la valeur de `source` :
+
+```types
+// Pour source="company_id" → #menu-company_id
+cy.get('#menu-company_id')
+  .contains(<string>company1Mock.name)
+  .click({ force: true })
+
+// Pour source="job_id" → #menu-job_id
+cy.get('#menu-job_id')
+  .contains(<string>job1Mock.description)
+  .click({ force: true })
+
+// Exemple complet avec ReferenceSelectWithCreate
+cy.get('[data-testid="input-jobs-id"]').click()  // Ouvrir le dropdown
+cy.wait('@getJobsSelection')                      // Attendre le chargement
+cy.get('#menu-job_id')                          // Cibler le menu par le source
+  .contains(<string>job1Mock.description)        // Texte visible de l'option
+  .click({ force: true })                        // Sélectionner
+cy.wait('@getJob')                               // Attendre la ressource liée si besoin
+```
+
+### Correspondance `source` → `#menu-{source}`
+
+| `source` dans le formulaire | Sélecteur Cypress            |
+| --------------------------- | ---------------------------- |
+| `source="company_id"`       | `cy.get('#menu-company_id')` |
+| `source="job_id"`           | `cy.get('#menu-job_id')`     |
+| `source="user_id"`          | `cy.get('#menu-user_id')`    |
+| `source="expense_id"`       | `cy.get('#menu-expense_id')` |
+
+### Remarque importante
+
+Pour sélectionner une option dans un `ReferenceSelectWithCreate` :
+
+- Utilisez **toujours** `cy.get('#menu-{source}')` suivi de `.contains()` pour cibler l'option par son texte visible
+- Le `data-testid="input-{reference}-id"` sert à **ouvrir** le dropdown, pas à sélectionner l'option
+
+```typescript
+// ✅ BON : Ouvrir avec data-testid, sélectionner avec #menu-source
+cy.get('[data-testid="input-jobs-id"]').click() // Ouvrir le dropdown
+cy.wait('@getJobsSelection') // Attendre le chargement
+cy.get('#menu-job_id') // Cibler par le source
+  .contains(<string>job1Mock.description) // Texte visible
+  .click({ force: true }) // Sélectionner
+
+// ❌ INCORRECT : Utiliser data-testid pour la sélection
+cy.contains(<string>job1Mock.description).click() // Peut échouer si plusieurs éléments correspondent
 ```
 
 ### Pour le menu déroulant de statut (SelectInput simple)
@@ -712,15 +767,19 @@ describe('E2E: ResourceName', () => {
 Après avoir créé un nouveau test, suivez cette procédure systématique :
 
 ### Étape 1 : Lancer le test en mode UI
+
 ```bash
 npm run dev &  # Terminal 1 : démarrer le serveur de dev
 npm run cypress:open  # Terminal 2 : ouvrir Cypress UI
 ```
+
 - Sélectionnez votre fichier de test dans l'interface Cypress
 - Observez l'exécution en temps réel
 
 ### Étape 2 : Analyser les erreurs
+
 Si le test échoue :
+
 - Lisez le message d'erreur dans Cypress
 - Identifiez la cause (selector introuvable, intercept non déclenché, assertion échouée, etc.)
 - Vérifiez dans l'ordre :
@@ -731,15 +790,18 @@ Si le test échoue :
   5. Les mocks contiennent-ils toutes les propriétés requises ?
 
 ### Étape 3 : Corriger le test
+
 - Modifiez le code du test et/ou les mocks
 - Sauvegardez le fichier (Cypress recharge automatiquement)
 - Relancez le test dans Cypress UI
 
 ### Étape 4 : Répéter jusqu'à succès
+
 - Répétez les étapes 2 et 3 jusqu'à ce que **tous** les `it()` du fichier passent
 - Vérifiez que les tests sont indépendants (réexécutez-les plusieurs fois)
 
 ### Étape 5 : Validation finale en mode headless
+
 ```bash
 # S'assurer que le serveur de dev tourne
 npm run dev
@@ -752,6 +814,7 @@ npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__test
 ```
 
 ### Étape 6 : Vérification complète du projet
+
 ```bash
 # Dans l'ordre (voir AGENTS.md)
 npm run lint          # Correction automatique des erreurs ESLint
@@ -760,6 +823,7 @@ npm run cypress:run   # Tests E2E finaux
 ```
 
 ### Résumé du cycle
+
 ```
 Écrire le test → Lancer Cypress UI → Échec ? → Corriger → Relancer → Succès ? → Test suivant
                                                               ↓

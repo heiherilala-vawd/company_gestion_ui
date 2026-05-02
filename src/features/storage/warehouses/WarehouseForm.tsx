@@ -10,8 +10,14 @@ export default function WarehouseForm({ isCreate = false, isCreateForm = false }
     <>
       {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      <TextInput source="name" label="Nom" />
-      <TextInput source="description" label="Description" multiline rows={3} />
+      <TextInput source="name" label="Nom" data-testid="input-name" />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        data-testid="input-description"
+      />
       <ReferenceSelectWithCreate
         source="job_id"
         reference="jobs"

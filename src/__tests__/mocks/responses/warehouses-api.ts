@@ -90,3 +90,41 @@ export const crupdateWarehousesMock: CrupdateWarehouse[] = [
     comment: 'New warehouse creation',
   },
 ]
+
+export const createOrUpdateWarehouses = (warehouses: CrupdateWarehouse[]): Warehouse[] => {
+  return warehouses.map((warehouse) => ({
+    ...warehouse,
+    id: warehouse.id || `wh_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    job: {
+      id: warehouse.job_id || job1Mock.id,
+      company_id: warehouse.job_id === job2Mock.id ? job2Mock.company.id : job1Mock.company.id,
+      description: warehouse.job_id === job2Mock.id ? job2Mock.description : job1Mock.description,
+      contract_signature_date:
+        warehouse.job_id === job2Mock.id
+          ? job2Mock.contract_signature_date
+          : job1Mock.contract_signature_date,
+      start_date: warehouse.job_id === job2Mock.id ? job2Mock.start_date : job1Mock.start_date,
+      end_date: warehouse.job_id === job2Mock.id ? job2Mock.end_date : job1Mock.end_date,
+      status: warehouse.job_id === job2Mock.id ? job2Mock.status : job1Mock.status,
+      comment: warehouse.job_id === job2Mock.id ? job2Mock.comment : job1Mock.comment,
+    },
+    created_at: warehouse.id ? warehouse1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

@@ -54,42 +54,110 @@ const MenuRoot = () => {
       to: '/companies',
       testId: 'menu-companies',
     },
-    { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users' },
+    { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
   ]
 
   const storageMain: ResourceItem[] = [
-    { name: 'warehouses', label: '🏭 Warehouse', icon: WarehouseIcon, to: '/warehouses' },
-    { name: 'equipment', label: '🔧 Equipments', icon: BuildIcon, to: '/equipment' },
-    { name: 'materials', label: '📦 Materials', icon: CategoryIcon, to: '/materials' },
+    {
+      name: 'warehouses',
+      label: '🏭 Warehouse',
+      icon: WarehouseIcon,
+      to: '/warehouses',
+      testId: 'menu-warehouses',
+    },
+    {
+      name: 'equipment',
+      label: '🔧 Equipments',
+      icon: BuildIcon,
+      to: '/equipment',
+      testId: 'menu-equipments',
+    },
+    {
+      name: 'materials',
+      label: '📦 Materials',
+      icon: CategoryIcon,
+      to: '/materials',
+      testId: 'menu-materials',
+    },
   ]
 
   const storageSub: ResourceItem[] = [
-    { name: 'travel_people', label: '👷 Personnel', icon: PeopleAltIcon, to: '/travel_people' },
+    {
+      name: 'travel_people',
+      label: '👷 Personnel',
+      icon: PeopleAltIcon,
+      to: '/travel_people',
+      testId: 'menu-travel-peoples',
+    },
     {
       name: 'travel_materials',
       label: '🚚 Matériaux',
       icon: CategoryIcon,
       to: '/travel_materials',
+      testId: 'menu-travel-materials',
     },
-    { name: 'travel_equipment', label: '🚜 Équipement', icon: BuildIcon, to: '/travel_equipment' },
+    {
+      name: 'travel_equipment',
+      label: '🚜 Équipement',
+      icon: BuildIcon,
+      to: '/travel_equipment',
+      testId: 'menu-travel-equipments',
+    },
   ]
 
   const expenses: ResourceItem[] = [
-    { name: 'expenses', label: '💸 Dépenses', icon: MoneyOffIcon, to: '/expenses' },
+    {
+      name: 'expenses',
+      label: '💸 Dépenses',
+      icon: MoneyOffIcon,
+      to: '/expenses',
+      testId: 'menu-expenses',
+    },
     {
       name: 'travel_expenses',
       label: '✈️ Déplacements',
       icon: FlightTakeoffIcon,
       to: '/travel_expenses',
+      testId: 'menu-travel-expenses',
     },
-    { name: 'purchases', label: '🛒 Achats', icon: ShoppingCartIcon, to: '/purchases' },
-    { name: 'bank_fees', label: '🏦 Frais bancaire', icon: AccountBalanceIcon, to: '/bank_fees' },
-    { name: 'other_expenses', label: '📝 Autres', icon: MoneyOffIcon, to: '/other_expenses' },
-    { name: 'incomes', label: '💰 Salaires', icon: PaidIcon, to: '/incomes' },
+    {
+      name: 'purchases',
+      label: '🛒 Achats',
+      icon: ShoppingCartIcon,
+      to: '/purchases',
+      testId: 'menu-purchases',
+    },
+    {
+      name: 'bank_fees',
+      label: '🏦 Frais bancaire',
+      icon: AccountBalanceIcon,
+      to: '/bank_fees',
+      testId: 'menu-bank-fees',
+    },
+    {
+      name: 'other_expenses',
+      label: '📝 Autres',
+      icon: MoneyOffIcon,
+      to: '/other_expenses',
+      testId: 'menu-other-expenses',
+    },
+    {
+      name: 'incomes',
+      label: '💰 Salaires',
+      icon: PaidIcon,
+      to: '/incomes',
+      testId: 'menu-incomes',
+    },
   ]
 
   const incomes: ResourceItem[] = [
-    { name: 'incomes', label: '💵 Revenus', icon: PaidIcon, to: '/incomes' },
+    {
+      name: 'incomes',
+      label: '💵 Revenus',
+      icon: PaidIcon,
+      to: '/incomes',
+      testId: 'menu-incomes',
+    },
   ]
 
   const renderItems = (items: ResourceItem[], nested = false) =>
