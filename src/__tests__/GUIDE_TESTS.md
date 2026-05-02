@@ -707,6 +707,69 @@ describe('E2E: ResourceName', () => {
 
 ---
 
+## Processus de création et validation des tests
+
+Après avoir créé un nouveau test, suivez cette procédure systématique :
+
+### Étape 1 : Lancer le test en mode UI
+```bash
+npm run dev &  # Terminal 1 : démarrer le serveur de dev
+npm run cypress:open  # Terminal 2 : ouvrir Cypress UI
+```
+- Sélectionnez votre fichier de test dans l'interface Cypress
+- Observez l'exécution en temps réel
+
+### Étape 2 : Analyser les erreurs
+Si le test échoue :
+- Lisez le message d'erreur dans Cypress
+- Identifiez la cause (selector introuvable, intercept non déclenché, assertion échouée, etc.)
+- Vérifiez dans l'ordre :
+  1. Les `data-testid` sont-ils corrects dans le composant React ?
+  2. Les `cy.intercept` correspondent-ils bien aux URLs appelées ?
+  3. Les `cy.wait()` utilisent-ils les bons alias ?
+  4. Le formulaire est-il bien rempli (attendre que les champs soient visibles) ?
+  5. Les mocks contiennent-ils toutes les propriétés requises ?
+
+### Étape 3 : Corriger le test
+- Modifiez le code du test et/ou les mocks
+- Sauvegardez le fichier (Cypress recharge automatiquement)
+- Relancez le test dans Cypress UI
+
+### Étape 4 : Répéter jusqu'à succès
+- Répétez les étapes 2 et 3 jusqu'à ce que **tous** les `it()` du fichier passent
+- Vérifiez que les tests sont indépendants (réexécutez-les plusieurs fois)
+
+### Étape 5 : Validation finale en mode headless
+```bash
+# S'assurer que le serveur de dev tourne
+npm run dev
+
+# Lancer tous les tests en mode headless
+npm run cypress:run -- --config-file src/__tests__/cypress.config.ts
+
+# Ou un test spécifique
+npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__tests__/e2e/votre-test.cy.ts"
+```
+
+### Étape 6 : Vérification complète du projet
+```bash
+# Dans l'ordre (voir AGENTS.md)
+npm run lint          # Correction automatique des erreurs ESLint
+npm run type-check    # Vérification TypeScript
+npm run cypress:run   # Tests E2E finaux
+```
+
+### Résumé du cycle
+```
+Écrire le test → Lancer Cypress UI → Échec ? → Corriger → Relancer → Succès ? → Test suivant
+                                                              ↓
+                                                              Répéter
+```
+
+**Important** : Ne passez pas au test suivant tant que le précédent ne passe pas à 100%.
+
+---
+
 ## Checklist avant d'écrire un test
 
 - [ ] Les types générés sont importés depuis `src/gen-ts/`
