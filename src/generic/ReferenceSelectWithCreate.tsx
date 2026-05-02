@@ -92,7 +92,8 @@ export default function ReferenceSelectWithCreate({
 
   return (
     <>
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" gap={1} data-testid={'input-' + reference + '-id'}>
+        {/*'input-' + label + '-id'*/}
         <Box flex={1}>
           <ReferenceInput
             source={source}

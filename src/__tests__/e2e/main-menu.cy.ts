@@ -98,12 +98,12 @@ describe('E2E: Main Menu and Selectors', () => {
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {
-        cy.contains(companiesMock[0].name).should('be.visible')
+        cy.contains(<string>companiesMock[0].name).should('be.visible')
       })
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {
-        cy.contains(companiesMock[1].name).should('be.visible')
+        cy.contains(<string>companiesMock[1].name).should('be.visible')
       })
   })
 
@@ -116,7 +116,7 @@ describe('E2E: Main Menu and Selectors', () => {
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {
-        cy.contains(companiesMock[0].name).click()
+        cy.contains(<string>companiesMock[0].name).click()
       })
 
     // Cliquer sur le sélecteur de job (deuxième select)
@@ -127,13 +127,13 @@ describe('E2E: Main Menu and Selectors', () => {
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {
-        cy.contains(jobsMock[0].description).should('be.visible')
+        cy.contains(<string>jobsMock[0].description).should('be.visible')
       })
 
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {
-        cy.contains(jobsMock[0].description).should('be.visible')
+        cy.contains(<string>jobsMock[0].description).should('be.visible')
       })
   })
 

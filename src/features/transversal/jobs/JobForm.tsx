@@ -18,14 +18,26 @@ export default function JobForm({ isCreate = false, isCreateForm = false }) {
         createUrlEnd={getMiddleUrl('companies')}
         createForm={<CompanyForm isCreateForm />}
       />
-      <TextInput source="description" label="Description" multiline rows={3} />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        data-testid="input-description"
+      />
       <DateInput
         source="contract_signature_date"
         label="Date signature contrat"
         defaultValue={new Date()}
+        data-testid="input-contract-signature-date"
       />
-      <DateInput source="start_date" label="Date début" defaultValue={new Date()} />
-      <DateInput source="end_date" label="Date fin" />
+      <DateInput
+        source="start_date"
+        label="Date début"
+        defaultValue={new Date()}
+        data-testid="input-start-date"
+      />
+      <DateInput source="end_date" label="Date fin" data-testid="input-end-date" />
       <SelectInput
         source="status"
         label="Statut"
@@ -35,6 +47,7 @@ export default function JobForm({ isCreate = false, isCreateForm = false }) {
           { id: 'COMPLETED', name: 'Terminé' },
         ]}
         defaultValue="PENDING_SIGNATURE"
+        data-testid="input-status"
       />
     </>
   )

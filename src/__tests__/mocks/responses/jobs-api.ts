@@ -134,3 +134,38 @@ export const crupdateJobsMock: CrupdateJob[] = [
     comment: 'New project creation',
   },
 ]
+
+export const createOrUpdateJobs = (jobs: CrupdateJob[]): Job[] => {
+  return jobs.map((job) => ({
+    ...job,
+    id: job.id || `job_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    company: {
+      id: job.company_id || company1Mock.id,
+      name: job.company_id === company2Mock.id ? company2Mock.name : company1Mock.name,
+      rib: job.company_id === company2Mock.id ? company2Mock.rib : company1Mock.rib,
+      description:
+        job.company_id === company2Mock.id ? company2Mock.description : company1Mock.description,
+      company_type:
+        job.company_id === company2Mock.id ? company2Mock.company_type : company1Mock.company_type,
+      comment: job.company_id === company2Mock.id ? company2Mock.comment : company1Mock.comment,
+    },
+    created_at: job.id ? job1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

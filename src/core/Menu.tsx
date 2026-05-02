@@ -46,7 +46,7 @@ const MenuRoot = () => {
 
   const transversalItems: ResourceItem[] = [
     { name: 'home', label: '🏠 Home', icon: HomeIcon, to: '/' },
-    { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs' },
+    { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
       name: 'companies',
       label: '🏢 Companies',

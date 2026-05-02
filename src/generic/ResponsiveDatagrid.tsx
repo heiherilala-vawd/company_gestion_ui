@@ -46,7 +46,7 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
   }
 
   return (
-    <Datagrid {...props} sx={datagridStyles.container}>
+    <Datagrid {...props} sx={datagridStyles.container} rowClick="show">
       {getVisibleFields()}
     </Datagrid>
   )

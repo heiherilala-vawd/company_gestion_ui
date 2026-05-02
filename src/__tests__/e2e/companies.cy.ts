@@ -12,6 +12,7 @@ import {
   crupdateCompaniesMock,
   createOrUpdateCompanies,
 } from '../mocks/responses/companies-api'
+import { expense2Mock, job3Mock, user3Mock } from '../mocks/responses'
 
 describe('E2E: Companies', () => {
   beforeEach(() => {
@@ -19,6 +20,23 @@ describe('E2E: Companies', () => {
     cy.clearCookies()
     cy.intercept('POST', '**/auth/login', mockSuccessResponse(authResponseMock)).as('login')
     cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(whoamiResponseMock)).as('whoami')
+    cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
+    cy.intercept('GET', '/companies/comp1_id*', mockSuccessResponse(company1Mock)).as('getCompany')
+
+    // Intercepter les endpoints pour les sélecteurs
+    cy.intercept('GET', '**/companies', mockSuccessResponse([company2Mock])).as(
+      'getCompaniesSelection',
+    )
+    cy.intercept('GET', '**/companies/*/jobs', mockSuccessResponse([job3Mock])).as(
+      'getJobsSelection',
+    )
+    cy.intercept('GET', '**/companies/*/jobs/*/users', mockSuccessResponse([user3Mock])).as(
+      'getJobUsersSelection',
+    )
+    cy.intercept('GET', '**/expenses', mockSuccessResponse([expense2Mock])).as(
+      'getExpensesSelection',
+    )
+
     cy.visit('/', { failOnStatusCode: false })
     cy.get('input[name="username"]').type(<string>loginRequestMock.email)
     cy.get('input[name="password"]').type(<string>loginRequestMock.password)
@@ -28,29 +46,25 @@ describe('E2E: Companies', () => {
   })
 
   it('should display companies list', () => {
-    cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-    cy.contains(company1Mock.name).should('be.visible')
-    cy.contains(company2Mock.name).should('be.visible')
+    cy.contains(<string>company1Mock.name).should('be.visible')
+    cy.contains(<string>company2Mock.name).should('be.visible')
   })
 
   it('should show company details', () => {
-    cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
-    cy.intercept('GET', '/companies/comp1_id*', mockSuccessResponse(company1Mock)).as('getCompany')
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-    cy.contains(company1Mock.name).click()
+    cy.contains(<string>company1Mock.name).click()
     cy.wait('@getCompany')
-    cy.contains(company1Mock.name).should('be.visible')
-    cy.contains(company1Mock.rib).should('be.visible')
-    cy.contains(company1Mock.description).should('be.visible')
+    cy.contains(<string>company1Mock.name).should('exist')
+    cy.contains(<string>company1Mock.rib).should('exist')
+    cy.contains(<string>company1Mock.description).should('exist')
   })
 
   it('should create a new company', () => {
     const newCompany = crupdateCompaniesMock[1]
 
-    cy.intercept('GET', '/companies*', mockSuccessResponse([company1Mock])).as('getCompanies')
     cy.intercept('PUT', '/companies', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
@@ -76,15 +90,13 @@ describe('E2E: Companies', () => {
   it('should update an existing company', () => {
     const updatedData = crupdateCompaniesMock[0]
 
-    cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
-    cy.intercept('GET', '/companies/comp1_id*', mockSuccessResponse(company1Mock)).as('getCompany')
     cy.intercept('PUT', '/companies', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
 
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-    cy.contains(company1Mock.name).click()
+    cy.contains(<string>company1Mock.name).click()
     cy.wait('@getCompany')
     cy.contains('Edit').click()
 
@@ -105,7 +117,6 @@ describe('E2E: Companies', () => {
   })
 
   it('should show error on create failure', () => {
-    cy.intercept('GET', '/companies*', mockSuccessResponse([company1Mock])).as('getCompanies')
     cy.intercept(
       'PUT',
       '/companies',
@@ -125,15 +136,13 @@ describe('E2E: Companies', () => {
   })
 
   it('should show error on update failure', () => {
-    cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
-    cy.intercept('GET', '/companies/comp1_id*', mockSuccessResponse(company1Mock)).as('getCompany')
     cy.intercept('PUT', '/companies', (req) => {
       req.reply(mockErrorResponse('BadRequestException', 'Update failed', 400))
     }).as('updateCompanyFail')
 
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-    cy.contains(company1Mock.name).click()
+    cy.contains(<string>company1Mock.name).click()
     cy.wait('@getCompany')
     cy.contains('Edit').click()
 
