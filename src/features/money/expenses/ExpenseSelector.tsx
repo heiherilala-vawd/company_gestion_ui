@@ -17,7 +17,7 @@ export const ExpenseSelector: React.FC<ExpenseSelectorProps> = ({ ...props }) =>
       entityType="expense"
       apiEndpoint={endpoint}
       label="expense"
-      labelPrefix="expense: "
+      labelPrefix="Expense: "
       {...props}
       useContext={useExpense}
     />

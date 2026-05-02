@@ -55,8 +55,11 @@ const MyMenu = () => <MyMenuComponent />
 const MySidebar = (props) => (
   <Sidebar
     {...props}
+    DrawerProps={{
+      keepMounted: false, // 🔥 IMPORTANT
+    }}
     sx={{
-      '& .MuiBackdrop-root': {
+      '& .MuiModal-root': {
         pointerEvents: 'none',
       },
     }}

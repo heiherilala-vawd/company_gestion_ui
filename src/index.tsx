@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './index.css'
 import { App } from './core/App'
 
 // Marqueur pour Cypress - signale que l'app est chargée
