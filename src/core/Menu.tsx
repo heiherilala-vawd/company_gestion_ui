@@ -34,6 +34,7 @@ interface ResourceItem {
   label: string
   icon: React.ElementType
   to: string
+  testId?: string
 }
 
 const MenuRoot = () => {
@@ -46,7 +47,13 @@ const MenuRoot = () => {
   const transversalItems: ResourceItem[] = [
     { name: 'home', label: '🏠 Home', icon: HomeIcon, to: '/' },
     { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs' },
-    { name: 'companies', label: '🏢 Companies', icon: BusinessIcon, to: '/companies' },
+    {
+      name: 'companies',
+      label: '🏢 Companies',
+      icon: BusinessIcon,
+      to: '/companies',
+      testId: 'menu-companies',
+    },
     { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users' },
   ]
 
@@ -92,6 +99,7 @@ const MenuRoot = () => {
         component={Link}
         to={item.to}
         sx={nested ? menuStyles.nested : menuStyles.item}
+        data-testid={item.testId}
       >
         <ListItemIcon sx={{ minWidth: 40 }}>
           <item.icon fontSize="small" />

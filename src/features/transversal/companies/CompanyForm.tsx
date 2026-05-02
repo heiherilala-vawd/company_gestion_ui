@@ -7,9 +7,16 @@ export default function CompanyForm({ isCreate = false, isCreateForm = false }) 
     <>
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
-      <TextInput source="name" label="Nom" validate={[required()]} />
-      <TextInput source="rib" label="RIB" />
-      <TextInput source="description" label="Description" multiline rows={3} />
+      <TextInput source="name" label="Nom" validate={[required()]} data-testid="input-name" />
+      <TextInput source="rib" label="RIB" data-testid="input-rib" />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        data-testid="input-description"
+      />
+      <TextInput source="comment" label="Commentaire" data-testid="input-comment" />
       <SelectInput
         source="company_type"
         label="Type"
@@ -18,6 +25,7 @@ export default function CompanyForm({ isCreate = false, isCreateForm = false }) 
           { id: 'HOTEL', name: 'Hôtel' },
         ]}
         validate={[required()]}
+        data-testid="input-company-type"
       />
     </>
   )

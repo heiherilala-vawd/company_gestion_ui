@@ -75,3 +75,30 @@ export const crupdateCompaniesMock: CrupdateCompany[] = [
     comment: 'New company creation',
   },
 ]
+
+export const createOrUpdateCompanies = (companies: CrupdateCompany[]): Company[] => {
+  return companies.map((company) => ({
+    ...company,
+    id: company.id || `comp_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    created_at: company.id ? company1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: company.id
+      ? company1Mock.created_by
+      : {
+          id: user1Mock.id,
+          role: user1Mock.role,
+          first_name: user1Mock.first_name,
+          last_name: user1Mock.last_name,
+          sex: user1Mock.sex,
+          email: user1Mock.email,
+        },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}
