@@ -1,5 +1,5 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './AuthApi'
 export * from './BankFeeApi'
 export * from './CompanyApi'
@@ -12,9 +12,11 @@ export * from './JobApi'
 export * from './MaterialApi'
 export * from './OtherExpenseApi'
 export * from './PurchaseApi'
+export * from './PurchaseOperationApi'
 export * from './TravelEquipmentApi'
 export * from './TravelExpenseApi'
 export * from './TravelMaterialsApi'
+export * from './TravelOperationApi'
 export * from './TravelPeopleApi'
 export * from './UsersApi'
 export * from './WarehouseApi'

@@ -2,12 +2,14 @@
 
 ## Properties
 
-| Name        | Type   |
-| ----------- | ------ |
-| `comment`   | string |
-| `id`        | string |
-| `travel_id` | string |
-| `user_id`   | string |
+| Name               | Type   |
+| ------------------ | ------ |
+| `comment`          | string |
+| `id`               | string |
+| `travel_id`        | string |
+| `user_id`          | string |
+| `arrival_date`     | Date   |
+| `arrival_location` | string |
 
 ## Example
 
@@ -16,10 +18,12 @@ import type { CrupdateTravelPeople } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  travel_id: null,
-  user_id: null,
+  "comment": Commentaire sur cette entité,
+  "id": tp_001,
+  "travel_id": travel_001,
+  "user_id": usr_123458,
+  "arrival_date": 2024-02-20T18:00Z,
+  "arrival_location": wh_001,
 } satisfies CrupdateTravelPeople
 
 console.log(example)

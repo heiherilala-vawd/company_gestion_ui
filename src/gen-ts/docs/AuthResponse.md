@@ -17,11 +17,11 @@ import type { AuthResponse } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  token: null,
-  type: Bearer,
-  id: null,
-  email: null,
-  role: null,
+  "token": eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMTIzNDU2IiwibmFtZSI6IkplYW4gRHVwb250IiwiaWF0IjoxNTE2MjM5MDIyfQ,
+  "type": Bearer,
+  "id": usr_123456,
+  "email": jean.dupont@example.com,
+  "role": EMPLOYEE,
 } satisfies AuthResponse
 
 console.log(example)

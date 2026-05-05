@@ -5,10 +5,18 @@ import generateId from '../../../utili/utils.tsx'
 export default function MaterialForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      <TextInput source="name" label="Nom" validate={[required()]} />
-      <TextInput source="description" label="Description" multiline rows={3} />
+      <TextInput source="name" label="Nom" validate={[required()]} data-testid="input-name" />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        data-testid="input-description"
+      />
       <SelectInput
         source="unit"
         label="unit"
@@ -20,7 +28,7 @@ export default function MaterialForm({ isCreate = false, isCreateForm = false })
           { id: 'M3', name: 'Mètre cube' },
           { id: 'KIT', name: 'Kit' },
           { id: 'POT', name: 'Pot' },
-          { id: 'PNL', name: 'Panel' },
+          { id: 'PNL', name: 'Pannel' },
           { id: 'FEU', name: 'Feuille' },
           { id: 'BAR', name: 'Barre' },
           { id: 'T', name: 'Tonne' },
@@ -28,6 +36,7 @@ export default function MaterialForm({ isCreate = false, isCreateForm = false })
           { id: 'FFT', name: 'Forfait' },
           { id: 'U', name: 'Unité' },
         ]}
+        data-testid="input-unit"
       />
     </>
   )

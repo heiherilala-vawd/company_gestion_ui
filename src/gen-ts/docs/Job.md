@@ -24,18 +24,18 @@ import type { Job } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  id: null,
-  company: null,
-  description: null,
-  contract_signature_date: null,
-  start_date: null,
-  end_date: null,
-  status: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "id": job_001,
+  "company": null,
+  "description": Construction d'un entrepôt logistique de 5000m²,
+  "contract_signature_date": Sat Jan 20 03:00:00 EAT 2024,
+  "start_date": Thu Feb 01 03:00:00 EAT 2024,
+  "end_date": Sat Aug 31 03:00:00 EAT 2024,
+  "status": null,
 } satisfies Job
 
 console.log(example)

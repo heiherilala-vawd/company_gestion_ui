@@ -18,45 +18,50 @@ Create new travel people or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelPeopleApi,
-} from 'api-client';
-import type { CrupdateTravelPeopleRequest } from 'api-client';
+import { Configuration, TravelPeopleApi } from 'api-client'
+import type { CrupdateTravelPeopleRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelPeopleApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelPeopleApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // Array<CrupdateTravelPeople>
-    crupdateTravelPeople: ...,
-  } satisfies CrupdateTravelPeopleRequest;
+    crupdateTravelPeople: [
+      {
+        id: 'tp_001',
+        travel_id: 'travel_001',
+        user_id: 'usr_123458',
+        comment: 'Chauffeur principal',
+      },
+      { travel_id: 'travel_001', user_id: 'usr_123459', comment: 'Assistant' },
+    ],
+  } satisfies CrupdateTravelPeopleRequest
 
   try {
-    const data = await api.crupdateTravelPeople(body);
-    console.log(data);
+    const data = await api.crupdateTravelPeople(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -118,17 +123,17 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // string
-    id: id_example,
+    id: tp_001,
   } satisfies DeleteTravelPeopleByIdRequest
 
   try {
@@ -182,70 +187,85 @@ example().catch(console.error)
 
 ## getTravelPeople
 
-> Array&lt;TravelPeople&gt; getTravelPeople(compId, jobId, userId, expensesId, travelExpensesId, page, pageSize, travelId, userId2)
+> Array&lt;TravelPeople&gt; getTravelPeople(compId, jobId, userId, expensesId, travelExpensesId, page, pageSize, travelId, userId2, arrivalLocation, arrivalDateMin, arrivalDateMax, notArrived)
 
 Get all travel people
 
 ### Example
 
 ```ts
-import { Configuration, TravelPeopleApi } from 'api-client'
-import type { GetTravelPeopleRequest } from 'api-client'
+import {
+  Configuration,
+  TravelPeopleApi,
+} from 'api-client';
+import type { GetTravelPeopleRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
+  console.log("🚀 Testing api-client SDK...");
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new TravelPeopleApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TravelPeopleApi(config);
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    travelId: travelId_example,
+    travelId: travel_001,
     // string | Filter travel people by user id (optional)
-    userId2: userId_example,
-  } satisfies GetTravelPeopleRequest
+    userId2: usr_123458,
+    // string | Filter travel people by arrival warehouse id (optional)
+    arrivalLocation: wh_001,
+    // Date | Filter travel people by minimum arrival date (optional)
+    arrivalDateMin: 2024-02-20T00:00:00Z,
+    // Date | Filter travel people by maximum arrival date (optional)
+    arrivalDateMax: 2024-02-20T23:59:59Z,
+    // boolean | Filter travel people that have not arrived yet (no arrival date or location) (optional)
+    notArrived: true,
+  } satisfies GetTravelPeopleRequest;
 
   try {
-    const data = await api.getTravelPeople(body)
-    console.log(data)
+    const data = await api.getTravelPeople(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name                 | Type     | Description                     | Notes                                |
-| -------------------- | -------- | ------------------------------- | ------------------------------------ |
-| **compId**           | `string` |                                 | [Defaults to `undefined`]            |
-| **jobId**            | `string` |                                 | [Defaults to `undefined`]            |
-| **userId**           | `string` |                                 | [Defaults to `undefined`]            |
-| **expensesId**       | `string` |                                 | [Defaults to `undefined`]            |
-| **travelExpensesId** | `string` |                                 | [Defaults to `undefined`]            |
-| **page**             | `number` |                                 | [Optional] [Defaults to `undefined`] |
-| **pageSize**         | `number` |                                 | [Optional] [Defaults to `undefined`] |
-| **travelId**         | `string` |                                 | [Optional] [Defaults to `undefined`] |
-| **userId2**          | `string` | Filter travel people by user id | [Optional] [Defaults to `undefined`] |
+| Name                 | Type      | Description                                                                  | Notes                                |
+| -------------------- | --------- | ---------------------------------------------------------------------------- | ------------------------------------ |
+| **compId**           | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **jobId**            | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **userId**           | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **expensesId**       | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **travelExpensesId** | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **page**             | `number`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **pageSize**         | `number`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **travelId**         | `string`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **userId2**          | `string`  | Filter travel people by user id                                              | [Optional] [Defaults to `undefined`] |
+| **arrivalLocation**  | `string`  | Filter travel people by arrival warehouse id                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMin**   | `Date`    | Filter travel people by minimum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMax**   | `Date`    | Filter travel people by maximum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **notArrived**       | `boolean` | Filter travel people that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -295,17 +315,17 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // string
-    id: id_example,
+    id: tp_001,
   } satisfies GetTravelPeopleByIdRequest
 
   try {

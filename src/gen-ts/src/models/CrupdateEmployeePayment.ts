@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime'
+import type { CrupdateExpenseMoney } from './CrupdateExpenseMoney'
+import {
+  CrupdateExpenseMoneyFromJSON,
+  CrupdateExpenseMoneyFromJSONTyped,
+  CrupdateExpenseMoneyToJSON,
+  CrupdateExpenseMoneyToJSONTyped,
+} from './CrupdateExpenseMoney'
 import type { PaymentType } from './PaymentType'
 import {
   PaymentTypeFromJSON,
@@ -35,10 +42,10 @@ export interface CrupdateEmployeePayment {
   id?: string
   /**
    *
-   * @type {string}
+   * @type {CrupdateExpenseMoney}
    * @memberof CrupdateEmployeePayment
    */
-  expense_id?: string
+  expense?: CrupdateExpenseMoney
   /**
    *
    * @type {string}
@@ -79,7 +86,7 @@ export function CrupdateEmployeePaymentFromJSONTyped(
   }
   return {
     id: json['id'] == null ? undefined : json['id'],
-    expense_id: json['expense_id'] == null ? undefined : json['expense_id'],
+    expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
     employee_id: json['employee_id'] == null ? undefined : json['employee_id'],
     payment_description:
       json['payment_description'] == null ? undefined : json['payment_description'],
@@ -102,7 +109,7 @@ export function CrupdateEmployeePaymentToJSONTyped(
 
   return {
     id: value['id'],
-    expense_id: value['expense_id'],
+    expense: CrupdateExpenseMoneyToJSON(value['expense']),
     employee_id: value['employee_id'],
     payment_description: value['payment_description'],
     payment_type: PaymentTypeToJSON(value['payment_type']),

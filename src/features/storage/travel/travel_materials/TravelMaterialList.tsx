@@ -20,11 +20,15 @@ export default function TravelMaterialList() {
   return (
     <List resource="travel_materials" filters={TravelMaterialFilters} perPage={25}>
       <Datagrid rowClick="show">
-        <TextField source="travel.departure_location" label="Lieu de départ" />
-        <TextField source="travel.arrival_location" label="Lieu d'arivé" />
-        <DateField source="travel.departure_date" label="Date de départ" />
-        <DateField source="travel.arrival_date" label="Date d'arivé" />{' '}
-        <TextField source="material" label="Matériau" />
+        <FunctionField
+          label="Déplacement"
+          render={(record) =>
+            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+          }
+        />
+        <TextField source="arrival_location.name" label="Lieu d'arivé" />
+        <DateField source="arrival_date" label="Date d'arivé" />
+        <TextField source="material.name" label="Matériau" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Quantité reçue" />
         <DateField source="created_at" label="Créé le" showTime />

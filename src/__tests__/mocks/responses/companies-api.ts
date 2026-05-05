@@ -79,7 +79,7 @@ export const crupdateCompaniesMock: CrupdateCompany[] = [
 export const createOrUpdateCompanies = (companies: CrupdateCompany[]): Company[] => {
   return companies.map((company) => ({
     ...company,
-    id: company.id || `comp_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    id: `newId`,
     created_at: company.id ? company1Mock.created_at : new Date().toISOString(),
     updated_at: new Date().toISOString(),
     created_by: company.id

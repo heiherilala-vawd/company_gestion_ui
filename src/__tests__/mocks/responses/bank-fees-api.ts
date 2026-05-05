@@ -43,3 +43,17 @@ export const crupdateBankFeesMock: CrupdateBankFee[] = [
     description: 'New bank fee for account opening',
   },
 ]
+
+export const createOrUpdateBankFees = (bankFees: CrupdateBankFee[]): BankFee[] => {
+  return bankFees.map((bf) => ({
+    ...bf,
+    id: `newId`,
+    expense: {
+      id: bf.expense_id || expense1Mock.id,
+      amount: expense1Mock.amount,
+      description: expense1Mock.description,
+      job_id: expense1Mock.job.id,
+      comment: expense1Mock.comment,
+    },
+  }))
+}

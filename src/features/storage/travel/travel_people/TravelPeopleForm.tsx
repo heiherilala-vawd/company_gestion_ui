@@ -1,21 +1,24 @@
 import { TextInput } from 'react-admin'
-import ReferenceSelectWithCreate from '../../../../generic/ReferenceSelectWithCreate'
 import generateId from '../../../../utili/utils.tsx'
+import { getMiddleUrl } from '../../../../config/dynamicResources.ts'
+import MaterialForm from '../../materials/MaterialForm.tsx'
+import TravelExpenseForm from '../../../money/travel_expenses/TravelExpenseForm.tsx'
+import SelectWithCreateProvider, {
+  renderTravelExpenseSelect,
+  renderUserSelect,
+} from '../../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
 export default function TravelPeopleForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      <ReferenceSelectWithCreate
-        source="travel_id"
-        reference="travel_expenses"
-        label="Voyage"
-        optionText="title"
-      />
-      <TextInput source="person_name" label="Nom de la personne" />
-      <TextInput source="comment" label="Commentaire" multiline />
+      {renderTravelExpenseSelect(null, null)}
+      {renderUserSelect(null, null)}
+      <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
     </>
   )
 }

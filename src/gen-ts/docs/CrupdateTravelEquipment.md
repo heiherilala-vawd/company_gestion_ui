@@ -2,14 +2,16 @@
 
 ## Properties
 
-| Name        | Type                                  |
-| ----------- | ------------------------------------- |
-| `comment`   | string                                |
-| `id`        | string                                |
-| `travel_id` | string                                |
-| `equipment` | string                                |
-| `quantity`  | number                                |
-| `status`    | [TransportStatus](TransportStatus.md) |
+| Name               | Type                                  |
+| ------------------ | ------------------------------------- |
+| `comment`          | string                                |
+| `id`               | string                                |
+| `travel_id`        | string                                |
+| `equipment`        | string                                |
+| `quantity`         | number                                |
+| `status`           | [TransportStatus](TransportStatus.md) |
+| `arrival_date`     | Date                                  |
+| `arrival_location` | string                                |
 
 ## Example
 
@@ -18,12 +20,14 @@ import type { CrupdateTravelEquipment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  travel_id: null,
-  equipment: null,
-  quantity: null,
-  status: null,
+  "comment": Commentaire sur cette entité,
+  "id": te_001,
+  "travel_id": travel_001,
+  "equipment": eq_001,
+  "quantity": 1,
+  "status": null,
+  "arrival_date": 2024-02-20T18:00Z,
+  "arrival_location": wh_001,
 } satisfies CrupdateTravelEquipment
 
 console.log(example)

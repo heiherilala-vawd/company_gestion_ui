@@ -18,43 +18,42 @@ Create new other expenses or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  OtherExpenseApi,
-} from 'api-client';
-import type { CrupdateOtherExpensesRequest } from 'api-client';
+import { Configuration, OtherExpenseApi } from 'api-client'
+import type { CrupdateOtherExpensesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new OtherExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new OtherExpenseApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_002,
     // Array<CrupdateOtherExpense>
-    crupdateOtherExpense: ...,
-  } satisfies CrupdateOtherExpensesRequest;
+    crupdateOtherExpense: [
+      { id: 'other_001', expense_id: 'exp_002', description: 'Frais de carburant et entretien' },
+    ],
+  } satisfies CrupdateOtherExpensesRequest
 
   try {
-    const data = await api.crupdateOtherExpenses(body);
-    console.log(data);
+    const data = await api.crupdateOtherExpenses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -115,15 +114,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_002,
     // string
-    id: id_example,
+    id: other_001,
   } satisfies DeleteOtherExpenseByIdRequest
 
   try {
@@ -196,15 +195,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_002,
     // string
-    id: id_example,
+    id: other_001,
   } satisfies GetOtherExpenseByIdRequest
 
   try {
@@ -277,21 +276,21 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_002,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    expenseId: expenseId_example,
+    expenseId: exp_002,
     // string | Filter other expenses by description, case is ignored (optional)
-    description: description_example,
+    description: carburant,
   } satisfies GetOtherExpensesRequest
 
   try {

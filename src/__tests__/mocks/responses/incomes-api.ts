@@ -98,3 +98,38 @@ export const crupdateIncomesMock: CrupdateIncomeMoney[] = [
     comment: 'New income creation',
   },
 ]
+
+export const createOrUpdateIncomes = (incomes: CrupdateIncomeMoney[]): IncomeMoney[] => {
+  return incomes.map((inc) => ({
+    ...inc,
+    id: `newId`,
+    job: {
+      id: inc.job_id || job1Mock.id,
+      company_id: job1Mock.company.id,
+      description: job1Mock.description,
+      contract_signature_date: job1Mock.contract_signature_date,
+      start_date: job1Mock.start_date,
+      end_date: job1Mock.end_date,
+      status: job1Mock.status,
+      comment: job1Mock.comment,
+    },
+    created_at: inc.id ? income1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

@@ -18,43 +18,47 @@ Create new bank fees or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  BankFeeApi,
-} from 'api-client';
-import type { CrupdateBankFeesRequest } from 'api-client';
+import { Configuration, BankFeeApi } from 'api-client'
+import type { CrupdateBankFeesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new BankFeeApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new BankFeeApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // Array<CrupdateBankFee>
-    crupdateBankFee: ...,
-  } satisfies CrupdateBankFeesRequest;
+    crupdateBankFee: [
+      {
+        id: 'bank_001',
+        expense_id: 'exp_001',
+        bank_name: 'BNP Paribas',
+        description: 'Frais de virement international révisés',
+      },
+    ],
+  } satisfies CrupdateBankFeesRequest
 
   try {
-    const data = await api.crupdateBankFees(body);
-    console.log(data);
+    const data = await api.crupdateBankFees(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -115,15 +119,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // string
-    id: id_example,
+    id: bank_001,
   } satisfies DeleteBankFeeByIdRequest
 
   try {
@@ -196,15 +200,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // string
-    id: id_example,
+    id: bank_001,
   } satisfies GetBankFeeByIdRequest
 
   try {
@@ -277,23 +281,23 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    expenseId: expenseId_example,
+    expenseId: exp_001,
     // string | Filter bank fees by bank name, case is ignored (optional)
-    bankName: bankName_example,
+    bankName: BNP,
     // string | Filter bank fees by description, case is ignored (optional)
-    description: description_example,
+    description: virement,
   } satisfies GetBankFeesRequest
 
   try {

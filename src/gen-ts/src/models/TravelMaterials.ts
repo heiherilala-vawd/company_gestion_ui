@@ -20,6 +20,13 @@ import {
   AuditUserToJSON,
   AuditUserToJSONTyped,
 } from './AuditUser'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
 import type { CrupdateTravelExpense } from './CrupdateTravelExpense'
 import {
   CrupdateTravelExpenseFromJSON,
@@ -101,6 +108,18 @@ export interface TravelMaterials {
    * @memberof TravelMaterials
    */
   quantity_received?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof TravelMaterials
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {CrupdateWarehouse}
+   * @memberof TravelMaterials
+   */
+  arrival_location?: CrupdateWarehouse
 }
 
 /**
@@ -132,6 +151,11 @@ export function TravelMaterialsFromJSONTyped(
     material: json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
     quantity: json['quantity'] == null ? undefined : json['quantity'],
     quantity_received: json['quantity_received'] == null ? undefined : json['quantity_received'],
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location:
+      json['arrival_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['arrival_location']),
   }
 }
 
@@ -160,5 +184,8 @@ export function TravelMaterialsToJSONTyped(
     material: CrupdateMaterialToJSON(value['material']),
     quantity: value['quantity'],
     quantity_received: value['quantity_received'],
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: CrupdateWarehouseToJSON(value['arrival_location']),
   }
 }

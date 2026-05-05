@@ -20,6 +20,13 @@ import {
   CrupdateExpenseMoneyToJSON,
   CrupdateExpenseMoneyToJSONTyped,
 } from './CrupdateExpenseMoney'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
 import type { CrupdateEquipment } from './CrupdateEquipment'
 import {
   CrupdateEquipmentFromJSON,
@@ -55,10 +62,10 @@ export interface Purchase {
   expense?: CrupdateExpenseMoney
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof Purchase
    */
-  supplier?: string
+  supplier?: CrupdateWarehouse
   /**
    *
    * @type {CrupdateEquipment}
@@ -103,7 +110,7 @@ export function PurchaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
-    supplier: json['supplier'] == null ? undefined : json['supplier'],
+    supplier: json['supplier'] == null ? undefined : CrupdateWarehouseFromJSON(json['supplier']),
     equipment: json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
     material: json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
     quantity: json['quantity'] == null ? undefined : json['quantity'],
@@ -126,7 +133,7 @@ export function PurchaseToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
-    supplier: value['supplier'],
+    supplier: CrupdateWarehouseToJSON(value['supplier']),
     equipment: CrupdateEquipmentToJSON(value['equipment']),
     material: CrupdateMaterialToJSON(value['material']),
     quantity: value['quantity'],

@@ -14,8 +14,8 @@ import type { LoginRequest } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  email: null,
-  password: null,
+  "email": jean.dupont@example.com,
+  "password": securePassword123,
 } satisfies LoginRequest
 
 console.log(example)

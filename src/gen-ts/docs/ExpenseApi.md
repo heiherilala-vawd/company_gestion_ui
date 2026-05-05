@@ -18,41 +18,52 @@ Create new expenses or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  ExpenseApi,
-} from 'api-client';
-import type { CrupdateExpensesRequest } from 'api-client';
+import { Configuration, ExpenseApi } from 'api-client'
+import type { CrupdateExpensesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new ExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new ExpenseApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // Array<CrupdateExpenseMoney>
-    crupdateExpenseMoney: ...,
-  } satisfies CrupdateExpensesRequest;
+    crupdateExpenseMoney: [
+      {
+        id: 'exp_001',
+        amount: 16200,
+        description: 'Achat de matériaux pour le chantier',
+        job_id: 'job_001',
+        comment: 'Facture N°F-2024-001 révisée',
+      },
+      {
+        amount: 2800,
+        description: 'Frais de déplacement',
+        job_id: 'job_001',
+        comment: 'Déplacement sur site Marseille',
+      },
+    ],
+  } satisfies CrupdateExpensesRequest
 
   try {
-    const data = await api.crupdateExpenses(body);
-    console.log(data);
+    const data = await api.crupdateExpenses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -112,13 +123,13 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    id: id_example,
+    id: exp_001,
   } satisfies DeleteExpenseByIdRequest
 
   try {
@@ -190,13 +201,13 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    id: id_example,
+    id: exp_001,
   } satisfies GetExpenseByIdRequest
 
   try {
@@ -268,19 +279,19 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter expenses by description, case is ignored (optional)
-    description: description_example,
+    description: matériaux,
     // number (optional)
-    amount: 56,
+    amount: 15000,
   } satisfies GetExpensesRequest
 
   try {

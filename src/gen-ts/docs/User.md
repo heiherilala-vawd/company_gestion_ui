@@ -23,17 +23,17 @@ import type { User } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  id: null,
-  role: null,
-  first_name: null,
-  last_name: null,
-  sex: null,
-  email: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "id": usr_123456,
+  "role": null,
+  "first_name": Jean,
+  "last_name": Dupont,
+  "sex": null,
+  "email": jean.dupont@example.com,
 } satisfies User
 
 console.log(example)

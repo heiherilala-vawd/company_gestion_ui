@@ -19,7 +19,7 @@ import TravelExpenseResource from '../features/money/travel_expenses'
 import PurchaseResource from '../features/money/purchases'
 import BankFeeResource from '../features/money/bank_fees'
 import OtherExpenseResource from '../features/money/other_expenses'
-import EmployerPaymentResource from '../features/money/employer_payments'
+import EmployerPaymentResource from '../features/money/employee_payments'
 import IncomeResource from '../features/money/incomes'
 
 import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
@@ -167,7 +167,7 @@ export const App = () => (
           <Resource name="purchases" {...PurchaseResource} />
           <Resource name="bank_fees" {...BankFeeResource} />
           <Resource name="other_expenses" {...OtherExpenseResource} />
-          <Resource name="employer_payments" {...EmployerPaymentResource} />
+          <Resource name="employee_payments" {...EmployerPaymentResource} />
           <Resource name="travel_people" {...TravelPeopleResource} />
           <Resource name="travel_materials" {...TravelMaterialResource} />
           <Resource name="travel_equipment" {...TravelEquipmentResource} />

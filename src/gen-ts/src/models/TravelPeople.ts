@@ -22,6 +22,13 @@ import {
   AuditUserToJSON,
   AuditUserToJSONTyped,
 } from './AuditUser'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
 import type { CrupdateTravelExpense } from './CrupdateTravelExpense'
 import {
   CrupdateTravelExpenseFromJSON,
@@ -84,6 +91,18 @@ export interface TravelPeople {
    * @memberof TravelPeople
    */
   user?: User
+  /**
+   *
+   * @type {Date}
+   * @memberof TravelPeople
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {CrupdateWarehouse}
+   * @memberof TravelPeople
+   */
+  arrival_location?: CrupdateWarehouse
 }
 
 /**
@@ -110,6 +129,11 @@ export function TravelPeopleFromJSONTyped(json: any, ignoreDiscriminator: boolea
     id: json['id'] == null ? undefined : json['id'],
     travel: json['travel'] == null ? undefined : CrupdateTravelExpenseFromJSON(json['travel']),
     user: json['user'] == null ? undefined : UserFromJSON(json['user']),
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location:
+      json['arrival_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['arrival_location']),
   }
 }
 
@@ -136,5 +160,8 @@ export function TravelPeopleToJSONTyped(
     id: value['id'],
     travel: CrupdateTravelExpenseToJSON(value['travel']),
     user: UserToJSON(value['user']),
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: CrupdateWarehouseToJSON(value['arrival_location']),
   }
 }

@@ -55,6 +55,18 @@ export interface CrupdateTravelMaterials {
    * @memberof CrupdateTravelMaterials
    */
   quantity_received?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateTravelMaterials
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateTravelMaterials
+   */
+  arrival_location?: string
 }
 
 /**
@@ -82,6 +94,8 @@ export function CrupdateTravelMaterialsFromJSONTyped(
     material: json['material'] == null ? undefined : json['material'],
     quantity: json['quantity'] == null ? undefined : json['quantity'],
     quantity_received: json['quantity_received'] == null ? undefined : json['quantity_received'],
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location: json['arrival_location'] == null ? undefined : json['arrival_location'],
   }
 }
 
@@ -104,5 +118,8 @@ export function CrupdateTravelMaterialsToJSONTyped(
     material: value['material'],
     quantity: value['quantity'],
     quantity_received: value['quantity_received'],
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: value['arrival_location'],
   }
 }

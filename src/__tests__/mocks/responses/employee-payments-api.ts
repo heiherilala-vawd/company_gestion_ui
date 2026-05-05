@@ -48,3 +48,20 @@ export const crupdateEmployeePaymentsMock: CrupdateEmployeePayment[] = [
     payment_type: 'OTHER' as PaymentType,
   },
 ]
+
+export const createOrUpdateEmployeePayments = (
+  employeePayments: CrupdateEmployeePayment[],
+): EmployeePayment[] => {
+  return employeePayments.map((ep) => ({
+    ...ep,
+    id: `newId`,
+    expense: {
+      id: ep.expense_id || expense1Mock.id,
+      amount: expense1Mock.amount,
+      description: expense1Mock.description,
+      job_id: expense1Mock.job.id,
+      comment: expense1Mock.comment,
+    },
+    employee: user2Mock,
+  }))
+}

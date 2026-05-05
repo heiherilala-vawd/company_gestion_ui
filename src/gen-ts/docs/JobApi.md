@@ -34,11 +34,11 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
   } satisfies AssignUserToJobRequest
 
   try {
@@ -96,37 +96,54 @@ Create new jobs or update existing jobs
 ### Example
 
 ```ts
-import {
-  Configuration,
-  JobApi,
-} from 'api-client';
-import type { CrupdateJobsRequest } from 'api-client';
+import { Configuration, JobApi } from 'api-client'
+import type { CrupdateJobsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new JobApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new JobApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // Array<CrupdateJob>
-    crupdateJob: ...,
-  } satisfies CrupdateJobsRequest;
+    crupdateJob: [
+      {
+        id: 'job_001',
+        company_id: 'comp_btp001',
+        description: "Construction d'un entrepôt logistique de 5000m²",
+        contract_signature_date: '2024-01-20',
+        start_date: '2024-02-01',
+        end_date: '2024-08-31',
+        status: 'IN_PROGRESS',
+        comment: 'Le projet a pris du retard',
+      },
+      {
+        company_id: 'comp_hotel001',
+        description: 'Rénovation complète des chambres',
+        contract_signature_date: '2024-02-15',
+        start_date: '2024-03-15',
+        end_date: '2024-05-30',
+        status: 'PENDING_SIGNATURE',
+        comment: 'Nouveau projet hôtelier',
+      },
+    ],
+  } satisfies CrupdateJobsRequest
 
   try {
-    const data = await api.crupdateJobs(body);
-    console.log(data);
+    const data = await api.crupdateJobs(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -184,9 +201,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: job_001,
   } satisfies DeleteJobByIdRequest
 
   try {
@@ -256,9 +273,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: job_001,
   } satisfies GetJobByIdRequest
 
   try {
@@ -328,9 +345,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
   } satisfies GetJobResponsibleUsersRequest
 
   try {
@@ -387,43 +404,40 @@ Get all jobs
 ### Example
 
 ```ts
-import {
-  Configuration,
-  JobApi,
-} from 'api-client';
-import type { GetJobsRequest } from 'api-client';
+import { Configuration, JobApi } from 'api-client'
+import type { GetJobsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new JobApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new JobApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // JobStatus (optional)
-    status: ...,
+    status: IN_PROGRESS,
     // string | Filter jobs by description, case is ignored (optional)
-    description: description_example,
-  } satisfies GetJobsRequest;
+    description: entrepôt,
+  } satisfies GetJobsRequest
 
   try {
-    const data = await api.getJobs(body);
-    console.log(data);
+    const data = await api.getJobs(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -484,11 +498,11 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
   } satisfies UnassignUserFromJobRequest
 
   try {

@@ -3,7 +3,13 @@ import IncomeForm from './IncomeForm'
 
 export default function IncomeCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        job_id: data.job?.id,
+        job: undefined,
+      })}
+    >
       <SimpleForm>
         <IncomeForm isCreate />
       </SimpleForm>

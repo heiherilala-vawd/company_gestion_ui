@@ -17,35 +17,32 @@ Login user
 ### Example
 
 ```ts
-import {
-  Configuration,
-  AuthApi,
-} from 'api-client';
-import type { AuthLoginPostRequest } from 'api-client';
+import { Configuration, AuthApi } from 'api-client'
+import type { AuthLoginPostRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new AuthApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new AuthApi(config)
 
   const body = {
     // LoginRequest
-    loginRequest: ...,
-  } satisfies AuthLoginPostRequest;
+    loginRequest: { email: 'jean.dupont@example.com', password: 'securePassword123' },
+  } satisfies AuthLoginPostRequest
 
   try {
-    const data = await api.authLoginPost(body);
-    console.log(data);
+    const data = await api.authLoginPost(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -89,35 +86,40 @@ Register a new user
 ### Example
 
 ```ts
-import {
-  Configuration,
-  AuthApi,
-} from 'api-client';
-import type { AuthRegisterPostRequest } from 'api-client';
+import { Configuration, AuthApi } from 'api-client'
+import type { AuthRegisterPostRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new AuthApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new AuthApi(config)
 
   const body = {
     // CrupdateUser
-    crupdateUser: ...,
-  } satisfies AuthRegisterPostRequest;
+    crupdateUser: {
+      first_name: 'Jean',
+      last_name: 'Dupont',
+      email: 'jean.dupont@example.com',
+      password: 'securePassword123',
+      role: 'EMPLOYEE',
+      sex: 'M',
+      comment: 'Nouvel employé en CDI',
+    },
+  } satisfies AuthRegisterPostRequest
 
   try {
-    const data = await api.authRegisterPost(body);
-    console.log(data);
+    const data = await api.authRegisterPost(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters

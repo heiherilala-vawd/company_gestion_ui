@@ -4610,6 +4610,32 @@ paths:
           schema:
             type: string
           example: 'usr_123458'
+        - name: arrival_location
+          in: query
+          description: 'Filter travel people by arrival warehouse id'
+          schema:
+            type: string
+          example: 'wh_001'
+        - name: arrival_date_min
+          in: query
+          description: 'Filter travel people by minimum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T00:00:00Z'
+        - name: arrival_date_max
+          in: query
+          description: 'Filter travel people by maximum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T23:59:59Z'
+        - name: not_arrived
+          in: query
+          description: 'Filter travel people that have not arrived yet (no arrival date or location)'
+          schema:
+            type: boolean
+          example: true
       responses:
         '200':
           description: List of travel people
@@ -5010,6 +5036,32 @@ paths:
           schema:
             type: integer
           example: 100
+        - name: arrival_location
+          in: query
+          description: 'Filter travel materials by arrival warehouse id'
+          schema:
+            type: string
+          example: 'wh_001'
+        - name: arrival_date_min
+          in: query
+          description: 'Filter travel materials by minimum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T00:00:00Z'
+        - name: arrival_date_max
+          in: query
+          description: 'Filter travel materials by maximum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T23:59:59Z'
+        - name: not_arrived
+          in: query
+          description: 'Filter travel materials that have not arrived yet (no arrival date or location)'
+          schema:
+            type: boolean
+          example: true
       responses:
         '200':
           description: List of travel materials
@@ -5222,14 +5274,14 @@ paths:
           schema:
             type: string
             format: date-time
-          example: 2024-02-01T00:00:00Z
+          example: '2024-02-01T00:00:00Z'
         - name: date_to
           in: query
           description: 'Filter modifications until this date (inclusive)'
           schema:
             type: string
             format: date-time
-          example: 2024-02-29T23:59:59Z
+          example: '2024-02-29T23:59:59Z'
       responses:
         '200':
           description: List of history entries
@@ -5476,6 +5528,32 @@ paths:
           schema:
             $ref: '#/components/schemas/TransportStatus'
           example: 'ARRIVED'
+        - name: arrival_location
+          in: query
+          description: 'Filter travel equipment by arrival warehouse id'
+          schema:
+            type: string
+          example: 'wh_001'
+        - name: arrival_date_min
+          in: query
+          description: 'Filter travel equipment by minimum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T00:00:00Z'
+        - name: arrival_date_max
+          in: query
+          description: 'Filter travel equipment by maximum arrival date'
+          schema:
+            type: string
+            format: date-time
+          example: '2024-02-20T23:59:59Z'
+        - name: not_arrived
+          in: query
+          description: 'Filter travel equipment that have not arrived yet (no arrival date or location)'
+          schema:
+            type: boolean
+          example: true
       responses:
         '200':
           description: List of travel equipment
@@ -5770,11 +5848,11 @@ components:
         created_at:
           type: string
           format: date-time
-          example: 2024-01-15T09:30:00Z
+          example: '2024-01-15T09:30:00Z'
         updated_at:
           type: string
           format: date-time
-          example: 2024-02-20T15:45:00Z
+          example: '2024-02-20T15:45:00Z'
         created_by:
           $ref: '#/components/schemas/AuditUser'
         updated_by:
@@ -5885,15 +5963,15 @@ components:
         contract_signature_date:
           type: string
           format: date
-          example: 2024-01-20
+          example: '2024-01-20'
         start_date:
           type: string
           format: date
-          example: 2024-02-01
+          example: '2024-02-01'
         end_date:
           type: string
           format: date
-          example: 2024-08-31
+          example: '2024-08-31'
         status:
           $ref: '#/components/schemas/JobStatus'
     CrupdateJob:
@@ -5912,15 +5990,15 @@ components:
         contract_signature_date:
           type: string
           format: date
-          example: 2024-01-20
+          example: '2024-01-20'
         start_date:
           type: string
           format: date
-          example: 2024-02-01
+          example: '2024-02-01'
         end_date:
           type: string
           format: date
-          example: 2024-08-31
+          example: '2024-08-31'
         status:
           $ref: '#/components/schemas/JobStatus'
 
@@ -6168,9 +6246,8 @@ components:
         id:
           type: string
           example: 'emp_pay_001'
-        expense_id:
-          type: string
-          example: 'exp_004'
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         employee_id:
           type: string
           example: 'usr_123456'
@@ -6197,19 +6274,18 @@ components:
         departure_date:
           type: string
           format: date-time
-          example: 2024-02-20T08:00:00Z
+          example: '2024-02-20T08:00:00Z'
         arrival_date:
           type: string
           format: date-time
-          example: 2024-02-20T18:00:00Z
+          example: '2024-02-20T18:00:00Z'
     CrupdateTravelExpense:
       properties:
         id:
           type: string
           example: 'travel_001'
-        expense_id:
-          type: string
-          example: 'exp_003'
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         departure_location:
           $ref: '#/components/schemas/CrupdateWarehouse'
         arrival_location:
@@ -6217,11 +6293,11 @@ components:
         departure_date:
           type: string
           format: date-time
-          example: 2024-02-20T08:00:00Z
+          example: '2024-02-20T08:00:00Z'
         arrival_date:
           type: string
           format: date-time
-          example: 2024-02-20T18:00:00Z
+          example: '2024-02-20T18:00:00Z'
 
     # =========================
     # TRAVEL PEOPLE
@@ -6237,6 +6313,12 @@ components:
           $ref: '#/components/schemas/CrupdateTravelExpense'
         user:
           $ref: '#/components/schemas/User'
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          $ref: '#/components/schemas/CrupdateWarehouse'
     CrupdateTravelPeople:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -6250,6 +6332,13 @@ components:
         user_id:
           type: string
           example: 'usr_123458'
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          type: string
+          example: 'wh_001'
 
     # =========================
     # TRAVEL MATERIALS
@@ -6271,6 +6360,12 @@ components:
         quantity_received:
           type: integer
           example: 100
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          $ref: '#/components/schemas/CrupdateWarehouse'
     CrupdateTravelMaterials:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -6290,6 +6385,13 @@ components:
         quantity_received:
           type: integer
           example: 100
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          type: string
+          example: 'wh_001'
 
     # =========================
     # TRAVEL EQUIPMENT
@@ -6310,6 +6412,12 @@ components:
           example: 1
         status:
           $ref: '#/components/schemas/TransportStatus'
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          $ref: '#/components/schemas/CrupdateWarehouse'
     CrupdateTravelEquipment:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -6328,6 +6436,13 @@ components:
           example: 1
         status:
           $ref: '#/components/schemas/TransportStatus'
+        arrival_date:
+          type: string
+          format: date-time
+          example: '2024-02-20T18:00:00Z'
+        arrival_location:
+          type: string
+          example: 'wh_001'
 
     # =========================
     # PURCHASE
@@ -6356,9 +6471,8 @@ components:
         id:
           type: string
           example: 'purch_001'
-        expense_id:
-          type: string
-          example: 'exp_001'
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         supplier:
           $ref: '#/components/schemas/CrupdateWarehouse'
         equipment:
@@ -6427,11 +6541,11 @@ components:
         departure_date:
           type: string
           format: date-time
-          example: 2024-02-25T09:00:00Z
+          example: '2024-02-25T09:00:00Z'
         arrival_date:
           type: string
           format: date-time
-          example: 2024-02-25T17:00:00Z
+          example: '2024-02-25T17:00:00Z'
         fee:
           type: integer
           example: 500
@@ -6464,11 +6578,11 @@ components:
         departure_date:
           type: string
           format: date-time
-          example: 2024-02-25T09:00:00Z
+          example: '2024-02-25T09:00:00Z'
         arrival_date:
           type: string
           format: date-time
-          example: 2024-02-25T17:00:00Z
+          example: '2024-02-25T17:00:00Z'
         fee:
           type: integer
           example: 500
@@ -6543,9 +6657,8 @@ components:
         id:
           type: string
           example: 'bank_001'
-        expense_id:
-          type: string
-          example: 'exp_001'
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         bank_name:
           type: string
           example: 'BNP Paribas'
@@ -6571,9 +6684,8 @@ components:
         id:
           type: string
           example: 'other_001'
-        expense_id:
-          type: string
-          example: 'exp_002'
+        expense:
+          $ref: '#/components/schemas/CrupdateExpenseMoney'
         description:
           type: string
           example: 'Frais de carburant pour grues'
@@ -6603,7 +6715,7 @@ components:
           type: string
           format: date-time
           description: 'Date and time of the modification'
-          example: 2024-02-01T09:00:00Z
+          example: '2024-02-01T09:00:00Z'
         entity_type:
           $ref: '#/components/schemas/EntityType'
         entity_id:

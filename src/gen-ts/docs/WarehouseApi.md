@@ -18,37 +18,48 @@ Create new warehouses or update existing warehouses
 ### Example
 
 ```ts
-import {
-  Configuration,
-  WarehouseApi,
-} from 'api-client';
-import type { CrupdateWarehousesRequest } from 'api-client';
+import { Configuration, WarehouseApi } from 'api-client'
+import type { CrupdateWarehousesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new WarehouseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new WarehouseApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // Array<CrupdateWarehouse>
-    crupdateWarehouse: ...,
-  } satisfies CrupdateWarehousesRequest;
+    crupdateWarehouse: [
+      {
+        id: 'wh_001',
+        name: 'Entrepôt Nord',
+        description: 'Entrepôt principal pour le chantier de Lyon',
+        job_id: 'job_001',
+        comment: "Agrandissement de l'entrepôt",
+      },
+      {
+        name: 'Entrepôt Est',
+        description: 'Entrepôt pour les équipements électriques',
+        job_id: 'job_001',
+        comment: 'Nouveau stockage pour le matériel électrique',
+      },
+    ],
+  } satisfies CrupdateWarehousesRequest
 
   try {
-    const data = await api.crupdateWarehouses(body);
-    console.log(data);
+    const data = await api.crupdateWarehouses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -106,9 +117,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: wh_001,
   } satisfies DeleteWarehouseByIdRequest
 
   try {
@@ -178,9 +189,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: wh_001,
   } satisfies GetWarehouseByIdRequest
 
   try {
@@ -250,17 +261,17 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    jobId: jobId_example,
+    jobId: job_001,
     // string | Filter warehouses by name, case is ignored (optional)
-    name: name_example,
+    name: Entrepôt,
     // string | Filter warehouses by description, case is ignored (optional)
-    description: description_example,
+    description: stockage,
   } satisfies GetWarehousesRequest
 
   try {

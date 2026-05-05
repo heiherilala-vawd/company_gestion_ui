@@ -1,23 +1,19 @@
-import { Create, SimpleForm, TextInput, SelectInput } from 'react-admin'
-import ReferenceSelectWithCreate from '../../../../generic/ReferenceSelectWithCreate'
+import { Create, SimpleForm } from 'react-admin'
+import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        travel_id: data.travel?.id,
+        travel: undefined,
+        user_id: data.user?.id,
+        user: undefined,
+      })}
+    >
       <SimpleForm>
-        <ReferenceSelectWithCreate
-          source="travel_id"
-          reference="travel_expenses"
-          label="Voyage"
-          optionText="title"
-          fields={[
-            { source: 'expense_id', label: 'Dépense', type: 'select', required: true },
-            { source: 'departure_location', label: 'Lieu de départ' },
-            { source: 'arrival_location', label: "Lieu d'arrivée" },
-          ]}
-        />
-        <TextInput source="person_name" label="Nom de la personne" />
-        <TextInput source="comment" label="Commentaire" multiline />
+        <TravelPeopleForm isCreate />
       </SimpleForm>
     </Create>
   )

@@ -16,10 +16,10 @@ import type { BankFee } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense: null,
-  bank_name: null,
-  description: null,
+  "id": bank_001,
+  "expense": null,
+  "bank_name": BNP Paribas,
+  "description": Frais de virement international,
 } satisfies BankFee
 
 console.log(example)

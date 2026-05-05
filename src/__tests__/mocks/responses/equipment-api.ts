@@ -70,7 +70,7 @@ export const equipment2Mock: Equipment = {
   },
 }
 
-export const equipmentMock: Equipment[] = [equipment1Mock, equipment2Mock]
+export const equipmentsMock: Equipment[] = [equipment1Mock, equipment2Mock]
 
 export const crupdateEquipmentMock: CrupdateEquipment[] = [
   {
@@ -92,3 +92,35 @@ export const crupdateEquipmentMock: CrupdateEquipment[] = [
     comment: 'New equipment addition',
   },
 ]
+
+export const createOrUpdateEquipments = (equipment: CrupdateEquipment[]): Equipment[] => {
+  return equipment.map((eq) => ({
+    ...eq,
+    id: `newId`,
+    warehouse: {
+      id: eq.warehouse_id || warehouse1Mock.id,
+      name: warehouse1Mock.name,
+      description: warehouse1Mock.description,
+      job_id: warehouse1Mock.job.id,
+      comment: warehouse1Mock.comment,
+    },
+    created_at: eq.id ? equipment1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

@@ -13,7 +13,7 @@ import type { Comment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
+  "comment": Commentaire sur cette entité,
 } satisfies Comment
 
 console.log(example)

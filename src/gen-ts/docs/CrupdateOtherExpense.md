@@ -2,11 +2,11 @@
 
 ## Properties
 
-| Name          | Type   |
-| ------------- | ------ |
-| `id`          | string |
-| `expense_id`  | string |
-| `description` | string |
+| Name          | Type                                            |
+| ------------- | ----------------------------------------------- |
+| `id`          | string                                          |
+| `expense`     | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `description` | string                                          |
 
 ## Example
 
@@ -15,9 +15,9 @@ import type { CrupdateOtherExpense } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense_id: null,
-  description: null,
+  "id": other_001,
+  "expense": null,
+  "description": Frais de carburant pour grues,
 } satisfies CrupdateOtherExpense
 
 console.log(example)

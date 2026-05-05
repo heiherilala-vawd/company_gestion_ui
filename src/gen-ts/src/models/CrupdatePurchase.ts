@@ -13,6 +13,21 @@
  */
 
 import { mapValues } from '../runtime'
+import type { CrupdateExpenseMoney } from './CrupdateExpenseMoney'
+import {
+  CrupdateExpenseMoneyFromJSON,
+  CrupdateExpenseMoneyFromJSONTyped,
+  CrupdateExpenseMoneyToJSON,
+  CrupdateExpenseMoneyToJSONTyped,
+} from './CrupdateExpenseMoney'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
+
 /**
  *
  * @export
@@ -27,16 +42,16 @@ export interface CrupdatePurchase {
   id?: string
   /**
    *
-   * @type {string}
+   * @type {CrupdateExpenseMoney}
    * @memberof CrupdatePurchase
    */
-  expense_id?: string
+  expense?: CrupdateExpenseMoney
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof CrupdatePurchase
    */
-  supplier?: string
+  supplier?: CrupdateWarehouse
   /**
    *
    * @type {string}
@@ -83,8 +98,8 @@ export function CrupdatePurchaseFromJSONTyped(
   }
   return {
     id: json['id'] == null ? undefined : json['id'],
-    expense_id: json['expense_id'] == null ? undefined : json['expense_id'],
-    supplier: json['supplier'] == null ? undefined : json['supplier'],
+    expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
+    supplier: json['supplier'] == null ? undefined : CrupdateWarehouseFromJSON(json['supplier']),
     equipment: json['equipment'] == null ? undefined : json['equipment'],
     material: json['material'] == null ? undefined : json['material'],
     quantity: json['quantity'] == null ? undefined : json['quantity'],
@@ -106,8 +121,8 @@ export function CrupdatePurchaseToJSONTyped(
 
   return {
     id: value['id'],
-    expense_id: value['expense_id'],
-    supplier: value['supplier'],
+    expense: CrupdateExpenseMoneyToJSON(value['expense']),
+    supplier: CrupdateWarehouseToJSON(value['supplier']),
     equipment: value['equipment'],
     material: value['material'],
     quantity: value['quantity'],

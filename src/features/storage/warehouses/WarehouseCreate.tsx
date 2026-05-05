@@ -3,7 +3,13 @@ import WarehouseForm from './WarehouseForm'
 
 export default function WarehouseCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        job_id: data.job?.id,
+        job: undefined,
+      })}
+    >
       <SimpleForm>
         <WarehouseForm isCreate />
       </SimpleForm>

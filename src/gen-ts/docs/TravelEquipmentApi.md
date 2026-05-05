@@ -18,45 +18,51 @@ Create new travel equipment or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelEquipmentApi,
-} from 'api-client';
-import type { CrupdateTravelEquipmentRequest } from 'api-client';
+import { Configuration, TravelEquipmentApi } from 'api-client'
+import type { CrupdateTravelEquipmentRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelEquipmentApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelEquipmentApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // Array<CrupdateTravelEquipment>
-    crupdateTravelEquipment: ...,
-  } satisfies CrupdateTravelEquipmentRequest;
+    crupdateTravelEquipment: [
+      {
+        id: 'te_001',
+        travel_id: 'travel_001',
+        equipment: 'eq_001',
+        quantity: 1,
+        status: 'ARRIVED',
+        comment: 'Pelleteuse réceptionnée en bon état',
+      },
+    ],
+  } satisfies CrupdateTravelEquipmentRequest
 
   try {
-    const data = await api.crupdateTravelEquipment(body);
-    console.log(data);
+    const data = await api.crupdateTravelEquipment(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -118,17 +124,17 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // string
-    id: id_example,
+    id: te_001,
   } satisfies DeleteTravelEquipmentByIdRequest
 
   try {
@@ -182,7 +188,7 @@ example().catch(console.error)
 
 ## getTravelEquipment
 
-> Array&lt;TravelEquipment&gt; getTravelEquipment(compId, jobId, userId, expensesId, travelExpensesId, page, pageSize, travelId, equipmentId, quantity, status)
+> Array&lt;TravelEquipment&gt; getTravelEquipment(compId, jobId, userId, expensesId, travelExpensesId, page, pageSize, travelId, equipmentId, quantity, status, arrivalLocation, arrivalDateMin, arrivalDateMax, notArrived)
 
 Get all travel equipment
 
@@ -205,27 +211,35 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    travelId: travelId_example,
+    travelId: travel_001,
     // string (optional)
-    equipmentId: equipmentId_example,
+    equipmentId: eq_001,
     // number (optional)
-    quantity: 56,
+    quantity: 1,
     // TransportStatus (optional)
-    status: ...,
+    status: ARRIVED,
+    // string | Filter travel equipment by arrival warehouse id (optional)
+    arrivalLocation: wh_001,
+    // Date | Filter travel equipment by minimum arrival date (optional)
+    arrivalDateMin: 2024-02-20T00:00:00Z,
+    // Date | Filter travel equipment by maximum arrival date (optional)
+    arrivalDateMax: 2024-02-20T23:59:59Z,
+    // boolean | Filter travel equipment that have not arrived yet (no arrival date or location) (optional)
+    notArrived: true,
   } satisfies GetTravelEquipmentRequest;
 
   try {
@@ -242,19 +256,23 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name                 | Type              | Description | Notes                                                                   |
-| -------------------- | ----------------- | ----------- | ----------------------------------------------------------------------- |
-| **compId**           | `string`          |             | [Defaults to `undefined`]                                               |
-| **jobId**            | `string`          |             | [Defaults to `undefined`]                                               |
-| **userId**           | `string`          |             | [Defaults to `undefined`]                                               |
-| **expensesId**       | `string`          |             | [Defaults to `undefined`]                                               |
-| **travelExpensesId** | `string`          |             | [Defaults to `undefined`]                                               |
-| **page**             | `number`          |             | [Optional] [Defaults to `undefined`]                                    |
-| **pageSize**         | `number`          |             | [Optional] [Defaults to `undefined`]                                    |
-| **travelId**         | `string`          |             | [Optional] [Defaults to `undefined`]                                    |
-| **equipmentId**      | `string`          |             | [Optional] [Defaults to `undefined`]                                    |
-| **quantity**         | `number`          |             | [Optional] [Defaults to `undefined`]                                    |
-| **status**           | `TransportStatus` |             | [Optional] [Defaults to `undefined`] [Enum: IN_PROGRESS, LOST, ARRIVED] |
+| Name                 | Type              | Description                                                                     | Notes                                                                   |
+| -------------------- | ----------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **compId**           | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
+| **jobId**            | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
+| **userId**           | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
+| **expensesId**       | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
+| **travelExpensesId** | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
+| **page**             | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
+| **pageSize**         | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
+| **travelId**         | `string`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
+| **equipmentId**      | `string`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
+| **quantity**         | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
+| **status**           | `TransportStatus` |                                                                                 | [Optional] [Defaults to `undefined`] [Enum: IN_PROGRESS, LOST, ARRIVED] |
+| **arrivalLocation**  | `string`          | Filter travel equipment by arrival warehouse id                                 | [Optional] [Defaults to `undefined`]                                    |
+| **arrivalDateMin**   | `Date`            | Filter travel equipment by minimum arrival date                                 | [Optional] [Defaults to `undefined`]                                    |
+| **arrivalDateMax**   | `Date`            | Filter travel equipment by maximum arrival date                                 | [Optional] [Defaults to `undefined`]                                    |
+| **notArrived**       | `boolean`         | Filter travel equipment that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`]                                    |
 
 ### Return type
 
@@ -304,17 +322,17 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    travelExpensesId: travelExpensesId_example,
+    travelExpensesId: travel_001,
     // string
-    id: id_example,
+    id: te_001,
   } satisfies GetTravelEquipmentByIdRequest
 
   try {

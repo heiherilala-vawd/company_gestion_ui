@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime'
+import type { CrupdateExpenseMoney } from './CrupdateExpenseMoney'
+import {
+  CrupdateExpenseMoneyFromJSON,
+  CrupdateExpenseMoneyFromJSONTyped,
+  CrupdateExpenseMoneyToJSON,
+  CrupdateExpenseMoneyToJSONTyped,
+} from './CrupdateExpenseMoney'
+
 /**
  *
  * @export
@@ -27,10 +35,10 @@ export interface CrupdateBankFee {
   id?: string
   /**
    *
-   * @type {string}
+   * @type {CrupdateExpenseMoney}
    * @memberof CrupdateBankFee
    */
-  expense_id?: string
+  expense?: CrupdateExpenseMoney
   /**
    *
    * @type {string}
@@ -65,7 +73,7 @@ export function CrupdateBankFeeFromJSONTyped(
   }
   return {
     id: json['id'] == null ? undefined : json['id'],
-    expense_id: json['expense_id'] == null ? undefined : json['expense_id'],
+    expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
     bank_name: json['bank_name'] == null ? undefined : json['bank_name'],
     description: json['description'] == null ? undefined : json['description'],
   }
@@ -85,7 +93,7 @@ export function CrupdateBankFeeToJSONTyped(
 
   return {
     id: value['id'],
-    expense_id: value['expense_id'],
+    expense: CrupdateExpenseMoneyToJSON(value['expense']),
     bank_name: value['bank_name'],
     description: value['description'],
   }

@@ -20,35 +20,52 @@ Update users when &#x60;id&#x60; are provided, create them otherwise.
 ### Example
 
 ```ts
-import {
-  Configuration,
-  UsersApi,
-} from 'api-client';
-import type { CrupdateUsersRequest } from 'api-client';
+import { Configuration, UsersApi } from 'api-client'
+import type { CrupdateUsersRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new UsersApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new UsersApi(config)
 
   const body = {
     // Array<CrupdateUser>
-    crupdateUser: ...,
-  } satisfies CrupdateUsersRequest;
+    crupdateUser: [
+      {
+        id: 'usr_123456',
+        first_name: 'Jean',
+        last_name: 'Dupont',
+        email: 'jean.dupont@example.com',
+        role: 'EMPLOYEE',
+        sex: 'M',
+        password: 'newPassword123',
+        comment: 'Mise à jour du profil',
+      },
+      {
+        first_name: 'Pierre',
+        last_name: 'Durand',
+        email: 'pierre.durand@example.com',
+        role: 'WAREHOUSE_WORKER',
+        sex: 'M',
+        password: 'password123',
+        comment: "Nouvel employé d'entrepôt",
+      },
+    ],
+  } satisfies CrupdateUsersRequest
 
   try {
-    const data = await api.crupdateUsers(body);
-    console.log(data);
+    const data = await api.crupdateUsers(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -105,7 +122,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: usr_123456,
   } satisfies DeleteUserByIdRequest
 
   try {
@@ -174,7 +191,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: usr_123456,
   } satisfies GetUserByIdRequest
 
   try {
@@ -246,17 +263,17 @@ async function example() {
 
   const body = {
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter users by first name, case is ignored (optional)
-    firstName: firstName_example,
+    firstName: Jean,
     // string | Filter users by last name, case is ignored (optional)
-    lastName: lastName_example,
+    lastName: Dupont,
     // string | Filter users by email, case is ignored (optional)
-    email: email_example,
+    email: jean.dupont@example.com,
     // Role | Filter users by role (optional)
-    role: ...,
+    role: EMPLOYEE,
   } satisfies GetUsersRequest;
 
   try {

@@ -6,7 +6,7 @@
 | -------------- | ----------------------------------------------- |
 | `id`           | string                                          |
 | `expense`      | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `supplier`     | string                                          |
+| `supplier`     | [CrupdateWarehouse](CrupdateWarehouse.md)       |
 | `equipment`    | [CrupdateEquipment](CrupdateEquipment.md)       |
 | `material`     | [CrupdateMaterial](CrupdateMaterial.md)         |
 | `quantity`     | number                                          |
@@ -19,13 +19,13 @@ import type { Purchase } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
+  id: purch_001,
   expense: null,
   supplier: null,
   equipment: null,
   material: null,
-  quantity: null,
-  is_equipment: null,
+  quantity: 200,
+  is_equipment: false,
 } satisfies Purchase
 
 console.log(example)

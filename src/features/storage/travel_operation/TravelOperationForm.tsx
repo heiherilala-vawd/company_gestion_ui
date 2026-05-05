@@ -34,27 +34,9 @@ import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
 import { useNavigate } from 'react-router'
 import EquipmentForm from '../equipment/EquipmentForm.tsx'
 
-// Valeurs initiales
-const initialEquipmentLine = {
-  id: generateId(),
-  equipment_id: '',
-}
-
-const initialMaterialLine = {
-  id: generateId(),
-  material_id: '',
-  quantity: '',
-}
-
-const initialPeopleLine = {
-  id: generateId(),
-  user_id: '',
-}
-
 const TravelOperationForm = () => {
   const notify = useNotify()
   const { isLoading: identityLoading } = useGetIdentity()
-  const { comp_id, job_id, user_id } = useParams()
   const navigate = useNavigate()
 
   // ÉTAT POUR LE FILTRAGE DYNAMIQUE
@@ -74,11 +56,6 @@ const TravelOperationForm = () => {
   const [isTravelOpen, setIsTravelOpen] = useState(true)
 
   const onSubmit = async (data: any) => {
-    // Construction du payload selon le schéma attendu
-    console.log('--------------------------------------------------------------')
-    console.log('Données soumises:', data)
-    console.log('--------------------------------------------------------------')
-
     const payload = {
       comment: data.comment || null,
       travel: {

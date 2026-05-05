@@ -8,9 +8,9 @@ export default function PurchaseShow() {
         <TextField source="expense.amount" label="Pris dépense" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
-        <TextField source="supplier" label="Fournisseur" />
-        <TextField source="equipment" label="Équipement" />
-        <TextField source="material" label="Matériau" />
+        <TextField source="supplier.name" label="Fournisseur" />
+        <TextField source="equipment.name" label="Équipement" />
+        <TextField source="material.name" label="Matériau" />
         <NumberField source="quantity" label="Quantité" />
         <BooleanField source="is_equipment" label="Est équipement" />
       </SimpleShowLayout>

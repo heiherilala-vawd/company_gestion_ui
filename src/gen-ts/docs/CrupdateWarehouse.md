@@ -17,11 +17,11 @@ import type { CrupdateWarehouse } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  name: null,
-  description: null,
-  job_id: null,
+  "comment": Commentaire sur cette entité,
+  "id": wh_001,
+  "name": Entrepôt Nord,
+  "description": Entrepôt principal pour le chantier de Lyon,
+  "job_id": job_001,
 } satisfies CrupdateWarehouse
 
 console.log(example)

@@ -94,7 +94,7 @@ export const crupdateWarehousesMock: CrupdateWarehouse[] = [
 export const createOrUpdateWarehouses = (warehouses: CrupdateWarehouse[]): Warehouse[] => {
   return warehouses.map((warehouse) => ({
     ...warehouse,
-    id: warehouse.id || `wh_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    id: `newId`,
     job: {
       id: warehouse.job_id || job1Mock.id,
       company_id: warehouse.job_id === job2Mock.id ? job2Mock.company.id : job1Mock.company.id,

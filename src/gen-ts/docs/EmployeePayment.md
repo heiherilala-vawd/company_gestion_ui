@@ -17,11 +17,11 @@ import type { EmployeePayment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense: null,
-  employee: null,
-  payment_description: null,
-  payment_type: null,
+  "id": emp_pay_001,
+  "expense": null,
+  "employee": null,
+  "payment_description": Salaire février 2024,
+  "payment_type": null,
 } satisfies EmployeePayment
 
 console.log(example)

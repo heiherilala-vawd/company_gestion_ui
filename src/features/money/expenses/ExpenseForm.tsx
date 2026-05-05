@@ -1,27 +1,24 @@
 import { TextInput, NumberInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
-import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
-import { getMiddleUrl } from '../../../config/dynamicResources.ts'
-import JobForm from '../../transversal/jobs/JobForm.tsx'
+import { renderJobSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
 export default function ExpenseForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-
-      <ReferenceSelectWithCreate
-        source="job_id"
-        reference="jobs"
-        label="Chantier"
-        optionText="description"
-        createUrlEnd={getMiddleUrl('jobs')}
-        createForm={<JobForm isCreateForm />}
+      {renderJobSelect('job_id', 'Chantier')}
+      <NumberInput source="amount" label="Montant" data-testid="input-amount" />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        data-testid="input-description"
       />
-      <NumberInput source="amount" label="Montant" />
-      <TextInput source="description" label="Description" multiline />
-      <TextInput source="comment" label="Commentaire" multiline />
+      <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
     </>
   )
 }

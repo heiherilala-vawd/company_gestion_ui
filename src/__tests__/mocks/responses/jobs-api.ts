@@ -138,9 +138,9 @@ export const crupdateJobsMock: CrupdateJob[] = [
 export const createOrUpdateJobs = (jobs: CrupdateJob[]): Job[] => {
   return jobs.map((job) => ({
     ...job,
-    id: job.id || `job_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
+    id: `newId`,
     company: {
-      id: job.company_id || company1Mock.id,
+      id: `newId`,
       name: job.company_id === company2Mock.id ? company2Mock.name : company1Mock.name,
       rib: job.company_id === company2Mock.id ? company2Mock.rib : company1Mock.rib,
       description:

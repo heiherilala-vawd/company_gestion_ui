@@ -97,3 +97,28 @@ export const crupdateMaterialsMock: CrupdateMaterial[] = [
     comment: 'New material',
   },
 ]
+
+export const createOrUpdateMaterials = (materials: CrupdateMaterial[]): Material[] => {
+  return materials.map((mat) => ({
+    ...mat,
+    id: `newId`,
+    created_at: mat.id ? material1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

@@ -17,11 +17,11 @@ import type { CrupdateExpenseMoney } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  amount: null,
-  description: null,
-  id: null,
-  job_id: null,
+  "comment": Commentaire sur cette entité,
+  "amount": 15000,
+  "description": Achat de matériaux pour le chantier,
+  "id": exp_001,
+  "job_id": job_001,
 } satisfies CrupdateExpenseMoney
 
 console.log(example)

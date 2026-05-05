@@ -79,6 +79,10 @@ export interface GetTravelMaterialsRequest {
   materialId?: string
   quantity?: number
   quantityReceived?: number
+  arrivalLocation?: string
+  arrivalDateMin?: Date
+  arrivalDateMax?: Date
+  notArrived?: boolean
 }
 
 export interface GetTravelMaterialsByIdRequest {
@@ -376,6 +380,26 @@ export class TravelMaterialsApi extends runtime.BaseAPI {
 
     if (requestParameters['quantityReceived'] != null) {
       queryParameters['quantity_received'] = requestParameters['quantityReceived']
+    }
+
+    if (requestParameters['arrivalLocation'] != null) {
+      queryParameters['arrival_location'] = requestParameters['arrivalLocation']
+    }
+
+    if (requestParameters['arrivalDateMin'] != null) {
+      queryParameters['arrival_date_min'] = (
+        requestParameters['arrivalDateMin'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['arrivalDateMax'] != null) {
+      queryParameters['arrival_date_max'] = (
+        requestParameters['arrivalDateMax'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['notArrived'] != null) {
+      queryParameters['not_arrived'] = requestParameters['notArrived']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}

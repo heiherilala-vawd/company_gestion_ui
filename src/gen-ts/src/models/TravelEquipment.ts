@@ -20,6 +20,13 @@ import {
   AuditUserToJSON,
   AuditUserToJSONTyped,
 } from './AuditUser'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
 import type { CrupdateTravelExpense } from './CrupdateTravelExpense'
 import {
   CrupdateTravelExpenseFromJSON,
@@ -108,6 +115,18 @@ export interface TravelEquipment {
    * @memberof TravelEquipment
    */
   status?: TransportStatus
+  /**
+   *
+   * @type {Date}
+   * @memberof TravelEquipment
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {CrupdateWarehouse}
+   * @memberof TravelEquipment
+   */
+  arrival_location?: CrupdateWarehouse
 }
 
 /**
@@ -139,6 +158,11 @@ export function TravelEquipmentFromJSONTyped(
     equipment: json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
     quantity: json['quantity'] == null ? undefined : json['quantity'],
     status: json['status'] == null ? undefined : TransportStatusFromJSON(json['status']),
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location:
+      json['arrival_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['arrival_location']),
   }
 }
 
@@ -167,5 +191,8 @@ export function TravelEquipmentToJSONTyped(
     equipment: CrupdateEquipmentToJSON(value['equipment']),
     quantity: value['quantity'],
     status: TransportStatusToJSON(value['status']),
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: CrupdateWarehouseToJSON(value['arrival_location']),
   }
 }

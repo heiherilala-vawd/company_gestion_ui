@@ -31,7 +31,7 @@ export default function ReferenceSelectWithCreate({
   source,
   reference,
   label,
-  optionText = 'name',
+  optionText,
   filter,
   sort = { field: 'name', order: 'ASC' },
   perPage = 100,
@@ -92,7 +92,13 @@ export default function ReferenceSelectWithCreate({
 
   return (
     <>
-      <Box display="flex" alignItems="center" gap={1} data-testid={'input-' + reference + '-id'}>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={1}
+        data-testid={'input-' + reference + '-id'}
+        style={{ width: '100%' }}
+      >
         {/*'input-' + label + '-id'*/}
         <Box flex={1}>
           <ReferenceInput
@@ -101,6 +107,7 @@ export default function ReferenceSelectWithCreate({
             filter={filter}
             sort={sort}
             perPage={perPage}
+            optionText={optionText}
           >
             <SelectInput optionText={optionText} label={label} fullWidth />
           </ReferenceInput>

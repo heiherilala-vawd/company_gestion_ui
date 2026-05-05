@@ -1,7 +1,7 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin'
-import EmployerPaymentForm from './EmployerPaymentForm'
+import EmployeePaymentForm from './EmployeePaymentForm.tsx'
 
-export default function EmployerPaymentEdit() {
+export default function EmployeePaymentEdit() {
   return (
     <Edit
       transform={(data) => ({
@@ -13,8 +13,8 @@ export default function EmployerPaymentEdit() {
       })}
     >
       <SimpleForm>
-        <TextInput source="id" disabled />
-        <EmployerPaymentForm />
+        <TextInput source="id" readOnly />
+        <EmployeePaymentForm />
       </SimpleForm>
     </Edit>
   )

@@ -14,6 +14,8 @@
 | `material`          | [CrupdateMaterial](CrupdateMaterial.md)           |
 | `quantity`          | number                                            |
 | `quantity_received` | number                                            |
+| `arrival_date`      | Date                                              |
+| `arrival_location`  | [CrupdateWarehouse](CrupdateWarehouse.md)         |
 
 ## Example
 
@@ -22,16 +24,18 @@ import type { TravelMaterials } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  id: null,
-  travel: null,
-  material: null,
-  quantity: null,
-  quantity_received: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "id": tm_001,
+  "travel": null,
+  "material": null,
+  "quantity": 100,
+  "quantity_received": 100,
+  "arrival_date": 2024-02-20T18:00Z,
+  "arrival_location": null,
 } satisfies TravelMaterials
 
 console.log(example)

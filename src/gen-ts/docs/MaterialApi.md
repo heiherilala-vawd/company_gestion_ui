@@ -18,35 +18,46 @@ Create new materials or update existing materials
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialApi,
-} from 'api-client';
-import type { CrupdateMaterialsRequest } from 'api-client';
+import { Configuration, MaterialApi } from 'api-client'
+import type { CrupdateMaterialsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialApi(config)
 
   const body = {
     // Array<CrupdateMaterial>
-    crupdateMaterial: ...,
-  } satisfies CrupdateMaterialsRequest;
+    crupdateMaterial: [
+      {
+        id: 'mat_001',
+        name: 'Ciment Portland',
+        description: 'Ciment Portland pour béton haute résistance',
+        unit: 'SAC',
+        comment: 'Nouvelle référence - résistance accrue',
+      },
+      {
+        name: 'Acier à béton HA12',
+        description: "Barres d'acier haute adhérence diamètre 12mm",
+        unit: 'BAR',
+        comment: 'Longueur 6m - NF A35-016',
+      },
+    ],
+  } satisfies CrupdateMaterialsRequest
 
   try {
-    const data = await api.crupdateMaterials(body);
-    console.log(data);
+    const data = await api.crupdateMaterials(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -103,7 +114,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: mat_001,
   } satisfies DeleteMaterialByIdRequest
 
   try {
@@ -172,7 +183,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: mat_001,
   } satisfies GetMaterialByIdRequest
 
   try {
@@ -228,43 +239,40 @@ Get all materials
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialApi,
-} from 'api-client';
-import type { GetMaterialsRequest } from 'api-client';
+import { Configuration, MaterialApi } from 'api-client'
+import type { GetMaterialsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialApi(config)
 
   const body = {
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter materials by name, case is ignored (optional)
-    name: name_example,
+    name: Ciment,
     // string | Filter materials by description, case is ignored (optional)
-    description: description_example,
+    description: béton,
     // MaterialUnit (optional)
-    unit: ...,
-  } satisfies GetMaterialsRequest;
+    unit: SAC,
+  } satisfies GetMaterialsRequest
 
   try {
-    const data = await api.getMaterials(body);
-    console.log(data);
+    const data = await api.getMaterials(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters

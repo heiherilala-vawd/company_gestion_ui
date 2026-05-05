@@ -22,16 +22,16 @@ import type { Company } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  id: null,
-  name: null,
-  rib: null,
-  description: null,
-  company_type: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "id": comp_btp001,
+  "name": BTP Construction Martin,
+  "rib": FR76 1234 5678 9012 3456 7890 123,
+  "description": Entreprise de construction spécialisée dans les bâtiments industriels,
+  "company_type": null,
 } satisfies Company
 
 console.log(example)

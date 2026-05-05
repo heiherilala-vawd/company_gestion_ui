@@ -2,13 +2,13 @@
 
 ## Properties
 
-| Name                  | Type                          |
-| --------------------- | ----------------------------- |
-| `id`                  | string                        |
-| `expense_id`          | string                        |
-| `employee_id`         | string                        |
-| `payment_description` | string                        |
-| `payment_type`        | [PaymentType](PaymentType.md) |
+| Name                  | Type                                            |
+| --------------------- | ----------------------------------------------- |
+| `id`                  | string                                          |
+| `expense`             | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `employee_id`         | string                                          |
+| `payment_description` | string                                          |
+| `payment_type`        | [PaymentType](PaymentType.md)                   |
 
 ## Example
 
@@ -17,11 +17,11 @@ import type { CrupdateEmployeePayment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense_id: null,
-  employee_id: null,
-  payment_description: null,
-  payment_type: null,
+  "id": emp_pay_001,
+  "expense": null,
+  "employee_id": usr_123456,
+  "payment_description": Salaire février 2024,
+  "payment_type": null,
 } satisfies CrupdateEmployeePayment
 
 console.log(example)

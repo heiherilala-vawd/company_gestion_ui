@@ -1,32 +1,23 @@
 import {
-  List,
-  Datagrid,
+  Show,
+  SimpleShowLayout,
   TextField,
   SelectField,
-  SearchInput,
-  TextInput,
-  EditButton,
-  DeleteButton,
   DateField,
   FunctionField,
 } from 'react-admin'
 
-const EmployerPaymentFilters = [
-  <SearchInput source="payment_description" alwaysOn />,
-  <TextInput source="employee_id" label="Employé" />,
-]
-
-export default function EmployerPaymentList() {
+export default function EmployeePaymentShow() {
   return (
-    <List resource="employer_payments" filters={EmployerPaymentFilters} perPage={25}>
-      <Datagrid rowClick="show">
+    <Show>
+      <SimpleShowLayout>
+        <TextField source="id" />
         <TextField source="expense.amount" label="Pris dépense" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
         <TextField source="employee.first_name" label="Nom persone" />
         <TextField source="employee.last_name" label="Prénomm persone" />
-        <TextField source="payment_description" label="Description paiement" />
-
+        <TextField source="payment_description" label="Description" />
         <SelectField
           source="payment_type"
           label="Type"
@@ -57,9 +48,7 @@ export default function EmployerPaymentList() {
             </span>
           )}
         />
-        <EditButton />
-        <DeleteButton />
-      </Datagrid>
-    </List>
+      </SimpleShowLayout>
+    </Show>
   )
 }

@@ -1,23 +1,27 @@
 import { TextInput, DateInput } from 'react-admin'
-import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate'
 import generateId from '../../../utili/utils.tsx'
+import {
+  renderExpenseSelect,
+  renderWarehouseSelect,
+} from '../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
 export default function TravelExpenseForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      <ReferenceSelectWithCreate
-        source="expense_id"
-        reference="expenses"
-        label="Dépense"
-        optionText="description"
+      {renderExpenseSelect('expense_id', null)}
+      {renderWarehouseSelect('departure_location_id', 'Lieu de départ')}
+      {renderWarehouseSelect('arrival_location_id', "Lieu d'arrivée")}
+      <DateInput
+        source="departure_date"
+        label="Date de départ"
+        data-testid="input-departure_date"
       />
-      <TextInput source="departure_location" label="Lieu de départ" />
-      <TextInput source="arrival_location" label="Lieu d'arrivée" />
-      <DateInput source="departure_date" label="Date de départ" />
-      <DateInput source="arrival_date" label="Date d'arrivée" />
+      <DateInput source="arrival_date" label="Date d'arrivée" data-testid="input-arrival_date" />
     </>
   )
 }

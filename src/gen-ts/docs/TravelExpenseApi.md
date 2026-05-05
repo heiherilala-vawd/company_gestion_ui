@@ -18,43 +18,49 @@ Create new travel expenses or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelExpenseApi,
-} from 'api-client';
-import type { CrupdateTravelExpensesRequest } from 'api-client';
+import { Configuration, TravelExpenseApi } from 'api-client'
+import type { CrupdateTravelExpensesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelExpenseApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // Array<CrupdateTravelExpense>
-    crupdateTravelExpense: ...,
-  } satisfies CrupdateTravelExpensesRequest;
+    crupdateTravelExpense: [
+      {
+        id: 'travel_001',
+        expense_id: 'exp_003',
+        departure_location: { id: 'wh_001', name: 'Entrepôt Nord' },
+        arrival_location: { id: 'wh_002', name: 'Entrepôt Sud' },
+        departure_date: '2024-02-20T08:00:00Z',
+        arrival_date: '2024-02-20T19:00:00Z',
+      },
+    ],
+  } satisfies CrupdateTravelExpensesRequest
 
   try {
-    const data = await api.crupdateTravelExpenses(body);
-    console.log(data);
+    const data = await api.crupdateTravelExpenses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -115,15 +121,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    id: id_example,
+    id: travel_001,
   } satisfies DeleteTravelExpenseByIdRequest
 
   try {
@@ -196,15 +202,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // string
-    id: id_example,
+    id: travel_001,
   } satisfies GetTravelExpenseByIdRequest
 
   try {
@@ -277,23 +283,23 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_003,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    expenseId: expenseId_example,
-    // string | Filter travel expenses by departure location, case is ignored (optional)
-    departureLocation: departureLocation_example,
-    // string | Filter travel expenses by arrival location, case is ignored (optional)
-    arrivalLocation: arrivalLocation_example,
+    expenseId: exp_003,
+    // string | Filter travel expenses by departure warehouse id (optional)
+    departureLocation: wh_001,
+    // string | Filter travel expenses by arrival warehouse id (optional)
+    arrivalLocation: wh_002,
   } satisfies GetTravelExpensesRequest
 
   try {
@@ -310,17 +316,17 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name                  | Type     | Description                                                   | Notes                                |
-| --------------------- | -------- | ------------------------------------------------------------- | ------------------------------------ |
-| **compId**            | `string` |                                                               | [Defaults to `undefined`]            |
-| **jobId**             | `string` |                                                               | [Defaults to `undefined`]            |
-| **userId**            | `string` |                                                               | [Defaults to `undefined`]            |
-| **expensesId**        | `string` |                                                               | [Defaults to `undefined`]            |
-| **page**              | `number` |                                                               | [Optional] [Defaults to `undefined`] |
-| **pageSize**          | `number` |                                                               | [Optional] [Defaults to `undefined`] |
-| **expenseId**         | `string` |                                                               | [Optional] [Defaults to `undefined`] |
-| **departureLocation** | `string` | Filter travel expenses by departure location, case is ignored | [Optional] [Defaults to `undefined`] |
-| **arrivalLocation**   | `string` | Filter travel expenses by arrival location, case is ignored   | [Optional] [Defaults to `undefined`] |
+| Name                  | Type     | Description                                      | Notes                                |
+| --------------------- | -------- | ------------------------------------------------ | ------------------------------------ |
+| **compId**            | `string` |                                                  | [Defaults to `undefined`]            |
+| **jobId**             | `string` |                                                  | [Defaults to `undefined`]            |
+| **userId**            | `string` |                                                  | [Defaults to `undefined`]            |
+| **expensesId**        | `string` |                                                  | [Defaults to `undefined`]            |
+| **page**              | `number` |                                                  | [Optional] [Defaults to `undefined`] |
+| **pageSize**          | `number` |                                                  | [Optional] [Defaults to `undefined`] |
+| **expenseId**         | `string` |                                                  | [Optional] [Defaults to `undefined`] |
+| **departureLocation** | `string` | Filter travel expenses by departure warehouse id | [Optional] [Defaults to `undefined`] |
+| **arrivalLocation**   | `string` | Filter travel expenses by arrival warehouse id   | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

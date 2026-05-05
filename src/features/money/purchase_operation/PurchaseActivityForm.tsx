@@ -1,6 +1,5 @@
 // pages/PurchaseActivityForm.tsx
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom' // à installer si ce n'est pas déjà fait
 import {
   Title,
   Form,

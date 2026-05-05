@@ -142,11 +142,11 @@ const MenuRoot = () => {
       testId: 'menu-other-expenses',
     },
     {
-      name: 'incomes',
-      label: '💰 Salaires',
+      name: 'employer_payments',
+      label: '💰 Salaires personnel',
       icon: PaidIcon,
-      to: '/incomes',
-      testId: 'menu-incomes',
+      to: '/employee_payments',
+      testId: 'menu-employee-payments',
     },
   ]
 

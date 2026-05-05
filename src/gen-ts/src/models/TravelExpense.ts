@@ -20,6 +20,13 @@ import {
   CrupdateExpenseMoneyToJSON,
   CrupdateExpenseMoneyToJSONTyped,
 } from './CrupdateExpenseMoney'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
 
 /**
  *
@@ -41,16 +48,16 @@ export interface TravelExpense {
   expense?: CrupdateExpenseMoney
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof TravelExpense
    */
-  departure_location?: string
+  departure_location?: CrupdateWarehouse
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof TravelExpense
    */
-  arrival_location?: string
+  arrival_location?: CrupdateWarehouse
   /**
    *
    * @type {Date}
@@ -83,8 +90,14 @@ export function TravelExpenseFromJSONTyped(json: any, ignoreDiscriminator: boole
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
-    departure_location: json['departure_location'] == null ? undefined : json['departure_location'],
-    arrival_location: json['arrival_location'] == null ? undefined : json['arrival_location'],
+    departure_location:
+      json['departure_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['departure_location']),
+    arrival_location:
+      json['arrival_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['arrival_location']),
     departure_date: json['departure_date'] == null ? undefined : new Date(json['departure_date']),
     arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
   }
@@ -105,8 +118,8 @@ export function TravelExpenseToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
-    departure_location: value['departure_location'],
-    arrival_location: value['arrival_location'],
+    departure_location: CrupdateWarehouseToJSON(value['departure_location']),
+    arrival_location: CrupdateWarehouseToJSON(value['arrival_location']),
     departure_date:
       value['departure_date'] == null
         ? value['departure_date']

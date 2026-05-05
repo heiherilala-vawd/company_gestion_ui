@@ -52,26 +52,102 @@
    })
    ```
 
-3. **Write E2E tests in `src/__tests__/e2e/`**:
-   - Use `beforeEach` for setup (clear storage, visit page)
-   - Use `mockSuccessResponse()` for 200 responses
-   - Place real tests after comments describing the scenario
+3. **Use utility functions** from `src/__tests__/support/utils.ts` for common setup:
+   - `insertInToLocalStorage()` - Sets localStorage items (currentCompanyId, etc.)
+   - `interceptGeneralEndpoint()` - Intercepts all common API endpoints (users, jobs, warehouses, materials, etc.)
+   - `loginInPage()` - Performs login with valid credentials
+   - `selectReferenceWithCreate(testId, menuId, entitySelection, waitAlias)` - Generic helper for ReferenceSelectWithCreate
+   - `selectJob()` - Selects a job in ReferenceSelectWithCreate
+   - `selectCompany()` - Selects a company in ReferenceSelectWithCreate
+   - `selectExpense()` - Selects an expense in ReferenceSelectWithCreate
+   - `selectUser()` - Selects a user in ReferenceSelectWithCreate
+   - `selectWarehouse()` - Selects a warehouse in ReferenceSelectWithCreate
+   - `selectMaterial()` - Selects a material in ReferenceSelectWithCreate
+   - `selectEquipment()` - Selects equipment in ReferenceSelectWithCreate
+   - `selectTravelExpense()` - Selects a travel expense in ReferenceSelectWithCreate
+
+4. **Write E2E tests in `src/__tests__/e2e/`** with the pattern:
+   - Create `creatOrUpdate(isCreating: boolean)` function for create/update logic
+   - Use `beforeEach` with utility functions for setup
+   - Include create, update, and error scenarios
 
    ```typescript
-   describe('E2E: Authentication', () => {
+   import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
+   import {
+     entity1Mock,
+     entity2Mock,
+     entitiesMock,
+     crupdateEntitiesMock,
+     createOrUpdateEntities,
+   } from '../mocks/responses/entities-api'
+   import {
+     insertInToLocalStorage,
+     interceptGeneralEndpoint,
+     loginInPage,
+     selectHelper,
+   } from '../support/utils.ts'
+
+   describe('E2E: Entity', () => {
+     function creatOrUpdate(isCreating: boolean) {
+       const crupdatedData = crupdateEntitiesMock[0]
+       if (isCreating) {
+         cy.contains('Create').click()
+       } else {
+         cy.contains(<string>entity1Mock.name).click()
+         cy.wait('@getEntity')
+         cy.contains('Edit').click()
+       }
+       // Fill form fields
+       selectHelper()
+       cy.get('button[type="submit"]').click()
+     }
+
      beforeEach(() => {
        cy.clearLocalStorage()
-       cy.visit('/', { failOnStatusCode: false })
+       cy.clearCookies()
+       insertInToLocalStorage()
+       interceptGeneralEndpoint()
+       loginInPage()
+       cy.get('[data-testid="menu-entities"]').click()
+       cy.wait('@getEntities')
      })
 
-     it('test description', () => {
-       cy.intercept('POST', '**/endpoint', mockSuccessResponse(mockData)).as('alias')
-       // ... test logic
+     it('should display entities list', () => {
+       cy.contains(<string>entity1Mock.name).should('be.visible')
+     })
+
+     it('should create a new entity', () => {
+       cy.intercept('PUT', '**/entities', (req) => {
+         req.reply(mockSuccessResponse(createOrUpdateEntities(req.body)))
+       }).as('createEntity')
+       creatOrUpdate(true)
+       cy.wait('@createEntity')
+       cy.url().should('include', '/entities')
+     })
+
+     it('should update an existing entity', () => {
+       cy.intercept('PUT', '**/entities', (req) => {
+         req.reply(mockSuccessResponse(createOrUpdateEntities(req.body)))
+       }).as('updateEntity')
+       creatOrUpdate(false)
+       cy.wait('@updateEntity')
+       cy.url().should('include', '/entities')
+     })
+
+     it('should show error on create failure', () => {
+       cy.intercept(
+         'PUT',
+         '**/entities',
+         mockErrorResponse('BadRequestException', 'Invalid data', 400),
+       ).as('createEntityFail')
+       creatOrUpdate(true)
+       cy.wait('@createEntityFail')
+       cy.get('.RaNotification-error').should('be.visible')
      })
    })
    ```
 
-4. **After implementation, run and fix errors**:
+5. **After implementation, run and fix errors**:
    ```bash
    npm run dev &  # Terminal 1
    npx cypress run --config-file src/__tests__/cypress.config.ts  # Terminal 2

@@ -18,12 +18,12 @@ import type { AuditUser } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  role: null,
-  first_name: null,
-  last_name: null,
-  sex: null,
-  email: null,
+  "id": usr_admin001,
+  "role": null,
+  "first_name": Admin,
+  "last_name": System,
+  "sex": null,
+  "email": admin@company.com,
 } satisfies AuditUser
 
 console.log(example)

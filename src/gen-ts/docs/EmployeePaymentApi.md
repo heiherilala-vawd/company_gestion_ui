@@ -18,43 +18,48 @@ Create new employee payments or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  EmployeePaymentApi,
-} from 'api-client';
-import type { CrupdateEmployeePaymentsRequest } from 'api-client';
+import { Configuration, EmployeePaymentApi } from 'api-client'
+import type { CrupdateEmployeePaymentsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new EmployeePaymentApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new EmployeePaymentApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_004,
     // Array<CrupdateEmployeePayment>
-    crupdateEmployeePayment: ...,
-  } satisfies CrupdateEmployeePaymentsRequest;
+    crupdateEmployeePayment: [
+      {
+        id: 'emp_pay_001',
+        expense_id: 'exp_004',
+        employee_id: 'usr_123456',
+        payment_description: 'Salaire février 2024 + prime',
+        payment_type: 'MONTHLY',
+      },
+    ],
+  } satisfies CrupdateEmployeePaymentsRequest
 
   try {
-    const data = await api.crupdateEmployeePayments(body);
-    console.log(data);
+    const data = await api.crupdateEmployeePayments(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -115,15 +120,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_004,
     // string
-    id: id_example,
+    id: emp_pay_001,
   } satisfies DeleteEmployeePaymentByIdRequest
 
   try {
@@ -196,15 +201,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_004,
     // string
-    id: id_example,
+    id: emp_pay_001,
   } satisfies GetEmployeePaymentByIdRequest
 
   try {
@@ -264,53 +269,50 @@ Get all employee payments
 ### Example
 
 ```ts
-import {
-  Configuration,
-  EmployeePaymentApi,
-} from 'api-client';
-import type { GetEmployeePaymentsRequest } from 'api-client';
+import { Configuration, EmployeePaymentApi } from 'api-client'
+import type { GetEmployeePaymentsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new EmployeePaymentApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new EmployeePaymentApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_004,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    employeeId: employeeId_example,
+    employeeId: usr_123456,
     // string (optional)
-    expenseId: expenseId_example,
+    expenseId: exp_004,
     // string | Filter employee payments by description, case is ignored (optional)
-    paymentDescription: paymentDescription_example,
+    paymentDescription: salaire,
     // PaymentType (optional)
-    paymentType: ...,
-  } satisfies GetEmployeePaymentsRequest;
+    paymentType: MONTHLY,
+  } satisfies GetEmployeePaymentsRequest
 
   try {
-    const data = await api.getEmployeePayments(body);
-    console.log(data);
+    const data = await api.getEmployeePayments(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters

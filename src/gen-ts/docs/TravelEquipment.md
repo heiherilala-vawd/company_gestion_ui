@@ -2,18 +2,20 @@
 
 ## Properties
 
-| Name         | Type                                              |
-| ------------ | ------------------------------------------------- |
-| `comment`    | string                                            |
-| `created_at` | Date                                              |
-| `updated_at` | Date                                              |
-| `created_by` | [AuditUser](AuditUser.md)                         |
-| `updated_by` | [AuditUser](AuditUser.md)                         |
-| `id`         | string                                            |
-| `travel`     | [CrupdateTravelExpense](CrupdateTravelExpense.md) |
-| `equipment`  | [CrupdateEquipment](CrupdateEquipment.md)         |
-| `quantity`   | number                                            |
-| `status`     | [TransportStatus](TransportStatus.md)             |
+| Name               | Type                                              |
+| ------------------ | ------------------------------------------------- |
+| `comment`          | string                                            |
+| `created_at`       | Date                                              |
+| `updated_at`       | Date                                              |
+| `created_by`       | [AuditUser](AuditUser.md)                         |
+| `updated_by`       | [AuditUser](AuditUser.md)                         |
+| `id`               | string                                            |
+| `travel`           | [CrupdateTravelExpense](CrupdateTravelExpense.md) |
+| `equipment`        | [CrupdateEquipment](CrupdateEquipment.md)         |
+| `quantity`         | number                                            |
+| `status`           | [TransportStatus](TransportStatus.md)             |
+| `arrival_date`     | Date                                              |
+| `arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)         |
 
 ## Example
 
@@ -22,16 +24,18 @@ import type { TravelEquipment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  id: null,
-  travel: null,
-  equipment: null,
-  quantity: null,
-  status: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "id": te_001,
+  "travel": null,
+  "equipment": null,
+  "quantity": 1,
+  "status": null,
+  "arrival_date": 2024-02-20T18:00Z,
+  "arrival_location": null,
 } satisfies TravelEquipment
 
 console.log(example)

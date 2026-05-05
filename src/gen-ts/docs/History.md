@@ -19,13 +19,13 @@ import type { History } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  previous_value: null,
-  new_value: null,
-  user_id: null,
-  modified_at: null,
-  entity_type: null,
-  entity_id: null,
+  "id": hist_001,
+  "previous_value": {"status":"PENDING_SIGNATURE"},
+  "new_value": {"status":"IN_PROGRESS"},
+  "user_id": usr_123456,
+  "modified_at": 2024-02-01T09:00Z,
+  "entity_type": null,
+  "entity_id": job_001,
 } satisfies History
 
 console.log(example)

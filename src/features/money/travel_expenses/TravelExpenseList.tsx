@@ -21,8 +21,8 @@ export default function TravelExpenseList() {
         <TextField source="expense.amount" label="Pris dépense" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
-        <TextField source="departure_location" label="Départ" />
-        <TextField source="arrival_location" label="Arrivée" />
+        <TextField source="departure_location.name" label="Départ" />
+        <TextField source="arrival_location.name" label="Arrivée" />
         <DateField source="departure_date" label="Date départ" showTime />
         <DateField source="arrival_date" label="Date arrivée" showTime />
         <EditButton />

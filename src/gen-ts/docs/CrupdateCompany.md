@@ -18,12 +18,12 @@ import type { CrupdateCompany } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  name: null,
-  rib: null,
-  description: null,
-  company_type: null,
+  "comment": Commentaire sur cette entité,
+  "id": comp_btp001,
+  "name": BTP Construction Martin,
+  "rib": FR76 1234 5678 9012 3456 7890 123,
+  "description": Entreprise de construction spécialisée dans les bâtiments industriels,
+  "company_type": null,
 } satisfies CrupdateCompany
 
 console.log(example)

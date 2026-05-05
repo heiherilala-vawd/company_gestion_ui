@@ -1,5 +1,5 @@
-import { Edit, SimpleForm, TextInput, SelectInput } from 'react-admin'
-import ReferenceSelectWithCreate from '../../../../generic/ReferenceSelectWithCreate'
+import { Edit, SimpleForm, TextInput } from 'react-admin'
+import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleEdit() {
   return (
@@ -8,18 +8,13 @@ export default function TravelPeopleEdit() {
         ...data,
         travel_id: data.travel?.id,
         travel: undefined,
+        user_id: data.user?.id,
+        user: undefined,
       })}
     >
       <SimpleForm>
-        <TextInput source="id" disabled />
-        <ReferenceSelectWithCreate
-          source="travel_id"
-          reference="travel_expenses"
-          label="Voyage"
-          optionText="title"
-        />
-        <TextInput source="person_name" label="Nom de la personne" />
-        <TextInput source="comment" label="Commentaire" multiline />
+        <TextInput source="id" readOnly />
+        <TravelPeopleForm />
       </SimpleForm>
     </Edit>
   )

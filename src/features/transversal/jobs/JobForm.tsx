@@ -1,23 +1,16 @@
 import { TextInput, DateInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
-import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate'
-import CompanyForm from '../companies/CompanyForm.tsx'
-import { getMiddleUrl } from '../../../config/dynamicResources.ts'
+import { renderCompanySelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
 export default function JobForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreate && <TextInput source="id" readOnly defaultValue={generateId()} />}
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      <ReferenceSelectWithCreate
-        source="company_id"
-        reference="companies"
-        label="Entreprise"
-        optionText="name"
-        createUrlEnd={getMiddleUrl('companies')}
-        createForm={<CompanyForm isCreateForm />}
-      />
+      {renderCompanySelect('company_id', 'companies')}
       <TextInput
         source="description"
         label="Description"

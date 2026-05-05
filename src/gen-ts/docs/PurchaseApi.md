@@ -18,43 +18,49 @@ Create new purchases or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  PurchaseApi,
-} from 'api-client';
-import type { CrupdatePurchasesRequest } from 'api-client';
+import { Configuration, PurchaseApi } from 'api-client'
+import type { CrupdatePurchasesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new PurchaseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new PurchaseApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // Array<CrupdatePurchase>
-    crupdatePurchase: ...,
-  } satisfies CrupdatePurchasesRequest;
+    crupdatePurchase: [
+      {
+        id: 'purch_001',
+        expense_id: 'exp_001',
+        supplier_id: 'supp_001',
+        material: 'mat_001',
+        quantity: 250,
+        is_equipment: false,
+      },
+    ],
+  } satisfies CrupdatePurchasesRequest
 
   try {
-    const data = await api.crupdatePurchases(body);
-    console.log(data);
+    const data = await api.crupdatePurchases(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -115,15 +121,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // string
-    id: id_example,
+    id: purch_001,
   } satisfies DeletePurchaseByIdRequest
 
   try {
@@ -196,15 +202,15 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // string
-    id: id_example,
+    id: purch_001,
   } satisfies GetPurchaseByIdRequest
 
   try {
@@ -257,7 +263,7 @@ example().catch(console.error)
 
 ## getPurchases
 
-> Array&lt;Purchase&gt; getPurchases(compId, jobId, userId, expensesId, page, pageSize, expenseId, supplier, isEquipment)
+> Array&lt;Purchase&gt; getPurchases(compId, jobId, userId, expensesId, page, pageSize, expenseId, supplierId, isEquipment)
 
 Get all purchases
 
@@ -277,23 +283,23 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    expensesId: expensesId_example,
+    expensesId: exp_001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    expenseId: expenseId_example,
-    // string | Filter purchases by supplier, case is ignored (optional)
-    supplier: supplier_example,
+    expenseId: exp_001,
+    // string | Filter purchases by supplier id (optional)
+    supplierId: supp_001,
     // boolean (optional)
-    isEquipment: true,
+    isEquipment: false,
   } satisfies GetPurchasesRequest
 
   try {
@@ -310,17 +316,17 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name            | Type      | Description                                   | Notes                                |
-| --------------- | --------- | --------------------------------------------- | ------------------------------------ |
-| **compId**      | `string`  |                                               | [Defaults to `undefined`]            |
-| **jobId**       | `string`  |                                               | [Defaults to `undefined`]            |
-| **userId**      | `string`  |                                               | [Defaults to `undefined`]            |
-| **expensesId**  | `string`  |                                               | [Defaults to `undefined`]            |
-| **page**        | `number`  |                                               | [Optional] [Defaults to `undefined`] |
-| **pageSize**    | `number`  |                                               | [Optional] [Defaults to `undefined`] |
-| **expenseId**   | `string`  |                                               | [Optional] [Defaults to `undefined`] |
-| **supplier**    | `string`  | Filter purchases by supplier, case is ignored | [Optional] [Defaults to `undefined`] |
-| **isEquipment** | `boolean` |                                               | [Optional] [Defaults to `undefined`] |
+| Name            | Type      | Description                     | Notes                                |
+| --------------- | --------- | ------------------------------- | ------------------------------------ |
+| **compId**      | `string`  |                                 | [Defaults to `undefined`]            |
+| **jobId**       | `string`  |                                 | [Defaults to `undefined`]            |
+| **userId**      | `string`  |                                 | [Defaults to `undefined`]            |
+| **expensesId**  | `string`  |                                 | [Defaults to `undefined`]            |
+| **page**        | `number`  |                                 | [Optional] [Defaults to `undefined`] |
+| **pageSize**    | `number`  |                                 | [Optional] [Defaults to `undefined`] |
+| **expenseId**   | `string`  |                                 | [Optional] [Defaults to `undefined`] |
+| **supplierId**  | `string`  | Filter purchases by supplier id | [Optional] [Defaults to `undefined`] |
+| **isEquipment** | `boolean` |                                 | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

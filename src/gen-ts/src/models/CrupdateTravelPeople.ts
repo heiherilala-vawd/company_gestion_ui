@@ -43,6 +43,18 @@ export interface CrupdateTravelPeople {
    * @memberof CrupdateTravelPeople
    */
   user_id?: string
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateTravelPeople
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateTravelPeople
+   */
+  arrival_location?: string
 }
 
 /**
@@ -68,6 +80,8 @@ export function CrupdateTravelPeopleFromJSONTyped(
     id: json['id'] == null ? undefined : json['id'],
     travel_id: json['travel_id'] == null ? undefined : json['travel_id'],
     user_id: json['user_id'] == null ? undefined : json['user_id'],
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location: json['arrival_location'] == null ? undefined : json['arrival_location'],
   }
 }
 
@@ -88,5 +102,8 @@ export function CrupdateTravelPeopleToJSONTyped(
     id: value['id'],
     travel_id: value['travel_id'],
     user_id: value['user_id'],
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: value['arrival_location'],
   }
 }

@@ -90,3 +90,38 @@ export const crupdateExpensesMock: CrupdateExpenseMoney[] = [
     comment: 'New expense creation',
   },
 ]
+
+export const createOrUpdateExpenses = (expenses: CrupdateExpenseMoney[]): ExpenseMoney[] => {
+  return expenses.map((exp) => ({
+    ...exp,
+    id: `newId`,
+    job: {
+      id: exp.job_id || job1Mock.id,
+      company_id: job1Mock.company.id,
+      description: job1Mock.description,
+      contract_signature_date: job1Mock.contract_signature_date,
+      start_date: job1Mock.start_date,
+      end_date: job1Mock.end_date,
+      status: job1Mock.status,
+      comment: job1Mock.comment,
+    },
+    created_at: exp.id ? expense1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

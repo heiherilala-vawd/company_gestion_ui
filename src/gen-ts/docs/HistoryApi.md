@@ -33,19 +33,19 @@ async function example() {
 
   const body = {
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter by user who made the modification (optional)
-    userId: userId_example,
+    userId: usr_123456,
     // EntityType | Filter by entity type (optional)
-    entityType: ...,
+    entityType: JOB,
     // string | Filter by entity identifier (optional)
-    entityId: entityId_example,
+    entityId: job_001,
     // Date | Filter modifications from this date (inclusive) (optional)
-    dateFrom: 2013-10-20T19:20:30+01:00,
+    dateFrom: 2024-02-01T00:00:00Z,
     // Date | Filter modifications until this date (inclusive) (optional)
-    dateTo: 2013-10-20T19:20:30+01:00,
+    dateTo: 2024-02-29T23:59:59Z,
   } satisfies GetHistoriesRequest;
 
   try {

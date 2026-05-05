@@ -20,14 +20,14 @@ import type { CrupdateUser } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  role: null,
-  first_name: null,
-  last_name: null,
-  sex: null,
-  email: null,
-  password: null,
+  "comment": Commentaire sur cette entité,
+  "id": usr_123456,
+  "role": null,
+  "first_name": Jean,
+  "last_name": Dupont,
+  "sex": null,
+  "email": jean.dupont@example.com,
+  "password": securePassword123,
 } satisfies CrupdateUser
 
 console.log(example)

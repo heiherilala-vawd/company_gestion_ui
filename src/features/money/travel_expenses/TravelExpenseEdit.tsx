@@ -11,7 +11,7 @@ export default function TravelExpenseEdit() {
       })}
     >
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput source="id" readOnly />
         <TravelExpenseForm />
       </SimpleForm>
     </Edit>

@@ -107,3 +107,28 @@ export const crupdateUsersMock: CrupdateUser[] = [
     comment: 'New employee',
   },
 ]
+
+export const createOrUpdateUsers = (users: CrupdateUser[]): User[] => {
+  return users.map((user) => ({
+    ...user,
+    id: `newId`,
+    created_at: user.id ? user1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

@@ -21,15 +21,15 @@ import type { ExpenseMoney } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  created_at: null,
-  updated_at: null,
-  created_by: null,
-  updated_by: null,
-  amount: null,
-  description: null,
-  id: null,
-  job: null,
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
+  "amount": 15000,
+  "description": Achat de matériaux pour le chantier,
+  "id": exp_001,
+  "job": null,
 } satisfies ExpenseMoney
 
 console.log(example)

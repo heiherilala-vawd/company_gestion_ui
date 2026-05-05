@@ -2,15 +2,15 @@
 
 ## Properties
 
-| Name           | Type    |
-| -------------- | ------- |
-| `id`           | string  |
-| `expense_id`   | string  |
-| `supplier`     | string  |
-| `equipment`    | string  |
-| `material`     | string  |
-| `quantity`     | number  |
-| `is_equipment` | boolean |
+| Name           | Type                                            |
+| -------------- | ----------------------------------------------- |
+| `id`           | string                                          |
+| `expense`      | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `supplier`     | [CrupdateWarehouse](CrupdateWarehouse.md)       |
+| `equipment`    | string                                          |
+| `material`     | string                                          |
+| `quantity`     | number                                          |
+| `is_equipment` | boolean                                         |
 
 ## Example
 
@@ -19,13 +19,13 @@ import type { CrupdatePurchase } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense_id: null,
+  id: purch_001,
+  expense: null,
   supplier: null,
-  equipment: null,
-  material: null,
-  quantity: null,
-  is_equipment: null,
+  equipment: eq_001,
+  material: mat_001,
+  quantity: 200,
+  is_equipment: false,
 } satisfies CrupdatePurchase
 
 console.log(example)

@@ -2,12 +2,13 @@ import { TravelMaterials, CrupdateTravelMaterials } from '../../../gen-ts/src'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { material1Mock } from './materials-api.ts'
 import { user1Mock } from './users-api.ts'
+import { expense1Mock, expense2Mock } from './expenses-api.ts'
 
 export const travelMaterials1Mock: TravelMaterials = {
   id: 'tm1_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense_id: travelExpense1Mock.expense.id,
+    expense: expense1Mock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -47,7 +48,7 @@ export const travelMaterials2Mock: TravelMaterials = {
   id: 'tm2_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense_id: travelExpense1Mock.expense.id,
+    expense: expense1Mock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -103,3 +104,45 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
     comment: 'New material shipment',
   },
 ]
+
+export const createOrUpdateTravelMaterialss = (
+  travelMaterials: CrupdateTravelMaterials[],
+): TravelMaterials[] => {
+  return travelMaterials.map((tm) => ({
+    ...tm,
+    id: `newId`,
+    travel: {
+      id: tm.travel_id || travelExpense1Mock.id,
+      expense: expense1Mock,
+      departure_location: travelExpense1Mock.departure_location,
+      arrival_location: travelExpense1Mock.arrival_location,
+      departure_date: travelExpense1Mock.departure_date,
+      arrival_date: travelExpense1Mock.arrival_date,
+    },
+    material: {
+      id: typeof tm.material === 'string' ? tm.material : material1Mock.id,
+      name: material1Mock.name,
+      description: material1Mock.description,
+      unit: material1Mock.unit,
+      comment: material1Mock.comment,
+    },
+    created_at: tm.id ? travelMaterials1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

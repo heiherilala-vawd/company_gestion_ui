@@ -1,4 +1,4 @@
-# Exception
+# ApiException
 
 ## Properties
 
@@ -10,13 +10,13 @@
 ## Example
 
 ```typescript
-import type { Exception } from 'api-client'
+import type { ApiException } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
   type: null,
   message: null,
-} satisfies Exception
+} satisfies ApiException
 
 console.log(example)
 
@@ -25,7 +25,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as Exception
+const exampleParsed = JSON.parse(exampleJSON) as ApiException
 console.log(exampleParsed)
 ```
 

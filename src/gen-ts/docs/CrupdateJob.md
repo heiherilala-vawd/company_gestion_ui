@@ -20,14 +20,14 @@ import type { CrupdateJob } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  company_id: null,
-  description: null,
-  contract_signature_date: null,
-  start_date: null,
-  end_date: null,
-  status: null,
+  "comment": Commentaire sur cette entité,
+  "id": job_001,
+  "company_id": comp_btp001,
+  "description": Construction d'un entrepôt logistique de 5000m²,
+  "contract_signature_date": Sat Jan 20 03:00:00 EAT 2024,
+  "start_date": Thu Feb 01 03:00:00 EAT 2024,
+  "end_date": Sat Aug 31 03:00:00 EAT 2024,
+  "status": null,
 } satisfies CrupdateJob
 
 console.log(example)

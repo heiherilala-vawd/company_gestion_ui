@@ -14,7 +14,7 @@ export default function EquipmentShow() {
         <TextField source="id" />
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
-        <TextField source="warehouse_id" label="ID Entrepôt" />
+        <TextField source="warehouse.name" label="ID Entrepôt" />
         <NumberField source="floor_number" label="Étage" />
         <NumberField source="storage_number" label="Emplacement" />
         <DateField source="created_at" label="Créé le" showTime />

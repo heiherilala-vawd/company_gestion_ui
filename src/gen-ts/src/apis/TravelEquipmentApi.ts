@@ -84,6 +84,10 @@ export interface GetTravelEquipmentRequest {
   equipmentId?: string
   quantity?: number
   status?: TransportStatus
+  arrivalLocation?: string
+  arrivalDateMin?: Date
+  arrivalDateMax?: Date
+  notArrived?: boolean
 }
 
 export interface GetTravelEquipmentByIdRequest {
@@ -381,6 +385,26 @@ export class TravelEquipmentApi extends runtime.BaseAPI {
 
     if (requestParameters['status'] != null) {
       queryParameters['status'] = requestParameters['status']
+    }
+
+    if (requestParameters['arrivalLocation'] != null) {
+      queryParameters['arrival_location'] = requestParameters['arrivalLocation']
+    }
+
+    if (requestParameters['arrivalDateMin'] != null) {
+      queryParameters['arrival_date_min'] = (
+        requestParameters['arrivalDateMin'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['arrivalDateMax'] != null) {
+      queryParameters['arrival_date_max'] = (
+        requestParameters['arrivalDateMax'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['notArrived'] != null) {
+      queryParameters['not_arrived'] = requestParameters['notArrived']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}

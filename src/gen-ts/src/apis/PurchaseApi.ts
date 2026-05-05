@@ -77,7 +77,7 @@ export interface GetPurchasesRequest {
   page?: number
   pageSize?: number
   expenseId?: string
-  supplier?: string
+  supplierId?: string
   isEquipment?: boolean
 }
 
@@ -422,8 +422,8 @@ export class PurchaseApi extends runtime.BaseAPI {
       queryParameters['expense_id'] = requestParameters['expenseId']
     }
 
-    if (requestParameters['supplier'] != null) {
-      queryParameters['supplier'] = requestParameters['supplier']
+    if (requestParameters['supplierId'] != null) {
+      queryParameters['supplier_id'] = requestParameters['supplierId']
     }
 
     if (requestParameters['isEquipment'] != null) {

@@ -19,13 +19,13 @@ import type { CrupdateEquipment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  name: null,
-  description: null,
-  warehouse_id: null,
-  floor_number: null,
-  storage_number: null,
+  "comment": Commentaire sur cette entité,
+  "id": eq_001,
+  "name": Pelleteuse CAT 320,
+  "description": Pelleteuse pour terrassement, 20 tonnes,
+  "warehouse_id": wh_001,
+  "floor_number": 1,
+  "storage_number": 5,
 } satisfies CrupdateEquipment
 
 console.log(example)

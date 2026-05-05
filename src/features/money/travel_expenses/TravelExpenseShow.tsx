@@ -8,8 +8,8 @@ export default function TravelExpenseShow() {
         <TextField source="expense.amount" label="Pris dépense" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
-        <TextField source="departure_location" label="Lieu de départ" />
-        <TextField source="arrival_location" label="Lieu d'arrivée" />
+        <TextField source="departure_location.name" label="Lieu de départ" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <DateField source="departure_date" label="Date de départ" showTime />
         <DateField source="arrival_date" label="Date d'arrivée" showTime />
       </SimpleShowLayout>

@@ -11,7 +11,7 @@ export default function OtherExpenseEdit() {
       })}
     >
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput source="id" readOnly />
         <OtherExpenseForm />
       </SimpleForm>
     </Edit>

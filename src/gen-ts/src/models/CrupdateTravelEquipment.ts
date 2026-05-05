@@ -63,6 +63,18 @@ export interface CrupdateTravelEquipment {
    * @memberof CrupdateTravelEquipment
    */
   status?: TransportStatus
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateTravelEquipment
+   */
+  arrival_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateTravelEquipment
+   */
+  arrival_location?: string
 }
 
 /**
@@ -90,6 +102,8 @@ export function CrupdateTravelEquipmentFromJSONTyped(
     equipment: json['equipment'] == null ? undefined : json['equipment'],
     quantity: json['quantity'] == null ? undefined : json['quantity'],
     status: json['status'] == null ? undefined : TransportStatusFromJSON(json['status']),
+    arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
+    arrival_location: json['arrival_location'] == null ? undefined : json['arrival_location'],
   }
 }
 
@@ -112,5 +126,8 @@ export function CrupdateTravelEquipmentToJSONTyped(
     equipment: value['equipment'],
     quantity: value['quantity'],
     status: TransportStatusToJSON(value['status']),
+    arrival_date:
+      value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
+    arrival_location: value['arrival_location'],
   }
 }

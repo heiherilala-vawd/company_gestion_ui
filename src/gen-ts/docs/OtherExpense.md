@@ -15,9 +15,9 @@ import type { OtherExpense } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  expense: null,
-  description: null,
+  "id": other_001,
+  "expense": null,
+  "description": Frais de carburant pour grues,
 } satisfies OtherExpense
 
 console.log(example)

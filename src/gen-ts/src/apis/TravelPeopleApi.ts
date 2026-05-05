@@ -73,6 +73,10 @@ export interface GetTravelPeopleRequest {
   pageSize?: number
   travelId?: string
   userId2?: string
+  arrivalLocation?: string
+  arrivalDateMin?: Date
+  arrivalDateMax?: Date
+  notArrived?: boolean
 }
 
 export interface GetTravelPeopleByIdRequest {
@@ -360,6 +364,26 @@ export class TravelPeopleApi extends runtime.BaseAPI {
 
     if (requestParameters['userId2'] != null) {
       queryParameters['user_id'] = requestParameters['userId2']
+    }
+
+    if (requestParameters['arrivalLocation'] != null) {
+      queryParameters['arrival_location'] = requestParameters['arrivalLocation']
+    }
+
+    if (requestParameters['arrivalDateMin'] != null) {
+      queryParameters['arrival_date_min'] = (
+        requestParameters['arrivalDateMin'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['arrivalDateMax'] != null) {
+      queryParameters['arrival_date_max'] = (
+        requestParameters['arrivalDateMax'] as any
+      ).toISOString()
+    }
+
+    if (requestParameters['notArrived'] != null) {
+      queryParameters['not_arrived'] = requestParameters['notArrived']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}

@@ -3,7 +3,13 @@ import OtherExpenseForm from './OtherExpenseForm'
 
 export default function OtherExpenseCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        expense_id: data.expense?.id,
+        expense: undefined,
+      })}
+    >
       <SimpleForm>
         <OtherExpenseForm isCreate />
       </SimpleForm>

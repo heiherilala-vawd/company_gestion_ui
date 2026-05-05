@@ -17,11 +17,11 @@ import type { CrupdateMaterial } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  comment: null,
-  id: null,
-  name: null,
-  description: null,
-  unit: null,
+  "comment": Commentaire sur cette entité,
+  "id": mat_001,
+  "name": Ciment Portland,
+  "description": Ciment Portland de qualité supérieure pour béton armé,
+  "unit": null,
 } satisfies CrupdateMaterial
 
 console.log(example)

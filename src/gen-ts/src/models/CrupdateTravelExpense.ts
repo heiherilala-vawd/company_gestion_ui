@@ -13,6 +13,21 @@
  */
 
 import { mapValues } from '../runtime'
+import type { CrupdateExpenseMoney } from './CrupdateExpenseMoney'
+import {
+  CrupdateExpenseMoneyFromJSON,
+  CrupdateExpenseMoneyFromJSONTyped,
+  CrupdateExpenseMoneyToJSON,
+  CrupdateExpenseMoneyToJSONTyped,
+} from './CrupdateExpenseMoney'
+import type { CrupdateWarehouse } from './CrupdateWarehouse'
+import {
+  CrupdateWarehouseFromJSON,
+  CrupdateWarehouseFromJSONTyped,
+  CrupdateWarehouseToJSON,
+  CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse'
+
 /**
  *
  * @export
@@ -27,22 +42,22 @@ export interface CrupdateTravelExpense {
   id?: string
   /**
    *
-   * @type {string}
+   * @type {CrupdateExpenseMoney}
    * @memberof CrupdateTravelExpense
    */
-  expense_id?: string
+  expense?: CrupdateExpenseMoney
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof CrupdateTravelExpense
    */
-  departure_location?: string
+  departure_location?: CrupdateWarehouse
   /**
    *
-   * @type {string}
+   * @type {CrupdateWarehouse}
    * @memberof CrupdateTravelExpense
    */
-  arrival_location?: string
+  arrival_location?: CrupdateWarehouse
   /**
    *
    * @type {Date}
@@ -77,9 +92,15 @@ export function CrupdateTravelExpenseFromJSONTyped(
   }
   return {
     id: json['id'] == null ? undefined : json['id'],
-    expense_id: json['expense_id'] == null ? undefined : json['expense_id'],
-    departure_location: json['departure_location'] == null ? undefined : json['departure_location'],
-    arrival_location: json['arrival_location'] == null ? undefined : json['arrival_location'],
+    expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
+    departure_location:
+      json['departure_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['departure_location']),
+    arrival_location:
+      json['arrival_location'] == null
+        ? undefined
+        : CrupdateWarehouseFromJSON(json['arrival_location']),
     departure_date: json['departure_date'] == null ? undefined : new Date(json['departure_date']),
     arrival_date: json['arrival_date'] == null ? undefined : new Date(json['arrival_date']),
   }
@@ -99,9 +120,9 @@ export function CrupdateTravelExpenseToJSONTyped(
 
   return {
     id: value['id'],
-    expense_id: value['expense_id'],
-    departure_location: value['departure_location'],
-    arrival_location: value['arrival_location'],
+    expense: CrupdateExpenseMoneyToJSON(value['expense']),
+    departure_location: CrupdateWarehouseToJSON(value['departure_location']),
+    arrival_location: CrupdateWarehouseToJSON(value['arrival_location']),
     departure_date:
       value['departure_date'] == null
         ? value['departure_date']

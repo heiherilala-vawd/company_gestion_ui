@@ -18,41 +18,56 @@ Create new incomes or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  IncomeApi,
-} from 'api-client';
-import type { CrupdateIncomesRequest } from 'api-client';
+import { Configuration, IncomeApi } from 'api-client'
+import type { CrupdateIncomesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new IncomeApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // Array<CrupdateIncomeMoney>
-    crupdateIncomeMoney: ...,
-  } satisfies CrupdateIncomesRequest;
+    crupdateIncomeMoney: [
+      {
+        id: 'inc_001',
+        amount: 55000,
+        source_organization: 'Client Principal',
+        invoice_reference: 'FACT-2024-001',
+        description: 'Premier acompte pour le chantier (révisé)',
+        job_id: 'job_001',
+        comment: 'Acompte révisé à 33%',
+      },
+      {
+        amount: 40000,
+        source_organization: 'Subvention',
+        invoice_reference: 'SUB-2024-01',
+        description: 'Aide à la construction',
+        job_id: 'job_001',
+        comment: 'Subvention région',
+      },
+    ],
+  } satisfies CrupdateIncomesRequest
 
   try {
-    const data = await api.crupdateIncomes(body);
-    console.log(data);
+    const data = await api.crupdateIncomes(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -112,13 +127,13 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    id: id_example,
+    id: inc_001,
   } satisfies DeleteIncomeByIdRequest
 
   try {
@@ -190,13 +205,13 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // string
-    id: id_example,
+    id: inc_001,
   } satisfies GetIncomeByIdRequest
 
   try {
@@ -268,23 +283,23 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    jobId: jobId_example,
+    jobId: job_001,
     // string
-    userId: userId_example,
+    userId: usr_123456,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter incomes by source organization, case is ignored (optional)
-    sourceOrganization: sourceOrganization_example,
+    sourceOrganization: Client,
     // string | Filter incomes by invoice reference, case is ignored (optional)
-    invoiceReference: invoiceReference_example,
+    invoiceReference: FACT - 2024,
     // string | Filter incomes by description, case is ignored (optional)
-    description: description_example,
+    description: acompte,
     // number (optional)
-    amount: 56,
+    amount: 50000,
   } satisfies GetIncomesRequest
 
   try {

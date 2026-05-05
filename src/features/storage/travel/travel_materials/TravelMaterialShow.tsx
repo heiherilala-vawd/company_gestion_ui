@@ -12,13 +12,23 @@ export default function TravelMaterialShow() {
     <Show>
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="travel.departure_location" label="Lieu de départ" />
-        <TextField source="travel.arrival_location" label="Lieu d'arivé" />
-        <DateField source="travel.departure_date" label="Date de départ" />
-        <DateField source="travel.arrival_date" label="Date d'arivé" />
-        <TextField source="material" label="Matériau" />
+
+        <TextField source="material.name" label="Matériau" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Quantité reçue" />
+        <TextField source="arrival_location.name" label="Lieu d'arivé" />
+        <DateField source="arrival_date" label="Date d'arivé" />
+        <SimpleShowLayout>
+          <FunctionField label="Déplacement id" render={(record) => `${record.travel?.id || ''}`} />
+          <FunctionField
+            label="Déplacement"
+            render={(record) =>
+              `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+            }
+          />
+          <DateField source="travel.departure_date" label="Date de départ transport" />
+          <DateField source="travel.arrival_date" label="Date d'arivé transport" />
+        </SimpleShowLayout>
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         {/* Nom complet du créateur */}

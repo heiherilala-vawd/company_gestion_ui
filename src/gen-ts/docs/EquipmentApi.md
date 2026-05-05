@@ -18,37 +18,52 @@ Create new equipment or update existing equipment
 ### Example
 
 ```ts
-import {
-  Configuration,
-  EquipmentApi,
-} from 'api-client';
-import type { CrupdateEquipmentRequest } from 'api-client';
+import { Configuration, EquipmentApi } from 'api-client'
+import type { CrupdateEquipmentRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new EquipmentApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new EquipmentApi(config)
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // Array<CrupdateEquipment>
-    crupdateEquipment: ...,
-  } satisfies CrupdateEquipmentRequest;
+    crupdateEquipment: [
+      {
+        id: 'eq_001',
+        name: 'Pelleteuse CAT 320',
+        description: 'Pelleteuse pour terrassement, 20 tonnes - Révisée',
+        warehouse_id: 'wh_001',
+        floor_number: 1,
+        storage_number: 5,
+        comment: 'Machine révisée et opérationnelle',
+      },
+      {
+        name: 'Bétonnière 500L',
+        description: 'Bétonnière électrique 500 litres',
+        warehouse_id: 'wh_002',
+        floor_number: 2,
+        storage_number: 8,
+        comment: 'Nouvelle bétonnière',
+      },
+    ],
+  } satisfies CrupdateEquipmentRequest
 
   try {
-    const data = await api.crupdateEquipment(body);
-    console.log(data);
+    const data = await api.crupdateEquipment(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -106,9 +121,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: eq_001,
   } satisfies DeleteEquipmentByIdRequest
 
   try {
@@ -178,21 +193,21 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string (optional)
-    warehouseId: warehouseId_example,
+    warehouseId: wh_001,
     // string | Filter equipment by name, case is ignored (optional)
-    name: name_example,
+    name: Pelleteuse,
     // string | Filter equipment by description, case is ignored (optional)
-    description: description_example,
+    description: terrassement,
     // number (optional)
-    floorNumber: 56,
+    floorNumber: 1,
     // number (optional)
-    storageNumber: 56,
+    storageNumber: 5,
   } satisfies GetEquipmentRequest
 
   try {
@@ -268,9 +283,9 @@ async function example() {
 
   const body = {
     // string
-    compId: compId_example,
+    compId: comp_btp001,
     // string
-    id: id_example,
+    id: eq_001,
   } satisfies GetEquipmentByIdRequest
 
   try {

@@ -18,35 +18,48 @@ Create new companies or update existing companies
 ### Example
 
 ```ts
-import {
-  Configuration,
-  CompanyApi,
-} from 'api-client';
-import type { CrupdateCompaniesRequest } from 'api-client';
+import { Configuration, CompanyApi } from 'api-client'
+import type { CrupdateCompaniesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
+  console.log('🚀 Testing api-client SDK...')
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new CompanyApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new CompanyApi(config)
 
   const body = {
     // Array<CrupdateCompany>
-    crupdateCompany: ...,
-  } satisfies CrupdateCompaniesRequest;
+    crupdateCompany: [
+      {
+        id: 'comp_btp001',
+        name: 'BTP Construction Martin',
+        rib: 'FR76 1234 5678 9012 3456 7890 123',
+        description: 'Entreprise de construction spécialisée dans les bâtiments industriels',
+        company_type: 'BTP',
+        comment: 'Mise à jour des coordonnées bancaires',
+      },
+      {
+        name: 'Hôtel du Lac',
+        rib: 'FR76 1111 2222 3333 4444 5555 666',
+        description: "Hôtel 4 étoiles au bord du lac d'Annecy",
+        company_type: 'HOTEL',
+        comment: 'Nouvel hôtel partenaire',
+      },
+    ],
+  } satisfies CrupdateCompaniesRequest
 
   try {
-    const data = await api.crupdateCompanies(body);
-    console.log(data);
+    const data = await api.crupdateCompanies(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
@@ -103,7 +116,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: comp_btp001,
   } satisfies DeleteCompanyByIdRequest
 
   try {
@@ -175,17 +188,17 @@ async function example() {
 
   const body = {
     // number (optional)
-    page: 56,
+    page: 1,
     // number (optional)
-    pageSize: 56,
+    pageSize: 20,
     // string | Filter companies by name, case is ignored (optional)
-    name: name_example,
+    name: BTP Construction,
     // string | Filter companies by RIB, case is ignored (optional)
-    rib: rib_example,
+    rib: FR76 1234,
     // string | Filter companies by description, case is ignored (optional)
-    description: description_example,
+    description: construction,
     // CompanyType | Filter by company type (optional)
-    companyType: ...,
+    companyType: BTP,
   } satisfies GetCompaniesRequest;
 
   try {
@@ -259,7 +272,7 @@ async function example() {
 
   const body = {
     // string
-    id: id_example,
+    id: comp_btp001,
   } satisfies GetCompanyByIdRequest
 
   try {

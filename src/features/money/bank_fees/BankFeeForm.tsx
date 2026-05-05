@@ -1,17 +1,22 @@
 import { TextInput } from 'react-admin'
-import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate'
+import { renderExpenseSelect } from '../../../generic/SelectWithCreateProvider.tsx'
+import generateId from '../../../utili/utils.tsx'
 
-export default function BankFeeForm({ isCreate = false }) {
+export default function BankFeeForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      <ReferenceSelectWithCreate
-        source="expense_id"
-        reference="expenses"
-        label="Dépense"
-        optionText="description"
+      {isCreate && (
+        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}
+      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {renderExpenseSelect('expense_id', 'Dépense')}
+      <TextInput source="bank_name" label="Nom de la banque" data-testid="input-bank_name" />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        data-testid="input-description"
       />
-      <TextInput source="bank_name" label="Nom de la banque" />
-      <TextInput source="description" label="Description" multiline />
     </>
   )
 }

@@ -16,35 +16,35 @@ import { mapValues } from '../runtime'
 /**
  *
  * @export
- * @interface Exception
+ * @interface ApiException
  */
-export interface Exception {
+export interface ApiException {
   /**
    *
    * @type {string}
-   * @memberof Exception
+   * @memberof ApiException
    */
   type?: string
   /**
    *
    * @type {string}
-   * @memberof Exception
+   * @memberof ApiException
    */
   message?: string
 }
 
 /**
- * Check if a given object implements the Exception interface.
+ * Check if a given object implements the ApiException interface.
  */
-export function instanceOfException(value: object): value is Exception {
+export function instanceOfApiException(value: object): value is ApiException {
   return true
 }
 
-export function ExceptionFromJSON(json: any): Exception {
-  return ExceptionFromJSONTyped(json, false)
+export function ApiExceptionFromJSON(json: any): ApiException {
+  return ApiExceptionFromJSONTyped(json, false)
 }
 
-export function ExceptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Exception {
+export function ApiExceptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): ApiException {
   if (json == null) {
     return json
   }
@@ -54,12 +54,12 @@ export function ExceptionFromJSONTyped(json: any, ignoreDiscriminator: boolean):
   }
 }
 
-export function ExceptionToJSON(json: any): Exception {
-  return ExceptionToJSONTyped(json, false)
+export function ApiExceptionToJSON(json: any): ApiException {
+  return ApiExceptionToJSONTyped(json, false)
 }
 
-export function ExceptionToJSONTyped(
-  value?: Exception | null,
+export function ApiExceptionToJSONTyped(
+  value?: ApiException | null,
   ignoreDiscriminator: boolean = false,
 ): any {
   if (value == null) {

@@ -19,11 +19,22 @@ export default function TravelPeopleList() {
   return (
     <List resource="travel_people" filters={TravelPeopleFilters} perPage={25}>
       <Datagrid rowClick="show">
-        <TextField source="travel.departure_location" label="Lieu de départ" />
-        <TextField source="travel.arrival_location" label="Lieu d'arivé" />
-        <DateField source="travel.departure_date" label="Date de départ" />
-        <DateField source="travel.arrival_date" label="Date d'arivé" />
-        <TextField source="person_name" label="Nom de la personne" />
+        <FunctionField
+          label="Déplacement"
+          render={(record) =>
+            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+          }
+        />
+        <TextField source="arrival_location.name" label="Lieu d'arivé" />
+        <DateField source="arrival_date" label="Date d'arivé" />
+        <FunctionField
+          label="Nom de la personne"
+          render={(record) => (
+            <span>
+              {record.user?.first_name} {record.user?.last_name}
+            </span>
+          )}
+        />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         {/* Nom complet du créateur */}
@@ -35,7 +46,6 @@ export default function TravelPeopleList() {
             </span>
           )}
         />
-
         {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"

@@ -3,7 +3,13 @@ import TravelExpenseForm from './TravelExpenseForm'
 
 export default function TravelExpenseCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        expense_id: data.expense?.id,
+        expense: undefined,
+      })}
+    >
       <SimpleForm>
         <TravelExpenseForm isCreate />
       </SimpleForm>
