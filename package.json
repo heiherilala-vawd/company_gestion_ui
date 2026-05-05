@@ -10,7 +10,8 @@
     "format": "prettier --write ./src",
     "gen:api": "node scripts/generate-api.mjs",
     "cypress:open": "cypress open --config-file src/__tests__/cypress.config.ts",
-    "cypress:run": "cypress run --config-file src/__tests__/cypress.config.ts"
+    "cypress:run": "cypress run --config-file src/__tests__/cypress.config.ts",
+    "cypress:coverage": "cypress run --config-file src/__tests__/cypress.config.ts && npx nyc report --reporter=text-summary --reporter=html"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

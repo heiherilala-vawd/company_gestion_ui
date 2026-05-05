@@ -13,7 +13,7 @@ export default function TravelEquipmentShow() {
     <Show>
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="equipment" label="Équipement" />
+        <TextField source="equipment.name" label="Équipement" />
         <NumberField source="quantity" label="Quantité" />
         <TextField source="arrival_location.name" label="Lieu d'arivé" />
         <DateField source="arrival_date" label="Date d'arivé" />

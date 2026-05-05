@@ -7,7 +7,7 @@ export const travelEquipment1Mock: TravelEquipment = {
   id: 'teq1_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense_id: travelExpense1Mock.expense.id,
+    expense: travelExpense1Mock.expense,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -88,6 +88,7 @@ export const travelEquipment2Mock: TravelEquipment = {
 }
 
 export const travelEquipmentMock: TravelEquipment[] = [travelEquipment1Mock, travelEquipment2Mock]
+export const travelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock, travelEquipment2Mock]
 
 export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
   {
@@ -107,3 +108,47 @@ export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
     comment: 'New equipment transport',
   },
 ]
+
+export const createOrUpdateTravelEquipments = (
+  travelEquipments: CrupdateTravelEquipment[],
+): TravelEquipment[] => {
+  return travelEquipments.map((te) => ({
+    ...te,
+    id: `newId`,
+    travel: {
+      id: te.travel_id || travelExpense1Mock.id,
+      expense_id: travelExpense1Mock.expense.id,
+      departure_location: travelExpense1Mock.departure_location,
+      arrival_location: travelExpense1Mock.arrival_location,
+      departure_date: travelExpense1Mock.departure_date,
+      arrival_date: travelExpense1Mock.arrival_date,
+    },
+    equipment: {
+      id: typeof te.equipment === 'string' ? te.equipment : equipment1Mock.id,
+      name: equipment1Mock.name,
+      description: equipment1Mock.description,
+      warehouse_id: equipment1Mock.warehouse.id,
+      floor_number: equipment1Mock.floor_number,
+      storage_number: equipment1Mock.storage_number,
+      comment: equipment1Mock.comment,
+    },
+    created_at: te.id ? travelEquipment1Mock.created_at : new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    created_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+    updated_by: {
+      id: user1Mock.id,
+      role: user1Mock.role,
+      first_name: user1Mock.first_name,
+      last_name: user1Mock.last_name,
+      sex: user1Mock.sex,
+      email: user1Mock.email,
+    },
+  }))
+}

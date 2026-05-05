@@ -12,10 +12,12 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
       {isCreate && (
         <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" readOnly defaultValue={generateId()} data-testid="input-id" />
+      )}
       {renderTravelExpenseSelect(null, null)}
       {renderEquipmentSelect(null, null)}
-      <NumberInput source="quantity" label="Quantité" />
+      <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <SelectInput
         source="status"
         label="Statut"
@@ -24,8 +26,9 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
           { id: 'LOST', name: 'Perdu' },
           { id: 'ARRIVED', name: 'Arrivé' },
         ]}
+        data-testid="input-status"
       />
-      <TextInput source="comment" label="Commentaire" multiline />
+      <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
     </>
   )
 }

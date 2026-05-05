@@ -17,6 +17,7 @@ import {
   travelExpense1Mock,
   travelMaterials1Mock,
   travelPeople1Mock,
+  travelEquipment1Mock,
   user1Mock,
   usersMock,
   warehouse1Mock,
@@ -33,6 +34,7 @@ import {
   equipmentsMock,
   travelMaterialsMock,
   travelPeoplesMock,
+  travelEquipmentsMock,
   materialsMock,
 } from '../mocks/responses'
 
@@ -129,6 +131,14 @@ export function interceptGeneralEndpoint(): void {
   )
   cy.intercept('GET', '**/travel_people/tp1_id*', mockSuccessResponse(travelPeople1Mock)).as(
     'getTravelPeople',
+  )
+
+  // ---------------------- TRAVEL EQUIPMENTS ------------------------------------------
+  cy.intercept('GET', '**/travel_equipment*', mockSuccessResponse(travelEquipmentsMock)).as(
+    'getTravelEquipments',
+  )
+  cy.intercept('GET', '**/travel_equipment/teq1_id*', mockSuccessResponse(travelEquipment1Mock)).as(
+    'getTravelEquipment',
   )
 }
 
