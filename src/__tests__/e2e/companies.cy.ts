@@ -60,7 +60,7 @@ describe('E2E: Companies', () => {
   })
 
   it('should create a new company', () => {
-    cy.intercept('PUT', '/companies', (req) => {
+    cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
     creatOrUpdate(true)
@@ -69,7 +69,7 @@ describe('E2E: Companies', () => {
   })
 
   it('should update an existing company', () => {
-    cy.intercept('PUT', '/companies', (req) => {
+    cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
     creatOrUpdate(false)
@@ -80,7 +80,7 @@ describe('E2E: Companies', () => {
   it('should show error on create failure', () => {
     cy.intercept(
       'PUT',
-      '/companies',
+      '/companies*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createCompanyFail')
     creatOrUpdate(true)
@@ -89,7 +89,7 @@ describe('E2E: Companies', () => {
   })
 
   it('should show error on update failure', () => {
-    cy.intercept('PUT', '/companies', (req) => {
+    cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockErrorResponse('BadRequestException', 'Update failed', 400))
     }).as('updateCompanyFail')
     creatOrUpdate(false)

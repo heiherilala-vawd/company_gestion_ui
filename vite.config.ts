@@ -7,8 +7,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     istanbul({
-      include: 'src/*',
-      exclude: ['node_modules', 'test/', 'src/__tests__/'],
+      include: 'src/**/*',
+      exclude: ['node_modules/**', 'src/gen-ts/**', 'src/__tests__/**'],
       extension: ['.js', '.ts', '.jsx', '.tsx'],
       requireEnv: true,
     }),

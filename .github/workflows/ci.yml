@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  lint-and-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run type-check
+
+  cypress-with-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Start dev server with coverage
+        run: npm run dev &
+        env:
+          NYC_CAFEOBJECT_COVERAGE: true
+          NODE_ENV: test
+
+      - name: Wait for server
+        run: npx wait-on http://localhost:5173
+
+      - name: Run Cypress tests with coverage
+        run: npm run cypress:coverage
+
+      - name: Check coverage threshold (60%)
+        run: |
+          echo "Checking 60% coverage threshold..."
+          npx nyc check-coverage --lines 60 --functions 60 --branches 60 --statements 60
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/

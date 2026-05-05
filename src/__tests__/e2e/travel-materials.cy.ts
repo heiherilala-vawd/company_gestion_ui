@@ -99,7 +99,7 @@ describe('E2E: Travel Materials', () => {
   it('should show error on update failure', () => {
     cy.intercept(
       'PUT',
-      '**/travel_materials',
+      '**/travel_materials*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateTravelMaterialFail')
     creatOrUpdate(false)
