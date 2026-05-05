@@ -1,8 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   bankFee1Mock,
-  bankFee2Mock,
-  bankFeesMock,
   crupdateBankFeesMock,
   createOrUpdateBankFees,
 } from '../mocks/responses/bank-fees-api'

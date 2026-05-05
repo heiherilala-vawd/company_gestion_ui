@@ -1,8 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   travelMaterials1Mock,
-  travelMaterials2Mock,
-  travelMaterialsMock,
   crupdateTravelMaterialsMock,
   createOrUpdateTravelMaterialss,
 } from '../mocks/responses/travel-materials-api'

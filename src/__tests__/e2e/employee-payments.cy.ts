@@ -1,8 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   employeePayment1Mock,
-  employeePayment2Mock,
-  employeePaymentsMock,
   crupdateEmployeePaymentsMock,
   createOrUpdateEmployeePayments,
 } from '../mocks/responses/employee-payments-api'

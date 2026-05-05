@@ -1,8 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   equipment1Mock,
-  equipment2Mock,
-  equipmentsMock,
   crupdateEquipmentMock,
   createOrUpdateEquipments,
 } from '../mocks/responses/equipment-api'

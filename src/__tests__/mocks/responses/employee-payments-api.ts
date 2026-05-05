@@ -1,6 +1,6 @@
 import { EmployeePayment, CrupdateEmployeePayment, PaymentType } from '../../../gen-ts/src'
-import { user1Mock, user2Mock } from './users-api.ts'
 import { expense1Mock } from './expenses-api.ts'
+import { user2Mock } from './users-api.ts'
 
 export const employeePayment1Mock: EmployeePayment = {
   id: 'ep1_id',
@@ -56,7 +56,7 @@ export const createOrUpdateEmployeePayments = (
     ...ep,
     id: `newId`,
     expense: {
-      id: ep.expense_id || expense1Mock.id,
+      id: ep.expense.id || expense1Mock.id,
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job.id,

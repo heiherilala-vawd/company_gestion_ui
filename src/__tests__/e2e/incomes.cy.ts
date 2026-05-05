@@ -1,11 +1,5 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import {
-  income1Mock,
-  income2Mock,
-  incomesMock,
-  crupdateIncomesMock,
-  createOrUpdateIncomes,
-} from '../mocks/responses/incomes-api'
+import { crupdateIncomesMock, createOrUpdateIncomes } from '../mocks/responses/incomes-api'
 import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,

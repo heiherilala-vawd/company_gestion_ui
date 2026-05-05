@@ -47,7 +47,7 @@ export const createOrUpdateOtherExpenses = (
     ...oe,
     id: `newId`,
     expense: {
-      id: oe.expense_id || expense1Mock.id,
+      id: oe.expense?.id || expense1Mock.id,
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job.id,

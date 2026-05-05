@@ -1,9 +1,735 @@
 {
   "total": {
-    "lines": { "total": 0, "covered": 0, "skipped": 0, "pct": "Unknown" },
-    "statements": { "total": 0, "covered": 0, "skipped": 0, "pct": "Unknown" },
-    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": "Unknown" },
-    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": "Unknown" },
-    "branchesTrue": { "total": 0, "covered": 0, "skipped": 0, "pct": "Unknown" }
+    "lines": { "total": 1009, "covered": 545, "skipped": 0, "pct": 54.01 },
+    "statements": { "total": 1135, "covered": 576, "skipped": 0, "pct": 50.74 },
+    "functions": { "total": 321, "covered": 98, "skipped": 0, "pct": 30.52 },
+    "branches": { "total": 554, "covered": 118, "skipped": 0, "pct": 21.29 },
+    "branchesTrue": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/index.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/auth/authProvider.tsx": {
+    "lines": { "total": 185, "covered": 63, "skipped": 0, "pct": 34.05 },
+    "functions": { "total": 15, "covered": 9, "skipped": 0, "pct": 60 },
+    "statements": { "total": 255, "covered": 64, "skipped": 0, "pct": 25.09 },
+    "branches": { "total": 165, "covered": 23, "skipped": 0, "pct": 13.93 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/auth/dataProvider.ts": {
+    "lines": { "total": 50, "covered": 34, "skipped": 0, "pct": 68 },
+    "functions": { "total": 16, "covered": 9, "skipped": 0, "pct": 56.25 },
+    "statements": { "total": 54, "covered": 36, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 20, "covered": 9, "skipped": 0, "pct": 45 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/config/dynamicResources.ts": {
+    "lines": { "total": 65, "covered": 54, "skipped": 0, "pct": 83.07 },
+    "functions": { "total": 11, "covered": 10, "skipped": 0, "pct": 90.9 },
+    "statements": { "total": 65, "covered": 54, "skipped": 0, "pct": 83.07 },
+    "branches": { "total": 33, "covered": 20, "skipped": 0, "pct": 60.6 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/core/App.tsx": {
+    "lines": { "total": 13, "covered": 12, "skipped": 0, "pct": 92.3 },
+    "functions": { "total": 5, "covered": 4, "skipped": 0, "pct": 80 },
+    "statements": { "total": 16, "covered": 15, "skipped": 0, "pct": 93.75 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/core/Layout.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/core/Menu.tsx": {
+    "lines": { "total": 18, "covered": 16, "skipped": 0, "pct": 88.88 },
+    "functions": { "total": 6, "covered": 4, "skipped": 0, "pct": 66.66 },
+    "statements": { "total": 22, "covered": 19, "skipped": 0, "pct": 86.36 },
+    "branches": { "total": 8, "covered": 5, "skipped": 0, "pct": 62.5 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/HomePage.tsx": {
+    "lines": { "total": 14, "covered": 13, "skipped": 0, "pct": 92.85 },
+    "functions": { "total": 7, "covered": 6, "skipped": 0, "pct": 85.71 },
+    "statements": { "total": 19, "covered": 18, "skipped": 0, "pct": 94.73 },
+    "branches": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/SimplePage.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/BankFeeCreate.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/BankFeeEdit.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/BankFeeForm.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 6, "covered": 5, "skipped": 0, "pct": 83.33 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/BankFeeList.tsx": {
+    "lines": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/BankFeeShow.tsx": {
+    "lines": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/bank_fees/index.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/EmployeePaymentCreate.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/EmployeePaymentEdit.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/EmployeePaymentForm.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 6, "covered": 5, "skipped": 0, "pct": 83.33 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/EmployeePaymentList.tsx": {
+    "lines": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/EmployeePaymentShow.tsx": {
+    "lines": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/employee_payments/index.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseContext.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseSelector.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/ExpenseShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/expenses/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/OtherExpenseCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/OtherExpenseEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/OtherExpenseForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/OtherExpenseList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/OtherExpenseShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/other_expenses/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchase_operation/PurchaseActivityForm.tsx": {
+    "lines": { "total": 38, "covered": 6, "skipped": 0, "pct": 15.78 },
+    "functions": { "total": 11, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 44, "covered": 6, "skipped": 0, "pct": 13.63 },
+    "branches": { "total": 30, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/PurchaseCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/PurchaseEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/PurchaseForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/PurchaseList.tsx": {
+    "lines": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/PurchaseShow.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/purchases/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/TravelExpenseCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/TravelExpenseEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/TravelExpenseForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/TravelExpenseList.tsx": {
+    "lines": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/TravelExpenseShow.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/travel_expenses/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/EquipmentCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/EquipmentEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/EquipmentForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/EquipmentList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/EquipmentShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/equipment/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/MaterialCreate.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/MaterialEdit.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/MaterialForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/MaterialList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/MaterialShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/materials/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/TravelEquipmentCreate.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/TravelEquipmentEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/TravelEquipmentForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/TravelEquipmentList.tsx": {
+    "lines": { "total": 7, "covered": 3, "skipped": 0, "pct": 42.85 },
+    "functions": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 7, "covered": 3, "skipped": 0, "pct": 42.85 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/TravelEquipmentShow.tsx": {
+    "lines": { "total": 7, "covered": 2, "skipped": 0, "pct": 28.57 },
+    "functions": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 7, "covered": 2, "skipped": 0, "pct": 28.57 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_equipment/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/TravelMaterialCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/TravelMaterialEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/TravelMaterialForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/TravelMaterialList.tsx": {
+    "lines": { "total": 7, "covered": 3, "skipped": 0, "pct": 42.85 },
+    "functions": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 7, "covered": 3, "skipped": 0, "pct": 42.85 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/TravelMaterialShow.tsx": {
+    "lines": { "total": 7, "covered": 2, "skipped": 0, "pct": 28.57 },
+    "functions": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 7, "covered": 2, "skipped": 0, "pct": 28.57 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_materials/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/TravelPeopleCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/TravelPeopleEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/TravelPeopleForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/TravelPeopleList.tsx": {
+    "lines": { "total": 8, "covered": 3, "skipped": 0, "pct": 37.5 },
+    "functions": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 8, "covered": 3, "skipped": 0, "pct": 37.5 },
+    "branches": { "total": 4, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/TravelPeopleShow.tsx": {
+    "lines": { "total": 8, "covered": 2, "skipped": 0, "pct": 25 },
+    "functions": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 8, "covered": 2, "skipped": 0, "pct": 25 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel/travel_people/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/travel_operation/TravelOperationForm.tsx": {
+    "lines": { "total": 40, "covered": 4, "skipped": 0, "pct": 10 },
+    "functions": { "total": 14, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 46, "covered": 4, "skipped": 0, "pct": 8.69 },
+    "branches": { "total": 32, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/WarehouseCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/WarehouseEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/WarehouseForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/WarehouseList.tsx": {
+    "lines": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 3, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/WarehouseShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/storage/warehouses/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyContext.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyCreate.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyEdit.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyForm.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "branches": { "total": 6, "covered": 5, "skipped": 0, "pct": 83.33 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyList.tsx": {
+    "lines": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "functions": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "statements": { "total": 6, "covered": 6, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanySelector.tsx": {
+    "lines": { "total": 3, "covered": 3, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/CompanyShow.tsx": {
+    "lines": { "total": 13, "covered": 11, "skipped": 0, "pct": 84.61 },
+    "functions": { "total": 6, "covered": 4, "skipped": 0, "pct": 66.66 },
+    "statements": { "total": 16, "covered": 14, "skipped": 0, "pct": 87.5 },
+    "branches": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/companies/index.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobContext.tsx": {
+    "lines": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobCreate.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobEdit.tsx": {
+    "lines": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "functions": { "total": 2, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 2, "skipped": 0, "pct": 50 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobList.tsx": {
+    "lines": { "total": 15, "covered": 5, "skipped": 0, "pct": 33.33 },
+    "functions": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 17, "covered": 5, "skipped": 0, "pct": 29.41 },
+    "branches": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobSelector.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 1, "covered": 1, "skipped": 0, "pct": 100 },
+    "statements": { "total": 5, "covered": 5, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/JobShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/jobs/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/UserCreate.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/UserEdit.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/UserForm.tsx": {
+    "lines": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 3, "covered": 2, "skipped": 0, "pct": 66.66 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/UserList.tsx": {
+    "lines": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 4, "covered": 3, "skipped": 0, "pct": 75 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/UserShow.tsx": {
+    "lines": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "functions": { "total": 3, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 5, "covered": 2, "skipped": 0, "pct": 40 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/features/transversal/usersSetup/index.tsx": {
+    "lines": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/generic/GenericContext.tsx": {
+    "lines": { "total": 22, "covered": 15, "skipped": 0, "pct": 68.18 },
+    "functions": { "total": 6, "covered": 4, "skipped": 0, "pct": 66.66 },
+    "statements": { "total": 25, "covered": 18, "skipped": 0, "pct": 72 },
+    "branches": { "total": 6, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/generic/GenericSelector.tsx": {
+    "lines": { "total": 66, "covered": 47, "skipped": 0, "pct": 71.21 },
+    "functions": { "total": 9, "covered": 6, "skipped": 0, "pct": 66.66 },
+    "statements": { "total": 72, "covered": 52, "skipped": 0, "pct": 72.22 },
+    "branches": { "total": 53, "covered": 27, "skipped": 0, "pct": 50.94 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/generic/ReferenceSelectWithCreate.tsx": {
+    "lines": { "total": 36, "covered": 10, "skipped": 0, "pct": 27.77 },
+    "functions": { "total": 6, "covered": 2, "skipped": 0, "pct": 33.33 },
+    "statements": { "total": 40, "covered": 12, "skipped": 0, "pct": 30 },
+    "branches": { "total": 15, "covered": 5, "skipped": 0, "pct": 33.33 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/generic/ResponsiveDatagrid.tsx": {
+    "lines": { "total": 24, "covered": 3, "skipped": 0, "pct": 12.5 },
+    "functions": { "total": 5, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 31, "covered": 4, "skipped": 0, "pct": 12.9 },
+    "branches": { "total": 12, "covered": 0, "skipped": 0, "pct": 0 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/generic/SelectWithCreateProvider.tsx": {
+    "lines": { "total": 18, "covered": 11, "skipped": 0, "pct": 61.11 },
+    "functions": { "total": 10, "covered": 3, "skipped": 0, "pct": 30 },
+    "statements": { "total": 18, "covered": 11, "skipped": 0, "pct": 61.11 },
+    "branches": { "total": 34, "covered": 4, "skipped": 0, "pct": 11.76 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/style/components.ts": {
+    "lines": { "total": 7, "covered": 7, "skipped": 0, "pct": 100 },
+    "functions": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 },
+    "statements": { "total": 7, "covered": 7, "skipped": 0, "pct": 100 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/style/theme.ts": {
+    "lines": { "total": 6, "covered": 5, "skipped": 0, "pct": 83.33 },
+    "functions": { "total": 1, "covered": 0, "skipped": 0, "pct": 0 },
+    "statements": { "total": 6, "covered": 5, "skipped": 0, "pct": 83.33 },
+    "branches": { "total": 0, "covered": 0, "skipped": 0, "pct": 100 }
+  },
+  "/home/herilala/Documents/react admin/firt project/test-admin/src/utili/utils.tsx": {
+    "lines": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "functions": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 },
+    "statements": { "total": 4, "covered": 4, "skipped": 0, "pct": 100 },
+    "branches": { "total": 2, "covered": 2, "skipped": 0, "pct": 100 }
   }
 }

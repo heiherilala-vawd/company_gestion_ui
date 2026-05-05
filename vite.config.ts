@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
       include: 'src/**/*',
       exclude: ['node_modules/**', 'src/gen-ts/**', 'src/__tests__/**'],
       extension: ['.js', '.ts', '.jsx', '.tsx'],
-      requireEnv: true,
+      requireEnv: false,
     }),
   ],
   server: {

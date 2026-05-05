@@ -1,8 +1,8 @@
 import { TravelMaterials, CrupdateTravelMaterials } from '../../../gen-ts/src'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { material1Mock } from './materials-api.ts'
+import { expense1Mock } from './expenses-api.ts'
 import { user1Mock } from './users-api.ts'
-import { expense1Mock, expense2Mock } from './expenses-api.ts'
 
 export const travelMaterials1Mock: TravelMaterials = {
   id: 'tm1_id',

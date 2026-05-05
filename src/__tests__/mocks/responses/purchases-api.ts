@@ -92,7 +92,7 @@ export const createOrUpdatePurchases = (purchases: CrupdatePurchase[]): Purchase
     ...pur,
     id: `newId`,
     expense: {
-      id: pur.expense_id || expense1Mock.id,
+      id: pur.expense?.id || expense1Mock.id,
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job.id,

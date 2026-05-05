@@ -1,14 +1,6 @@
-import {
-  mockSuccessResponse,
-  mockErrorResponse,
-  loginRequestMock,
-} from '../mocks/responses/auth-api'
-import {
-  warehouse1Mock,
-  warehouse2Mock,
-  crupdateWarehousesMock,
-  createOrUpdateWarehouses,
-} from '../mocks/responses/warehouses-api'
+import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
+import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
+import { warehouse1Mock, createOrUpdateWarehouses } from '../mocks/responses/warehouses-api'
 import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,

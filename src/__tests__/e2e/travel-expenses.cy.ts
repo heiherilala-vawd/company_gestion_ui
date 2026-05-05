@@ -1,9 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   travelExpense1Mock,
-  travelExpense2Mock,
-  travelExpensesMock,
-  crupdateTravelExpensesMock,
   createOrUpdateTravelExpenses,
 } from '../mocks/responses/travel-expenses-api'
 import {

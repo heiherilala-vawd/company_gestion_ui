@@ -60,7 +60,7 @@ export const createOrUpdateTravelExpenses = (
     ...te,
     id: te.id || `te_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
     expense: {
-      id: te.expense_id || expense1Mock.id,
+      id: te.expense?.id || expense1Mock.id,
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job.id,

@@ -1,11 +1,5 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import {
-  otherExpense1Mock,
-  otherExpense2Mock,
-  otherExpensesMock,
-  crupdateOtherExpensesMock,
-  createOrUpdateOtherExpenses,
-} from '../mocks/responses/other-expenses-api'
+import { createOrUpdateOtherExpenses } from '../mocks/responses/other-expenses-api'
 import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
