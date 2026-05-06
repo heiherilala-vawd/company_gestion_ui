@@ -266,9 +266,16 @@ const MenuRoot = () => {
         variant="caption"
         sx={{
           ...menuStyles.section,
-          color: 'rgba(255,255,255,0.7)',
-          fontSize: '0.6875rem',
-          fontWeight: 600,
+          color: '#fff',
+          fontSize: '0.8125rem',
+          fontWeight: 700,
+          letterSpacing: '1.5px',
+          py: 1,
+          px: 2,
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          borderRadius: 1,
+          mx: 1,
+          mb: 1,
         }}
       >
         PRINCIPAL
@@ -281,9 +288,16 @@ const MenuRoot = () => {
         variant="caption"
         sx={{
           ...menuStyles.section,
-          color: 'rgba(255,255,255,0.7)',
-          fontSize: '0.6875rem',
-          fontWeight: 600,
+          color: '#fff',
+          fontSize: '0.8125rem',
+          fontWeight: 700,
+          letterSpacing: '1.5px',
+          py: 1,
+          px: 2,
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          borderRadius: 1,
+          mx: 1,
+          mb: 1,
         }}
       >
         STOCKAGE
@@ -313,7 +327,7 @@ const MenuRoot = () => {
           <PeopleAltIcon fontSize="small" />
         </ListItemIcon>
         <ListItemText
-          primary="Personnel & Déplacements"
+          primary="Déplacements"
           primaryTypographyProps={{
             fontSize: '0.875rem',
             fontWeight: 500,
@@ -331,9 +345,16 @@ const MenuRoot = () => {
         variant="caption"
         sx={{
           ...menuStyles.section,
-          color: 'rgba(255,255,255,0.7)',
-          fontSize: '0.6875rem',
-          fontWeight: 600,
+          color: '#fff',
+          fontSize: '0.8125rem',
+          fontWeight: 700,
+          letterSpacing: '1.5px',
+          py: 1,
+          px: 2,
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          borderRadius: 1,
+          mx: 1,
+          mb: 1,
         }}
       >
         FINANCES
