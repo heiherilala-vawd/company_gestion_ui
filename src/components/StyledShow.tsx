@@ -1,24 +1,8 @@
 import React from 'react'
-import {
-  Show,
-  TabbedShowLayout,
-  Tab,
-  useShowController,
-  ReferenceManyField,
-  Datagrid,
-  DateField,
-  FunctionField,
-  TextField,
-} from 'react-admin'
-import { Box, Card, CardContent, Typography, Chip, Stack, Divider, alpha } from '@mui/material'
+import { Show, TabbedShowLayout, Tab, ReferenceManyField, Datagrid } from 'react-admin'
+import { Box, Card, CardContent, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import {
-  colors,
-  borderRadius as br,
-  transitions,
-  getShadow,
-  getBackgroundColor,
-} from '../style/themeConfig'
+import { showStyles } from '../style/components'
 
 interface StyledShowProps {
   title?: string
@@ -26,46 +10,17 @@ interface StyledShowProps {
 }
 
 export const StyledShow = ({ title, children }: StyledShowProps) => {
-  const theme = useTheme()
-  const mode = theme.palette.mode as 'light' | 'dark'
-
   return (
-    <Show
-      sx={{
-        '& .RaShow-main': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      }}
-    >
-      <Card
-        sx={{
-          borderRadius: br.lg,
-          boxShadow: getShadow(mode, 'sm'),
-          border:
-            mode === 'light'
-              ? `1px solid ${colors.light.divider}`
-              : `1px solid ${colors.dark.divider}`,
-          overflow: 'hidden',
-        }}
-      >
+    <Show sx={showStyles.page}>
+      <Card sx={showStyles.card}>
         {title && (
-          <Box
-            sx={{
-              p: 3,
-              borderBottom:
-                mode === 'light'
-                  ? `1px solid ${colors.light.divider}`
-                  : `1px solid ${colors.dark.divider}`,
-              backgroundColor: getBackgroundColor(mode, 'paper'),
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          <Box sx={showStyles.titleBox}>
+            <Typography variant="h6" sx={showStyles.titleText}>
               {title}
             </Typography>
           </Box>
         )}
-        <CardContent sx={{ p: { xs: 2, md: 3 } }}>{children}</CardContent>
+        <CardContent sx={showStyles.cardContent}>{children}</CardContent>
       </Card>
     </Show>
   )
@@ -74,20 +29,12 @@ export const StyledShow = ({ title, children }: StyledShowProps) => {
 export const StyledTabbedShowLayout = ({ children }: { children: React.ReactNode }) => {
   const theme = useTheme()
   const mode = theme.palette.mode as 'light' | 'dark'
-
   return (
     <TabbedShowLayout
       sx={{
-        '& .RaTabbedShowLayout-root': {
-          borderRadius: br.lg,
-          overflow: 'hidden',
-        },
+        ...showStyles.tabbedLayout,
         '& .RaTabbedShowLayout-tabs': {
-          backgroundColor: getBackgroundColor(mode, 'paper'),
-          borderBottom:
-            mode === 'light'
-              ? `1px solid ${colors.light.divider}`
-              : `1px solid ${colors.dark.divider}`,
+          backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
         },
       }}
     >
@@ -96,115 +43,46 @@ export const StyledTabbedShowLayout = ({ children }: { children: React.ReactNode
   )
 }
 
-export const StyledTab = ({ label, ...props }: { label: string; [key: string]: any }) => {
-  return (
-    <Tab
-      label={label}
-      sx={{
-        fontWeight: 500,
-        textTransform: 'none',
-        fontSize: '0.875rem',
-      }}
-      {...props}
-    />
-  )
+export const StyledTab = ({ label, ...props }: { label: string; [key: string]: unknown }) => {
+  return <Tab label={label} sx={showStyles.tab} {...props} />
 }
 
-export const StyledReferenceManyField = ({ children, ...props }: any) => {
-  const theme = useTheme()
-  const mode = theme.palette.mode as 'light' | 'dark'
-
+export const StyledReferenceManyField = ({
+  children,
+  ...props
+}: {
+  children: React.ReactNode
+  [key: string]: unknown
+}) => {
   return (
-    <ReferenceManyField
-      {...props}
-      sx={{
-        '& .RaReferenceManyField-root': {
-          borderRadius: br.md,
-          overflow: 'hidden',
-        },
-      }}
-    >
-      <Datagrid
-        sx={{
-          borderRadius: br.md,
-          '& .RaDatagrid-row:hover': {
-            backgroundColor: alpha(colors.primary.main, mode === 'light' ? 0.04 : 0.08),
-          },
-        }}
-      >
-        {children}
-      </Datagrid>
+    <ReferenceManyField {...props} sx={showStyles.referenceManyField}>
+      <Datagrid sx={showStyles.datagrid}>{children}</Datagrid>
     </ReferenceManyField>
   )
 }
 
 export const InfoCard = ({ title, children }: { title?: string; children: React.ReactNode }) => {
-  const theme = useTheme()
-  const mode = theme.palette.mode as 'light' | 'dark'
-
   return (
-    <Card
-      sx={{
-        borderRadius: br.md,
-        mb: 2,
-        boxShadow: 'none',
-        border:
-          mode === 'light'
-            ? `1px solid ${colors.light.divider}`
-            : `1px solid ${colors.dark.divider}`,
-      }}
-    >
+    <Card sx={showStyles.infoCard}>
       {title && (
-        <Box
-          sx={{
-            p: 2,
-            borderBottom:
-              mode === 'light'
-                ? `1px solid ${colors.light.divider}`
-                : `1px solid ${colors.dark.divider}`,
-            backgroundColor: getBackgroundColor(mode, 'paper'),
-          }}
-        >
-          <Typography variant="subtitle2" sx={{ fontWeight: 600, fontSize: '0.875rem' }}>
+        <Box sx={showStyles.infoCardTitleBox}>
+          <Typography variant="subtitle2" sx={showStyles.infoCardTitle}>
             {title}
           </Typography>
         </Box>
       )}
-      <CardContent sx={{ p: 2 }}>{children}</CardContent>
+      <CardContent sx={showStyles.infoCardContent}>{children}</CardContent>
     </Card>
   )
 }
 
-export const FieldRow = ({
-  label,
-  value,
-  mode,
-}: {
-  label: string
-  value: React.ReactNode
-  mode?: 'light' | 'dark'
-}) => {
-  const currentMode = mode || ('light' as const)
+export const FieldRow = ({ label, value }: { label: string; value: React.ReactNode }) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        py: 1.5,
-        borderBottom:
-          currentMode === 'light'
-            ? `1px solid ${colors.light.divider}`
-            : `1px solid ${colors.dark.divider}`,
-        '&:last-child': {
-          borderBottom: 'none',
-        },
-      }}
-    >
-      <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500 }}>
+    <Box sx={showStyles.fieldRow}>
+      <Typography variant="body2" sx={showStyles.fieldLabel}>
         {label}
       </Typography>
-      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+      <Typography variant="body2" sx={showStyles.fieldValue}>
         {value}
       </Typography>
     </Box>

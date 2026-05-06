@@ -8,72 +8,33 @@ import {
   DateInput,
   NumberInput,
   BooleanInput,
-  useNotify,
-  useRedirect,
   SaveButton,
   DeleteButton,
   Toolbar,
 } from 'react-admin'
-import { Box, Card, CardContent, Typography, Stack, Button, alpha } from '@mui/material'
-import { Save as SaveIcon, Delete as DeleteIcon } from '@mui/icons-material'
-import {
-  colors,
-  gradients,
-  shadows,
-  borderRadius as br,
-  transitions,
-  getShadow,
-} from '../style/themeConfig'
+import { Box, Card, CardContent, Typography, Button } from '@mui/material'
+import { formStyles } from '../style/components'
 
 interface StyledFormProps {
   title?: string
   children: React.ReactNode
   resource?: string
   id?: string | number
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export const StyledCreate = ({ title, children, ...props }: StyledFormProps) => {
   return (
-    <Create
-      title={title}
-      sx={{
-        '& .RaCreate-main': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      }}
-      {...props}
-    >
-      <Card
-        sx={{
-          borderRadius: br.lg,
-          boxShadow: (theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
-          border: (theme) =>
-            theme.palette.mode === 'light'
-              ? `1px solid ${colors.light.divider}`
-              : `1px solid ${colors.dark.divider}`,
-          overflow: 'hidden',
-        }}
-      >
+    <Create title={title} sx={formStyles.page} {...props}>
+      <Card sx={formStyles.card}>
         {title && (
-          <Box
-            sx={{
-              p: 3,
-              borderBottom: (theme) =>
-                theme.palette.mode === 'light'
-                  ? `1px solid ${colors.light.divider}`
-                  : `1px solid ${colors.dark.divider}`,
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          <Box sx={formStyles.titleBox}>
+            <Typography variant="h6" sx={formStyles.titleText}>
               {title}
             </Typography>
           </Box>
         )}
-        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+        <CardContent sx={formStyles.cardContent}>
           <StyledSimpleForm>{children}</StyledSimpleForm>
         </CardContent>
       </Card>
@@ -83,45 +44,16 @@ export const StyledCreate = ({ title, children, ...props }: StyledFormProps) => 
 
 export const StyledEdit = ({ title, children, ...props }: StyledFormProps) => {
   return (
-    <Edit
-      title={title}
-      sx={{
-        '& .RaEdit-main': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      }}
-      {...props}
-    >
-      <Card
-        sx={{
-          borderRadius: br.lg,
-          boxShadow: (theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
-          border: (theme) =>
-            theme.palette.mode === 'light'
-              ? `1px solid ${colors.light.divider}`
-              : `1px solid ${colors.dark.divider}`,
-          overflow: 'hidden',
-        }}
-      >
+    <Edit title={title} sx={formStyles.page} {...props}>
+      <Card sx={formStyles.card}>
         {title && (
-          <Box
-            sx={{
-              p: 3,
-              borderBottom: (theme) =>
-                theme.palette.mode === 'light'
-                  ? `1px solid ${colors.light.divider}`
-                  : `1px solid ${colors.dark.divider}`,
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-            }}
-          >
-            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          <Box sx={formStyles.titleBox}>
+            <Typography variant="h6" sx={formStyles.titleText}>
               {title}
             </Typography>
           </Box>
         )}
-        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+        <CardContent sx={formStyles.cardContent}>
           <StyledSimpleForm>{children}</StyledSimpleForm>
         </CardContent>
       </Card>
@@ -134,149 +66,89 @@ export const StyledSimpleForm = ({
   ...props
 }: {
   children: React.ReactNode
-  [key: string]: any
+  [key: string]: unknown
 }) => {
   return (
-    <SimpleForm
-      sx={{
-        '& .RaSimpleForm-form': {
-          gap: 2,
-        },
-      }}
-      {...props}
-    >
+    <SimpleForm sx={formStyles.simpleForm} {...props}>
       {children}
     </SimpleForm>
   )
 }
 
-export const StyledTextInput = (props: any) => {
+export const StyledTextInput = (props: Record<string, unknown>) => {
   return (
     <TextInput
       {...props}
       sx={{
-        '& .MuiFormControl-root': {
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-          borderRadius: br.sm,
-          transition: transitions.default,
-          '&:hover': {
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',
-          },
-        },
+        ...formStyles.textInputRoot,
         ...props.sx,
       }}
     />
   )
 }
 
-export const StyledSelectInput = (props: any) => {
+export const StyledSelectInput = (props: Record<string, unknown>) => {
   return (
     <SelectInput
       {...props}
       sx={{
-        '& .MuiFormControl-root': {
-          borderRadius: 2,
-        },
+        ...formStyles.inputRoot,
         ...props.sx,
       }}
     />
   )
 }
 
-export const StyledDateInput = (props: any) => {
+export const StyledDateInput = (props: Record<string, unknown>) => {
   return (
     <DateInput
       {...props}
       sx={{
-        '& .MuiFormControl-root': {
-          borderRadius: 2,
-        },
+        ...formStyles.inputRoot,
         ...props.sx,
       }}
     />
   )
 }
 
-export const StyledNumberInput = (props: any) => {
+export const StyledNumberInput = (props: Record<string, unknown>) => {
   return (
     <NumberInput
       {...props}
       sx={{
-        '& .MuiFormControl-root': {
-          borderRadius: 2,
-        },
+        ...formStyles.inputRoot,
         ...props.sx,
       }}
     />
   )
 }
 
-export const StyledBooleanInput = (props: any) => {
+export const StyledBooleanInput = (props: Record<string, unknown>) => {
   return (
     <BooleanInput
       {...props}
       sx={{
-        '& .MuiFormControl-root': {
-          borderRadius: 2,
-        },
+        ...formStyles.inputRoot,
         ...props.sx,
       }}
     />
   )
 }
 
-export const StyledToolbar = (props: any) => {
+export const StyledToolbar = (props: Record<string, unknown>) => {
   return (
     <Toolbar
       {...props}
       sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        gap: 2,
-        p: 2,
-        borderTop: (theme) =>
-          theme.palette.mode === 'light'
-            ? `1px solid ${colors.light.divider}`
-            : `1px solid ${colors.dark.divider}`,
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+        ...formStyles.toolbar,
         ...props.sx,
       }}
     >
-      <Button
-        variant="outlined"
-        onClick={() => window.history.back()}
-        sx={{
-          borderRadius: br.sm,
-          textTransform: 'none',
-          fontWeight: 500,
-        }}
-      >
+      <Button variant="outlined" onClick={() => window.history.back()} sx={formStyles.cancelButton}>
         Annuler
       </Button>
-      <SaveButton
-        sx={{
-          borderRadius: br.sm,
-          textTransform: 'none',
-          fontWeight: 500,
-          background: gradients.primary,
-          '&:hover': {
-            background: gradients.primary,
-            filter: 'brightness(1.1)',
-          },
-        }}
-      />
-      {props.record && (
-        <DeleteButton
-          sx={{
-            borderRadius: br.sm,
-            textTransform: 'none',
-            fontWeight: 500,
-          }}
-        />
-      )}
+      <SaveButton sx={formStyles.saveButton} />
+      {props.record && <DeleteButton sx={formStyles.deleteButton} />}
     </Toolbar>
   )
 }

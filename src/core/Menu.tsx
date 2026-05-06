@@ -27,7 +27,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import { menuStyles } from '../style/components'
-import { themeColors } from '../style/theme'
 
 interface ResourceItem {
   name: string
@@ -167,139 +166,36 @@ const MenuRoot = () => {
         component={Link}
         to={item.to}
         sx={{
-          ...(nested ? menuStyles.nested : menuStyles.item),
-          borderRadius: 2,
-          mx: 1,
-          mb: 0.5,
-          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-          '&.Mui-selected': {
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? 'rgba(255, 255, 255, 0.2)'
-                : 'rgba(255, 90, 60, 0.15)',
-            color: '#fff',
-            backdropFilter: 'blur(4px)',
-            '& .MuiListItemIcon-root': {
-              color: '#fff',
-            },
-          },
-          '&:hover': {
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? 'rgba(255, 255, 255, 0.15)'
-                : 'rgba(255, 90, 60, 0.1)',
-            transform: 'translateX(4px)',
-          },
+          ...(nested ? menuStyles.nested : menuStyles.listItem),
         }}
         data-testid={item.testId}
       >
-        <ListItemIcon
-          sx={{
-            minWidth: 40,
-            color: 'inherit',
-          }}
-        >
+        <ListItemIcon sx={menuStyles.listItemIcon}>
           <item.icon fontSize="small" />
         </ListItemIcon>
-        <ListItemText
-          primary={item.label}
-          primaryTypographyProps={{
-            fontSize: '0.875rem',
-            fontWeight: 500,
-          }}
-        />
+        <ListItemText primary={item.label} primaryTypographyProps={menuStyles.listItemText} />
       </ListItemButton>
     ))
 
   return (
-    <Box
-      sx={{
-        height: '100%',
-        background: (theme) =>
-          theme.palette.mode === 'light'
-            ? themeColors.sidebarGradient
-            : themeColors.sidebarDarkGradient,
-        borderRadius: { xs: 0, md: '0 16px 16px 0' },
-        p: 2,
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        '&::-webkit-scrollbar': {
-          width: '4px',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'rgba(255,255,255,0.2)',
-          borderRadius: '4px',
-        },
-      }}
-      data-testid="menu-item-home"
-    >
-      <Box
-        sx={{
-          mb: 3,
-          pb: 2,
-          borderBottom: '1px solid rgba(255,255,255,0.15)',
-        }}
-      >
-        <Typography
-          variant="h6"
-          sx={{
-            color: '#fff',
-            fontWeight: 700,
-            fontSize: '1.25rem',
-            letterSpacing: '-0.025em',
-          }}
-        >
+    <Box sx={menuStyles.container} data-testid="menu-item-home">
+      <Box sx={menuStyles.headerBox}>
+        <Typography variant="h6" sx={menuStyles.appTitle}>
           Test Admin
         </Typography>
-        <Typography
-          variant="caption"
-          sx={{
-            color: 'rgba(255,255,255,0.7)',
-            fontSize: '0.75rem',
-          }}
-        >
+        <Typography variant="caption" sx={menuStyles.appSubtitle}>
           Gestion d&apos;entreprise
         </Typography>
       </Box>
 
-      <Typography
-        variant="caption"
-        sx={{
-          ...menuStyles.section,
-          color: '#fff',
-          fontSize: '0.8125rem',
-          fontWeight: 700,
-          letterSpacing: '1.5px',
-          py: 1,
-          px: 2,
-          backgroundColor: 'rgba(255,255,255,0.1)',
-          borderRadius: 1,
-          mx: 1,
-          mb: 1,
-        }}
-      >
+      <Typography variant="caption" sx={menuStyles.sectionHeader}>
         PRINCIPAL
       </Typography>
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(transversalItems)}
       </List>
 
-      <Typography
-        variant="caption"
-        sx={{
-          ...menuStyles.section,
-          color: '#fff',
-          fontSize: '0.8125rem',
-          fontWeight: 700,
-          letterSpacing: '1.5px',
-          py: 1,
-          px: 2,
-          backgroundColor: 'rgba(255,255,255,0.1)',
-          borderRadius: 1,
-          mx: 1,
-          mb: 1,
-        }}
-      >
+      <Typography variant="caption" sx={menuStyles.sectionHeader}>
         STOCKAGE
       </Typography>
       <List component="nav" dense sx={{ mb: 1 }}>
@@ -308,31 +204,12 @@ const MenuRoot = () => {
 
       <ListItemButton
         onClick={() => setOpenStorage(!openStorage)}
-        sx={{
-          ...menuStyles.item,
-          borderRadius: 2,
-          mx: 1,
-          mb: 0.5,
-          color: '#fff',
-          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:hover': {
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? 'rgba(255, 255, 255, 0.15)'
-                : 'rgba(255, 90, 60, 0.1)',
-          },
-        }}
+        sx={menuStyles.collapsibleButton}
       >
-        <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
+        <ListItemIcon sx={menuStyles.listItemIcon}>
           <PeopleAltIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText
-          primary="Déplacements"
-          primaryTypographyProps={{
-            fontSize: '0.875rem',
-            fontWeight: 500,
-          }}
-        />
+        <ListItemText primary="Déplacements" primaryTypographyProps={menuStyles.listItemText} />
         {openStorage ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openStorage} timeout="auto" unmountOnExit>
@@ -341,52 +218,18 @@ const MenuRoot = () => {
         </List>
       </Collapse>
 
-      <Typography
-        variant="caption"
-        sx={{
-          ...menuStyles.section,
-          color: '#fff',
-          fontSize: '0.8125rem',
-          fontWeight: 700,
-          letterSpacing: '1.5px',
-          py: 1,
-          px: 2,
-          backgroundColor: 'rgba(255,255,255,0.1)',
-          borderRadius: 1,
-          mx: 1,
-          mb: 1,
-        }}
-      >
+      <Typography variant="caption" sx={menuStyles.sectionHeader}>
         FINANCES
       </Typography>
 
       <ListItemButton
         onClick={() => setOpenExpenses(!openExpenses)}
-        sx={{
-          ...menuStyles.item,
-          borderRadius: 2,
-          mx: 1,
-          mb: 0.5,
-          color: '#fff',
-          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-          '&:hover': {
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? 'rgba(255, 255, 255, 0.15)'
-                : 'rgba(255, 90, 60, 0.1)',
-          },
-        }}
+        sx={menuStyles.collapsibleButton}
       >
-        <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
+        <ListItemIcon sx={menuStyles.listItemIcon}>
           <MoneyOffIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText
-          primary="Dépenses"
-          primaryTypographyProps={{
-            fontSize: '0.875rem',
-            fontWeight: 500,
-          }}
-        />
+        <ListItemText primary="Dépenses" primaryTypographyProps={menuStyles.listItemText} />
         {openExpenses ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openExpenses} timeout="auto" unmountOnExit>

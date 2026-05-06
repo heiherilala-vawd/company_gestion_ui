@@ -50,21 +50,7 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
       {...props}
       sx={{
         ...datagridStyles.container,
-        borderRadius: 3,
-        overflow: 'hidden',
-        '& .RaDatagrid-root': {
-          borderRadius: 3,
-        },
-        '& .RaDatagrid-header': {
-          backgroundColor: (theme) => (theme.palette.mode === 'light' ? '#f8fafc' : '#273548'),
-        },
-        '& .RaDatagrid-row:hover': {
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.04)' : 'rgba(255, 90, 60, 0.08)',
-        },
-        '& .RaDatagrid-row': {
-          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-        },
+        ...datagridStyles.responsive,
       }}
       rowClick="show"
     >

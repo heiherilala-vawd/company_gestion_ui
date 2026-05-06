@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, Button } from '@mui/material'
-import { alpha } from '@mui/material/styles'
+import { emptyStateStyles } from '../style/components'
 
 interface EmptyStateProps {
   icon?: React.ReactNode
@@ -18,25 +18,7 @@ export const EmptyState = ({
   onAction,
 }: EmptyStateProps) => {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        py: 8,
-        px: 2,
-        textAlign: 'center',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? alpha(theme.palette.primary.main, 0.02)
-            : alpha(theme.palette.primary.main, 0.04),
-        borderRadius: 4,
-        border: (theme) =>
-          `1px dashed ${theme.palette.mode === 'light' ? alpha(theme.palette.primary.main, 0.2) : alpha(theme.palette.primary.main, 0.3)}`,
-        transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-      }}
-    >
+    <Box sx={emptyStateStyles}>
       {icon && (
         <Box
           sx={{
