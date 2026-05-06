@@ -173,7 +173,7 @@ const MenuRoot = () => {
           mb: 0.5,
           transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
           '&.Mui-selected': {
-            backgroundColor: (theme: Theme) =>
+            backgroundColor: (theme) =>
               theme.palette.mode === 'light'
                 ? 'rgba(255, 255, 255, 0.2)'
                 : 'rgba(255, 90, 60, 0.15)',
@@ -184,7 +184,7 @@ const MenuRoot = () => {
             },
           },
           '&:hover': {
-            backgroundColor: (theme: Theme) =>
+            backgroundColor: (theme) =>
               theme.palette.mode === 'light'
                 ? 'rgba(255, 255, 255, 0.15)'
                 : 'rgba(255, 90, 60, 0.1)',
@@ -215,7 +215,7 @@ const MenuRoot = () => {
     <Box
       sx={{
         height: '100%',
-        background: (theme: Theme) =>
+        background: (theme) =>
           theme.palette.mode === 'light'
             ? themeColors.sidebarGradient
             : themeColors.sidebarDarkGradient,
@@ -302,7 +302,7 @@ const MenuRoot = () => {
           color: '#fff',
           transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            backgroundColor: (theme: Theme) =>
+            backgroundColor: (theme) =>
               theme.palette.mode === 'light'
                 ? 'rgba(255, 255, 255, 0.15)'
                 : 'rgba(255, 90, 60, 0.1)',
@@ -349,7 +349,7 @@ const MenuRoot = () => {
           color: '#fff',
           transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
           '&:hover': {
-            backgroundColor: (theme: Theme) =>
+            backgroundColor: (theme) =>
               theme.palette.mode === 'light'
                 ? 'rgba(255, 255, 255, 0.15)'
                 : 'rgba(255, 90, 60, 0.1)',

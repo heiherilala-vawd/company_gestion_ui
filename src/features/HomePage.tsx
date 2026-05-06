@@ -27,6 +27,9 @@ const buttons = [
     to: '/expenses_activity',
     desc: 'Payer',
   },
+]
+
+const validationButtons = [
   {
     label: 'Valider Payment',
     icon: CheckCircleIcon,
@@ -165,6 +168,30 @@ export default function HomePage() {
         </Typography>
         <Grid container spacing={3} sx={{ mb: 4, justifyContent: 'center' }}>
           {buttons.map((btn) => (
+            <Grid item xs={6} sm={4} md={2} key={btn.label} sx={{ display: 'flex' }}>
+              <ActionButton btn={btn} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+
+      <Box sx={{ width: '100%', maxWidth: 900, mt: 4 }}>
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 3,
+            textAlign: 'center',
+            color: 'text.secondary',
+            fontWeight: 600,
+            fontSize: '0.875rem',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+          }}
+        >
+          Validations
+        </Typography>
+        <Grid container spacing={3} sx={{ mb: 4, justifyContent: 'center' }}>
+          {validationButtons.map((btn) => (
             <Grid item xs={6} sm={4} md={2} key={btn.label} sx={{ display: 'flex' }}>
               <ActionButton btn={btn} />
             </Grid>

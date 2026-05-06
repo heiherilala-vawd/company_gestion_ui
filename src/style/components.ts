@@ -1,7 +1,31 @@
 import { SxProps, Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
+import { colors, borderRadius as br } from './themeConfig'
 
 export const appBarStyles = {
+  selectorBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    backgroundColor: alpha(colors.primary.main, 0.1),
+    borderRadius: br.xs,
+    px: 1,
+    py: 0.5,
+  } as const,
+
+  selectorLabel: {
+    color: 'primary.main',
+    fontWeight: 600,
+    fontSize: 11,
+    whiteSpace: 'nowrap',
+    display: { xs: 'none', sm: 'block' },
+  } as const,
+
+  selectorInput: {
+    color: 'primary.main',
+    fontSize: 12,
+  } as const,
+
   container: {
     display: 'flex',
     alignItems: 'center',
@@ -49,7 +73,7 @@ export const formStyles = {
   container: {
     minWidth: 150,
     maxWidth: 200,
-    backgroundColor: 'white',
+    backgroundColor: 'background.paper',
   } as const,
   wrapper: {
     minWidth: 120,
@@ -60,7 +84,7 @@ export const formStyles = {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: (theme: Theme) => alpha(theme.palette.primary.main, 0.1),
-    borderRadius: 2,
+    borderRadius: br.xs,
     px: 1,
     py: 0.5,
     gap: 1,
