@@ -27,7 +27,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import { menuStyles } from '../style/components'
-import { commonStyles } from '../style/theme'
+import { themeColors } from '../style/theme'
 
 interface ResourceItem {
   name: string
@@ -45,36 +45,36 @@ const MenuRoot = () => {
   if (!sidebarOpen) return null
 
   const transversalItems: ResourceItem[] = [
-    { name: 'home', label: '🏠 Home', icon: HomeIcon, to: '/' },
-    { name: 'jobs', label: '📋 Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
+    { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/' },
+    { name: 'jobs', label: 'Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
       name: 'companies',
-      label: '🏢 Companies',
+      label: 'Entreprises',
       icon: BusinessIcon,
       to: '/companies',
       testId: 'menu-companies',
     },
-    { name: 'users', label: '👥 Users', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
+    { name: 'users', label: 'Utilisateurs', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
   ]
 
   const storageMain: ResourceItem[] = [
     {
       name: 'warehouses',
-      label: '🏭 Warehouse',
+      label: 'Entrepôts',
       icon: WarehouseIcon,
       to: '/warehouses',
       testId: 'menu-warehouses',
     },
     {
       name: 'equipment',
-      label: '🔧 Equipments',
+      label: 'Équipements',
       icon: BuildIcon,
       to: '/equipment',
       testId: 'menu-equipments',
     },
     {
       name: 'materials',
-      label: '📦 Materials',
+      label: 'Matériaux',
       icon: CategoryIcon,
       to: '/materials',
       testId: 'menu-materials',
@@ -84,21 +84,21 @@ const MenuRoot = () => {
   const storageSub: ResourceItem[] = [
     {
       name: 'travel_people',
-      label: '👷 Personnel',
+      label: 'Personnel',
       icon: PeopleAltIcon,
       to: '/travel_people',
       testId: 'menu-travel-peoples',
     },
     {
       name: 'travel_materials',
-      label: '🚚 Matériaux',
+      label: 'Matériaux dépl.',
       icon: CategoryIcon,
       to: '/travel_materials',
       testId: 'menu-travel-materials',
     },
     {
       name: 'travel_equipment',
-      label: '🚜 Équipement',
+      label: 'Équipement dépl.',
       icon: BuildIcon,
       to: '/travel_equipment',
       testId: 'menu-travel-equipments',
@@ -108,43 +108,43 @@ const MenuRoot = () => {
   const expenses: ResourceItem[] = [
     {
       name: 'expenses',
-      label: '💸 Dépenses',
+      label: 'Dépenses',
       icon: MoneyOffIcon,
       to: '/expenses',
       testId: 'menu-expenses',
     },
     {
       name: 'travel_expenses',
-      label: '✈️ Déplacements',
+      label: 'Déplacements',
       icon: FlightTakeoffIcon,
       to: '/travel_expenses',
       testId: 'menu-travel-expenses',
     },
     {
       name: 'purchases',
-      label: '🛒 Achats',
+      label: 'Achats',
       icon: ShoppingCartIcon,
       to: '/purchases',
       testId: 'menu-purchases',
     },
     {
       name: 'bank_fees',
-      label: '🏦 Frais bancaire',
+      label: 'Frais bancaire',
       icon: AccountBalanceIcon,
       to: '/bank_fees',
       testId: 'menu-bank-fees',
     },
     {
       name: 'other_expenses',
-      label: '📝 Autres',
+      label: 'Autres dépenses',
       icon: MoneyOffIcon,
       to: '/other_expenses',
       testId: 'menu-other-expenses',
     },
     {
       name: 'employer_payments',
-      label: '💰 Salaires personnel',
-      icon: PaidIcon,
+      label: 'Salaires',
+      icon: PaymentsIcon,
       to: '/employee_payments',
       testId: 'menu-employee-payments',
     },
@@ -153,7 +153,7 @@ const MenuRoot = () => {
   const incomes: ResourceItem[] = [
     {
       name: 'incomes',
-      label: '💵 Revenus',
+      label: 'Revenus',
       icon: PaidIcon,
       to: '/incomes',
       testId: 'menu-incomes',
@@ -166,39 +166,159 @@ const MenuRoot = () => {
         key={item.name}
         component={Link}
         to={item.to}
-        sx={nested ? menuStyles.nested : menuStyles.item}
+        sx={{
+          ...(nested ? menuStyles.nested : menuStyles.item),
+          borderRadius: 2,
+          mx: 1,
+          mb: 0.5,
+          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+          '&.Mui-selected': {
+            backgroundColor: (theme: Theme) =>
+              theme.palette.mode === 'light'
+                ? 'rgba(255, 255, 255, 0.2)'
+                : 'rgba(255, 90, 60, 0.15)',
+            color: '#fff',
+            backdropFilter: 'blur(4px)',
+            '& .MuiListItemIcon-root': {
+              color: '#fff',
+            },
+          },
+          '&:hover': {
+            backgroundColor: (theme: Theme) =>
+              theme.palette.mode === 'light'
+                ? 'rgba(255, 255, 255, 0.15)'
+                : 'rgba(255, 90, 60, 0.1)',
+            transform: 'translateX(4px)',
+          },
+        }}
         data-testid={item.testId}
       >
-        <ListItemIcon sx={{ minWidth: 40 }}>
+        <ListItemIcon
+          sx={{
+            minWidth: 40,
+            color: 'inherit',
+          }}
+        >
           <item.icon fontSize="small" />
         </ListItemIcon>
-        <ListItemText primary={item.label} />
+        <ListItemText
+          primary={item.label}
+          primaryTypographyProps={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+          }}
+        />
       </ListItemButton>
     ))
 
   return (
-    <Box sx={commonStyles.container} data-testid="menu-item-home">
-      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'primary.main' }}>
-        ⚡ Transversal
+    <Box
+      sx={{
+        height: '100%',
+        background: (theme: Theme) =>
+          theme.palette.mode === 'light'
+            ? themeColors.sidebarGradient
+            : themeColors.sidebarDarkGradient,
+        borderRadius: { xs: 0, md: '0 16px 16px 0' },
+        p: 2,
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        '&::-webkit-scrollbar': {
+          width: '4px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'rgba(255,255,255,0.2)',
+          borderRadius: '4px',
+        },
+      }}
+      data-testid="menu-item-home"
+    >
+      <Box
+        sx={{
+          mb: 3,
+          pb: 2,
+          borderBottom: '1px solid rgba(255,255,255,0.15)',
+        }}
+      >
+        <Typography
+          variant="h6"
+          sx={{
+            color: '#fff',
+            fontWeight: 700,
+            fontSize: '1.25rem',
+            letterSpacing: '-0.025em',
+          }}
+        >
+          Test Admin
+        </Typography>
+        <Typography
+          variant="caption"
+          sx={{
+            color: 'rgba(255,255,255,0.7)',
+            fontSize: '0.75rem',
+          }}
+        >
+          Gestion d&apos;entreprise
+        </Typography>
+      </Box>
+
+      <Typography
+        variant="caption"
+        sx={{
+          ...menuStyles.section,
+          color: 'rgba(255,255,255,0.7)',
+          fontSize: '0.6875rem',
+          fontWeight: 600,
+        }}
+      >
+        PRINCIPAL
       </Typography>
-      <List component="nav" dense>
+      <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(transversalItems)}
       </List>
 
-      <Box sx={menuStyles.divider} />
-
-      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'warning.main' }}>
-        📦 Gestion de stockage
+      <Typography
+        variant="caption"
+        sx={{
+          ...menuStyles.section,
+          color: 'rgba(255,255,255,0.7)',
+          fontSize: '0.6875rem',
+          fontWeight: 600,
+        }}
+      >
+        STOCKAGE
       </Typography>
-      <List component="nav" dense>
+      <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(storageMain)}
       </List>
 
-      <ListItemButton onClick={() => setOpenStorage(!openStorage)} sx={menuStyles.item}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+      <ListItemButton
+        onClick={() => setOpenStorage(!openStorage)}
+        sx={{
+          ...menuStyles.item,
+          borderRadius: 2,
+          mx: 1,
+          mb: 0.5,
+          color: '#fff',
+          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+          '&:hover': {
+            backgroundColor: (theme: Theme) =>
+              theme.palette.mode === 'light'
+                ? 'rgba(255, 255, 255, 0.15)'
+                : 'rgba(255, 90, 60, 0.1)',
+          },
+        }}
+      >
+        <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
           <PeopleAltIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText primary="👥 Personnel & Déplacements" />
+        <ListItemText
+          primary="Personnel & Déplacements"
+          primaryTypographyProps={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+          }}
+        />
         {openStorage ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openStorage} timeout="auto" unmountOnExit>
@@ -207,17 +327,45 @@ const MenuRoot = () => {
         </List>
       </Collapse>
 
-      <Box sx={menuStyles.divider} />
-
-      <Typography variant="caption" sx={{ ...menuStyles.section, color: 'success.main' }}>
-        💰 Gestion d&apos;argent
+      <Typography
+        variant="caption"
+        sx={{
+          ...menuStyles.section,
+          color: 'rgba(255,255,255,0.7)',
+          fontSize: '0.6875rem',
+          fontWeight: 600,
+        }}
+      >
+        FINANCES
       </Typography>
 
-      <ListItemButton onClick={() => setOpenExpenses(!openExpenses)} sx={menuStyles.item}>
-        <ListItemIcon sx={{ minWidth: 40 }}>
+      <ListItemButton
+        onClick={() => setOpenExpenses(!openExpenses)}
+        sx={{
+          ...menuStyles.item,
+          borderRadius: 2,
+          mx: 1,
+          mb: 0.5,
+          color: '#fff',
+          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+          '&:hover': {
+            backgroundColor: (theme: Theme) =>
+              theme.palette.mode === 'light'
+                ? 'rgba(255, 255, 255, 0.15)'
+                : 'rgba(255, 90, 60, 0.1)',
+          },
+        }}
+      >
+        <ListItemIcon sx={{ minWidth: 40, color: 'inherit' }}>
           <MoneyOffIcon fontSize="small" />
         </ListItemIcon>
-        <ListItemText primary="💸 Dépenses" />
+        <ListItemText
+          primary="Dépenses"
+          primaryTypographyProps={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+          }}
+        />
         {openExpenses ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openExpenses} timeout="auto" unmountOnExit>
@@ -233,4 +381,5 @@ const MenuRoot = () => {
   )
 }
 
+export { MenuRoot as Menu }
 export default MenuRoot

@@ -3,7 +3,6 @@ set -e
 
 echo "Building the app with coverage instrumentation..."
 export NYC_CAFEOBJECT_COVERAGE=true
-# Sécurité : forcer VITE_API_URL à vide pour éviter les fuites vers le vrai backend
 export VITE_API_URL=''
 npm run build
 

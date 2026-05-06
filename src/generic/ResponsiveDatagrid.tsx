@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode, Children, isValidElement } from 'react'
 import { Datagrid, DatagridProps } from 'react-admin'
-import { useMediaQuery, useTheme } from '@mui/material'
+import { useMediaQuery, useTheme as useMuiTheme } from '@mui/material'
 import { datagridStyles } from '../style/components'
 
 interface ResponsiveDatagridProps extends Omit<DatagridProps, 'children'> {
@@ -13,7 +13,7 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
   priorityFields,
   ...props
 }) => {
-  const theme = useTheme()
+  const theme = useMuiTheme()
   const isXs = useMediaQuery(theme.breakpoints.only('xs'))
   const isSm = useMediaQuery(theme.breakpoints.only('sm'))
   const isMd = useMediaQuery(theme.breakpoints.only('md'))
@@ -46,7 +46,28 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
   }
 
   return (
-    <Datagrid {...props} sx={datagridStyles.container} rowClick="show">
+    <Datagrid
+      {...props}
+      sx={{
+        ...datagridStyles.container,
+        borderRadius: 3,
+        overflow: 'hidden',
+        '& .RaDatagrid-root': {
+          borderRadius: 3,
+        },
+        '& .RaDatagrid-header': {
+          backgroundColor: (theme) => (theme.palette.mode === 'light' ? '#f8fafc' : '#273548'),
+        },
+        '& .RaDatagrid-row:hover': {
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.04)' : 'rgba(255, 90, 60, 0.08)',
+        },
+        '& .RaDatagrid-row': {
+          transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+        },
+      }}
+      rowClick="show"
+    >
       {getVisibleFields()}
     </Datagrid>
   )
