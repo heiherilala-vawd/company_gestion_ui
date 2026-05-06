@@ -3,6 +3,7 @@ import {
   expense1Mock,
   crupdateExpensesMock,
   createOrUpdateExpenses,
+  expense2Mock,
 } from '../mocks/responses/expenses-api'
 import {
   insertInToLocalStorage,

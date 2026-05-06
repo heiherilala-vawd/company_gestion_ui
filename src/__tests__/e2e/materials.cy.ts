@@ -1,5 +1,10 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import { createOrUpdateMaterials } from '../mocks/responses/materials-api'
+import {
+  createOrUpdateMaterials,
+  crupdateMaterialsMock,
+  material1Mock,
+  material2Mock,
+} from '../mocks/responses/materials-api'
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Materials', () => {

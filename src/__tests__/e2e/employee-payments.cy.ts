@@ -3,6 +3,7 @@ import {
   employeePayment1Mock,
   crupdateEmployeePaymentsMock,
   createOrUpdateEmployeePayments,
+  employeePayment2Mock,
 } from '../mocks/responses/employee-payments-api'
 import {
   insertInToLocalStorage,
@@ -10,6 +11,7 @@ import {
   loginInPage,
   selectEmployee,
   selectExpense,
+  selectJob,
 } from '../support/utils.ts'
 
 describe('E2E: Employee Payments', () => {
@@ -22,14 +24,23 @@ describe('E2E: Employee Payments', () => {
       cy.wait('@getEmployeePayment')
       cy.contains('Edit').click()
     }
-    selectExpense()
     selectEmployee()
     cy.get('[data-testid="input-payment_description"] textarea:visible')
+      .first()
       .clear()
       .type(<string>crupdatedData.payment_description, { force: true })
     cy.get('[data-testid="input-payment_type"] input')
       .clear()
       .type(<string>crupdatedData.payment_type)
+
+    selectJob('expense\\.job_id')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
+      .clear()
+      .type('description of job', { force: true })
+
     cy.get('button[type="submit"]').click()
   }
 

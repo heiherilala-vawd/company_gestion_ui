@@ -45,7 +45,6 @@ const MyAppBar = () => (
     <Box sx={appBarStyles.container} data-testid="menu-item-selector-home">
       <CompanySelector />
       <JobSelector />
-      <ExpenseSelector />
     </Box>
   </RAppBar>
 )

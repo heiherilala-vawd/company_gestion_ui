@@ -188,8 +188,8 @@ export function selectEnumType(testId: string, selection: string): void {
   cy.get('li[aria-selected]').should('not.be.visible')
 }
 
-export function selectJob(): void {
-  selectReferenceWithCreate('input-jobs-id', 'job_id', <string>job1Mock.description)
+export function selectJob(menuId: string = 'job_id'): void {
+  selectReferenceWithCreate('input-jobs-id', menuId, <string>job1Mock.description)
 }
 
 export function selectCompany(): void {

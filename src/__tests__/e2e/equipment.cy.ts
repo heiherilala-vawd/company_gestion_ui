@@ -3,6 +3,7 @@ import {
   equipment1Mock,
   crupdateEquipmentMock,
   createOrUpdateEquipments,
+  equipment2Mock,
 } from '../mocks/responses/equipment-api'
 import {
   insertInToLocalStorage,

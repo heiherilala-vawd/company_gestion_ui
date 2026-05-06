@@ -9,6 +9,7 @@ import {
   interceptGeneralEndpoint,
   loginInPage,
   selectExpense,
+  selectJob,
 } from '../support/utils.ts'
 
 describe('E2E: Bank Fees', () => {
@@ -27,13 +28,22 @@ describe('E2E: Bank Fees', () => {
       cy.wait('@getBankFee')
       cy.contains('Edit').click()
     }
-    selectExpense()
     cy.get('[data-testid="input-bank_name"] input')
       .clear()
       .type(<string>crupdatedData.bank_name)
     cy.get('[data-testid="input-description"] textarea:visible')
+      .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
+
+    selectJob('expense\\.job_id')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
+      .clear()
+      .type('description of job', { force: true })
+
     cy.get('button[type="submit"]').click()
   }
 

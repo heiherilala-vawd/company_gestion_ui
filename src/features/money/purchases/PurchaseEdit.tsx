@@ -6,8 +6,6 @@ export default function PurchaseEdit() {
     <Edit
       transform={(data) => ({
         ...data,
-        expense_id: data.expense?.id,
-        expense: undefined,
         material: data.material?.id,
         equipment: data.equipment?.id,
       })}

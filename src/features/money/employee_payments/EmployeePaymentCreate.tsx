@@ -6,8 +6,6 @@ export default function EmployeePaymentCreate() {
     <Create
       transform={(data) => ({
         ...data,
-        expense_id: data.expense?.id,
-        expense: undefined,
         employee_id: data.employee?.id,
         employee: undefined,
       })}

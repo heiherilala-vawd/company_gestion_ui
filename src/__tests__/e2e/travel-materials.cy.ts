@@ -1,8 +1,9 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   travelMaterials1Mock,
-  crupdateTravelMaterialsMock,
   createOrUpdateTravelMaterialss,
+  travelMaterials2Mock,
+  crupdateTravelMaterialsMock,
 } from '../mocks/responses/travel-materials-api'
 import {
   insertInToLocalStorage,

@@ -1,10 +1,14 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import { createOrUpdateOtherExpenses } from '../mocks/responses/other-expenses-api'
+import {
+  createOrUpdateOtherExpenses,
+  crupdateOtherExpensesMock,
+} from '../mocks/responses/other-expenses-api'
 import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
   selectExpense,
+  selectJob,
 } from '../support/utils.ts'
 
 describe('E2E: Other Expenses', () => {
@@ -17,10 +21,18 @@ describe('E2E: Other Expenses', () => {
       cy.wait('@getOtherExpense')
       cy.contains('Edit').click()
     }
-    selectExpense()
     cy.get('[data-testid="input-description"] textarea:visible')
+      .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
+
+    selectJob('expense\\.job_id')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
+      .clear()
+      .type('description of job', { force: true })
     cy.get('button[type="submit"]').click()
   }
 

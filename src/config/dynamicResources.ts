@@ -32,6 +32,11 @@ export const DYNAMIC_JOB_RESOURCES = [
   'incomes',
   'purchase_operations',
   'travel_operations',
+  'travel_expenses',
+  'purchases',
+  'bank_fees',
+  'other_expenses',
+  'employee_payments',
 ] as const
 
 // Type pour les ressources dynamiques (TypeScript)
@@ -54,13 +59,7 @@ export const getMiddleUrlDynamicJobResource = (resource: string): string => {
 /**
  * Liste des ressources qui nécessitent un EXPENSES dans l'URL
  */
-export const DYNAMIC_EXPENSES_RESOURCES = [
-  'travel_expenses',
-  'purchases',
-  'bank_fees',
-  'other_expenses',
-  'employee_payments',
-] as const
+export const DYNAMIC_EXPENSES_RESOURCES = [] as const
 
 // Type pour les ressources dynamiques (TypeScript)
 export type DynamicExpensesResource = (typeof DYNAMIC_EXPENSES_RESOURCES)[number]
@@ -111,7 +110,6 @@ export const isDynamicTravelExpensesResource = (resource: string): boolean => {
 export const getMiddleUrlDynamicTravelExpensesResource = (resource: string): string => {
   const companyId = localStorage.getItem('currentCompanyId')
   const jobId = localStorage.getItem('currentJobId')
-  const expenseId = localStorage.getItem('currentExpenseId')
   const travelExpenseId = localStorage.getItem('currentTravelExpenseId')
   return (
     '/companies/' +
@@ -120,8 +118,6 @@ export const getMiddleUrlDynamicTravelExpensesResource = (resource: string): str
     jobId +
     '/user/' +
     userId +
-    '/expenses/' +
-    expenseId +
     '/travel_expenses/' +
     travelExpenseId +
     '/' +

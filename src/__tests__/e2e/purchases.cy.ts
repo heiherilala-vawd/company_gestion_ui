@@ -13,6 +13,7 @@ import {
   selectEquipment,
   selectMaterial,
   selectWarehouse,
+  selectJob,
 } from '../support/utils.ts'
 
 describe('E2E: Purchases', () => {
@@ -25,13 +26,20 @@ describe('E2E: Purchases', () => {
       cy.wait('@getPurchase')
       cy.contains('Edit').click()
     }
-    selectExpense()
     selectWarehouse('supplier_id')
     selectEquipment('equipment_id')
     selectMaterial('material_id')
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(String(<number>crupdatedData.quantity))
+
+    selectJob('expense\\.job_id')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
+      .clear()
+      .type('description of job', { force: true })
     cy.get('button[type="submit"]').click()
   }
 

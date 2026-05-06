@@ -6,8 +6,6 @@ export default function OtherExpenseCreate() {
     <Create
       transform={(data) => ({
         ...data,
-        expense_id: data.expense?.id,
-        expense: undefined,
       })}
     >
       <SimpleForm>

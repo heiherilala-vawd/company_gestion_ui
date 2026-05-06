@@ -2,6 +2,7 @@ import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-
 import {
   travelPeople1Mock,
   createOrUpdateTravelPeoples,
+  travelPeople2Mock,
 } from '../mocks/responses/travel-people-api'
 import {
   insertInToLocalStorage,

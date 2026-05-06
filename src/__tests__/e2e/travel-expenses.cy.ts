@@ -2,12 +2,13 @@ import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-
 import {
   travelExpense1Mock,
   createOrUpdateTravelExpenses,
+  travelExpense2Mock,
 } from '../mocks/responses/travel-expenses-api'
 import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectExpense,
+  selectJob,
   selectWarehouse,
 } from '../support/utils.ts'
 
@@ -20,9 +21,15 @@ describe('E2E: Travel Expenses', () => {
       cy.wait('@getTravelExpense')
       cy.contains('Edit').click()
     }
-    selectExpense()
     selectWarehouse('departure_location_id')
     selectWarehouse('arrival_location_id', 1)
+    selectJob('expense\\.job_id')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
+      .clear()
+      .type('description of job', { force: true })
     cy.get('button[type="submit"]').click()
   }
 

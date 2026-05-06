@@ -1,5 +1,10 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import { createOrUpdateUsers } from '../mocks/responses/users-api'
+import {
+  createOrUpdateUsers,
+  crupdateUsersMock,
+  user1Mock,
+  user2Mock,
+} from '../mocks/responses/users-api'
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Users', () => {

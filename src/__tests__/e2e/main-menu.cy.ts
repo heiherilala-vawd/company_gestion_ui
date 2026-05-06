@@ -170,7 +170,6 @@ describe('E2E: Main Menu and Selectors', () => {
     // Vérifier que les sélecteurs sont présents en cherchant leur label
     cy.contains('Company:').should('be.visible')
     cy.contains('Job:').should('be.visible')
-    cy.contains('Expense:').should('be.visible')
   })
 
   it('should adapt layout for mobile view', () => {
@@ -204,6 +203,5 @@ describe('E2E: Main Menu and Selectors', () => {
     // Vérifier que les sélecteurs sont présents en cherchant leur label
     cy.contains('Company:').should('exist')
     cy.contains('Job:').should('exist')
-    cy.contains('Expense:').should('exist')
   })
 })
