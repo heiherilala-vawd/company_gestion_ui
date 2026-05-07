@@ -9,7 +9,7 @@ import {
 
 export default function JobShow() {
   return (
-    <Show>
+    <Show title="Détails chantier">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="company.name" label="Nom Entreprise" />

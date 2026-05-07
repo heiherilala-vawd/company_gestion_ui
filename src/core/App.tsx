@@ -1,6 +1,5 @@
 import React from 'react'
 import { Admin, Resource, CustomRoutes } from 'react-admin'
-import { ThemeProvider as MUIThemeProvider, CssBaseline } from '@mui/material'
 import { Layout } from './Layout'
 import { dataProvider } from '../auth/dataProvider'
 import authProvider from '../auth/authProvider'
@@ -40,51 +39,49 @@ const ThemedAdmin = () => {
   const theme = mode === 'light' ? lightTheme : darkTheme
 
   return (
-    <MUIThemeProvider theme={theme}>
-      <CssBaseline />
-      <CompanyProvider>
-        <JobProvider>
-          <ExpenseProvider>
-            <Admin
-              dashboard={HomePage}
-              layout={Layout}
-              dataProvider={dataProvider}
-              authProvider={authProvider}
-            >
-              <CustomRoutes>
-                <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
-                <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
-                <Route path="/expenses_activity" element={<SimplePage title="Dépenses" />} />
-                <Route
-                  path="/employer_payments_activity"
-                  element={<SimplePage title="Valider Payment" />}
-                />
-                <Route
-                  path="/travel_materials_activity"
-                  element={<SimplePage title="Valider Réception" />}
-                />
-              </CustomRoutes>
-              <Resource name="jobs" {...JobResource} />
-              <Resource name="companies" {...CompanyResource} />
-              <Resource name="users" {...UserResource} />
-              <Resource name="warehouses" {...WarehousesResource} />
-              <Resource name="equipment" {...EquipmentResource} />
-              <Resource name="materials" {...MaterialsResource} />
-              <Resource name="expenses" {...ExpenseResource} />
-              <Resource name="travel_expenses" {...TravelExpenseResource} />
-              <Resource name="purchases" {...PurchaseResource} />
-              <Resource name="bank_fees" {...BankFeeResource} />
-              <Resource name="other_expenses" {...OtherExpenseResource} />
-              <Resource name="employee_payments" {...EmployerPaymentResource} />
-              <Resource name="travel_people" {...TravelPeopleResource} />
-              <Resource name="travel_materials" {...TravelMaterialResource} />
-              <Resource name="travel_equipment" {...TravelEquipmentResource} />
-              <Resource name="incomes" {...IncomeResource} />
-            </Admin>
-          </ExpenseProvider>
-        </JobProvider>
-      </CompanyProvider>
-    </MUIThemeProvider>
+    <CompanyProvider>
+      <JobProvider>
+        <ExpenseProvider>
+          <Admin
+            theme={theme}
+            dashboard={HomePage}
+            layout={Layout}
+            dataProvider={dataProvider}
+            authProvider={authProvider}
+          >
+            <CustomRoutes>
+              <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
+              <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
+              <Route path="/expenses_activity" element={<SimplePage title="Dépenses" />} />
+              <Route
+                path="/employer_payments_activity"
+                element={<SimplePage title="Valider Payment" />}
+              />
+              <Route
+                path="/travel_materials_activity"
+                element={<SimplePage title="Valider Réception" />}
+              />
+            </CustomRoutes>
+            <Resource name="jobs" {...JobResource} />
+            <Resource name="companies" {...CompanyResource} />
+            <Resource name="users" {...UserResource} />
+            <Resource name="warehouses" {...WarehousesResource} />
+            <Resource name="equipment" {...EquipmentResource} />
+            <Resource name="materials" {...MaterialsResource} />
+            <Resource name="expenses" {...ExpenseResource} />
+            <Resource name="travel_expenses" {...TravelExpenseResource} />
+            <Resource name="purchases" {...PurchaseResource} />
+            <Resource name="bank_fees" {...BankFeeResource} />
+            <Resource name="other_expenses" {...OtherExpenseResource} />
+            <Resource name="employee_payments" {...EmployerPaymentResource} />
+            <Resource name="travel_people" {...TravelPeopleResource} />
+            <Resource name="travel_materials" {...TravelMaterialResource} />
+            <Resource name="travel_equipment" {...TravelEquipmentResource} />
+            <Resource name="incomes" {...IncomeResource} />
+          </Admin>
+        </ExpenseProvider>
+      </JobProvider>
+    </CompanyProvider>
   )
 }
 

@@ -9,7 +9,7 @@ import {
 
 export default function TravelMaterialShow() {
   return (
-    <Show>
+    <Show title="Détails matériau de déplacement">
       <SimpleShowLayout>
         <TextField source="id" />
 

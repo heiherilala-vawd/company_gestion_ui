@@ -1,6 +1,5 @@
-import { TextInput, SelectInput, required } from 'react-admin'
+import { required, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
-import { Box, Card, CardContent, Typography, Stack } from '@mui/material'
 
 // eslint-disable-next-line react/prop-types
 export default function CompanyForm({ isCreate = false, isCreateForm = false }) {

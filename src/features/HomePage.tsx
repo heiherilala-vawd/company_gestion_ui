@@ -10,7 +10,13 @@ import { homePageStyles } from '../style/components'
 
 type ButtonColor = 'red' | 'success' | 'warning'
 
-const buttons: { label: string; icon: React.ElementType; to: string; desc: string; color: ButtonColor }[] = [
+const buttons: {
+  label: string
+  icon: React.ElementType
+  to: string
+  desc: string
+  color: ButtonColor
+}[] = [
   {
     label: 'Achats',
     icon: ShoppingCartIcon,
@@ -35,7 +41,13 @@ const buttons: { label: string; icon: React.ElementType; to: string; desc: strin
   },
 ]
 
-const validationButtons: { label: string; icon: React.ElementType; to: string; desc: string; color: ButtonColor }[] = [
+const validationButtons: {
+  label: string
+  icon: React.ElementType
+  to: string
+  desc: string
+  color: ButtonColor
+}[] = [
   {
     label: 'Valider Payment',
     icon: CheckCircleIcon,
@@ -64,12 +76,7 @@ function ActionButton({ btn }: { btn: (typeof buttons)[0] }) {
   const sx = styleMap[btn.color]
 
   return (
-    <Button
-      variant="contained"
-      fullWidth
-      onClick={() => navigate(btn.to)}
-      sx={sx}
-    >
+    <Button variant="contained" fullWidth onClick={() => navigate(btn.to)} sx={sx}>
       <Icon sx={homePageStyles.icon} />
       <Typography variant="body2" sx={homePageStyles.buttonLabel}>
         {btn.label}

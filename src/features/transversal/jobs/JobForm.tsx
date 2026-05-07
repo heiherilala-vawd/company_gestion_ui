@@ -1,4 +1,4 @@
-import { TextInput, DateInput, SelectInput } from 'react-admin'
+import { TextInput, SelectInput, DateInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderCompanySelect } from '../../../generic/SelectWithCreateProvider.tsx'
 

@@ -9,7 +9,7 @@ import {
 
 export default function IncomeShow() {
   return (
-    <Show>
+    <Show title="Détails revenu">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="source_organization" label="Organisation source" />

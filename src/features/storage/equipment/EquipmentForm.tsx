@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, required } from 'react-admin'
+import { required, TextInput, NumberInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderWarehouseSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 

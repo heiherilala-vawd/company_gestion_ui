@@ -1,5 +1,5 @@
-// components/CompanySelector.tsx - Version simplifiée
 import React from 'react'
+import BusinessIcon from '@mui/icons-material/Business'
 import { GenericSelector } from '../../../generic/GenericSelector.tsx'
 import { useCompany } from './CompanyContext.tsx'
 
@@ -16,6 +16,7 @@ export const CompanySelector: React.FC<CompanySelectorProps> = (props) => {
       apiEndpoint="/companies"
       label="Company"
       labelPrefix="Company: "
+      icon={<BusinessIcon fontSize="small" />}
       {...props}
       useContext={useCompany}
     />

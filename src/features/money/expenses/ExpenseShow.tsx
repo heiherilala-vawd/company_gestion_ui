@@ -9,7 +9,7 @@ import {
 
 export default function ExpenseShow() {
   return (
-    <Show>
+    <Show title="Détails dépense">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="job.description" label="Chantier" />

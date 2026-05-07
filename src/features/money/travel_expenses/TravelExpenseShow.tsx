@@ -2,7 +2,7 @@ import { Show, SimpleShowLayout, TextField, DateField } from 'react-admin'
 
 export default function TravelExpenseShow() {
   return (
-    <Show>
+    <Show title="Détails frais de déplacement">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="expense.amount" label="Pris dépense" />

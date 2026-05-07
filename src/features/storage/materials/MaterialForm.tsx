@@ -1,4 +1,4 @@
-import { TextInput, SelectInput, required } from 'react-admin'
+import { required, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 
 // eslint-disable-next-line react/prop-types

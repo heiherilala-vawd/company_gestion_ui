@@ -9,7 +9,7 @@ import {
 
 export default function MaterialShow() {
   return (
-    <Show>
+    <Show title="Détails matériau">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />

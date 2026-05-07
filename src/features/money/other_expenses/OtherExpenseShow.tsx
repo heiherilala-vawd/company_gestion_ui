@@ -2,7 +2,7 @@ import { DateField, FunctionField, Show, SimpleShowLayout, TextField } from 'rea
 
 export default function OtherExpenseShow() {
   return (
-    <Show>
+    <Show title="Détails autre dépense">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="expense.amount" label="Pris dépense" />

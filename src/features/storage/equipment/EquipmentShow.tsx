@@ -9,7 +9,7 @@ import {
 
 export default function EquipmentShow() {
   return (
-    <Show>
+    <Show title="Détails équipement">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />

@@ -131,12 +131,12 @@ export const shadows = {
 }
 
 export const borderRadius = {
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  xxl: 24,
+  xs: 1,
+  sm: 2,
+  md: 4,
+  lg: 6,
+  xl: 8,
+  xxl: 10,
 }
 
 export const transitions = {

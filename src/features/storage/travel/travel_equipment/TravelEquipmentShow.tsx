@@ -1,5 +1,4 @@
 import {
-  Show,
   SimpleShowLayout,
   TextField,
   NumberField,
@@ -7,10 +6,11 @@ import {
   DateField,
   FunctionField,
 } from 'react-admin'
+import { Show } from 'react-admin'
 
 export default function TravelEquipmentShow() {
   return (
-    <Show>
+    <Show title="Détails équipement de déplacement">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="equipment.name" label="Équipement" />

@@ -1,6 +1,5 @@
 // users/UserShow.tsx
 import {
-  Show,
   SimpleShowLayout,
   TextField,
   EmailField,
@@ -8,11 +7,12 @@ import {
   SelectField,
   FunctionField,
 } from 'react-admin'
+import { Show } from 'react-admin'
 
 // ⚠️ Ajouter 'export default'
 export default function UserShow() {
   return (
-    <Show>
+    <Show title="Détails utilisateur">
       <SimpleShowLayout>
         <TextField source="id" />
         <EmailField source="email" />

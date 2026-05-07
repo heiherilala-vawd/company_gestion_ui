@@ -2,7 +2,7 @@ import { Show, SimpleShowLayout, TextField, DateField, FunctionField } from 'rea
 
 export default function WarehouseShow() {
   return (
-    <Show>
+    <Show title="Détails entrepôt">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />

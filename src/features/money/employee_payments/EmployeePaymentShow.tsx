@@ -9,7 +9,7 @@ import {
 
 export default function EmployeePaymentShow() {
   return (
-    <Show>
+    <Show title="Détails paiement employé">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="expense.amount" label="Pris dépense" />

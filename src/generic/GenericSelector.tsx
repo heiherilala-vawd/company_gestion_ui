@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useNotify, useRefresh, Loading } from 'react-admin'
-import { FormControl, Select, MenuItem, Box, Typography, Alert } from '@mui/material'
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
+  Typography,
+  Alert,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { formStyles } from '../style/components'
 
 interface GenericEntity {
@@ -18,6 +27,7 @@ interface GenericSelectorProps {
   apiEndpoint: string
   label?: string
   labelPrefix?: string
+  icon?: React.ReactNode
   useContext: () => { currentId: string | null; selectEntity: (id: string | null) => void }
   fullWidth?: boolean
   onEntitySelected?: (entity: GenericEntity) => void
@@ -34,6 +44,7 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   apiEndpoint,
   label,
   labelPrefix,
+  icon,
   useContext,
   fullWidth = true,
   onEntitySelected,
@@ -44,6 +55,8 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   allOptionLabel = 'Tous',
   displayFields = ['name', 'description', 'title', 'label', 'code'],
 }) => {
+  const muiTheme = useTheme()
+  const isXs = useMediaQuery(muiTheme.breakpoints.only('xs'))
   const { currentId, selectEntity } = useContext()
   const [entities, setEntities] = useState<GenericEntity[]>([])
   const [loading, setLoading] = useState<boolean>(true)
@@ -147,7 +160,8 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
 
   return (
     <Box sx={formStyles.selectorBox}>
-      {prefixDisplay && (
+      {icon && !isXs && <Box sx={formStyles.selectorIcon}>{icon}</Box>}
+      {prefixDisplay && !isXs && (
         <Typography variant="caption" sx={formStyles.selectorLabel}>
           {prefixDisplay}
         </Typography>
@@ -163,6 +177,11 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
           onChange={(e) => handleEntityChange(e.target.value as string)}
           sx={formStyles.selectorInput}
           disableUnderline
+          renderValue={(val) => {
+            if (isXs && icon) return icon
+            const ent = entities.find((e) => e.id === val)
+            return ent ? getDisplayText(ent) : ''
+          }}
         >
           {showAllOption && (
             <MenuItem value="all" sx={formStyles.input}>

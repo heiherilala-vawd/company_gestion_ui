@@ -1,5 +1,4 @@
 import { TextInput } from 'react-admin'
-import { renderExpenseSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import generateId from '../../../utili/utils.tsx'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
 import { Typography } from '@mui/material'

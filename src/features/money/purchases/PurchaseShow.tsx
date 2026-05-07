@@ -2,7 +2,7 @@ import { Show, SimpleShowLayout, TextField, NumberField, BooleanField } from 're
 
 export default function PurchaseShow() {
   return (
-    <Show>
+    <Show title="Détails achat">
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="expense.amount" label="Pris dépense" />

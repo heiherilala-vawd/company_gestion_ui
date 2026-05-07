@@ -2,7 +2,7 @@ import { Show, SimpleShowLayout, TextField, DateField, FunctionField } from 'rea
 
 export default function TravelPeopleShow() {
   return (
-    <Show>
+    <Show title="Détails personne de déplacement">
       <SimpleShowLayout>
         <TextField source="id" />
 

@@ -3,15 +3,15 @@ import {
   Show,
   TabbedShowLayout,
   Tab,
+  ReferenceManyField,
   SimpleShowLayout,
   TextField,
   SelectField,
   useShowController,
-  ReferenceManyField,
-  Datagrid,
   DateField,
   FunctionField,
 } from 'react-admin'
+
 import { useEffect } from 'react'
 
 function CompanyInformations() {
@@ -55,35 +55,33 @@ export default function CompanyShow() {
             <p>Chargement...</p>
           ) : record?.id ? (
             <ReferenceManyField reference="jobs" target="company_id" record={record} perPage={25}>
-              <Datagrid rowClick="show">
-                <TextField source="id" />
-                <TextField source="company_id" label="ID Entreprise" />
-                <TextField source="description" label="Description" />
-                <DateField source="contract_signature_date" label="Signature contrat" />
-                <DateField source="start_date" label="Date début" />
-                <DateField source="end_date" label="Date fin" />
-                <DateField source="created_at" label="Créé le" showTime />
-                <DateField source="updated_at" label="Modifié le" showTime />
-                {/* Nom complet du créateur */}
-                <FunctionField
-                  label="Créé par"
-                  render={(record) => (
-                    <span>
-                      {record.created_by?.first_name} {record.created_by?.last_name}
-                    </span>
-                  )}
-                />
+              <TextField source="id" />
+              <TextField source="company_id" label="ID Entreprise" />
+              <TextField source="description" label="Description" />
+              <DateField source="contract_signature_date" label="Signature contrat" />
+              <DateField source="start_date" label="Date début" />
+              <DateField source="end_date" label="Date fin" />
+              <DateField source="created_at" label="Créé le" showTime />
+              <DateField source="updated_at" label="Modifié le" showTime />
+              {/* Nom complet du créateur */}
+              <FunctionField
+                label="Créé par"
+                render={(record) => (
+                  <span>
+                    {record.created_by?.first_name} {record.created_by?.last_name}
+                  </span>
+                )}
+              />
 
-                {/* Nom complet du modificateur */}
-                <FunctionField
-                  label="Modifié par"
-                  render={(record) => (
-                    <span>
-                      {record.updated_by?.first_name} {record.updated_by?.last_name}
-                    </span>
-                  )}
-                />
-              </Datagrid>
+              {/* Nom complet du modificateur */}
+              <FunctionField
+                label="Modifié par"
+                render={(record) => (
+                  <span>
+                    {record.updated_by?.first_name} {record.updated_by?.last_name}
+                  </span>
+                )}
+              />
             </ReferenceManyField>
           ) : (
             <p>Aucun ID de company</p>

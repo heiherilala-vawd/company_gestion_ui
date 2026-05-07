@@ -1,4 +1,5 @@
 import React from 'react'
+import WorkIcon from '@mui/icons-material/Work'
 import { GenericSelector } from '../../../generic/GenericSelector.tsx'
 import { useJob } from './JobContext.tsx'
 import { getMiddleUrlDynamicCompanyResource } from '../../../config/dynamicResources.ts'
@@ -19,6 +20,7 @@ export const JobSelector: React.FC<JobSelectorProps> = ({ ...props }) => {
       apiEndpoint={endpoint}
       label="Job"
       labelPrefix="Job: "
+      icon={<WorkIcon fontSize="small" />}
       {...props}
       useContext={useJob}
     />

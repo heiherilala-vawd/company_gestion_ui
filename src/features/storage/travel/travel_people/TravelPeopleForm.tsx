@@ -1,9 +1,6 @@
 import { TextInput } from 'react-admin'
 import generateId from '../../../../utili/utils.tsx'
-import { getMiddleUrl } from '../../../../config/dynamicResources.ts'
-import MaterialForm from '../../materials/MaterialForm.tsx'
-import TravelExpenseForm from '../../../money/travel_expenses/TravelExpenseForm.tsx'
-import SelectWithCreateProvider, {
+import {
   renderTravelExpenseSelect,
   renderUserSelect,
 } from '../../../../generic/SelectWithCreateProvider.tsx'
