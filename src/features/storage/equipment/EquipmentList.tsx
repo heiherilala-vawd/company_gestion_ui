@@ -7,6 +7,8 @@ import {
   SearchInput,
   TextInput,
   BooleanInput,
+  ReferenceInput,
+  SelectInput,
   FunctionField,
   EditButton,
   DeleteButton,
@@ -15,7 +17,9 @@ import {
 const EquipmentFilters = [
   <SearchInput source="name" alwaysOn />,
   <TextInput source="description" label="Description" />,
-  <TextInput source="warehouse_id" label="Entrepôt" />,
+  <ReferenceInput source="warehouse_id" reference="warehouses" perPage={100}>
+    <SelectInput optionText="name" label="Entrepôt" />
+  </ReferenceInput>,
   <TextInput source="floor_number" label="N° étage" />,
   <TextInput source="storage_number" label="N° rangement" />,
   <BooleanInput source="not_arrived" label="Non arrivé" />,

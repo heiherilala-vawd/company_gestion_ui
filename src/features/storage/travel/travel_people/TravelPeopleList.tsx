@@ -3,17 +3,22 @@ import {
   Datagrid,
   TextField,
   DateField,
-  SearchInput,
   TextInput,
   BooleanInput,
+  ReferenceInput,
+  SelectInput,
   EditButton,
   DeleteButton,
   FunctionField,
 } from 'react-admin'
 
 const TravelPeopleFilters = [
-  <SearchInput source="travel_id" alwaysOn />,
-  <TextInput source="user_id" label="Utilisateur" />,
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100} alwaysOn>
+    <SelectInput optionText="expense.description" label="Voyage" />
+  </ReferenceInput>,
+  <ReferenceInput source="user_id" reference="users" perPage={100}>
+    <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Utilisateur" />
+  </ReferenceInput>,
   <TextInput source="arrival_location" label="Lieu d'arrivée" />,
   <TextInput source="arrival_date_min" label="Date arrivée min" />,
   <TextInput source="arrival_date_max" label="Date arrivée max" />,

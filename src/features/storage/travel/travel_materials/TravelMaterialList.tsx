@@ -4,17 +4,22 @@ import {
   TextField,
   NumberField,
   DateField,
-  SearchInput,
   TextInput,
   BooleanInput,
+  ReferenceInput,
+  SelectInput,
   EditButton,
   DeleteButton,
   FunctionField,
 } from 'react-admin'
 
 const TravelMaterialFilters = [
-  <SearchInput source="material_id" alwaysOn />,
-  <TextInput source="travel_id" label="Voyage" />,
+  <ReferenceInput source="material_id" reference="materials" perPage={100} alwaysOn>
+    <SelectInput optionText="name" label="Matériau" />
+  </ReferenceInput>,
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
+    <SelectInput optionText="expense.description" label="Voyage" />
+  </ReferenceInput>,
   <TextInput source="quantity" label="Quantité" />,
   <TextInput source="quantity_received" label="Qté reçue" />,
   <TextInput source="arrival_location" label="Lieu d'arrivée" />,

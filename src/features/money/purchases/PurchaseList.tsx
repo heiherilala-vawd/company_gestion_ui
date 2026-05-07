@@ -4,14 +4,17 @@ import {
   TextField,
   BooleanField,
   NumberField,
-  SearchInput,
   BooleanInput,
+  ReferenceInput,
+  SelectInput,
   EditButton,
   DeleteButton,
 } from 'react-admin'
 
 const PurchaseFilters = [
-  <SearchInput source="supplier_id" alwaysOn />,
+  <ReferenceInput source="supplier_id" reference="warehouses" perPage={100} alwaysOn>
+    <SelectInput optionText="name" label="Fournisseur" />
+  </ReferenceInput>,
   <BooleanInput source="is_equipment" label="Équipement" />,
 ]
 

@@ -4,8 +4,8 @@ import {
   TextField,
   SelectField,
   SearchInput,
-  TextInput,
   SelectInput,
+  ReferenceInput,
   EditButton,
   DeleteButton,
   DateField,
@@ -15,7 +15,9 @@ import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
 
 const EmployerPaymentFilters = [
   <SearchInput source="payment_description" alwaysOn />,
-  <TextInput source="employee_id" label="Employé" />,
+  <ReferenceInput source="employee_id" reference="users" perPage={100}>
+    <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Employé" />
+  </ReferenceInput>,
   <SelectInput
     source="payment_type"
     label="Type de paiement"

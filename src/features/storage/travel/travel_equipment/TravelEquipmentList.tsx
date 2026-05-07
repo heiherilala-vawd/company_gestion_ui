@@ -5,10 +5,10 @@ import {
   NumberField,
   SelectField,
   DateField,
-  SearchInput,
   TextInput,
   SelectInput,
   BooleanInput,
+  ReferenceInput,
   EditButton,
   DeleteButton,
   FunctionField,
@@ -16,8 +16,12 @@ import {
 import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
 
 const TravelEquipmentFilters = [
-  <SearchInput source="equipment_id" alwaysOn />,
-  <TextInput source="travel_id" label="Voyage" />,
+  <ReferenceInput source="equipment_id" reference="equipment" perPage={100} alwaysOn>
+    <SelectInput optionText="name" label="Équipement" />
+  </ReferenceInput>,
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
+    <SelectInput optionText="expense.description" label="Voyage" />
+  </ReferenceInput>,
   <TextInput source="quantity" label="Quantité" />,
   <SelectInput
     source="status"
