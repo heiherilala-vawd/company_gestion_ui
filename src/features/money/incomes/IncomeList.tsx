@@ -13,8 +13,11 @@ import {
 
 const IncomeFilters = [
   <SearchInput source="source_organization" alwaysOn />,
-  <TextInput source="invoice_reference" label="Référence facture" />,
+  <TextInput source="invoice_reference" label="Réf. facture" />,
   <TextInput source="description" label="Description" />,
+  <TextInput source="amount" label="Montant" />,
+  <TextInput source="income_type_id" label="Type de revenu" />,
+  <TextInput source="money_received" label="Argent reçu" />,
 ]
 
 export default function IncomeList() {

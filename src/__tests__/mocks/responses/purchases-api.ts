@@ -3,6 +3,7 @@ import { expense1Mock } from './expenses-api.ts'
 import { equipment1Mock } from './equipment-api.ts'
 import { material1Mock } from './materials-api.ts'
 import { user1Mock } from './users-api.ts'
+import { warehouse1Mock } from './warehouses-api.ts'
 
 export const purchase1Mock: Purchase = {
   id: 'pur1_id',
@@ -13,7 +14,13 @@ export const purchase1Mock: Purchase = {
     job_id: expense1Mock.job.id,
     comment: expense1Mock.comment,
   },
-  supplier: 'EquipCo Ltd',
+  supplier: {
+    id: warehouse1Mock.id,
+    name: warehouse1Mock.name,
+    description: warehouse1Mock.description,
+    job_id: warehouse1Mock.job.id,
+    comment: warehouse1Mock.comment,
+  },
   equipment: {
     id: equipment1Mock.id,
     name: equipment1Mock.name,
@@ -43,7 +50,13 @@ export const purchase2Mock: Purchase = {
     job_id: expense1Mock.job.id,
     comment: expense1Mock.comment,
   },
-  supplier: 'MaterialSupplier Inc',
+  supplier: {
+    id: warehouse1Mock.id,
+    name: warehouse1Mock.name,
+    description: warehouse1Mock.description,
+    job_id: warehouse1Mock.job.id,
+    comment: warehouse1Mock.comment,
+  },
   equipment: {
     id: equipment1Mock.id,
     name: equipment1Mock.name,
@@ -69,8 +82,20 @@ export const purchasesMock: Purchase[] = [purchase1Mock, purchase2Mock]
 export const crupdatePurchasesMock: CrupdatePurchase[] = [
   {
     id: 'pur1_id',
-    expense_id: expense1Mock.id,
-    supplier: 'EquipCo Ltd Updated',
+    expense: {
+      id: expense1Mock.id,
+      amount: expense1Mock.amount,
+      description: expense1Mock.description,
+      job_id: expense1Mock.job.id,
+      comment: expense1Mock.comment,
+    },
+    supplier: {
+      id: warehouse1Mock.id,
+      name: warehouse1Mock.name,
+      description: warehouse1Mock.description,
+      job_id: warehouse1Mock.job.id,
+      comment: warehouse1Mock.comment,
+    },
     equipment: equipment1Mock.id,
     material: material1Mock.id,
     quantity: 3,
@@ -78,8 +103,20 @@ export const crupdatePurchasesMock: CrupdatePurchase[] = [
   },
   {
     id: 'pur3_id',
-    expense_id: expense1Mock.id,
-    supplier: 'New Supplier SA',
+    expense: {
+      id: expense1Mock.id,
+      amount: expense1Mock.amount,
+      description: expense1Mock.description,
+      job_id: expense1Mock.job.id,
+      comment: expense1Mock.comment,
+    },
+    supplier: {
+      id: warehouse1Mock.id,
+      name: warehouse1Mock.name,
+      description: warehouse1Mock.description,
+      job_id: warehouse1Mock.job.id,
+      comment: warehouse1Mock.comment,
+    },
     equipment: equipment1Mock.id,
     material: material1Mock.id,
     quantity: 100,

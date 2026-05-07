@@ -11,9 +11,8 @@ import {
 } from 'react-admin'
 
 const PurchaseFilters = [
-  <SearchInput source="supplier" alwaysOn />,
-  <TextInput source="equipment" label="Équipement" />,
-  <TextInput source="material" label="Matériau" />,
+  <SearchInput source="supplier_id" alwaysOn />,
+  <TextInput source="is_equipment" label="Équipement" />,
 ]
 
 export default function PurchaseList() {

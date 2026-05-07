@@ -14,7 +14,10 @@ import {
 const EquipmentFilters = [
   <SearchInput source="name" alwaysOn />,
   <TextInput source="description" label="Description" />,
-  <TextInput source="warehouse_id" label="ID Entrepôt" />,
+  <TextInput source="warehouse_id" label="Entrepôt" />,
+  <TextInput source="floor_number" label="N° étage" />,
+  <TextInput source="storage_number" label="N° rangement" />,
+  <TextInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function EquipmentList() {

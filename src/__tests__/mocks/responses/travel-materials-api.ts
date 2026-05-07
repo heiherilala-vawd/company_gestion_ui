@@ -1,14 +1,22 @@
-import { TravelMaterials, CrupdateTravelMaterials } from '../../../gen-ts/src'
+import { TravelMaterials, CrupdateTravelMaterials, CrupdateExpenseMoney } from '../../../gen-ts/src'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { material1Mock } from './materials-api.ts'
 import { expense1Mock } from './expenses-api.ts'
 import { user1Mock } from './users-api.ts'
 
+const crupdateExpenseMoneyMock: CrupdateExpenseMoney = {
+  id: expense1Mock.id,
+  amount: expense1Mock.amount,
+  description: expense1Mock.description,
+  job_id: expense1Mock.job?.id,
+  comment: expense1Mock.comment,
+}
+
 export const travelMaterials1Mock: TravelMaterials = {
   id: 'tm1_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense: expense1Mock,
+    expense: crupdateExpenseMoneyMock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -48,7 +56,7 @@ export const travelMaterials2Mock: TravelMaterials = {
   id: 'tm2_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense: expense1Mock,
+    expense: crupdateExpenseMoneyMock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -105,7 +113,7 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
   },
 ]
 
-export const createOrUpdateTravelMaterialss = (
+export const createOrUpdateTravelMaterials = (
   travelMaterials: CrupdateTravelMaterials[],
 ): TravelMaterials[] => {
   return travelMaterials.map((tm) => ({
@@ -113,7 +121,7 @@ export const createOrUpdateTravelMaterialss = (
     id: `newId`,
     travel: {
       id: tm.travel_id || travelExpense1Mock.id,
-      expense: expense1Mock,
+      expense: crupdateExpenseMoneyMock,
       departure_location: travelExpense1Mock.departure_location,
       arrival_location: travelExpense1Mock.arrival_location,
       departure_date: travelExpense1Mock.departure_date,

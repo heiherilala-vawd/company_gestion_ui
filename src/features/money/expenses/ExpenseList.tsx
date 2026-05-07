@@ -14,7 +14,7 @@ import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const ExpenseFilters = [
   <SearchInput source="description" alwaysOn />,
-  <TextInput source="job_id" label="Chantier" />,
+  <TextInput source="amount" label="Montant" />,
 ]
 
 export default function ExpenseList() {

@@ -14,7 +14,8 @@ import {
 const MaterialFilters = [
   <SearchInput source="name" alwaysOn />,
   <TextInput source="description" label="Description" />,
-  <TextInput source="warehouse_id" label="ID Entrepôt" />,
+  <TextInput source="unit" label="Unité" />,
+  <TextInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function MaterialList() {

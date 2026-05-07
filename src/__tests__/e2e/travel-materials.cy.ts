@@ -1,7 +1,7 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   travelMaterials1Mock,
-  createOrUpdateTravelMaterialss,
+  createOrUpdateTravelMaterials,
   travelMaterials2Mock,
   crupdateTravelMaterialsMock,
 } from '../mocks/responses/travel-materials-api'
@@ -68,7 +68,7 @@ describe('E2E: Travel Materials', () => {
 
   it('should create a new travel material', () => {
     cy.intercept('PUT', '**/travel_materials*', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateTravelMaterialss(req.body)))
+      req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('createTravelMaterial')
     creatOrUpdate(true)
     cy.wait('@createTravelMaterial')
@@ -77,7 +77,7 @@ describe('E2E: Travel Materials', () => {
 
   it('should update an existing travel material', () => {
     cy.intercept('PUT', '**/travel_materials*', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateTravelMaterialss(req.body)))
+      req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('updateTravelMaterial')
     creatOrUpdate(false)
     cy.wait('@updateTravelMaterial')

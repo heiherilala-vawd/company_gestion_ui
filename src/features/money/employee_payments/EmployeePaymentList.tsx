@@ -14,6 +14,7 @@ import {
 const EmployerPaymentFilters = [
   <SearchInput source="payment_description" alwaysOn />,
   <TextInput source="employee_id" label="Employé" />,
+  <TextInput source="payment_type" label="Type de paiement" />,
 ]
 
 export default function EmployeePaymentList() {

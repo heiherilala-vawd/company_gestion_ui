@@ -49,7 +49,13 @@ export const travelEquipment2Mock: TravelEquipment = {
   id: 'teq2_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense_id: travelExpense1Mock.expense.id,
+    expense: {
+      id: travelExpense1Mock.expense?.id || '',
+      amount: travelExpense1Mock.expense?.amount || 0,
+      description: travelExpense1Mock.expense?.description || '',
+      job_id: travelExpense1Mock.expense?.job_id || '',
+      comment: travelExpense1Mock.expense?.comment || '',
+    },
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,

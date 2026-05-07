@@ -13,8 +13,14 @@ import {
 } from 'react-admin'
 
 const TravelEquipmentFilters = [
-  <SearchInput source="equipment" alwaysOn />,
+  <SearchInput source="equipment_id" alwaysOn />,
   <TextInput source="travel_id" label="Voyage" />,
+  <TextInput source="quantity" label="Quantité" />,
+  <TextInput source="status" label="Statut" />,
+  <TextInput source="arrival_location" label="Lieu d'arrivée" />,
+  <TextInput source="arrival_date_min" label="Date arrivée min" />,
+  <TextInput source="arrival_date_max" label="Date arrivée max" />,
+  <TextInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function TravelEquipmentList() {

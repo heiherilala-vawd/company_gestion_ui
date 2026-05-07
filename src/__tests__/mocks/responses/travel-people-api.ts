@@ -1,15 +1,23 @@
-import { TravelPeople, CrupdateTravelPeople } from '../../../gen-ts/src'
+import { TravelPeople, CrupdateTravelPeople, CrupdateExpenseMoney } from '../../../gen-ts/src'
 import { user2Mock } from './users-api.ts'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { user1Mock } from './users-api.ts'
 import { warehouse1Mock, warehouse2Mock } from './warehouses-api.ts'
 import { expense1Mock } from './expenses-api.ts'
 
+const crupdateExpenseMoneyMock: CrupdateExpenseMoney = {
+  id: expense1Mock.id,
+  amount: expense1Mock.amount,
+  description: expense1Mock.description,
+  job_id: expense1Mock.job?.id,
+  comment: expense1Mock.comment,
+}
+
 export const travelPeople1Mock: TravelPeople = {
   id: 'tp1_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense: expense1Mock,
+    expense: crupdateExpenseMoneyMock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -43,7 +51,7 @@ export const travelPeople2Mock: TravelPeople = {
   id: 'tp2_id',
   travel: {
     id: travelExpense1Mock.id,
-    expense: expense1Mock,
+    expense: crupdateExpenseMoneyMock,
     departure_location: travelExpense1Mock.departure_location,
     arrival_location: travelExpense1Mock.arrival_location,
     departure_date: travelExpense1Mock.departure_date,
@@ -98,7 +106,7 @@ export const createOrUpdateTravelPeoples = (
     id: `newId`,
     travel: {
       id: tp.travel_id || travelExpense1Mock.id,
-      expense: expense1Mock,
+      expense: crupdateExpenseMoneyMock,
       departure_location: travelExpense1Mock.departure_location,
       arrival_location: travelExpense1Mock.arrival_location,
       departure_date: travelExpense1Mock.departure_date,

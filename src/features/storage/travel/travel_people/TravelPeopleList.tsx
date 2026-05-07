@@ -11,8 +11,12 @@ import {
 } from 'react-admin'
 
 const TravelPeopleFilters = [
-  <SearchInput source="person_name" alwaysOn />,
-  <TextInput source="travel_id" label="Voyage" />,
+  <SearchInput source="travel_id" alwaysOn />,
+  <TextInput source="user_id" label="Utilisateur" />,
+  <TextInput source="arrival_location" label="Lieu d'arrivée" />,
+  <TextInput source="arrival_date_min" label="Date arrivée min" />,
+  <TextInput source="arrival_date_max" label="Date arrivée max" />,
+  <TextInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function TravelPeopleList() {
