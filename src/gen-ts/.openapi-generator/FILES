@@ -20,6 +20,7 @@ docs/CrupdateEmployeePayment.md
 docs/CrupdateEquipment.md
 docs/CrupdateExpenseMoney.md
 docs/CrupdateIncomeMoney.md
+docs/CrupdateIncomeType.md
 docs/CrupdateJob.md
 docs/CrupdateMaterial.md
 docs/CrupdateMonetaryMovement.md
@@ -42,10 +43,13 @@ docs/History.md
 docs/HistoryApi.md
 docs/IncomeApi.md
 docs/IncomeMoney.md
+docs/IncomeType.md
+docs/IncomeTypeApi.md
 docs/InternalServerException.md
 docs/Job.md
 docs/JobApi.md
 docs/JobStatus.md
+docs/JobWithFinancials.md
 docs/LoginRequest.md
 docs/Material.md
 docs/MaterialApi.md
@@ -62,6 +66,7 @@ docs/PurchaseOperationEquipmentLine.md
 docs/PurchaseOperationMaterialLine.md
 docs/PurchaseOperationRequest.md
 docs/PurchaseOperationTravel.md
+docs/ReportApi.md
 docs/ResourceNotFoundException.md
 docs/Role.md
 docs/Sex.md
@@ -85,6 +90,8 @@ docs/User.md
 docs/UsersApi.md
 docs/Warehouse.md
 docs/WarehouseApi.md
+docs/YearlyReport.md
+docs/YearlyReportSummary.md
 package.json
 src/apis/AuthApi.ts
 src/apis/BankFeeApi.ts
@@ -94,11 +101,13 @@ src/apis/EquipmentApi.ts
 src/apis/ExpenseApi.ts
 src/apis/HistoryApi.ts
 src/apis/IncomeApi.ts
+src/apis/IncomeTypeApi.ts
 src/apis/JobApi.ts
 src/apis/MaterialApi.ts
 src/apis/OtherExpenseApi.ts
 src/apis/PurchaseApi.ts
 src/apis/PurchaseOperationApi.ts
+src/apis/ReportApi.ts
 src/apis/TravelEquipmentApi.ts
 src/apis/TravelExpenseApi.ts
 src/apis/TravelMaterialsApi.ts
@@ -123,6 +132,7 @@ src/models/CrupdateEmployeePayment.ts
 src/models/CrupdateEquipment.ts
 src/models/CrupdateExpenseMoney.ts
 src/models/CrupdateIncomeMoney.ts
+src/models/CrupdateIncomeType.ts
 src/models/CrupdateJob.ts
 src/models/CrupdateMaterial.ts
 src/models/CrupdateMonetaryMovement.ts
@@ -140,9 +150,11 @@ src/models/Equipment.ts
 src/models/ExpenseMoney.ts
 src/models/History.ts
 src/models/IncomeMoney.ts
+src/models/IncomeType.ts
 src/models/InternalServerException.ts
 src/models/Job.ts
 src/models/JobStatus.ts
+src/models/JobWithFinancials.ts
 src/models/LoginRequest.ts
 src/models/Material.ts
 src/models/MaterialUnit.ts
@@ -171,6 +183,8 @@ src/models/TravelOperationTravel.ts
 src/models/TravelPeople.ts
 src/models/User.ts
 src/models/Warehouse.ts
+src/models/YearlyReport.ts
+src/models/YearlyReportSummary.ts
 src/models/index.ts
 src/runtime.ts
 tsconfig.esm.json

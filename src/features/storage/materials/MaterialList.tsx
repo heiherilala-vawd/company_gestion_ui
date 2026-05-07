@@ -5,17 +5,30 @@ import {
   DateField,
   SearchInput,
   TextInput,
+  SelectInput,
   SelectField,
+  BooleanInput,
   FunctionField,
   EditButton,
   DeleteButton,
 } from 'react-admin'
+import { MaterialUnit } from '../../../gen-ts/src/models/MaterialUnit'
+
+const formatEnumLabel = (key: string) =>
+  key
+    .split('_')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ')
 
 const MaterialFilters = [
   <SearchInput source="name" alwaysOn />,
   <TextInput source="description" label="Description" />,
-  <TextInput source="unit" label="Unité" />,
-  <TextInput source="not_arrived" label="Non arrivé" />,
+  <SelectInput
+    source="unit"
+    label="Unité"
+    choices={Object.entries(MaterialUnit).map(([k, v]) => ({ id: v, name: formatEnumLabel(k) }))}
+  />,
+  <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function MaterialList() {

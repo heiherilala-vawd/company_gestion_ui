@@ -5,14 +5,14 @@ import {
   BooleanField,
   NumberField,
   SearchInput,
-  TextInput,
+  BooleanInput,
   EditButton,
   DeleteButton,
 } from 'react-admin'
 
 const PurchaseFilters = [
   <SearchInput source="supplier_id" alwaysOn />,
-  <TextInput source="is_equipment" label="Équipement" />,
+  <BooleanInput source="is_equipment" label="Équipement" />,
 ]
 
 export default function PurchaseList() {

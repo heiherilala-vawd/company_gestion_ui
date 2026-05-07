@@ -1,15 +1,17 @@
+
 # AuditUser
+
 
 ## Properties
 
-| Name         | Type            |
-| ------------ | --------------- |
-| `id`         | string          |
-| `role`       | [Role](Role.md) |
-| `first_name` | string          |
-| `last_name`  | string          |
-| `sex`        | [Sex](Sex.md)   |
-| `email`      | string          |
+Name | Type
+------------ | -------------
+`id` | string
+`role` | [Role](Role.md)
+`first_name` | string
+`last_name` | string
+`sex` | [Sex](Sex.md)
+`email` | string
 
 ## Example
 
@@ -38,3 +40,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

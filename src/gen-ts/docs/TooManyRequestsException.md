@@ -1,11 +1,13 @@
+
 # TooManyRequestsException
+
 
 ## Properties
 
-| Name      | Type   |
-| --------- | ------ |
-| `type`    | string |
-| `message` | string |
+Name | Type
+------------ | -------------
+`type` | string
+`message` | string
 
 ## Example
 
@@ -14,8 +16,8 @@ import type { TooManyRequestsException } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  type: null,
-  message: null,
+  "type": null,
+  "message": null,
 } satisfies TooManyRequestsException
 
 console.log(example)
@@ -30,3 +32,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

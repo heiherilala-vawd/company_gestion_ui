@@ -1,15 +1,17 @@
+
 # CrupdateCompany
+
 
 ## Properties
 
-| Name           | Type                          |
-| -------------- | ----------------------------- |
-| `comment`      | string                        |
-| `id`           | string                        |
-| `name`         | string                        |
-| `rib`          | string                        |
-| `description`  | string                        |
-| `company_type` | [CompanyType](CompanyType.md) |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`name` | string
+`rib` | string
+`description` | string
+`company_type` | [CompanyType](CompanyType.md)
 
 ## Example
 
@@ -38,3 +40,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

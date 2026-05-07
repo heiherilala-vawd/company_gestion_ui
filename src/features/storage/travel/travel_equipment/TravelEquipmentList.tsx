@@ -7,20 +7,27 @@ import {
   DateField,
   SearchInput,
   TextInput,
+  SelectInput,
+  BooleanInput,
   EditButton,
   DeleteButton,
   FunctionField,
 } from 'react-admin'
+import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
 
 const TravelEquipmentFilters = [
   <SearchInput source="equipment_id" alwaysOn />,
   <TextInput source="travel_id" label="Voyage" />,
   <TextInput source="quantity" label="Quantité" />,
-  <TextInput source="status" label="Statut" />,
+  <SelectInput
+    source="status"
+    label="Statut"
+    choices={Object.entries(TransportStatus).map(([k, v]) => ({ id: v, name: k }))}
+  />,
   <TextInput source="arrival_location" label="Lieu d'arrivée" />,
   <TextInput source="arrival_date_min" label="Date arrivée min" />,
   <TextInput source="arrival_date_max" label="Date arrivée max" />,
-  <TextInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function TravelEquipmentList() {

@@ -5,16 +5,22 @@ import {
   SelectField,
   SearchInput,
   TextInput,
+  SelectInput,
   EditButton,
   DeleteButton,
   DateField,
   FunctionField,
 } from 'react-admin'
+import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
 
 const EmployerPaymentFilters = [
   <SearchInput source="payment_description" alwaysOn />,
   <TextInput source="employee_id" label="Employé" />,
-  <TextInput source="payment_type" label="Type de paiement" />,
+  <SelectInput
+    source="payment_type"
+    label="Type de paiement"
+    choices={Object.entries(PaymentType).map(([k, v]) => ({ id: v, name: k }))}
+  />,
 ]
 
 export default function EmployeePaymentList() {

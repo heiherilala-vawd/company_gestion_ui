@@ -1,13 +1,15 @@
+
 # TravelOperationMaterialLine
+
 
 ## Properties
 
-| Name       | Type                                    |
-| ---------- | --------------------------------------- |
-| `comment`  | string                                  |
-| `id`       | string                                  |
-| `material` | [CrupdateMaterial](CrupdateMaterial.md) |
-| `quantity` | number                                  |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
+`quantity` | number
 
 ## Example
 
@@ -34,3 +36,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

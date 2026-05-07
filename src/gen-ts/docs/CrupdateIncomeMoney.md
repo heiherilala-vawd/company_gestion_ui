@@ -1,16 +1,21 @@
+
 # CrupdateIncomeMoney
+
 
 ## Properties
 
-| Name                  | Type   |
-| --------------------- | ------ |
-| `comment`             | string |
-| `amount`              | number |
-| `description`         | string |
-| `id`                  | string |
-| `source_organization` | string |
-| `invoice_reference`   | string |
-| `job_id`              | string |
+Name | Type
+------------ | -------------
+`comment` | string
+`amount` | number
+`description` | string
+`id` | string
+`source_organization` | string
+`invoice_reference` | string
+`billing_start_date` | Date
+`money_arrival_date` | Date
+`job_id` | string
+`income_type_id` | string
 
 ## Example
 
@@ -25,7 +30,10 @@ const example = {
   "id": inc_001,
   "source_organization": Client Principal,
   "invoice_reference": FACT-2024-001,
+  "billing_start_date": Mon Jan 15 03:00:00 EAT 2024,
+  "money_arrival_date": Thu Feb 01 03:00:00 EAT 2024,
   "job_id": job_001,
+  "income_type_id": income_type_001,
 } satisfies CrupdateIncomeMoney
 
 console.log(example)
@@ -40,3 +48,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

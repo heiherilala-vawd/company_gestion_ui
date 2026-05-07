@@ -7,15 +7,27 @@ import {
   SelectField,
   SearchInput,
   TextInput,
+  SelectInput,
   EditButton,
 } from 'react-admin'
+import { Role } from '../../../gen-ts/src/models/Role'
+
+const formatEnumLabel = (key: string) =>
+  key
+    .split('_')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ')
 
 // Filtres pour la liste
 const UserFilters = [
   <SearchInput source="email" alwaysOn />,
   <TextInput source="first_name" label="Prénom" />,
   <TextInput source="last_name" label="Nom" />,
-  <TextInput source="role" label="Rôle" />,
+  <SelectInput
+    source="role"
+    label="Rôle"
+    choices={Object.entries(Role).map(([k, v]) => ({ id: v, name: formatEnumLabel(k) }))}
+  />,
 ]
 
 // ⚠️ Ajouter 'export default' au lieu de 'export const'

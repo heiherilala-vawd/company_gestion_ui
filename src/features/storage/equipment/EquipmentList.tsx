@@ -6,6 +6,7 @@ import {
   DateField,
   SearchInput,
   TextInput,
+  BooleanInput,
   FunctionField,
   EditButton,
   DeleteButton,
@@ -17,7 +18,7 @@ const EquipmentFilters = [
   <TextInput source="warehouse_id" label="Entrepôt" />,
   <TextInput source="floor_number" label="N° étage" />,
   <TextInput source="storage_number" label="N° rangement" />,
-  <TextInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function EquipmentList() {

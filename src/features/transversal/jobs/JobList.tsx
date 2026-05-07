@@ -4,7 +4,7 @@ import {
   DateField,
   SelectField,
   SearchInput,
-  TextInput,
+  SelectInput,
   useListContext,
   EditButton,
   DeleteButton,
@@ -12,10 +12,15 @@ import {
 } from 'react-admin'
 import { useEffect } from 'react'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
+import { JobStatus } from '../../../gen-ts/src/models/JobStatus'
 
 const JobFilters = [
   <SearchInput source="description" alwaysOn />,
-  <TextInput source="status" label="Statut" />,
+  <SelectInput
+    source="status"
+    label="Statut"
+    choices={Object.entries(JobStatus).map(([k, v]) => ({ id: v, name: k }))}
+  />,
 ]
 
 interface JobListProps {

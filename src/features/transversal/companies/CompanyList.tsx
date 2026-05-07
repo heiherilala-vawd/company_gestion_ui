@@ -6,6 +6,7 @@ import {
   SelectField,
   SearchInput,
   TextInput,
+  SelectInput,
   FunctionField,
   EditButton,
   DeleteButton,
@@ -13,12 +14,17 @@ import {
 import { Card } from '@mui/material'
 import { formStyles } from '../../../style/components'
 import { borderRadius as br, getShadow } from '../../../style/themeConfig'
+import { CompanyType } from '../../../gen-ts/src/models/CompanyType'
 
 const CompanyFilters = [
   <SearchInput source="name" alwaysOn />,
   <TextInput source="rib" label="RIB" />,
   <TextInput source="description" label="Description" />,
-  <TextInput source="company_type" label="Type" />,
+  <SelectInput
+    source="company_type"
+    label="Type"
+    choices={Object.entries(CompanyType).map(([k, v]) => ({ id: v, name: k }))}
+  />,
 ]
 
 export default function CompanyList() {

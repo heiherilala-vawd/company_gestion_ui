@@ -6,6 +6,7 @@ import {
   DateField,
   SearchInput,
   TextInput,
+  BooleanInput,
   FunctionField,
   EditButton,
   DeleteButton,
@@ -17,7 +18,7 @@ const IncomeFilters = [
   <TextInput source="description" label="Description" />,
   <TextInput source="amount" label="Montant" />,
   <TextInput source="income_type_id" label="Type de revenu" />,
-  <TextInput source="money_received" label="Argent reçu" />,
+  <BooleanInput source="money_received" label="Argent reçu" />,
 ]
 
 export default function IncomeList() {

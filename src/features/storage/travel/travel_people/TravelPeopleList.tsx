@@ -5,6 +5,7 @@ import {
   DateField,
   SearchInput,
   TextInput,
+  BooleanInput,
   EditButton,
   DeleteButton,
   FunctionField,
@@ -16,7 +17,7 @@ const TravelPeopleFilters = [
   <TextInput source="arrival_location" label="Lieu d'arrivée" />,
   <TextInput source="arrival_date_min" label="Date arrivée min" />,
   <TextInput source="arrival_date_max" label="Date arrivée max" />,
-  <TextInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 
 export default function TravelPeopleList() {
