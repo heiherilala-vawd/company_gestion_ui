@@ -50,6 +50,36 @@ All design tokens (colors, gradients, shadows, border radii, transitions, spacin
 
 - **`src/style/ThemeContext.tsx`** — Light/dark mode toggle (persisted in localStorage)
 
+### MUI Override Pattern
+
+All MUI component overrides (and React Admin component overrides) are in `src/style/theme.ts` inside the `commonComponentOverrides(mode)` function.
+
+- **Pattern**: `MuiComponentName: { styleOverrides: { slotName: { ...styles } } }`
+- **React Admin components** use the same pattern with `Ra` prefix (e.g., `RaCreate`, `RaEdit`, `RaShow`, `RaSimpleForm`, `RaList`, `RaSaveButton`, `RaEmpty`)
+- **All visual values** reference `themeConfig` tokens — never hardcoded
+- **Mode-aware styles** use `mode` parameter (e.g., `mode === 'light' ? colors.light.border : colors.dark.border`)
+- **Structure**:
+  ```typescript
+  const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['components'] => ({
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: br.md,
+          background: mode === 'light' ? gradients.primary : gradients.primaryDark,
+          color: mode === 'light' ? '#fff' : '#1a1a2e',
+        },
+        containedPrimary: { ... },
+      },
+    },
+    // React Admin
+    RaCreate: {
+      styleOverrides: { ... },
+    },
+  })
+  ```
+- Consumed by `createAppTheme(mode)` → `createTheme({ components: commonComponentOverrides(mode) })`
+- **To override a new MUI/RA component**: add its entry in `commonComponentOverrides()`, reference `themeConfig` tokens, use `mode` for light/dark variants
+
 ### Design Rules
 
 1. **NEVER hardcode colors, rgba, gradients, shadows, border radii, or transitions** outside `src/style/`. Always use:

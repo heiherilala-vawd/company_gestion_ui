@@ -629,13 +629,16 @@ export const homePageStyles = {
     py: 2,
     fontSize: { xs: '0.8rem', sm: '0.9rem' },
     fontWeight: 600,
-    background: gradients.primary,
+    background: (theme: Theme) =>
+      theme.palette.mode === 'light' ? gradients.primary : gradients.primaryDark,
     borderRadius: br.md,
     textTransform: 'none',
+    color: '#fff',
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'primary'),
     transition: transitions.default,
     '&:hover': {
-      background: gradients.primary,
+      background: (theme: Theme) =>
+        theme.palette.mode === 'light' ? gradients.primary : gradients.primaryDark,
       transform: 'translateY(-4px)',
       boxShadow: (theme: Theme) =>
         getShadow(theme.palette.mode as 'light' | 'dark', 'primaryHover'),
@@ -654,16 +657,19 @@ export const homePageStyles = {
     py: 2,
     fontSize: { xs: '0.8rem', sm: '0.9rem' },
     fontWeight: 600,
-    background: gradients.secondary,
+    background: (theme: Theme) =>
+      theme.palette.mode === 'light' ? gradients.secondary : gradients.secondaryDark,
     borderRadius: br.md,
     textTransform: 'none',
+    color: '#fff',
     boxShadow: (theme: Theme) =>
       theme.palette.mode === 'light'
         ? '0 4px 12px rgba(234, 67, 53, 0.25)'
         : '0 4px 12px rgba(234, 67, 53, 0.2)',
     transition: transitions.default,
     '&:hover': {
-      background: gradients.secondary,
+      background: (theme: Theme) =>
+        theme.palette.mode === 'light' ? gradients.secondary : gradients.secondaryDark,
       transform: 'translateY(-4px)',
       filter: 'brightness(1.1)',
     },
@@ -680,16 +686,19 @@ export const homePageStyles = {
     py: 2,
     fontSize: { xs: '0.8rem', sm: '0.9rem' },
     fontWeight: 600,
-    background: gradients.success,
+    background: (theme: Theme) =>
+      theme.palette.mode === 'light' ? gradients.success : gradients.successDark,
     borderRadius: br.md,
     textTransform: 'none',
+    color: '#fff',
     boxShadow: (theme: Theme) =>
       theme.palette.mode === 'light'
         ? '0 4px 12px rgba(52, 168, 83, 0.25)'
         : '0 4px 12px rgba(52, 168, 83, 0.2)',
     transition: transitions.default,
     '&:hover': {
-      background: gradients.success,
+      background: (theme: Theme) =>
+        theme.palette.mode === 'light' ? gradients.success : gradients.successDark,
       transform: 'translateY(-4px)',
       filter: 'brightness(1.1)',
     },
@@ -706,7 +715,8 @@ export const homePageStyles = {
     py: 2,
     fontSize: { xs: '0.8rem', sm: '0.9rem' },
     fontWeight: 600,
-    background: gradients.warning,
+    background: (theme: Theme) =>
+      theme.palette.mode === 'light' ? gradients.warning : gradients.warningDark,
     borderRadius: br.md,
     textTransform: 'none',
     color: '#1a1a2e',
@@ -716,7 +726,8 @@ export const homePageStyles = {
         : '0 4px 12px rgba(251, 188, 5, 0.25)',
     transition: transitions.default,
     '&:hover': {
-      background: gradients.warning,
+      background: (theme: Theme) =>
+        theme.palette.mode === 'light' ? gradients.warning : gradients.warningDark,
       transform: 'translateY(-4px)',
       filter: 'brightness(1.05)',
     },
@@ -728,7 +739,8 @@ export const homePageStyles = {
 
   buttonDesc: {
     fontSize: { xs: '0.65rem', sm: '0.7rem' },
-    opacity: 0.9,
+    opacity: 0.85,
+    color: 'inherit',
   } as const,
 
   icon: {

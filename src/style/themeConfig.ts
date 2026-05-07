@@ -101,11 +101,15 @@ export const colors = {
 export const gradients = {
   primary: 'linear-gradient(135deg, #4285F4 0%, #5B9CF6 100%)',
   primaryHorizontal: 'linear-gradient(90deg, #4285F4 0%, #5B9CF6 100%)',
+  primaryDark: 'linear-gradient(135deg, #5B9CF6 0%, #85C1FF 100%)',
   secondary: 'linear-gradient(135deg, #EA4335 0%, #E8756A 100%)',
+  secondaryDark: 'linear-gradient(135deg, #E8756A 0%, #F5A099 100%)',
   sidebar: 'linear-gradient(180deg, #4285F4 0%, #3367D6 100%)',
   sidebarDark: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
   success: `linear-gradient(135deg, ${colors.success.light} 0%, ${colors.success.main} 100%)`,
+  successDark: `linear-gradient(135deg, #5BBF75 0%, #85D699 100%)`,
   warning: `linear-gradient(135deg, ${colors.warning.light} 0%, ${colors.warning.main} 100%)`,
+  warningDark: `linear-gradient(135deg, #FCCA40 0%, #FDE07A 100%)`,
   error: `linear-gradient(135deg, ${colors.error.light} 0%, ${colors.error.main} 100%)`,
 }
 

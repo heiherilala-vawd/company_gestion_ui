@@ -1,94 +1,40 @@
 import { Box, Button, Typography, Grid } from '@mui/material'
+import { useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import PaidIcon from '@mui/icons-material/Paid'
-import MoneyOffIcon from '@mui/icons-material/MoneyOff'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import InventoryIcon from '@mui/icons-material/Inventory'
 import { homePageStyles } from '../style/components'
+import {
+  quickActionButtons,
+  validationButtons,
+  getButtonSx,
+  iconSx,
+  buttonLabelSx,
+} from '../config/homeButtons'
 
-type ButtonColor = 'red' | 'success' | 'warning'
-
-const buttons: {
-  label: string
-  icon: React.ElementType
-  to: string
-  desc: string
-  color: ButtonColor
-}[] = [
-  {
-    label: 'Achats',
-    icon: ShoppingCartIcon,
-    to: '/purchases_activity',
-    desc: 'Acheter',
-    color: 'red',
-  },
-  {
-    label: 'Déplacements',
-    icon: LocalShippingIcon,
-    to: '/travel_equipment_activity',
-    desc: 'Déplacer',
-    color: 'success',
-  },
-  { label: 'Revenus', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir', color: 'red' },
-  {
-    label: 'Dépenses',
-    icon: MoneyOffIcon,
-    to: '/expenses_activity',
-    desc: 'Payer',
-    color: 'red',
-  },
-]
-
-const validationButtons: {
-  label: string
-  icon: React.ElementType
-  to: string
-  desc: string
-  color: ButtonColor
-}[] = [
-  {
-    label: 'Valider Payment',
-    icon: CheckCircleIcon,
-    to: '/employer_payments_activity',
-    desc: 'Valider',
-    color: 'warning',
-  },
-  {
-    label: 'Valider Réception',
-    icon: InventoryIcon,
-    to: '/travel_materials_activity',
-    desc: 'Réception',
-    color: 'warning',
-  },
-]
-
-const styleMap: Record<ButtonColor, Record<string, any>> = {
-  red: homePageStyles.actionButtonRed,
-  success: homePageStyles.actionButtonSuccess,
-  warning: homePageStyles.actionButtonWarning,
-}
-
-function ActionButton({ btn }: { btn: (typeof buttons)[0] }) {
+function ActionButton({
+  btn,
+  mode,
+}: {
+  btn: (typeof quickActionButtons)[0]
+  mode: 'light' | 'dark'
+}) {
   const navigate = useNavigate()
   const Icon = btn.icon
-  const sx = styleMap[btn.color]
+  const sx = getButtonSx(btn.color, mode)
 
   return (
     <Button variant="contained" fullWidth onClick={() => navigate(btn.to)} sx={sx}>
-      <Icon sx={homePageStyles.icon} />
-      <Typography variant="body2" sx={homePageStyles.buttonLabel}>
+      <Icon sx={iconSx} />
+      <Typography variant="body2" sx={buttonLabelSx}>
         {btn.label}
-      </Typography>
-      <Typography variant="caption" sx={homePageStyles.buttonDesc}>
-        {btn.desc}
       </Typography>
     </Button>
   )
 }
 
 export default function HomePage() {
+  const theme = useTheme()
+  const mode = theme.palette.mode as 'light' | 'dark'
+
   return (
     <Box sx={homePageStyles.container}>
       <Box sx={homePageStyles.welcomeBox}>
@@ -105,9 +51,9 @@ export default function HomePage() {
           Actions rapides
         </Typography>
         <Grid container spacing={3} sx={homePageStyles.gridContainer}>
-          {buttons.map((btn) => (
+          {quickActionButtons.map((btn) => (
             <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
-              <ActionButton btn={btn} />
+              <ActionButton btn={btn} mode={mode} />
             </Grid>
           ))}
         </Grid>
@@ -120,7 +66,7 @@ export default function HomePage() {
         <Grid container spacing={3} sx={homePageStyles.gridContainer}>
           {validationButtons.map((btn) => (
             <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
-              <ActionButton btn={btn} />
+              <ActionButton btn={btn} mode={mode} />
             </Grid>
           ))}
         </Grid>
