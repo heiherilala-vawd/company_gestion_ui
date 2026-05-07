@@ -8,53 +8,67 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import { homePageStyles } from '../style/components'
 
-const buttons = [
+type ButtonColor = 'red' | 'success' | 'warning'
+
+const buttons: { label: string; icon: React.ElementType; to: string; desc: string; color: ButtonColor }[] = [
   {
     label: 'Achats',
     icon: ShoppingCartIcon,
     to: '/purchases_activity',
     desc: 'Acheter',
+    color: 'red',
   },
   {
     label: 'Déplacements',
     icon: LocalShippingIcon,
     to: '/travel_equipment_activity',
     desc: 'Déplacer',
+    color: 'success',
   },
-  { label: 'Revenus', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir' },
+  { label: 'Revenus', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir', color: 'red' },
   {
     label: 'Dépenses',
     icon: MoneyOffIcon,
     to: '/expenses_activity',
     desc: 'Payer',
+    color: 'red',
   },
 ]
 
-const validationButtons = [
+const validationButtons: { label: string; icon: React.ElementType; to: string; desc: string; color: ButtonColor }[] = [
   {
     label: 'Valider Payment',
     icon: CheckCircleIcon,
     to: '/employer_payments_activity',
     desc: 'Valider',
+    color: 'warning',
   },
   {
     label: 'Valider Réception',
     icon: InventoryIcon,
     to: '/travel_materials_activity',
     desc: 'Réception',
+    color: 'warning',
   },
 ]
+
+const styleMap: Record<ButtonColor, Record<string, any>> = {
+  red: homePageStyles.actionButtonRed,
+  success: homePageStyles.actionButtonSuccess,
+  warning: homePageStyles.actionButtonWarning,
+}
 
 function ActionButton({ btn }: { btn: (typeof buttons)[0] }) {
   const navigate = useNavigate()
   const Icon = btn.icon
+  const sx = styleMap[btn.color]
 
   return (
     <Button
       variant="contained"
       fullWidth
       onClick={() => navigate(btn.to)}
-      sx={homePageStyles.actionButton}
+      sx={sx}
     >
       <Icon sx={homePageStyles.icon} />
       <Typography variant="body2" sx={homePageStyles.buttonLabel}>

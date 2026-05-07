@@ -188,16 +188,22 @@ const MenuRoot = () => {
         </Typography>
       </Box>
 
-      <Typography variant="caption" sx={menuStyles.sectionHeader}>
-        PRINCIPAL
-      </Typography>
+      <Box sx={menuStyles.sectionHeaderBlue}>
+        <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#4285F4', flexShrink: 0 }} />
+        <Typography variant="caption" sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}>
+          PRINCIPAL
+        </Typography>
+      </Box>
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(transversalItems)}
       </List>
 
-      <Typography variant="caption" sx={menuStyles.sectionHeader}>
-        STOCKAGE
-      </Typography>
+      <Box sx={menuStyles.sectionHeaderGreen}>
+        <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#34A853', flexShrink: 0 }} />
+        <Typography variant="caption" sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}>
+          STOCKAGE
+        </Typography>
+      </Box>
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(storageMain)}
       </List>
@@ -218,9 +224,12 @@ const MenuRoot = () => {
         </List>
       </Collapse>
 
-      <Typography variant="caption" sx={menuStyles.sectionHeader}>
-        FINANCES
-      </Typography>
+      <Box sx={menuStyles.sectionHeaderRed}>
+        <Box sx={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#EA4335', flexShrink: 0 }} />
+        <Typography variant="caption" sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}>
+          FINANCES
+        </Typography>
+      </Box>
 
       <ListItemButton
         onClick={() => setOpenExpenses(!openExpenses)}

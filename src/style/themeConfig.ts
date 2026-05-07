@@ -3,43 +3,43 @@ import { alpha } from '@mui/material/styles'
 
 export const colors = {
   primary: {
-    main: '#ff5a3c',
-    light: '#ff7a5c',
-    dark: '#e04530',
+    main: '#4285F4',
+    light: '#5B9CF6',
+    dark: '#3367D6',
     contrastText: '#ffffff',
   },
 
   secondary: {
-    main: '#ff7a5c',
-    light: '#ff9a7c',
-    dark: '#e05a3c',
+    main: '#EA4335',
+    light: '#E8756A',
+    dark: '#C5221F',
     contrastText: '#ffffff',
   },
 
   success: {
-    main: '#10b981',
-    light: '#34d399',
-    dark: '#047857',
+    main: '#34A853',
+    light: '#5BBF75',
+    dark: '#1E8E3E',
   },
   warning: {
-    main: '#f59e0b',
-    light: '#fbbf24',
-    dark: '#d97706',
+    main: '#FBBC05',
+    light: '#FCCA40',
+    dark: '#F59E00',
   },
   error: {
-    main: '#ef4444',
-    light: '#f87171',
-    dark: '#dc2626',
+    main: '#D93025',
+    light: '#E0635E',
+    dark: '#B3261E',
   },
   info: {
-    main: '#3b82f6',
-    light: '#60a5fa',
-    dark: '#2563eb',
+    main: '#5B9CF6',
+    light: '#7BB3F8',
+    dark: '#3367D6',
   },
 
   light: {
     background: {
-      default: '#f5f7fa',
+      default: '#f0f4f9',
       paper: '#ffffff',
     },
     grey: {
@@ -56,15 +56,15 @@ export const colors = {
     },
     text: {
       primary: '#1a1a2e',
-      secondary: '#6b7280',
+      secondary: '#5f6368',
     },
     divider: 'rgba(0, 0, 0, 0.08)',
     border: 'rgba(0,0,0,0.04)',
     subtleBg: 'rgba(0,0,0,0.02)',
     subtleBgHover: 'rgba(0,0,0,0.04)',
-    primaryBg: alpha('#ff5a3c', 0.04),
-    primaryBgHover: alpha('#ff5a3c', 0.08),
-    tableHeader: '#f8fafc',
+    primaryBg: alpha('#4285F4', 0.04),
+    primaryBgHover: alpha('#4285F4', 0.08),
+    tableHeader: '#f0f4f9',
   },
 
   dark: {
@@ -92,19 +92,20 @@ export const colors = {
     border: 'rgba(255,255,255,0.04)',
     subtleBg: 'rgba(255,255,255,0.02)',
     subtleBgHover: 'rgba(255,255,255,0.04)',
-    primaryBg: alpha('#ff5a3c', 0.08),
-    primaryBgHover: alpha('#ff5a3c', 0.12),
+    primaryBg: alpha('#4285F4', 0.08),
+    primaryBgHover: alpha('#4285F4', 0.12),
     tableHeader: '#273548',
   },
 }
 
 export const gradients = {
-  primary: 'linear-gradient(135deg, #ff5a3c 0%, #ff7a5c 100%)',
-  primaryHorizontal: 'linear-gradient(90deg, #ff5a3c 0%, #ff7a5c 100%)',
-  secondary: 'linear-gradient(135deg, #ff7a5c 0%, #ff9a7c 100%)',
-  sidebar: 'linear-gradient(180deg, #ff5a3c 0%, #e04530 100%)',
+  primary: 'linear-gradient(135deg, #4285F4 0%, #5B9CF6 100%)',
+  primaryHorizontal: 'linear-gradient(90deg, #4285F4 0%, #5B9CF6 100%)',
+  secondary: 'linear-gradient(135deg, #EA4335 0%, #E8756A 100%)',
+  sidebar: 'linear-gradient(180deg, #4285F4 0%, #3367D6 100%)',
   sidebarDark: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
   success: `linear-gradient(135deg, ${colors.success.light} 0%, ${colors.success.main} 100%)`,
+  warning: `linear-gradient(135deg, ${colors.warning.light} 0%, ${colors.warning.main} 100%)`,
   error: `linear-gradient(135deg, ${colors.error.light} 0%, ${colors.error.main} 100%)`,
 }
 
@@ -113,18 +114,18 @@ export const shadows = {
     sm: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)',
     md: '0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)',
     lg: '0 4px 12px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.04)',
-    primary: '0 2px 8px rgba(255, 90, 60, 0.25)',
-    primaryHover: '0 4px 12px rgba(255, 90, 60, 0.35)',
-    primaryActive: '0 8px 24px rgba(255, 90, 60, 0.4)',
+    primary: '0 2px 8px rgba(66, 133, 244, 0.25)',
+    primaryHover: '0 4px 12px rgba(66, 133, 244, 0.35)',
+    primaryActive: '0 8px 24px rgba(66, 133, 244, 0.4)',
     dialog: '0 20px 60px rgba(0,0,0,0.15)',
   },
   dark: {
     sm: '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)',
     md: '0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2)',
     lg: '0 4px 12px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.3)',
-    primary: '0 2px 8px rgba(255, 90, 60, 0.2)',
-    primaryHover: '0 4px 12px rgba(255, 90, 60, 0.3)',
-    primaryActive: '0 8px 24px rgba(255, 90, 60, 0.4)',
+    primary: '0 2px 8px rgba(66, 133, 244, 0.2)',
+    primaryHover: '0 4px 12px rgba(66, 133, 244, 0.3)',
+    primaryActive: '0 8px 24px rgba(66, 133, 244, 0.4)',
     dialog: '0 20px 60px rgba(0,0,0,0.5)',
   },
 }

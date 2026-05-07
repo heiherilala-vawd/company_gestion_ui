@@ -72,14 +72,6 @@ export const appBarStyles = {
 }
 
 export const menuStyles = {
-  section: {
-    display: 'block',
-    padding: '8px 16px',
-    fontWeight: 600,
-    fontSize: '0.6875rem',
-    textTransform: 'uppercase' as const,
-    letterSpacing: 1,
-  },
   divider: {
     my: 1,
     mx: 2,
@@ -97,8 +89,10 @@ export const menuStyles = {
   container: {
     height: '100%',
     background: (theme: Theme) =>
-      theme.palette.mode === 'light' ? gradients.sidebar : gradients.sidebarDark,
+      theme.palette.mode === 'light' ? '#f8fafc' : gradients.sidebarDark,
     borderRadius: { xs: 0, md: '0 16px 16px 0' },
+    borderRight: (theme: Theme) =>
+      theme.palette.mode === 'light' ? '1px solid rgba(0,0,0,0.06)' : 'none',
     p: 2,
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -106,7 +100,8 @@ export const menuStyles = {
       width: '4px',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(255,255,255,0.2)',
+      backgroundColor: (theme: Theme) =>
+        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.2)',
       borderRadius: '4px',
     },
   } as const,
@@ -114,52 +109,102 @@ export const menuStyles = {
   headerBox: {
     mb: 3,
     pb: 2,
-    borderBottom: '1px solid rgba(255,255,255,0.15)',
+    borderBottom: (theme: Theme) =>
+      `1px solid ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.15)'}`,
   } as const,
 
   appTitle: {
-    color: '#fff',
+    color: (theme: Theme) =>
+      theme.palette.mode === 'light' ? '#1a1a2e' : '#fff',
     fontWeight: 700,
     fontSize: '1.25rem',
     letterSpacing: '-0.025em',
   } as const,
 
   appSubtitle: {
-    color: 'rgba(255,255,255,0.7)',
+    color: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.7)',
     fontSize: '0.75rem',
   } as const,
 
-  sectionHeader: {
-    color: '#fff',
-    fontSize: '0.8125rem',
+  sectionHeaderBlue: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    color: (theme: Theme) => theme.palette.mode === 'light' ? '#1a1a2e' : '#fff',
+    fontSize: '0.75rem',
     fontWeight: 700,
     letterSpacing: '1.5px',
-    py: 1,
+    py: 0.75,
     px: 2,
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: br.xs,
+    mb: 0.75,
     mx: 1,
-    mb: 1,
+    mt: 1.5,
+    borderLeft: '3px solid #4285F4',
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(66, 133, 244, 0.08)' : 'rgba(66, 133, 244, 0.15)',
+    borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
+  } as const,
+
+  sectionHeaderGreen: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    color: (theme: Theme) => theme.palette.mode === 'light' ? '#1a1a2e' : '#fff',
+    fontSize: '0.75rem',
+    fontWeight: 700,
+    letterSpacing: '1.5px',
+    py: 0.75,
+    px: 2,
+    mb: 0.75,
+    mx: 1,
+    mt: 1.5,
+    borderLeft: '3px solid #34A853',
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(52, 168, 83, 0.08)' : 'rgba(52, 168, 83, 0.15)',
+    borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
+  } as const,
+
+  sectionHeaderRed: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    color: (theme: Theme) => theme.palette.mode === 'light' ? '#1a1a2e' : '#fff',
+    fontSize: '0.75rem',
+    fontWeight: 700,
+    letterSpacing: '1.5px',
+    py: 0.75,
+    px: 2,
+    mb: 0.75,
+    mx: 1,
+    mt: 1.5,
+    borderLeft: '3px solid #EA4335',
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(234, 67, 53, 0.08)' : 'rgba(234, 67, 53, 0.15)',
+    borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
   } as const,
 
   listItem: {
     borderRadius: br.sm,
     mx: 1,
     mb: 0.5,
-    color: '#fff',
+    color: (theme: Theme) => theme.palette.mode === 'light' ? '#374151' : '#fff',
     transition: transitions.default,
     '&.Mui-selected': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 90, 60, 0.15)',
-      color: '#fff',
-      backdropFilter: 'blur(4px)',
+        theme.palette.mode === 'light' ? 'rgba(66, 133, 244, 0.1)' : 'rgba(66, 133, 244, 0.2)',
+      color: (theme: Theme) => theme.palette.mode === 'light' ? '#4285F4' : '#fff',
       '& .MuiListItemIcon-root': {
-        color: '#fff',
+        color: (theme: Theme) => theme.palette.mode === 'light' ? '#4285F4' : '#fff',
+      },
+      '&:hover': {
+        backgroundColor: (theme: Theme) =>
+          theme.palette.mode === 'light' ? 'rgba(66, 133, 244, 0.15)' : 'rgba(66, 133, 244, 0.25)',
       },
     },
     '&:hover': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 90, 60, 0.1)',
+        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(66, 133, 244, 0.1)',
       transform: 'translateX(4px)',
     },
   } as const,
@@ -168,11 +213,11 @@ export const menuStyles = {
     borderRadius: br.sm,
     mx: 1,
     mb: 0.5,
-    color: '#fff',
+    color: (theme: Theme) => theme.palette.mode === 'light' ? '#374151' : '#fff',
     transition: transitions.default,
     '&:hover': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 90, 60, 0.1)',
+        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(66, 133, 244, 0.1)',
     },
   } as const,
 
@@ -582,6 +627,79 @@ export const homePageStyles = {
       boxShadow: (theme: Theme) =>
         getShadow(theme.palette.mode as 'light' | 'dark', 'primaryHover'),
       filter: 'brightness(1.1)',
+    },
+  } as const,
+
+  actionButtonRed: {
+    height: { xs: 120, sm: 140 },
+    minWidth: 140,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
+    py: 2,
+    fontSize: { xs: '0.8rem', sm: '0.9rem' },
+    fontWeight: 600,
+    background: gradients.secondary,
+    borderRadius: br.md,
+    textTransform: 'none',
+    boxShadow: (theme: Theme) =>
+      theme.palette.mode === 'light' ? '0 4px 12px rgba(234, 67, 53, 0.25)' : '0 4px 12px rgba(234, 67, 53, 0.2)',
+    transition: transitions.default,
+    '&:hover': {
+      background: gradients.secondary,
+      transform: 'translateY(-4px)',
+      filter: 'brightness(1.1)',
+    },
+  } as const,
+
+  actionButtonSuccess: {
+    height: { xs: 120, sm: 140 },
+    minWidth: 140,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
+    py: 2,
+    fontSize: { xs: '0.8rem', sm: '0.9rem' },
+    fontWeight: 600,
+    background: gradients.success,
+    borderRadius: br.md,
+    textTransform: 'none',
+    boxShadow: (theme: Theme) =>
+      theme.palette.mode === 'light' ? '0 4px 12px rgba(52, 168, 83, 0.25)' : '0 4px 12px rgba(52, 168, 83, 0.2)',
+    transition: transitions.default,
+    '&:hover': {
+      background: gradients.success,
+      transform: 'translateY(-4px)',
+      filter: 'brightness(1.1)',
+    },
+  } as const,
+
+  actionButtonWarning: {
+    height: { xs: 120, sm: 140 },
+    minWidth: 140,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 1,
+    py: 2,
+    fontSize: { xs: '0.8rem', sm: '0.9rem' },
+    fontWeight: 600,
+    background: gradients.warning,
+    borderRadius: br.md,
+    textTransform: 'none',
+    color: '#1a1a2e',
+    boxShadow: (theme: Theme) =>
+      theme.palette.mode === 'light' ? '0 4px 12px rgba(251, 188, 5, 0.3)' : '0 4px 12px rgba(251, 188, 5, 0.25)',
+    transition: transitions.default,
+    '&:hover': {
+      background: gradients.warning,
+      transform: 'translateY(-4px)',
+      filter: 'brightness(1.05)',
     },
   } as const,
 
