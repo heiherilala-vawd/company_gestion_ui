@@ -1,4 +1,3 @@
-// ReferenceSelectWithCreate.tsx - Version finale
 import React, { useState } from 'react'
 import { ReferenceInput, SelectInput, useDataProvider, useNotify, useRefresh } from 'react-admin'
 import {
@@ -24,7 +23,7 @@ interface Props {
   createUrlEnd?: string
   createForm?: React.ReactNode
   onSuccess?: (newRecord: any) => void
-  extractionPath?: string // NOUVEAU : Chemin pour extraire les données
+  extractionPath?: string
 }
 
 export default function ReferenceSelectWithCreate({
@@ -40,17 +39,15 @@ export default function ReferenceSelectWithCreate({
   onSuccess,
   extractionPath,
 }: Props) {
-  const refresh = useRefresh() // Initialiser useRefresh
+  const refresh = useRefresh()
   const [dialogOpen, setDialogOpen] = useState(false)
   const methods = useForm()
   const dataProvider = useDataProvider()
   const notify = useNotify()
 
   const onSubmit = async (data: any) => {
-    // NOUVEAU : Extraire les données selon le chemin spécifié
     let extractedData = data
     if (extractionPath) {
-      // Si un chemin d'extraction est spécifié, on prend le premier élément du tableau
       if (Array.isArray(data[extractionPath]) && data[extractionPath].length > 0) {
         extractedData = data[extractionPath][0]
         console.log('Données extraites:', extractedData)
@@ -97,9 +94,8 @@ export default function ReferenceSelectWithCreate({
         alignItems="center"
         gap={1}
         data-testid={'input-' + reference + '-id'}
-        style={{ width: '100%' }}
+        sx={{ width: '100%' }}
       >
-        {/*'input-' + label + '-id'*/}
         <Box flex={1}>
           <ReferenceInput
             source={source}

@@ -7,16 +7,20 @@ import {
   spacing as spConfig,
   typography as typoConfig,
   getShadow,
+  getBorder,
+  getSubtleBg,
+  getSubtleBgHover,
+  getTextSecondary,
 } from './themeConfig'
 
 const SPACING_UNIT = 8
 
 export const spacing = {
-  xs: 0.5 * SPACING_UNIT, // 4px
-  sm: 1 * SPACING_UNIT, // 8px
-  md: 2 * SPACING_UNIT, // 16px
-  lg: 3 * SPACING_UNIT, // 24px
-  xl: 4 * SPACING_UNIT, // 32px
+  xs: 0.5 * SPACING_UNIT,
+  sm: 1 * SPACING_UNIT,
+  md: 2 * SPACING_UNIT,
+  lg: 3 * SPACING_UNIT,
+  xl: 4 * SPACING_UNIT,
 }
 
 export const commonStyles = {
@@ -51,7 +55,8 @@ export const commonStyles = {
   floatingContainer: {
     borderRadius: br.lg,
     backgroundColor: 'background.paper',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)',
+    boxShadow: (theme: { palette: { mode: string } }) =>
+      getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
     m: { xs: 1, md: 2 },
     p: { xs: 2, md: 3 },
   },
@@ -117,8 +122,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         transition: transitions.default,
         backgroundColor:
           mode === 'light' ? colors.light.background.paper : colors.dark.background.paper,
-        border:
-          mode === 'light' ? '1px solid rgba(0,0,0,0.04)' : '1px solid rgba(255,255,255,0.04)',
+        border: `1px solid ${getBorder(mode)}`,
         '&:hover': {
           boxShadow: getShadow(mode, 'md'),
         },
@@ -147,9 +151,9 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         '& .MuiOutlinedInput-root': {
           borderRadius: br.md,
           transition: transitions.default,
-          backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+          backgroundColor: getSubtleBg(mode),
           '&:hover': {
-            backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',
+            backgroundColor: getSubtleBgHover(mode),
           },
           '&.Mui-focused': {
             backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
@@ -168,7 +172,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         },
         '& .MuiInputLabel-root': {
           fontWeight: 500,
-          color: mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary,
+          color: getTextSecondary(mode),
           '&.Mui-focused': {
             color: colors.primary.main,
           },
@@ -180,7 +184,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       select: {
         borderRadius: br.md,
-        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+        backgroundColor: getSubtleBg(mode),
         transition: transitions.default,
         minHeight: 36,
       },
@@ -198,8 +202,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         borderRadius: br.lg,
-        border:
-          mode === 'light' ? '1px solid rgba(0,0,0,0.04)' : '1px solid rgba(255,255,255,0.04)',
+        border: `1px solid ${getBorder(mode)}`,
         boxShadow: getShadow(mode, 'sm'),
       },
     },
@@ -207,15 +210,14 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiTableHead: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+        backgroundColor: getSubtleBg(mode),
         '& .MuiTableCell-head': {
           fontWeight: 600,
           fontSize: '0.75rem',
           textTransform: 'uppercase',
           letterSpacing: '0.5px',
-          color: mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary,
-          borderBottom:
-            mode === 'light' ? '2px solid rgba(0,0,0,0.04)' : '2px solid rgba(255,255,255,0.04)',
+          color: getTextSecondary(mode),
+          borderBottom: `2px solid ${getBorder(mode)}`,
           padding: '12px 16px',
         },
       },
@@ -225,8 +227,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         '& .MuiTableCell-body': {
-          borderBottom:
-            mode === 'light' ? '1px solid rgba(0,0,0,0.04)' : '1px solid rgba(255,255,255,0.04)',
+          borderBottom: `1px solid ${getBorder(mode)}`,
           padding: '12px 16px',
           fontSize: '0.875rem',
           transition: transitions.default,
@@ -303,7 +304,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
       body2: typoConfig.body2,
       caption: {
         ...typoConfig.caption,
-        color: mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary,
+        color: getTextSecondary(mode),
       },
     },
   },
@@ -356,7 +357,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         color: mode === 'light' ? '#ffffff' : colors.light.text.primary,
         fontSize: '0.75rem',
         padding: '6px 12px',
-        boxShadow: mode === 'light' ? '0 4px 12px rgba(0,0,0,0.1)' : '0 4px 12px rgba(0,0,0,0.3)',
+        boxShadow: getShadow(mode, 'sm'),
       },
       arrow: {
         color: mode === 'light' ? colors.light.text.primary : colors.dark.text.primary,
@@ -389,7 +390,7 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
       body2: typoConfig.body2,
       caption: {
         ...typoConfig.caption,
-        color: mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary,
+        color: getTextSecondary(mode),
       },
     },
     spacing: SPACING_UNIT,

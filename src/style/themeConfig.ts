@@ -1,9 +1,7 @@
 import type { Alpha } from '@mui/material/styles' // eslint-disable-line @typescript-eslint/no-unused-vars
-
-// ==================== COULEURS PRINCIPALES ====================
+import { alpha } from '@mui/material/styles'
 
 export const colors = {
-  // Accent primaire (orange/rouge)
   primary: {
     main: '#ff5a3c',
     light: '#ff7a5c',
@@ -11,7 +9,6 @@ export const colors = {
     contrastText: '#ffffff',
   },
 
-  // Accent secondaire
   secondary: {
     main: '#ff7a5c',
     light: '#ff9a7c',
@@ -19,7 +16,6 @@ export const colors = {
     contrastText: '#ffffff',
   },
 
-  // Status
   success: {
     main: '#10b981',
     light: '#34d399',
@@ -41,7 +37,6 @@ export const colors = {
     dark: '#2563eb',
   },
 
-  // Mode clair
   light: {
     background: {
       default: '#f5f7fa',
@@ -64,9 +59,14 @@ export const colors = {
       secondary: '#6b7280',
     },
     divider: 'rgba(0, 0, 0, 0.08)',
+    border: 'rgba(0,0,0,0.04)',
+    subtleBg: 'rgba(0,0,0,0.02)',
+    subtleBgHover: 'rgba(0,0,0,0.04)',
+    primaryBg: alpha('#ff5a3c', 0.04),
+    primaryBgHover: alpha('#ff5a3c', 0.08),
+    tableHeader: '#f8fafc',
   },
 
-  // Mode sombre
   dark: {
     background: {
       default: '#0f172a',
@@ -89,10 +89,14 @@ export const colors = {
       secondary: '#94a3b8',
     },
     divider: 'rgba(255, 255, 255, 0.08)',
+    border: 'rgba(255,255,255,0.04)',
+    subtleBg: 'rgba(255,255,255,0.02)',
+    subtleBgHover: 'rgba(255,255,255,0.04)',
+    primaryBg: alpha('#ff5a3c', 0.08),
+    primaryBgHover: alpha('#ff5a3c', 0.12),
+    tableHeader: '#273548',
   },
 }
-
-// ==================== DÉGRADÉS ====================
 
 export const gradients = {
   primary: 'linear-gradient(135deg, #ff5a3c 0%, #ff7a5c 100%)',
@@ -104,10 +108,7 @@ export const gradients = {
   error: `linear-gradient(135deg, ${colors.error.light} 0%, ${colors.error.main} 100%)`,
 }
 
-// ==================== OMBRES ====================
-
 export const shadows = {
-  // Ombres mode clair
   light: {
     sm: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)',
     md: '0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)',
@@ -115,8 +116,8 @@ export const shadows = {
     primary: '0 2px 8px rgba(255, 90, 60, 0.25)',
     primaryHover: '0 4px 12px rgba(255, 90, 60, 0.35)',
     primaryActive: '0 8px 24px rgba(255, 90, 60, 0.4)',
+    dialog: '0 20px 60px rgba(0,0,0,0.15)',
   },
-  // Ombres mode sombre
   dark: {
     sm: '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)',
     md: '0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2)',
@@ -124,10 +125,9 @@ export const shadows = {
     primary: '0 2px 8px rgba(255, 90, 60, 0.2)',
     primaryHover: '0 4px 12px rgba(255, 90, 60, 0.3)',
     primaryActive: '0 8px 24px rgba(255, 90, 60, 0.4)',
+    dialog: '0 20px 60px rgba(0,0,0,0.5)',
   },
 }
-
-// ==================== RAYONS DE BORDURE ====================
 
 export const borderRadius = {
   xs: 4,
@@ -138,26 +138,21 @@ export const borderRadius = {
   xxl: 24,
 }
 
-// ==================== TRANSITIONS ====================
-
 export const transitions = {
   default: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   fast: 'all 100ms cubic-bezier(0.4, 0, 0.2, 1)',
   slow: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
+  spin: 'transform 0.3s ease',
 }
-
-// ==================== ESPACEMENT ====================
 
 export const spacing = {
-  xs: 4, // 0.5 * 8px
-  sm: 8, // 1 * 8px
-  md: 16, // 2 * 8px
-  lg: 24, // 3 * 8px
-  xl: 32, // 4 * 8px
-  xxl: 48, // 6 * 8px
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
 }
-
-// ==================== TYPOGRAPHIE ====================
 
 export const typography = {
   fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -173,14 +168,70 @@ export const typography = {
   button: { fontSize: '0.875rem', fontWeight: 500, textTransform: 'none' as const },
 }
 
-// ==================== FONCTIONS UTILITAIRES ====================
-
 export const getShadow = (mode: 'light' | 'dark', size: keyof typeof shadows.light) => {
   return mode === 'light' ? shadows.light[size] : shadows.dark[size]
 }
 
-export const getBackgroundColor = (mode: 'light' | 'dark', variant: 'default' | 'paper') => {
-  return mode === 'light' ? colors.light.background[variant] : colors.dark.background[variant]
+export const getModeValue = <T>(mode: 'light' | 'dark', lightVal: T, darkVal: T) => {
+  return mode === 'light' ? lightVal : darkVal
+}
+
+export const getBorder = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.border : colors.dark.border
+}
+
+export const getSubtleBg = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.subtleBg : colors.dark.subtleBg
+}
+
+export const getSubtleBgHover = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.subtleBgHover : colors.dark.subtleBgHover
+}
+
+export const getPrimaryBg = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.primaryBg : colors.dark.primaryBg
+}
+
+export const getPrimaryBgHover = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.primaryBgHover : colors.dark.primaryBgHover
+}
+
+export const getTableHeader = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.tableHeader : colors.dark.tableHeader
+}
+
+export const getDivider = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.divider : colors.dark.divider
+}
+
+export const getTextPrimary = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.text.primary : colors.dark.text.primary
+}
+
+export const getTextSecondary = (mode: 'light' | 'dark') => {
+  return mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary
+}
+
+export const commonHover = {
+  row: (mode: 'light' | 'dark') => ({
+    backgroundColor: getPrimaryBg(mode),
+    transition: transitions.default,
+  }),
+  translateX: {
+    '&:hover': {
+      transform: 'translateX(4px)',
+    },
+  },
+  translateY: {
+    '&:hover': {
+      transform: 'translateY(-1px)',
+    },
+  },
+  lift: {
+    '&:hover': {
+      transform: 'translateY(-4px)',
+    },
+  },
 }
 
 export const themeConfig = {
@@ -192,7 +243,17 @@ export const themeConfig = {
   spacing,
   typography,
   getShadow,
-  getBackgroundColor,
+  getModeValue,
+  getBorder,
+  getSubtleBg,
+  getSubtleBgHover,
+  getPrimaryBg,
+  getPrimaryBgHover,
+  getTableHeader,
+  getDivider,
+  getTextPrimary,
+  getTextSecondary,
+  commonHover,
 }
 
 export default themeConfig

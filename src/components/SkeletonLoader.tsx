@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Skeleton } from '@mui/material'
 import { skeletonStyles } from '../style/components'
+import { borderRadius as br } from '../style/themeConfig'
 
 interface SkeletonLoaderProps {
   rows?: number
@@ -10,34 +11,31 @@ interface SkeletonLoaderProps {
 export const SkeletonLoader = ({ rows = 5, showAvatar = false }: SkeletonLoaderProps) => {
   return (
     <Box sx={skeletonStyles.container}>
-      {/* Header skeleton */}
       <Box sx={skeletonStyles.headerBox}>
         <Skeleton variant="text" width={200} height={32} sx={skeletonStyles.skeletonItem} />
         <Skeleton
           variant="rectangular"
           width={120}
           height={36}
-          sx={{ ...skeletonStyles.skeletonItem, borderRadius: 2 }}
+          sx={{ ...skeletonStyles.skeletonItem, borderRadius: br.sm }}
         />
       </Box>
 
-      {/* Filter skeleton */}
       <Box sx={skeletonStyles.filterBox}>
         <Skeleton
           variant="rectangular"
           width={300}
           height={40}
-          sx={{ ...skeletonStyles.skeletonItem, borderRadius: 2 }}
+          sx={{ ...skeletonStyles.skeletonItem, borderRadius: br.sm }}
         />
         <Skeleton
           variant="rectangular"
           width={150}
           height={40}
-          sx={{ ...skeletonStyles.skeletonItem, borderRadius: 2 }}
+          sx={{ ...skeletonStyles.skeletonItem, borderRadius: br.sm }}
         />
       </Box>
 
-      {/* Table rows skeleton */}
       {Array.from({ length: rows }).map((_, index) => (
         <Box key={index} sx={skeletonStyles.row}>
           {showAvatar && (
@@ -51,7 +49,7 @@ export const SkeletonLoader = ({ rows = 5, showAvatar = false }: SkeletonLoaderP
             variant="rectangular"
             width={100}
             height={32}
-            sx={{ ...skeletonStyles.skeletonItem, borderRadius: 1 }}
+            sx={{ ...skeletonStyles.skeletonItem, borderRadius: br.xs }}
           />
         </Box>
       ))}

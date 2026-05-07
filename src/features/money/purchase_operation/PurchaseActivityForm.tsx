@@ -1,4 +1,3 @@
-// pages/PurchaseActivityForm.tsx
 import React, { useState } from 'react'
 import {
   Title,
@@ -11,7 +10,6 @@ import {
   useNotify,
   ResourceContextProvider,
   useGetIdentity,
-  required,
 } from 'react-admin'
 import {
   Card,
@@ -30,9 +28,10 @@ import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreat
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
 import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
-import { redirect, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+import { operationFormStyles } from '../../../style/components'
+import { transitions } from '../../../style/themeConfig'
 
-// Valeurs initiales
 const initialEquipmentLine = {
   equipment_id: generateId(),
   equipment_name: '',
@@ -54,10 +53,8 @@ const initialMaterialLine = {
 const PurchaseActivityForm = () => {
   const notify = useNotify()
 
-  // Récupération du token authentication (à adapter selon votre authProvider)
   const { isLoading: identityLoading } = useGetIdentity()
 
-  // Initialisation de react-hook-form
   const methods = useForm({
     defaultValues: {
       supplier_id: '',
@@ -137,7 +134,6 @@ const PurchaseActivityForm = () => {
       comment: data.comment || null,
     }
 
-    // Construction de l'URL dynamique
     const url = getMiddleUrl('purchase_operations')
     const token = localStorage.getItem('token')
     if (!token) {
@@ -160,7 +156,7 @@ const PurchaseActivityForm = () => {
       }
 
       const result = await response.json()
-      notify('Opération d’achat créée avec succès !', { type: 'success' })
+      notify("Opération d'achat créée avec succès !", { type: 'success' })
       navigate('/')
     } catch (error) {
       console.error(error)
@@ -168,40 +164,38 @@ const PurchaseActivityForm = () => {
     }
   }
 
-  if (identityLoading) return <div>Chargement de l’authentification...</div>
+  if (identityLoading) return <div>Chargement de l\'authentification...</div>
 
   return (
     <ResourceContextProvider value="purchases_activity">
-      <Card sx={{ maxWidth: 'xl', mx: 'auto', my: 2 }}>
+      <Card sx={operationFormStyles.card}>
         <CardContent>
-          <Title title="Nouvelle Opération d’Achat" />
+          <Title title="Nouvelle Opération d'Achat" />
           <FormProvider {...methods}>
             <Form onSubmit={onSubmit}>
-              {/* ---------- Informations générales ---------- */}
-              <Typography variant="h6" color="primary" sx={{ mt: 2, mb: 1 }}>
+              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
                 📋 Informations Générales
               </Typography>
               {add_autogenaration_id('id')}
               {add_autogenaration_id('travel_expense_id')}
               {add_autogenaration_id('travel_id')}
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <Box sx={operationFormStyles.flexRow}>
                 <TextInput
                   source="comment"
                   label="Commentaire"
                   multiline
                   fullWidth
-                  sx={{ flex: 2 }}
+                  sx={operationFormStyles.flexDouble}
                 />
               </Box>
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={operationFormStyles.divider} />
 
-              {/* ---------- Équipements ---------- */}
-              <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
+              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
                 🔧 Équipements
               </Typography>
               <ArrayInput source="equipment_lines" label="">
                 <SimpleFormIterator inline>
-                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', width: '100%' }}>
+                  <Box sx={operationFormStyles.flexRowTight}>
                     <TextInput
                       source="equipment_id"
                       label="ID Équipement"
@@ -209,32 +203,35 @@ const PurchaseActivityForm = () => {
                       defaultValue={generateId()}
                       sx={{ display: 'none' }}
                     />
-                    <TextInput source="equipment_name" label="Nom" sx={{ flex: 1 }} />
-                    <TextInput source="description" label="Description" sx={{ flex: 1 }} />
-                    <NumberInput source="unit_price" label="Prix" sx={{ flex: 1 }} />
+                    <TextInput
+                      source="equipment_name"
+                      label="Nom"
+                      sx={operationFormStyles.flexFull}
+                    />
+                    <TextInput
+                      source="description"
+                      label="Description"
+                      sx={operationFormStyles.flexFull}
+                    />
+                    <NumberInput
+                      source="unit_price"
+                      label="Prix"
+                      sx={operationFormStyles.flexFull}
+                    />
                     {add_autogenaration_id('expense_id')}
                     {add_autogenaration_id('purchase_id')}
                     {add_autogenaration_id('travel_equipment_id')}
                   </Box>
                 </SimpleFormIterator>
               </ArrayInput>
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={operationFormStyles.divider} />
 
-              {/* ---------- Matériaux ---------- */}
-              <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
+              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
                 📦 Matériaux
               </Typography>
               <ArrayInput source="material_lines" label="">
                 <SimpleFormIterator inline>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      gap: 1,
-                      flexWrap: 'wrap',
-                      width: '100%',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <Box sx={operationFormStyles.flexRowAlign}>
                     <ReferenceSelectWithCreate
                       source="material"
                       reference="materials"
@@ -242,35 +239,33 @@ const PurchaseActivityForm = () => {
                       optionText={(record) => `${record.name} / ${record.unit}`}
                       createUrlEnd={getMiddleUrl('materials')}
                       createForm={<MaterialForm isCreateForm />}
-                      sx={{ flex: 1 }}
+                      sx={operationFormStyles.flexFull}
                       extractionPath={'material_lines'}
                     />
-                    <NumberInput source="quantity" label="Quantité" sx={{ flex: 1 }} />
-                    <NumberInput source="unit_price" label="Prix Unitaire" sx={{ flex: 1 }} />
+                    <NumberInput
+                      source="quantity"
+                      label="Quantité"
+                      sx={operationFormStyles.flexFull}
+                    />
+                    <NumberInput
+                      source="unit_price"
+                      label="Prix Unitaire"
+                      sx={operationFormStyles.flexFull}
+                    />
                     {add_autogenaration_id('expense_id')}
                     {add_autogenaration_id('purchase_id')}
                     {add_autogenaration_id('travel_material_id')}
                   </Box>
                 </SimpleFormIterator>
               </ArrayInput>
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={operationFormStyles.divider} />
 
-              {/* ---------- Transport avec Toggle ---------- */}
               <Box sx={{ mb: 2 }}>
                 <Box
                   onClick={() => setShowTransport(!showTransport)}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    p: 1,
-                    borderRadius: 1,
-                    '&:hover': {
-                      bgcolor: 'action.hover',
-                    },
-                  }}
+                  sx={operationFormStyles.toggleBox}
                 >
-                  <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
+                  <Typography variant="h6" color="primary" sx={operationFormStyles.flexFull}>
                     🚚 Transport
                   </Typography>
                   <Button onClick={() => setIsTravelOpen((prev) => !prev)}>
@@ -278,7 +273,7 @@ const PurchaseActivityForm = () => {
                       size="small"
                       sx={{
                         transform: showTransport ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s ease',
+                        transition: transitions.spin,
                       }}
                     >
                       <ExpandMoreIcon />
@@ -287,8 +282,8 @@ const PurchaseActivityForm = () => {
                 </Box>
 
                 <Collapse in={isTravelOpen}>
-                  <Box sx={{ pt: 2 }}>
-                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                  <Box sx={operationFormStyles.collapseContent}>
+                    <Box sx={operationFormStyles.flexRow}>
                       <ReferenceSelectWithCreate
                         source="departure_warehouse"
                         reference="warehouses"
@@ -296,7 +291,7 @@ const PurchaseActivityForm = () => {
                         optionText="name"
                         createUrlEnd={getMiddleUrl('warehouses')}
                         createForm={<WarehouseForm isCreateForm />}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       />
                       <ReferenceSelectWithCreate
                         source="arrival_warehouse"
@@ -305,20 +300,20 @@ const PurchaseActivityForm = () => {
                         optionText="name"
                         createUrlEnd={getMiddleUrl('warehouses')}
                         createForm={<WarehouseForm isCreateForm />}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       />
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}>
+                    <Box sx={operationFormStyles.collapseRow}>
                       <DateTimeInput
                         source="departure_date"
                         label="Date de départ"
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                         defaultValue={new Date()}
                       />
                       <DateTimeInput
                         source="arrival_date"
                         label="Date d'arrivée"
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                         defaultValue={new Date()}
                       />
                     </Box>
@@ -332,10 +327,9 @@ const PurchaseActivityForm = () => {
                 </Collapse>
               </Box>
 
-              {/* Bouton de soumission personnalisé */}
-              <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Box sx={operationFormStyles.submitBox}>
                 <Button type="submit" variant="contained" color="primary">
-                  Créer l’opération d’achat
+                  Créer l'opération d'achat
                 </Button>
               </Box>
             </Form>

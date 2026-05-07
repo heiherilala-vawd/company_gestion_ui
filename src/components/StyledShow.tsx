@@ -1,7 +1,6 @@
 import React from 'react'
 import { Show, TabbedShowLayout, Tab, ReferenceManyField, Datagrid } from 'react-admin'
 import { Box, Card, CardContent, Typography } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
 import { showStyles } from '../style/components'
 
 interface StyledShowProps {
@@ -27,20 +26,7 @@ export const StyledShow = ({ title, children }: StyledShowProps) => {
 }
 
 export const StyledTabbedShowLayout = ({ children }: { children: React.ReactNode }) => {
-  const theme = useTheme()
-  const mode = theme.palette.mode as 'light' | 'dark'
-  return (
-    <TabbedShowLayout
-      sx={{
-        ...showStyles.tabbedLayout,
-        '& .RaTabbedShowLayout-tabs': {
-          backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-        },
-      }}
-    >
-      {children}
-    </TabbedShowLayout>
-  )
+  return <TabbedShowLayout sx={showStyles.tabbedLayout}>{children}</TabbedShowLayout>
 }
 
 export const StyledTab = ({ label, ...props }: { label: string; [key: string]: unknown }) => {

@@ -24,6 +24,45 @@
   - **NO** external REST client (`ra-data-simple-rest` removed)
 - **Environment**: `.env` file contains `VITE_SIMPLE_REST_URL=http://localhost:8080` (not used in code)
 
+## Theme System (Style Centralization)
+
+All design tokens (colors, gradients, shadows, border radii, transitions, spacing, typography) are centralized in `src/style/` to allow global style changes from a single place.
+
+### File Hierarchy
+
+- **`src/style/themeConfig.ts`** — **SOURCE OF TRUTH**: all design tokens and helper functions
+  - `colors` — primary, secondary, status, light/dark mode colors, mode-aware backgrounds (`subtleBg`, `primaryBg`, `tableHeader`, `border`, `divider`)
+  - `gradients` — primary, secondary, sidebar, success, error
+  - `shadows` — light/dark variants (`sm`, `md`, `lg`, `primary`, `primaryHover`, `dialog`)
+  - `borderRadius` — `xs(4)`, `sm(8)`, `md(12)`, `lg(16)`, `xl(20)`, `xxl(24)`
+  - `transitions` — `default(200ms)`, `fast(100ms)`, `slow(300ms)`, `spin`
+  - `spacing` — `xs(4)`, `sm(8)`, `md(16)`, `lg(24)`, `xl(32)`, `xxl(48)`
+  - `typography` — fontFamily, h1-h6, body1/2, caption, button
+  - Helpers: `getShadow()`, `getBorder()`, `getDivider()`, `getSubtleBg()`, `getPrimaryBg()`, `getTableHeader()`, `getModeValue()`
+
+- **`src/style/theme.ts`** — MUI theme creation consuming `themeConfig`, exports `lightTheme`, `darkTheme`, `commonStyles`, plus component overrides for 20+ MUI components (`MuiButton`, `MuiCard`, `MuiTextField`, `MuiTable`, etc.)
+
+- **`src/style/components.ts`** — Reusable `sx` style objects used across the app:
+  - `appBarStyles`, `menuStyles`, `formStyles`, `showStyles`, `datagridStyles`
+  - `homePageStyles`, `emptyStateStyles`, `layoutStyles`, `skeletonStyles`
+  - `operationFormStyles` — shared styles for complex operation forms (flex layouts, toggle box, collapse sections)
+  - All values reference `themeConfig` helpers — **no hardcoded colors/rgba**
+
+- **`src/style/ThemeContext.tsx`** — Light/dark mode toggle (persisted in localStorage)
+
+### Design Rules
+
+1. **NEVER hardcode colors, rgba, gradients, shadows, border radii, or transitions** outside `src/style/`. Always use:
+   - Theme-aware helpers from `themeConfig` (e.g., `getShadow(theme.palette.mode, 'sm')`)
+   - Predefined `sx` objects from `components.ts`
+   - MUI theme tokens (e.g., `'background.paper'`, `'text.primary'`, `'primary.main'`)
+
+2. **To change the entire app look**: edit only `src/style/themeConfig.ts` (colors, borderRadius, shadows, etc.)
+
+3. **To add new theme options** (e.g., a third theme mode): extend `themeConfig`, add palette in `theme.ts`, update `ThemeContext.tsx`
+
+4. **Inline `sx={{ flex: 1 }}` or spacing values** (mt, mb, p, gap) are acceptable for layout — these are not design tokens.
+
 ## Testing
 
 ### Overview

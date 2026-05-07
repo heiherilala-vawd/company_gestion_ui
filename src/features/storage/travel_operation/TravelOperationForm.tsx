@@ -1,6 +1,4 @@
-// pages/TravelOperationForm.tsx
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import {
   Title,
   Form,
@@ -33,13 +31,14 @@ import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
 import { useNavigate } from 'react-router'
 import EquipmentForm from '../equipment/EquipmentForm.tsx'
+import { operationFormStyles } from '../../../style/components'
+import { transitions } from '../../../style/themeConfig'
 
 const TravelOperationForm = () => {
   const notify = useNotify()
   const { isLoading: identityLoading } = useGetIdentity()
   const navigate = useNavigate()
 
-  // ÉTAT POUR LE FILTRAGE DYNAMIQUE
   const [departureLocationId, setDepartureLocationId] = useState<string | null>(null)
 
   const toInstant = (date: string) => {
@@ -94,7 +93,6 @@ const TravelOperationForm = () => {
       })),
     }
 
-    // Construction de l'URL dynamique avec les paramètres
     const url = getMiddleUrl(`travel_operations`)
     const token = localStorage.getItem('token')
 
@@ -128,55 +126,44 @@ const TravelOperationForm = () => {
     }
   }
 
-  if (identityLoading) return <div>Chargement de l’authentification...</div>
+  if (identityLoading) return <div>Chargement de l'authentification...</div>
 
   return (
     <ResourceContextProvider value="travel_operations">
-      <Card sx={{ maxWidth: 'xl', mx: 'auto', my: 2 }}>
+      <Card sx={operationFormStyles.card}>
         <CardContent>
           <Title title="Nouvelle Opération de Déplacement" />
           <Form onSubmit={onSubmit}>
-            {/* ---------- Informations Générales ---------- */}
-            <Typography variant="h6" color="primary" sx={{ mt: 2, mb: 1 }}>
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               📋 Informations Générales
             </Typography>
 
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <Box sx={operationFormStyles.flexRow}>
               <TextInput
                 source="comment"
                 label="Commentaire"
                 multiline
                 rows={3}
                 fullWidth
-                sx={{ flex: 1 }}
+                sx={operationFormStyles.flexFull}
               />
             </Box>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={operationFormStyles.divider} />
 
-            {/* ---------- Transport / Trajet ---------- */}
             <Box sx={{ mb: 2 }}>
               <Box
                 onClick={() => setIsTravelOpen(!isTravelOpen)}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                  p: 1,
-                  borderRadius: 1,
-                  '&:hover': {
-                    bgcolor: 'action.hover',
-                  },
-                }}
+                sx={operationFormStyles.toggleBox}
               >
-                <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
+                <Typography variant="h6" color="primary" sx={operationFormStyles.flexFull}>
                   🚚 Détails du Trajet
                 </Typography>
                 <IconButton
                   size="small"
                   sx={{
                     transform: isTravelOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
+                    transition: transitions.spin,
                   }}
                 >
                   <ExpandMoreIcon />
@@ -184,12 +171,11 @@ const TravelOperationForm = () => {
               </Box>
 
               <Collapse in={isTravelOpen}>
-                <Box sx={{ pt: 2 }}>
+                <Box sx={operationFormStyles.collapseContent}>
                   {add_autogenaration_id('travel_id')}
                   {add_autogenaration_id('expense_id')}
 
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    {/* MODIFIÉ : Séparer le ReferenceInput et le SelectInput pour capturer le changement */}
+                  <Box sx={operationFormStyles.flexRow}>
                     <ReferenceInput source="departure_location_id" reference="warehouses">
                       <SelectInput
                         source="departure_location_id"
@@ -199,7 +185,7 @@ const TravelOperationForm = () => {
                         onChange={(event) => {
                           setDepartureLocationId(event.target.value)
                         }}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       />
                     </ReferenceInput>
 
@@ -210,21 +196,21 @@ const TravelOperationForm = () => {
                       optionText="name"
                       createUrlEnd={getMiddleUrl('warehouses')}
                       createForm={<WarehouseForm isCreateForm />}
-                      sx={{ flex: 1 }}
+                      sx={operationFormStyles.flexFull}
                     />
                   </Box>
 
-                  <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}>
+                  <Box sx={operationFormStyles.collapseRow}>
                     <DateTimeInput
                       source="departure_date"
                       label="Date de départ"
-                      sx={{ flex: 1 }}
+                      sx={operationFormStyles.flexFull}
                       defaultValue={new Date()}
                     />
                     <DateTimeInput
                       source="arrival_date"
                       label="Date d'arrivée"
-                      sx={{ flex: 1 }}
+                      sx={operationFormStyles.flexFull}
                       defaultValue={new Date()}
                     />
                   </Box>
@@ -234,23 +220,14 @@ const TravelOperationForm = () => {
               </Collapse>
             </Box>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={operationFormStyles.divider} />
 
-            {/* ---------- Équipements ---------- */}
-            <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               🔧 Équipements à déplacer
             </Typography>
             <ArrayInput source="equipment_lines" label="">
               <SimpleFormIterator inline>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                >
+                <Box sx={operationFormStyles.flexRowAlign}>
                   {add_autogenaration_id('travel_equipment_id')}
 
                   <ReferenceSelectWithCreate
@@ -261,30 +238,21 @@ const TravelOperationForm = () => {
                     createUrlEnd={getMiddleUrl('equipment')}
                     createForm={<EquipmentForm isCreateForm />}
                     filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                     extractionPath={'equipment_lines'}
                   />
                 </Box>
               </SimpleFormIterator>
             </ArrayInput>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={operationFormStyles.divider} />
 
-            {/* ---------- Matériaux ---------- */}
-            <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               📦 Matériaux à déplacer
             </Typography>
             <ArrayInput source="material_lines" label="">
               <SimpleFormIterator inline>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                >
+                <Box sx={operationFormStyles.flexRowAlign}>
                   {add_autogenaration_id('travel_material_id')}
 
                   <ReferenceSelectWithCreate
@@ -295,32 +263,27 @@ const TravelOperationForm = () => {
                     createUrlEnd={getMiddleUrl('materials')}
                     createForm={<MaterialForm isCreateForm />}
                     filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                     extractionPath={'material_lines'}
                   />
 
-                  <NumberInput source="material_quantity" label="Quantité" sx={{ flex: 1 }} />
+                  <NumberInput
+                    source="material_quantity"
+                    label="Quantité"
+                    sx={operationFormStyles.flexFull}
+                  />
                 </Box>
               </SimpleFormIterator>
             </ArrayInput>
 
-            <Divider sx={{ my: 3 }} />
+            <Divider sx={operationFormStyles.divider} />
 
-            {/* ---------- Personnel ---------- */}
-            <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               👥 Personnel à déplacer
             </Typography>
             <ArrayInput source="people_lines" label="">
               <SimpleFormIterator inline>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                >
+                <Box sx={operationFormStyles.flexRowAlign}>
                   {add_autogenaration_id('travel_people_id')}
 
                   <ReferenceSelectWithCreate
@@ -332,14 +295,13 @@ const TravelOperationForm = () => {
                     }
                     createUrlEnd={getMiddleUrl('users')}
                     createForm={<div>Formulaire de création d'utilisateur à définir</div>}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                   />
                 </Box>
               </SimpleFormIterator>
             </ArrayInput>
 
-            {/* Bouton de soumission personnalisé */}
-            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={operationFormStyles.submitBox}>
               <Button type="submit" variant="contained" color="primary">
                 Créer l'opération de déplacement
               </Button>

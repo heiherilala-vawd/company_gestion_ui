@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Typography, Button } from '@mui/material'
 import { emptyStateStyles } from '../style/components'
+import { borderRadius as br } from '../style/themeConfig'
 
 interface EmptyStateProps {
   icon?: React.ReactNode
@@ -58,7 +59,7 @@ export const EmptyState = ({
           variant="contained"
           onClick={onAction}
           sx={{
-            borderRadius: 2,
+            borderRadius: br.sm,
             textTransform: 'none',
             fontWeight: 500,
           }}

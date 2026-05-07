@@ -1,4 +1,3 @@
-// companies/CompanyList.tsx
 import {
   List,
   Datagrid,
@@ -11,8 +10,9 @@ import {
   EditButton,
   DeleteButton,
 } from 'react-admin'
-import { Box, Card, Typography, Chip, alpha } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Card } from '@mui/material'
+import { formStyles } from '../../../style/components'
+import { borderRadius as br, getShadow } from '../../../style/themeConfig'
 
 const CompanyFilters = [
   <SearchInput source="name" alwaysOn />,
@@ -22,26 +22,14 @@ const CompanyFilters = [
 ]
 
 export default function CompanyList() {
-  const theme = useTheme()
-  const isDark = theme.palette.mode === 'dark'
-
   return (
-    <List
-      filters={CompanyFilters}
-      sx={{
-        '& .RaList-main': {
-          backgroundColor: 'transparent',
-          boxShadow: 'none',
-        },
-      }}
-    >
+    <List filters={CompanyFilters} sx={formStyles.page}>
       <Card
         sx={{
-          borderRadius: 4,
-          boxShadow: isDark
-            ? '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)'
-            : '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)',
-          border: isDark ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(0,0,0,0.04)',
+          borderRadius: br.lg,
+          boxShadow: (theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
+          border: (theme) =>
+            `1px solid ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'}`,
           overflow: 'hidden',
         }}
       >
@@ -49,15 +37,19 @@ export default function CompanyList() {
           rowClick="show"
           sx={{
             '& .RaDatagrid-root': {
-              borderRadius: 4,
+              borderRadius: br.lg,
             },
             '& .RaDatagrid-header': {
-              backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+              backgroundColor: (theme) =>
+                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
             },
             '& .RaDatagrid-row': {
               transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
               '&:hover': {
-                backgroundColor: isDark ? 'rgba(255, 90, 60, 0.08)' : 'rgba(255, 90, 60, 0.04)',
+                backgroundColor: (theme) =>
+                  theme.palette.mode === 'light'
+                    ? 'rgba(255, 90, 60, 0.04)'
+                    : 'rgba(255, 90, 60, 0.08)',
               },
             },
           }}

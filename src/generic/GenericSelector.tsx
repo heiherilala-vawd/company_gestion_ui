@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNotify, useRefresh, Loading } from 'react-admin'
-import { FormControl, InputLabel, Select, MenuItem, Box, Typography } from '@mui/material'
+import { FormControl, Select, MenuItem, Box, Typography, Alert } from '@mui/material'
 import { formStyles } from '../style/components'
 
 interface GenericEntity {
@@ -19,8 +19,6 @@ interface GenericSelectorProps {
   label?: string
   labelPrefix?: string
   useContext: () => { currentId: string | null; selectEntity: (id: string | null) => void }
-  className?: string
-  style?: React.CSSProperties
   fullWidth?: boolean
   onEntitySelected?: (entity: GenericEntity) => void
   onLoading?: (loading: boolean) => void
@@ -37,8 +35,6 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   label,
   labelPrefix,
   useContext,
-  className = '',
-  style = {},
   fullWidth = true,
   onEntitySelected,
   onLoading,
@@ -138,11 +134,11 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
   }
 
   if (error) {
-    return <div style={{ color: 'red', padding: 10 }}>⚠️ {error}</div>
+    return <Alert severity="error">⚠️ {error}</Alert>
   }
 
   if (entities.length === 0) {
-    return <div style={{ padding: 10, color: 'orange' }}>⚠️ Aucun</div>
+    return <Alert severity="warning">⚠️ Aucun</Alert>
   }
 
   const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)

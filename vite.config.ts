@@ -7,12 +7,16 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     // Only enable istanbul when NYC_CAFEOBJECT_COVERAGE is set (for coverage builds)
-    ...(process.env.NYC_CAFEOBJECT_COVERAGE ? [istanbul({
-      include: 'src/**/*',
-      exclude: ['node_modules/**', 'src/gen-ts/**', 'src/__tests__/**'],
-      extension: ['.js', '.ts', '.jsx', '.tsx'],
-      requireEnv: false,
-    })] : []),
+    ...(process.env.NYC_CAFEOBJECT_COVERAGE
+      ? [
+          istanbul({
+            include: 'src/**/*',
+            exclude: ['node_modules/**', 'src/gen-ts/**', 'src/__tests__/**'],
+            extension: ['.js', '.ts', '.jsx', '.tsx'],
+            requireEnv: false,
+          }),
+        ]
+      : []),
   ],
   server: {
     port: 5173,

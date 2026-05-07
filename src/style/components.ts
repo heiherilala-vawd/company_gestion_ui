@@ -1,13 +1,26 @@
 import { SxProps, Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
-import { colors, borderRadius as br, transitions, getShadow, gradients } from './themeConfig'
+import {
+  colors,
+  borderRadius as br,
+  transitions,
+  getShadow,
+  gradients,
+  getDivider,
+  getSubtleBg,
+  getSubtleBgHover,
+  getPrimaryBg,
+  getPrimaryBgHover,
+  getTableHeader,
+  getBorder,
+} from './themeConfig'
 
 export const appBarStyles = {
   selectorBox: {
     display: 'flex',
     alignItems: 'center',
     gap: 1,
-    backgroundColor: alpha(colors.primary.main, 0.1),
+    backgroundColor: (theme: Theme) => alpha(theme.palette.primary.main, 0.1),
     borderRadius: br.xs,
     px: 1,
     py: 0.5,
@@ -39,9 +52,7 @@ export const appBarStyles = {
     color: 'text.primary',
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
     borderBottom: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     backdropFilter: 'blur(12px)',
     backgroundImage: 'none',
     borderRadius: { xs: 0, md: 0 },
@@ -50,13 +61,11 @@ export const appBarStyles = {
 
   iconButton: {
     color: 'text.primary',
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.04)' : 'rgba(255, 90, 60, 0.08)',
+    backgroundColor: (theme: Theme) => getPrimaryBg(theme.palette.mode as 'light' | 'dark'),
     borderRadius: br.xs,
     transition: transitions.default,
     '&:hover': {
-      backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.08)' : 'rgba(255, 90, 60, 0.12)',
+      backgroundColor: (theme: Theme) => getPrimaryBgHover(theme.palette.mode as 'light' | 'dark'),
       transform: 'translateY(-1px)',
     },
   } as const,
@@ -85,13 +94,10 @@ export const menuStyles = {
     py: 0.5,
   },
 
-  // Menu container
   container: {
     height: '100%',
     background: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? 'linear-gradient(180deg, #ff5a3c 0%, #e04530 100%)'
-        : 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
+      theme.palette.mode === 'light' ? gradients.sidebar : gradients.sidebarDark,
     borderRadius: { xs: 0, md: '0 16px 16px 0' },
     p: 2,
     overflowY: 'auto',
@@ -105,14 +111,12 @@ export const menuStyles = {
     },
   } as const,
 
-  // Header box
   headerBox: {
     mb: 3,
     pb: 2,
     borderBottom: '1px solid rgba(255,255,255,0.15)',
   } as const,
 
-  // App title
   appTitle: {
     color: '#fff',
     fontWeight: 700,
@@ -120,13 +124,11 @@ export const menuStyles = {
     letterSpacing: '-0.025em',
   } as const,
 
-  // App subtitle
   appSubtitle: {
     color: 'rgba(255,255,255,0.7)',
     fontSize: '0.75rem',
   } as const,
 
-  // Section header
   sectionHeader: {
     color: '#fff',
     fontSize: '0.8125rem',
@@ -135,18 +137,17 @@ export const menuStyles = {
     py: 1,
     px: 2,
     backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: 1,
+    borderRadius: br.xs,
     mx: 1,
     mb: 1,
   } as const,
 
-  // List item button (main items)
   listItem: {
-    borderRadius: 2,
+    borderRadius: br.sm,
     mx: 1,
     mb: 0.5,
     color: '#fff',
-    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: transitions.default,
     '&.Mui-selected': {
       backgroundColor: (theme: Theme) =>
         theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 90, 60, 0.15)',
@@ -163,26 +164,23 @@ export const menuStyles = {
     },
   } as const,
 
-  // Collapsible section button
   collapsibleButton: {
-    borderRadius: 2,
+    borderRadius: br.sm,
     mx: 1,
     mb: 0.5,
     color: '#fff',
-    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: transitions.default,
     '&:hover': {
       backgroundColor: (theme: Theme) =>
         theme.palette.mode === 'light' ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 90, 60, 0.1)',
     },
   } as const,
 
-  // List item icon
   listItemIcon: {
     minWidth: 40,
     color: 'inherit',
   } as const,
 
-  // List item text
   listItemText: {
     fontSize: '0.875rem',
     fontWeight: 500,
@@ -235,7 +233,6 @@ export const formStyles = {
     fontSize: 12,
   } as const,
 
-  // Create/Edit page styles
   page: {
     '& .RaCreate-main, & .RaEdit-main': {
       backgroundColor: 'transparent',
@@ -246,21 +243,15 @@ export const formStyles = {
   card: {
     borderRadius: br.lg,
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
-    border: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
+    border: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     overflow: 'hidden',
   } as const,
 
   titleBox: {
     p: 3,
     borderBottom: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
   } as const,
 
   titleText: {
@@ -279,20 +270,18 @@ export const formStyles = {
 
   textInputRoot: {
     '& .MuiFormControl-root': {
-      backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
       borderRadius: br.sm,
       transition: transitions.default,
       '&:hover': {
-        backgroundColor: (theme: Theme) =>
-          theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',
+        backgroundColor: (theme: Theme) => getSubtleBgHover(theme.palette.mode as 'light' | 'dark'),
       },
     },
   } as const,
 
   inputRoot: {
     '& .MuiFormControl-root': {
-      borderRadius: 2,
+      borderRadius: br.sm,
     },
   } as const,
 
@@ -301,12 +290,8 @@ export const formStyles = {
     justifyContent: 'flex-end',
     gap: 2,
     p: 2,
-    borderTop: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+    borderTop: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
   } as const,
 
   cancelButton: {
@@ -342,7 +327,7 @@ export const datagridStyles = {
       fontSize: '0.875rem',
     },
     '& .MuiDataGrid-columnHeaders': {
-      backgroundColor: (theme: Theme) => (theme.palette.mode === 'light' ? '#f8fafc' : '#273548'),
+      backgroundColor: (theme: Theme) => getTableHeader(theme.palette.mode as 'light' | 'dark'),
     },
     '& .MuiDataGrid-columnHeaderTitle': {
       fontWeight: 600,
@@ -356,25 +341,23 @@ export const datagridStyles = {
   } as const,
   header: {
     fontWeight: 600,
-    backgroundColor: (theme: Theme) => (theme.palette.mode === 'light' ? '#f8fafc' : '#273548'),
+    backgroundColor: (theme: Theme) => getTableHeader(theme.palette.mode as 'light' | 'dark'),
   } as const,
 
-  // Responsive datagrid styles
   responsive: {
-    borderRadius: 3,
+    borderRadius: br.md,
     overflow: 'hidden',
     '& .RaDatagrid-root': {
-      borderRadius: 3,
+      borderRadius: br.md,
     },
     '& .RaDatagrid-header': {
-      backgroundColor: (theme: Theme) => (theme.palette.mode === 'light' ? '#f8fafc' : '#273548'),
+      backgroundColor: (theme: Theme) => getTableHeader(theme.palette.mode as 'light' | 'dark'),
     },
     '& .RaDatagrid-row:hover': {
-      backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.04)' : 'rgba(255, 90, 60, 0.08)',
+      backgroundColor: (theme: Theme) => getPrimaryBg(theme.palette.mode as 'light' | 'dark'),
     },
     '& .RaDatagrid-row': {
-      transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: transitions.default,
     },
   } as const,
 }
@@ -418,21 +401,15 @@ export const showStyles = {
   card: {
     borderRadius: br.lg,
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
-    border: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
+    border: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     overflow: 'hidden',
   } as const,
 
   titleBox: {
     p: 3,
     borderBottom: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
   } as const,
 
   titleText: {
@@ -449,12 +426,9 @@ export const showStyles = {
       overflow: 'hidden',
     },
     '& .RaTabbedShowLayout-tabs': {
-      backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
       borderBottom: (theme: Theme) =>
-        theme.palette.mode === 'light'
-          ? `1px solid ${colors.light.divider}`
-          : `1px solid ${colors.dark.divider}`,
+        `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     },
   } as const,
 
@@ -483,20 +457,14 @@ export const showStyles = {
     borderRadius: br.md,
     mb: 2,
     boxShadow: 'none',
-    border: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
+    border: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
   } as const,
 
   infoCardTitleBox: {
     p: 2,
     borderBottom: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
-    backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
   } as const,
 
   infoCardTitle: {
@@ -514,9 +482,7 @@ export const showStyles = {
     alignItems: 'center',
     py: 1.5,
     borderBottom: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? `1px solid ${colors.light.divider}`
-        : `1px solid ${colors.dark.divider}`,
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     '&:last-child': {
       borderBottom: 'none',
     },
@@ -546,11 +512,11 @@ export const homePageStyles = {
     textAlign: 'center',
     mb: 6,
     p: { xs: 3, sm: 4 },
-    borderRadius: 4,
+    borderRadius: br.lg,
     backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.02)' : 'rgba(255, 90, 60, 0.04)',
+      `rgba(255, 90, 60, ${theme.palette.mode === 'light' ? '0.02' : '0.04'})`,
     border: (theme: Theme) =>
-      `1px solid ${theme.palette.mode === 'light' ? 'rgba(255, 90, 60, 0.1)' : 'rgba(255, 90, 60, 0.15)'}`,
+      `1px solid rgba(255, 90, 60, ${theme.palette.mode === 'light' ? '0.1' : '0.15'})`,
     maxWidth: 600,
     width: '100%',
   } as const,
@@ -558,7 +524,7 @@ export const homePageStyles = {
   title: {
     mb: 1,
     fontWeight: 700,
-    background: 'linear-gradient(135deg, #ff5a3c 0%, #ff7a5c 100%)',
+    background: gradients.primary,
     backgroundClip: 'text',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
@@ -605,21 +571,16 @@ export const homePageStyles = {
     py: 2,
     fontSize: { xs: '0.8rem', sm: '0.9rem' },
     fontWeight: 600,
-    background: 'linear-gradient(135deg, #ff5a3c 0%, #ff7a5c 100%)',
-    borderRadius: 3,
+    background: gradients.primary,
+    borderRadius: br.md,
     textTransform: 'none',
-    boxShadow: (theme: Theme) =>
-      theme.palette.mode === 'dark'
-        ? '0 4px 12px rgba(255, 90, 60, 0.3)'
-        : '0 4px 12px rgba(255, 90, 60, 0.25)',
-    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'primary'),
+    transition: transitions.default,
     '&:hover': {
-      background: 'linear-gradient(135deg, #ff5a3c 0%, #ff7a5c 100%)',
+      background: gradients.primary,
       transform: 'translateY(-4px)',
       boxShadow: (theme: Theme) =>
-        theme.palette.mode === 'dark'
-          ? '0 8px 24px rgba(255, 90, 60, 0.4)'
-          : '0 8px 24px rgba(255, 90, 60, 0.35)',
+        getShadow(theme.palette.mode as 'light' | 'dark', 'primaryHover'),
       filter: 'brightness(1.1)',
     },
   } as const,
@@ -661,29 +622,97 @@ export const layoutStyles = {
     p: { xs: 1, sm: 2, md: 3 },
     backgroundColor: 'background.default',
     minHeight: '100vh',
-    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: transitions.default,
   } as const,
 
   content: {
     flex: 1,
     backgroundColor: 'background.paper',
-    borderRadius: { xs: 2, md: 4 },
-    boxShadow: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)'
-        : '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)',
-    border: (theme: Theme) =>
-      theme.palette.mode === 'light'
-        ? '1px solid rgba(0,0,0,0.04)'
-        : '1px solid rgba(255,255,255,0.04)',
+    borderRadius: br.sm,
+    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
+    border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
     overflow: 'hidden',
-    transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: transitions.default,
   } as const,
 
   sidebar: {
     '& .MuiModal-root': {
       pointerEvents: 'none',
     },
+  } as const,
+}
+
+export const operationFormStyles = {
+  card: {
+    maxWidth: 'xl',
+    mx: 'auto',
+    my: 2,
+  } as const,
+
+  sectionHeader: {
+    mt: 2,
+    mb: 1,
+  } as const,
+
+  flexRow: {
+    display: 'flex',
+    gap: 2,
+    flexWrap: 'wrap',
+  } as const,
+
+  flexRowTight: {
+    display: 'flex',
+    gap: 1,
+    flexWrap: 'wrap',
+    width: '100%',
+  } as const,
+
+  flexRowAlign: {
+    display: 'flex',
+    gap: 1,
+    flexWrap: 'wrap',
+    width: '100%',
+    alignItems: 'center',
+  } as const,
+
+  flexFull: {
+    flex: 1,
+  } as const,
+
+  flexDouble: {
+    flex: 2,
+  } as const,
+
+  divider: {
+    my: 3,
+  } as const,
+
+  submitBox: {
+    mt: 3,
+    display: 'flex',
+    justifyContent: 'flex-end',
+  } as const,
+
+  toggleBox: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    p: 1,
+    borderRadius: br.xs,
+    '&:hover': {
+      bgcolor: 'action.hover',
+    },
+  } as const,
+
+  collapseContent: {
+    pt: 2,
+  } as const,
+
+  collapseRow: {
+    display: 'flex',
+    gap: 2,
+    flexWrap: 'wrap',
+    mt: 2,
   } as const,
 }
 
@@ -705,7 +734,7 @@ export const skeletonStyles = {
   } as const,
 
   skeletonItem: {
-    borderRadius: 2,
+    borderRadius: br.sm,
     bgcolor: (theme: Theme) =>
       theme.palette.mode === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
   } as const,
@@ -716,7 +745,7 @@ export const skeletonStyles = {
     gap: 2,
     py: 2,
     borderBottom: (theme: Theme) =>
-      `1px solid ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)'}`,
+      `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
   } as const,
 
   contentBox: {
