@@ -1,17 +1,15 @@
-
 # TravelExpense
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`expense` | [CrupdateExpenseMoney](CrupdateExpenseMoney.md)
-`departure_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
-`arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
-`departure_date` | Date
-`arrival_date` | Date
+| Name                 | Type                                            |
+| -------------------- | ----------------------------------------------- |
+| `id`                 | string                                          |
+| `expense`            | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `departure_location` | [CrupdateWarehouse](CrupdateWarehouse.md)       |
+| `arrival_location`   | [CrupdateWarehouse](CrupdateWarehouse.md)       |
+| `departure_date`     | Date                                            |
+| `arrival_date`       | Date                                            |
 
 ## Example
 
@@ -40,5 +38,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

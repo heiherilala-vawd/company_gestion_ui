@@ -2,14 +2,12 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**crupdateTravelPeople**](TravelPeopleApi.md#crupdatetravelpeople) | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people | Create new travel people or update existing ones |
-| [**deleteTravelPeopleById**](TravelPeopleApi.md#deletetravelpeoplebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people/{id} | Delete travel people by identifier |
-| [**getTravelPeople**](TravelPeopleApi.md#gettravelpeople) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people | Get all travel people |
-| [**getTravelPeopleById**](TravelPeopleApi.md#gettravelpeoplebyid) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people/{id} | Get travel people by identifier |
-
-
+| Method                                                                  | HTTP request                                                                                                        | Description                                      |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| [**crupdateTravelPeople**](TravelPeopleApi.md#crupdatetravelpeople)     | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people         | Create new travel people or update existing ones |
+| [**deleteTravelPeopleById**](TravelPeopleApi.md#deletetravelpeoplebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people/{id} | Delete travel people by identifier               |
+| [**getTravelPeople**](TravelPeopleApi.md#gettravelpeople)               | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people         | Get all travel people                            |
+| [**getTravelPeopleById**](TravelPeopleApi.md#gettravelpeoplebyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_people/{id}    | Get travel people by identifier                  |
 
 ## crupdateTravelPeople
 
@@ -20,19 +18,16 @@ Create new travel people or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelPeopleApi,
-} from 'api-client';
-import type { CrupdateTravelPeopleRequest } from 'api-client';
+import { Configuration, TravelPeopleApi } from 'api-client'
+import type { CrupdateTravelPeopleRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelPeopleApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelPeopleApi(config)
 
   const body = {
     // string
@@ -44,31 +39,38 @@ async function example() {
     // string
     travelExpensesId: travel_001,
     // Array<CrupdateTravelPeople>
-    crupdateTravelPeople: [{"id":"tp_001","travel_id":"travel_001","user_id":"usr_123458","comment":"Chauffeur principal"},{"travel_id":"travel_001","user_id":"usr_123459","comment":"Assistant"}],
-  } satisfies CrupdateTravelPeopleRequest;
+    crupdateTravelPeople: [
+      {
+        id: 'tp_001',
+        travel_id: 'travel_001',
+        user_id: 'usr_123458',
+        comment: 'Chauffeur principal',
+      },
+      { travel_id: 'travel_001', user_id: 'usr_123459', comment: 'Assistant' },
+    ],
+  } satisfies CrupdateTravelPeopleRequest
 
   try {
-    const data = await api.crupdateTravelPeople(body);
-    console.log(data);
+    const data = await api.crupdateTravelPeople(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateTravelPeople** | `Array<CrupdateTravelPeople>` |  | |
+| Name                     | Type                          | Description | Notes                     |
+| ------------------------ | ----------------------------- | ----------- | ------------------------- |
+| **compId**               | `string`                      |             | [Defaults to `undefined`] |
+| **jobId**                | `string`                      |             | [Defaults to `undefined`] |
+| **userId**               | `string`                      |             | [Defaults to `undefined`] |
+| **travelExpensesId**     | `string`                      |             | [Defaults to `undefined`] |
+| **crupdateTravelPeople** | `Array<CrupdateTravelPeople>` |             |                           |
 
 ### Return type
 
@@ -83,19 +85,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated travel people |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                          | Response headers |
+| ----------- | ------------------------------------ | ---------------- |
+| **200**     | The created or updated travel people | -                |
+| **400**     | Bad request                          | -                |
+| **403**     | Forbidden                            | -                |
+| **404**     | Not found                            | -                |
+| **429**     | Too many requests to the API         | -                |
+| **500**     | Internal server error                | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteTravelPeopleById
 
@@ -106,19 +107,16 @@ Delete travel people by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelPeopleApi,
-} from 'api-client';
-import type { DeleteTravelPeopleByIdRequest } from 'api-client';
+import { Configuration, TravelPeopleApi } from 'api-client'
+import type { DeleteTravelPeopleByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelPeopleApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelPeopleApi(config)
 
   const body = {
     // string
@@ -131,30 +129,29 @@ async function example() {
     travelExpensesId: travel_001,
     // string
     id: tp_001,
-  } satisfies DeleteTravelPeopleByIdRequest;
+  } satisfies DeleteTravelPeopleByIdRequest
 
   try {
-    const data = await api.deleteTravelPeopleById(body);
-    console.log(data);
+    const data = await api.deleteTravelPeopleById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name                 | Type     | Description | Notes                     |
+| -------------------- | -------- | ----------- | ------------------------- |
+| **compId**           | `string` |             | [Defaults to `undefined`] |
+| **jobId**            | `string` |             | [Defaults to `undefined`] |
+| **userId**           | `string` |             | [Defaults to `undefined`] |
+| **travelExpensesId** | `string` |             | [Defaults to `undefined`] |
+| **id**               | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -169,19 +166,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Travel people deleted successfully |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                        | Response headers |
+| ----------- | ---------------------------------- | ---------------- |
+| **204**     | Travel people deleted successfully | -                |
+| **400**     | Bad request                        | -                |
+| **403**     | Forbidden                          | -                |
+| **404**     | Not found                          | -                |
+| **429**     | Too many requests to the API       | -                |
+| **500**     | Internal server error              | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getTravelPeople
 
@@ -200,7 +196,7 @@ import type { GetTravelPeopleRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -247,21 +243,20 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **travelId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **userId2** | `string` | Filter travel people by user id | [Optional] [Defaults to `undefined`] |
-| **arrivalLocation** | `string` | Filter travel people by arrival warehouse id | [Optional] [Defaults to `undefined`] |
-| **arrivalDateMin** | `Date` | Filter travel people by minimum arrival date | [Optional] [Defaults to `undefined`] |
-| **arrivalDateMax** | `Date` | Filter travel people by maximum arrival date | [Optional] [Defaults to `undefined`] |
-| **notArrived** | `boolean` | Filter travel people that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
+| Name                 | Type      | Description                                                                  | Notes                                |
+| -------------------- | --------- | ---------------------------------------------------------------------------- | ------------------------------------ |
+| **compId**           | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **jobId**            | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **userId**           | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **travelExpensesId** | `string`  |                                                                              | [Defaults to `undefined`]            |
+| **page**             | `number`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **pageSize**         | `number`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **travelId**         | `string`  |                                                                              | [Optional] [Defaults to `undefined`] |
+| **userId2**          | `string`  | Filter travel people by user id                                              | [Optional] [Defaults to `undefined`] |
+| **arrivalLocation**  | `string`  | Filter travel people by arrival warehouse id                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMin**   | `Date`    | Filter travel people by minimum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMax**   | `Date`    | Filter travel people by maximum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **notArrived**       | `boolean` | Filter travel people that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -276,19 +271,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of travel people |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of travel people        | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getTravelPeopleById
 
@@ -299,19 +293,16 @@ Get travel people by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelPeopleApi,
-} from 'api-client';
-import type { GetTravelPeopleByIdRequest } from 'api-client';
+import { Configuration, TravelPeopleApi } from 'api-client'
+import type { GetTravelPeopleByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelPeopleApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelPeopleApi(config)
 
   const body = {
     // string
@@ -324,30 +315,29 @@ async function example() {
     travelExpensesId: travel_001,
     // string
     id: tp_001,
-  } satisfies GetTravelPeopleByIdRequest;
+  } satisfies GetTravelPeopleByIdRequest
 
   try {
-    const data = await api.getTravelPeopleById(body);
-    console.log(data);
+    const data = await api.getTravelPeopleById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name                 | Type     | Description | Notes                     |
+| -------------------- | -------- | ----------- | ------------------------- |
+| **compId**           | `string` |             | [Defaults to `undefined`] |
+| **jobId**            | `string` |             | [Defaults to `undefined`] |
+| **userId**           | `string` |             | [Defaults to `undefined`] |
+| **travelExpensesId** | `string` |             | [Defaults to `undefined`] |
+| **id**               | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -362,16 +352,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The identified travel people |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The identified travel people | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-

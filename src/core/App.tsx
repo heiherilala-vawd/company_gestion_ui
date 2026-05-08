@@ -27,6 +27,8 @@ import IncomeResource from '../features/money/incomes'
 
 import HomePage from '../features/HomePage'
 import SimplePage from '../features/SimplePage'
+import EmployerPaymentActivity from '../features/EmployerPaymentActivity'
+import TravelMaterialActivity from '../features/TravelMaterialActivity'
 import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm'
 import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
 import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
@@ -53,14 +55,8 @@ const ThemedAdmin = () => {
               <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
               <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
               <Route path="/expenses_activity" element={<SimplePage title="Dépenses" />} />
-              <Route
-                path="/employer_payments_activity"
-                element={<SimplePage title="Valider Payment" />}
-              />
-              <Route
-                path="/travel_materials_activity"
-                element={<SimplePage title="Valider Réception" />}
-              />
+              <Route path="/employer_payments_activity" element={<EmployerPaymentActivity />} />
+              <Route path="/travel_materials_activity" element={<TravelMaterialActivity />} />
             </CustomRoutes>
             <Resource name="jobs" {...JobResource} />
             <Resource name="companies" {...CompanyResource} />

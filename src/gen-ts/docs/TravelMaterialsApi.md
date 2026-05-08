@@ -2,14 +2,12 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**crupdateTravelMaterials**](TravelMaterialsApi.md#crupdatetravelmaterials) | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials | Create new travel materials or update existing ones |
-| [**deleteTravelMaterialsById**](TravelMaterialsApi.md#deletetravelmaterialsbyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials/{id} | Delete travel materials by identifier |
-| [**getTravelMaterials**](TravelMaterialsApi.md#gettravelmaterials) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials | Get all travel materials |
-| [**getTravelMaterialsById**](TravelMaterialsApi.md#gettravelmaterialsbyid) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials/{id} | Get travel materials by identifier |
-
-
+| Method                                                                           | HTTP request                                                                                                           | Description                                         |
+| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [**crupdateTravelMaterials**](TravelMaterialsApi.md#crupdatetravelmaterials)     | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials         | Create new travel materials or update existing ones |
+| [**deleteTravelMaterialsById**](TravelMaterialsApi.md#deletetravelmaterialsbyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials/{id} | Delete travel materials by identifier               |
+| [**getTravelMaterials**](TravelMaterialsApi.md#gettravelmaterials)               | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials         | Get all travel materials                            |
+| [**getTravelMaterialsById**](TravelMaterialsApi.md#gettravelmaterialsbyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_materials/{id}    | Get travel materials by identifier                  |
 
 ## crupdateTravelMaterials
 
@@ -20,19 +18,16 @@ Create new travel materials or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelMaterialsApi,
-} from 'api-client';
-import type { CrupdateTravelMaterialsRequest } from 'api-client';
+import { Configuration, TravelMaterialsApi } from 'api-client'
+import type { CrupdateTravelMaterialsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelMaterialsApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelMaterialsApi(config)
 
   const body = {
     // string
@@ -44,31 +39,39 @@ async function example() {
     // string
     travelExpensesId: travel_001,
     // Array<CrupdateTravelMaterials>
-    crupdateTravelMaterials: [{"id":"tm_001","travel_id":"travel_001","material":"mat_001","quantity":120,"quantity_received":115,"comment":"5 sacs manquants"}],
-  } satisfies CrupdateTravelMaterialsRequest;
+    crupdateTravelMaterials: [
+      {
+        id: 'tm_001',
+        travel_id: 'travel_001',
+        material: 'mat_001',
+        quantity: 120,
+        quantity_received: 115,
+        comment: '5 sacs manquants',
+      },
+    ],
+  } satisfies CrupdateTravelMaterialsRequest
 
   try {
-    const data = await api.crupdateTravelMaterials(body);
-    console.log(data);
+    const data = await api.crupdateTravelMaterials(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateTravelMaterials** | `Array<CrupdateTravelMaterials>` |  | |
+| Name                        | Type                             | Description | Notes                     |
+| --------------------------- | -------------------------------- | ----------- | ------------------------- |
+| **compId**                  | `string`                         |             | [Defaults to `undefined`] |
+| **jobId**                   | `string`                         |             | [Defaults to `undefined`] |
+| **userId**                  | `string`                         |             | [Defaults to `undefined`] |
+| **travelExpensesId**        | `string`                         |             | [Defaults to `undefined`] |
+| **crupdateTravelMaterials** | `Array<CrupdateTravelMaterials>` |             |                           |
 
 ### Return type
 
@@ -83,19 +86,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated travel materials |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                             | Response headers |
+| ----------- | --------------------------------------- | ---------------- |
+| **200**     | The created or updated travel materials | -                |
+| **400**     | Bad request                             | -                |
+| **403**     | Forbidden                               | -                |
+| **404**     | Not found                               | -                |
+| **429**     | Too many requests to the API            | -                |
+| **500**     | Internal server error                   | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteTravelMaterialsById
 
@@ -106,19 +108,16 @@ Delete travel materials by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelMaterialsApi,
-} from 'api-client';
-import type { DeleteTravelMaterialsByIdRequest } from 'api-client';
+import { Configuration, TravelMaterialsApi } from 'api-client'
+import type { DeleteTravelMaterialsByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelMaterialsApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelMaterialsApi(config)
 
   const body = {
     // string
@@ -131,30 +130,29 @@ async function example() {
     travelExpensesId: travel_001,
     // string
     id: tm_001,
-  } satisfies DeleteTravelMaterialsByIdRequest;
+  } satisfies DeleteTravelMaterialsByIdRequest
 
   try {
-    const data = await api.deleteTravelMaterialsById(body);
-    console.log(data);
+    const data = await api.deleteTravelMaterialsById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name                 | Type     | Description | Notes                     |
+| -------------------- | -------- | ----------- | ------------------------- |
+| **compId**           | `string` |             | [Defaults to `undefined`] |
+| **jobId**            | `string` |             | [Defaults to `undefined`] |
+| **userId**           | `string` |             | [Defaults to `undefined`] |
+| **travelExpensesId** | `string` |             | [Defaults to `undefined`] |
+| **id**               | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -169,19 +167,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Travel materials deleted successfully |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                           | Response headers |
+| ----------- | ------------------------------------- | ---------------- |
+| **204**     | Travel materials deleted successfully | -                |
+| **400**     | Bad request                           | -                |
+| **403**     | Forbidden                             | -                |
+| **404**     | Not found                             | -                |
+| **429**     | Too many requests to the API          | -                |
+| **500**     | Internal server error                 | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getTravelMaterials
 
@@ -200,7 +197,7 @@ import type { GetTravelMaterialsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -251,23 +248,22 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **travelId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **materialId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **quantity** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **quantityReceived** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **arrivalLocation** | `string` | Filter travel materials by arrival warehouse id | [Optional] [Defaults to `undefined`] |
-| **arrivalDateMin** | `Date` | Filter travel materials by minimum arrival date | [Optional] [Defaults to `undefined`] |
-| **arrivalDateMax** | `Date` | Filter travel materials by maximum arrival date | [Optional] [Defaults to `undefined`] |
-| **notArrived** | `boolean` | Filter travel materials that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
+| Name                 | Type      | Description                                                                     | Notes                                |
+| -------------------- | --------- | ------------------------------------------------------------------------------- | ------------------------------------ |
+| **compId**           | `string`  |                                                                                 | [Defaults to `undefined`]            |
+| **jobId**            | `string`  |                                                                                 | [Defaults to `undefined`]            |
+| **userId**           | `string`  |                                                                                 | [Defaults to `undefined`]            |
+| **travelExpensesId** | `string`  |                                                                                 | [Defaults to `undefined`]            |
+| **page**             | `number`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **pageSize**         | `number`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **travelId**         | `string`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **materialId**       | `string`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **quantity**         | `number`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **quantityReceived** | `number`  |                                                                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalLocation**  | `string`  | Filter travel materials by arrival warehouse id                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMin**   | `Date`    | Filter travel materials by minimum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMax**   | `Date`    | Filter travel materials by maximum arrival date                                 | [Optional] [Defaults to `undefined`] |
+| **notArrived**       | `boolean` | Filter travel materials that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -282,19 +278,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of travel materials |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of travel materials     | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getTravelMaterialsById
 
@@ -305,19 +300,16 @@ Get travel materials by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  TravelMaterialsApi,
-} from 'api-client';
-import type { GetTravelMaterialsByIdRequest } from 'api-client';
+import { Configuration, TravelMaterialsApi } from 'api-client'
+import type { GetTravelMaterialsByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new TravelMaterialsApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new TravelMaterialsApi(config)
 
   const body = {
     // string
@@ -330,30 +322,29 @@ async function example() {
     travelExpensesId: travel_001,
     // string
     id: tm_001,
-  } satisfies GetTravelMaterialsByIdRequest;
+  } satisfies GetTravelMaterialsByIdRequest
 
   try {
-    const data = await api.getTravelMaterialsById(body);
-    console.log(data);
+    const data = await api.getTravelMaterialsById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **travelExpensesId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name                 | Type     | Description | Notes                     |
+| -------------------- | -------- | ----------- | ------------------------- |
+| **compId**           | `string` |             | [Defaults to `undefined`] |
+| **jobId**            | `string` |             | [Defaults to `undefined`] |
+| **userId**           | `string` |             | [Defaults to `undefined`] |
+| **travelExpensesId** | `string` |             | [Defaults to `undefined`] |
+| **id**               | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -368,16 +359,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The identified travel materials |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                     | Response headers |
+| ----------- | ------------------------------- | ---------------- |
+| **200**     | The identified travel materials | -                |
+| **400**     | Bad request                     | -                |
+| **403**     | Forbidden                       | -                |
+| **404**     | Not found                       | -                |
+| **429**     | Too many requests to the API    | -                |
+| **500**     | Internal server error           | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
