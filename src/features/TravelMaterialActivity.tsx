@@ -26,8 +26,11 @@ import {
   CircularProgress,
   ToggleButtonGroup,
   ToggleButton,
+  InputAdornment,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import SearchIcon from '@mui/icons-material/Search'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 function cleanFilters(raw: Record<string, string | boolean>) {
   const out: Record<string, string | boolean> = {}
@@ -43,50 +46,76 @@ export default function TravelMaterialActivity() {
   const navigate = useNavigate()
 
   const [entityType, setEntityType] = useState<'materials' | 'equipment'>('materials')
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectedItems, setSelectedItems] = useState<any[]>([])
   const [selectedLocation, setSelectedLocation] = useState('')
   const [page, setPage] = useState(0)
   const [perPage, setPerPage] = useState(25)
-  const [filters, setFilters] = useState<Record<string, string>>({})
+  const [search, setSearch] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
+  const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
   const [showSummary, setShowSummary] = useState(false)
 
   const resource = entityType === 'materials' ? 'materials' : 'equipment'
-  const queryFilters = useMemo(() => cleanFilters({ ...filters, not_arrived: true }), [filters])
+  const queryFilters = useMemo(
+    () => cleanFilters({ ...serverFilters, not_arrived: true }),
+    [serverFilters],
+  )
 
   const {
-    data: items = [],
-    total,
+    data: allItems = [],
     isLoading,
     refetch,
   } = useGetList(resource, {
-    pagination: { page: page + 1, perPage },
+    pagination: { page: 1, perPage: 499 },
     filter: queryFilters,
   })
+
+  const filteredItems = useMemo(() => {
+    if (!search) return allItems
+    const q = search.toLowerCase()
+    return allItems.filter((item: any) =>
+      Object.values(item).some((v) =>
+        String(v ?? '')
+          .toLowerCase()
+          .includes(q),
+      ),
+    )
+  }, [allItems, search])
+
+  const total = filteredItems.length
+  const items = filteredItems.slice(page * perPage, (page + 1) * perPage)
 
   const { data: warehouses = [] } = useGetList('warehouses', {
     pagination: { page: 1, perPage: 100 },
   })
 
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]))
+  const toggleSelect = (item: any) => {
+    setSelectedItems((prev) =>
+      prev.find((i) => i.id === item.id) ? prev.filter((i) => i.id !== item.id) : [...prev, item],
+    )
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+    setPage(0)
   }
 
   const handleFilterChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((prev) => ({ ...prev, [field]: e.target.value }))
+    setServerFilters((prev) => ({ ...prev, [field]: e.target.value }))
     setPage(0)
   }
 
   const handleEntityChange = (_: any, value: 'materials' | 'equipment' | null) => {
     if (value) {
       setEntityType(value)
-      setSelectedIds([])
+      setSelectedItems([])
       setPage(0)
-      setFilters({})
+      setServerFilters({})
+      setSearch('')
     }
   }
 
   const handleValidate = () => {
-    const selectedItems = items.filter((i: any) => selectedIds.includes(i.id))
     const locationName = warehouses.find((w: any) => w.id === selectedLocation)?.name || ''
     const summary = {
       type: 'reception_validation',
@@ -101,15 +130,10 @@ export default function TravelMaterialActivity() {
     }
     console.log('Validation summary:', summary)
     setShowSummary(false)
-    setSelectedIds([])
+    setSelectedItems([])
     setSelectedLocation('')
     refetch()
   }
-
-  const selectedItems = useMemo(
-    () => items.filter((i: any) => selectedIds.includes(i.id)),
-    [items, selectedIds],
-  )
 
   const locationName = warehouses.find((w: any) => w.id === selectedLocation)?.name
 
@@ -122,24 +146,7 @@ export default function TravelMaterialActivity() {
         Réception - Éléments non arrivés
       </Typography>
 
-      <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange} sx={{ mb: 2 }}>
-        <ToggleButton value="materials">Matériaux</ToggleButton>
-        <ToggleButton value="equipment">Équipement</ToggleButton>
-      </ToggleButtonGroup>
-
-      <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap', alignItems: 'center' }}>
-        <TextField
-          label="Nom"
-          size="small"
-          value={filters.name || ''}
-          onChange={handleFilterChange('name')}
-        />
-        <TextField
-          label="Description"
-          size="small"
-          value={filters.description || ''}
-          onChange={handleFilterChange('description')}
-        />
+      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
         <FormControl size="small" sx={{ minWidth: 200 }}>
           <InputLabel>Lieu de réception</InputLabel>
           <Select
@@ -157,7 +164,63 @@ export default function TravelMaterialActivity() {
             ))}
           </Select>
         </FormControl>
+        <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange}>
+          <ToggleButton value="materials">Matériaux</ToggleButton>
+          <ToggleButton value="equipment">Équipement</ToggleButton>
+        </ToggleButtonGroup>
       </Box>
+
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          mb: 2,
+        }}
+      >
+        <TextField
+          placeholder="Rechercher..."
+          size="small"
+          value={search}
+          onChange={handleSearchChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 260 }}
+        />
+        <Button
+          size="small"
+          startIcon={<FilterListIcon />}
+          onClick={() => setShowFilters(!showFilters)}
+          color={showFilters ? 'primary' : 'inherit'}
+        >
+          Filtres
+        </Button>
+      </Box>
+
+      {showFilters && (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            flexWrap: 'wrap',
+            mb: 2,
+            '& .MuiTextField-root': { minWidth: 160 },
+          }}
+        >
+          <TextField
+            label="Description"
+            size="small"
+            value={filters.description || ''}
+            onChange={handleFilterChange('description')}
+          />
+        </Box>
+      )}
 
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -192,11 +255,15 @@ export default function TravelMaterialActivity() {
               </TableHead>
               <TableBody>
                 {items.map((item: any) => (
-                  <TableRow key={item.id} hover>
+                  <TableRow
+                    key={item.id}
+                    hover
+                    selected={selectedItems.some((i) => i.id === item.id)}
+                  >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedIds.includes(item.id)}
-                        onChange={() => toggleSelect(item.id)}
+                        checked={selectedItems.some((i) => i.id === item.id)}
+                        onChange={() => toggleSelect(item)}
                       />
                     </TableCell>
                     {entityType === 'materials' ? (
@@ -240,11 +307,11 @@ export default function TravelMaterialActivity() {
       <Button
         variant="contained"
         color="primary"
-        disabled={selectedIds.length === 0 || !selectedLocation}
+        disabled={selectedItems.length === 0 || !selectedLocation}
         onClick={() => setShowSummary(true)}
         sx={{ mt: 2 }}
       >
-        Effectuer la validation ({selectedIds.length})
+        Effectuer la validation ({selectedItems.length})
       </Button>
 
       <Dialog open={showSummary} onClose={() => setShowSummary(false)} maxWidth="md" fullWidth>

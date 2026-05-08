@@ -20,8 +20,11 @@ import {
   Typography,
   Paper,
   CircularProgress,
+  InputAdornment,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import SearchIcon from '@mui/icons-material/Search'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 function cleanFilters(raw: Record<string, string | boolean>) {
   const out: Record<string, string | boolean> = {}
@@ -36,40 +39,64 @@ function cleanFilters(raw: Record<string, string | boolean>) {
 export default function EmployerPaymentActivity() {
   const navigate = useNavigate()
 
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectedItems, setSelectedItems] = useState<any[]>([])
   const [page, setPage] = useState(0)
   const [perPage, setPerPage] = useState(25)
-  const [filters, setFilters] = useState({
-    source_organization: '',
+  const [search, setSearch] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
+  const [serverFilters, setServerFilters] = useState({
     invoice_reference: '',
     description: '',
     amount: '',
   })
   const [showSummary, setShowSummary] = useState(false)
 
-  const queryFilters = useMemo(() => cleanFilters({ ...filters, money_received: false }), [filters])
+  const queryFilters = useMemo(
+    () => cleanFilters({ ...serverFilters, money_received: false }),
+    [serverFilters],
+  )
 
   const {
-    data: incomes = [],
-    total,
+    data: allIncomes = [],
     isLoading,
     refetch,
   } = useGetList('incomes', {
-    pagination: { page: page + 1, perPage },
+    pagination: { page: 1, perPage: 499 },
     filter: queryFilters,
   })
 
-  const toggleSelect = (id: string) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]))
+  const filteredIncomes = useMemo(() => {
+    if (!search) return allIncomes
+    const q = search.toLowerCase()
+    return allIncomes.filter((item: any) =>
+      Object.values(item).some((v) =>
+        String(v ?? '')
+          .toLowerCase()
+          .includes(q),
+      ),
+    )
+  }, [allIncomes, search])
+
+  const total = filteredIncomes.length
+  const incomes = filteredIncomes.slice(page * perPage, (page + 1) * perPage)
+
+  const toggleSelect = (item: any) => {
+    setSelectedItems((prev) =>
+      prev.find((i) => i.id === item.id) ? prev.filter((i) => i.id !== item.id) : [...prev, item],
+    )
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+    setPage(0)
   }
 
   const handleFilterChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilters((prev) => ({ ...prev, [field]: e.target.value }))
+    setServerFilters((prev) => ({ ...prev, [field]: e.target.value }))
     setPage(0)
   }
 
   const handleValidate = () => {
-    const selectedItems = incomes.filter((i: any) => selectedIds.includes(i.id))
     const summary = {
       type: 'payment_validation',
       items: selectedItems.map((i: any) => ({
@@ -82,14 +109,9 @@ export default function EmployerPaymentActivity() {
     }
     console.log('Validation summary:', summary)
     setShowSummary(false)
-    setSelectedIds([])
+    setSelectedItems([])
     refetch()
   }
-
-  const selectedItems = useMemo(
-    () => incomes.filter((i: any) => selectedIds.includes(i.id)),
-    [incomes, selectedIds],
-  )
 
   return (
     <Box sx={{ p: 2 }}>
@@ -100,32 +122,69 @@ export default function EmployerPaymentActivity() {
         Paiements en attente de réception
       </Typography>
 
-      <Box sx={{ display: 'flex', gap: 2, mb: 2, flexWrap: 'wrap' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          mb: 2,
+        }}
+      >
         <TextField
-          label="Organisation"
+          placeholder="Rechercher..."
           size="small"
-          value={filters.source_organization}
-          onChange={handleFilterChange('source_organization')}
+          value={search}
+          onChange={handleSearchChange}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon fontSize="small" />
+              </InputAdornment>
+            ),
+          }}
+          sx={{ minWidth: 260 }}
         />
-        <TextField
-          label="Réf. facture"
+        <Button
           size="small"
-          value={filters.invoice_reference}
-          onChange={handleFilterChange('invoice_reference')}
-        />
-        <TextField
-          label="Description"
-          size="small"
-          value={filters.description}
-          onChange={handleFilterChange('description')}
-        />
-        <TextField
-          label="Montant"
-          size="small"
-          value={filters.amount}
-          onChange={handleFilterChange('amount')}
-        />
+          startIcon={<FilterListIcon />}
+          onClick={() => setShowFilters(!showFilters)}
+          color={showFilters ? 'primary' : 'inherit'}
+        >
+          Filtres
+        </Button>
       </Box>
+
+      {showFilters && (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            flexWrap: 'wrap',
+            mb: 2,
+            '& .MuiTextField-root': { minWidth: 160 },
+          }}
+        >
+          <TextField
+            label="Réf. facture"
+            size="small"
+            value={serverFilters.invoice_reference}
+            onChange={handleFilterChange('invoice_reference')}
+          />
+          <TextField
+            label="Description"
+            size="small"
+            value={serverFilters.description}
+            onChange={handleFilterChange('description')}
+          />
+          <TextField
+            label="Montant"
+            size="small"
+            value={serverFilters.amount}
+            onChange={handleFilterChange('amount')}
+          />
+        </Box>
+      )}
 
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -150,11 +209,15 @@ export default function EmployerPaymentActivity() {
               </TableHead>
               <TableBody>
                 {incomes.map((income: any) => (
-                  <TableRow key={income.id} hover>
+                  <TableRow
+                    key={income.id}
+                    hover
+                    selected={selectedItems.some((i) => i.id === income.id)}
+                  >
                     <TableCell padding="checkbox">
                       <Checkbox
-                        checked={selectedIds.includes(income.id)}
-                        onChange={() => toggleSelect(income.id)}
+                        checked={selectedItems.some((i) => i.id === income.id)}
+                        onChange={() => toggleSelect(income)}
                       />
                     </TableCell>
                     <TableCell>{income.source_organization}</TableCell>
@@ -195,11 +258,11 @@ export default function EmployerPaymentActivity() {
       <Button
         variant="contained"
         color="primary"
-        disabled={selectedIds.length === 0}
+        disabled={selectedItems.length === 0}
         onClick={() => setShowSummary(true)}
         sx={{ mt: 2 }}
       >
-        Effectuer la validation ({selectedIds.length})
+        Effectuer la validation ({selectedItems.length})
       </Button>
 
       <Dialog open={showSummary} onClose={() => setShowSummary(false)} maxWidth="md" fullWidth>
