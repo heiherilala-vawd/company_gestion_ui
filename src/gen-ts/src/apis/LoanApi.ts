@@ -18,17 +18,14 @@ import {
   BadRequestExceptionFromJSON,
   BadRequestExceptionToJSON,
 } from '../models/BadRequestException'
-import {
-  type CrupdateIncomeMoney,
-  CrupdateIncomeMoneyFromJSON,
-  CrupdateIncomeMoneyToJSON,
-} from '../models/CrupdateIncomeMoney'
-import { type IncomeMoney, IncomeMoneyFromJSON, IncomeMoneyToJSON } from '../models/IncomeMoney'
+import { type CrupdateLoan, CrupdateLoanFromJSON, CrupdateLoanToJSON } from '../models/CrupdateLoan'
 import {
   type InternalServerException,
   InternalServerExceptionFromJSON,
   InternalServerExceptionToJSON,
 } from '../models/InternalServerException'
+import { type Loan, LoanFromJSON, LoanToJSON } from '../models/Loan'
+import { type LoanStatus, LoanStatusFromJSON, LoanStatusToJSON } from '../models/LoanStatus'
 import {
   type NotAuthorizedException,
   NotAuthorizedExceptionFromJSON,
@@ -45,82 +42,74 @@ import {
   TooManyRequestsExceptionToJSON,
 } from '../models/TooManyRequestsException'
 
-export interface CrupdateIncomesRequest {
+export interface CrupdateLoansRequest {
   compId: string
   jobId: string
   userId: string
-  crupdateIncomeMoney: Array<CrupdateIncomeMoney>
+  crupdateLoan: Array<CrupdateLoan>
 }
 
-export interface DeleteIncomeByIdRequest {
-  compId: string
-  jobId: string
-  userId: string
-  id: string
-}
-
-export interface GetIncomeByIdRequest {
+export interface DeleteLoanByIdRequest {
   compId: string
   jobId: string
   userId: string
   id: string
 }
 
-export interface GetIncomesRequest {
+export interface GetLoanByIdRequest {
+  compId: string
+  jobId: string
+  userId: string
+  id: string
+}
+
+export interface GetLoansRequest {
   compId: string
   jobId: string
   userId: string
   page?: number
   pageSize?: number
-  sourceOrganization?: string
-  invoiceReference?: string
   description?: string
   amount?: number
-  incomeTypeId?: string
-  moneyReceived?: boolean
-}
-
-export interface GetIncomesExcelRequest {
-  compId: string
-  jobId: string
-  userId: string
+  lender?: string
+  status?: LoanStatus
 }
 
 /**
  *
  */
-export class IncomeApi extends runtime.BaseAPI {
+export class LoanApi extends runtime.BaseAPI {
   /**
-   * Creates request options for crupdateIncomes without sending the request
+   * Creates request options for crupdateLoans without sending the request
    */
-  async crupdateIncomesRequestOpts(
-    requestParameters: CrupdateIncomesRequest,
+  async crupdateLoansRequestOpts(
+    requestParameters: CrupdateLoansRequest,
   ): Promise<runtime.RequestOpts> {
     if (requestParameters['compId'] == null) {
       throw new runtime.RequiredError(
         'compId',
-        'Required parameter "compId" was null or undefined when calling crupdateIncomes().',
+        'Required parameter "compId" was null or undefined when calling crupdateLoans().',
       )
     }
 
     if (requestParameters['jobId'] == null) {
       throw new runtime.RequiredError(
         'jobId',
-        'Required parameter "jobId" was null or undefined when calling crupdateIncomes().',
+        'Required parameter "jobId" was null or undefined when calling crupdateLoans().',
       )
     }
 
     if (requestParameters['userId'] == null) {
       throw new runtime.RequiredError(
         'userId',
-        'Required parameter "userId" was null or undefined when calling crupdateIncomes().',
+        'Required parameter "userId" was null or undefined when calling crupdateLoans().',
       )
     }
 
-    if (requestParameters['crupdateIncomeMoney'] == null) {
+    if (requestParameters['crupdateLoan'] == null) {
       throw new runtime.RequiredError(
-        'crupdateIncomeMoney',
-        'Required parameter "crupdateIncomeMoney" was null or undefined when calling crupdateIncomes().',
+        'crupdateLoan',
+        'Required parameter "crupdateLoan" was null or undefined when calling crupdateLoans().',
       )
     }
 
@@ -139,7 +128,7 @@ export class IncomeApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/incomes`
+    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/loans`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
     urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
@@ -149,65 +138,65 @@ export class IncomeApi extends runtime.BaseAPI {
       method: 'PUT',
       headers: headerParameters,
       query: queryParameters,
-      body: requestParameters['crupdateIncomeMoney']!.map(CrupdateIncomeMoneyToJSON),
+      body: requestParameters['crupdateLoan']!.map(CrupdateLoanToJSON),
     }
   }
 
   /**
-   * Create new incomes or update existing ones
+   * Create new loans or update existing ones
    */
-  async crupdateIncomesRaw(
-    requestParameters: CrupdateIncomesRequest,
+  async crupdateLoansRaw(
+    requestParameters: CrupdateLoansRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<IncomeMoney>>> {
-    const requestOptions = await this.crupdateIncomesRequestOpts(requestParameters)
+  ): Promise<runtime.ApiResponse<Array<Loan>>> {
+    const requestOptions = await this.crupdateLoansRequestOpts(requestParameters)
     const response = await this.request(requestOptions, initOverrides)
 
-    return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IncomeMoneyFromJSON))
+    return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(LoanFromJSON))
   }
 
   /**
-   * Create new incomes or update existing ones
+   * Create new loans or update existing ones
    */
-  async crupdateIncomes(
-    requestParameters: CrupdateIncomesRequest,
+  async crupdateLoans(
+    requestParameters: CrupdateLoansRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<IncomeMoney>> {
-    const response = await this.crupdateIncomesRaw(requestParameters, initOverrides)
+  ): Promise<Array<Loan>> {
+    const response = await this.crupdateLoansRaw(requestParameters, initOverrides)
     return await response.value()
   }
 
   /**
-   * Creates request options for deleteIncomeById without sending the request
+   * Creates request options for deleteLoanById without sending the request
    */
-  async deleteIncomeByIdRequestOpts(
-    requestParameters: DeleteIncomeByIdRequest,
+  async deleteLoanByIdRequestOpts(
+    requestParameters: DeleteLoanByIdRequest,
   ): Promise<runtime.RequestOpts> {
     if (requestParameters['compId'] == null) {
       throw new runtime.RequiredError(
         'compId',
-        'Required parameter "compId" was null or undefined when calling deleteIncomeById().',
+        'Required parameter "compId" was null or undefined when calling deleteLoanById().',
       )
     }
 
     if (requestParameters['jobId'] == null) {
       throw new runtime.RequiredError(
         'jobId',
-        'Required parameter "jobId" was null or undefined when calling deleteIncomeById().',
+        'Required parameter "jobId" was null or undefined when calling deleteLoanById().',
       )
     }
 
     if (requestParameters['userId'] == null) {
       throw new runtime.RequiredError(
         'userId',
-        'Required parameter "userId" was null or undefined when calling deleteIncomeById().',
+        'Required parameter "userId" was null or undefined when calling deleteLoanById().',
       )
     }
 
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter "id" was null or undefined when calling deleteIncomeById().',
+        'Required parameter "id" was null or undefined when calling deleteLoanById().',
       )
     }
 
@@ -224,7 +213,7 @@ export class IncomeApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/{id}`
+    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/loans/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
     urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
@@ -239,59 +228,59 @@ export class IncomeApi extends runtime.BaseAPI {
   }
 
   /**
-   * Delete income by identifier
+   * Delete loan by identifier
    */
-  async deleteIncomeByIdRaw(
-    requestParameters: DeleteIncomeByIdRequest,
+  async deleteLoanByIdRaw(
+    requestParameters: DeleteLoanByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<runtime.ApiResponse<void>> {
-    const requestOptions = await this.deleteIncomeByIdRequestOpts(requestParameters)
+    const requestOptions = await this.deleteLoanByIdRequestOpts(requestParameters)
     const response = await this.request(requestOptions, initOverrides)
 
     return new runtime.VoidApiResponse(response)
   }
 
   /**
-   * Delete income by identifier
+   * Delete loan by identifier
    */
-  async deleteIncomeById(
-    requestParameters: DeleteIncomeByIdRequest,
+  async deleteLoanById(
+    requestParameters: DeleteLoanByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<void> {
-    await this.deleteIncomeByIdRaw(requestParameters, initOverrides)
+    await this.deleteLoanByIdRaw(requestParameters, initOverrides)
   }
 
   /**
-   * Creates request options for getIncomeById without sending the request
+   * Creates request options for getLoanById without sending the request
    */
-  async getIncomeByIdRequestOpts(
-    requestParameters: GetIncomeByIdRequest,
+  async getLoanByIdRequestOpts(
+    requestParameters: GetLoanByIdRequest,
   ): Promise<runtime.RequestOpts> {
     if (requestParameters['compId'] == null) {
       throw new runtime.RequiredError(
         'compId',
-        'Required parameter "compId" was null or undefined when calling getIncomeById().',
+        'Required parameter "compId" was null or undefined when calling getLoanById().',
       )
     }
 
     if (requestParameters['jobId'] == null) {
       throw new runtime.RequiredError(
         'jobId',
-        'Required parameter "jobId" was null or undefined when calling getIncomeById().',
+        'Required parameter "jobId" was null or undefined when calling getLoanById().',
       )
     }
 
     if (requestParameters['userId'] == null) {
       throw new runtime.RequiredError(
         'userId',
-        'Required parameter "userId" was null or undefined when calling getIncomeById().',
+        'Required parameter "userId" was null or undefined when calling getLoanById().',
       )
     }
 
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
-        'Required parameter "id" was null or undefined when calling getIncomeById().',
+        'Required parameter "id" was null or undefined when calling getLoanById().',
       )
     }
 
@@ -308,7 +297,7 @@ export class IncomeApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/{id}`
+    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/loans/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
     urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
@@ -323,51 +312,51 @@ export class IncomeApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get income by identifier
+   * Get loan by identifier
    */
-  async getIncomeByIdRaw(
-    requestParameters: GetIncomeByIdRequest,
+  async getLoanByIdRaw(
+    requestParameters: GetLoanByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<IncomeMoney>> {
-    const requestOptions = await this.getIncomeByIdRequestOpts(requestParameters)
+  ): Promise<runtime.ApiResponse<Loan>> {
+    const requestOptions = await this.getLoanByIdRequestOpts(requestParameters)
     const response = await this.request(requestOptions, initOverrides)
 
-    return new runtime.JSONApiResponse(response, (jsonValue) => IncomeMoneyFromJSON(jsonValue))
+    return new runtime.JSONApiResponse(response, (jsonValue) => LoanFromJSON(jsonValue))
   }
 
   /**
-   * Get income by identifier
+   * Get loan by identifier
    */
-  async getIncomeById(
-    requestParameters: GetIncomeByIdRequest,
+  async getLoanById(
+    requestParameters: GetLoanByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<IncomeMoney> {
-    const response = await this.getIncomeByIdRaw(requestParameters, initOverrides)
+  ): Promise<Loan> {
+    const response = await this.getLoanByIdRaw(requestParameters, initOverrides)
     return await response.value()
   }
 
   /**
-   * Creates request options for getIncomes without sending the request
+   * Creates request options for getLoans without sending the request
    */
-  async getIncomesRequestOpts(requestParameters: GetIncomesRequest): Promise<runtime.RequestOpts> {
+  async getLoansRequestOpts(requestParameters: GetLoansRequest): Promise<runtime.RequestOpts> {
     if (requestParameters['compId'] == null) {
       throw new runtime.RequiredError(
         'compId',
-        'Required parameter "compId" was null or undefined when calling getIncomes().',
+        'Required parameter "compId" was null or undefined when calling getLoans().',
       )
     }
 
     if (requestParameters['jobId'] == null) {
       throw new runtime.RequiredError(
         'jobId',
-        'Required parameter "jobId" was null or undefined when calling getIncomes().',
+        'Required parameter "jobId" was null or undefined when calling getLoans().',
       )
     }
 
     if (requestParameters['userId'] == null) {
       throw new runtime.RequiredError(
         'userId',
-        'Required parameter "userId" was null or undefined when calling getIncomes().',
+        'Required parameter "userId" was null or undefined when calling getLoans().',
       )
     }
 
@@ -381,14 +370,6 @@ export class IncomeApi extends runtime.BaseAPI {
       queryParameters['page_size'] = requestParameters['pageSize']
     }
 
-    if (requestParameters['sourceOrganization'] != null) {
-      queryParameters['source_organization'] = requestParameters['sourceOrganization']
-    }
-
-    if (requestParameters['invoiceReference'] != null) {
-      queryParameters['invoice_reference'] = requestParameters['invoiceReference']
-    }
-
     if (requestParameters['description'] != null) {
       queryParameters['description'] = requestParameters['description']
     }
@@ -397,12 +378,12 @@ export class IncomeApi extends runtime.BaseAPI {
       queryParameters['amount'] = requestParameters['amount']
     }
 
-    if (requestParameters['incomeTypeId'] != null) {
-      queryParameters['income_type_id'] = requestParameters['incomeTypeId']
+    if (requestParameters['lender'] != null) {
+      queryParameters['lender'] = requestParameters['lender']
     }
 
-    if (requestParameters['moneyReceived'] != null) {
-      queryParameters['money_received'] = requestParameters['moneyReceived']
+    if (requestParameters['status'] != null) {
+      queryParameters['status'] = requestParameters['status']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}
@@ -416,7 +397,7 @@ export class IncomeApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/incomes`
+    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/loans`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
     urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
@@ -430,103 +411,26 @@ export class IncomeApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get all incomes
+   * Get all loans
    */
-  async getIncomesRaw(
-    requestParameters: GetIncomesRequest,
+  async getLoansRaw(
+    requestParameters: GetLoansRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<IncomeMoney>>> {
-    const requestOptions = await this.getIncomesRequestOpts(requestParameters)
+  ): Promise<runtime.ApiResponse<Array<Loan>>> {
+    const requestOptions = await this.getLoansRequestOpts(requestParameters)
     const response = await this.request(requestOptions, initOverrides)
 
-    return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(IncomeMoneyFromJSON))
+    return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(LoanFromJSON))
   }
 
   /**
-   * Get all incomes
+   * Get all loans
    */
-  async getIncomes(
-    requestParameters: GetIncomesRequest,
+  async getLoans(
+    requestParameters: GetLoansRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<IncomeMoney>> {
-    const response = await this.getIncomesRaw(requestParameters, initOverrides)
-    return await response.value()
-  }
-
-  /**
-   * Creates request options for getIncomesExcel without sending the request
-   */
-  async getIncomesExcelRequestOpts(
-    requestParameters: GetIncomesExcelRequest,
-  ): Promise<runtime.RequestOpts> {
-    if (requestParameters['compId'] == null) {
-      throw new runtime.RequiredError(
-        'compId',
-        'Required parameter "compId" was null or undefined when calling getIncomesExcel().',
-      )
-    }
-
-    if (requestParameters['jobId'] == null) {
-      throw new runtime.RequiredError(
-        'jobId',
-        'Required parameter "jobId" was null or undefined when calling getIncomesExcel().',
-      )
-    }
-
-    if (requestParameters['userId'] == null) {
-      throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling getIncomesExcel().',
-      )
-    }
-
-    const queryParameters: any = {}
-
-    const headerParameters: runtime.HTTPHeaders = {}
-
-    if (this.configuration && this.configuration.accessToken) {
-      const token = this.configuration.accessToken
-      const tokenString = await token('BearerAuth', [])
-
-      if (tokenString) {
-        headerParameters['Authorization'] = `Bearer ${tokenString}`
-      }
-    }
-
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/excel`
-    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
-
-    return {
-      path: urlPath,
-      method: 'GET',
-      headers: headerParameters,
-      query: queryParameters,
-    }
-  }
-
-  /**
-   * Export incomes to Excel
-   */
-  async getIncomesExcelRaw(
-    requestParameters: GetIncomesExcelRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Blob>> {
-    const requestOptions = await this.getIncomesExcelRequestOpts(requestParameters)
-    const response = await this.request(requestOptions, initOverrides)
-
-    return new runtime.BlobApiResponse(response)
-  }
-
-  /**
-   * Export incomes to Excel
-   */
-  async getIncomesExcel(
-    requestParameters: GetIncomesExcelRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Blob> {
-    const response = await this.getIncomesExcelRaw(requestParameters, initOverrides)
+  ): Promise<Array<Loan>> {
+    const response = await this.getLoansRaw(requestParameters, initOverrides)
     return await response.value()
   }
 }

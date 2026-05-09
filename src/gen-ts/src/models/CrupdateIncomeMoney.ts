@@ -62,12 +62,6 @@ export interface CrupdateIncomeMoney {
    */
   billing_start_date?: Date
   /**
-   *
-   * @type {Date}
-   * @memberof CrupdateIncomeMoney
-   */
-  money_arrival_date?: Date
-  /**
    * ID of the job this income is related to
    * @type {string}
    * @memberof CrupdateIncomeMoney
@@ -109,8 +103,6 @@ export function CrupdateIncomeMoneyFromJSONTyped(
     invoice_reference: json['invoice_reference'] == null ? undefined : json['invoice_reference'],
     billing_start_date:
       json['billing_start_date'] == null ? undefined : new Date(json['billing_start_date']),
-    money_arrival_date:
-      json['money_arrival_date'] == null ? undefined : new Date(json['money_arrival_date']),
     job_id: json['job_id'] == null ? undefined : json['job_id'],
     income_type_id: json['income_type_id'] == null ? undefined : json['income_type_id'],
   }
@@ -139,10 +131,6 @@ export function CrupdateIncomeMoneyToJSONTyped(
       value['billing_start_date'] == null
         ? value['billing_start_date']
         : value['billing_start_date'].toISOString().substring(0, 10),
-    money_arrival_date:
-      value['money_arrival_date'] == null
-        ? value['money_arrival_date']
-        : value['money_arrival_date'].toISOString().substring(0, 10),
     job_id: value['job_id'],
     income_type_id: value['income_type_id'],
   }

@@ -57,6 +57,11 @@ export default function TravelMaterialActivity() {
   const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
   const [showSummary, setShowSummary] = useState(false)
   const [quantities, setQuantities] = useState<Record<string, number>>({})
+  const [pendingIds, setPendingIds] = useState<{
+    travelId: string
+    expenseId: string
+    materialLineIds: string[]
+  } | null>(null)
 
   const getToken = () => localStorage.getItem('token')
 
@@ -166,16 +171,16 @@ export default function TravelMaterialActivity() {
         const payload = {
           comment: null,
           travel: {
-            id: generateId(),
-            expense_id: generateId(),
+            id: pendingIds!.travelId,
+            expense_id: pendingIds!.expenseId,
             departure_location: { id: departureWarehouseId },
             arrival_location: { id: selectedLocation },
             departure_date: new Date().toISOString(),
             arrival_date: new Date().toISOString(),
             fee: 0,
           },
-          material_lines: selectedItems.map((item: any) => ({
-            id: generateId(),
+          material_lines: selectedItems.map((item: any, index: number) => ({
+            id: pendingIds!.materialLineIds[index],
             material: { id: item.material?.id },
             quantity: quantities[item.id] || 0,
           })),
@@ -394,7 +399,14 @@ export default function TravelMaterialActivity() {
         variant="contained"
         color="primary"
         disabled={selectedItems.length === 0 || !selectedLocation}
-        onClick={() => setShowSummary(true)}
+        onClick={() => {
+          setPendingIds({
+            travelId: generateId(),
+            expenseId: generateId(),
+            materialLineIds: selectedItems.map(() => generateId()),
+          })
+          setShowSummary(true)
+        }}
         sx={{ mt: 2 }}
       >
         Effectuer la validation ({selectedItems.length})

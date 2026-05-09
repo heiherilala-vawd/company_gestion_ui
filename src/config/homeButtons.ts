@@ -97,7 +97,13 @@ export const quickActionButtons: HomeButton[] = [
     desc: 'Déplacer',
     color: 'success',
   },
-  { label: 'Revenus / Emprunts', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir', color: 'red' },
+  {
+    label: 'Revenus / Emprunts',
+    icon: PaidIcon,
+    to: '/incomes_activity',
+    desc: 'Recevoir',
+    color: 'red',
+  },
   {
     label: 'Dépenses',
     icon: MoneyOffIcon,

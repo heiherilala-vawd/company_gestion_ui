@@ -8,7 +8,13 @@ export default function BankFeeForm({ isCreate = false, isCreateForm = false }) 
   return (
     <>
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+        <TextInput
+          source="id"
+          readOnly
+          defaultValue={generateId()}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        />
       )}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       <TextInput source="bank_name" label="Nom de la banque" data-testid="input-bank_name" />

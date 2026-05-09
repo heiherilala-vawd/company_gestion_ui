@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime'
+import type { LoanRepayment } from './LoanRepayment'
+import {
+  LoanRepaymentFromJSON,
+  LoanRepaymentFromJSONTyped,
+  LoanRepaymentToJSON,
+  LoanRepaymentToJSONTyped,
+} from './LoanRepayment'
 import type { CrupdateJob } from './CrupdateJob'
 import {
   CrupdateJobFromJSON,
@@ -27,131 +34,124 @@ import {
   AuditUserToJSON,
   AuditUserToJSONTyped,
 } from './AuditUser'
-import type { IncomeType } from './IncomeType'
+import type { LoanStatus } from './LoanStatus'
 import {
-  IncomeTypeFromJSON,
-  IncomeTypeFromJSONTyped,
-  IncomeTypeToJSON,
-  IncomeTypeToJSONTyped,
-} from './IncomeType'
-import type { IncomeReceipt } from './IncomeReceipt'
-import {
-  IncomeReceiptFromJSON,
-  IncomeReceiptFromJSONTyped,
-  IncomeReceiptToJSON,
-  IncomeReceiptToJSONTyped,
-} from './IncomeReceipt'
+  LoanStatusFromJSON,
+  LoanStatusFromJSONTyped,
+  LoanStatusToJSON,
+  LoanStatusToJSONTyped,
+} from './LoanStatus'
 
 /**
  *
  * @export
- * @interface IncomeMoney
+ * @interface Loan
  */
-export interface IncomeMoney {
+export interface Loan {
   /**
    *
    * @type {string}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   comment?: string
   /**
    *
    * @type {Date}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   created_at?: Date
   /**
    *
    * @type {Date}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   updated_at?: Date
   /**
    *
    * @type {AuditUser}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   created_by?: AuditUser
   /**
    *
    * @type {AuditUser}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   updated_by?: AuditUser
   /**
    *
    * @type {number}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   amount?: number
   /**
    *
    * @type {string}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   description?: string
   /**
    *
    * @type {string}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   id?: string
   /**
    *
    * @type {string}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
-  source_organization?: string
+  lender?: string
   /**
-   *
-   * @type {string}
-   * @memberof IncomeMoney
+   * Annual interest rate in basis points (e.g., 1200 = 12%)
+   * @type {number}
+   * @memberof Loan
    */
-  invoice_reference?: string
+  interest_rate?: number
   /**
    *
    * @type {Date}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
-  billing_start_date?: Date
+  start_date?: Date
   /**
-   * Job this income is related to
+   *
+   * @type {LoanStatus}
+   * @memberof Loan
+   */
+  status?: LoanStatus
+  /**
+   * Job this loan is related to
    * @type {CrupdateJob}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   job?: CrupdateJob
   /**
-   * Type of income associated with this income
-   * @type {IncomeType}
-   * @memberof IncomeMoney
+   * Repayments made for this loan
+   * @type {Array<LoanRepayment>}
+   * @memberof Loan
    */
-  income_type?: IncomeType
+  repayments?: Array<LoanRepayment>
   /**
-   * Payments received for this income
-   * @type {Array<IncomeReceipt>}
-   * @memberof IncomeMoney
-   */
-  receipts?: Array<IncomeReceipt>
-  /**
-   * Remaining unpaid amount (amount - sum of receipts)
+   * Remaining outstanding amount (amount - sum of repayments)
    * @type {number}
-   * @memberof IncomeMoney
+   * @memberof Loan
    */
   remaining_amount?: number
 }
 
 /**
- * Check if a given object implements the IncomeMoney interface.
+ * Check if a given object implements the Loan interface.
  */
-export function instanceOfIncomeMoney(value: object): value is IncomeMoney {
+export function instanceOfLoan(value: object): value is Loan {
   return true
 }
 
-export function IncomeMoneyFromJSON(json: any): IncomeMoney {
-  return IncomeMoneyFromJSONTyped(json, false)
+export function LoanFromJSON(json: any): Loan {
+  return LoanFromJSONTyped(json, false)
 }
 
-export function IncomeMoneyFromJSONTyped(json: any, ignoreDiscriminator: boolean): IncomeMoney {
+export function LoanFromJSONTyped(json: any, ignoreDiscriminator: boolean): Loan {
   if (json == null) {
     return json
   }
@@ -164,29 +164,24 @@ export function IncomeMoneyFromJSONTyped(json: any, ignoreDiscriminator: boolean
     amount: json['amount'] == null ? undefined : json['amount'],
     description: json['description'] == null ? undefined : json['description'],
     id: json['id'] == null ? undefined : json['id'],
-    source_organization:
-      json['source_organization'] == null ? undefined : json['source_organization'],
-    invoice_reference: json['invoice_reference'] == null ? undefined : json['invoice_reference'],
-    billing_start_date:
-      json['billing_start_date'] == null ? undefined : new Date(json['billing_start_date']),
+    lender: json['lender'] == null ? undefined : json['lender'],
+    interest_rate: json['interest_rate'] == null ? undefined : json['interest_rate'],
+    start_date: json['start_date'] == null ? undefined : new Date(json['start_date']),
+    status: json['status'] == null ? undefined : LoanStatusFromJSON(json['status']),
     job: json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
-    income_type: json['income_type'] == null ? undefined : IncomeTypeFromJSON(json['income_type']),
-    receipts:
-      json['receipts'] == null
+    repayments:
+      json['repayments'] == null
         ? undefined
-        : (json['receipts'] as Array<any>).map(IncomeReceiptFromJSON),
+        : (json['repayments'] as Array<any>).map(LoanRepaymentFromJSON),
     remaining_amount: json['remaining_amount'] == null ? undefined : json['remaining_amount'],
   }
 }
 
-export function IncomeMoneyToJSON(json: any): IncomeMoney {
-  return IncomeMoneyToJSONTyped(json, false)
+export function LoanToJSON(json: any): Loan {
+  return LoanToJSONTyped(json, false)
 }
 
-export function IncomeMoneyToJSONTyped(
-  value?: IncomeMoney | null,
-  ignoreDiscriminator: boolean = false,
-): any {
+export function LoanToJSONTyped(value?: Loan | null, ignoreDiscriminator: boolean = false): any {
   if (value == null) {
     return value
   }
@@ -202,18 +197,18 @@ export function IncomeMoneyToJSONTyped(
     amount: value['amount'],
     description: value['description'],
     id: value['id'],
-    source_organization: value['source_organization'],
-    invoice_reference: value['invoice_reference'],
-    billing_start_date:
-      value['billing_start_date'] == null
-        ? value['billing_start_date']
-        : value['billing_start_date'].toISOString().substring(0, 10),
+    lender: value['lender'],
+    interest_rate: value['interest_rate'],
+    start_date:
+      value['start_date'] == null
+        ? value['start_date']
+        : value['start_date'].toISOString().substring(0, 10),
+    status: LoanStatusToJSON(value['status']),
     job: CrupdateJobToJSON(value['job']),
-    income_type: IncomeTypeToJSON(value['income_type']),
-    receipts:
-      value['receipts'] == null
+    repayments:
+      value['repayments'] == null
         ? undefined
-        : (value['receipts'] as Array<any>).map(IncomeReceiptToJSON),
+        : (value['repayments'] as Array<any>).map(LoanRepaymentToJSON),
     remaining_amount: value['remaining_amount'],
   }
 }

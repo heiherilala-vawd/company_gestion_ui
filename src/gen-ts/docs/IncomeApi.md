@@ -8,6 +8,7 @@ All URIs are relative to *https://api-dev.company.com*
 | [**deleteIncomeById**](IncomeApi.md#deleteincomebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/{id} | Delete income by identifier                |
 | [**getIncomeById**](IncomeApi.md#getincomebyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/{id}    | Get income by identifier                   |
 | [**getIncomes**](IncomeApi.md#getincomes)             | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes         | Get all incomes                            |
+| [**getIncomesExcel**](IncomeApi.md#getincomesexcel)   | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/excel   | Export incomes to Excel                    |
 
 ## crupdateIncomes
 
@@ -44,7 +45,6 @@ async function example() {
         source_organization: 'Client Principal',
         invoice_reference: 'FACT-2024-001',
         billing_start_date: '2024-01-15',
-        money_arrival_date: '2024-02-01',
         income_type_id: 'income_type_001',
         description: 'Premier acompte pour le chantier (révisé)',
         job_id: 'job_001',
@@ -55,7 +55,6 @@ async function example() {
         source_organization: 'Subvention',
         invoice_reference: 'SUB-2024-01',
         billing_start_date: '2024-02-20',
-        money_arrival_date: '2024-02-28',
         income_type_id: 'income_type_002',
         description: 'Aide à la construction',
         job_id: 'job_001',
@@ -308,7 +307,7 @@ async function example() {
     amount: 50000,
     // string | Filter incomes by income type (optional)
     incomeTypeId: income_type_001,
-    // boolean | Filter incomes by money received status (money_arrival_date is not null) (optional)
+    // boolean | Filter incomes by money received status (has at least one receipt) (optional)
     moneyReceived: true,
   } satisfies GetIncomesRequest
 
@@ -326,19 +325,19 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name                   | Type      | Description                                                              | Notes                                |
-| ---------------------- | --------- | ------------------------------------------------------------------------ | ------------------------------------ |
-| **compId**             | `string`  |                                                                          | [Defaults to `undefined`]            |
-| **jobId**              | `string`  |                                                                          | [Defaults to `undefined`]            |
-| **userId**             | `string`  |                                                                          | [Defaults to `undefined`]            |
-| **page**               | `number`  |                                                                          | [Optional] [Defaults to `undefined`] |
-| **pageSize**           | `number`  |                                                                          | [Optional] [Defaults to `undefined`] |
-| **sourceOrganization** | `string`  | Filter incomes by source organization, case is ignored                   | [Optional] [Defaults to `undefined`] |
-| **invoiceReference**   | `string`  | Filter incomes by invoice reference, case is ignored                     | [Optional] [Defaults to `undefined`] |
-| **description**        | `string`  | Filter incomes by description, case is ignored                           | [Optional] [Defaults to `undefined`] |
-| **amount**             | `number`  |                                                                          | [Optional] [Defaults to `undefined`] |
-| **incomeTypeId**       | `string`  | Filter incomes by income type                                            | [Optional] [Defaults to `undefined`] |
-| **moneyReceived**      | `boolean` | Filter incomes by money received status (money_arrival_date is not null) | [Optional] [Defaults to `undefined`] |
+| Name                   | Type      | Description                                                        | Notes                                |
+| ---------------------- | --------- | ------------------------------------------------------------------ | ------------------------------------ |
+| **compId**             | `string`  |                                                                    | [Defaults to `undefined`]            |
+| **jobId**              | `string`  |                                                                    | [Defaults to `undefined`]            |
+| **userId**             | `string`  |                                                                    | [Defaults to `undefined`]            |
+| **page**               | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
+| **pageSize**           | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
+| **sourceOrganization** | `string`  | Filter incomes by source organization, case is ignored             | [Optional] [Defaults to `undefined`] |
+| **invoiceReference**   | `string`  | Filter incomes by invoice reference, case is ignored               | [Optional] [Defaults to `undefined`] |
+| **description**        | `string`  | Filter incomes by description, case is ignored                     | [Optional] [Defaults to `undefined`] |
+| **amount**             | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
+| **incomeTypeId**       | `string`  | Filter incomes by income type                                      | [Optional] [Defaults to `undefined`] |
+| **moneyReceived**      | `boolean` | Filter incomes by money received status (has at least one receipt) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -358,6 +357,81 @@ example().catch(console.error)
 | Status code | Description                  | Response headers |
 | ----------- | ---------------------------- | ---------------- |
 | **200**     | List of incomes              | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+## getIncomesExcel
+
+> Blob getIncomesExcel(compId, jobId, userId)
+
+Export incomes to Excel
+
+### Example
+
+```ts
+import { Configuration, IncomeApi } from 'api-client'
+import type { GetIncomesExcelRequest } from 'api-client'
+
+async function example() {
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeApi(config)
+
+  const body = {
+    // string
+    compId: comp_btp001,
+    // string
+    jobId: job_001,
+    // string
+    userId: usr_123456,
+  } satisfies GetIncomesExcelRequest
+
+  try {
+    const data = await api.getIncomesExcel(body)
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// Run the test
+example().catch(console.error)
+```
+
+### Parameters
+
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **jobId**  | `string` |             | [Defaults to `undefined`] |
+| **userId** | `string` |             | [Defaults to `undefined`] |
+
+### Return type
+
+**Blob**
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`, `application/json`
+
+### HTTP response details
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | Excel file with incomes data | -                |
 | **400**     | Bad request                  | -                |
 | **403**     | Forbidden                    | -                |
 | **404**     | Not found                    | -                |

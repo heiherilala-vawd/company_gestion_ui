@@ -11,19 +11,13 @@ import {
 import IncomeForm from './money/incomes/IncomeForm.tsx'
 import { renderJobSelect } from '../generic/SelectWithCreateProvider.tsx'
 import generateId from '../utili/utils.tsx'
-import {
-  Box,
-  Button,
-  Typography,
-  ToggleButtonGroup,
-  ToggleButton,
-} from '@mui/material'
+import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 function LoanForm() {
   return (
     <>
-      <TextInput source="id" readOnly defaultValue={generateId()} />
+      <TextInput source="id" readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
       {renderJobSelect('job_id', 'Chantier')}
       <TextInput source="lender" label="Prêteur" />
       <NumberInput source="amount" label="Montant" />

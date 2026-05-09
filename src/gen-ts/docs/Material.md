@@ -2,17 +2,18 @@
 
 ## Properties
 
-| Name          | Type                            |
-| ------------- | ------------------------------- |
-| `comment`     | string                          |
-| `created_at`  | Date                            |
-| `updated_at`  | Date                            |
-| `created_by`  | [AuditUser](AuditUser.md)       |
-| `updated_by`  | [AuditUser](AuditUser.md)       |
-| `id`          | string                          |
-| `name`        | string                          |
-| `description` | string                          |
-| `unit`        | [MaterialUnit](MaterialUnit.md) |
+| Name                  | Type                                                           |
+| --------------------- | -------------------------------------------------------------- |
+| `comment`             | string                                                         |
+| `created_at`          | Date                                                           |
+| `updated_at`          | Date                                                           |
+| `created_by`          | [AuditUser](AuditUser.md)                                      |
+| `updated_by`          | [AuditUser](AuditUser.md)                                      |
+| `id`                  | string                                                         |
+| `name`                | string                                                         |
+| `description`         | string                                                         |
+| `unit`                | [MaterialUnit](MaterialUnit.md)                                |
+| `material_warehouses` | [Array&lt;MaterialWarehouseInfo&gt;](MaterialWarehouseInfo.md) |
 
 ## Example
 
@@ -30,6 +31,7 @@ const example = {
   "name": Ciment Portland,
   "description": Ciment Portland de qualité supérieure pour béton armé,
   "unit": null,
+  "material_warehouses": null,
 } satisfies Material
 
 console.log(example)

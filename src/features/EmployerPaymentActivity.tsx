@@ -94,9 +94,7 @@ function LoanTable({
                   </TableCell>
                   <TableCell>{loan.interest_rate ? `${loan.interest_rate / 100}%` : '-'}</TableCell>
                   <TableCell>
-                    {loan.start_date
-                      ? new Date(loan.start_date).toLocaleDateString('fr-FR')
-                      : '-'}
+                    {loan.start_date ? new Date(loan.start_date).toLocaleDateString('fr-FR') : '-'}
                   </TableCell>
                   <TableCell>
                     <TextField
@@ -144,8 +142,16 @@ export default function EmployerPaymentActivity() {
   const [repaymentAmounts, setRepaymentAmounts] = useState<Record<string, number>>({})
   const [submitting, setSubmitting] = useState<Record<string, boolean>>({})
   const [submittingRepayments, setSubmittingRepayments] = useState<Record<string, boolean>>({})
-  const [confirmTarget, setConfirmTarget] = useState<{ income: any; amount: number } | null>(null)
-  const [confirmRepayTarget, setConfirmRepayTarget] = useState<{ loan: any; amount: number } | null>(null)
+  const [confirmTarget, setConfirmTarget] = useState<{
+    income: any
+    amount: number
+    receiptId: string
+  } | null>(null)
+  const [confirmRepayTarget, setConfirmRepayTarget] = useState<{
+    loan: any
+    amount: number
+    repaymentId: string
+  } | null>(null)
 
   const {
     data: loansActive = [],
@@ -224,7 +230,7 @@ export default function EmployerPaymentActivity() {
       const url = getMiddleUrlWithId('incomes', income.id) + '/receipts'
       const body = [
         {
-          id: generateId(),
+          id: confirmTarget.receiptId,
           payment_date: new Date().toISOString(),
           amount,
           income_id: income.id,
@@ -275,7 +281,7 @@ export default function EmployerPaymentActivity() {
       const url = getMiddleUrlWithId('loans', loan.id) + '/repayments'
       const body = [
         {
-          id: generateId(),
+          id: confirmRepayTarget.repaymentId,
           payment_date: new Date().toISOString().split('T')[0],
           amount,
           loan_id: loan.id,
@@ -320,12 +326,7 @@ export default function EmployerPaymentActivity() {
         Paiements en attente de réception
       </Typography>
 
-      <ToggleButtonGroup
-        value={entityType}
-        exclusive
-        onChange={handleEntityChange}
-        sx={{ mb: 2 }}
-      >
+      <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange} sx={{ mb: 2 }}>
         <ToggleButton value="payment">Valider paiement</ToggleButton>
         <ToggleButton value="loans">Retourner emprunt</ToggleButton>
       </ToggleButtonGroup>
@@ -447,7 +448,13 @@ export default function EmployerPaymentActivity() {
                               variant="contained"
                               size="small"
                               disabled={!payAmount || payAmount <= 0 || submitting[income.id]}
-                              onClick={() => setConfirmTarget({ income, amount: payAmount })}
+                              onClick={() =>
+                                setConfirmTarget({
+                                  income,
+                                  amount: payAmount,
+                                  receiptId: generateId(),
+                                })
+                              }
                             >
                               {submitting[income.id] ? '...' : 'Valider'}
                             </Button>
@@ -490,6 +497,7 @@ export default function EmployerPaymentActivity() {
                   setConfirmRepayTarget({
                     loan,
                     amount: repaymentAmounts[loan.id],
+                    repaymentId: generateId(),
                   })
                 }
                 submittingRepayments={submittingRepayments}
@@ -503,6 +511,7 @@ export default function EmployerPaymentActivity() {
                   setConfirmRepayTarget({
                     loan,
                     amount: repaymentAmounts[loan.id],
+                    repaymentId: generateId(),
                   })
                 }
                 submittingRepayments={submittingRepayments}

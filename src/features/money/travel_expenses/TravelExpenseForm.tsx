@@ -10,7 +10,13 @@ export default function TravelExpenseForm({ isCreate = false, isCreateForm = fal
   return (
     <>
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+        <TextInput
+          source="id"
+          readOnly
+          defaultValue={generateId()}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        />
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {renderWarehouseSelect('departure_location_id', 'Lieu de départ')}

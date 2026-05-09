@@ -20,101 +20,88 @@ import {
   AuditUserToJSON,
   AuditUserToJSONTyped,
 } from './AuditUser'
-import type { MaterialUnit } from './MaterialUnit'
+import type { IncomeMoney } from './IncomeMoney'
 import {
-  MaterialUnitFromJSON,
-  MaterialUnitFromJSONTyped,
-  MaterialUnitToJSON,
-  MaterialUnitToJSONTyped,
-} from './MaterialUnit'
-import type { MaterialWarehouseInfo } from './MaterialWarehouseInfo'
-import {
-  MaterialWarehouseInfoFromJSON,
-  MaterialWarehouseInfoFromJSONTyped,
-  MaterialWarehouseInfoToJSON,
-  MaterialWarehouseInfoToJSONTyped,
-} from './MaterialWarehouseInfo'
+  IncomeMoneyFromJSON,
+  IncomeMoneyFromJSONTyped,
+  IncomeMoneyToJSON,
+  IncomeMoneyToJSONTyped,
+} from './IncomeMoney'
 
 /**
  *
  * @export
- * @interface Material
+ * @interface IncomeReceipt
  */
-export interface Material {
+export interface IncomeReceipt {
   /**
    *
    * @type {string}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   comment?: string
   /**
    *
    * @type {Date}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   created_at?: Date
   /**
    *
    * @type {Date}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   updated_at?: Date
   /**
    *
    * @type {AuditUser}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   created_by?: AuditUser
   /**
    *
    * @type {AuditUser}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   updated_by?: AuditUser
   /**
    *
    * @type {string}
-   * @memberof Material
+   * @memberof IncomeReceipt
    */
   id?: string
   /**
    *
-   * @type {string}
-   * @memberof Material
+   * @type {Date}
+   * @memberof IncomeReceipt
    */
-  name?: string
+  payment_date?: Date
   /**
    *
-   * @type {string}
-   * @memberof Material
+   * @type {number}
+   * @memberof IncomeReceipt
    */
-  description?: string
+  amount?: number
   /**
-   *
-   * @type {MaterialUnit}
-   * @memberof Material
+   * Income this receipt is related to
+   * @type {IncomeMoney}
+   * @memberof IncomeReceipt
    */
-  unit?: MaterialUnit
-  /**
-   *
-   * @type {Array<MaterialWarehouseInfo>}
-   * @memberof Material
-   */
-  material_warehouses?: Array<MaterialWarehouseInfo>
+  income?: IncomeMoney
 }
 
 /**
- * Check if a given object implements the Material interface.
+ * Check if a given object implements the IncomeReceipt interface.
  */
-export function instanceOfMaterial(value: object): value is Material {
+export function instanceOfIncomeReceipt(value: object): value is IncomeReceipt {
   return true
 }
 
-export function MaterialFromJSON(json: any): Material {
-  return MaterialFromJSONTyped(json, false)
+export function IncomeReceiptFromJSON(json: any): IncomeReceipt {
+  return IncomeReceiptFromJSONTyped(json, false)
 }
 
-export function MaterialFromJSONTyped(json: any, ignoreDiscriminator: boolean): Material {
+export function IncomeReceiptFromJSONTyped(json: any, ignoreDiscriminator: boolean): IncomeReceipt {
   if (json == null) {
     return json
   }
@@ -125,22 +112,18 @@ export function MaterialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     created_by: json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
     updated_by: json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
     id: json['id'] == null ? undefined : json['id'],
-    name: json['name'] == null ? undefined : json['name'],
-    description: json['description'] == null ? undefined : json['description'],
-    unit: json['unit'] == null ? undefined : MaterialUnitFromJSON(json['unit']),
-    material_warehouses:
-      json['material_warehouses'] == null
-        ? undefined
-        : (json['material_warehouses'] as Array<any>).map(MaterialWarehouseInfoFromJSON),
+    payment_date: json['payment_date'] == null ? undefined : new Date(json['payment_date']),
+    amount: json['amount'] == null ? undefined : json['amount'],
+    income: json['income'] == null ? undefined : IncomeMoneyFromJSON(json['income']),
   }
 }
 
-export function MaterialToJSON(json: any): Material {
-  return MaterialToJSONTyped(json, false)
+export function IncomeReceiptToJSON(json: any): IncomeReceipt {
+  return IncomeReceiptToJSONTyped(json, false)
 }
 
-export function MaterialToJSONTyped(
-  value?: Material | null,
+export function IncomeReceiptToJSONTyped(
+  value?: IncomeReceipt | null,
   ignoreDiscriminator: boolean = false,
 ): any {
   if (value == null) {
@@ -156,12 +139,11 @@ export function MaterialToJSONTyped(
     created_by: AuditUserToJSON(value['created_by']),
     updated_by: AuditUserToJSON(value['updated_by']),
     id: value['id'],
-    name: value['name'],
-    description: value['description'],
-    unit: MaterialUnitToJSON(value['unit']),
-    material_warehouses:
-      value['material_warehouses'] == null
-        ? undefined
-        : (value['material_warehouses'] as Array<any>).map(MaterialWarehouseInfoToJSON),
+    payment_date:
+      value['payment_date'] == null
+        ? value['payment_date']
+        : value['payment_date'].toISOString().substring(0, 10),
+    amount: value['amount'],
+    income: IncomeMoneyToJSON(value['income']),
   }
 }

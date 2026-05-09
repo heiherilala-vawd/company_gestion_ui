@@ -13,7 +13,13 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
   return (
     <>
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+        <TextInput
+          source="id"
+          readOnly
+          defaultValue={generateId()}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        />
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {renderUserSelect('employee_id', 'Employé')}

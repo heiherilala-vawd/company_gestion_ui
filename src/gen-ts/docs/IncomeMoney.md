@@ -2,22 +2,23 @@
 
 ## Properties
 
-| Name                  | Type                          |
-| --------------------- | ----------------------------- |
-| `comment`             | string                        |
-| `created_at`          | Date                          |
-| `updated_at`          | Date                          |
-| `created_by`          | [AuditUser](AuditUser.md)     |
-| `updated_by`          | [AuditUser](AuditUser.md)     |
-| `amount`              | number                        |
-| `description`         | string                        |
-| `id`                  | string                        |
-| `source_organization` | string                        |
-| `invoice_reference`   | string                        |
-| `billing_start_date`  | Date                          |
-| `money_arrival_date`  | Date                          |
-| `job`                 | [CrupdateJob](CrupdateJob.md) |
-| `income_type`         | [IncomeType](IncomeType.md)   |
+| Name                  | Type                                           |
+| --------------------- | ---------------------------------------------- |
+| `comment`             | string                                         |
+| `created_at`          | Date                                           |
+| `updated_at`          | Date                                           |
+| `created_by`          | [AuditUser](AuditUser.md)                      |
+| `updated_by`          | [AuditUser](AuditUser.md)                      |
+| `amount`              | number                                         |
+| `description`         | string                                         |
+| `id`                  | string                                         |
+| `source_organization` | string                                         |
+| `invoice_reference`   | string                                         |
+| `billing_start_date`  | Date                                           |
+| `job`                 | [CrupdateJob](CrupdateJob.md)                  |
+| `income_type`         | [IncomeType](IncomeType.md)                    |
+| `receipts`            | [Array&lt;IncomeReceipt&gt;](IncomeReceipt.md) |
+| `remaining_amount`    | number                                         |
 
 ## Example
 
@@ -37,9 +38,10 @@ const example = {
   "source_organization": Client Principal,
   "invoice_reference": FACT-2024-001,
   "billing_start_date": Mon Jan 15 03:00:00 EAT 2024,
-  "money_arrival_date": Thu Feb 01 03:00:00 EAT 2024,
   "job": null,
   "income_type": null,
+  "receipts": null,
+  "remaining_amount": 50000,
 } satisfies IncomeMoney
 
 console.log(example)

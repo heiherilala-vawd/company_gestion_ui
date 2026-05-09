@@ -4,13 +4,7 @@ import { Create, SimpleForm, ResourceContextProvider } from 'react-admin'
 import BankFeeForm from './money/bank_fees/BankFeeForm.tsx'
 import EmployeePaymentForm from './money/employee_payments/EmployeePaymentForm.tsx'
 import OtherExpenseForm from './money/other_expenses/OtherExpenseForm.tsx'
-import {
-  Box,
-  Button,
-  Typography,
-  ToggleButtonGroup,
-  ToggleButton,
-} from '@mui/material'
+import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 export default function ExpensesActivity() {

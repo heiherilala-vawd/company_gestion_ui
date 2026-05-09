@@ -7,7 +7,13 @@ export default function CompanyForm({ isCreate = false, isCreateForm = false }) 
     <>
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+        <TextInput
+          source="id"
+          readOnly
+          defaultValue={generateId()}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        />
       )}
       <TextInput source="name" label="Nom" validate={[required()]} data-testid="input-name" />
       <TextInput source="rib" label="RIB" data-testid="input-rib" />

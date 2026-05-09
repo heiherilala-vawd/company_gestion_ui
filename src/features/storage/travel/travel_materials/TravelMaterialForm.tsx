@@ -10,7 +10,13 @@ export default function TravelMaterialForm({ isCreate = false, isCreateForm = fa
   return (
     <>
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" />
+        <TextInput
+          source="id"
+          readOnly
+          defaultValue={generateId()}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        />
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {renderTravelExpenseSelect(null, null)}

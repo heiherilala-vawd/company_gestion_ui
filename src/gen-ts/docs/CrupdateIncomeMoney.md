@@ -11,7 +11,6 @@
 | `source_organization` | string |
 | `invoice_reference`   | string |
 | `billing_start_date`  | Date   |
-| `money_arrival_date`  | Date   |
 | `job_id`              | string |
 | `income_type_id`      | string |
 
@@ -29,7 +28,6 @@ const example = {
   "source_organization": Client Principal,
   "invoice_reference": FACT-2024-001,
   "billing_start_date": Mon Jan 15 03:00:00 EAT 2024,
-  "money_arrival_date": Thu Feb 01 03:00:00 EAT 2024,
   "job_id": job_001,
   "income_type_id": income_type_001,
 } satisfies CrupdateIncomeMoney

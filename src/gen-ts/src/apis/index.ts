@@ -1,5 +1,5 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './AuthApi'
 export * from './BankFeeApi'
 export * from './CompanyApi'
@@ -8,9 +8,13 @@ export * from './EquipmentApi'
 export * from './ExpenseApi'
 export * from './HistoryApi'
 export * from './IncomeApi'
+export * from './IncomeReceiptApi'
 export * from './IncomeTypeApi'
 export * from './JobApi'
+export * from './LoanApi'
+export * from './LoanRepaymentApi'
 export * from './MaterialApi'
+export * from './MaterialWarehouseApi'
 export * from './OtherExpenseApi'
 export * from './PurchaseApi'
 export * from './PurchaseOperationApi'
