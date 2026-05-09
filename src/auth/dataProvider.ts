@@ -67,8 +67,18 @@ export const dataProvider = {
 
     const response = await fetchWithToken<{ data: T[]; total?: number }>(url)
 
+    const rawData: any[] = Array.isArray(response) ? response : response.data || []
+
+    const data = rawData.map((item: any) => {
+      if (item.id) return item
+      if (item.material?.id && item.warehouse?.id) {
+        return { ...item, id: `${item.material.id}-${item.warehouse.id}` }
+      }
+      return { ...item, id: crypto.randomUUID() }
+    })
+
     return {
-      data: Array.isArray(response) ? response : response.data || [],
+      data,
       total: (response as any).total || (Array.isArray(response) ? response.length : 0),
     }
   },

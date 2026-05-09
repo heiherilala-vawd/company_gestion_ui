@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetList } from 'react-admin'
+import { getMiddleUrl } from '../config/dynamicResources'
+import generateId from '../utili/utils.tsx'
 import {
   Box,
   Button,
@@ -54,8 +56,26 @@ export default function TravelMaterialActivity() {
   const [showFilters, setShowFilters] = useState(false)
   const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
   const [showSummary, setShowSummary] = useState(false)
+  const [quantities, setQuantities] = useState<Record<string, number>>({})
 
-  const resource = entityType === 'materials' ? 'materials' : 'equipment'
+  const getToken = () => localStorage.getItem('token')
+
+  const putItems = async (resource: string, body: any[]) => {
+    const token = getToken()
+    const url = getMiddleUrl(resource)
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(body),
+    })
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    return response.json()
+  }
+
+  const resource = entityType === 'materials' ? 'material_warehouse' : 'equipment'
   const queryFilters = useMemo(
     () => cleanFilters({ ...serverFilters, not_arrived: true }),
     [serverFilters],
@@ -112,26 +132,80 @@ export default function TravelMaterialActivity() {
       setPage(0)
       setServerFilters({})
       setSearch('')
+      setQuantities({})
     }
   }
 
-  const handleValidate = () => {
-    const locationName = warehouses.find((w: any) => w.id === selectedLocation)?.name || ''
-    const summary = {
-      type: 'reception_validation',
-      entityType,
-      location: { id: selectedLocation, name: locationName },
-      items: selectedItems.map((i: any) => ({
-        id: i.id,
-        name: i.name || i.description,
-        description: i.description,
-        ...(entityType === 'materials' ? { unit: i.unit } : {}),
-      })),
+  const handleQuantityChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantities((prev) => ({ ...prev, [id]: Number(e.target.value) }))
+  }
+
+  const handleValidate = async () => {
+    const token = getToken()
+
+    try {
+      if (entityType === 'equipment') {
+        const body = selectedItems.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+          description: item.description,
+          warehouse_id: selectedLocation,
+          floor_number: item.floor_number,
+          storage_number: item.storage_number,
+          comment: item.comment,
+        }))
+        const result = await putItems('equipment', body)
+        console.log('Equipment updated:', result)
+      } else {
+        const departureWarehouseId = selectedItems[0]?.warehouse?.id
+        if (!departureWarehouseId) {
+          console.error('No departure warehouse found')
+          return
+        }
+
+        const payload = {
+          comment: null,
+          travel: {
+            id: generateId(),
+            expense_id: generateId(),
+            departure_location: { id: departureWarehouseId },
+            arrival_location: { id: selectedLocation },
+            departure_date: new Date().toISOString(),
+            arrival_date: new Date().toISOString(),
+            fee: 0,
+          },
+          material_lines: selectedItems.map((item: any) => ({
+            id: generateId(),
+            material: { id: item.material?.id },
+            quantity: quantities[item.id] || 0,
+          })),
+          equipment_lines: [],
+          people_lines: [],
+        }
+
+        const url = getMiddleUrl('travel_operations')
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify(payload),
+        })
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
+        }
+        console.log('Travel operation created:', await response.json())
+      }
+    } catch (err) {
+      console.error('Validation failed:', err)
     }
-    console.log('Validation summary:', summary)
+
     setShowSummary(false)
     setSelectedItems([])
     setSelectedLocation('')
+    setQuantities({})
     refetch()
   }
 
@@ -216,7 +290,7 @@ export default function TravelMaterialActivity() {
           <TextField
             label="Description"
             size="small"
-            value={filters.description || ''}
+            value={serverFilters.description || ''}
             onChange={handleFilterChange('description')}
           />
         </Box>
@@ -237,9 +311,10 @@ export default function TravelMaterialActivity() {
                   </TableCell>
                   {entityType === 'materials' ? (
                     <>
-                      <TableCell sx={{ fontWeight: 600 }}>Nom</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Description</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Unité</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Lieu</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Matériau</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Quantité actuelle</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Quantité à déplacer</TableCell>
                     </>
                   ) : (
                     <>
@@ -268,9 +343,20 @@ export default function TravelMaterialActivity() {
                     </TableCell>
                     {entityType === 'materials' ? (
                       <>
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell>{item.description}</TableCell>
-                        <TableCell>{item.unit}</TableCell>
+                        <TableCell>{item.warehouse?.name}</TableCell>
+                        <TableCell>{item.material?.name}</TableCell>
+                        <TableCell>
+                          {item.quantity} {item.material?.unit}
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            type="number"
+                            size="small"
+                            value={quantities[item.id] ?? ''}
+                            onChange={handleQuantityChange(item.id)}
+                            inputProps={{ min: 0, style: { width: 70 } }}
+                          />
+                        </TableCell>
                       </>
                     ) : (
                       <>
@@ -326,8 +412,9 @@ export default function TravelMaterialActivity() {
           </Typography>
           {selectedItems.map((item: any) => (
             <Typography key={item.id} sx={{ mb: 0.5 }}>
-              • {item.name || item.description}
-              {entityType === 'materials' ? ` (${item.unit})` : ''}
+              {entityType === 'materials'
+                ? `• ${item.warehouse?.name || '?'} → ${item.material?.name || '?'} — Qté: ${quantities[item.id] || 0}`
+                : `• ${item.name || item.description} → ${locationName || selectedLocation}`}
             </Typography>
           ))}
         </DialogContent>

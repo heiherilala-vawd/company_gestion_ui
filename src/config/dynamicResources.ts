@@ -5,7 +5,12 @@ const userId: string | null = localStorage.getItem('user_id')
 /**
  * Liste des ressources qui nécessitent un companyId dans l'URL
  */
-export const DYNAMIC_COMPANY_RESOURCES = ['jobs', 'warehouses', 'equipment'] as const
+export const DYNAMIC_COMPANY_RESOURCES = [
+  'jobs',
+  'warehouses',
+  'equipment',
+  'material_warehouse',
+] as const
 
 // Type pour les ressources dynamiques (TypeScript)
 export type DynamicCompanyResource = (typeof DYNAMIC_COMPANY_RESOURCES)[number]
