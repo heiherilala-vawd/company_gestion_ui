@@ -42,6 +42,7 @@ export const DYNAMIC_JOB_RESOURCES = [
   'bank_fees',
   'other_expenses',
   'employee_payments',
+  'loans',
 ] as const
 
 // Type pour les ressources dynamiques (TypeScript)

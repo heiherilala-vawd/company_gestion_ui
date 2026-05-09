@@ -97,7 +97,7 @@ export const quickActionButtons: HomeButton[] = [
     desc: 'Déplacer',
     color: 'success',
   },
-  { label: 'Revenus', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir', color: 'red' },
+  { label: 'Revenus / Emprunts', icon: PaidIcon, to: '/incomes_activity', desc: 'Recevoir', color: 'red' },
   {
     label: 'Dépenses',
     icon: MoneyOffIcon,
@@ -109,7 +109,7 @@ export const quickActionButtons: HomeButton[] = [
 
 export const validationButtons: HomeButton[] = [
   {
-    label: 'Valider Payment',
+    label: 'Valider paiement / Retourner emprunt',
     icon: CheckCircleIcon,
     to: '/employer_payments_activity',
     desc: 'Valider',
