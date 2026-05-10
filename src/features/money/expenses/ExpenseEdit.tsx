@@ -3,13 +3,7 @@ import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseEdit() {
   return (
-    <Edit
-      transform={(data) => ({
-        ...data,
-        job_id: data.job?.id,
-        job: undefined,
-      })}
-    >
+    <Edit>
       <SimpleForm>
         <TextInput source="id" readOnly />
         <ExpenseForm />

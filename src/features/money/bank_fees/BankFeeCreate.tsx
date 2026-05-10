@@ -6,6 +6,7 @@ export default function BankFeeCreate() {
     <Create
       transform={(data) => ({
         ...data,
+        expense_id: data.expense_id,
       })}
     >
       <SimpleForm>

@@ -3,13 +3,7 @@ import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseCreate() {
   return (
-    <Create
-      transform={(data) => ({
-        ...data,
-        job_id: data.job?.id,
-        job: undefined,
-      })}
-    >
+    <Create>
       <SimpleForm>
         <ExpenseForm isCreate />
       </SimpleForm>
