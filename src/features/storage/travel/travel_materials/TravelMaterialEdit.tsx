@@ -3,14 +3,7 @@ import TravelMaterialForm from './TravelMaterialForm.tsx'
 
 export default function TravelMaterialEdit() {
   return (
-    <Edit
-      transform={(data) => ({
-        ...data,
-        travel_id: data.travel?.id,
-        travel: undefined,
-        material: data.material?.id,
-      })}
-    >
+    <Edit transform={(data) => ({ ...data, material: data.material_id })}>
       <SimpleForm>
         <TextInput source="id" readOnly />
         <TravelMaterialForm />

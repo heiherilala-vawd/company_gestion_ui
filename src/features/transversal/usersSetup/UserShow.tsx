@@ -53,6 +53,7 @@ export default function UserShow() {
             </span>
           )}
         />
+        <TextField source="comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
       </SimpleShowLayout>

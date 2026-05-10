@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   NumberField,
   DateField,
@@ -12,6 +11,7 @@ import {
   DeleteButton,
   FunctionField,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelMaterialFilters = [
   <ReferenceInput source="material_id" reference="materials" perPage={100} alwaysOn>
@@ -31,21 +31,22 @@ const TravelMaterialFilters = [
 export default function TravelMaterialList() {
   return (
     <List resource="travel_materials" filters={TravelMaterialFilters} perPage={25}>
-      <Datagrid rowClick="show">
+      <ResponsiveDatagrid
+        priorityFields={['material.name', 'quantity', 'quantity_received', 'arrival_location.name']}
+      >
+        <TextField source="material.name" label="Matériau" />
+        <NumberField source="quantity" label="Quantité" />
+        <NumberField source="quantity_received" label="Reçue" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <FunctionField
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
-        <TextField source="arrival_location.name" label="Lieu d'arivé" />
-        <DateField source="arrival_date" label="Date d'arivé" />
-        <TextField source="material.name" label="Matériau" />
-        <NumberField source="quantity" label="Quantité" />
-        <NumberField source="quantity_received" label="Quantité reçue" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -54,7 +55,6 @@ export default function TravelMaterialList() {
             </span>
           )}
         />
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -65,7 +65,7 @@ export default function TravelMaterialList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

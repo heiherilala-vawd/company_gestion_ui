@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   NumberField,
   DateField,
@@ -13,6 +12,7 @@ import {
   EditButton,
   DeleteButton,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EquipmentFilters = [
   <SearchInput source="name" alwaysOn />,
@@ -28,15 +28,16 @@ const EquipmentFilters = [
 export default function EquipmentList() {
   return (
     <List filters={EquipmentFilters}>
-      <Datagrid rowClick="show">
+      <ResponsiveDatagrid
+        priorityFields={['name', 'description', 'warehouse.name', 'floor_number']}
+      >
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
-        <TextField source="warehouse.name" label="ID Entrepôt" />
+        <TextField source="warehouse.name" label="Entrepôt" />
         <NumberField source="floor_number" label="Étage" />
         <NumberField source="storage_number" label="Emplacement" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -45,8 +46,6 @@ export default function EquipmentList() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -57,7 +56,7 @@ export default function EquipmentList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

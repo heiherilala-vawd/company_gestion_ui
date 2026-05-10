@@ -29,6 +29,7 @@ function CompanyInformations() {
           { id: 'HOTEL', name: 'Hôtel' },
         ]}
       />
+      <TextField source="comment" label="Commentaire" />
     </SimpleShowLayout>
   )
 }

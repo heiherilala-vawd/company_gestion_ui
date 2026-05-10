@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   DateField,
   SelectField,
@@ -15,6 +14,7 @@ import { Card } from '@mui/material'
 import { formStyles } from '../../../style/components'
 import { borderRadius as br, getShadow } from '../../../style/themeConfig'
 import { CompanyType } from '../../../gen-ts/src/models/CompanyType'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const CompanyFilters = [
   <SearchInput source="name" alwaysOn />,
@@ -39,30 +39,10 @@ export default function CompanyList() {
           overflow: 'hidden',
         }}
       >
-        <Datagrid
-          rowClick="show"
-          sx={{
-            '& .RaDatagrid-root': {
-              borderRadius: br.lg,
-            },
-            '& .RaDatagrid-header': {
-              backgroundColor: (theme) =>
-                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)',
-            },
-            '& .RaDatagrid-row': {
-              transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-              '&:hover': {
-                backgroundColor: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? 'rgba(255, 90, 60, 0.04)'
-                    : 'rgba(255, 90, 60, 0.08)',
-              },
-            },
-          }}
-        >
+        <ResponsiveDatagrid priorityFields={['name', 'description', 'rib', 'company_type']}>
           <TextField source="name" label="Nom" />
-          <TextField source="rib" label="RIB" />
           <TextField source="description" label="Description" />
+          <TextField source="rib" label="RIB" />
           <SelectField
             source="company_type"
             label="Type"
@@ -91,7 +71,7 @@ export default function CompanyList() {
           />
           <EditButton />
           <DeleteButton />
-        </Datagrid>
+        </ResponsiveDatagrid>
       </Card>
     </List>
   )

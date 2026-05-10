@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   NumberField,
   DateField,
@@ -11,6 +10,7 @@ import {
   EditButton,
   DeleteButton,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const IncomeFilters = [
   <SearchInput source="source_organization" alwaysOn />,
@@ -24,15 +24,16 @@ const IncomeFilters = [
 export default function IncomeList() {
   return (
     <List filters={IncomeFilters}>
-      <Datagrid rowClick="show">
-        <TextField source="source_organization" label="Organisation source" />
-        <TextField source="invoice_reference" label="Référence facture" />
+      <ResponsiveDatagrid
+        priorityFields={['source_organization', 'amount', 'invoice_reference', 'description']}
+      >
+        <TextField source="source_organization" label="Organisation" />
         <NumberField source="amount" label="Montant" />
+        <TextField source="invoice_reference" label="Réf. facture" />
         <TextField source="description" label="Description" />
         <TextField source="job.description" label="Chantier" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -41,8 +42,6 @@ export default function IncomeList() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -53,7 +52,7 @@ export default function IncomeList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

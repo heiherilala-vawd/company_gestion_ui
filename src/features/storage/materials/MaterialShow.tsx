@@ -14,10 +14,9 @@ export default function MaterialShow() {
         <TextField source="id" />
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
-        <TextField source="unit" label="ID Entrepôt" />
         <SelectField
           source="unit"
-          label="unit"
+          label="Unité"
           choices={[
             { id: 'SAC', name: 'Sac' },
             { id: 'L', name: 'Litre' },
@@ -35,9 +34,9 @@ export default function MaterialShow() {
             { id: 'U', name: 'Unité' },
           ]}
         />
+        <TextField source="comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -46,8 +45,6 @@ export default function MaterialShow() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (

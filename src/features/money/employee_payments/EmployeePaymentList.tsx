@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   SelectField,
   SearchInput,
@@ -12,6 +11,7 @@ import {
   FunctionField,
 } from 'react-admin'
 import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EmployerPaymentFilters = [
   <SearchInput source="payment_description" alwaysOn />,
@@ -28,14 +28,15 @@ const EmployerPaymentFilters = [
 export default function EmployeePaymentList() {
   return (
     <List resource="employee_payments" filters={EmployerPaymentFilters} perPage={25}>
-      <Datagrid rowClick="show">
-        <TextField source="expense.amount" label="Pris dépense" />
-        <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
-        <TextField source="employee.first_name" label="Nom persone" />
-        <TextField source="employee.last_name" label="Prénomm persone" />
-        <TextField source="payment_description" label="Description paiement" />
-
+      <ResponsiveDatagrid
+        priorityFields={[
+          'expense.amount',
+          'payment_type',
+          'employee.first_name',
+          'employee.last_name',
+        ]}
+      >
+        <TextField source="expense.amount" label="Montant" />
         <SelectField
           source="payment_type"
           label="Type"
@@ -45,9 +46,12 @@ export default function EmployeePaymentList() {
             { id: 'OTHER', name: 'Autre' },
           ]}
         />
+        <TextField source="employee.first_name" label="Prénom" />
+        <TextField source="employee.last_name" label="Nom" />
+        <TextField source="payment_description" label="Description" />
+        <TextField source="expense.comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -56,8 +60,6 @@ export default function EmployeePaymentList() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -68,7 +70,7 @@ export default function EmployeePaymentList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

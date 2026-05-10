@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   NumberField,
   SelectField,
@@ -14,6 +13,7 @@ import {
   FunctionField,
 } from 'react-admin'
 import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
+import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelEquipmentFilters = [
   <ReferenceInput source="equipment_id" reference="equipment" perPage={100} alwaysOn>
@@ -37,15 +37,9 @@ const TravelEquipmentFilters = [
 export default function TravelEquipmentList() {
   return (
     <List resource="travel_equipment" filters={TravelEquipmentFilters} perPage={25}>
-      <Datagrid rowClick="show">
-        <FunctionField
-          label="Déplacement"
-          render={(record) =>
-            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
-          }
-        />
-        <TextField source="arrival_location.name" label="Lieu d'arivé" />
-        <DateField source="arrival_date" label="Date d'arivé" />
+      <ResponsiveDatagrid
+        priorityFields={['equipment.name', 'quantity', 'status', 'arrival_location.name']}
+      >
         <TextField source="equipment.name" label="Équipement" />
         <NumberField source="quantity" label="Quantité" />
         <SelectField
@@ -57,9 +51,16 @@ export default function TravelEquipmentList() {
             { id: 'ARRIVED', name: 'Arrivé' },
           ]}
         />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <FunctionField
+          label="Déplacement"
+          render={(record) =>
+            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+          }
+        />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -68,8 +69,6 @@ export default function TravelEquipmentList() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -80,7 +79,7 @@ export default function TravelEquipmentList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

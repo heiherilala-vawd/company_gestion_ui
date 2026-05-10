@@ -15,11 +15,14 @@ export default function IncomeShow() {
         <TextField source="source_organization" label="Organisation source" />
         <TextField source="invoice_reference" label="Référence facture" />
         <NumberField source="amount" label="Montant" />
+        <NumberField source="remaining_amount" label="Reste à recevoir" />
         <TextField source="description" label="Description" />
         <TextField source="job.description" label="Chantier" />
+        <TextField source="income_type.name" label="Type de revenu" />
+        <DateField source="billing_start_date" label="Date début facturation" />
+        <TextField source="comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -28,8 +31,6 @@ export default function IncomeShow() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (

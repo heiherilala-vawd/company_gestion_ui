@@ -3,15 +3,7 @@ import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleEdit() {
   return (
-    <Edit
-      transform={(data) => ({
-        ...data,
-        travel_id: data.travel?.id,
-        travel: undefined,
-        user_id: data.user?.id,
-        user: undefined,
-      })}
-    >
+    <Edit>
       <SimpleForm>
         <TextInput source="id" readOnly />
         <TravelPeopleForm />

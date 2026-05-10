@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   DateField,
   TextInput,
@@ -11,6 +10,7 @@ import {
   DeleteButton,
   FunctionField,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelPeopleFilters = [
   <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100} alwaysOn>
@@ -28,26 +28,26 @@ const TravelPeopleFilters = [
 export default function TravelPeopleList() {
   return (
     <List resource="travel_people" filters={TravelPeopleFilters} perPage={25}>
-      <Datagrid rowClick="show">
+      <ResponsiveDatagrid
+        priorityFields={[
+          'arrival_location.name',
+          'arrival_date',
+          'user.first_name',
+          'user.last_name',
+        ]}
+      >
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
+        <TextField source="user.first_name" label="Prénom" />
+        <TextField source="user.last_name" label="Nom" />
         <FunctionField
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
-        <TextField source="arrival_location.name" label="Lieu d'arivé" />
-        <DateField source="arrival_date" label="Date d'arivé" />
-        <FunctionField
-          label="Nom de la personne"
-          render={(record) => (
-            <span>
-              {record.user?.first_name} {record.user?.last_name}
-            </span>
-          )}
-        />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -56,7 +56,6 @@ export default function TravelPeopleList() {
             </span>
           )}
         />
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -67,7 +66,7 @@ export default function TravelPeopleList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

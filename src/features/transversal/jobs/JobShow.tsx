@@ -26,6 +26,7 @@ export default function JobShow() {
             { id: 'COMPLETED', name: 'Terminé' },
           ]}
         />
+        <TextField source="comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         {/* Nom complet du créateur */}

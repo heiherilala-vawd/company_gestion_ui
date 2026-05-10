@@ -24,7 +24,7 @@ export default function TravelPeopleShow() {
           label="Nom de la personne"
           render={(record) => (
             <span>
-              {record.user?.first_name} {record.created_by?.last_name}
+              {record.user?.first_name} {record.user?.last_name}
             </span>
           )}
         />

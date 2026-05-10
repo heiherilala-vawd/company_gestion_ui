@@ -3,14 +3,7 @@ import TravelMaterialForm from './TravelMaterialForm.tsx'
 
 export default function TravelMaterialCreate() {
   return (
-    <Create
-      transform={(data) => ({
-        ...data,
-        travel_id: data.travel?.id,
-        travel: undefined,
-        material: data.material?.id,
-      })}
-    >
+    <Create transform={(data) => ({ ...data, material: data.material_id })}>
       <SimpleForm>
         <TravelMaterialForm isCreate />
       </SimpleForm>

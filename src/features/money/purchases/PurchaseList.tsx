@@ -1,8 +1,6 @@
 import {
   List,
-  Datagrid,
   TextField,
-  BooleanField,
   NumberField,
   BooleanInput,
   ReferenceInput,
@@ -10,6 +8,7 @@ import {
   EditButton,
   DeleteButton,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const PurchaseFilters = [
   <ReferenceInput source="supplier_id" reference="warehouses" perPage={100} alwaysOn>
@@ -21,18 +20,15 @@ const PurchaseFilters = [
 export default function PurchaseList() {
   return (
     <List resource="purchases" filters={PurchaseFilters} perPage={25}>
-      <Datagrid rowClick="show">
-        <TextField source="expense.amount" label="Pris dépense" />
-        <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+      <ResponsiveDatagrid priorityFields={['supplier.name', 'expense.amount', 'quantity']}>
         <TextField source="supplier.name" label="Fournisseur" />
+        <TextField source="expense.amount" label="Montant" />
+        <NumberField source="quantity" label="Quantité" />
         <TextField source="equipment.name" label="Équipement" />
         <TextField source="material.name" label="Matériau" />
-        <NumberField source="quantity" label="Quantité" />
-        <BooleanField source="is_equipment" label="Est équipement" />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

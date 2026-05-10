@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   SearchInput,
   EditButton,
@@ -8,20 +7,19 @@ import {
   DateField,
   FunctionField,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const OtherExpenseFilters = [<SearchInput source="description" alwaysOn />]
 
 export default function OtherExpenseList() {
   return (
     <List resource="other_expenses" filters={OtherExpenseFilters} perPage={25}>
-      <Datagrid rowClick="show">
-        <TextField source="expense.amount" label="Pris dépense" />
-        <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+      <ResponsiveDatagrid priorityFields={['expense.amount', 'description']}>
+        <TextField source="expense.amount" label="Montant" />
         <TextField source="description" label="Description" />
+        <TextField source="expense.comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -30,8 +28,6 @@ export default function OtherExpenseList() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (
@@ -42,7 +38,7 @@ export default function OtherExpenseList() {
         />
         <EditButton />
         <DeleteButton />
-      </Datagrid>
+      </ResponsiveDatagrid>
     </List>
   )
 }

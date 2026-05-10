@@ -1,6 +1,5 @@
 import {
   List,
-  Datagrid,
   TextField,
   EmailField,
   DateField,
@@ -11,6 +10,7 @@ import {
   EditButton,
 } from 'react-admin'
 import { Role } from '../../../gen-ts/src/models/Role'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const formatEnumLabel = (key: string) =>
   key
@@ -18,7 +18,6 @@ const formatEnumLabel = (key: string) =>
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(' ')
 
-// Filtres pour la liste
 const UserFilters = [
   <SearchInput source="email" alwaysOn />,
   <TextInput source="first_name" label="Prénom" />,
@@ -30,15 +29,13 @@ const UserFilters = [
   />,
 ]
 
-// ⚠️ Ajouter 'export default' au lieu de 'export const'
 export default function UserList() {
   return (
     <List filters={UserFilters}>
-      <Datagrid rowClick="show">
-        {/* ← Garde "edit" ou enlève pour pas de clic */}
-        <EmailField source="email" />
+      <ResponsiveDatagrid priorityFields={['first_name', 'last_name', 'email', 'role']}>
         <TextField source="first_name" label="Prénom" />
         <TextField source="last_name" label="Nom" />
+        <EmailField source="email" />
         <SelectField
           source="role"
           choices={[
@@ -57,8 +54,8 @@ export default function UserList() {
         />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        <EditButton /> {/* ← Bouton d'édition */}
-      </Datagrid>
+        <EditButton />
+      </ResponsiveDatagrid>
     </List>
   )
 }
