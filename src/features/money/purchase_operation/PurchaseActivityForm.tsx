@@ -63,8 +63,8 @@ const PurchaseActivityForm = () => {
       material_lines: [initialMaterialLine],
       departure_warehouse: null,
       arrival_warehouse: null,
-      departure_date: new Date().toISOString().slice(0, 16),
-      arrival_date: new Date().toISOString().slice(0, 16),
+      departure_date: new Date().toISOString(),
+      arrival_date: new Date().toISOString(),
       travel_fee: '',
     },
   })
@@ -308,13 +308,13 @@ const PurchaseActivityForm = () => {
                         source="departure_date"
                         label="Date de départ"
                         sx={operationFormStyles.flexFull}
-                        defaultValue={new Date()}
+                        defaultValue={new Date().toISOString()}
                       />
                       <DateTimeInput
                         source="arrival_date"
                         label="Date d'arrivée"
                         sx={operationFormStyles.flexFull}
-                        defaultValue={new Date()}
+                        defaultValue={new Date().toISOString()}
                       />
                     </Box>
                     <NumberInput

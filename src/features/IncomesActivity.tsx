@@ -6,7 +6,7 @@ import {
   ResourceContextProvider,
   TextInput,
   NumberInput,
-  DateInput,
+  DateTimeInput,
 } from 'react-admin'
 import IncomeForm from './money/incomes/IncomeForm.tsx'
 import { renderJobSelect } from '../generic/SelectWithCreateProvider.tsx'
@@ -22,7 +22,7 @@ function LoanForm() {
       <TextInput source="lender" label="Prêteur" />
       <NumberInput source="amount" label="Montant" />
       <NumberInput source="interest_rate" label="Taux d'intérêt annuel (en points de base)" />
-      <DateInput source="start_date" label="Date de début" data-testid="input-departure_date" />
+      <DateTimeInput source="start_date" label="Date de début" defaultValue={new Date().toISOString()} data-testid="input-departure_date" />
       <TextInput source="description" label="Description" multiline rows={3} />
       <TextInput source="status" readOnly defaultValue="ACTIVE" sx={{ display: 'none' }} />
     </>

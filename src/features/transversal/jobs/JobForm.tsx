@@ -1,4 +1,4 @@
-import { TextInput, SelectInput, DateInput } from 'react-admin'
+import { TextInput, SelectInput, DateTimeInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderCompanySelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
@@ -24,19 +24,19 @@ export default function JobForm({ isCreate = false, isCreateForm = false }) {
         rows={3}
         data-testid="input-description"
       />
-      <DateInput
+      <DateTimeInput
         source="contract_signature_date"
         label="Date signature contrat"
-        defaultValue={new Date()}
+        defaultValue={new Date().toISOString()}
         data-testid="input-contract-signature-date"
       />
-      <DateInput
+      <DateTimeInput
         source="start_date"
         label="Date début"
-        defaultValue={new Date()}
+        defaultValue={new Date().toISOString()}
         data-testid="input-start-date"
       />
-      <DateInput source="end_date" label="Date fin" data-testid="input-end-date" />
+      <DateTimeInput source="end_date" label="Date fin" data-testid="input-end-date" />
       <SelectInput
         source="status"
         label="Statut"

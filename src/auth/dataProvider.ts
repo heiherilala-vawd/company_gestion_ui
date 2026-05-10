@@ -3,6 +3,29 @@ import { stringify } from 'query-string'
 import { DeleteParams, GetListParams, GetManyParams, GetOneParams, UpdateParams } from 'react-admin'
 import { getMiddleUrl, getMiddleUrlWithId, getMiddleUrlWithQuery } from '../config/dynamicResources'
 
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?)?$/
+
+const toInstant = (value: any): any => {
+  if (typeof value === 'string' && DATE_PATTERN.test(value)) {
+    const d = new Date(value)
+    if (!isNaN(d.getTime())) return d.toISOString()
+  }
+  return value
+}
+
+const convertDates = (obj: any): any => {
+  if (obj === null || obj === undefined) return obj
+  if (Array.isArray(obj)) return obj.map(convertDates)
+  if (typeof obj === 'object') {
+    const result: any = {}
+    for (const key of Object.keys(obj)) {
+      result[key] = convertDates(toInstant(obj[key]))
+    }
+    return result
+  }
+  return toInstant(obj)
+}
+
 // Fonction pour obtenir le token
 const getToken = (): string | null => {
   return localStorage.getItem('token')
@@ -102,7 +125,7 @@ export const dataProvider = {
     const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
-      body: JSON.stringify([{ ...params.data }]),
+      body: JSON.stringify([convertDates(params.data)]),
     })
 
     return { data: json[0] }
@@ -113,7 +136,7 @@ export const dataProvider = {
     const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
-      body: JSON.stringify([{ ...params.data, id: params.id }]),
+      body: JSON.stringify([convertDates({ ...params.data, id: params.id })]),
     })
 
     return { data: json[0] }

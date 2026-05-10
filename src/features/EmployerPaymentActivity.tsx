@@ -282,7 +282,7 @@ export default function EmployerPaymentActivity() {
       const body = [
         {
           id: confirmRepayTarget.repaymentId,
-          payment_date: new Date().toISOString().split('T')[0],
+          payment_date: new Date().toISOString(),
           amount,
           loan_id: loan.id,
           comment: `Remboursement pour le prêt ${loan.lender} — ${amount} €`,

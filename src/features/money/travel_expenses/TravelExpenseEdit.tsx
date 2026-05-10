@@ -6,6 +6,9 @@ export default function TravelExpenseEdit() {
     <Edit
       transform={(data) => ({
         ...data,
+        departure_location: { id: data.departure_location_id },
+        arrival_location: { id: data.arrival_location_id },
+        expense: data.expense.id,
       })}
     >
       <SimpleForm>

@@ -205,13 +205,13 @@ const TravelOperationForm = () => {
                       source="departure_date"
                       label="Date de départ"
                       sx={operationFormStyles.flexFull}
-                      defaultValue={new Date()}
+                      defaultValue={new Date().toISOString()}
                     />
                     <DateTimeInput
                       source="arrival_date"
                       label="Date d'arrivée"
                       sx={operationFormStyles.flexFull}
-                      defaultValue={new Date()}
+                      defaultValue={new Date().toISOString()}
                     />
                   </Box>
 
