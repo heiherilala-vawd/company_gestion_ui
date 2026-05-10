@@ -9,7 +9,6 @@ import {
   DateTimeInput,
 } from 'react-admin'
 import IncomeForm from './money/incomes/IncomeForm.tsx'
-import { renderJobSelect } from '../generic/SelectWithCreateProvider.tsx'
 import generateId from '../utili/utils.tsx'
 import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -18,11 +17,15 @@ function LoanForm() {
   return (
     <>
       <TextInput source="id" readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
-      {renderJobSelect('job_id', 'Chantier')}
       <TextInput source="lender" label="Prêteur" />
       <NumberInput source="amount" label="Montant" />
       <NumberInput source="interest_rate" label="Taux d'intérêt annuel (en points de base)" />
-      <DateTimeInput source="start_date" label="Date de début" defaultValue={new Date().toISOString()} data-testid="input-departure_date" />
+      <DateTimeInput
+        source="start_date"
+        label="Date de début"
+        defaultValue={new Date().toISOString()}
+        data-testid="input-departure_date"
+      />
       <TextInput source="description" label="Description" multiline rows={3} />
       <TextInput source="status" readOnly defaultValue="ACTIVE" sx={{ display: 'none' }} />
     </>
@@ -53,7 +56,14 @@ export default function IncomesActivity() {
 
       {entityType === 'income' ? (
         <ResourceContextProvider value="incomes">
-          <Create redirect={false} title=" ">
+          <Create
+            redirect={false}
+            title=" "
+            transform={(data) => ({
+              ...data,
+              job_id: localStorage.getItem('currentJobId'),
+            })}
+          >
             <SimpleForm>
               <IncomeForm isCreate />
             </SimpleForm>
@@ -61,7 +71,14 @@ export default function IncomesActivity() {
         </ResourceContextProvider>
       ) : (
         <ResourceContextProvider value="loans">
-          <Create redirect={false} title=" ">
+          <Create
+            redirect={false}
+            title=" "
+            transform={(data) => ({
+              ...data,
+              job_id: localStorage.getItem('currentJobId'),
+            })}
+          >
             <SimpleForm>
               <LoanForm />
             </SimpleForm>

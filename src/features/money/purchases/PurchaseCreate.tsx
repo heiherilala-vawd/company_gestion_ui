@@ -7,6 +7,7 @@ export default function PurchaseCreate() {
       transform={(data) => ({
         ...data,
         material: data.material?.id,
+        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
       <SimpleForm>

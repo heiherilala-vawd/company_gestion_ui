@@ -3,7 +3,12 @@ import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseCreate() {
   return (
-    <Create>
+    <Create
+      transform={(data) => ({
+        ...data,
+        job_id: localStorage.getItem('currentJobId'),
+      })}
+    >
       <SimpleForm>
         <ExpenseForm isCreate />
       </SimpleForm>

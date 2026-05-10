@@ -7,6 +7,7 @@ export default function BankFeeCreate() {
       transform={(data) => ({
         ...data,
         expense_id: data.expense_id,
+        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
       <SimpleForm>

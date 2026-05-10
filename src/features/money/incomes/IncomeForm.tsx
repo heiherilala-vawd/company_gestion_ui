@@ -16,7 +16,7 @@ export default function IncomeForm({ isCreate = false, isCreateForm = false }) {
         />
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
-      {renderJobSelect('job_id', 'Chantier')}
+      {!isCreate && renderJobSelect('job_id', 'Chantier')}
       <TextInput
         source="source_organization"
         label="Organisation source"

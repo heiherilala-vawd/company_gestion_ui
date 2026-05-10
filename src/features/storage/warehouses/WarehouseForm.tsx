@@ -26,7 +26,7 @@ export default function WarehouseForm({ isCreate = false, isCreateForm = false }
         rows={3}
         data-testid="input-description"
       />
-      {renderJobSelect('job_id', 'Chantier')}
+      {!isCreate && renderJobSelect('job_id', 'Chantier')}
     </>
   )
 }

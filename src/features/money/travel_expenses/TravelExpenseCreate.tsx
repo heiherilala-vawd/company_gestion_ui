@@ -9,6 +9,7 @@ export default function TravelExpenseCreate() {
         departure_location: { id: data.departure_location_id },
         arrival_location: { id: data.arrival_location_id },
         expense_id: data.expense.id,
+        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
       <SimpleForm>

@@ -8,6 +8,7 @@ export default function EmployeePaymentCreate() {
         ...data,
         employee_id: data.employee?.id,
         employee: undefined,
+        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
       <SimpleForm>

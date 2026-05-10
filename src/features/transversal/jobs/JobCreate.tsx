@@ -6,8 +6,7 @@ export default function JobCreate() {
     <Create
       transform={(data) => ({
         ...data,
-        company_id: data.company?.id,
-        company: undefined,
+        company_id: localStorage.getItem('currentCompanyId'),
       })}
     >
       <SimpleForm>

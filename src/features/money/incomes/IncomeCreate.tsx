@@ -6,8 +6,7 @@ export default function IncomeCreate() {
     <Create
       transform={(data) => ({
         ...data,
-        job_id: data.job?.id,
-        job: undefined,
+        job_id: localStorage.getItem('currentJobId'),
       })}
     >
       <SimpleForm>

@@ -6,6 +6,7 @@ export default function OtherExpenseCreate() {
     <Create
       transform={(data) => ({
         ...data,
+        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
       <SimpleForm>
