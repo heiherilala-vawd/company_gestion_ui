@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Create, SimpleForm, ResourceContextProvider } from 'react-admin'
+import FormToolbar from '../generic/FormToolbar'
 import BankFeeForm from './money/bank_fees/BankFeeForm.tsx'
 import EmployeePaymentForm from './money/employee_payments/EmployeePaymentForm.tsx'
 import OtherExpenseForm from './money/other_expenses/OtherExpenseForm.tsx'
@@ -48,7 +49,7 @@ export default function ExpensesActivity() {
 
       <ResourceContextProvider value={resource}>
         <Create redirect="list" title=" ">
-          <SimpleForm>
+          <SimpleForm toolbar={<FormToolbar />}>
             <FormComponent isCreate />
           </SimpleForm>
         </Create>

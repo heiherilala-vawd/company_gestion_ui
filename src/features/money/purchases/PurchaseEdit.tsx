@@ -1,4 +1,5 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin'
+import FormToolbar from '../../../generic/FormToolbar'
 import PurchaseForm from './PurchaseForm'
 
 export default function PurchaseEdit() {
@@ -20,7 +21,7 @@ export default function PurchaseEdit() {
         }),
       }}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <PurchaseForm />
       </SimpleForm>

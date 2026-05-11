@@ -170,21 +170,21 @@ const MenuRoot = () => {
         return canAccessResource(resource, 'list')
       })
       .map((item) => (
-      <ListItemButton
-        key={item.name}
-        component={Link}
-        to={item.to}
-        sx={{
-          ...(nested ? menuStyles.nested : menuStyles.listItem),
-        }}
-        data-testid={item.testId}
-      >
-        <ListItemIcon sx={menuStyles.listItemIcon}>
-          <item.icon fontSize="small" />
-        </ListItemIcon>
-        <ListItemText primary={item.label} primaryTypographyProps={menuStyles.listItemText} />
-      </ListItemButton>
-    ))
+        <ListItemButton
+          key={item.name}
+          component={Link}
+          to={item.to}
+          sx={{
+            ...(nested ? menuStyles.nested : menuStyles.listItem),
+          }}
+          data-testid={item.testId}
+        >
+          <ListItemIcon sx={menuStyles.listItemIcon}>
+            <item.icon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary={item.label} primaryTypographyProps={menuStyles.listItemText} />
+        </ListItemButton>
+      ))
 
   return (
     <Box sx={menuStyles.container} data-testid="menu-item-home">

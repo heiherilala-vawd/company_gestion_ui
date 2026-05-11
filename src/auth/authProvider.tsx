@@ -60,8 +60,7 @@ function canAccess(
   const writeActions = ['create', 'update', 'batch_create', 'batch_update']
   const crudActions = [...readActions, ...writeActions]
 
-  const canReadWrite = (...actions: string[]) =>
-    actions.some((a) => crudActions.includes(a))
+  const canReadWrite = (...actions: string[]) => actions.some((a) => crudActions.includes(a))
 
   // =========================
   // Règles pour ADMINISTRATION
@@ -69,12 +68,26 @@ function canAccess(
   if (role === 'ADMINISTRATION') {
     // Ressources avec CRUD complet (sauf delete)
     const fullCRUDResources = [
-      'companies', 'users', 'jobs',
-      'warehouses', 'equipment', 'materials', 'material_warehouse',
-      'expenses', 'incomes', 'bank_fees', 'other_expenses', 'employee_payments',
+      'companies',
+      'users',
+      'jobs',
+      'warehouses',
+      'equipment',
+      'materials',
+      'material_warehouse',
+      'expenses',
+      'incomes',
+      'bank_fees',
+      'other_expenses',
+      'employee_payments',
       'purchases',
-      'travel_expenses', 'travel_people', 'travel_materials', 'travel_equipment',
-      'loans', 'income_types', 'income_receipts',
+      'travel_expenses',
+      'travel_people',
+      'travel_materials',
+      'travel_equipment',
+      'loans',
+      'income_types',
+      'income_receipts',
     ]
     if (fullCRUDResources.includes(resource) && canReadWrite(action)) return true
 
@@ -106,7 +119,13 @@ function canAccess(
     if (resource === 'users' && readActions.includes(action)) return true
 
     // CRUD (sauf delete) sur stock et achats
-    const stockResources = ['warehouses', 'materials', 'material_warehouse', 'equipment', 'purchases']
+    const stockResources = [
+      'warehouses',
+      'materials',
+      'material_warehouse',
+      'equipment',
+      'purchases',
+    ]
     if (stockResources.includes(resource) && canReadWrite(action)) return true
 
     // Jobs : tout accès
@@ -130,8 +149,12 @@ function canAccess(
 
     // Données personnelles (le backend filtre par #user_id)
     const personalResources = [
-      'travel_expenses', 'other_expenses', 'employee_payments',
-      'travel_people', 'travel_materials', 'travel_equipment',
+      'travel_expenses',
+      'other_expenses',
+      'employee_payments',
+      'travel_people',
+      'travel_materials',
+      'travel_equipment',
     ]
     if (personalResources.includes(resource) && canReadWrite(action)) {
       return true

@@ -1,4 +1,5 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin'
+import FormToolbar from '../../../generic/FormToolbar'
 import JobForm from './JobForm'
 
 export default function JobEdit() {
@@ -13,7 +14,7 @@ export default function JobEdit() {
         }),
       }}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <JobForm />
       </SimpleForm>

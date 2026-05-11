@@ -1,4 +1,5 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin'
+import FormToolbar from '../../../../generic/FormToolbar'
 import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleEdit() {
@@ -14,7 +15,7 @@ export default function TravelPeopleEdit() {
         }),
       }}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <TravelPeopleForm />
       </SimpleForm>

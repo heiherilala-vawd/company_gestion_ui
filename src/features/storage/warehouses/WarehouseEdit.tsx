@@ -1,4 +1,5 @@
 import { Edit, SimpleForm, TextInput } from 'react-admin'
+import FormToolbar from '../../../generic/FormToolbar'
 import WarehouseForm from './WarehouseForm'
 
 export default function WarehouseEdit() {
@@ -13,7 +14,7 @@ export default function WarehouseEdit() {
         }),
       }}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <WarehouseForm />
       </SimpleForm>

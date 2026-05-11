@@ -8,6 +8,7 @@ import {
   NumberInput,
   DateTimeInput,
 } from 'react-admin'
+import FormToolbar from '../generic/FormToolbar'
 import IncomeForm from './money/incomes/IncomeForm.tsx'
 import generateId from '../utili/utils.tsx'
 import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
@@ -64,7 +65,7 @@ export default function IncomesActivity() {
               job_id: localStorage.getItem('currentJobId'),
             })}
           >
-            <SimpleForm>
+            <SimpleForm toolbar={<FormToolbar />}>
               <IncomeForm isCreate />
             </SimpleForm>
           </Create>
@@ -79,7 +80,7 @@ export default function IncomesActivity() {
               job_id: localStorage.getItem('currentJobId'),
             })}
           >
-            <SimpleForm>
+            <SimpleForm toolbar={<FormToolbar />}>
               <LoanForm />
             </SimpleForm>
           </Create>

@@ -139,11 +139,7 @@ export const validationButtons: HomeButton[] = [
 ]
 
 export const getVisibleQuickActions = () =>
-  quickActionButtons.filter((btn) =>
-    btn.checkResources.some((r) => canAccessResource(r, 'list')),
-  )
+  quickActionButtons.filter((btn) => btn.checkResources.some((r) => canAccessResource(r, 'list')))
 
 export const getVisibleValidationButtons = () =>
-  validationButtons.filter((btn) =>
-    btn.checkResources.some((r) => canAccessResource(r, 'list')),
-  )
+  validationButtons.filter((btn) => btn.checkResources.some((r) => canAccessResource(r, 'list')))

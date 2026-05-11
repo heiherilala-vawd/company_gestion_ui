@@ -1,4 +1,5 @@
 import { Create, SimpleForm } from 'react-admin'
+import FormToolbar from '../../../generic/FormToolbar'
 import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseCreate() {
@@ -10,7 +11,7 @@ export default function ExpenseCreate() {
         job_id: localStorage.getItem('currentJobId'),
       })}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <ExpenseForm isCreate />
       </SimpleForm>
     </Create>

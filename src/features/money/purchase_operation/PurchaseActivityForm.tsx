@@ -22,6 +22,7 @@ import {
   Collapse,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useForm, FormProvider } from 'react-hook-form'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
@@ -330,6 +331,13 @@ const PurchaseActivityForm = () => {
               <Box sx={operationFormStyles.submitBox}>
                 <Button type="submit" variant="contained" color="primary">
                   Créer l'opération d'achat
+                </Button>
+                <Button
+                  startIcon={<ArrowBackIcon />}
+                  onClick={() => navigate('/')}
+                  sx={{ ml: 1 }}
+                >
+                  Retour
                 </Button>
               </Box>
             </Form>

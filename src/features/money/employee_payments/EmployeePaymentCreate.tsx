@@ -1,4 +1,5 @@
 import { Create, SimpleForm } from 'react-admin'
+import FormToolbar from '../../../generic/FormToolbar'
 import EmployeePaymentForm from './EmployeePaymentForm.tsx'
 
 export default function EmployeePaymentCreate() {
@@ -10,7 +11,7 @@ export default function EmployeePaymentCreate() {
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
-      <SimpleForm>
+      <SimpleForm toolbar={<FormToolbar />}>
         <EmployeePaymentForm isCreate />
       </SimpleForm>
     </Create>

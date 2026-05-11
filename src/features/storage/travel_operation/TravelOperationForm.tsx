@@ -24,6 +24,7 @@ import {
   Collapse,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
@@ -304,6 +305,13 @@ const TravelOperationForm = () => {
             <Box sx={operationFormStyles.submitBox}>
               <Button type="submit" variant="contained" color="primary">
                 Créer l'opération de déplacement
+              </Button>
+              <Button
+                startIcon={<ArrowBackIcon />}
+                onClick={() => navigate('/')}
+                sx={{ ml: 1 }}
+              >
+                Retour
               </Button>
             </Box>
           </Form>
