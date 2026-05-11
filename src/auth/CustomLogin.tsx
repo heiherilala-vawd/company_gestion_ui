@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useLogin, useNotify, useTranslate } from 'react-admin'
-import { Box, Button, Card, Avatar, CardContent, CircularProgress, TextField } from '@mui/material'
+import { Box, Button, Card, Avatar, CircularProgress, TextField, Typography } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '@mui/material/styles'
+import { gradients, getShadow, transitions, colors } from '../style/themeConfig'
 
 export const CustomLogin = () => {
   const [email, setEmail] = useState('')
@@ -12,6 +14,8 @@ export const CustomLogin = () => {
   const notify = useNotify()
   const translate = useTranslate()
   const navigate = useNavigate()
+  const theme = useTheme()
+  const mode = theme.palette.mode as 'light' | 'dark'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,6 +43,7 @@ export const CustomLogin = () => {
         minHeight: '100vh',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        bgcolor: 'background.default',
       }}
     >
       <Card
@@ -46,22 +51,22 @@ export const CustomLogin = () => {
           minWidth: 300,
           mt: { xs: 2, sm: 8 },
           mx: 'auto',
+          borderRadius: 2,
+          boxShadow: getShadow(mode, 'lg'),
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-          <Avatar sx={{ bgcolor: 'secondary.main' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, mb: 1 }}>
+          <Avatar
+            sx={{
+              bgcolor: colors.primary.main,
+              width: 48,
+              height: 48,
+            }}
+          >
             <LockIcon />
           </Avatar>
         </Box>
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{
-            width: 300,
-            p: 2,
-            pb: '16px !important',
-          }}
-        >
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: 300, px: 3, pb: 2 }}>
           <TextField
             autoFocus
             label={translate('ra.auth.username')}
@@ -80,7 +85,25 @@ export const CustomLogin = () => {
             required
             sx={{ mb: 2 }}
           />
-          <Button variant="contained" type="submit" color="primary" disabled={loading} fullWidth>
+          <Button
+            variant="contained"
+            type="submit"
+            color="primary"
+            disabled={loading}
+            fullWidth
+            sx={{
+              background: gradients.primary,
+              borderRadius: 1.5,
+              textTransform: 'none',
+              fontWeight: 600,
+              py: 1.2,
+              transition: transitions.default,
+              '&:hover': {
+                background: gradients.primary,
+                filter: 'brightness(1.1)',
+              },
+            }}
+          >
             {loading ? (
               <CircularProgress size={19} thickness={3} sx={{ my: 0.3 }} />
             ) : (
@@ -88,12 +111,20 @@ export const CustomLogin = () => {
             )}
           </Button>
         </Box>
-        <Box sx={{ textAlign: 'center', pb: 2 }}>
+        <Box sx={{ textAlign: 'center', pb: 2.5 }}>
           <Button
             variant="text"
-            color="primary"
             onClick={() => navigate('/register')}
-            sx={{ textTransform: 'none' }}
+            sx={{
+              textTransform: 'none',
+              fontWeight: 500,
+              color: colors.primary.main,
+              transition: transitions.default,
+              '&:hover': {
+                bgcolor: 'transparent',
+                color: colors.primary.dark,
+              },
+            }}
           >
             {translate('ra.auth.create_account', { _: 'Créer un compte' })}
           </Button>
