@@ -5,6 +5,8 @@ import { homePageStyles } from '../style/components'
 import {
   quickActionButtons,
   validationButtons,
+  getVisibleQuickActions,
+  getVisibleValidationButtons,
   getButtonSx,
   iconSx,
   buttonLabelSx,
@@ -35,6 +37,9 @@ export default function HomePage() {
   const theme = useTheme()
   const mode = theme.palette.mode as 'light' | 'dark'
 
+  const visibleQuick = getVisibleQuickActions()
+  const visibleValidation = getVisibleValidationButtons()
+
   return (
     <Box sx={homePageStyles.container}>
       <Box sx={homePageStyles.welcomeBox}>
@@ -46,31 +51,35 @@ export default function HomePage() {
         </Typography>
       </Box>
 
-      <Box sx={homePageStyles.sectionContainer}>
-        <Typography variant="h6" sx={homePageStyles.sectionHeader}>
-          Actions rapides
-        </Typography>
-        <Grid container spacing={3} sx={homePageStyles.gridContainer}>
-          {quickActionButtons.map((btn) => (
-            <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
-              <ActionButton btn={btn} mode={mode} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+      {visibleQuick.length > 0 && (
+        <Box sx={homePageStyles.sectionContainer}>
+          <Typography variant="h6" sx={homePageStyles.sectionHeader}>
+            Actions rapides
+          </Typography>
+          <Grid container spacing={3} sx={homePageStyles.gridContainer}>
+            {visibleQuick.map((btn) => (
+              <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
+                <ActionButton btn={btn} mode={mode} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
 
-      <Box sx={{ ...homePageStyles.sectionContainer, mt: 4 }}>
-        <Typography variant="h6" sx={homePageStyles.sectionHeader}>
-          Validations
-        </Typography>
-        <Grid container spacing={3} sx={homePageStyles.gridContainer}>
-          {validationButtons.map((btn) => (
-            <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
-              <ActionButton btn={btn} mode={mode} />
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+      {visibleValidation.length > 0 && (
+        <Box sx={{ ...homePageStyles.sectionContainer, mt: 4 }}>
+          <Typography variant="h6" sx={homePageStyles.sectionHeader}>
+            Validations
+          </Typography>
+          <Grid container spacing={3} sx={homePageStyles.gridContainer}>
+            {visibleValidation.map((btn) => (
+              <Grid item xs={6} sm={4} md={2} key={btn.label} sx={homePageStyles.gridItem}>
+                <ActionButton btn={btn} mode={mode} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
     </Box>
   )
 }

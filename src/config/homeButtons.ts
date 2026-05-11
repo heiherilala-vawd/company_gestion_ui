@@ -6,6 +6,7 @@ import MoneyOffIcon from '@mui/icons-material/MoneyOff'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import type { SxProps, Theme } from '@mui/material'
+import { canAccessResource } from '../auth/authProvider'
 
 export const buttonThemes = {
   red: {
@@ -80,6 +81,7 @@ interface HomeButton {
   to: string
   desc: string
   color: ButtonColor
+  checkResources: string[]
 }
 
 export const quickActionButtons: HomeButton[] = [
@@ -89,6 +91,7 @@ export const quickActionButtons: HomeButton[] = [
     to: '/purchases_activity',
     desc: 'Acheter',
     color: 'red',
+    checkResources: ['purchases', 'expenses'],
   },
   {
     label: 'Déplacements',
@@ -96,6 +99,7 @@ export const quickActionButtons: HomeButton[] = [
     to: '/travel_equipment_activity',
     desc: 'Déplacer',
     color: 'success',
+    checkResources: ['travel_expenses', 'equipment'],
   },
   {
     label: 'Revenus / Emprunts',
@@ -103,6 +107,7 @@ export const quickActionButtons: HomeButton[] = [
     to: '/incomes_activity',
     desc: 'Recevoir',
     color: 'red',
+    checkResources: ['incomes', 'loans'],
   },
   {
     label: 'Dépenses',
@@ -110,6 +115,7 @@ export const quickActionButtons: HomeButton[] = [
     to: '/expenses_activity',
     desc: 'Payer',
     color: 'red',
+    checkResources: ['bank_fees', 'employee_payments', 'other_expenses'],
   },
 ]
 
@@ -120,6 +126,7 @@ export const validationButtons: HomeButton[] = [
     to: '/employer_payments_activity',
     desc: 'Valider',
     color: 'warning',
+    checkResources: ['incomes', 'loans'],
   },
   {
     label: 'Valider Réception',
@@ -127,5 +134,16 @@ export const validationButtons: HomeButton[] = [
     to: '/travel_materials_activity',
     desc: 'Réception',
     color: 'warning',
+    checkResources: ['material_warehouse', 'equipment'],
   },
 ]
+
+export const getVisibleQuickActions = () =>
+  quickActionButtons.filter((btn) =>
+    btn.checkResources.some((r) => canAccessResource(r, 'list')),
+  )
+
+export const getVisibleValidationButtons = () =>
+  validationButtons.filter((btn) =>
+    btn.checkResources.some((r) => canAccessResource(r, 'list')),
+  )

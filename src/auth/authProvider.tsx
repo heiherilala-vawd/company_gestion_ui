@@ -48,110 +48,51 @@ function canAccess(
   // ADMIN a tous les droits
   if (role === 'ADMIN') return true
 
-  // Suppressions réservées ADMIN
+  // Suppressions réservées ADMIN uniquement (sauf exceptions explicites)
   const deleteActions = ['delete', 'batch_delete']
   if (deleteActions.includes(action)) {
-    // Les suppressions sont réservées ADMIN uniquement
+    // WAREHOUSE_WORKER peut supprimer travel_expenses
+    if (role === 'WAREHOUSE_WORKER' && resource === 'travel_expenses') return true
     return false
   }
+
+  const readActions = ['list', 'get']
+  const writeActions = ['create', 'update', 'batch_create', 'batch_update']
+  const crudActions = [...readActions, ...writeActions]
+
+  const canReadWrite = (...actions: string[]) =>
+    actions.some((a) => crudActions.includes(a))
 
   // =========================
   // Règles pour ADMINISTRATION
   // =========================
   if (role === 'ADMINISTRATION') {
-    // PUT /users - autorisé
-    if (resource === 'users' && action === 'update') return true
-    if (resource === 'users' && action === 'batch_update') return true
-
-    // GET /histories
-    if (resource === 'histories' && action === 'list') return true
-    if (resource === 'histories' && action === 'get') return true
-
-    // CRUD expenses, incomes (sauf delete)
-    if (['expenses', 'incomes'].includes(resource)) {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      // delete interdit
-      return false
-    }
-
-    // CRUD bank_fees (sauf delete)
-    if (resource === 'bank_fees') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
-
-    // Attribution utilisateurs à un job
-    if (resource === 'job_users' && ['create', 'delete'].includes(action)) {
-      return true
-    }
-
-    // Endpoints personnels - ADMINISTRATION a accès à tous
-    const personalResources = [
-      'travel_expenses',
-      'other_expenses',
-      'employee_payments',
-      'travel_people',
-      'travel_materials',
-      'travel_equipment',
+    // Ressources avec CRUD complet (sauf delete)
+    const fullCRUDResources = [
+      'companies', 'users', 'jobs',
+      'warehouses', 'equipment', 'materials', 'material_warehouse',
+      'expenses', 'incomes', 'bank_fees', 'other_expenses', 'employee_payments',
       'purchases',
+      'travel_expenses', 'travel_people', 'travel_materials', 'travel_equipment',
+      'loans', 'income_types', 'income_receipts',
     ]
-    if (personalResources.includes(resource)) {
-      return true
-    }
+    if (fullCRUDResources.includes(resource) && canReadWrite(action)) return true
 
-    // GET /companies
-    if (resource === 'companies' && action === 'list') return true
-    if (resource === 'companies' && action === 'get') return true
+    // job_users : create et delete autorisés
+    if (resource === 'job_users' && (action === 'create' || action === 'delete')) return true
 
-    // GET /users
-    if (resource === 'users' && action === 'list') return true
-    if (resource === 'users' && action === 'get') return true
+    // Histoires : lecture seule
+    if (resource === 'histories' && readActions.includes(action)) return true
 
-    // CRUD warehouses (sauf delete)
-    if (resource === 'warehouses') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
+    // Rapport annuel : lecture seule
+    if (resource === 'yearly_report' && readActions.includes(action)) return true
 
-    // CRUD materials (sauf delete)
-    if (resource === 'materials') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
+    // Opérations : création
+    if (resource === 'purchase_operations' && action === 'create') return true
+    if (resource === 'travel_operations' && action === 'create') return true
 
-    // CRUD purchases (sauf delete)
-    if (resource === 'purchases') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
-
-    // Endpoints jobs
-    if (resource === 'jobs') return true
+    // Repayments liés aux loans
+    if (resource === 'loan_repayments' && canReadWrite(action)) return true
 
     return false
   }
@@ -160,49 +101,19 @@ function canAccess(
   // Règles pour WAREHOUSE_WORKER
   // =========================
   if (role === 'WAREHOUSE_WORKER') {
-    // GET /companies
-    if (resource === 'companies' && action === 'list') return true
-    if (resource === 'companies' && action === 'get') return true
+    // Lecture compagnies et utilisateurs
+    if (resource === 'companies' && readActions.includes(action)) return true
+    if (resource === 'users' && readActions.includes(action)) return true
 
-    // GET /users
-    if (resource === 'users' && action === 'list') return true
-    if (resource === 'users' && action === 'get') return true
+    // CRUD (sauf delete) sur stock et achats
+    const stockResources = ['warehouses', 'materials', 'material_warehouse', 'equipment', 'purchases']
+    if (stockResources.includes(resource) && canReadWrite(action)) return true
 
-    // CRUD warehouses (sauf delete)
-    if (resource === 'warehouses') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
+    // Jobs : tout accès
+    if (resource === 'jobs' && canReadWrite(action)) return true
 
-    // CRUD materials (sauf delete)
-    if (resource === 'materials') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
-
-    // CRUD purchases (sauf delete)
-    if (resource === 'purchases') {
-      if (action === 'create') return true
-      if (action === 'update') return true
-      if (action === 'batch_create') return true
-      if (action === 'batch_update') return true
-      if (action === 'list') return true
-      if (action === 'get') return true
-      return false
-    }
-
-    // Endpoints jobs
-    if (resource === 'jobs') return true
+    // Opérations d'achat
+    if (resource === 'purchase_operations' && action === 'create') return true
 
     return false
   }
@@ -211,36 +122,19 @@ function canAccess(
   // Règles pour EMPLOYEE
   // =========================
   if (role === 'EMPLOYEE') {
-    // Lecture seule sur company par id
+    // Lecture seule
     if (resource === 'companies' && action === 'get') return true
-
-    // Lecture job par id
     if (resource === 'jobs' && action === 'get') return true
-
-    // Liste des users d'un job
     if (resource === 'job_users' && action === 'list') return true
+    if (resource === 'equipment' && ['list', 'get'].includes(action)) return true
 
-    // Lecture équipements par société
-    if (resource === 'equipment' && action === 'list') return true
-    if (resource === 'equipment' && action === 'get') return true
-
-    // Endpoints personnels - seulement si l'utilisateur est le propriétaire
-    const personalResourcesEmployee = [
-      'travel_expenses',
-      'other_expenses',
-      'employee_payments',
-      'travel_people',
-      'travel_materials',
-      'travel_equipment',
-      'expenses',
-      'incomes',
+    // Données personnelles (le backend filtre par #user_id)
+    const personalResources = [
+      'travel_expenses', 'other_expenses', 'employee_payments',
+      'travel_people', 'travel_materials', 'travel_equipment',
     ]
-
-    if (personalResourcesEmployee.includes(resource)) {
-      // Pour les endpoints personnels, on vérifie que recordUserId === userId
-      // Note: cette vérification est partielle car recordUserId peut ne pas être disponible ici
-      // La sécurité doit aussi être assurée côté backend
-      return true // On laisse passer, le backend vérifiera
+    if (personalResources.includes(resource) && canReadWrite(action)) {
+      return true
     }
 
     return false
@@ -390,8 +284,6 @@ const authProvider: AuthProvider = {
       'travel_people',
       'travel_materials',
       'travel_equipment',
-      'expenses',
-      'incomes',
     ]
 
     if (personalResources.includes(resource) && record?.user_id) {
@@ -407,6 +299,12 @@ const authProvider: AuthProvider = {
   getToken: () => {
     return localStorage.getItem('token') || null
   },
+}
+
+// Helper pour vérifier l'accès depuis n'importe où (synchrone, basé sur localStorage)
+export const canAccessResource = (resource: string, action: string): boolean => {
+  const role = (localStorage.getItem('user_role') as Role) || null
+  return canAccess(role, resource, action)
 }
 
 // Helper pour ajouter le token aux requêtes fetch

@@ -27,6 +27,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import { menuStyles } from '../style/components'
+import { canAccessResource } from '../auth/authProvider'
 
 interface ResourceItem {
   name: string
@@ -34,6 +35,7 @@ interface ResourceItem {
   icon: React.ElementType
   to: string
   testId?: string
+  resource?: string
 }
 
 const MenuRoot = () => {
@@ -146,6 +148,7 @@ const MenuRoot = () => {
       icon: PaymentsIcon,
       to: '/employee_payments',
       testId: 'menu-employee-payments',
+      resource: 'employee_payments',
     },
   ]
 
@@ -160,7 +163,13 @@ const MenuRoot = () => {
   ]
 
   const renderItems = (items: ResourceItem[], nested = false) =>
-    items.map((item) => (
+    items
+      .filter((item) => {
+        if (item.name === 'home') return true
+        const resource = item.resource || item.name
+        return canAccessResource(resource, 'list')
+      })
+      .map((item) => (
       <ListItemButton
         key={item.name}
         component={Link}
