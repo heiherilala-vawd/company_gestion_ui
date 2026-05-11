@@ -3,7 +3,7 @@ import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleCreate() {
   return (
-    <Create>
+    <Create redirect="list">
       <SimpleForm>
         <TravelPeopleForm isCreate />
       </SimpleForm>

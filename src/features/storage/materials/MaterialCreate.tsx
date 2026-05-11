@@ -3,7 +3,7 @@ import MaterialForm from './MaterialForm'
 
 export default function MaterialCreate() {
   return (
-    <Create>
+    <Create redirect="list">
       <SimpleForm>
         <MaterialForm isCreate />
       </SimpleForm>

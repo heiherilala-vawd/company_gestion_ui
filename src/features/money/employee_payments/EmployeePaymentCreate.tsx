@@ -4,10 +4,9 @@ import EmployeePaymentForm from './EmployeePaymentForm.tsx'
 export default function EmployeePaymentCreate() {
   return (
     <Create
+      redirect="list"
       transform={(data) => ({
         ...data,
-        employee_id: data.employee?.id,
-        employee: undefined,
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >

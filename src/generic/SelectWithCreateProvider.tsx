@@ -9,6 +9,7 @@ import JobForm from '../features/transversal/jobs/JobForm.tsx'
 import WarehouseForm from '../features/storage/warehouses/WarehouseForm.tsx'
 import CompanyForm from '../features/transversal/companies/CompanyForm.tsx'
 import UserForm from '../features/transversal/usersSetup/UserForm.tsx'
+import IncomeTypeForm from '../features/money/incomeType/IncomeTypeForm.tsx'
 
 export const renderTravelExpenseSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
@@ -84,6 +85,17 @@ export const renderJobSelect = (source: any, label: any) => (
     optionText="description"
     createUrlEnd={getMiddleUrl('jobs')}
     createForm={<JobForm isCreateForm />}
+  />
+)
+
+export const renderIncomeTypeSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'income_type_id'}
+    reference="income_types"
+    label={label ? label : 'Type de revenu'}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('income_types')}
+    createForm={<IncomeTypeForm isCreateForm />}
   />
 )
 

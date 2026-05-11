@@ -4,6 +4,7 @@ import WarehouseForm from './WarehouseForm'
 export default function WarehouseCreate() {
   return (
     <Create
+      redirect="list"
       transform={(data) => ({
         ...data,
         job_id: localStorage.getItem('currentJobId'),

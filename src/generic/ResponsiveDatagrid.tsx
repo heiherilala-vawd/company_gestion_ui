@@ -38,11 +38,14 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
       return true
     })
 
-    if (isXs) return priority.slice(0, 2)
-    if (isSm) return priority.slice(0, 3)
-    if (isMd) return priority.slice(0, 5)
+    const actions = childArray.filter((child) => !isValidElement(child) || !child.props.source)
 
-    return [...priority, ...others].slice(0, 8)
+    if (isXs) return [...actions, ...priority.slice(0, 2)]
+    if (isSm) return [...actions, ...priority.slice(0, 3)]
+    if (isMd) return [...actions, ...priority.slice(0, 5)]
+
+    const data = [...priority, ...others].slice(0, 8)
+    return [...actions, ...data]
   }
 
   return (

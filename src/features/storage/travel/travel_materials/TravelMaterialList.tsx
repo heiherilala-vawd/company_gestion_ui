@@ -32,39 +32,25 @@ export default function TravelMaterialList() {
   return (
     <List resource="travel_materials" filters={TravelMaterialFilters} perPage={25}>
       <ResponsiveDatagrid
-        priorityFields={['material.name', 'quantity', 'quantity_received', 'arrival_location.name']}
+        priorityFields={[
+          'material.name',
+          'arrival_location.name',
+          'quantity_received',
+          'arrival_date',
+        ]}
       >
         <TextField source="material.name" label="Matériau" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Reçue" />
-        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <FunctionField
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
-        <DateField source="arrival_date" label="Date d'arrivée" />
-        <DateField source="created_at" label="Créé le" showTime />
-        <DateField source="updated_at" label="Modifié le" showTime />
-        <FunctionField
-          label="Créé par"
-          render={(record) => (
-            <span>
-              {record.created_by?.first_name} {record.created_by?.last_name}
-            </span>
-          )}
-        />
-        <FunctionField
-          label="Modifié par"
-          render={(record) => (
-            <span>
-              {record.updated_by?.first_name} {record.updated_by?.last_name}
-            </span>
-          )}
-        />
         <EditButton />
-        <DeleteButton />
       </ResponsiveDatagrid>
     </List>
   )

@@ -6,18 +6,20 @@ import React from 'react'
 
 // eslint-disable-next-line react/prop-types
 export default function OtherExpenseForm({ isCreate = false, isCreateForm = false }) {
+  const id = generateId()
+
   return (
     <>
       {isCreate && (
         <TextInput
           source="id"
           readOnly
-          defaultValue={generateId()}
+          defaultValue={id}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       <TextInput
         source="description"
         label="Description"
@@ -29,7 +31,19 @@ export default function OtherExpenseForm({ isCreate = false, isCreateForm = fals
           💰 Dépense
         </Typography>
         {!isCreate && <TextInput source="expense.id" readOnly />}
-        <ExpenseForm isCreate={isCreate} isCreateForm={isCreateForm} souce={'expense.'} />
+        <ExpenseForm
+          isCreate={isCreate}
+          isCreateForm={isCreateForm}
+          souce={'expense.'}
+          description={
+            'expence of ' +
+            OtherExpenseForm.name +
+            ' from :' +
+            new Date().toISOString() +
+            '. And with id: ' +
+            id
+          }
+        />
       </div>
     </>
   )

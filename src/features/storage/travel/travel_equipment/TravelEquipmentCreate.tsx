@@ -3,7 +3,7 @@ import TravelEquipmentForm from './TravelEquipmentForm.tsx'
 
 export default function TravelEquipmentCreate() {
   return (
-    <Create transform={(data) => ({ ...data, equipment: data.equipment_id })}>
+    <Create redirect="list" transform={(data) => ({ ...data, equipment: data.equipment_id })}>
       <SimpleForm>
         <TravelEquipmentForm isCreate />
       </SimpleForm>

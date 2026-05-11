@@ -3,13 +3,7 @@ import EquipmentForm from './EquipmentForm'
 
 export default function EquipmentCreate() {
   return (
-    <Create
-      transform={(data) => ({
-        ...data,
-        warehouse_id: data.warehouse?.id,
-        warehouse: undefined,
-      })}
-    >
+    <Create redirect="list">
       <SimpleForm>
         <EquipmentForm isCreate />
       </SimpleForm>

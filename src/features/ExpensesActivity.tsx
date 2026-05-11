@@ -47,7 +47,7 @@ export default function ExpensesActivity() {
       </ToggleButtonGroup>
 
       <ResourceContextProvider value={resource}>
-        <Create redirect={false} title=" ">
+        <Create redirect="list" title=" ">
           <SimpleForm>
             <FormComponent isCreate />
           </SimpleForm>

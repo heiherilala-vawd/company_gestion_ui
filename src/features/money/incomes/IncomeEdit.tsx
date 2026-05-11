@@ -4,14 +4,18 @@ import IncomeForm from './IncomeForm'
 export default function IncomeEdit() {
   return (
     <Edit
-      transform={(data) => ({
-        ...data,
-        job_id: data.job?.id,
-        job: undefined,
-      })}
+      redirect="list"
+      queryOptions={{
+        // Intercepter et modifier les données après le fetch
+        select: (data) => ({
+          ...data,
+          job_id: data.job.id,
+          income_type_id: data.income_type.id,
+        }),
+      }}
     >
       <SimpleForm>
-        <TextInput source="id" readOnly />
+        <TextInput source="id" sx={{ display: 'none' }} />
         <IncomeForm />
       </SimpleForm>
     </Edit>

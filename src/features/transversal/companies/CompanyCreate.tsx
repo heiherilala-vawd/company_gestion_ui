@@ -3,7 +3,7 @@ import CompanyForm from './CompanyForm'
 
 export default function CompanyCreate() {
   return (
-    <Create>
+    <Create redirect="list">
       <SimpleForm>
         <CompanyForm isCreate />
       </SimpleForm>

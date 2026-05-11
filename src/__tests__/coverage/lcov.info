@@ -1306,11 +1306,11 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:../features/money/incomes/IncomeForm.tsx
-FN:6,IncomeForm
+SF:../features/money/incomes/IncomeTypeForm.tsx
+FN:6,IncomeTypeForm
 FNF:1
 FNH:1
-FNDA:8,IncomeForm
+FNDA:8,IncomeTypeForm
 DA:6,140
 DA:7,8
 DA:34,140

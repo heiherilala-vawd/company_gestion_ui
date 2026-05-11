@@ -3,9 +3,9 @@ import MaterialForm from './MaterialForm'
 
 export default function MaterialEdit() {
   return (
-    <Edit>
+    <Edit redirect="list">
       <SimpleForm>
-        <TextInput source="id" readOnly />
+        <TextInput source="id" sx={{ display: 'none' }} />
         <MaterialForm />
       </SimpleForm>
     </Edit>

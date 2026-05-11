@@ -38,9 +38,11 @@ export default function TravelEquipmentList() {
   return (
     <List resource="travel_equipment" filters={TravelEquipmentFilters} perPage={25}>
       <ResponsiveDatagrid
-        priorityFields={['equipment.name', 'quantity', 'status', 'arrival_location.name']}
+        priorityFields={['equipment.name', 'arrival_date', 'status', 'arrival_location.name']}
       >
         <TextField source="equipment.name" label="Équipement" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <NumberField source="quantity" label="Quantité" />
         <SelectField
           source="status"
@@ -51,34 +53,13 @@ export default function TravelEquipmentList() {
             { id: 'ARRIVED', name: 'Arrivé' },
           ]}
         />
-        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <FunctionField
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
-        <DateField source="arrival_date" label="Date d'arrivée" />
-        <DateField source="created_at" label="Créé le" showTime />
-        <DateField source="updated_at" label="Modifié le" showTime />
-        <FunctionField
-          label="Créé par"
-          render={(record) => (
-            <span>
-              {record.created_by?.first_name} {record.created_by?.last_name}
-            </span>
-          )}
-        />
-        <FunctionField
-          label="Modifié par"
-          render={(record) => (
-            <span>
-              {record.updated_by?.first_name} {record.updated_by?.last_name}
-            </span>
-          )}
-        />
         <EditButton />
-        <DeleteButton />
       </ResponsiveDatagrid>
     </List>
   )

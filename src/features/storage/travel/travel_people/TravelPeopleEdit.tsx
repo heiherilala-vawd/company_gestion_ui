@@ -3,9 +3,19 @@ import TravelPeopleForm from './TravelPeopleForm.tsx'
 
 export default function TravelPeopleEdit() {
   return (
-    <Edit>
+    <Edit
+      redirect="list"
+      queryOptions={{
+        // Intercepter et modifier les données après le fetch
+        select: (data) => ({
+          ...data,
+          travel_id: data.travel.id,
+          user_id: data.user.id,
+        }),
+      }}
+    >
       <SimpleForm>
-        <TextInput source="id" readOnly />
+        <TextInput source="id" sx={{ display: 'none' }} />
         <TravelPeopleForm />
       </SimpleForm>
     </Edit>

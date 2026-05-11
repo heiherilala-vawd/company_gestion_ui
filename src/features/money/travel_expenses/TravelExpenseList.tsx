@@ -32,7 +32,6 @@ export default function TravelExpenseList() {
         <TextField source="expense.comment" label="Commentaire" />
         <DateField source="arrival_date" label="Date arrivée" showTime />
         <EditButton />
-        <DeleteButton />
       </ResponsiveDatagrid>
     </List>
   )

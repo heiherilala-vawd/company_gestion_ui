@@ -4,6 +4,7 @@ import JobForm from './JobForm'
 export default function JobCreate() {
   return (
     <Create
+      redirect="list"
       transform={(data) => ({
         ...data,
         company_id: localStorage.getItem('currentCompanyId'),

@@ -4,7 +4,7 @@ import UserForm from './UserForm.tsx'
 // ⚠️ Ajouter 'export default'
 export default function UserCreate() {
   return (
-    <Create>
+    <Create redirect="list">
       <SimpleForm>
         <UserForm isCreate />
       </SimpleForm>

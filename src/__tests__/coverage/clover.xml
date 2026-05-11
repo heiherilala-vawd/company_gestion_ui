@@ -590,7 +590,7 @@
         <line num="7" count="2" type="stmt"/>
         <line num="19" count="140" type="stmt"/>
       </file>
-      <file name="IncomeForm.tsx" path="/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeForm.tsx">
+      <file name="IncomeTypeForm.tsx" path="/home/herilala/Documents/react admin/firt project/test-admin/src/features/money/incomes/IncomeTypeForm.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="6" coveredconditionals="5" methods="1" coveredmethods="1"/>
         <line num="6" count="140" type="cond" truecount="2" falsecount="0"/>
         <line num="7" count="8" type="stmt"/>

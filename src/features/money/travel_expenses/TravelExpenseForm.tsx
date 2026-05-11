@@ -7,18 +7,20 @@ import React from 'react'
 
 // eslint-disable-next-line react/prop-types
 export default function TravelExpenseForm({ isCreate = false, isCreateForm = false }) {
+  const id = generateId()
+
   return (
     <>
       {isCreate && (
         <TextInput
           source="id"
           readOnly
-          defaultValue={generateId()}
+          defaultValue={id}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       {renderWarehouseSelect('departure_location_id', 'Lieu de départ')}
       {renderWarehouseSelect('arrival_location_id', "Lieu d'arrivée")}
       <DateTimeInput
@@ -37,8 +39,20 @@ export default function TravelExpenseForm({ isCreate = false, isCreateForm = fal
         <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
           💰 Dépense
         </Typography>
-        {!isCreate && <TextInput source="expense_id" readOnly />}
-        <ExpenseForm isCreate={isCreate} isCreateForm={isCreateForm} souce={'expense.'} />
+        {!isCreate && <TextInput source="expense.id" readOnly />}
+        <ExpenseForm
+          isCreate={isCreate}
+          isCreateForm={isCreateForm}
+          souce={'expense.'}
+          description={
+            'expence of ' +
+            TravelExpenseForm.name +
+            ' from :' +
+            new Date().toISOString() +
+            '. And with id: ' +
+            id
+          }
+        />
       </div>
     </>
   )

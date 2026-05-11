@@ -754,14 +754,45 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // DeleteButton
-  RaDeleteButton: {
+  // EditButton
+  RaEditButton: {
+    defaultProps: {
+      size: 'small',
+      label: '',
+    },
     styleOverrides: {
       root: {
-        borderRadius: br.md,
+        minWidth: 0,
+        width: 24,
+        height: 24,
+        borderRadius: '50%',
+        padding: 0,
+        '& .MuiSvgIcon-root': {
+          fontSize: 14,
+        },
+      },
+    },
+  },
+
+  // DeleteButton
+  RaDeleteButton: {
+    defaultProps: {
+      size: 'small',
+      label: '',
+    },
+    styleOverrides: {
+      root: {
+        minWidth: 0,
+        width: 24,
+        height: 24,
+        borderRadius: '50%',
+        padding: 0,
         textTransform: 'none',
         fontWeight: 500,
         transition: transitions.default,
+        '& .MuiSvgIcon-root': {
+          fontSize: 14,
+        },
         '&:hover': {
           backgroundColor: alpha(colors.error.main, 0.1),
         },

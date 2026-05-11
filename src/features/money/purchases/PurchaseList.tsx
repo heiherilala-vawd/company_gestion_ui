@@ -27,7 +27,6 @@ export default function PurchaseList() {
         <TextField source="equipment.name" label="Équipement" />
         <TextField source="material.name" label="Matériau" />
         <EditButton />
-        <DeleteButton />
       </ResponsiveDatagrid>
     </List>
   )

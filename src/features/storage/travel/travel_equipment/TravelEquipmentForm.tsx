@@ -22,7 +22,7 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
         <TextInput source="newId" readOnly defaultValue={generateId()} data-testid="input-id" />
       )}
       {renderTravelExpenseSelect(null, null)}
-      {renderEquipmentSelect(null, null)}
+      {renderEquipmentSelect('equipment', null)}
       <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <SelectInput
         source="status"

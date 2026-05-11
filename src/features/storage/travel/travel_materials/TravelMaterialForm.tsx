@@ -20,7 +20,7 @@ export default function TravelMaterialForm({ isCreate = false, isCreateForm = fa
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {renderTravelExpenseSelect(null, null)}
-      {renderMaterialSelect(null, null)}
+      {renderMaterialSelect('material', null)}
       <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <NumberInput
         source="quantity_received"

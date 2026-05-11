@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, BooleanInput } from 'react-admin'
+import { TextInput, NumberInput, BooleanInput, FormDataConsumer } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
@@ -12,33 +12,56 @@ import React from 'react'
 
 // eslint-disable-next-line react/prop-types
 export default function PurchaseForm({ isCreate = false, isCreateForm = false }) {
+  const id = generateId()
+
   return (
     <>
       {isCreate && (
         <TextInput
           source="id"
           readOnly
-          defaultValue={generateId()}
+          defaultValue={id}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       {renderWarehouseSelect('supplier_id', 'Fournisseur')}
-      {renderEquipmentSelect('equipment_id', 'Équipement')}
-      {renderMaterialSelect('material_id', 'Matériau')}
-      <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <BooleanInput
         source="is_equipment"
         label="Est un équipement"
         data-testid="input-is_equipment"
       />
+      <FormDataConsumer>
+        {({ formData }) =>
+          formData?.is_equipment ? (
+            renderEquipmentSelect('equipment', 'Équipement')
+          ) : (
+            <>
+              {renderMaterialSelect('material', 'Matériau')}
+              <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
+            </>
+          )
+        }
+      </FormDataConsumer>
       <div data-testid="input-expense-form" style={{ width: '100%' }}>
         <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
           💰 Dépense
         </Typography>
         {!isCreate && <TextInput source="expense.id" readOnly />}
-        <ExpenseForm isCreate={isCreate} isCreateForm={isCreateForm} souce={'expense.'} />
+        <ExpenseForm
+          isCreate={isCreate}
+          isCreateForm={isCreateForm}
+          souce={'expense.'}
+          description={
+            'expence of ' +
+            PurchaseForm.name +
+            ' from :' +
+            new Date().toISOString() +
+            '. And with id: ' +
+            id
+          }
+        />
       </div>
     </>
   )

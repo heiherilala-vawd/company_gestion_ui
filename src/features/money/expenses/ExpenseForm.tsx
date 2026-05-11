@@ -3,7 +3,12 @@ import generateId from '../../../utili/utils.tsx'
 import { renderJobSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
-export default function ExpenseForm({ isCreate = false, isCreateForm = false, souce = '' }) {
+export default function ExpenseForm({
+  isCreate = false,
+  isCreateForm = false,
+  souce = '',
+  description = '',
+}) {
   return (
     <>
       {isCreate && (
@@ -15,14 +20,25 @@ export default function ExpenseForm({ isCreate = false, isCreateForm = false, so
         />
       )}{' '}
       {isCreateForm && <TextInput source={souce + 'newId'} readOnly defaultValue={generateId()} />}
-      {!isCreate && renderJobSelect(null, 'Chantier')}
+      {!isCreate && renderJobSelect(souce + 'job_id', 'Chantier')}
       <NumberInput source={souce + 'amount'} label="Montant" data-testid="input-amount" />
-      <TextInput
-        source={souce + 'description'}
-        label="Description"
-        multiline
-        data-testid="input-description"
-      />
+      {description === '' ? (
+        <TextInput
+          source={souce + 'description'}
+          label="Description"
+          multiline
+          data-testid="input-description"
+        />
+      ) : (
+        <TextInput
+          source={souce + 'description'}
+          label="Description"
+          multiline
+          data-testid="input-description"
+          defaultValue={description}
+          sx={{ display: 'none' }}
+        />
+      )}
       <TextInput
         source={souce + 'comment'}
         label="Commentaire"

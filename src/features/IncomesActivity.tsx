@@ -57,7 +57,7 @@ export default function IncomesActivity() {
       {entityType === 'income' ? (
         <ResourceContextProvider value="incomes">
           <Create
-            redirect={false}
+            redirect="list"
             title=" "
             transform={(data) => ({
               ...data,
@@ -72,7 +72,7 @@ export default function IncomesActivity() {
       ) : (
         <ResourceContextProvider value="loans">
           <Create
-            redirect={false}
+            redirect="list"
             title=" "
             transform={(data) => ({
               ...data,

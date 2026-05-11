@@ -5,18 +5,20 @@ import { Typography } from '@mui/material'
 import React from 'react'
 
 export default function BankFeeForm({ isCreate = false, isCreateForm = false }) {
+  const id = generateId()
+
   return (
     <>
       {isCreate && (
         <TextInput
           source="id"
           readOnly
-          defaultValue={generateId()}
+          defaultValue={id}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       <TextInput source="bank_name" label="Nom de la banque" data-testid="input-bank_name" />
       <TextInput
         source="description"
@@ -29,7 +31,19 @@ export default function BankFeeForm({ isCreate = false, isCreateForm = false }) 
           💰 Dépense
         </Typography>
         {!isCreate && <TextInput source="expense.id" readOnly />}
-        <ExpenseForm isCreate={isCreate} isCreateForm={isCreateForm} souce={'expense.'} />
+        <ExpenseForm
+          isCreate={isCreate}
+          isCreateForm={isCreateForm}
+          souce={'expense.'}
+          description={
+            'expence of ' +
+            BankFeeForm.name +
+            ' from :' +
+            new Date().toISOString() +
+            '. And with id: ' +
+            id
+          }
+        />
       </div>
     </>
   )

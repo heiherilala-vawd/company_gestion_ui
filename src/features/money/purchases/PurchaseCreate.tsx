@@ -4,9 +4,11 @@ import PurchaseForm from './PurchaseForm'
 export default function PurchaseCreate() {
   return (
     <Create
+      redirect="list"
       transform={(data) => ({
         ...data,
-        material: data.material?.id,
+        quantity: data.quantity ? data.quantity : 1,
+        supplier: { id: data.supplier_id },
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >

@@ -3,14 +3,9 @@ import BankFeeForm from './BankFeeForm.tsx'
 
 export default function BankFeeEdit() {
   return (
-    <Edit
-      transform={(data) => ({
-        ...data,
-        expense_id: data.expense_id,
-      })}
-    >
+    <Edit redirect="list">
       <SimpleForm>
-        <TextInput source="id" readOnly />
+        <TextInput source="id" sx={{ display: 'none' }} />
         <BankFeeForm />
       </SimpleForm>
     </Edit>
