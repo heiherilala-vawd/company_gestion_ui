@@ -34,9 +34,6 @@ export default function ExpensesActivity() {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ mb: 1 }}>
-        Retour
-      </Button>
       <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
         Dépenses
       </Typography>

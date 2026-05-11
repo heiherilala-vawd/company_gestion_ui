@@ -218,9 +218,6 @@ export default function TravelMaterialActivity() {
 
   return (
     <Box sx={{ p: 2 }}>
-      <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ mb: 1 }}>
-        Retour
-      </Button>
       <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
         Réception - Éléments non arrivés
       </Typography>

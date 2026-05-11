@@ -332,11 +332,7 @@ const PurchaseActivityForm = () => {
                 <Button type="submit" variant="contained" color="primary">
                   Créer l'opération d'achat
                 </Button>
-                <Button
-                  startIcon={<ArrowBackIcon />}
-                  onClick={() => navigate('/')}
-                  sx={{ ml: 1 }}
-                >
+                <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ ml: 1 }}>
                   Retour
                 </Button>
               </Box>
