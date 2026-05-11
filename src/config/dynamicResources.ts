@@ -11,6 +11,8 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'equipment',
   'material_warehouse',
   'income_types',
+  'materials',
+  'users',
 ] as const
 
 // Type pour les ressources dynamiques (TypeScript)

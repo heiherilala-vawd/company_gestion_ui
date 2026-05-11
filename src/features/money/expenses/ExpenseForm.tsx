@@ -2,7 +2,6 @@ import { TextInput, NumberInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderJobSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function ExpenseForm({
   isCreate = false,
   isCreateForm = false,

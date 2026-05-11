@@ -24,9 +24,10 @@ export const AppBar = () => {
 
   const isAuthPage =
     location.pathname === '/login' ||
-    location.pathname === '/' ||
+    location.pathname === '/register' ||
     location.pathname.startsWith('/auth')
-  const prevIsAuth = prevPath === '/login' || prevPath.startsWith('/auth')
+  const prevIsAuth =
+    prevPath === '/login' || prevPath === '/register' || prevPath.startsWith('/auth')
 
   return (
     <RAAppBar sx={appBarStyles.appBar}>

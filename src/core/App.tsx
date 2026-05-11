@@ -36,6 +36,8 @@ import { CompanyProvider } from '../features/transversal/companies/CompanyContex
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
 import { Route } from 'react-router-dom'
+import { CustomLogin } from '../auth/CustomLogin'
+import { RegisterPage } from '../auth/RegisterPage'
 
 const ThemedAdmin = () => {
   const { mode } = useThemeMode()
@@ -49,9 +51,13 @@ const ThemedAdmin = () => {
             theme={theme}
             dashboard={HomePage}
             layout={Layout}
+            loginPage={CustomLogin}
             dataProvider={dataProvider}
             authProvider={authProvider}
           >
+            <CustomRoutes noLayout>
+              <Route path="/register" element={<RegisterPage />} />
+            </CustomRoutes>
             <CustomRoutes>
               <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
               <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
