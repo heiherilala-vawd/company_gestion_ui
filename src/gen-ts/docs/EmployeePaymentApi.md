@@ -40,7 +40,7 @@ async function example() {
     crupdateEmployeePayment: [
       {
         id: 'emp_pay_001',
-        expense_id: 'exp_004',
+        expense: { id: 'exp_004', amount: 5000, job_id: 'job_004' },
         employee_id: 'usr_123456',
         payment_description: 'Salaire février 2024 + prime',
         payment_type: 'MONTHLY',

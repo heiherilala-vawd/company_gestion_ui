@@ -128,10 +128,7 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,41 +194,51 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
   List,
-  Datagrid,
   TextField,
   NumberField,
   SelectField,
   DateField,
-  SearchInput,
   TextInput,
+  SelectInput,
+  BooleanInput,
+  ReferenceInput,
   EditButton,
   DeleteButton,
   FunctionField,
 } from 'react-admin'
+import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
+import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 &nbsp;
 const TravelEquipmentFilters = [
-  &lt;SearchInput source="equipment" alwaysOn /&gt;,
-  &lt;TextInput source="travel_id" label="Voyage" /&gt;,
+  &lt;ReferenceInput source="equipment_id" reference="equipment" perPage={100} alwaysOn&gt;
+    &lt;SelectInput optionText="name" label="Équipement" /&gt;
+  &lt;/ReferenceInput&gt;,
+  &lt;ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}&gt;
+    &lt;SelectInput optionText="expense.description" label="Voyage" /&gt;
+  &lt;/ReferenceInput&gt;,
+  &lt;TextInput source="quantity" label="Quantité" /&gt;,
+  &lt;SelectInput
+    source="status"<span class="branch-1 cbranch-no" title="branch not covered" ><span class="branch-1 cbranch-no" title="branch not covered" ></span></span>
+    label="Statut"
+    choices={Object.entries(TransportStatus).map(([k, v]) =&gt; ({ id: v, name: k }))}
+  /&gt;,
+  &lt;TextInput source="arrival_location" label="Lieu d'arrivée" /&gt;,
+  &lt;TextInput source="arrival_date_min" label="Date arrivée min" /&gt;,
+  &lt;TextInput source="arrival_date_max" label="Date arrivée max" /&gt;,
+  &lt;BooleanInput source="not_arrived" label="Non arrivé" /&gt;,
 ]
 &nbsp;
 export default function TravelEquipmentList() {
   return (
     &lt;List resource="travel_equipment" filters={TravelEquipmentFilters} perPage={25}&gt;
-      &lt;Datagrid rowClick="show"&gt;
-        &lt;FunctionField
-          label="Déplacement"
-          render={(record) =&gt;
-            `${record.travel?.departure_location.name || <span class="branch-1 cbranch-no" title="branch not covered" >''}</span> → ${record.travel?.arrival_location.name || <span class="branch-1 cbranch-no" title="branch not covered" >''}</span>`
-          }
-        /&gt;
-        &lt;TextField source="arrival_location.name" label="Lieu d'arivé" /&gt;
-        &lt;DateField source="arrival_date" label="Date d'arivé" /&gt;
+      &lt;ResponsiveDatagrid
+        priorityFields={['equipment.name', 'arrival_date', 'status', 'arrival_location.name']}
+      &gt;
         &lt;TextField source="equipment.name" label="Équipement" /&gt;
+        &lt;TextField source="arrival_location.name" label="Lieu d'arrivée" /&gt;
+        &lt;DateField source="arrival_date" label="Date d'arrivée" /&gt;
         &lt;NumberField source="quantity" label="Quantité" /&gt;
         &lt;SelectField
           source="status"
@@ -242,30 +249,14 @@ export default function TravelEquipmentList() {
             { id: 'ARRIVED', name: 'Arrivé' },
           ]}
         /&gt;
-        &lt;DateField source="created_at" label="Créé le" showTime /&gt;
-        &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
-        {/* Nom complet du créateur */}
         &lt;FunctionField
-          label="Créé par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.created_by?.first_name} {record.created_by?.last_name}
-            &lt;/span&gt;
-          )}
-        /&gt;
-&nbsp;
-        {/* Nom complet du modificateur */}
-        &lt;FunctionField
-          label="Modifié par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.updated_by?.first_name} {record.updated_by?.last_name}
-            &lt;/span&gt;
-          )}
+          label="Déplacement"
+          render={(record) =&gt;
+            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+          }
         /&gt;
         &lt;EditButton /&gt;
-        &lt;DeleteButton /&gt;
-      &lt;/Datagrid&gt;
+      &lt;/ResponsiveDatagrid&gt;
     &lt;/List&gt;
   )
 }
@@ -278,7 +269,7 @@ export default function TravelEquipmentList() {
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../../prettify.js"></script>
     <script>

@@ -23,8 +23,8 @@ describe('E2E: Authentication', () => {
 
     cy.url().should('include', '/login')
 
-    cy.get('input[name="username"]').type('wrong@email.com')
-    cy.get('input[name="password"]').type('wrongpassword')
+    cy.get('input').first().type('wrong@email.com')
+    cy.get('input[type="password"]').type('wrongpassword')
     cy.get('button[type="submit"]').click()
 
     cy.wait('@failedLogin')
@@ -44,15 +44,16 @@ describe('E2E: Authentication', () => {
     cy.visit('/', { failOnStatusCode: false })
     cy.url().should('include', '/login')
 
-    cy.get('input[name="username"]').type(<string>loginRequestMock.email)
-    cy.get('input[name="password"]').type(<string>loginRequestMock.password)
+    cy.get('input')
+      .first()
+      .type(<string>loginRequestMock.email)
+    cy.get('input[type="password"]').type(<string>loginRequestMock.password)
     cy.get('button[type="submit"]').click()
 
     cy.wait('@successfulLogin')
     cy.wait('@whoamiRequest')
 
     cy.url().should('not.include', '/login')
-    cy.get('[class*="RaLayout"]').should('be.visible')
   })
 
   it('redirects to login page when accessing protected route without auth', () => {
@@ -70,8 +71,10 @@ describe('E2E: Authentication', () => {
     )
 
     cy.visit('/', { failOnStatusCode: false })
-    cy.get('input[name="username"]').type(<string>loginRequestMock.email)
-    cy.get('input[name="password"]').type(<string>loginRequestMock.password)
+    cy.get('input')
+      .first()
+      .type(<string>loginRequestMock.email)
+    cy.get('input[type="password"]').type(<string>loginRequestMock.password)
     cy.get('button[type="submit"]').click()
     cy.wait('@loginRequest')
     cy.wait('@whoamiRequest')

@@ -40,7 +40,7 @@ async function example() {
     crupdateBankFee: [
       {
         id: 'bank_001',
-        expense_id: 'exp_001',
+        expense: { id: 'exp_001', amount: 5000, job_id: 'job_001' },
         bank_name: 'BNP Paribas',
         description: 'Frais de virement international révisés',
       },

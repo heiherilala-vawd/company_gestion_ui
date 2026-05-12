@@ -40,7 +40,7 @@ async function example() {
     crupdateTravelExpense: [
       {
         id: 'travel_001',
-        expense_id: 'exp_003',
+        expense: { id: 'exp_003', amount: 10000, job_id: 'job_001' },
         departure_location: { id: 'wh_001', name: 'Entrepôt Nord' },
         arrival_location: { id: 'wh_002', name: 'Entrepôt Sud' },
         departure_date: '2024-02-20T08:00:00Z',

@@ -17,29 +17,50 @@ import {
 } from '../support/utils.ts'
 
 describe('E2E: Purchases', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function creatOrUpdateEquipment(isCreating: boolean) {
+    if (isCreating) {
+      cy.contains('Create').click()
+    } else {
+      cy.contains(<number>purchase1Mock.quantity).click()
+      cy.wait('@getPurchase')
+      cy.get('.RaEditButton-root').click()
+    }
+    selectWarehouse('supplier_id')
+    cy.get('[data-testid="input-is_equipment"]').click()
+    selectEquipment('equipment')
+
+    if (!isCreating) {
+      selectJob('expense\\.job_id')
+    }
+    cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
+      .clear()
+      .type('10000')
+
+    cy.get('button[type="submit"]').click()
+  }
+
+  function creatOrUpdateMaterial(isCreating: boolean) {
     const crupdatedData = crupdatePurchasesMock[0]
     if (isCreating) {
       cy.contains('Create').click()
     } else {
       cy.contains(<number>purchase1Mock.quantity).click()
       cy.wait('@getPurchase')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     selectWarehouse('supplier_id')
-    selectEquipment('equipment_id')
-    selectMaterial('material_id')
+    selectMaterial('material')
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(String(<number>crupdatedData.quantity))
 
-    selectJob('expense\\.job_id')
+    if (!isCreating) {
+      selectJob('expense\\.job_id')
+    }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
       .type('10000')
-    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
-      .clear()
-      .type('description of job', { force: true })
+
     cy.get('button[type="submit"]').click()
   }
 
@@ -49,7 +70,7 @@ describe('E2E: Purchases', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-purchases"]').click()
     cy.wait('@getPurchases')
@@ -71,11 +92,20 @@ describe('E2E: Purchases', () => {
     cy.contains(<string>purchase1Mock.expense?.comment).should('exist')
   })
 
-  it('should create a new purchase', () => {
+  it('should create a new purchase equipment', () => {
     cy.intercept('PUT', '**/purchases', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
-    creatOrUpdate(true)
+    creatOrUpdateEquipment(true)
+    cy.wait('@createPurchase')
+    cy.url().should('include', '/purchases')
+  })
+
+  it('should create a new purchase material', () => {
+    cy.intercept('PUT', '**/purchases', (req) => {
+      req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
+    }).as('createPurchase')
+    creatOrUpdateMaterial(true)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   })
@@ -84,7 +114,7 @@ describe('E2E: Purchases', () => {
     cy.intercept('PUT', '**/purchases', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('updatePurchase')
-    creatOrUpdate(false)
+    creatOrUpdateMaterial(false)
     cy.wait('@updatePurchase')
     cy.url().should('include', '/purchases')
   })
@@ -95,7 +125,7 @@ describe('E2E: Purchases', () => {
       '**/purchases',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createPurchaseFail')
-    creatOrUpdate(true)
+    creatOrUpdateMaterial(true)
     cy.wait('@createPurchaseFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
@@ -106,7 +136,7 @@ describe('E2E: Purchases', () => {
       '**/purchases',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updatePurchaseFail')
-    creatOrUpdate(false)
+    creatOrUpdateEquipment(false)
     cy.wait('@updatePurchaseFail')
     cy.get('.RaNotification-error').should('be.visible')
   })

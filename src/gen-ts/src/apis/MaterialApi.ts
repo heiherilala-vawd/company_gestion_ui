@@ -47,18 +47,22 @@ import {
 } from '../models/TooManyRequestsException'
 
 export interface CrupdateMaterialsRequest {
+  compId: string
   crupdateMaterial: Array<CrupdateMaterial>
 }
 
 export interface DeleteMaterialByIdRequest {
+  compId: string
   id: string
 }
 
 export interface GetMaterialByIdRequest {
+  compId: string
   id: string
 }
 
 export interface GetMaterialsRequest {
+  compId: string
   page?: number
   pageSize?: number
   name?: string
@@ -77,6 +81,13 @@ export class MaterialApi extends runtime.BaseAPI {
   async crupdateMaterialsRequestOpts(
     requestParameters: CrupdateMaterialsRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling crupdateMaterials().',
+      )
+    }
+
     if (requestParameters['crupdateMaterial'] == null) {
       throw new runtime.RequiredError(
         'crupdateMaterial',
@@ -99,7 +110,8 @@ export class MaterialApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/materials`
+    let urlPath = `/companies/{comp_id}/materials`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
       path: urlPath,
@@ -140,6 +152,13 @@ export class MaterialApi extends runtime.BaseAPI {
   async deleteMaterialByIdRequestOpts(
     requestParameters: DeleteMaterialByIdRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling deleteMaterialById().',
+      )
+    }
+
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
@@ -160,7 +179,8 @@ export class MaterialApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/materials/{id}`
+    let urlPath = `/companies/{comp_id}/materials/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
     return {
@@ -200,6 +220,13 @@ export class MaterialApi extends runtime.BaseAPI {
   async getMaterialByIdRequestOpts(
     requestParameters: GetMaterialByIdRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getMaterialById().',
+      )
+    }
+
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
@@ -220,7 +247,8 @@ export class MaterialApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/materials/{id}`
+    let urlPath = `/companies/{comp_id}/materials/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
     return {
@@ -261,6 +289,13 @@ export class MaterialApi extends runtime.BaseAPI {
   async getMaterialsRequestOpts(
     requestParameters: GetMaterialsRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getMaterials().',
+      )
+    }
+
     const queryParameters: any = {}
 
     if (requestParameters['page'] != null) {
@@ -298,7 +333,8 @@ export class MaterialApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/materials`
+    let urlPath = `/companies/{comp_id}/materials`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
       path: urlPath,
@@ -325,7 +361,7 @@ export class MaterialApi extends runtime.BaseAPI {
    * Get all materials
    */
   async getMaterials(
-    requestParameters: GetMaterialsRequest = {},
+    requestParameters: GetMaterialsRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<Array<Material>> {
     const response = await this.getMaterialsRaw(requestParameters, initOverrides)

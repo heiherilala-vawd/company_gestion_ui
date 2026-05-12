@@ -381,41 +381,7 @@
 <a name='L318'></a><a href='#L318'>318</a>
 <a name='L319'></a><a href='#L319'>319</a>
 <a name='L320'></a><a href='#L320'>320</a>
-<a name='L321'></a><a href='#L321'>321</a>
-<a name='L322'></a><a href='#L322'>322</a>
-<a name='L323'></a><a href='#L323'>323</a>
-<a name='L324'></a><a href='#L324'>324</a>
-<a name='L325'></a><a href='#L325'>325</a>
-<a name='L326'></a><a href='#L326'>326</a>
-<a name='L327'></a><a href='#L327'>327</a>
-<a name='L328'></a><a href='#L328'>328</a>
-<a name='L329'></a><a href='#L329'>329</a>
-<a name='L330'></a><a href='#L330'>330</a>
-<a name='L331'></a><a href='#L331'>331</a>
-<a name='L332'></a><a href='#L332'>332</a>
-<a name='L333'></a><a href='#L333'>333</a>
-<a name='L334'></a><a href='#L334'>334</a>
-<a name='L335'></a><a href='#L335'>335</a>
-<a name='L336'></a><a href='#L336'>336</a>
-<a name='L337'></a><a href='#L337'>337</a>
-<a name='L338'></a><a href='#L338'>338</a>
-<a name='L339'></a><a href='#L339'>339</a>
-<a name='L340'></a><a href='#L340'>340</a>
-<a name='L341'></a><a href='#L341'>341</a>
-<a name='L342'></a><a href='#L342'>342</a>
-<a name='L343'></a><a href='#L343'>343</a>
-<a name='L344'></a><a href='#L344'>344</a>
-<a name='L345'></a><a href='#L345'>345</a>
-<a name='L346'></a><a href='#L346'>346</a>
-<a name='L347'></a><a href='#L347'>347</a>
-<a name='L348'></a><a href='#L348'>348</a>
-<a name='L349'></a><a href='#L349'>349</a>
-<a name='L350'></a><a href='#L350'>350</a>
-<a name='L351'></a><a href='#L351'>351</a>
-<a name='L352'></a><a href='#L352'>352</a>
-<a name='L353'></a><a href='#L353'>353</a>
-<a name='L354'></a><a href='#L354'>354</a>
-<a name='L355'></a><a href='#L355'>355</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L321'></a><a href='#L321'>321</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -735,56 +701,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// pages/TravelOperationForm.tsx
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react'
 import {
   Title,
   Form,
-  TextInput,
-  NumberInput,
   DateTimeInput,
   ArrayInput,
   SimpleFormIterator,
   useNotify,
   ResourceContextProvider,
   useGetIdentity,
-  SelectInput,
   ReferenceInput,
+  TextInput,
+  NumberInput,
+  SelectInput,
 } from 'react-admin'
 import {
   Card,
@@ -797,6 +727,7 @@ import {
   Collapse,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
@@ -804,13 +735,14 @@ import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
 import { useNavigate } from 'react-router'
 import EquipmentForm from '../equipment/EquipmentForm.tsx'
+import { operationFormStyles } from '../../../style/components'
+import { transitions } from '../../../style/themeConfig'
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" ></span></span></span></span>
+const TravelOpera<span class="cstat-no" title="statement not covered" >tionForm = () =&gt; {</span>
+  const notify = useNotify()<span class="cstat-no" title="statement not covered" ></span>
+  const { isLoading<span class="cstat-no" title="statement not covered" >: identityLoading } = useGetIdentity()</span>
+  const navigate = useNavigate()
 &nbsp;
-const TravelOperationForm<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > = <span class="fstat-no" title="function not covered" >(</span>) =&gt; <span class="cstat-no" title="statement not covered" >{</span></span></span>
-  const notify = <span class="cstat-no" title="statement not covered" >useNotify()</span>
-  const { isLoading: identityLoading } = <span class="cstat-no" title="statement not covered" >useGetIdentity()</span>
-  const navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
-&nbsp;
-  // ÉTAT POUR LE FILTRAGE DYNAMIQUE
   const [departureLocationId, setDepartureLocationId] = <span class="cstat-no" title="statement not covered" >useState&lt;string | null&gt;(null)</span>
 &nbsp;
   const toInstant = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>ate: string) =&gt; {</span>
@@ -865,18 +797,17 @@ const TravelOperationForm<span class="cstat-no" title="statement not covered" ><
       })),
     }
 &nbsp;
-    // Construction de l'URL dynamique avec les paramètres
-    const url = <span class="cstat-no" title="statement not covered" >getMiddleUrl(`travel_operations`)</span>
-    const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token')</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!token) {</span>
-<span class="cstat-no" title="statement not covered" >      notify("Token d'authentification manquant", { type: 'error' })</span>
+    const url = getMiddleUrl(`travel_operations`)
+    const token <span class="cstat-no" title="statement not covered" >= localStorage.getItem('token')</span>
+<span class="cstat-no" title="statement not covered" ></span>
+    if (!token) {
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>  notify("Token d'authentification manquant", { type: 'error' })</span>
 <span class="cstat-no" title="statement not covered" >      return</span>
-    }
+    }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const response = <span class="cstat-no" title="statement not covered" >await fetch(url, {</span>
-        method: 'POST',
+    try {
+<span class="cstat-no" title="statement not covered" >      const response = await fetch(url, {</span>
+        method: 'POST',<span class="cstat-no" title="statement not covered" ></span>
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
@@ -885,69 +816,58 @@ const TravelOperationForm<span class="cstat-no" title="statement not covered" ><
         body: JSON.stringify(payload),
       })
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (!response.ok) {</span>
-        const errorData = <span class="cstat-no" title="statement not covered" >await response.json().catch(<span class="fstat-no" title="function not covered" >() =&gt; (<span class="cstat-no" title="statement not covered" >{</span>}))</span></span>
-<span class="cstat-no" title="statement not covered" >        throw new Error(errorData.message || `Erreur HTTP ${response.status}`)</span>
-      }
+      if (!response.ok) {
+<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>  const errorData = await response.json().catch(() =&gt; ({}))</span>
+        throw new Error(er<span class="cstat-no" title="statement not covered" >rorData.message || `Erreur H<span class="fstat-no" title="function not covered" >TTP ${r<span class="cstat-no" title="statement not covered" >e</span>spo</span>nse.status}`)</span>
+      }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-      const result = <span class="cstat-no" title="statement not covered" >await response.json()</span>
-<span class="cstat-no" title="statement not covered" >      notify('Opération de déplacement créée avec succès !', { type: 'success' })</span>
+      const result = await response.json()
+      notify('Opérati<span class="cstat-no" title="statement not covered" >on de déplacement créée avec succès !', { type: 'success' })</span>
 <span class="cstat-no" title="statement not covered" >      navigate(`/`)</span>
-    } catch (error: any) {
-<span class="cstat-no" title="statement not covered" >      console.error(error)</span>
+    } <span class="cstat-no" title="statement not covered" >catch (error: any) {</span>
+      console.error(error)
 <span class="cstat-no" title="statement not covered" >      notify(`Erreur : ${error.message}`, { type: 'error' })</span>
-    }
+    }<span class="cstat-no" title="statement not covered" ></span>
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (identityLoading) <span class="cstat-no" title="statement not covered" >return &lt;div&gt;Chargement de l’authentification...&lt;/div&gt;</span></span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;ResourceContextProvider value="travel_operations"&gt;
-      &lt;Card sx={{ maxWidth: 'xl', mx: 'auto', my: 2 }}&gt;
+  if (identityLoading) return &lt;div&gt;Chargement de l'authentification...&lt;/div&gt;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span></span>
+  return (
+<span class="cstat-no" title="statement not covered" >    &lt;ResourceContextProvider value="travel_operations"&gt;</span>
+      &lt;Card sx={operationFormStyles.card}&gt;
         &lt;CardContent&gt;
           &lt;Title title="Nouvelle Opération de Déplacement" /&gt;
           &lt;Form onSubmit={onSubmit}&gt;
-            {/* ---------- Informations Générales ---------- */}
-            &lt;Typography variant="h6" color="primary" sx={{ mt: 2, mb: 1 }}&gt;
+            &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
               📋 Informations Générales
             &lt;/Typography&gt;
 &nbsp;
-            &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}&gt;
+            &lt;Box sx={operationFormStyles.flexRow}&gt;
               &lt;TextInput
                 source="comment"
                 label="Commentaire"
                 multiline
                 rows={3}
                 fullWidth
-                sx={{ flex: 1 }}
+                sx={operationFormStyles.flexFull}
               /&gt;
             &lt;/Box&gt;
 &nbsp;
-            &lt;Divider sx={{ my: 3 }} /&gt;
+            &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-            {/* ---------- Transport / Trajet ---------- */}
             &lt;Box sx={{ mb: 2 }}&gt;
               &lt;Box
-                onClick={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etIsTravelOpen(!isTravelOpen)}</span>
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                  p: 1,
-                  borderRadius: 1,
-                  '&amp;:hover': {
-                    bgcolor: 'action.hover',
-                  },
-                }}
+                onClick={() =&gt; setIsTravelOpen(!isTravelOpen)}
+                sx={operationFormStyles.toggleBox}
               &gt;
-                &lt;Typography variant="h6" color="primary" sx={{ flex: 1 }}&gt;
+                &lt;Typograp<span class="fstat-no" title="function not covered" >hy var<span class="cstat-no" title="statement not covered" >i</span>ant="h6" color="primary" sx={operationFormStyles.flexFull}&gt;</span>
                   🚚 Détails du Trajet
                 &lt;/Typography&gt;
                 &lt;IconButton
                   size="small"
                   sx={{
                     transform: isTravelOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
+                    transition: transitions.spin,
                   }}
                 &gt;
                   &lt;ExpandMoreIcon /&gt;
@@ -955,22 +875,21 @@ const TravelOperationForm<span class="cstat-no" title="statement not covered" ><
               &lt;/Box&gt;
 &nbsp;
               &lt;Collapse in={isTravelOpen}&gt;
-                &lt;Box sx={{ pt: 2 }}&gt;
+                &lt;Box sx={operationFormStyles.collapseContent}&gt;
                   {add_autogenaration_id('travel_id')}
                   {add_autogenaration_id('expense_id')}
 &nbsp;
-                  &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}&gt;
-                    {/* MODIFIÉ : Séparer le ReferenceInput et le SelectInput pour capturer le changement */}
+                  &lt;Box sx={operationFormStyles.flexRow}&gt;
                     &lt;ReferenceInput source="departure_location_id" reference="warehouses"&gt;
                       &lt;SelectInput
                         source="departure_location_id"
                         label="Lieu de départ"
                         optionText="name"
                         fullWidth
-                        onChange={<span class="fstat-no" title="function not covered" >(e</span>vent) =&gt; {
-<span class="cstat-no" title="statement not covered" >                          setDepartureLocationId(event.target.value)</span>
+                        onChange={(event) =&gt; {
+                          setDepartureLocationId(event.target.value)
                         }}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       /&gt;
                     &lt;/ReferenceInput&gt;
 &nbsp;
@@ -980,23 +899,23 @@ const TravelOperationForm<span class="cstat-no" title="statement not covered" ><
                       label="Lieu d'arrivée"
                       optionText="name"
                       createUrlEnd={getMiddleUrl('warehouses')}
-                      createForm={&lt;WarehouseForm isCreateForm /&gt;}
-                      sx={{ flex: 1 }}
+                      createForm={<span class="fstat-no" title="function not covered" >&lt;W</span>arehouseForm isCreateForm /&gt;}
+                      sx={<span class="cstat-no" title="statement not covered" >operationFormStyles.flexFull}</span>
                     /&gt;
                   &lt;/Box&gt;
 &nbsp;
-                  &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}&gt;
+                  &lt;Box sx={operationFormStyles.collapseRow}&gt;
                     &lt;DateTimeInput
                       source="departure_date"
                       label="Date de départ"
-                      sx={{ flex: 1 }}
-                      defaultValue={new Date()}
+                      sx={operationFormStyles.flexFull}
+                      defaultValue={new Date().toISOString()}
                     /&gt;
                     &lt;DateTimeInput
                       source="arrival_date"
                       label="Date d'arrivée"
-                      sx={{ flex: 1 }}
-                      defaultValue={new Date()}
+                      sx={operationFormStyles.flexFull}
+                      defaultValue={new Date().toISOString()}
                     /&gt;
                   &lt;/Box&gt;
 &nbsp;
@@ -1005,114 +924,93 @@ const TravelOperationForm<span class="cstat-no" title="statement not covered" ><
               &lt;/Collapse&gt;
             &lt;/Box&gt;
 &nbsp;
-            &lt;Divider sx={{ my: 3 }} /&gt;
+            &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-            {/* ---------- Équipements ---------- */}
-            &lt;Typography variant="h6" color="primary" sx={{ mb: 1 }}&gt;
+            &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
               🔧 Équipements à déplacer
             &lt;/Typography&gt;
             &lt;ArrayInput source="equipment_lines" label=""&gt;
               &lt;SimpleFormIterator inline&gt;
-                &lt;Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                &gt;
+                &lt;Box sx={operationFormStyles.flexRowAlign}&gt;
                   {add_autogenaration_id('travel_equipment_id')}
 &nbsp;
                   &lt;ReferenceSelectWithCreate
                     source="equipment_id"
                     reference="equipment"
                     label="Équipement"
-                    optionText={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; <span class="cstat-no" title="statement not covered" >`${record.name} - ${record.description || ''}`}</span>
+                    optionText={(record) =&gt; `${record.name} - ${record.description || ''}`}
                     createUrlEnd={getMiddleUrl('equipment')}
                     createForm={&lt;EquipmentForm isCreateForm /&gt;}
                     filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                     extractionPath={'equipment_lines'}
                   /&gt;
                 &lt;/Box&gt;
               &lt;/SimpleFormIterator&gt;
             &lt;/ArrayInput&gt;
 &nbsp;
-            &lt;Divider sx={{ my: 3 }} /&gt;
+            &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-            {/* ---------- Matériaux ---------- */}
-            &lt;Typography variant="h6" color="primary" sx={{ mb: 1 }}&gt;
+            &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
               📦 Matériaux à déplacer
             &lt;/Typography&gt;
             &lt;ArrayInput source="material_lines" label=""&gt;
               &lt;SimpleFormIterator inline&gt;
-                &lt;Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                &gt;
+                &lt;Box sx={operationFormStyles.flexRowAlign}&gt;
                   {add_autogenaration_id('travel_material_id')}
 &nbsp;
                   &lt;ReferenceSelectWithCreate
-                    source="material_id"
+                    source="mate<span class="fstat-no" title="function not covered" >ri</span>al_id"<span class="cstat-no" title="statement not covered" ></span>
                     reference="materials"
                     label="Matériau"
-                    optionText={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; <span class="cstat-no" title="statement not covered" >`${record.name} / ${record.unit}`}</span>
+                    optionText={(record) =&gt; `${record.name} / ${record.unit}`}
                     createUrlEnd={getMiddleUrl('materials')}
                     createForm={&lt;MaterialForm isCreateForm /&gt;}
                     filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                     extractionPath={'material_lines'}
                   /&gt;
 &nbsp;
-                  &lt;NumberInput source="material_quantity" label="Quantité" sx={{ flex: 1 }} /&gt;
+                  &lt;NumberInput
+                    source="material_quantity"
+                    label="Quantité"
+                    sx={operationFormStyles.flexFull}
+                  /&gt;
                 &lt;/Box&gt;
               &lt;/SimpleFormIterator&gt;
             &lt;/ArrayInput&gt;
 &nbsp;
-            &lt;Divider sx={{ my: 3 }} /&gt;
+            &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-            {/* ---------- Personnel ---------- */}
-            &lt;Typography variant="h6" color="primary" sx={{ mb: 1 }}&gt;
+            &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
               👥 Personnel à déplacer
             &lt;/Typography&gt;
             &lt;ArrayInput source="people_lines" label=""&gt;
               &lt;SimpleFormIterator inline&gt;
-                &lt;Box
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    alignItems: 'center',
-                  }}
-                &gt;
+                &lt;Box sx={operationFormStyles.flexRowAlign}&gt;
                   {add_autogenaration_id('travel_people_id')}
 &nbsp;
                   &lt;ReferenceSelectWithCreate
                     source="user_id"
                     reference="users"
                     label="Utilisateur"
-                    optionText={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt;
-<span class="cstat-no" title="statement not covered" >                      `${record.first_name} ${record.last_name} - ${record.email || ''}`</span>
+                    optionText={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt;<span class="cstat-no" title="statement not covered" ></span>
+                      `${record.first_name} ${record.last_name} - ${record.email || ''}`
                     }
                     createUrlEnd={getMiddleUrl('users')}
                     createForm={&lt;div&gt;Formulaire de création d'utilisateur à définir&lt;/div&gt;}
-                    sx={{ flex: 2 }}
+                    sx={operationFormStyles.flexDouble}
                   /&gt;
                 &lt;/Box&gt;
               &lt;/SimpleFormIterator&gt;
             &lt;/ArrayInput&gt;
 &nbsp;
-            {/* Bouton de soumission personnalisé */}
-            &lt;Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}&gt;
+            &lt;Box sx={operationFormStyles.submitBox}&gt;
               &lt;Button type="submit" variant="contained" color="primary"&gt;
                 Créer l'opération de déplacement
+              &lt;/Button&gt;
+              &lt;Button startIcon={&lt;ArrowBackIcon /&gt;} onClick={() =&gt; navigate('/')} sx={{ ml: 1 }}&gt;
+                Retour
               &lt;/Button&gt;
             &lt;/Box&gt;
           &lt;/Form&gt;
@@ -1132,7 +1030,7 @@ export default TravelOperationForm
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

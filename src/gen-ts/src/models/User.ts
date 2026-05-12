@@ -97,6 +97,12 @@ export interface User {
    * @memberof User
    */
   email?: string
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  company_id?: string
 }
 
 /**
@@ -126,6 +132,7 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
     last_name: json['last_name'] == null ? undefined : json['last_name'],
     sex: json['sex'] == null ? undefined : SexFromJSON(json['sex']),
     email: json['email'] == null ? undefined : json['email'],
+    company_id: json['company_id'] == null ? undefined : json['company_id'],
   }
 }
 
@@ -152,5 +159,6 @@ export function UserToJSONTyped(value?: User | null, ignoreDiscriminator: boolea
     last_name: value['last_name'],
     sex: SexToJSON(value['sex']),
     email: value['email'],
+    company_id: value['company_id'],
   }
 }

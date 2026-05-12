@@ -84,30 +84,7 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a>
-<a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,32 +109,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">54x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
   List,
-  Datagrid,
   TextField,
   SearchInput,
   EditButton,
@@ -165,41 +118,19 @@
   DateField,
   FunctionField,
 } from 'react-admin'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 &nbsp;
 const OtherExpenseFilters = [&lt;SearchInput source="description" alwaysOn /&gt;]
 &nbsp;
 export default function OtherExpenseList() {
   return (
     &lt;List resource="other_expenses" filters={OtherExpenseFilters} perPage={25}&gt;
-      &lt;Datagrid rowClick="show"&gt;
-        &lt;TextField source="expense.amount" label="Pris dépense" /&gt;
-        &lt;TextField source="expense.comment" label="Commentaire" /&gt;
-        &lt;TextField source="expense.job_id" label="Id travail" /&gt;
+      &lt;ResponsiveDatagrid priorityFields={['expense.amount', 'description']}&gt;
+        &lt;TextField source="expense.amount" label="Montant" /&gt;
         &lt;TextField source="description" label="Description" /&gt;
-        &lt;DateField source="created_at" label="Créé le" showTime /&gt;
-        &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
-        {/* Nom complet du créateur */}
-        &lt;FunctionField
-          label="Créé par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.created_by?.first_name} {record.created_by?.last_name}
-            &lt;/span&gt;
-          )}
-        /&gt;
-&nbsp;
-        {/* Nom complet du modificateur */}
-        &lt;FunctionField
-          label="Modifié par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.updated_by?.first_name} {record.updated_by?.last_name}
-            &lt;/span&gt;
-          )}
-        /&gt;
+        &lt;TextField source="expense.comment" label="Commentaire" /&gt;
         &lt;EditButton /&gt;
-        &lt;DeleteButton /&gt;
-      &lt;/Datagrid&gt;
+      &lt;/ResponsiveDatagrid&gt;
     &lt;/List&gt;
   )
 }
@@ -212,7 +143,7 @@ export default function OtherExpenseList() {
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

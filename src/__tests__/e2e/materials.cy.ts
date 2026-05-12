@@ -15,7 +15,7 @@ describe('E2E: Materials', () => {
     } else {
       cy.contains(<string>material1Mock.name).click()
       cy.wait('@getMaterial')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     cy.get('[data-testid="input-name"] input')
       .clear()

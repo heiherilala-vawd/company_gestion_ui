@@ -15,6 +15,7 @@
 | `last_name`  | string                    |
 | `sex`        | [Sex](Sex.md)             |
 | `email`      | string                    |
+| `company_id` | string                    |
 
 ## Example
 
@@ -34,6 +35,7 @@ const example = {
   "last_name": Dupont,
   "sex": null,
   "email": jean.dupont@example.com,
+  "company_id": comp_001,
 } satisfies User
 
 console.log(example)

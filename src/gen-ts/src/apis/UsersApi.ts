@@ -43,18 +43,22 @@ import {
 import { type User, UserFromJSON, UserToJSON } from '../models/User'
 
 export interface CrupdateUsersRequest {
+  compId: string
   crupdateUser: Array<CrupdateUser>
 }
 
 export interface DeleteUserByIdRequest {
+  compId: string
   id: string
 }
 
 export interface GetUserByIdRequest {
+  compId: string
   id: string
 }
 
 export interface GetUsersRequest {
+  compId: string
   page?: number
   pageSize?: number
   firstName?: string
@@ -73,6 +77,13 @@ export class UsersApi extends runtime.BaseAPI {
   async crupdateUsersRequestOpts(
     requestParameters: CrupdateUsersRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling crupdateUsers().',
+      )
+    }
+
     if (requestParameters['crupdateUser'] == null) {
       throw new runtime.RequiredError(
         'crupdateUser',
@@ -95,7 +106,8 @@ export class UsersApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/users`
+    let urlPath = `/companies/{comp_id}/users`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
       path: urlPath,
@@ -138,6 +150,13 @@ export class UsersApi extends runtime.BaseAPI {
   async deleteUserByIdRequestOpts(
     requestParameters: DeleteUserByIdRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling deleteUserById().',
+      )
+    }
+
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
@@ -158,7 +177,8 @@ export class UsersApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/users/{id}`
+    let urlPath = `/companies/{comp_id}/users/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
     return {
@@ -198,6 +218,13 @@ export class UsersApi extends runtime.BaseAPI {
   async getUserByIdRequestOpts(
     requestParameters: GetUserByIdRequest,
   ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getUserById().',
+      )
+    }
+
     if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
         'id',
@@ -218,7 +245,8 @@ export class UsersApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/users/{id}`
+    let urlPath = `/companies/{comp_id}/users/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
     return {
@@ -257,6 +285,13 @@ export class UsersApi extends runtime.BaseAPI {
    * Creates request options for getUsers without sending the request
    */
   async getUsersRequestOpts(requestParameters: GetUsersRequest): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getUsers().',
+      )
+    }
+
     const queryParameters: any = {}
 
     if (requestParameters['page'] != null) {
@@ -294,7 +329,8 @@ export class UsersApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/users`
+    let urlPath = `/companies/{comp_id}/users`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
       path: urlPath,
@@ -321,7 +357,7 @@ export class UsersApi extends runtime.BaseAPI {
    * Get all users
    */
   async getUsers(
-    requestParameters: GetUsersRequest = {},
+    requestParameters: GetUsersRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<Array<User>> {
     const response = await this.getUsersRaw(requestParameters, initOverrides)

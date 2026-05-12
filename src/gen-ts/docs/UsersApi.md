@@ -2,16 +2,16 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                           | HTTP request           | Description                               |
-| ------------------------------------------------ | ---------------------- | ----------------------------------------- |
-| [**crupdateUsers**](UsersApi.md#crupdateusers)   | **PUT** /users         | Create new users or update existing users |
-| [**deleteUserById**](UsersApi.md#deleteuserbyid) | **DELETE** /users/{id} | Delete a user by identifier               |
-| [**getUserById**](UsersApi.md#getuserbyid)       | **GET** /users/{id}    | Get user by identifier                    |
-| [**getUsers**](UsersApi.md#getusers)             | **GET** /users         | Get all users                             |
+| Method                                           | HTTP request                               | Description                               |
+| ------------------------------------------------ | ------------------------------------------ | ----------------------------------------- |
+| [**crupdateUsers**](UsersApi.md#crupdateusers)   | **PUT** /companies/{comp_id}/users         | Create new users or update existing users |
+| [**deleteUserById**](UsersApi.md#deleteuserbyid) | **DELETE** /companies/{comp_id}/users/{id} | Delete a user by identifier               |
+| [**getUserById**](UsersApi.md#getuserbyid)       | **GET** /companies/{comp_id}/users/{id}    | Get user by identifier                    |
+| [**getUsers**](UsersApi.md#getusers)             | **GET** /companies/{comp_id}/users         | Get all users                             |
 
 ## crupdateUsers
 
-> Array&lt;User&gt; crupdateUsers(crupdateUser)
+> Array&lt;User&gt; crupdateUsers(compId, crupdateUser)
 
 Create new users or update existing users
 
@@ -32,6 +32,8 @@ async function example() {
   const api = new UsersApi(config)
 
   const body = {
+    // string
+    compId: comp_001,
     // Array<CrupdateUser>
     crupdateUser: [
       {
@@ -70,9 +72,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name             | Type                  | Description | Notes |
-| ---------------- | --------------------- | ----------- | ----- |
-| **crupdateUser** | `Array<CrupdateUser>` |             |       |
+| Name             | Type                  | Description | Notes                     |
+| ---------------- | --------------------- | ----------- | ------------------------- |
+| **compId**       | `string`              |             | [Defaults to `undefined`] |
+| **crupdateUser** | `Array<CrupdateUser>` |             |                           |
 
 ### Return type
 
@@ -102,7 +105,7 @@ example().catch(console.error)
 
 ## deleteUserById
 
-> deleteUserById(id)
+> deleteUserById(compId, id)
 
 Delete a user by identifier
 
@@ -122,6 +125,8 @@ async function example() {
 
   const body = {
     // string
+    compId: comp_001,
+    // string
     id: usr_123456,
   } satisfies DeleteUserByIdRequest
 
@@ -139,9 +144,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name   | Type     | Description | Notes                     |
-| ------ | -------- | ----------- | ------------------------- |
-| **id** | `string` |             | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -171,7 +177,7 @@ example().catch(console.error)
 
 ## getUserById
 
-> User getUserById(id)
+> User getUserById(compId, id)
 
 Get user by identifier
 
@@ -191,6 +197,8 @@ async function example() {
 
   const body = {
     // string
+    compId: comp_001,
+    // string
     id: usr_123456,
   } satisfies GetUserByIdRequest
 
@@ -208,9 +216,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name   | Type     | Description | Notes                     |
-| ------ | -------- | ----------- | ------------------------- |
-| **id** | `string` |             | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -240,7 +249,7 @@ example().catch(console.error)
 
 ## getUsers
 
-> Array&lt;User&gt; getUsers(page, pageSize, firstName, lastName, email, role)
+> Array&lt;User&gt; getUsers(compId, page, pageSize, firstName, lastName, email, role)
 
 Get all users
 
@@ -262,6 +271,8 @@ async function example() {
   const api = new UsersApi(config);
 
   const body = {
+    // string
+    compId: comp_001,
     // number (optional)
     page: 1,
     // number (optional)
@@ -292,6 +303,7 @@ example().catch(console.error);
 
 | Name          | Type     | Description                                 | Notes                                                                                          |
 | ------------- | -------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **compId**    | `string` |                                             | [Defaults to `undefined`]                                                                      |
 | **page**      | `number` |                                             | [Optional] [Defaults to `undefined`]                                                           |
 | **pageSize**  | `number` |                                             | [Optional] [Defaults to `undefined`]                                                           |
 | **firstName** | `string` | Filter users by first name, case is ignored | [Optional] [Defaults to `undefined`]                                                           |

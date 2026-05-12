@@ -9,6 +9,7 @@
 | `name`        | string                          |
 | `description` | string                          |
 | `unit`        | [MaterialUnit](MaterialUnit.md) |
+| `company_id`  | string                          |
 
 ## Example
 
@@ -22,6 +23,7 @@ const example = {
   "name": Ciment Portland,
   "description": Ciment Portland de qualité supérieure pour béton armé,
   "unit": null,
+  "company_id": comp_001,
 } satisfies CrupdateMaterial
 
 console.log(example)

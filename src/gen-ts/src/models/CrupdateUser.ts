@@ -72,6 +72,12 @@ export interface CrupdateUser {
    * @memberof CrupdateUser
    */
   password?: string
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateUser
+   */
+  company_id?: string
 }
 
 /**
@@ -98,6 +104,7 @@ export function CrupdateUserFromJSONTyped(json: any, ignoreDiscriminator: boolea
     sex: json['sex'] == null ? undefined : SexFromJSON(json['sex']),
     email: json['email'] == null ? undefined : json['email'],
     password: json['password'] == null ? undefined : json['password'],
+    company_id: json['company_id'] == null ? undefined : json['company_id'],
   }
 }
 
@@ -122,5 +129,6 @@ export function CrupdateUserToJSONTyped(
     sex: SexToJSON(value['sex']),
     email: value['email'],
     password: value['password'],
+    company_id: value['company_id'],
   }
 }

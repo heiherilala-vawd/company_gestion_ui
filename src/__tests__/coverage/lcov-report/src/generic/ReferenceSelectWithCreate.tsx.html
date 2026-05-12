@@ -195,11 +195,7 @@
 <a name='L134'></a><a href='#L134'>134</a>
 <a name='L135'></a><a href='#L135'>135</a>
 <a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a>
-<a name='L139'></a><a href='#L139'>139</a>
-<a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L137'></a><a href='#L137'>137</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -335,12 +331,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// ReferenceSelectWithCreate.tsx - Version finale
-import React, { useState } from 'react'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react'
 import { ReferenceInput, SelectInput, useDataProvider, useNotify, useRefresh } from 'react-admin'
 import {
   Dialog,
@@ -365,7 +356,7 @@ interface Props {
   createUrlEnd?: string
   createForm?: React.ReactNode
   onSuccess?: (newRecord: any) =&gt; void
-  extractionPath?: string // NOUVEAU : Chemin pour extraire les données
+  extractionPath?: string
 }
 &nbsp;
 export default function ReferenceSelectWithCreate({
@@ -381,56 +372,54 @@ export default function ReferenceSelectWithCreate({
   onSuccess,
   extractionPath,
 }: Props) {
-  const refresh = useRefresh() // Initialiser useRefresh
+  const refresh = useRefresh()
   const [dialogOpen, setDialogOpen] = useState(false)
   const methods = useForm()
   const dataProvider = useDataProvider()
   const notify = useNotify()
 &nbsp;
-  const onSubmit = <span class="fstat-no" title="function not covered" >async (d</span>ata: any) =&gt; {
-    // NOUVEAU : Extraire les données selon le chemin spécifié
-    let extractedData = <span class="cstat-no" title="statement not covered" >data</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (extractionPath) {</span>
-      // Si un chemin d'extraction est spécifié, on prend le premier élément du tableau
-<span class="cstat-no" title="statement not covered" >      if (Array.isArray(data[extractionPath]) &amp;&amp; data[extractionPath].length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >        extractedData = data[extractionPath][0]</span>
-<span class="cstat-no" title="statement not covered" >        console.log('Données extraites:', extractedData)</span>
-      } else {
+  const onSubmit = async (data: any) =&gt; {
+    let extractedDa<span class="fstat-no" title="function not covered" >ta = dat</span>a
+    if (extractionPath) {
+      if (Array.isArray(<span class="cstat-no" title="statement not covered" >data[extractionPath]) &amp;&amp; data[extractionPath].length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>    extractedData = data[extractionPath][0]</span>
+        console.log('Données extraites:', extractedData)
+<span class="cstat-no" title="statement not covered" >      } else {</span>
 <span class="cstat-no" title="statement not covered" >        console.warn(`Le chemin "${extractionPath}" n'existe pas ou n'est pas un tableau`)</span>
 <span class="cstat-no" title="statement not covered" >        notify('Erreur: Structure de données invalide', { type: 'error' })</span>
-<span class="cstat-no" title="statement not covered" >        return</span>
-      }
-    }
+        return
+      }<span class="cstat-no" title="statement not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    extractedData.id = extractedData.newId
+    delete extractedData.newId
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    extractedData.id = extractedData.newId</span>
-<span class="cstat-no" title="statement not covered" >    delete extractedData.newId</span>
-&nbsp;
-    const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token')</span>
+<span class="cstat-no" title="statement not covered" >    const token = localStorage.getItem('token')</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
-<span class="cstat-no" title="statement not covered" >      if (createUrlEnd) {</span>
-        const response = <span class="cstat-no" title="statement not covered" >await fetch(createUrlEnd, {</span>
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
+      if (createUrlEnd) {
+        const resp<span class="cstat-no" title="statement not covered" >onse = await fetch(createUrlEnd, {</span>
+<span class="cstat-no" title="statement not covered" >          method: 'PUT',</span>
+<span class="cstat-no" title="statement not covered" >          headers: {</span>
+            'Content-Type<span class="cstat-no" title="statement not covered" >': 'application/json',</span>
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify([extractedData]),
         })
-<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (!response.ok) <span class="cstat-no" title="statement not covered" >throw new Error('Erreur')</span></span>
-        const newRecord = <span class="cstat-no" title="statement not covered" >await response.json()</span>
-<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (onSuccess) <span class="cstat-no" title="statement not covered" >onSuccess(newRecord)</span></span>
-      } else {
-<span class="cstat-no" title="statement not covered" >        await dataProvider.create(reference, { extractedData })</span>
-      }
-<span class="cstat-no" title="statement not covered" >      notify('Création réussie', { type: 'success' })</span>
-<span class="cstat-no" title="statement not covered" >      setDialogOpen(false)</span>
-<span class="cstat-no" title="statement not covered" >      refresh()</span>
+        if (!response.ok) throw new Error('Erreur')
+        const newRecord = await response.json()
+        if (onSuccess) onSuccess(newRecord)
+      } <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>else {<span class="cstat-no" title="statement not covered" ></span></span>
+        await dataProvider<span class="cstat-no" title="statement not covered" >.create(reference, { extractedData })</span>
+      }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span></span>
+      notify('Création réussie', { type: 'success' })
+      se<span class="cstat-no" title="statement not covered" >tDialogOpen(false)</span>
+      refresh()
 <span class="cstat-no" title="statement not covered" >      methods.reset()</span>
-    } catch (error: any) {
+    } <span class="cstat-no" title="statement not covered" >catch (error: any) {</span>
 <span class="cstat-no" title="statement not covered" >      notify(`Erreur: ${error.message}`, { type: 'error' })</span>
-    }
+    }<span class="cstat-no" title="statement not covered" ></span>
   }
-&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>
   return (
     &lt;&gt;
       &lt;Box
@@ -438,9 +427,8 @@ export default function ReferenceSelectWithCreate({
         alignItems="center"
         gap={1}
         data-testid={'input-' + reference + '-id'}
-        style={{ width: '100%' }}
+        sx={{ width: '100%' }}
       &gt;
-        {/*'input-' + label + '-id'*/}
         &lt;Box flex={1}&gt;
           &lt;ReferenceInput
             source={source}
@@ -454,25 +442,25 @@ export default function ReferenceSelectWithCreate({
           &lt;/ReferenceInput&gt;
         &lt;/Box&gt;
         {createForm &amp;&amp; (
-          &lt;IconButton onClick={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etDialogOpen(true)} c</span>olor="primary"&gt;
+          &lt;IconButton onClick={() =&gt; setDialogOpen(true)} color="primary"&gt;
             &lt;AddIcon /&gt;
           &lt;/IconButton&gt;
         )}
-      &lt;/Box&gt;
+      &lt;/Box&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 &nbsp;
-      &lt;Dialog open={dialogOpen} onClose={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etDialogOpen(false)} m</span>axWidth="sm" fullWidth&gt;
+      &lt;Dialog open={dialogOpen} onClose={() =&gt; setDialogOpen(false)} maxWidth="sm" fullWidth&gt;
         &lt;FormProvider {...methods}&gt;
           &lt;form onSubmit={methods.handleSubmit(onSubmit)}&gt;
-            &lt;DialogTitle&gt;Créer un nouveau {label || <span class="branch-1 cbranch-no" title="branch not covered" >reference}&lt;</span>/DialogTitle&gt;
-            &lt;DialogContent&gt;
+            &lt;DialogTitle&gt;Créer un nouveau {label || reference}&lt;/DialogTitle&gt;
+            &lt;DialogContent&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
               &lt;Box mt={1}&gt;{createForm}&lt;/Box&gt;
             &lt;/DialogContent&gt;
-            &lt;DialogActions&gt;
-              &lt;Button onClick={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etDialogOpen(false)}&gt;A</span>nnuler&lt;/Button&gt;
+            &lt;DialogActions&gt;<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+              &lt;Button onClick={() =&gt; setDialogOpen(false)}&gt;Annuler&lt;/Button&gt;
               &lt;Button type="submit" variant="contained" color="primary"&gt;
                 Créer
               &lt;/Button&gt;
-            &lt;/DialogActions&gt;
+            &lt;/DialogActions&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
           &lt;/form&gt;
         &lt;/FormProvider&gt;
       &lt;/Dialog&gt;
@@ -488,7 +476,7 @@ export default function ReferenceSelectWithCreate({
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

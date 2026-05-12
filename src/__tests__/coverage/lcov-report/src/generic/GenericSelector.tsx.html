@@ -244,7 +244,22 @@
 <a name='L183'></a><a href='#L183'>183</a>
 <a name='L184'></a><a href='#L184'>184</a>
 <a name='L185'></a><a href='#L185'>185</a>
-<a name='L186'></a><a href='#L186'>186</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L186'></a><a href='#L186'>186</a>
+<a name='L187'></a><a href='#L187'>187</a>
+<a name='L188'></a><a href='#L188'>188</a>
+<a name='L189'></a><a href='#L189'>189</a>
+<a name='L190'></a><a href='#L190'>190</a>
+<a name='L191'></a><a href='#L191'>191</a>
+<a name='L192'></a><a href='#L192'>192</a>
+<a name='L193'></a><a href='#L193'>193</a>
+<a name='L194'></a><a href='#L194'>194</a>
+<a name='L195'></a><a href='#L195'>195</a>
+<a name='L196'></a><a href='#L196'>196</a>
+<a name='L197'></a><a href='#L197'>197</a>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -429,9 +444,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">140x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useState } from 'react'
 import { useNotify, useRefresh, Loading } from 'react-admin'
-import { FormControl, InputLabel, Select, MenuItem, Box, Typography } from '@mui/material'
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  Box,
+  Typography,
+  Alert,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { formStyles } from '../style/components'
 &nbsp;
 interface GenericEntity {
@@ -449,9 +488,8 @@ interface GenericSelectorProps {
   apiEndpoint: string
   label?: string
   labelPrefix?: string
+  icon?: React.ReactNode
   useContext: () =&gt; { currentId: string | null; selectEntity: (id: string | null) =&gt; void }
-  className?: string
-  style?: React.CSSProperties
   fullWidth?: boolean
   onEntitySelected?: (entity: GenericEntity) =&gt; void
   onLoading?: (loading: boolean) =&gt; void
@@ -467,9 +505,8 @@ export const GenericSelector: React.FC&lt;GenericSelectorProps&gt; = ({
   apiEndpoint,
   label,
   labelPrefix,
+  icon,
   useContext,
-  className = '',
-  style = {},
   fullWidth = true,
   onEntitySelected,
   onLoading,
@@ -479,13 +516,15 @@ export const GenericSelector: React.FC&lt;GenericSelectorProps&gt; = ({
   allOptionLabel = 'Tous',
   displayFields = ['name', 'description', 'title', 'label', 'code'],
 }) =&gt; {
+  const muiTheme = useTheme()
+  const isXs = useMediaQuery(muiTheme.breakpoints.only('xs'))
   const { currentId, selectEntity } = useContext()
   const [entities, setEntities] = useState&lt;GenericEntity[]&gt;([])
   const [loading, setLoading] = useState&lt;boolean&gt;(true)
   const [error, setError] = useState&lt;string | null&gt;(null)
 &nbsp;
   const notify = useNotify()
-  const refresh = useRefresh()
+  co<span class="cstat-no" title="statement not covered" >nst refresh = useRefresh()</span>
 &nbsp;
   const getDisplayText = (entity: GenericEntity): string =&gt; {
     for (const field of displayFields) {
@@ -494,12 +533,12 @@ export const GenericSelector: React.FC&lt;GenericSelectorProps&gt; = ({
         return value
       }
     }
-<span class="cstat-no" title="statement not covered" >    return entity.id || '?'</span>
+    return entity.id || '?'
   }
 &nbsp;
   useEffect(() =&gt; {
     const fetchEntities = async () =&gt; {
-      try {
+      try {<span class="branch-0 cbranch-no" title="branch not covered" ></span>
         setLoading(true)
         setError(null)
         onLoading?.(true)
@@ -508,99 +547,105 @@ export const GenericSelector: React.FC&lt;GenericSelectorProps&gt; = ({
         if (!token) throw new Error('Non authentifié')
 &nbsp;
         const apiBase = import.meta.env.VITE_API_URL ?? ''
-        const url = apiBase ? <span class="branch-0 cbranch-no" title="branch not covered" >`${apiBase}${apiEndpoint}` : a</span>piEndpoint
+        const url = apiBase ? `${apiBase}${apiEndpoint}` : apiEndpoint
         const response = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-          },
+          },<span class="branch-1 cbranch-no" title="branch not covered" ></span>
         })
 &nbsp;
-        if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`)
+        if (!response.ok) throw<span class="branch-1 cbranch-no" title="branch not covered" > new Error(</span>`Erreur HTTP: ${response.status}`)
 &nbsp;
         const data: GenericEntity[] = await response.json()
         setEntities(data)
 &nbsp;
         if (autoSelectFirst &amp;&amp; !currentId &amp;&amp; data.length &gt; 0) {
-          const selectionId = data[0].id ?? <span class="branch-1 cbranch-no" title="branch not covered" >''</span>
-          if (selectionId) {
+          const selectionId = data[0].id ?? ''
+          if (selectionId) {<span class="branch-1 cbranch-no" title="branch not covered" ></span>
             selectEntity(selectionId)
-            notify(`${label || <span class="branch-1 cbranch-no" title="branch not covered" >entityType}</span> "${getDisplayText(data[0])}" sélectionné`, {
+            notify(`${label || entityType} "${getDisplayText(data[0])}" sélectionné`, {
               type: 'info',
             })
             onEntitySelected?.(data[0])
           }
         }
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : <span class="branch-1 cbranch-no" title="branch not covered" >'Erreur inconnue'</span>
+        const errorMessage = err instanceof Error ? err.message : 'Erreur inconnue'
         setError(errorMessage)
         onError?.(errorMessage)
         notify(`Erreur: ${errorMessage}`, { type: 'error' })
-      } finally {
-        setLoading(false)
-        onLoading?.(false)
-      }
-    }
-&nbsp;
+      } finally {<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>    setLoading(false)</span>
+<span class="cstat-no" title="statement not covered" >        onLoading?.(false)</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
     fetchEntities()
   }, [apiEndpoint])
-&nbsp;
-  const handleEntityChange = <span class="fstat-no" title="function not covered" >(e</span>ntityId: string) =&gt; {
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (showAllOption &amp;&amp; entityId === 'all') {</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+  co<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span>nst handleEntityChange = (entityId: string) =&gt; {</span>
+    if<span class="cstat-no" title="statement not covered" > (showAllOption &amp;&amp; entityId === 'all') {</span>
 <span class="cstat-no" title="statement not covered" >      selectEntity(null)</span>
-<span class="cstat-no" title="statement not covered" >      notify(`Tous les ${label || entityType}s sélectionnés`, { type: 'info' })</span>
-<span class="cstat-no" title="statement not covered" >      refresh()</span>
+      notify(`Tous les ${label || entityType}s sélectionnés`, { type: 'info' })
+      refresh()
 <span class="cstat-no" title="statement not covered" >      return</span>
-    }
+    }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-    const selectedEntity = <span class="cstat-no" title="statement not covered" >entities.find(<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >e.id === entityId)</span></span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (selectedEntity) {</span>
-<span class="cstat-no" title="statement not covered" >      selectEntity(entityId)</span>
-<span class="cstat-no" title="statement not covered" >      notify(`${label || entityType} changé pour "${getDisplayText(selectedEntity)}"`, {</span>
+    const selectedEntity = entities.find((e) =&gt; e.id === entityId)
+    if (selectedEntity) {
+      selectEntity(entityId)
+      notify(`${label || entityType} changé pour "${getDisplayText(selectedEntity)}"`, {
         type: 'success',
       })
-<span class="cstat-no" title="statement not covered" >      refresh()</span>
-<span class="cstat-no" title="statement not covered" >      onEntitySelected?.(selectedEntity)</span>
+      refresh()
+      onEntitySelected?.(selectedEntity)
     }
   }
-&nbsp;
-  if (loading) {
+<span class="missing-if-branch" title="if path not taken" >I</span>
+  if<span class="cstat-no" title="statement not covered" > (loading) {</span>
     return &lt;Loading loadingSecondary={`Chargement...`} /&gt;
   }
-&nbsp;
-  if (error) {
-    return &lt;div style={{ color: 'red', padding: 10 }}&gt;⚠️ {error}&lt;/div&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  if (error) {<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    return &lt;Alert severity="error"&gt;⚠️<span class="branch-1 cbranch-no" title="branch not covered" > {error}&lt;/Alert&gt;</span>
   }
 &nbsp;
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (entities.length === 0) {
-<span class="cstat-no" title="statement not covered" >    return &lt;div style={{ padding: 10, color: 'orange' }}&gt;⚠️ Aucun&lt;/div&gt;</span>
+  if (entities.length === 0) {
+    return &lt;Alert severity="warning"&gt;⚠️ Aucun&lt;/Alert&gt;
   }
 &nbsp;
-  const displayLabel = label || <span class="branch-1 cbranch-no" title="branch not covered" >entityType.charAt(0).toUpperCase() + entityType.slice(1)</span>
-  const prefixDisplay = labelPrefix || <span class="branch-1 cbranch-no" title="branch not covered" >`${displayLabel}: `</span>
-  const currentValue = currentId || (<span class="branch-1 cbranch-no" title="branch not covered" >showAllOption ? 'all' : '')</span>
+  const displayLabel = label || entityType.charAt(0).toUpperCase() + entityType.slice(1)
+  const prefixDisplay = labelPrefix || `${displayLabel}: `
+  const currentValue = currentId || (showAllOption ? 'all' : '')
 &nbsp;
   return (
     &lt;Box sx={formStyles.selectorBox}&gt;
-      {prefixDisplay &amp;&amp; (
+      {icon &amp;&amp; !isXs &amp;&amp; &lt;Box sx={formStyles.selectorIcon}&gt;{icon}&lt;/Box&gt;}
+      {prefixDisplay &amp;&amp; !isXs &amp;&amp; (
         &lt;Typography variant="caption" sx={formStyles.selectorLabel}&gt;
           {prefixDisplay}
-        &lt;/Typography&gt;
+        &lt;/Typography<span class="fstat-no" title="function not covered" >&gt;<span class="cstat-no" title="statement not covered" ></span></span>
       )}
       &lt;FormControl
         variant="standard"
         size="small"
-        sx={formStyles.selectorWrapper}
+        sx={<span class="branch-1 cbranch-no" title="branch not covered" >formStyles.selectorWrapper}</span>
         fullWidth={fullWidth}
       &gt;
         &lt;Select
           value={currentValue}
-          onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; <span class="cstat-no" title="statement not covered" >handleEntityChange(e.target.value as string)}</span>
+          onChange={(e) =&gt; handleEntityChange(e.target.value as string)}
           sx={formStyles.selectorInput}
           disableUnderline
+          renderValue={(val) =&gt; {
+            if (isXs &amp;&amp; icon) return icon
+            const ent = entities.find((e) =&gt; e.id === val)
+            return ent ? getDisplayText(ent) : ''
+          }}
         &gt;
           {showAllOption &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >            &lt;MenuItem value="all" sx={formStyles.input}&gt;</span>
+            &lt;MenuItem value="all" sx={formStyles.input}&gt;
               {allOptionLabel}
             &lt;/MenuItem&gt;
           )}
@@ -623,7 +668,7 @@ export const GenericSelector: React.FC&lt;GenericSelectorProps&gt; = ({
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

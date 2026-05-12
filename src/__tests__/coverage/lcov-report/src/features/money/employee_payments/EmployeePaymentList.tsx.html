@@ -118,15 +118,7 @@
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,43 +175,45 @@
 <span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
   List,
-  Datagrid,
   TextField,
   SelectField,
   SearchInput,
-  TextInput,
+  SelectInput,
+  ReferenceInput,
   EditButton,
   DeleteButton,
   DateField,
   FunctionField,
 } from 'react-admin'
+import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
+import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 &nbsp;
 const EmployerPaymentFilters = [
   &lt;SearchInput source="payment_description" alwaysOn /&gt;,
-  &lt;TextInput source="employee_id" label="Employé" /&gt;,
+  &lt;ReferenceInput source="employee_id" reference="users" perPage={100}&gt;
+    &lt;SelectInput optionText={(r: any) =&gt; `${r.first_name} ${r.last_name}`} label="Employé" /&gt;
+  &lt;/ReferenceInput&gt;,
+  &lt;SelectInput
+    source="payment_type"
+    label="Type de paiement"
+    choices={Object.entries(PaymentType).map(([k, v]) =&gt; ({ id: v, name: k }))}
+  /&gt;,
 ]
 &nbsp;
 export default function EmployeePaymentList() {
   return (
     &lt;List resource="employee_payments" filters={EmployerPaymentFilters} perPage={25}&gt;
-      &lt;Datagrid rowClick="show"&gt;
-        &lt;TextField source="expense.amount" label="Pris dépense" /&gt;
-        &lt;TextField source="expense.comment" label="Commentaire" /&gt;
-        &lt;TextField source="expense.job_id" label="Id travail" /&gt;
-        &lt;TextField source="employee.first_name" label="Nom persone" /&gt;
-        &lt;TextField source="employee.last_name" label="Prénomm persone" /&gt;
-        &lt;TextField source="payment_description" label="Description paiement" /&gt;
-&nbsp;
+      &lt;ResponsiveDatagrid
+        priorityFields={[
+          'expense.amount',
+          'payment_type',
+          'employee.first_name',
+          'employee.last_name',
+        ]}
+      &gt;
+        &lt;TextField source="expense.amount" label="Montant" /&gt;
         &lt;SelectField
           source="payment_type"
           label="Type"
@@ -229,30 +223,12 @@ export default function EmployeePaymentList() {
             { id: 'OTHER', name: 'Autre' },
           ]}
         /&gt;
-        &lt;DateField source="created_at" label="Créé le" showTime /&gt;
-        &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
-        {/* Nom complet du créateur */}
-        &lt;FunctionField
-          label="Créé par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.created_by?.first_name} {record.created_by?.last_name}
-            &lt;/span&gt;
-          )}
-        /&gt;
-&nbsp;
-        {/* Nom complet du modificateur */}
-        &lt;FunctionField
-          label="Modifié par"
-          render={(record) =&gt; (
-            &lt;span&gt;
-              {record.updated_by?.first_name} {record.updated_by?.last_name}
-            &lt;/span&gt;
-          )}
-        /&gt;
+        &lt;TextField source="employee.first_name" label="Prénom" /&gt;
+        &lt;TextField source="employee.last_name" label="Nom" /&gt;
+        &lt;TextField source="payment_description" label="Description" /&gt;
+        &lt;TextField source="expense.comment" label="Commentaire" /&gt;
         &lt;EditButton /&gt;
-        &lt;DeleteButton /&gt;
-      &lt;/Datagrid&gt;
+      &lt;/ResponsiveDatagrid&gt;
     &lt;/List&gt;
   )
 }
@@ -265,7 +241,7 @@ export default function EmployeePaymentList() {
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

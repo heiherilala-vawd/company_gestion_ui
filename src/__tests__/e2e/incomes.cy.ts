@@ -9,6 +9,7 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
+  selectIncomeType,
   selectJob,
 } from '../support/utils.ts'
 
@@ -20,9 +21,9 @@ describe('E2E: Incomes', () => {
     } else {
       cy.contains(<string>income1Mock.description).click()
       cy.wait('@getIncome')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
-    selectJob()
+    selectIncomeType('income_type_id')
     cy.get('[data-testid="input-source_organization"] input')
       .clear()
       .type(<string>crupdatedData.source_organization)
@@ -44,7 +45,7 @@ describe('E2E: Incomes', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-incomes"]').click()
     cy.wait('@getIncomes')

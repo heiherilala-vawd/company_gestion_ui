@@ -307,7 +307,7 @@ async function example() {
     amount: 50000,
     // string | Filter incomes by income type (optional)
     incomeTypeId: income_type_001,
-    // boolean | Filter incomes by money received status (has at least one receipt) (optional)
+    // boolean | Filter incomes by money received status (amount minus sum of receipts <= 0) (optional)
     moneyReceived: true,
   } satisfies GetIncomesRequest
 
@@ -325,19 +325,19 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name                   | Type      | Description                                                        | Notes                                |
-| ---------------------- | --------- | ------------------------------------------------------------------ | ------------------------------------ |
-| **compId**             | `string`  |                                                                    | [Defaults to `undefined`]            |
-| **jobId**              | `string`  |                                                                    | [Defaults to `undefined`]            |
-| **userId**             | `string`  |                                                                    | [Defaults to `undefined`]            |
-| **page**               | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
-| **pageSize**           | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
-| **sourceOrganization** | `string`  | Filter incomes by source organization, case is ignored             | [Optional] [Defaults to `undefined`] |
-| **invoiceReference**   | `string`  | Filter incomes by invoice reference, case is ignored               | [Optional] [Defaults to `undefined`] |
-| **description**        | `string`  | Filter incomes by description, case is ignored                     | [Optional] [Defaults to `undefined`] |
-| **amount**             | `number`  |                                                                    | [Optional] [Defaults to `undefined`] |
-| **incomeTypeId**       | `string`  | Filter incomes by income type                                      | [Optional] [Defaults to `undefined`] |
-| **moneyReceived**      | `boolean` | Filter incomes by money received status (has at least one receipt) | [Optional] [Defaults to `undefined`] |
+| Name                   | Type      | Description                                                                         | Notes                                |
+| ---------------------- | --------- | ----------------------------------------------------------------------------------- | ------------------------------------ |
+| **compId**             | `string`  |                                                                                     | [Defaults to `undefined`]            |
+| **jobId**              | `string`  |                                                                                     | [Defaults to `undefined`]            |
+| **userId**             | `string`  |                                                                                     | [Defaults to `undefined`]            |
+| **page**               | `number`  |                                                                                     | [Optional] [Defaults to `undefined`] |
+| **pageSize**           | `number`  |                                                                                     | [Optional] [Defaults to `undefined`] |
+| **sourceOrganization** | `string`  | Filter incomes by source organization, case is ignored                              | [Optional] [Defaults to `undefined`] |
+| **invoiceReference**   | `string`  | Filter incomes by invoice reference, case is ignored                                | [Optional] [Defaults to `undefined`] |
+| **description**        | `string`  | Filter incomes by description, case is ignored                                      | [Optional] [Defaults to `undefined`] |
+| **amount**             | `number`  |                                                                                     | [Optional] [Defaults to `undefined`] |
+| **incomeTypeId**       | `string`  | Filter incomes by income type                                                       | [Optional] [Defaults to `undefined`] |
+| **moneyReceived**      | `boolean` | Filter incomes by money received status (amount minus sum of receipts &lt;&#x3D; 0) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

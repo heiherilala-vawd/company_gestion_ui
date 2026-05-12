@@ -408,9 +408,7 @@
 <a name='L345'></a><a href='#L345'>345</a>
 <a name='L346'></a><a href='#L346'>346</a>
 <a name='L347'></a><a href='#L347'>347</a>
-<a name='L348'></a><a href='#L348'>348</a>
-<a name='L349'></a><a href='#L349'>349</a>
-<a name='L350'></a><a href='#L350'>350</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L348'></a><a href='#L348'>348</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -757,22 +755,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// pages/PurchaseActivityForm.tsx
-import React, { useState } from 'react'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from 'react'
 import {
   Title,
   Form,
-  TextInput,
-  NumberInput,
   DateTimeInput,
   ArrayInput,
   SimpleFormIterator,
   useNotify,
   ResourceContextProvider,
   useGetIdentity,
-  required,
+  TextInput,
+  NumberInput,
 } from 'react-admin'
 import {
   Card,
@@ -785,15 +779,17 @@ import {
   Collapse,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useForm, FormProvider } from 'react-hook-form'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
 import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
-import { redirect, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+import { operationFormStyles } from '../../../style/components'
+import { transitions } from '../../../style/themeConfig'
 &nbsp;
-// Valeurs initiales
 const initialEquipmentLine = {
   equipment_id: generateId(),
   equipment_name: '',
@@ -815,46 +811,44 @@ const initialMaterialLine = {
 const PurchaseActivityForm<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > = <span class="fstat-no" title="function not covered" >(</span>) =&gt; <span class="cstat-no" title="statement not covered" >{</span></span></span>
   const notify = <span class="cstat-no" title="statement not covered" >useNotify()</span>
 &nbsp;
-  // Récupération du token authentication (à adapter selon votre authProvider)
-  const { isLoading: identityLoading } = <span class="cstat-no" title="statement not covered" >useGetIdentity()</span>
-&nbsp;
-  // Initialisation de react-hook-form
-  const methods = <span class="cstat-no" title="statement not covered" >useForm({</span>
+  const { isLoading: identityLoading } = useGetIdentity()
+<span class="cstat-no" title="statement not covered" ></span>
+  const methods = useForm({
     defaultValues: {
-      supplier_id: '',
+      supplier_id:<span class="cstat-no" title="statement not covered" > '',</span>
       comment: '',
       equipment_lines: [initialEquipmentLine],
       material_lines: [initialMaterialLine],
       departure_warehouse: null,
       arrival_warehouse: null,
-      departure_date: new Date().toISOString().slice(0, 16),
-      arrival_date: new Date().toISOString().slice(0, 16),
+      departure_date: new Date().toISOString(),
+      arrival_date: new Date().toISOString(),
       travel_fee: '',
     },
   })
 &nbsp;
-  const toInstant = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(d</span>ate: string) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!date) <span class="cstat-no" title="statement not covered" >return null</span></span>
-<span class="cstat-no" title="statement not covered" >    return new Date(date).toISOString()</span>
+  const toInstant = (date: string) =&gt; {
+    if (!date) return null
+    return new Date(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >da</span>te).toISOString()</span>
+  }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  const add_autogenaration_id = (source: string) =&gt; {
+    return (
+      &lt;TextInput source={source}<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > r</span>eadOnly defaultValue={generateId()} sx={{ display: 'none' }} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >    )</span>
   }
 &nbsp;
-  const add_autogenaration_id = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(s</span>ource: string) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;TextInput source={source} readOnly defaultValue={generateId()} sx={{ display: 'none' }} /&gt;
-    )
-  }
-&nbsp;
-  const [showTransport, setShowTransport] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
-  const [isTravelOpen, setIsTravelOpen] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
-  const navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
-&nbsp;
-  const onSubmit = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (d</span>ata: any) =&gt; {</span>
-    const payload = <span class="cstat-no" title="statement not covered" >{</span>
-      id: data.id,
-      supplier_id: data.departure_warehouse,
-      equipment_lines: (data.equipment_lines || []).map(<span class="fstat-no" title="function not covered" >(l</span>ine: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+  const [showTransport, setShowTransport] = useState(false)
+  const [isTravelOpen, setIsTravelOpen] = useState(false)
+  const navigate = useNavigate()<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  const onSubmit = <span class="cstat-no" title="statement not covered" >async (data: any) =&gt; {</span>
+    const payload = {
+      id: data.id,<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+      supplier_id: d<span class="cstat-no" title="statement not covered" >ata.departure_warehouse,</span>
+      equipment_lines: (data.equipment_lines || []).map((line: any) =&gt; ({
         equipment: {
-          id: line.equipment_id,
+          id: line.equipment_id,<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
           name: line.equipment_name || null,
           description: line.description || null,
         },
@@ -864,9 +858,9 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
         unit_price: parseFloat(line.unit_price) || 0,
       })),
 &nbsp;
-      material_lines: (data.material_lines || []).map(<span class="fstat-no" title="function not covered" >(l</span>ine: any) =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+      material_lines: (data.material_lines || []).map((line: any) =&gt; ({
         material: {
-          id: line.material,
+          id: line.material,<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
         },
         expense_id: line.expense_id,
         purchase_id: line.purchase_id,
@@ -898,71 +892,68 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
       comment: data.comment || null,
     }
 &nbsp;
-    // Construction de l'URL dynamique
-    const url = <span class="cstat-no" title="statement not covered" >getMiddleUrl('purchase_operations')</span>
-    const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token')</span>
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (!token) {</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error('No token')</span>
-    }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const response = <span class="cstat-no" title="statement not covered" >await fetch(url, {</span>
+    const url = getMiddleUrl('purchase_operations')
+    const token = localStorage.getItem('token')
+    if (!token) {
+      throw new <span class="cstat-no" title="statement not covered" >Error('No token')</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span>
+    tr<span class="cstat-no" title="statement not covered" >y {</span>
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+<span class="cstat-no" title="statement not covered" >        headers: {</span>
+          'Content-Type<span class="cstat-no" title="statement not covered" >': 'application/json',</span>
           Accept: 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
       })
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (!response.ok) {</span>
-<span class="cstat-no" title="statement not covered" >        throw new Error(`Erreur HTTP ${response.status}`)</span>
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP ${response.status}`)
       }
-&nbsp;
-      const result = <span class="cstat-no" title="statement not covered" >await response.json()</span>
-<span class="cstat-no" title="statement not covered" >      notify('Opération d’achat créée avec succès !', { type: 'success' })</span>
-<span class="cstat-no" title="statement not covered" >      navigate('/')</span>
-    } catch (error) {
+<span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span>
+      co<span class="cstat-no" title="statement not covered" >nst result = await response.json()</span>
+      notify("Opération d'achat créée avec succès !", { type: 'success' })
+      navigate('/')
+    } catch (error) {<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >      console.error(error)</span>
 <span class="cstat-no" title="statement not covered" >      notify(`Erreur : ${error.message}`, { type: 'error' })</span>
     }
-  }
+  }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  if (identityLoading) return &lt;div&gt;Chargement de l\'authentification...&lt;/div&gt;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (identityLoading) <span class="cstat-no" title="statement not covered" >return &lt;div&gt;Chargement de l’authentification...&lt;/div&gt;</span></span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;ResourceContextProvider value="purchases_activity"&gt;
-      &lt;Card sx={{ maxWidth: 'xl', mx: 'auto', my: 2 }}&gt;
-        &lt;CardContent&gt;
-          &lt;Title title="Nouvelle Opération d’Achat" /&gt;
+  return (
+<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>  &lt;ResourceContextPro<span class="cstat-no" title="statement not covered" >vider value="purchases_activity"&gt;</span></span>
+      &lt;Card sx={operationFormStyles.card}&gt;
+<span class="cstat-no" title="statement not covered" >        &lt;CardContent&gt;</span>
+          &lt;Title title="Nouvelle Opération d'Achat" /&gt;
           &lt;FormProvider {...methods}&gt;
             &lt;Form onSubmit={onSubmit}&gt;
-              {/* ---------- Informations générales ---------- */}
-              &lt;Typography variant="h6" color="primary" sx={{ mt: 2, mb: 1 }}&gt;
+              &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
                 📋 Informations Générales
               &lt;/Typography&gt;
               {add_autogenaration_id('id')}
               {add_autogenaration_id('travel_expense_id')}
               {add_autogenaration_id('travel_id')}
-              &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}&gt;
+              &lt;Box sx={operationFormStyles.flexRow}&gt;
                 &lt;TextInput
                   source="comment"
                   label="Commentaire"
                   multiline
                   fullWidth
-                  sx={{ flex: 2 }}
+                  sx={operationFormStyles.flexDouble}
                 /&gt;
               &lt;/Box&gt;
-              &lt;Divider sx={{ my: 3 }} /&gt;
+              &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-              {/* ---------- Équipements ---------- */}
-              &lt;Typography variant="h6" color="primary" sx={{ mb: 1 }}&gt;
+              &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
                 🔧 Équipements
               &lt;/Typography&gt;
               &lt;ArrayInput source="equipment_lines" label=""&gt;
                 &lt;SimpleFormIterator inline&gt;
-                  &lt;Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', width: '100%' }}&gt;
+                  &lt;Box sx={operationFormStyles.flexRowTight}&gt;
                     &lt;TextInput
                       source="equipment_id"
                       label="ID Équipement"
@@ -970,76 +961,77 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
                       defaultValue={generateId()}
                       sx={{ display: 'none' }}
                     /&gt;
-                    &lt;TextInput source="equipment_name" label="Nom" sx={{ flex: 1 }} /&gt;
-                    &lt;TextInput source="description" label="Description" sx={{ flex: 1 }} /&gt;
-                    &lt;NumberInput source="unit_price" label="Prix" sx={{ flex: 1 }} /&gt;
+                    &lt;TextInput
+                      source="equipment_name"
+                      label="Nom"
+                      sx={operationFormStyles.flexFull}
+                    /&gt;
+                    &lt;TextInput
+                      source="description"
+                      label="Description"
+                      sx={operationFormStyles.flexFull}
+                    /&gt;
+                    &lt;NumberInput
+                      source="unit_price"
+                      label="Prix"
+                      sx={operationFormStyles.flexFull}
+                    /&gt;
                     {add_autogenaration_id('expense_id')}
                     {add_autogenaration_id('purchase_id')}
                     {add_autogenaration_id('travel_equipment_id')}
                   &lt;/Box&gt;
                 &lt;/SimpleFormIterator&gt;
               &lt;/ArrayInput&gt;
-              &lt;Divider sx={{ my: 3 }} /&gt;
+              &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-              {/* ---------- Matériaux ---------- */}
-              &lt;Typography variant="h6" color="primary" sx={{ mb: 1 }}&gt;
+              &lt;Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}&gt;
                 📦 Matériaux
               &lt;/Typography&gt;
               &lt;ArrayInput source="material_lines" label=""&gt;
                 &lt;SimpleFormIterator inline&gt;
-                  &lt;Box
-                    sx={{
-                      display: 'flex',
-                      gap: 1,
-                      flexWrap: 'wrap',
-                      width: '100%',
-                      alignItems: 'center',
-                    }}
-                  &gt;
+                  &lt;Box sx={operationFormStyles.flexRowAlign}&gt;
                     &lt;ReferenceSelectWithCreate
                       source="material"
                       reference="materials"
                       label="Matériau"
-                      optionText={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; <span class="cstat-no" title="statement not covered" >`${record.name} / ${record.unit}`}</span>
+                      optionText={(record) =&gt; `${record.name} / ${record.unit}`}
                       createUrlEnd={getMiddleUrl('materials')}
-                      createForm={&lt;MaterialForm isCreateForm /&gt;}
-                      sx={{ flex: 1 }}
+                      createForm={<span class="fstat-no" title="function not covered" >&lt;M</span>aterialFor<span class="cstat-no" title="statement not covered" >m isCreateForm /&gt;}</span>
+                      sx={operationFormStyles.flexFull}
                       extractionPath={'material_lines'}
                     /&gt;
-                    &lt;NumberInput source="quantity" label="Quantité" sx={{ flex: 1 }} /&gt;
-                    &lt;NumberInput source="unit_price" label="Prix Unitaire" sx={{ flex: 1 }} /&gt;
+                    &lt;NumberInput
+                      source="quantity"
+                      label="Quantité"
+                      sx={operationFormStyles.flexFull}
+                    /&gt;
+                    &lt;NumberInput
+                      source="unit_price"
+                      label="Prix Unitaire"
+                      sx={operationFormStyles.flexFull}
+                    /&gt;
                     {add_autogenaration_id('expense_id')}
                     {add_autogenaration_id('purchase_id')}
                     {add_autogenaration_id('travel_material_id')}
                   &lt;/Box&gt;
                 &lt;/SimpleFormIterator&gt;
-              &lt;/ArrayInput&gt;
-              &lt;Divider sx={{ my: 3 }} /&gt;
+              &lt;/ArrayInput&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+              &lt;Divider sx={operationFormStyles.divider} /&gt;
 &nbsp;
-              {/* ---------- Transport avec Toggle ---------- */}
               &lt;Box sx={{ mb: 2 }}&gt;
                 &lt;Box
-                  onClick={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etShowTransport(!showTransport)}</span>
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    p: 1,
-                    borderRadius: 1,
-                    '&amp;:hover': {
-                      bgcolor: 'action.hover',
-                    },
-                  }}
+                  onClick={() =&gt; setShowTransport(!showTransport)}
+                  sx={operationFormStyles.toggleBox}
                 &gt;
-                  &lt;Typography variant="h6" color="primary" sx={{ flex: 1 }}&gt;
+                  &lt;Typography variant="h6" color="primary" sx={operationFormStyles.flexFull}&gt;
                     🚚 Transport
                   &lt;/Typography&gt;
-                  &lt;Button onClick={<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etIsTravelOpen(<span class="fstat-no" title="function not covered" >(p</span>rev) =&gt; <span class="cstat-no" title="statement not covered" >!prev)</span>}&gt;</span>
+                  &lt;Button onClick={() =&gt; setIsTravelOpen((prev) =&gt; !prev)}&gt;
                     &lt;IconButton
                       size="small"
                       sx={{
-                        transform: showTransport ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s ease',
+                        transform: <span class="fstat-no" title="function not covered" >showTr<span class="cstat-no" title="statement not covered" >a</span>nsport ? 'rotat<span class="fstat-no" title="function not covered" >e(</span>180deg)'<span class="cstat-no" title="statement not covered" > : 'ro</span>tate(0deg)',</span>
+                        transition: transitions.spin,
                       }}
                     &gt;
                       &lt;ExpandMoreIcon /&gt;
@@ -1048,8 +1040,8 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
                 &lt;/Box&gt;
 &nbsp;
                 &lt;Collapse in={isTravelOpen}&gt;
-                  &lt;Box sx={{ pt: 2 }}&gt;
-                    &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}&gt;
+                  &lt;Box sx={operationFormStyles.collapseContent}&gt;
+                    &lt;Box sx={operationFormStyles.flexRow}&gt;
                       &lt;ReferenceSelectWithCreate
                         source="departure_warehouse"
                         reference="warehouses"
@@ -1057,7 +1049,7 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
                         optionText="name"
                         createUrlEnd={getMiddleUrl('warehouses')}
                         createForm={&lt;WarehouseForm isCreateForm /&gt;}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       /&gt;
                       &lt;ReferenceSelectWithCreate
                         source="arrival_warehouse"
@@ -1066,21 +1058,21 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
                         optionText="name"
                         createUrlEnd={getMiddleUrl('warehouses')}
                         createForm={&lt;WarehouseForm isCreateForm /&gt;}
-                        sx={{ flex: 1 }}
+                        sx={operationFormStyles.flexFull}
                       /&gt;
                     &lt;/Box&gt;
-                    &lt;Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 2 }}&gt;
+                    &lt;Box sx={operationFormStyles.collapseRow}&gt;
                       &lt;DateTimeInput
                         source="departure_date"
                         label="Date de départ"
-                        sx={{ flex: 1 }}
-                        defaultValue={new Date()}
+                        sx={operationFormStyles.flexFull}
+                        defaultValue={new Date().toISOString()}
                       /&gt;
                       &lt;DateTimeInput
                         source="arrival_date"
                         label="Date d'arrivée"
-                        sx={{ flex: 1 }}
-                        defaultValue={new Date()}
+                        sx={operationFormStyles.flexFull}
+                        defaultValue={new Date().toISOString()}
                       /&gt;
                     &lt;/Box&gt;
                     &lt;NumberInput
@@ -1093,10 +1085,12 @@ const PurchaseActivityForm<span class="cstat-no" title="statement not covered" >
                 &lt;/Collapse&gt;
               &lt;/Box&gt;
 &nbsp;
-              {/* Bouton de soumission personnalisé */}
-              &lt;Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}&gt;
+              &lt;Box sx={operationFormStyles.submitBox}&gt;
                 &lt;Button type="submit" variant="contained" color="primary"&gt;
-                  Créer l’opération d’achat
+                  Créer l'opération d'achat
+                &lt;/Button&gt;
+                &lt;Button startIcon={&lt;ArrowBackIcon /&gt;} onClick={() =&gt; navigate('/')} sx={{ ml: 1 }}&gt;
+                  Retour
                 &lt;/Button&gt;
               &lt;/Box&gt;
             &lt;/Form&gt;
@@ -1117,7 +1111,7 @@ export default PurchaseActivityForm
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

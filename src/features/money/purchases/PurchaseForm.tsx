@@ -24,7 +24,7 @@ export default function PurchaseForm({ isCreate = false, isCreateForm = false })
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
-      )}{' '}
+      )}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       {renderWarehouseSelect('supplier_id', 'Fournisseur')}
       <BooleanInput

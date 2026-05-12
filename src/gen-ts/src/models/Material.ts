@@ -97,6 +97,12 @@ export interface Material {
   unit?: MaterialUnit
   /**
    *
+   * @type {string}
+   * @memberof Material
+   */
+  company_id?: string
+  /**
+   *
    * @type {Array<MaterialWarehouseInfo>}
    * @memberof Material
    */
@@ -128,6 +134,7 @@ export function MaterialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     name: json['name'] == null ? undefined : json['name'],
     description: json['description'] == null ? undefined : json['description'],
     unit: json['unit'] == null ? undefined : MaterialUnitFromJSON(json['unit']),
+    company_id: json['company_id'] == null ? undefined : json['company_id'],
     material_warehouses:
       json['material_warehouses'] == null
         ? undefined
@@ -159,6 +166,7 @@ export function MaterialToJSONTyped(
     name: value['name'],
     description: value['description'],
     unit: MaterialUnitToJSON(value['unit']),
+    company_id: value['company_id'],
     material_warehouses:
       value['material_warehouses'] == null
         ? undefined

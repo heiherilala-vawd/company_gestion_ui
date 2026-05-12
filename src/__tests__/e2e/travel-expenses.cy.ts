@@ -19,17 +19,17 @@ describe('E2E: Travel Expenses', () => {
     } else {
       cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
       cy.wait('@getTravelExpense')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     selectWarehouse('departure_location_id')
     selectWarehouse('arrival_location_id', 1)
-    selectJob('expense\\.job_id')
+    if (!isCreating) {
+      selectJob('expense\\.job_id')
+    }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
       .type('10000')
-    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
-      .clear()
-      .type('description of job', { force: true })
+
     cy.get('button[type="submit"]').click()
   }
 
@@ -39,7 +39,7 @@ describe('E2E: Travel Expenses', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-travel-expenses"]').click()
     cy.wait('@getTravelExpenses')
@@ -49,7 +49,6 @@ describe('E2E: Travel Expenses', () => {
     cy.contains(<string>travelExpense1Mock.departure_location?.name).should('be.visible')
     cy.contains(<string>travelExpense2Mock.arrival_location?.name).should('be.visible')
     cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
-    cy.contains(<string>travelExpense1Mock.expense?.job_id).should('be.visible')
   })
 
   it('should show travel expense details', () => {

@@ -38,7 +38,11 @@ async function example() {
     userId: usr_123456,
     // Array<CrupdateOtherExpense>
     crupdateOtherExpense: [
-      { id: 'other_001', expense_id: 'exp_002', description: 'Frais de carburant et entretien' },
+      {
+        id: 'other_001',
+        expense: { id: 'exp_002', amount: 5000, job_id: 'job_002' },
+        description: 'Frais de carburant et entretien',
+      },
     ],
   } satisfies CrupdateOtherExpensesRequest
 

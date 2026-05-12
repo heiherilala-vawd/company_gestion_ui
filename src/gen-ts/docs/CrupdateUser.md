@@ -12,6 +12,7 @@
 | `sex`        | [Sex](Sex.md)   |
 | `email`      | string          |
 | `password`   | string          |
+| `company_id` | string          |
 
 ## Example
 
@@ -28,6 +29,7 @@ const example = {
   "sex": null,
   "email": jean.dupont@example.com,
   "password": securePassword123,
+  "company_id": comp_001,
 } satisfies CrupdateUser
 
 console.log(example)

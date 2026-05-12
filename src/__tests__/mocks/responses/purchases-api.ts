@@ -38,7 +38,7 @@ export const purchase1Mock: Purchase = {
     comment: material1Mock.comment,
   },
   quantity: 2,
-  is_equipment: true,
+  is_equipment: false,
 }
 
 export const purchase2Mock: Purchase = {

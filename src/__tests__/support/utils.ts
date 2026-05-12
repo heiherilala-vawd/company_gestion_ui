@@ -35,6 +35,9 @@ import {
   travelMaterialsMock,
   travelPeoplesMock,
   travelEquipmentsMock,
+  incomesType1,
+  incomesTypes,
+  warehouse2Mock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -52,6 +55,9 @@ export function interceptGeneralEndpoint(): void {
     'getWarehouses',
   )
   cy.intercept('GET', '/companies/*/warehouses/wh1_id', mockSuccessResponse(warehouse1Mock)).as(
+    'getWarehouse',
+  )
+  cy.intercept('GET', '/companies/*/warehouses/wh2_id', mockSuccessResponse(warehouse2Mock)).as(
     'getWarehouse',
   )
 
@@ -80,6 +86,14 @@ export function interceptGeneralEndpoint(): void {
   // ---------------------- INCOMES ------------------------------------------
   cy.intercept('GET', '**/incomes*', mockSuccessResponse(incomesMock)).as('getIncomes')
   cy.intercept('GET', '**/incomes/inc1_id*', mockSuccessResponse(income1Mock)).as('getIncome')
+
+  // ---------------------- INCOMES TYPES ------------------------------------------
+  cy.intercept('GET', '**/income_types*', mockSuccessResponse(incomesTypes)).as('getIncomes')
+  cy.intercept(
+    'GET',
+    '**/income_types/' + incomesType1.id + '*',
+    mockSuccessResponse(incomesType1),
+  ).as('getIncome')
 
   // ---------------------- BANK FEES ------------------------------------------
   cy.intercept('GET', '**/bank_fees*', mockSuccessResponse(bankFeesMock)).as('getBankFees')
@@ -151,8 +165,10 @@ export function insertInToLocalStorage(): void {
 
 export function loginInPage(): void {
   cy.visit('/', { failOnStatusCode: false })
-  cy.get('input[name="username"]').type(<string>loginRequestMock.email)
-  cy.get('input[name="password"]').type(<string>loginRequestMock.password)
+  cy.get('input')
+    .first()
+    .type(<string>loginRequestMock.email)
+  cy.get('input[type="password"]').type(<string>loginRequestMock.password)
   cy.get('button[type="submit"]').click()
   cy.wait(['@login', '@whoami'])
   cy.url().should('not.include', '/login')
@@ -245,4 +261,12 @@ export function selectTravelExpense(
   selection: string = <string>travelExpense1Mock.departure_location,
 ): void {
   selectReferenceWithCreate('input-travel_expenses-id', 'travel_id', selection)
+}
+
+export function selectIncomeType(menuId: string | null): void {
+  selectReferenceWithCreate(
+    'input-income_types-id',
+    menuId ? menuId : 'income_type',
+    <string>incomesType1.name,
+  )
 }

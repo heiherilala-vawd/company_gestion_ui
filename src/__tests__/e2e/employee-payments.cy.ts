@@ -10,8 +10,8 @@ import {
   interceptGeneralEndpoint,
   loginInPage,
   selectEmployee,
-  selectExpense,
   selectJob,
+  selectEnumType,
 } from '../support/utils.ts'
 
 describe('E2E: Employee Payments', () => {
@@ -22,24 +22,21 @@ describe('E2E: Employee Payments', () => {
     } else {
       cy.contains('January salary advance').click()
       cy.wait('@getEmployeePayment')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     selectEmployee()
     cy.get('[data-testid="input-payment_description"] textarea:visible')
       .first()
       .clear()
       .type(<string>crupdatedData.payment_description, { force: true })
-    cy.get('[data-testid="input-payment_type"] input')
-      .clear()
-      .type(<string>crupdatedData.payment_type)
+    selectEnumType('input-payment_type', 'Avance')
 
-    selectJob('expense\\.job_id')
+    if (!isCreating) {
+      selectJob('expense\\.job_id')
+    }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
       .type('10000')
-    cy.get('[data-testid="input-expense-form"] [data-testid="input-description"] textarea:visible')
-      .clear()
-      .type('description of job', { force: true })
 
     cy.get('button[type="submit"]').click()
   }
@@ -50,7 +47,7 @@ describe('E2E: Employee Payments', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-employee-payments"]').click()
     cy.wait('@getEmployeePayments')

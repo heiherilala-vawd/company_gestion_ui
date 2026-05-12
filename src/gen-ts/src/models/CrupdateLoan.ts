@@ -13,14 +13,6 @@
  */
 
 import { mapValues } from '../runtime'
-import type { LoanStatus } from './LoanStatus'
-import {
-  LoanStatusFromJSON,
-  LoanStatusFromJSONTyped,
-  LoanStatusToJSON,
-  LoanStatusToJSONTyped,
-} from './LoanStatus'
-
 /**
  *
  * @export
@@ -70,11 +62,11 @@ export interface CrupdateLoan {
    */
   start_date?: Date
   /**
-   *
-   * @type {LoanStatus}
+   * Due date of the loan. If null, the loan has no fixed term.
+   * @type {Date}
    * @memberof CrupdateLoan
    */
-  status?: LoanStatus
+  due_date?: Date
   /**
    * ID of the job this loan is related to
    * @type {string}
@@ -106,7 +98,7 @@ export function CrupdateLoanFromJSONTyped(json: any, ignoreDiscriminator: boolea
     lender: json['lender'] == null ? undefined : json['lender'],
     interest_rate: json['interest_rate'] == null ? undefined : json['interest_rate'],
     start_date: json['start_date'] == null ? undefined : new Date(json['start_date']),
-    status: json['status'] == null ? undefined : LoanStatusFromJSON(json['status']),
+    due_date: json['due_date'] == null ? undefined : new Date(json['due_date']),
     job_id: json['job_id'] == null ? undefined : json['job_id'],
   }
 }
@@ -134,7 +126,10 @@ export function CrupdateLoanToJSONTyped(
       value['start_date'] == null
         ? value['start_date']
         : value['start_date'].toISOString().substring(0, 10),
-    status: LoanStatusToJSON(value['status']),
+    due_date:
+      value['due_date'] == null
+        ? value['due_date']
+        : value['due_date'].toISOString().substring(0, 10),
     job_id: value['job_id'],
   }
 }

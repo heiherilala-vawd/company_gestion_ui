@@ -2,17 +2,17 @@
 
 ## Properties
 
-| Name            | Type                        |
-| --------------- | --------------------------- |
-| `comment`       | string                      |
-| `amount`        | number                      |
-| `description`   | string                      |
-| `id`            | string                      |
-| `lender`        | string                      |
-| `interest_rate` | number                      |
-| `start_date`    | Date                        |
-| `status`        | [LoanStatus](LoanStatus.md) |
-| `job_id`        | string                      |
+| Name            | Type   |
+| --------------- | ------ |
+| `comment`       | string |
+| `amount`        | number |
+| `description`   | string |
+| `id`            | string |
+| `lender`        | string |
+| `interest_rate` | number |
+| `start_date`    | Date   |
+| `due_date`      | Date   |
+| `job_id`        | string |
 
 ## Example
 
@@ -28,7 +28,7 @@ const example = {
   "lender": BNI Madagascar,
   "interest_rate": 1200,
   "start_date": Thu Feb 01 03:00:00 EAT 2024,
-  "status": null,
+  "due_date": Thu Dec 31 03:00:00 EAT 2026,
   "job_id": job_001,
 } satisfies CrupdateLoan
 

@@ -40,8 +40,13 @@ async function example() {
     crupdatePurchase: [
       {
         id: 'purch_001',
-        expense_id: 'exp_001',
-        supplier_id: 'supp_001',
+        expense: { id: 'exp_001', amount: 15000, job_id: 'job_001' },
+        supplier: {
+          id: 'supp_001',
+          name: 'Fournisseur A',
+          description: 'Fournisseur matériaux',
+          job_id: 'job_001',
+        },
         material: 'mat_001',
         quantity: 250,
         is_equipment: false,

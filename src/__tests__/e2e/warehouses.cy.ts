@@ -20,7 +20,7 @@ describe('E2E: Warehouses', () => {
     } else {
       cy.contains(<string>warehouse1Mock.name).click()
       cy.wait('@getWarehouse')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     cy.get('[data-testid="input-name"] input')
       .clear()
@@ -28,7 +28,9 @@ describe('E2E: Warehouses', () => {
     cy.get('[data-testid="input-description"] textarea:visible')
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    selectJob()
+    if (!isCreating) {
+      selectJob()
+    }
     cy.get('button[type="submit"]').click()
   }
 

@@ -20,9 +20,11 @@ describe('E2E: Expenses', () => {
     } else {
       cy.contains(<string>expense1Mock.description).click()
       cy.wait('@getExpense')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
-    selectJob()
+    if (!isCreating) {
+      selectJob()
+    }
     cy.get('[data-testid="input-amount"] input')
       .clear()
       .type(<string>crupdatedData.amount)
@@ -38,7 +40,7 @@ describe('E2E: Expenses', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-expenses"]').click()
     cy.wait('@getExpenses')

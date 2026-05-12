@@ -55,6 +55,11 @@ export interface DeleteIncomeTypeByIdRequest {
   id: string
 }
 
+export interface GetIncomeTypeByIdRequest {
+  compId: string
+  id: string
+}
+
 export interface GetIncomeTypesRequest {
   compId: string
 }
@@ -200,6 +205,75 @@ export class IncomeTypeApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<void> {
     await this.deleteIncomeTypeByIdRaw(requestParameters, initOverrides)
+  }
+
+  /**
+   * Creates request options for getIncomeTypeById without sending the request
+   */
+  async getIncomeTypeByIdRequestOpts(
+    requestParameters: GetIncomeTypeByIdRequest,
+  ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getIncomeTypeById().',
+      )
+    }
+
+    if (requestParameters['id'] == null) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter "id" was null or undefined when calling getIncomeTypeById().',
+      )
+    }
+
+    const queryParameters: any = {}
+
+    const headerParameters: runtime.HTTPHeaders = {}
+
+    if (this.configuration && this.configuration.accessToken) {
+      const token = this.configuration.accessToken
+      const tokenString = await token('BearerAuth', [])
+
+      if (tokenString) {
+        headerParameters['Authorization'] = `Bearer ${tokenString}`
+      }
+    }
+
+    let urlPath = `/companies/{comp_id}/income_types/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
+    urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
+
+    return {
+      path: urlPath,
+      method: 'GET',
+      headers: headerParameters,
+      query: queryParameters,
+    }
+  }
+
+  /**
+   * Get an income type by identifier
+   */
+  async getIncomeTypeByIdRaw(
+    requestParameters: GetIncomeTypeByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction,
+  ): Promise<runtime.ApiResponse<IncomeType>> {
+    const requestOptions = await this.getIncomeTypeByIdRequestOpts(requestParameters)
+    const response = await this.request(requestOptions, initOverrides)
+
+    return new runtime.JSONApiResponse(response, (jsonValue) => IncomeTypeFromJSON(jsonValue))
+  }
+
+  /**
+   * Get an income type by identifier
+   */
+  async getIncomeTypeById(
+    requestParameters: GetIncomeTypeByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction,
+  ): Promise<IncomeType> {
+    const response = await this.getIncomeTypeByIdRaw(requestParameters, initOverrides)
+    return await response.value()
   }
 
   /**

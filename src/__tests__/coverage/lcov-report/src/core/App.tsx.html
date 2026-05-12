@@ -146,7 +146,17 @@
 <a name='L86'></a><a href='#L86'>86</a>
 <a name='L87'></a><a href='#L87'>87</a>
 <a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">24x</span>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -234,9 +244,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
 import { Admin, Resource, CustomRoutes } from 'react-admin'
-import { ThemeProvider as MUIThemeProvider, CssBaseline } from '@mui/material'
 import { Layout } from './Layout'
 import { dataProvider } from '../auth/dataProvider'
 import authProvider from '../auth/authProvider'
@@ -263,55 +282,66 @@ import EmployerPaymentResource from '../features/money/employee_payments'
 import IncomeResource from '../features/money/incomes'
 &nbsp;
 import HomePage from '../features/HomePage'
-import SimplePage from '../features/SimplePage'
+import EmployerPaymentActivity from '../features/EmployerPaymentActivity'
+import IncomesActivity from '../features/IncomesActivity'
+import ExpensesActivity from '../features/ExpensesActivity'
+import TravelMaterialActivity from '../features/TravelMaterialActivity'
 import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm'
 import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
-import { Route } from 'react-router-dom'
+import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
+import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
+import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
+import { Route } from 'react-rout<span class="branch-1 cbranch-no" title="branch not covered" >er-dom'</span>
+import { CustomLogin } from '../auth/CustomLogin'
+import { RegisterPage } from '../auth/RegisterPage'
 &nbsp;
 const ThemedAdmin = () =&gt; {
   const { mode } = useThemeMode()
   const theme = mode === 'light' ? lightTheme : darkTheme
-<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+&nbsp;
   return (
-    &lt;MUIThemeProvider theme={theme}&gt;
-      &lt;CssBaseline /&gt;
-      &lt;Admin
-        dashboard={HomePage}
-        layout={Layout}
-        dataProvider={dataProvider}
-        authProvider={authProvider}
-      &gt;
-        &lt;CustomRoutes&gt;
-          &lt;Route path="/purchases_activity" element={&lt;PurchaseActivityForm /&gt;} /&gt;
-          &lt;Route path="/travel_equipment_activity" element={&lt;TravelOperationForm /&gt;} /&gt;
-          &lt;Route path="/expenses_activity" element={&lt;SimplePage title="Dépenses" /&gt;} /&gt;
-          &lt;Route
-            path="/employer_payments_activity"
-            element={&lt;SimplePage title="Valider Payment" /&gt;}
-          /&gt;
-          &lt;Route
-            path="/travel_materials_activity"
-            element={&lt;SimplePage title="Valider Réception" /&gt;}
-          /&gt;
-        &lt;/CustomRoutes&gt;
-        &lt;Resource name="jobs" {...JobResource} /&gt;
-        &lt;Resource name="companies" {...CompanyResource} /&gt;
-        &lt;Resource name="users" {...UserResource} /&gt;
-        &lt;Resource name="warehouses" {...WarehousesResource} /&gt;
-        &lt;Resource name="equipment" {...EquipmentResource} /&gt;
-        &lt;Resource name="materials" {...MaterialsResource} /&gt;
-        &lt;Resource name="expenses" {...ExpenseResource} /&gt;
-        &lt;Resource name="travel_expenses" {...TravelExpenseResource} /&gt;
-        &lt;Resource name="purchases" {...PurchaseResource} /&gt;
-        &lt;Resource name="bank_fees" {...BankFeeResource} /&gt;
-        &lt;Resource name="other_expenses" {...OtherExpenseResource} /&gt;
-        &lt;Resource name="employee_payments" {...EmployerPaymentResource} /&gt;
-        &lt;Resource name="travel_people" {...TravelPeopleResource} /&gt;
-        &lt;Resource name="travel_materials" {...TravelMaterialResource} /&gt;
-        &lt;Resource name="travel_equipment" {...TravelEquipmentResource} /&gt;
-        &lt;Resource name="incomes" {...IncomeResource} /&gt;
-      &lt;/Admin&gt;
-    &lt;/MUIThemeProvider&gt;
+    &lt;CompanyProvider&gt;
+      &lt;JobProvider&gt;
+        &lt;ExpenseProvider&gt;
+          &lt;Admin
+            theme={theme}
+            dashboard={HomePage}
+            layout={Layout}
+            loginPage={CustomLogin}
+            dataProvider={dataProvider}
+            authProvider={authProvider}
+          &gt;
+            &lt;CustomRoutes noLayout&gt;
+              &lt;Route path="/register" element={&lt;RegisterPage /&gt;} /&gt;
+            &lt;/CustomRoutes&gt;
+            &lt;CustomRoutes&gt;
+              &lt;Route path="/purchases_activity" element={&lt;PurchaseActivityForm /&gt;} /&gt;
+              &lt;Route path="/travel_equipment_activity" element={&lt;TravelOperationForm /&gt;} /&gt;
+              &lt;Route path="/expenses_activity" element={&lt;ExpensesActivity /&gt;} /&gt;
+              &lt;Route path="/employer_payments_activity" element={&lt;EmployerPaymentActivity /&gt;} /&gt;
+              &lt;Route path="/incomes_activity" element={&lt;IncomesActivity /&gt;} /&gt;
+              &lt;Route path="/travel_materials_activity" element={&lt;TravelMaterialActivity /&gt;} /&gt;
+            &lt;/CustomRoutes&gt;
+            &lt;Resource name="jobs" {...JobResource} /&gt;
+            &lt;Resource name="companies" {...CompanyResource} /&gt;
+            &lt;Resource name="users" {...UserResource} /&gt;
+            &lt;Resource name="warehouses" {...WarehousesResource} /&gt;
+            &lt;Resource name="equipment" {...EquipmentResource} /&gt;
+            &lt;Resource name="materials" {...MaterialsResource} /&gt;
+            &lt;Resource name="expenses" {...ExpenseResource} /&gt;
+            &lt;Resource name="travel_expenses" {...TravelExpenseResource} /&gt;
+            &lt;Resource name="purchases" {...PurchaseResource} /&gt;
+            &lt;Resource name="bank_fees" {...BankFeeResource} /&gt;
+            &lt;Resource name="other_expenses" {...OtherExpenseResource} /&gt;
+            &lt;Resource name="employee_payments" {...EmployerPaymentResource} /&gt;
+            &lt;Resource name="travel_people" {...TravelPeopleResource} /&gt;
+            &lt;Resource name="travel_materials" {...TravelMaterialResource} /&gt;
+            &lt;Resource name="travel_equipment" {...TravelEquipmentResource} /&gt;
+            &lt;Resource name="incomes" {...IncomeResource} /&gt;
+          &lt;/Admin&gt;
+        &lt;/ExpenseProvider&gt;
+      &lt;/JobProvider&gt;
+    &lt;/CompanyProvider&gt;
   )
 }
 &nbsp;
@@ -331,7 +361,7 @@ export default App
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

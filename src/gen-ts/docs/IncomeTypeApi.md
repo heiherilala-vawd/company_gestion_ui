@@ -6,6 +6,7 @@ All URIs are relative to *https://api-dev.company.com*
 | ----------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------- |
 | [**crupdateIncomeTypes**](IncomeTypeApi.md#crupdateincometypes)   | **PUT** /companies/{comp_id}/income_types         | Create new income types or update existing ones |
 | [**deleteIncomeTypeById**](IncomeTypeApi.md#deleteincometypebyid) | **DELETE** /companies/{comp_id}/income_types/{id} | Delete an income type by identifier             |
+| [**getIncomeTypeById**](IncomeTypeApi.md#getincometypebyid)       | **GET** /companies/{comp_id}/income_types/{id}    | Get an income type by identifier                |
 | [**getIncomeTypes**](IncomeTypeApi.md#getincometypes)             | **GET** /companies/{comp_id}/income_types         | Get all income types for a company              |
 
 ## crupdateIncomeTypes
@@ -163,6 +164,78 @@ example().catch(console.error)
 | **404**     | Not found                        | -                |
 | **429**     | Too many requests to the API     | -                |
 | **500**     | Internal server error            | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+## getIncomeTypeById
+
+> IncomeType getIncomeTypeById(compId, id)
+
+Get an income type by identifier
+
+### Example
+
+```ts
+import { Configuration, IncomeTypeApi } from 'api-client'
+import type { GetIncomeTypeByIdRequest } from 'api-client'
+
+async function example() {
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeTypeApi(config)
+
+  const body = {
+    // string
+    compId: comp_btp001,
+    // string
+    id: income_type_001,
+  } satisfies GetIncomeTypeByIdRequest
+
+  try {
+    const data = await api.getIncomeTypeById(body)
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// Run the test
+example().catch(console.error)
+```
+
+### Parameters
+
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
+
+### Return type
+
+[**IncomeType**](IncomeType.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+### HTTP response details
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | Income type found            | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 

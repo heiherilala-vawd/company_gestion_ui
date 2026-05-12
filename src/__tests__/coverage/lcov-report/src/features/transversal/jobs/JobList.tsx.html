@@ -135,22 +135,7 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -226,28 +211,13 @@
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
   List,
   TextField,
   DateField,
   SelectField,
   SearchInput,
-  TextInput,
+  SelectInput,
   useListContext,
   EditButton,
   DeleteButton,
@@ -255,10 +225,15 @@
 } from 'react-admin'
 import { useEffect } from 'react'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
+import { JobStatus } from '../../../gen-ts/src/models/JobStatus'
 &nbsp;
 const JobFilters = [
   &lt;SearchInput source="description" alwaysOn /&gt;,
-  &lt;TextInput source="status" label="Statut" /&gt;,
+  &lt;SelectInput
+    source="status"
+    label="Statut"
+    choices={Object.entries(JobStatus).map(([k, v]) =&gt; ({ id: v, name: k }))}
+  /&gt;,
 ]
 &nbsp;
 interface JobListProps {
@@ -287,51 +262,31 @@ function JobListContent() {
           { id: 'IN_PROGRESS', name: 'En cours' },
           { id: 'COMPLETED', name: 'Terminé' },
         ]}
-      /&gt;
-      &lt;DateField source="created_at" label="Créé le" showTime /&gt;
-      &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
-      &lt;FunctionField
-        label="Créé par"
-        render={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; (
-<span class="cstat-no" title="statement not covered" >          &lt;span&gt;</span>
-            {record.created_by?.first_name} {record.created_by?.last_name}
-          &lt;/span&gt;
-        )}
-      /&gt;
-&nbsp;
-      &lt;FunctionField
-        label="Modifié par"
-        render={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; (
-<span class="cstat-no" title="statement not covered" >          &lt;span&gt;</span>
-            {record.updated_by?.first_name} {record.updated_by?.last_name}
-          &lt;/span&gt;
-        )}
-      /&gt;
-      &lt;EditButton /&gt;
-      &lt;DeleteButton /&gt;
+      /&gt;<span class="fstat-no" title="function not covered" ></span>
+      &lt;Edi<span class="cstat-no" title="statement not covered" >tButton /&gt;</span>
     &lt;/ResponsiveDatagrid&gt;
   )
 }
 &nbsp;
 export default function JobList({ company_id }: JobListProps) {
   const currentCompanyId = localStorage.getItem('currentCompanyId')
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!currentCompanyId) {
-<span class="cstat-no" title="statement not covered" >    return &lt;div&gt;Veuillez sélectionner une company&lt;/div&gt;</span>
-  }
+  if (!currentCompanyId) {
+    return &lt;div&gt;<span class="fstat-no" title="function not covered" >Ve</span>uillez sélectionner une company&lt;/div&gt;
+  }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
   return (
     &lt;List
       key={company_id ?? 'all-jobs'}
       resource="jobs"
       filters={JobFilters}
-      filter={currentCompanyId ? { currentCompanyId } : <span class="branch-1 cbranch-no" title="branch not covered" >undefined}</span>
+      filter={currentCompanyId ? { currentCompanyId } : undefined}
       title={`Jobs - Company ID: ${currentCompanyId}`}
       perPage={25}
     &gt;
       &lt;JobListContent /&gt;
     &lt;/List&gt;
-  )
-}
+  <span class="missing-if-branch" title="if path not taken" >I</span>)
+}<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;</pre></td></tr></table></pre>
 
       <div class="push"></div>
@@ -341,7 +296,7 @@ export default function JobList({ company_id }: JobListProps) {
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

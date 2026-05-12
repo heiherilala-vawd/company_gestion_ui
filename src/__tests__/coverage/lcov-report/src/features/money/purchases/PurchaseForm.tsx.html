@@ -98,7 +98,36 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,7 +166,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { TextInput, NumberInput, BooleanInput } from 'react-admin'
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { TextInput, NumberInput, BooleanInput, FormDataConsumer } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
@@ -151,27 +209,56 @@ import React from 'react'
 &nbsp;
 // eslint-disable-next-line react/prop-types
 export default function PurchaseForm({ isCreate = false, isCreateForm = false }) {
+  const id = generateId()
+&nbsp;
   return (
     &lt;&gt;
       {isCreate &amp;&amp; (
-        &lt;TextInput source="id" readOnly defaultValue={generateId()} data-testid="input-id" /&gt;
+        &lt;TextInput<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+          source="id"
+          readOnly
+          defaultValue={id}
+          sx={{ display: 'none' }}
+          data-testid="input-id"
+        /&gt;
       )}{' '}
-      {isCreateForm &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;TextInput source="newId" readOnly defaultValue={generateId()} /&gt;}</span>
+      {isCreateForm &amp;&amp; &lt;TextInput source="newId" readOnly defaultValue={id} /&gt;}
       {renderWarehouseSelect('supplier_id', 'Fournisseur')}
-      {renderEquipmentSelect('equipment_id', 'Équipement')}
-      {renderMaterialSelect('material_id', 'Matériau')}
-      &lt;NumberInput source="quantity" label="Quantité" data-testid="input-quantity" /&gt;
       &lt;BooleanInput
         source="is_equipment"
         label="Est un équipement"
         data-testid="input-is_equipment"
       /&gt;
+      &lt;FormDataConsumer&gt;
+        {({ formData }) =&gt;
+          formData?.is_equipment ? (
+            renderEquipmentSelect('equipment', 'Équipement')
+          ) : (
+            &lt;&gt;
+              {renderMaterialSelect('material', 'Matériau')}
+              &lt;NumberInput source="quantity" label="Quantité" data-testid="input-quantity" /&gt;
+            &lt;/&gt;
+          )
+        }
+      &lt;/FormDataConsumer&gt;
       &lt;div data-testid="input-expense-form" style={{ width: '100%' }}&gt;
         &lt;Typography variant="h6" color="primary" sx={{ flex: 1 }}&gt;
           💰 Dépense
         &lt;/Typography&gt;
         {!isCreate &amp;&amp; &lt;TextInput source="expense.id" readOnly /&gt;}
-        &lt;ExpenseForm isCreate={isCreate} isCreateForm={isCreateForm} souce={'expense.'} /&gt;
+        &lt;ExpenseForm
+          isCreate={isCreate}
+          isCreateForm={isCreateForm}
+          souce={'expense.'}
+          description={
+            'expence of ' +
+            PurchaseForm.name +
+            ' from :' +
+            new Date().toISOString() +
+            '. And with id: ' +
+            id
+          }
+        /&gt;
       &lt;/div&gt;
     &lt;/&gt;
   )
@@ -185,7 +272,7 @@ export default function PurchaseForm({ isCreate = false, isCreateForm = false })
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

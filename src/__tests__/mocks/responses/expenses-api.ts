@@ -4,7 +4,7 @@ import { job1Mock } from './jobs-api.ts'
 
 export const expense1Mock: ExpenseMoney = {
   id: 'exp1_id',
-  amount: 50000,
+  amount: 500,
   description: 'Equipment purchase for Building A',
   comment: 'Initial equipment expense',
   job: {

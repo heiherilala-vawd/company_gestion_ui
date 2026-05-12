@@ -1,5 +1,5 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './ApiException'
 export * from './AuditFields'
 export * from './AuditUser'

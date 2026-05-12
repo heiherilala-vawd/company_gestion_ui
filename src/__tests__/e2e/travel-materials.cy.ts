@@ -21,10 +21,10 @@ describe('E2E: Travel Materials', () => {
     } else {
       cy.contains(<number>travelMaterials1Mock.quantity).click()
       cy.wait('@getTravelMaterial')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     selectTravelExpense('Déplacement: ' + travelMaterials1Mock.travel?.expense?.description)
-    selectMaterial('material_id')
+    selectMaterial('material')
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(String(<number>crupdatedData.quantity))

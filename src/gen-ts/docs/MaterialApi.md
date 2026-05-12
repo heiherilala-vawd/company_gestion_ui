@@ -2,16 +2,16 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                      | HTTP request               | Description                                       |
-| ----------------------------------------------------------- | -------------------------- | ------------------------------------------------- |
-| [**crupdateMaterials**](MaterialApi.md#crupdatematerials)   | **PUT** /materials         | Create new materials or update existing materials |
-| [**deleteMaterialById**](MaterialApi.md#deletematerialbyid) | **DELETE** /materials/{id} | Delete material by identifier                     |
-| [**getMaterialById**](MaterialApi.md#getmaterialbyid)       | **GET** /materials/{id}    | Get material by identifier                        |
-| [**getMaterials**](MaterialApi.md#getmaterials)             | **GET** /materials         | Get all materials                                 |
+| Method                                                      | HTTP request                                   | Description                                       |
+| ----------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------- |
+| [**crupdateMaterials**](MaterialApi.md#crupdatematerials)   | **PUT** /companies/{comp_id}/materials         | Create new materials or update existing materials |
+| [**deleteMaterialById**](MaterialApi.md#deletematerialbyid) | **DELETE** /companies/{comp_id}/materials/{id} | Delete material by identifier                     |
+| [**getMaterialById**](MaterialApi.md#getmaterialbyid)       | **GET** /companies/{comp_id}/materials/{id}    | Get material by identifier                        |
+| [**getMaterials**](MaterialApi.md#getmaterials)             | **GET** /companies/{comp_id}/materials         | Get all materials                                 |
 
 ## crupdateMaterials
 
-> Array&lt;Material&gt; crupdateMaterials(crupdateMaterial)
+> Array&lt;Material&gt; crupdateMaterials(compId, crupdateMaterial)
 
 Create new materials or update existing materials
 
@@ -30,6 +30,8 @@ async function example() {
   const api = new MaterialApi(config)
 
   const body = {
+    // string
+    compId: comp_001,
     // Array<CrupdateMaterial>
     crupdateMaterial: [
       {
@@ -62,9 +64,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name                 | Type                      | Description | Notes |
-| -------------------- | ------------------------- | ----------- | ----- |
-| **crupdateMaterial** | `Array<CrupdateMaterial>` |             |       |
+| Name                 | Type                      | Description | Notes                     |
+| -------------------- | ------------------------- | ----------- | ------------------------- |
+| **compId**           | `string`                  |             | [Defaults to `undefined`] |
+| **crupdateMaterial** | `Array<CrupdateMaterial>` |             |                           |
 
 ### Return type
 
@@ -94,7 +97,7 @@ example().catch(console.error)
 
 ## deleteMaterialById
 
-> deleteMaterialById(id)
+> deleteMaterialById(compId, id)
 
 Delete material by identifier
 
@@ -114,6 +117,8 @@ async function example() {
 
   const body = {
     // string
+    compId: comp_001,
+    // string
     id: mat_001,
   } satisfies DeleteMaterialByIdRequest
 
@@ -131,9 +136,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name   | Type     | Description | Notes                     |
-| ------ | -------- | ----------- | ------------------------- |
-| **id** | `string` |             | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -163,7 +169,7 @@ example().catch(console.error)
 
 ## getMaterialById
 
-> Material getMaterialById(id)
+> Material getMaterialById(compId, id)
 
 Get material by identifier
 
@@ -183,6 +189,8 @@ async function example() {
 
   const body = {
     // string
+    compId: comp_001,
+    // string
     id: mat_001,
   } satisfies GetMaterialByIdRequest
 
@@ -200,9 +208,10 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name   | Type     | Description | Notes                     |
-| ------ | -------- | ----------- | ------------------------- |
-| **id** | `string` |             | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -232,7 +241,7 @@ example().catch(console.error)
 
 ## getMaterials
 
-> Array&lt;Material&gt; getMaterials(page, pageSize, name, description, unit, notArrived)
+> Array&lt;Material&gt; getMaterials(compId, page, pageSize, name, description, unit, notArrived)
 
 Get all materials
 
@@ -251,6 +260,8 @@ async function example() {
   const api = new MaterialApi(config)
 
   const body = {
+    // string
+    compId: comp_001,
     // number (optional)
     page: 1,
     // number (optional)
@@ -281,6 +292,7 @@ example().catch(console.error)
 
 | Name            | Type           | Description                                                                             | Notes                                                                                                  |
 | --------------- | -------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **compId**      | `string`       |                                                                                         | [Defaults to `undefined`]                                                                              |
 | **page**        | `number`       |                                                                                         | [Optional] [Defaults to `undefined`]                                                                   |
 | **pageSize**    | `number`       |                                                                                         | [Optional] [Defaults to `undefined`]                                                                   |
 | **name**        | `string`       | Filter materials by name, case is ignored                                               | [Optional] [Defaults to `undefined`]                                                                   |

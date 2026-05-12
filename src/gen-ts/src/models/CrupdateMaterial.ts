@@ -57,6 +57,12 @@ export interface CrupdateMaterial {
    * @memberof CrupdateMaterial
    */
   unit?: MaterialUnit
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateMaterial
+   */
+  company_id?: string
 }
 
 /**
@@ -83,6 +89,7 @@ export function CrupdateMaterialFromJSONTyped(
     name: json['name'] == null ? undefined : json['name'],
     description: json['description'] == null ? undefined : json['description'],
     unit: json['unit'] == null ? undefined : MaterialUnitFromJSON(json['unit']),
+    company_id: json['company_id'] == null ? undefined : json['company_id'],
   }
 }
 
@@ -104,5 +111,6 @@ export function CrupdateMaterialToJSONTyped(
     name: value['name'],
     description: value['description'],
     unit: MaterialUnitToJSON(value['unit']),
+    company_id: value['company_id'],
   }
 }

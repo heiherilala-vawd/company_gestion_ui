@@ -25,7 +25,6 @@ import {
   InternalServerExceptionToJSON,
 } from '../models/InternalServerException'
 import { type Loan, LoanFromJSON, LoanToJSON } from '../models/Loan'
-import { type LoanStatus, LoanStatusFromJSON, LoanStatusToJSON } from '../models/LoanStatus'
 import {
   type NotAuthorizedException,
   NotAuthorizedExceptionFromJSON,
@@ -72,7 +71,6 @@ export interface GetLoansRequest {
   description?: string
   amount?: number
   lender?: string
-  status?: LoanStatus
 }
 
 /**
@@ -380,10 +378,6 @@ export class LoanApi extends runtime.BaseAPI {
 
     if (requestParameters['lender'] != null) {
       queryParameters['lender'] = requestParameters['lender']
-    }
-
-    if (requestParameters['status'] != null) {
-      queryParameters['status'] = requestParameters['status']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}

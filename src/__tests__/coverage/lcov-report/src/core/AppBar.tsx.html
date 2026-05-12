@@ -117,31 +117,7 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,107 +176,59 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { AppBar as RAAppBar, TitlePortal } from 'react-admin'
-import { Box, IconButton, Tooltip } from '@mui/material'
-import { Brightness4, Brightness7, NotificationsNone } from '@mui/icons-material'
+import { Box, IconButton, Button, Tooltip } from '@mui/material'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import HomeIcon from '@mui/icons-material/Home'
 import { appBarStyles } from '../style/components'
-import { useThemeMode } from '../style/ThemeContext'
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
 import { JobSelector } from '../features/transversal/jobs/JobSelector'
+import { useThemeMode } from '../style/ThemeContext'
 &nbsp;
 export const AppBar = () =&gt; {
+  const navigate = useNavigate()
+  const location = useLocation()
   const { mode, toggleMode } = useThemeMode()
+  const prevPathRef<span class="fstat-no" title="function not covered" > =</span> useRef(location.pathname)
+  const pr<span class="cstat-no" title="statement not covered" >evPath = prevPathRef.current</span>
+&nbsp;
+  useEffect(() =&gt; {
+    prevPathRef.curren<span class="fstat-no" title="function not covered" >t </span>= location.pathname
+  }, [loca<span class="cstat-no" title="statement not covered" >tion])</span>
+&nbsp;
+  const isAuthPage =
+    location.pathname === '/login' ||
+    location.pathname === '/register' ||
+    location.pathname.startsWith('/auth')
+  const prevIsAuth =
+    prevPath === '/login' || prevPath === '/register' || prevPath.startsWith('/auth')
 &nbsp;
   return (
-    &lt;RAAppBar
-      sx={{
-        backgroundColor: 'background.paper',
-        color: 'text.primary',
-        boxShadow: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >          theme.palette.mode === 'light'</span>
-            ? '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)'
-            : '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)',
-        borderBottom: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >          theme.palette.mode === 'light'</span>
-            ? '1px solid rgba(0,0,0,0.04)'
-            : '1px solid rgba(255,255,255,0.04)',
-        backdropFilter: 'blur(12px)',
-        backgroundImage: 'none',
-        borderRadius: { xs: 0, md: 0 },
-        transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-      }}
-    &gt;
+    &lt;RAAppBar sx={appBarStyles.appBar}&gt;
+      &lt;Tooltip title="Retour à l'accueil"&gt;
+        &lt;IconButton onClick={() =&gt; navigate('/')} color="inherit" sx={{ mr: 0.5 }}&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;HomeIcon /&gt;</span>
+        &lt;/IconButton&gt;
+      &lt;/Tooltip&gt;
+      {!isAuthPage &amp;&amp; window.history.length &gt; 1 &amp;&amp; !prevIsAuth &amp;&amp; (
+        &lt;Button startIcon={&lt;ArrowBackIcon /&gt;} onClick={() =&gt; navigate(-1)} color="inherit"&gt;
+          Retour
+        &lt;/Button&gt;
+      )}
       &lt;TitlePortal /&gt;
       &lt;Box sx={{ flex: 1 }} /&gt;
-      &lt;Box sx={appBarStyles.container}&gt;
-        {!isSmall &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;&gt;</span>
-            &lt;CompanySelector /&gt;
-            &lt;JobSelector /&gt;
-          &lt;/&gt;
-        )}
-        &lt;Tooltip title={mode === 'light' ? 'Passer en mode sombre' : 'Passer en mode clair'}&gt;
-          &lt;IconButton
-            onClick={toggleMode}
-            sx={{
-              color: 'text.primary',
-              backgroundColor: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',</span>
-              borderRadius: 2,
-              transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-              '&amp;:hover': {
-                backgroundColor: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >                  theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)',</span>
-                transform: 'translateY(-1px)',
-              },
-            }}
-          &gt;
-            {mode === 'light' ? &lt;Brightness4 /&gt; : &lt;Brightness7 /&gt;}
-          &lt;/IconButton&gt;
-        &lt;/Tooltip&gt;
-        &lt;Tooltip title="Notifications"&gt;
-          &lt;IconButton
-            sx={{
-              color: 'text.primary',
-              backgroundColor: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >                theme.palette.mode === 'light' ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)',</span>
-              borderRadius: 2,
-              transition: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-              '&amp;:hover': {
-                backgroundColor: <span class="fstat-no" title="function not covered" >(t</span>heme) =&gt;
-<span class="cstat-no" title="statement not covered" >                  theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)',</span>
-                transform: 'translateY(-1px)',
-              },
-            }}
-          &gt;
-            &lt;NotificationsNone /&gt;
-          &lt;/IconButton&gt;
-        &lt;/Tooltip&gt;
+      &lt;Box sx={appBarStyles.con<span class="fstat-no" title="function not covered" >ta</span>iner}&gt;
+        &lt;IconBut<span class="cstat-no" title="statement not covered" >ton onClick={toggleMode} color="inherit" sx={{ mr: 1 }}&gt;</span>
+          {mode === 'dark' ? &lt;Brightness7Icon /&gt; : &lt;Brightness4Icon /&gt;}
+        &lt;/IconButton&gt;
+        &lt;&gt;
+          &lt;CompanySelector /&gt;<span class="fstat-no" title="function not covered" ></span>
+          &lt;JobSele<span class="cstat-no" title="statement not covered" >ctor /&gt;</span>
+        &lt;/&gt;
       &lt;/Box&gt;
     &lt;/RAAppBar&gt;
   )
@@ -316,7 +244,7 @@ export default AppBar
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

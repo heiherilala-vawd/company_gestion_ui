@@ -158,7 +158,19 @@
 <a name='L97'></a><a href='#L97'>97</a>
 <a name='L98'></a><a href='#L98'>98</a>
 <a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -257,6 +269,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { data } from 'react-router'
 import ReferenceSelectWithCreate from './ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../config/dynamicResources.ts'
@@ -268,13 +292,14 @@ import JobForm from '../features/transversal/jobs/JobForm.tsx'
 import WarehouseForm from '../features/storage/warehouses/WarehouseForm.tsx'
 import CompanyForm from '../features/transversal/companies/CompanyForm.tsx'
 import UserForm from '../features/transversal/usersSetup/UserForm.tsx'
+import IncomeTypeForm from '../features/money/incomeType/IncomeTypeForm.tsx'
 &nbsp;
 export const renderTravelExpenseSelect = (source: any, label: any) =&gt; (
-  &lt;ReferenceSelectWithCreate
-    source={source ? <span class="branch-0 cbranch-no" title="branch not covered" >source : '</span>travel_id'}
-    reference="travel_expenses"
-    label={label ? <span class="branch-0 cbranch-no" title="branch not covered" >label : '</span>Voyage'}
-    optionText={(record: any) =&gt; 'Déplacement: ' + (record?.expense?.description || <span class="branch-1 cbranch-no" title="branch not covered" >'')}</span>
+  &lt;ReferenceSelectWit<span class="branch-0 cbranch-no" title="branch not covered" >hCreate</span>
+    source={source ? source : 'travel_id'}
+    reference="trav<span class="branch-0 cbranch-no" title="branch not covered" >el_expens</span>es"
+    label={label ? label : 'Voyage'}<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    optionText={(record: any) =&gt; 'Déplacement: ' + (record?.expense?.description || '')}
     createUrlEnd={getMiddleUrl('travel_expenses')}
     createForm={&lt;TravelExpenseForm isCreateForm /&gt;}
   /&gt;
@@ -312,9 +337,9 @@ export const renderEquipmentSelect = (source: any, label: any) =&gt; (
     createForm={&lt;EquipmentForm isCreateForm /&gt;}
   /&gt;
 )
-&nbsp;
-export const renderExpenseSelect = <span class="fstat-no" title="function not covered" >(s</span>ource: any, label: any) =&gt; (
-<span class="cstat-no" title="statement not covered" >  &lt;ReferenceSelectWithCreate</span>
+<span class="fstat-no" title="function not covered" ></span>
+ex<span class="cstat-no" title="statement not covered" >port const renderExpenseSelect = (source: any, label: any) =&gt; (</span>
+  &lt;ReferenceSelectWithCreate
     source={source ? source : 'expense_id'}
     reference="expenses"
     label={label ? label : 'Dépense'}
@@ -325,10 +350,10 @@ export const renderExpenseSelect = <span class="fstat-no" title="function not co
 )
 &nbsp;
 export const renderCompanySelect = (source: any, label: any) =&gt; (
-  &lt;ReferenceSelectWithCreate
-    source={source ? source : <span class="branch-1 cbranch-no" title="branch not covered" >'company_id'}</span>
-    reference="companies"
-    label={label ? label : <span class="branch-1 cbranch-no" title="branch not covered" >'Entreprise'}</span>
+  &lt;ReferenceSelectWithCreate<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    source={source ? source : 'company_id'}
+    reference="companies"<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    label={label ? label : 'Entreprise'}
     optionText="name"
     createUrlEnd={getMiddleUrl('companies')}
     createForm={&lt;CompanyForm isCreateForm /&gt;}
@@ -336,21 +361,32 @@ export const renderCompanySelect = (source: any, label: any) =&gt; (
 )
 &nbsp;
 export const renderJobSelect = (source: any, label: any) =&gt; (
-  &lt;ReferenceSelectWithCreate
-    source={source ? source : <span class="branch-1 cbranch-no" title="branch not covered" >'job_id'}</span>
-    reference="jobs"
-    label={label ? label : <span class="branch-1 cbranch-no" title="branch not covered" >'Chantier'}</span>
+  &lt;ReferenceSelectWithCreate<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    source={source ? source : 'job_id'}
+    reference="jobs"<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    label={label ? label : 'Chantier'}
     optionText="description"
     createUrlEnd={getMiddleUrl('jobs')}
     createForm={&lt;JobForm isCreateForm /&gt;}
   /&gt;
 )
 &nbsp;
+export const renderIncomeTypeSelect = (source: any, label: any) =&gt; (
+  &lt;ReferenceSelectWithCreate<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+    source={source ? source : 'income_type_id'}
+    reference="income_types<span class="branch-1 cbranch-no" title="branch not covered" >"</span>
+    label={label ? label : 'Type de revenu'}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('income_types')}
+    createForm={&lt;IncomeTypeForm isCreateForm /&gt;}
+  /&gt;
+)
+&nbsp;
 export const renderWarehouseSelect = (source: any, label: any) =&gt; (
   &lt;ReferenceSelectWithCreate
-    source={source ? source : <span class="branch-1 cbranch-no" title="branch not covered" >'warehouse_id'}</span>
+    source={source ? source : 'warehouse_id'}
     reference="warehouses"
-    label={label ? label : <span class="branch-1 cbranch-no" title="branch not covered" >'Entrepôt'}</span>
+    label={label ? label : 'Entrepôt'}
     optionText="name"
     createUrlEnd={getMiddleUrl('warehouses')}
     createForm={&lt;WarehouseForm isCreateForm /&gt;}
@@ -365,7 +401,7 @@ export const renderWarehouseSelect = (source: any, label: any) =&gt; (
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

@@ -17,11 +17,9 @@ describe('E2E: Travel People', () => {
     if (isCreating) {
       cy.contains('Create').click()
     } else {
-      cy.contains(
-        travelPeople1Mock.user?.first_name + ' ' + travelPeople1Mock.user?.last_name,
-      ).click()
+      cy.contains(<string>travelPeople1Mock.arrival_location?.name).click()
       cy.wait('@getTravelPeople')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     selectTravelExpense('Déplacement: ' + travelPeople1Mock.travel?.expense?.description)
     selectUser()
@@ -53,18 +51,12 @@ describe('E2E: Travel People', () => {
           travelPeople2Mock.travel?.arrival_location?.name)
       ),
     ).should('be.visible')
-    cy.contains(
-      travelPeople1Mock.user?.first_name + ' ' + travelPeople1Mock.user?.last_name,
-    ).should('be.visible')
-    cy.contains(
-      travelPeople2Mock.user?.first_name + ' ' + travelPeople2Mock.user?.last_name,
-    ).should('be.visible')
+    cy.contains(<string>travelPeople1Mock.user?.first_name).should('be.visible')
+    cy.contains(<string>travelPeople2Mock.user?.first_name).should('be.visible')
   })
 
   it('should show travel people details', () => {
-    cy.contains(
-      travelPeople1Mock.user?.first_name + ' ' + travelPeople1Mock.user?.last_name,
-    ).click()
+    cy.contains(<string>travelPeople1Mock.arrival_location?.name).click()
     cy.wait('@getTravelPeople')
     cy.contains(<string>travelPeople1Mock.arrival_location?.name).should('exist')
     cy.contains(

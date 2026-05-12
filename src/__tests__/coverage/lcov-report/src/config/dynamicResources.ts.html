@@ -233,7 +233,16 @@
 <a name='L172'></a><a href='#L172'>172</a>
 <a name='L173'></a><a href='#L173'>173</a>
 <a name='L174'></a><a href='#L174'>174</a>
-<a name='L175'></a><a href='#L175'>175</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">140x</span>
+<a name='L175'></a><a href='#L175'>175</a>
+<a name='L176'></a><a href='#L176'>176</a>
+<a name='L177'></a><a href='#L177'>177</a>
+<a name='L178'></a><a href='#L178'>178</a>
+<a name='L179'></a><a href='#L179'>179</a>
+<a name='L180'></a><a href='#L180'>180</a>
+<a name='L181'></a><a href='#L181'>181</a>
+<a name='L182'></a><a href='#L182'>182</a>
+<a name='L183'></a><a href='#L183'>183</a>
+<a name='L184'></a><a href='#L184'>184</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">140x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -407,6 +416,15 @@
 <span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">212x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const API_URL = import.meta.env.VITE_API_URL ?? ''
 &nbsp;
 const userId: string | null = localStorage.getItem('user_id')
@@ -414,7 +432,15 @@ const userId: string | null = localStorage.getItem('user_id')
 /**
  * Liste des ressources qui nécessitent un companyId dans l'URL
  */
-export const DYNAMIC_COMPANY_RESOURCES = ['jobs', 'warehouses', 'equipment'] as const
+export const DYNAMIC_COMPANY_RESOURCES = [
+  'jobs',
+  'warehouses',
+  'equipment',
+  'material_warehouse',
+  'income_types',
+  'materials',
+  'users',
+] as const
 &nbsp;
 // Type pour les ressources dynamiques (TypeScript)
 export type DynamicCompanyResource = (typeof DYNAMIC_COMPANY_RESOURCES)[number]
@@ -446,6 +472,7 @@ export const DYNAMIC_JOB_RESOURCES = [
   'bank_fees',
   'other_expenses',
   'employee_payments',
+  'loans',
 ] as const
 &nbsp;
 // Type pour les ressources dynamiques (TypeScript)
@@ -471,20 +498,20 @@ export const getMiddleUrlDynamicJobResource = (resource: string): string =&gt; {
 export const DYNAMIC_EXPENSES_RESOURCES = [] as const
 &nbsp;
 // Type pour les ressources dynamiques (TypeScript)
-export type DynamicExpensesResource = (typeof DYNAMIC_EXPENSES_RESOURCES)[number]
-&nbsp;
-/**
- * Vérifie si une ressource est dynamique (nécessite companyId)
- */
+export type DynamicExpensesResource = (typeof DYNAM<span class="fstat-no" title="function not covered" >IC</span>_EXPENSES_RESOURCES)[number]
+<span class="cstat-no" title="statement not covered" ></span>
+/**<span class="cstat-no" title="statement not covered" ></span>
+ * Vérifie si une re<span class="cstat-no" title="statement not covered" >ssource est dynamique (nécessite companyId)</span>
+ *<span class="cstat-no" title="statement not covered" >/</span>
 export const isDynamicExpensesResource = (resource: string): boolean =&gt; {
   return DYNAMIC_EXPENSES_RESOURCES.includes(resource as DynamicExpensesResource)
 }
 export const getMiddleUrlDynamicExpensesResource = (resource: string): string =&gt; {
-  const companyId = localStorage.getItem('currentCo<span class="fstat-no" title="function not covered" >mp</span>anyId')
-  const jobId = loca<span class="cstat-no" title="statement not covered" >lStorage.getItem('currentJobId')</span>
-  const expenseI<span class="cstat-no" title="statement not covered" >d = localStorage.getItem('currentExpenseId')</span>
-  return (<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >    '/companies/' +</span>
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
+  const expenseId = localStorage.getItem('currentExpenseId')
+  return (
+    '/companies/' +
     companyId +
     '/job/' +
     jobId +
@@ -534,8 +561,8 @@ export const getMiddleUrlDynamicTravelExpensesResource = (resource: string): str
   )
 }
 &nbsp;
-//----------------------------------------------------------------------------------------------------------
-&nbsp;
+//<span class="missing-if-branch" title="if path not taken" >I</span>----------------------------------------------------------------------------------------------------------
+<span class="cstat-no" title="statement not covered" ></span>
 export const getMiddleUrl = (resource: string): string =&gt; {
   let url = `${API_URL}/${resource}`
   if (isDynamicCompanyResource(resource)) {
@@ -543,13 +570,13 @@ export const getMiddleUrl = (resource: string): string =&gt; {
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}`
   } else if (isDynamicExpensesResource(resource)) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>  url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}`
-  } <span class="cstat-no" title="statement not covered" >else if (isDynamicTravelExpensesResource(resource)) {</span>
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}`
   }
   return url
-}
-&nbsp;
+}<span class="missing-if-branch" title="if path not taken" >I</span>
+<span class="cstat-no" title="statement not covered" ></span>
 export const getMiddleUrlWithId = (resource: string, resourceId: string): string =&gt; {
   let url = `${API_URL}/${resource}/${resourceId}`
   if (isDynamicCompanyResource(resource)) {
@@ -557,28 +584,28 @@ export const getMiddleUrlWithId = (resource: string, resourceId: string): string
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}/${resourceId}`
   } else if (isDynamicExpensesResource(resource)) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>  url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}/${resourceId}`
-  } <span class="cstat-no" title="statement not covered" >else if (isDynamicTravelExpensesResource(resource)) {</span>
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}/${resourceId}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}/${resourceId}`
   }
-  return url
+  return url<span class="branch-1 cbranch-no" title="branch not covered" ></span>
 }
-&nbsp;
+<span class="branch-1 cbranch-no" title="branch not covered" ></span>
 export const getMiddleUrlWithQuery = (
-  resource: string,
-  queryString,
-  filterDefaultValues: any,
+  resource: string,<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>queryString,
+  fi<span class="cstat-no" title="statement not covered" >lterDefaultValues: any,</span>
 ): string =&gt; {
-  let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-  if (isDynamicCompanyResource(resource)) {<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  if (isDynamicCompanyResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}${queryString ? `?${queryString}` : ''}`
-  } else if (isDynamicJobResource(resource)) {<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}${queryString ? `?${queryString}` : ''}`
-  } else if (isDynamicExpensesResource(resource)) {<span class="branch-1 cbranch-no" title="branch not covered" ></span>
-  <span class="missing-if-branch" title="if path not taken" >I</span>  url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
-  } <span class="cstat-no" title="statement not covered" >else if (isDynamicTravelExpensesResource(resource)) {</span>
+  } else if (isDynamicExpensesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
-  }<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+  }
   return url
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -590,7 +617,7 @@ export const getMiddleUrlWithQuery = (
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../prettify.js"></script>
     <script>

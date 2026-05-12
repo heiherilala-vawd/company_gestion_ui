@@ -15,6 +15,7 @@
 | `lender`           | string                                         |
 | `interest_rate`    | number                                         |
 | `start_date`       | Date                                           |
+| `due_date`         | Date                                           |
 | `status`           | [LoanStatus](LoanStatus.md)                    |
 | `job`              | [CrupdateJob](CrupdateJob.md)                  |
 | `repayments`       | [Array&lt;LoanRepayment&gt;](LoanRepayment.md) |
@@ -38,6 +39,7 @@ const example = {
   "lender": BNI Madagascar,
   "interest_rate": 1200,
   "start_date": Thu Feb 01 03:00:00 EAT 2024,
+  "due_date": Thu Dec 31 03:00:00 EAT 2026,
   "status": null,
   "job": null,
   "repayments": null,

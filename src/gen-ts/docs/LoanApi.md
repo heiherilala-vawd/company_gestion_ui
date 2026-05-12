@@ -248,7 +248,7 @@ example().catch(console.error)
 
 ## getLoans
 
-> Array&lt;Loan&gt; getLoans(compId, jobId, userId, page, pageSize, description, amount, lender, status)
+> Array&lt;Loan&gt; getLoans(compId, jobId, userId, page, pageSize, description, amount, lender)
 
 Get all loans
 
@@ -283,8 +283,6 @@ async function example() {
     amount: 5000000,
     // string | Filter loans by lender, case is ignored (optional)
     lender: BNI,
-    // LoanStatus | Filter loans by status (optional)
-    status: ACTIVE,
   } satisfies GetLoansRequest
 
   try {
@@ -301,17 +299,16 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name            | Type         | Description                                  | Notes                                                                |
-| --------------- | ------------ | -------------------------------------------- | -------------------------------------------------------------------- |
-| **compId**      | `string`     |                                              | [Defaults to `undefined`]                                            |
-| **jobId**       | `string`     |                                              | [Defaults to `undefined`]                                            |
-| **userId**      | `string`     |                                              | [Defaults to `undefined`]                                            |
-| **page**        | `number`     |                                              | [Optional] [Defaults to `undefined`]                                 |
-| **pageSize**    | `number`     |                                              | [Optional] [Defaults to `undefined`]                                 |
-| **description** | `string`     | Filter loans by description, case is ignored | [Optional] [Defaults to `undefined`]                                 |
-| **amount**      | `number`     |                                              | [Optional] [Defaults to `undefined`]                                 |
-| **lender**      | `string`     | Filter loans by lender, case is ignored      | [Optional] [Defaults to `undefined`]                                 |
-| **status**      | `LoanStatus` | Filter loans by status                       | [Optional] [Defaults to `undefined`] [Enum: ACTIVE, PAID, DEFAULTED] |
+| Name            | Type     | Description                                  | Notes                                |
+| --------------- | -------- | -------------------------------------------- | ------------------------------------ |
+| **compId**      | `string` |                                              | [Defaults to `undefined`]            |
+| **jobId**       | `string` |                                              | [Defaults to `undefined`]            |
+| **userId**      | `string` |                                              | [Defaults to `undefined`]            |
+| **page**        | `number` |                                              | [Optional] [Defaults to `undefined`] |
+| **pageSize**    | `number` |                                              | [Optional] [Defaults to `undefined`] |
+| **description** | `string` | Filter loans by description, case is ignored | [Optional] [Defaults to `undefined`] |
+| **amount**      | `number` |                                              | [Optional] [Defaults to `undefined`] |
+| **lender**      | `string` | Filter loans by lender, case is ignored      | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

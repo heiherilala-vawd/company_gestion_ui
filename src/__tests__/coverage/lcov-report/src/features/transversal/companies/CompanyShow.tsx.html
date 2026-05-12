@@ -153,8 +153,7 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -248,21 +247,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">140x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// companies/CompanyShow.tsx
+<span class="cline-any cline-yes">140x</span></td><td class="text"><pre class="prettyprint lang-js">// companies/CompanyShow.tsx
 import {
   Show,
   TabbedShowLayout,
   Tab,
+  ReferenceManyField,
   SimpleShowLayout,
   TextField,
   SelectField,
   useShowController,
-  ReferenceManyField,
-  Datagrid,
   DateField,
   FunctionField,
 } from 'react-admin'
+&nbsp;
 import { useEffect } from 'react'
 &nbsp;
 function CompanyInformations() {
@@ -280,6 +278,7 @@ function CompanyInformations() {
           { id: 'HOTEL', name: 'Hôtel' },
         ]}
       /&gt;
+      &lt;TextField source="comment" label="Commentaire" /&gt;
     &lt;/SimpleShowLayout&gt;
   )
 }
@@ -302,43 +301,41 @@ export default function CompanyShow() {
         &lt;/Tab&gt;
 &nbsp;
         &lt;Tab label="Chantiers"&gt;
-          {isLoading ? (
-<span class="branch-0 cbranch-no" title="branch not covered" >            &lt;p&gt;Chargement...&lt;/p&gt;</span>
+          {i<span class="branch-0 cbranch-no" title="branch not covered" >sLoading ? (</span>
+            &lt;p&gt;Chargement...&lt;/p&gt;
           ) : record?.id ? (
             &lt;ReferenceManyField reference="jobs" target="company_id" record={record} perPage={25}&gt;
-              &lt;Datagrid rowClick="show"&gt;
-                &lt;TextField source="id" /&gt;
-                &lt;TextField source="company_id" label="ID Entreprise" /&gt;
-                &lt;TextField source="description" label="Description" /&gt;
-                &lt;DateField source="contract_signature_date" label="Signature contrat" /&gt;
-                &lt;DateField source="start_date" label="Date début" /&gt;
-                &lt;DateField source="end_date" label="Date fin" /&gt;
-                &lt;DateField source="created_at" label="Créé le" showTime /&gt;
-                &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
-                {/* Nom complet du créateur */}
-                &lt;FunctionField
-                  label="Créé par"
-                  render={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;span&gt;</span>
-                      {record.created_by?.first_name} {record.created_by?.last_name}
-                    &lt;/span&gt;
-                  )}
-                /&gt;
+              &lt;TextField source="id" /&gt;
+              &lt;TextField source="company_id" label="ID Entreprise" /&gt;
+              &lt;TextField source="description" label="Description" /&gt;
+              &lt;DateField source="contract_signature_date" label="Signature contrat" /&gt;
+              &lt;DateField source="start_date" label="Date début" /&gt;
+              &lt;DateField source="end_date" label="Date fin" /&gt;
+              &lt;DateField source="created_at" label="Créé le" showTime /&gt;
+              &lt;DateField source="updated_at" label="Modifié le" showTime /&gt;
+              {/* Nom complet du créateur */}
+              &lt;FunctionField
+                label="Créé par"
+                render={(r<span class="fstat-no" title="function not covered" >ec</span>ord) =&gt; (
+                  &lt;s<span class="cstat-no" title="statement not covered" >pan&gt;</span>
+                    {record.created_by?.first_name} {record.created_by?.last_name}
+                  &lt;/span&gt;
+                )}
+              /&gt;
 &nbsp;
-                {/* Nom complet du modificateur */}
-                &lt;FunctionField
-                  label="Modifié par"
-                  render={<span class="fstat-no" title="function not covered" >(r</span>ecord) =&gt; (
-<span class="cstat-no" title="statement not covered" >                    &lt;span&gt;</span>
-                      {record.updated_by?.first_name} {record.updated_by?.last_name}
-                    &lt;/span&gt;
-                  )}
-                /&gt;
-              &lt;/Datagrid&gt;
+              {/* Nom complet du modificateur */}
+              &lt;FunctionField
+                label="Modifié par"
+                render={(r<span class="fstat-no" title="function not covered" >ec</span>ord) =&gt; (
+                  &lt;s<span class="cstat-no" title="statement not covered" >pan&gt;</span>
+                    {record.updated_by?.first_name} {record.updated_by?.last_name}
+                  &lt;/span&gt;
+                )}
+              /&gt;
             &lt;/ReferenceManyField&gt;
           ) : (
-<span class="branch-1 cbranch-no" title="branch not covered" >            &lt;p&gt;Aucun ID de company&lt;/p&gt;</span>
-          )}
+            &lt;p&gt;Aucun ID de company&lt;/p&gt;
+          )}<span class="branch-1 cbranch-no" title="branch not covered" ></span>
         &lt;/Tab&gt;
       &lt;/TabbedShowLayout&gt;
     &lt;/Show&gt;
@@ -353,7 +350,7 @@ export default function CompanyShow() {
     <div class="footer quiet pad2 space-top1 center small">
       Code coverage generated by
       <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-      at 2026-05-06T08:14:40.350Z
+      at 2026-05-12T01:27:46.400Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

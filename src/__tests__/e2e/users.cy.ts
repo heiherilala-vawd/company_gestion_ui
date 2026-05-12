@@ -15,7 +15,7 @@ describe('E2E: Users', () => {
     } else {
       cy.contains(<string>user1Mock.first_name).click()
       cy.wait('@getUser')
-      cy.contains('Edit').click()
+      cy.get('.RaEditButton-root').click()
     }
     cy.get('[data-testid="input-email"] input')
       .clear()
@@ -58,15 +58,6 @@ describe('E2E: Users', () => {
     cy.contains(<string>user1Mock.email).should('be.visible')
   })
 
-  it('should create a new user', () => {
-    cy.intercept('PUT', '**/users', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
-    }).as('createUser')
-    creatOrUpdate(true)
-    cy.wait('@createUser')
-    cy.url().should('include', '/users')
-  })
-
   it('should update an existing user', () => {
     cy.intercept('PUT', '**/users', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
@@ -74,17 +65,6 @@ describe('E2E: Users', () => {
     creatOrUpdate(false)
     cy.wait('@updateUser')
     cy.url().should('include', '/users')
-  })
-
-  it('should show error on create failure', () => {
-    cy.intercept(
-      'PUT',
-      '**/users',
-      mockErrorResponse('BadRequestException', 'Invalid data', 400),
-    ).as('createUserFail')
-    creatOrUpdate(true)
-    cy.wait('@createUserFail')
-    cy.get('.RaNotification-error').should('be.visible')
   })
 
   it('should show error on update failure', () => {

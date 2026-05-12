@@ -62,8 +62,10 @@ describe('E2E: Main Menu and Selectors', () => {
     // Login
     cy.clearLocalStorage()
     cy.visit('/', { failOnStatusCode: false })
-    cy.get('input[name="username"]').type(<string>user1Mock.email)
-    cy.get('input[name="password"]').type('password123')
+    cy.get('input')
+      .first()
+      .type(<string>user1Mock.email)
+    cy.get('input[type="password"]').type('password123')
     cy.get('button[type="submit"]').click()
     cy.wait('@login')
     cy.wait('@whoami')
@@ -79,7 +81,7 @@ describe('E2E: Main Menu and Selectors', () => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('be.visible')
     })
 
-    cy.get('.RaSidebar-fixed').scrollTo('bottom', { duration: 500 })
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200) // laisse le temps au DOM de finir
 
     expectedMenuItemsPart2.forEach((item) => {
