@@ -23,6 +23,11 @@ describe('E2E: Travel People', () => {
     }
     selectTravelExpense('Déplacement: ' + travelPeople1Mock.travel?.expense?.description)
     selectUser()
+    cy.get('[data-testid="input-comment"]')
+      .find('textarea.MuiOutlinedInput-input')
+      .first()
+      .clear()
+      .type('new comment')
     cy.get('button[type="submit"]').click()
   }
 

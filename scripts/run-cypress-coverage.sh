@@ -17,10 +17,10 @@ echo "Running Cypress tests..."
 npx cypress run --config-file src/__tests__/cypress.config.ts
 
 echo "Generating coverage report..."
-npx nyc report --reporter=text-summary --reporter=html
+npx nyc report --reporter=text-summary --reporter=html --temp-dir src/__tests__/.nyc_output --report-dir coverage
 
 echo "Checking coverage threshold (60%)..."
-npx nyc check-coverage --lines 60 --functions 60 --branches 60 --statements 60
+npx nyc check-coverage --lines 60 --functions 60 --branches 60 --statements 60 --temp-dir src/__tests__/.nyc_output
 
 echo "Stopping static server..."
 kill $SERVER_PID || true

@@ -15,6 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
 import { colors, gradients, getShadow, transitions } from '../style/themeConfig'
+import generateId from '../utili/utils.tsx'
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('')
@@ -22,6 +23,8 @@ export const RegisterPage = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [sex, setSex] = useState<'M' | 'F'>('M')
+  const [id, setId] = useState('')
+
   const [loading, setLoading] = useState(false)
   const notify = useNotify()
   const authProvider = useAuthProvider()
@@ -39,6 +42,7 @@ export const RegisterPage = () => {
         first_name: firstName,
         last_name: lastName,
         sex,
+        id,
       })
       notify('Compte créé avec succès', { type: 'success' })
       navigate('/')
@@ -84,6 +88,14 @@ export const RegisterPage = () => {
             onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
+            {' '}
+            <TextField
+              label="ID"
+              value={generateId()}
+              onChange={(e) => setId(e.target.value)}
+              sx={{ display: 'none' }}
+              fullWidth
+            />
             <TextField
               label="Prénom"
               value={firstName}
