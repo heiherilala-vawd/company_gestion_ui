@@ -33,25 +33,34 @@ describe('E2E: Travel Expenses', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-travel-expenses"]').click()
     cy.wait('@getTravelExpenses')
-  })
+  }
 
-  it('should display travel expenses list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
+    cy.wait(200)
+    cy.get('[data-testid="menu-travel-expenses"]').click()
+    cy.wait('@getTravelExpenses')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>travelExpense1Mock.departure_location?.name).should('be.visible')
     cy.contains(<string>travelExpense2Mock.arrival_location?.name).should('be.visible')
     cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
-  })
+  }
 
-  it('should show travel expense details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
     cy.wait('@getTravelExpense')
     cy.contains(<string>travelExpense1Mock.departure_location?.name).should('exist')
@@ -59,27 +68,45 @@ describe('E2E: Travel Expenses', () => {
     cy.contains(<string>travelExpense1Mock.expense?.comment).should('be.visible')
     cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
     cy.contains(<string>travelExpense1Mock.expense?.job_id).should('be.visible')
-  })
+  }
 
-  it('should create a new travel expense', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_expenses', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('createTravelExpense')
     creatOrUpdate(true)
     cy.wait('@createTravelExpense')
     cy.url().should('include', '/travel_expenses')
-  })
+  }
 
-  it('should update an existing travel expense', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_expenses', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('updateTravelExpense')
     creatOrUpdate(false)
     cy.wait('@updateTravelExpense')
     cy.url().should('include', '/travel_expenses')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display travel expenses list', () => showList(true))
+  it('should show travel expense details', () => showDetails(true))
+  it('should create a new travel expense', () => canCreate(true))
+  it('should update an existing travel expense', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_expenses',
@@ -91,6 +118,7 @@ describe('E2E: Travel Expenses', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_expenses',
@@ -100,4 +128,9 @@ describe('E2E: Travel Expenses', () => {
     cy.wait('@updateTravelExpenseFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display travel expenses list on mobile', () => showList(false))
+  it('should show travel expense details on mobile', () => showDetails(false))
+  it('should create a new travel expense on mobile', () => canCreate(false))
+  it('should update an existing travel expense on mobile', () => canUpdate(false))
 })

@@ -37,17 +37,22 @@ describe('E2E: Travel Equipments', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-travel-equipments"]').click()
     cy.wait('@getTravelEquipments')
-  })
+  }
 
-  it('should display travel equipments list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-travel-equipments"]').click()
+    cy.wait('@getTravelEquipments')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>travelEquipment1Mock.quantity).should('be.visible')
     cy.contains(<number>travelEquipment2Mock.quantity).should('be.visible')
     cy.contains(<string>travelEquipment1Mock.equipment?.name).should('be.visible')
@@ -56,9 +61,11 @@ describe('E2E: Travel Equipments', () => {
         ' → ' +
         travelEquipment2Mock.travel?.arrival_location?.name,
     ).should('be.visible')
-  })
+  }
 
-  it('should show travel equipment details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>travelEquipment1Mock.quantity).click()
     cy.wait('@getTravelEquipment')
     cy.contains(<string>travelEquipment1Mock.equipment?.name).should('exist')
@@ -69,27 +76,45 @@ describe('E2E: Travel Equipments', () => {
         ' → ' +
         travelEquipment1Mock.travel?.arrival_location?.name,
     ).should('be.visible')
-  })
+  }
 
-  it('should create a new travel equipment', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_equipment*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('createTravelEquipment')
     creatOrUpdate(true)
     cy.wait('@createTravelEquipment')
     cy.url().should('include', '/travel_equipment')
-  })
+  }
 
-  it('should update an existing travel equipment', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_equipment*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('updateTravelEquipment')
     creatOrUpdate(false)
     cy.wait('@updateTravelEquipment')
     cy.url().should('include', '/travel_equipment')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display travel equipments list', () => showList(true))
+  it('should show travel equipment details', () => showDetails(true))
+  it('should create a new travel equipment', () => canCreate(true))
+  it('should update an existing travel equipment', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_equipment*',
@@ -101,6 +126,7 @@ describe('E2E: Travel Equipments', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_equipment*',
@@ -110,4 +136,9 @@ describe('E2E: Travel Equipments', () => {
     cy.wait('@updateTravelEquipmentFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display travel equipments list on mobile', () => showList(false))
+  it('should show travel equipment details on mobile', () => showDetails(false))
+  it('should create a new travel equipment on mobile', () => canCreate(false))
+  it('should update an existing travel equipment on mobile', () => canUpdate(false))
 })

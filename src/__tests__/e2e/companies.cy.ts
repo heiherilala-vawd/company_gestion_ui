@@ -36,48 +36,73 @@ describe('E2E: Companies', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-  })
+  }
 
-  it('should display companies list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-companies"]').click()
+    cy.wait('@getCompanies')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>company1Mock.name).should('be.visible')
     cy.contains(<string>company2Mock.name).should('be.visible')
-  })
+  }
 
-  it('should show company details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>company1Mock.name).click()
     cy.wait('@getCompany')
     cy.contains(<string>company1Mock.name).should('exist')
     cy.contains(<string>company1Mock.rib).should('exist')
     cy.contains(<string>company1Mock.description).should('exist')
-  })
+  }
 
-  it('should create a new company', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
     creatOrUpdate(true)
     cy.wait('@createCompany')
     cy.url().should('include', '/companies')
-  })
+  }
 
-  it('should update an existing company', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
     creatOrUpdate(false)
     cy.wait('@updateCompany')
     cy.url().should('include', '/companies')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display companies list', () => showList(true))
+  it('should show company details', () => showDetails(true))
+  it('should create a new company', () => canCreate(true))
+  it('should update an existing company', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '/companies*',
@@ -89,6 +114,7 @@ describe('E2E: Companies', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept('PUT', '/companies*', (req) => {
       req.reply(mockErrorResponse('BadRequestException', 'Update failed', 400))
     }).as('updateCompanyFail')
@@ -96,4 +122,9 @@ describe('E2E: Companies', () => {
     cy.wait('@updateCompanyFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display companies list on mobile', () => showList(false))
+  it('should show company details on mobile', () => showDetails(false))
+  it('should create a new company on mobile', () => canCreate(false))
+  it('should update an existing company on mobile', () => canUpdate(false))
 })

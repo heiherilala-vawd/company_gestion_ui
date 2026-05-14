@@ -11,7 +11,7 @@
 - `npm run cypress:coverage` - **Run Cypress tests with coverage (Build + Static Serve)** - NO dev server needed
 - `npm run type-check` - TypeScript check (`tsc --noEmit`)
 - `npm run lint` - ESLint with auto-fix
-- `npm run format` - Prettier format src/
+- `npm run format` - Prettier format src/ (`prettier --write ./src`)
 - `npm run test` - Run Vitest unit tests (`vitest run`)
 - `npm run test:watch` - Vitest watch mode
 - `npm run test:coverage` - Vitest unit tests with coverage
@@ -29,6 +29,11 @@
 - **Reusable components**: `src/generic/` (FormToolbar, GenericContext, GenericSelector, ReferenceSelectWithCreate, ResponsiveDatagrid, SelectWithCreateProvider)
 - **Utilities**: `src/utili/` (index.tsx, utils.tsx)
 - **Feature pages**: `src/features/` (HomePage, activity components, money/storage/transversal sub-modules)
+- **Loans (Prêteur)**: Loans are managed across two activity pages:
+  - **Create**: `src/features/IncomesActivity.tsx` — Toggle to "Emprunts" (`value="loan"`), uses `ResourceContextProvider value="loans"`. Form fields: `lender`, `amount`, `interest_rate`, `start_date`, `description`, `status` (default `ACTIVE`). API: `PUT /companies/{comp_id}/job/{job_id}/user/{user_id}/loans`
+  - **Repay**: `src/features/EmployerPaymentActivity.tsx` — Toggle to "Retourner emprunt" (`value="loans"`), fetches loans via `useGetList('loans', ...)`. Shows active & defaulted tables with repayment inputs. Repayment API: `POST {loans}/{id}/repayments` with body `{ id, loan_id, amount, comment }`
+  - **Generated types**: `Loan`, `CrupdateLoan`, `LoanRepayment`, `CrupdateLoanRepayment` in `src/gen-ts/`
+  - **URL pattern**: `/companies/{comp_id}/job/{job_id}/user/{user_id}/loans` (dynamic job resource)
 - **Environment**: `.env` file contains `VITE_SIMPLE_REST_URL=http://localhost:8080` (not used in code)
 
 ## Theme System (Style Centralization)
@@ -200,6 +205,7 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
    - Use `beforeEach` with utility functions for setup
    - Include create, update, and error scenarios
    - **Menu testId format**: `menu-{resource-name}` (e.g., `menu-travel-equipments`)
+   - **Loan toggle pattern**: Loans are on custom activity pages (not sidebar menu). Navigate directly via `cy.visit('/incomes_activity')` for creation ("Emprunts" toggle) or `cy.visit('/employer_payments_activity')` for repayment ("Retourner emprunt" toggle). Create uses `PUT **/loans`; list uses `GET **/loans*`; repayment uses `POST **/loans/*/repayments`.
 
    ```typescript
    import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
@@ -296,10 +302,12 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 - `travel-peoples.cy.ts` - Travel peoples CRUD
 - `users.cy.ts` - Users CRUD
 - `warehouses.cy.ts` - Warehouses CRUD
+- Loans are tested via `incomes.cy.ts` (create) and `employee-payments.cy.ts` (repay) using the toggle pattern above
 
 ### Existing Mock Files
 
 - `auth-api.ts`, `bank-fees-api.ts`, `companies-api.ts`, `employee-payments-api.ts`, `equipment-api.ts`, `expenses-api.ts`, `histories-api.ts`, `incomes-api.ts`, `jobs-api.ts`, `materials-api.ts`, `other-expenses-api.ts`, `purchases-api.ts`, `travel-equipment-api.ts`, `travel-expenses-api.ts`, `travel-materials-api.ts`, `travel-people-api.ts`, `users-api.ts`, `warehouses-api.ts`, `index.ts`
+- Loans mocks should go in `loans-api.ts` (not yet created) — mock `Loan` and `CrupdateLoan` types with `lender`, `amount`, `interest_rate`, `start_date`, `status`, `remaining_amount`. Repayment mocks use `CrupdateLoanRepayment`. Add interceptors in `utils.ts`: `GET **/loans*`, `PUT **/loans`, `POST **/loans/*/repayments`.
 
 ### Security Measures (Prevent backend leaks during tests)
 

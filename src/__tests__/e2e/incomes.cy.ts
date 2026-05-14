@@ -41,49 +41,76 @@ describe('E2E: Incomes', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-incomes"]').click()
     cy.wait('@getIncomes')
-  })
+  }
 
-  it('should display incomes list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
+    cy.wait(200)
+    cy.get('[data-testid="menu-incomes"]').click()
+    cy.wait('@getIncomes')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>income1Mock.description).should('be.visible')
     cy.contains(<string>income2Mock.description).should('be.visible')
-  })
+  }
 
-  it('should show income details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>income1Mock.description).click()
     cy.wait('@getIncome')
     cy.contains(<string>income1Mock.description).should('exist')
     cy.contains(<string>income1Mock.source_organization).should('exist')
-  })
+  }
 
-  it('should create a new income', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/incomes', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('createIncome')
     creatOrUpdate(true)
     cy.wait('@createIncome')
     cy.url().should('include', '/incomes')
-  })
+  }
 
-  it('should update an existing income', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/incomes', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('updateIncome')
     creatOrUpdate(false)
     cy.wait('@updateIncome')
     cy.url().should('include', '/incomes')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display incomes list', () => showList(true))
+  it('should show income details', () => showDetails(true))
+  it('should create a new income', () => canCreate(true))
+  it('should update an existing income', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/incomes',
@@ -95,6 +122,7 @@ describe('E2E: Incomes', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/incomes',
@@ -104,4 +132,9 @@ describe('E2E: Incomes', () => {
     cy.wait('@updateIncomeFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display incomes list on mobile', () => showList(false))
+  it('should show income details on mobile', () => showDetails(false))
+  it('should create a new income on mobile', () => canCreate(false))
+  it('should update an existing income on mobile', () => canUpdate(false))
 })

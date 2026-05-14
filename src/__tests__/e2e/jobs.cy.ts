@@ -39,47 +39,72 @@ describe('E2E: Jobs', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-jobs"]').click()
     cy.wait('@getJobs')
-  })
+  }
 
-  it('should display jobs list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-jobs"]').click()
+    cy.wait('@getJobs')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>job1Mock.description).should('be.visible')
     cy.contains(<string>job2Mock.description).should('be.visible')
-  })
+  }
 
-  it('should show job details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>job1Mock.description).click()
     cy.wait('@getJob')
     cy.contains(<string>job1Mock.description).should('be.visible')
     cy.contains('En cours').should('be.visible')
-  })
+  }
 
-  it('should create a new job', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/jobs', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('createJob')
     creatOrUpdate(true)
     cy.wait('@createJob')
     cy.url().should('include', '/jobs')
-  })
+  }
 
-  it('should update an existing job', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/jobs', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('updateJob')
     creatOrUpdate(false)
     cy.wait('@updateJob')
     cy.url().should('include', '/jobs')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display jobs list', () => showList(true))
+  it('should show job details', () => showDetails(true))
+  it('should create a new job', () => canCreate(true))
+  it('should update an existing job', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/jobs',
@@ -91,6 +116,7 @@ describe('E2E: Jobs', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/jobs',
@@ -100,4 +126,9 @@ describe('E2E: Jobs', () => {
     cy.wait('@updateJobFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display jobs list on mobile', () => showList(false))
+  it('should show job details on mobile', () => showDetails(false))
+  it('should create a new job on mobile', () => canCreate(false))
+  it('should update an existing job on mobile', () => canUpdate(false))
 })

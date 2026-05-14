@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => ({
             exclude: ['node_modules/**', 'src/gen-ts/**', 'src/__tests__/**'],
             extension: ['.js', '.ts', '.jsx', '.tsx'],
             requireEnv: false,
+            forceBuildInstrument: true,
           }),
         ]
       : []),

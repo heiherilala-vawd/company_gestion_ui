@@ -38,47 +38,72 @@ describe('E2E: Equipment', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-equipments"]').click()
     cy.wait('@getEquipments')
-  })
+  }
 
-  it('should display equipment list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-equipments"]').click()
+    cy.wait('@getEquipments')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>equipment1Mock.name).should('be.visible')
     cy.contains(<string>equipment2Mock.name).should('be.visible')
-  })
+  }
 
-  it('should show equipment details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>equipment1Mock.name).click()
     cy.wait('@getEquipment')
     cy.contains(<string>equipment1Mock.name).should('be.visible')
     cy.contains(<string>equipment1Mock.description).should('be.visible')
-  })
+  }
 
-  it('should create a new equipment', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/equipment', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('createEquipment')
     creatOrUpdate(true)
     cy.wait('@createEquipment')
     cy.url().should('include', '/equipment')
-  })
+  }
 
-  it('should update an existing equipment', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/equipment', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('updateEquipment')
     creatOrUpdate(false)
     cy.wait('@updateEquipment')
     cy.url().should('include', '/equipment')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display equipment list', () => showList(true))
+  it('should show equipment details', () => showDetails(true))
+  it('should create a new equipment', () => canCreate(true))
+  it('should update an existing equipment', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/equipment',
@@ -90,6 +115,7 @@ describe('E2E: Equipment', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/equipment',
@@ -99,4 +125,9 @@ describe('E2E: Equipment', () => {
     cy.wait('@updateEquipmentFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display equipment list on mobile', () => showList(false))
+  it('should show equipment details on mobile', () => showDetails(false))
+  it('should create a new equipment on mobile', () => canCreate(false))
+  it('should update an existing equipment on mobile', () => canUpdate(false))
 })

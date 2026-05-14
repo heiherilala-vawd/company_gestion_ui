@@ -18,9 +18,7 @@ describe('E2E: Bank Fees', () => {
     if (isCreating) {
       cy.contains('Create').click()
       cy.get('[data-testid="input-id"] input').then(($input) => {
-        // Modification directe de la valeur
         $input.val('newId')
-        // Déclencher l'événement onChange pour React
         $input.trigger('change')
       })
     } else {
@@ -46,48 +44,75 @@ describe('E2E: Bank Fees', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-bank-fees"]').click()
     cy.wait('@getBankFees')
-  })
+  }
 
-  it('should display bank fees list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
+    cy.wait(200)
+    cy.get('[data-testid="menu-bank-fees"]').click()
+    cy.wait('@getBankFees')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains('BNP Paribas').should('be.visible')
-  })
+  }
 
-  it('should show bank fee details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>bankFee1Mock.bank_name).click()
     cy.wait('@getBankFee')
     cy.contains(<string>bankFee1Mock.bank_name).should('exist')
     cy.contains(<string>bankFee1Mock.description).should('exist')
-  })
+  }
 
-  it('should create a new bank fee', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/bank_fees', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('createBankFee')
     creatOrUpdate(true)
     cy.wait('@createBankFee')
     cy.url().should('include', '/bank_fees')
-  })
+  }
 
-  it('should update an existing bank fee', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/bank_fees', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('updateBankFee')
     creatOrUpdate(false)
     cy.wait('@updateBankFee')
     cy.url().should('include', '/bank_fees')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display bank fees list', () => showList(true))
+  it('should show bank fee details', () => showDetails(true))
+  it('should create a new bank fee', () => canCreate(true))
+  it('should update an existing bank fee', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/bank_fees',
@@ -99,6 +124,7 @@ describe('E2E: Bank Fees', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/bank_fees',
@@ -108,4 +134,9 @@ describe('E2E: Bank Fees', () => {
     cy.wait('@updateBankFeeFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display bank fees list on mobile', () => showList(false))
+  it('should show bank fee details on mobile', () => showDetails(false))
+  it('should create a new bank fee on mobile', () => canCreate(false))
+  it('should update an existing bank fee on mobile', () => canUpdate(false))
 })

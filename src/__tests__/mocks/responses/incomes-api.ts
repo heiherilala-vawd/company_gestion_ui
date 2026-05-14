@@ -2,7 +2,6 @@ import { IncomeMoney, CrupdateIncomeMoney, IncomeType } from '../../../gen-ts/sr
 import { user1Mock } from './users-api.ts'
 import { job1Mock } from './jobs-api.ts'
 
-
 export const incomesType1: IncomeType = {
   id: 'inctype1_id',
   name: 'incomeType1 name',

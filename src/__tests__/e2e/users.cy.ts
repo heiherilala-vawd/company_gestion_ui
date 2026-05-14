@@ -36,38 +36,60 @@ describe('E2E: Users', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-users"]').click()
     cy.wait('@getUsers')
-  })
+  }
 
-  it('should display users list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-users"]').click()
+    cy.wait('@getUsers')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>user1Mock.first_name).should('be.visible')
     cy.contains(<string>user2Mock.first_name).should('be.visible')
-  })
+  }
 
-  it('should show user details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>user1Mock.first_name).click()
     cy.wait('@getUser')
     cy.contains(<string>user1Mock.first_name).should('be.visible')
     cy.contains(<string>user1Mock.email).should('be.visible')
-  })
+  }
 
-  it('should update an existing user', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/users', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
     }).as('updateUser')
     creatOrUpdate(false)
     cy.wait('@updateUser')
     cy.url().should('include', '/users')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display users list', () => showList(true))
+  it('should show user details', () => showDetails(true))
+  it('should update an existing user', () => canUpdate(true))
+
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/users',
@@ -77,4 +99,8 @@ describe('E2E: Users', () => {
     cy.wait('@updateUserFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display users list on mobile', () => showList(false))
+  it('should show user details on mobile', () => showDetails(false))
+  it('should update an existing user on mobile', () => canUpdate(false))
 })

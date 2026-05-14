@@ -41,49 +41,76 @@ describe('E2E: Employee Payments', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-employee-payments"]').click()
     cy.wait('@getEmployeePayments')
-  })
+  }
 
-  it('should display employee payments list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
+    cy.wait(200)
+    cy.get('[data-testid="menu-employee-payments"]').click()
+    cy.wait('@getEmployeePayments')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
     cy.contains(<string>employeePayment2Mock.payment_description).should('exist')
-  })
+  }
 
-  it('should show employee payment details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>employeePayment1Mock.payment_description).click()
     cy.wait('@getEmployeePayment')
     cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
     cy.contains(<string>employeePayment1Mock.employee?.first_name).should('exist')
-  })
+  }
 
-  it('should create a new employee payment', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/employee_payments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('createEmployeePayment')
     creatOrUpdate(true)
     cy.wait('@createEmployeePayment')
     cy.url().should('include', '/employee_payments')
-  })
+  }
 
-  it('should update an existing employee payment', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/employee_payments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('updateEmployeePayment')
     creatOrUpdate(false)
     cy.wait('@updateEmployeePayment')
     cy.url().should('include', '/employee_payments')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display employee payments list', () => showList(true))
+  it('should show employee payment details', () => showDetails(true))
+  it('should create a new employee payment', () => canCreate(true))
+  it('should update an existing employee payment', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/employee_payments',
@@ -95,6 +122,7 @@ describe('E2E: Employee Payments', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/employee_payments',
@@ -104,4 +132,9 @@ describe('E2E: Employee Payments', () => {
     cy.wait('@updateEmployeePaymentFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display employee payments list on mobile', () => showList(false))
+  it('should show employee payment details on mobile', () => showDetails(false))
+  it('should create a new employee payment on mobile', () => canCreate(false))
+  it('should update an existing employee payment on mobile', () => canUpdate(false))
 })

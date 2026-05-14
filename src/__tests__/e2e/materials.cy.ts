@@ -28,47 +28,72 @@ describe('E2E: Materials', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-materials"]').click()
     cy.wait('@getMaterials')
-  })
+  }
 
-  it('should display materials list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-materials"]').click()
+    cy.wait('@getMaterials')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>material1Mock.name).should('be.visible')
     cy.contains(<string>material2Mock.name).should('be.visible')
-  })
+  }
 
-  it('should show material details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>material1Mock.name).click()
     cy.wait('@getMaterial')
     cy.contains(<string>material1Mock.name).should('exist')
     cy.contains(<string>material1Mock.description).should('exist')
-  })
+  }
 
-  it('should create a new material', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/materials', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('createMaterial')
     creatOrUpdate(true)
     cy.wait('@createMaterial')
     cy.url().should('include', '/materials')
-  })
+  }
 
-  it('should update an existing material', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/materials', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('updateMaterial')
     creatOrUpdate(false)
     cy.wait('@updateMaterial')
     cy.url().should('include', '/materials')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display materials list', () => showList(true))
+  it('should show material details', () => showDetails(true))
+  it('should create a new material', () => canCreate(true))
+  it('should update an existing material', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/materials',
@@ -80,6 +105,7 @@ describe('E2E: Materials', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/materials',
@@ -89,4 +115,9 @@ describe('E2E: Materials', () => {
     cy.wait('@updateMaterialFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display materials list on mobile', () => showList(false))
+  it('should show material details on mobile', () => showDetails(false))
+  it('should create a new material on mobile', () => canCreate(false))
+  it('should update an existing material on mobile', () => canUpdate(false))
 })
