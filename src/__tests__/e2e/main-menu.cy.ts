@@ -84,17 +84,13 @@ describe('E2E: Main Menu and Selectors', () => {
         cy.contains(<string>companiesMock[0].name).click()
       })
 
+    cy.get('[role="listbox"]').should('not.exist')
+
     // Cliquer sur le sélecteur de job (deuxième select)
     cy.contains('Job:').closest('div').find('[role="combobox"]').click()
     cy.wait('@getJobs')
 
     // Vérifier que les jobs s'affichent
-    cy.get('[role="listbox"]')
-      .should('be.visible')
-      .within(() => {
-        cy.contains(<string>jobsMock[0].description).should('be.visible')
-      })
-
     cy.get('[role="listbox"]')
       .should('be.visible')
       .within(() => {

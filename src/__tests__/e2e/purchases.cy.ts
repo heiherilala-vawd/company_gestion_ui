@@ -64,24 +64,33 @@ describe('E2E: Purchases', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     cy.get('[data-testid="menu-purchases"]').click()
     cy.wait('@getPurchases')
-  })
+  }
 
-  it('should display purchases list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
+    cy.wait(200)
+    cy.get('[data-testid="menu-purchases"]').click()
+    cy.wait('@getPurchases')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>purchase1Mock.quantity).should('be.visible')
     cy.contains(<number>purchase2Mock.expense?.amount).should('be.visible')
-  })
+  }
 
-  it('should show purchase details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>purchase1Mock.quantity).click()
     cy.wait('@getPurchase')
     cy.contains(<number>purchase1Mock.quantity).should('exist')
@@ -90,36 +99,57 @@ describe('E2E: Purchases', () => {
     cy.contains(<string>purchase1Mock.equipment?.name).should('exist')
     cy.contains(<string>purchase1Mock.expense?.job_id).should('exist')
     cy.contains(<string>purchase1Mock.expense?.comment).should('exist')
-  })
+  }
 
-  it('should create a new purchase equipment', () => {
+  function canCreateEquipment(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/purchases', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateEquipment(true)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
-  })
+  }
 
-  it('should create a new purchase material', () => {
+  function canCreateMaterial(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/purchases', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateMaterial(true)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
-  })
+  }
 
-  it('should update an existing purchase', () => {
+  function canUpdatePurchase(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/purchases', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('updatePurchase')
     creatOrUpdateMaterial(false)
     cy.wait('@updatePurchase')
     cy.url().should('include', '/purchases')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display purchases list', () => showList(true))
+  it('should show purchase details', () => showDetails(true))
+  it('should create a new purchase equipment', () => canCreateEquipment(true))
+  it('should create a new purchase material', () => canCreateMaterial(true))
+  it('should update an existing purchase', () => canUpdatePurchase(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/purchases',
@@ -131,6 +161,7 @@ describe('E2E: Purchases', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/purchases',
@@ -140,4 +171,10 @@ describe('E2E: Purchases', () => {
     cy.wait('@updatePurchaseFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display purchases list on mobile', () => showList(false))
+  it('should show purchase details on mobile', () => showDetails(false))
+  it('should create a new purchase equipment on mobile', () => canCreateEquipment(false))
+  it('should create a new purchase material on mobile', () => canCreateMaterial(false))
+  it('should update an existing purchase on mobile', () => canUpdatePurchase(false))
 })

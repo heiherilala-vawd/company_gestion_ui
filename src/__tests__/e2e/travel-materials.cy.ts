@@ -31,17 +31,22 @@ describe('E2E: Travel Materials', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-travel-materials"]').click()
     cy.wait('@getTravelMaterials')
-  })
+  }
 
-  it('should display travel materials list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-travel-materials"]').click()
+    cy.wait('@getTravelMaterials')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>travelMaterials1Mock.quantity).should('be.visible')
     cy.contains(<number>travelMaterials1Mock.quantity_received).should('be.visible')
     cy.contains(<string>travelMaterials1Mock.material?.name).should('be.visible')
@@ -50,9 +55,11 @@ describe('E2E: Travel Materials', () => {
         ' → ' +
         travelMaterials2Mock.travel?.arrival_location?.name,
     ).should('be.visible')
-  })
+  }
 
-  it('should show travel material details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<number>travelMaterials1Mock.quantity).click()
     cy.wait('@getTravelMaterial')
     cy.contains('Cement bags').should('exist')
@@ -64,27 +71,45 @@ describe('E2E: Travel Materials', () => {
         ' → ' +
         travelMaterials1Mock.travel?.arrival_location?.name,
     ).should('be.visible')
-  })
+  }
 
-  it('should create a new travel material', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_materials*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('createTravelMaterial')
     creatOrUpdate(true)
     cy.wait('@createTravelMaterial')
     cy.url().should('include', '/travel_materials')
-  })
+  }
 
-  it('should update an existing travel material', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_materials*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('updateTravelMaterial')
     creatOrUpdate(false)
     cy.wait('@updateTravelMaterial')
     cy.url().should('include', '/travel_materials')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display travel materials list', () => showList(true))
+  it('should show travel material details', () => showDetails(true))
+  it('should create a new travel material', () => canCreate(true))
+  it('should update an existing travel material', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_materials*',
@@ -96,6 +121,7 @@ describe('E2E: Travel Materials', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_materials*',
@@ -105,4 +131,9 @@ describe('E2E: Travel Materials', () => {
     cy.wait('@updateTravelMaterialFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display travel materials list on mobile', () => showList(false))
+  it('should show travel material details on mobile', () => showDetails(false))
+  it('should create a new travel material on mobile', () => canCreate(false))
+  it('should update an existing travel material on mobile', () => canUpdate(false))
 })

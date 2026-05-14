@@ -31,17 +31,22 @@ describe('E2E: Travel People', () => {
     cy.get('button[type="submit"]').click()
   }
 
-  beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
-    interceptGeneralEndpoint()
-    loginInPage()
+  function navigateToDesktop() {
     cy.get('[data-testid="menu-travel-peoples"]').click()
     cy.wait('@getTravelPeoples')
-  })
+  }
 
-  it('should display travel peoples list', () => {
+  function navigateToMobile() {
+    cy.viewport(375, 667)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('[data-testid="menu-travel-peoples"]').click()
+    cy.wait('@getTravelPeoples')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+  }
+
+  function showList(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(
       <string>(
         (travelPeople1Mock.travel?.departure_location?.name +
@@ -58,36 +63,56 @@ describe('E2E: Travel People', () => {
     ).should('be.visible')
     cy.contains(<string>travelPeople1Mock.user?.first_name).should('be.visible')
     cy.contains(<string>travelPeople2Mock.user?.first_name).should('be.visible')
-  })
+  }
 
-  it('should show travel people details', () => {
+  function showDetails(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.contains(<string>travelPeople1Mock.arrival_location?.name).click()
     cy.wait('@getTravelPeople')
     cy.contains(<string>travelPeople1Mock.arrival_location?.name).should('exist')
     cy.contains(
       travelPeople1Mock.user?.first_name + ' ' + travelPeople1Mock.user?.last_name,
     ).should('exist')
-  })
+  }
 
-  it('should create a new travel people', () => {
+  function canCreate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_people*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelPeoples(req.body)))
     }).as('createTravelPeople')
     creatOrUpdate(true)
     cy.wait('@createTravelPeople')
     cy.url().should('include', '/travel_people')
-  })
+  }
 
-  it('should update an existing travel people', () => {
+  function canUpdate(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
     cy.intercept('PUT', '**/travel_people*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelPeoples(req.body)))
     }).as('updateTravelPeople')
     creatOrUpdate(false)
     cy.wait('@updateTravelPeople')
     cy.url().should('include', '/travel_people')
+  }
+
+  beforeEach(() => {
+    cy.clearLocalStorage()
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
+  it('should display travel peoples list', () => showList(true))
+  it('should show travel people details', () => showDetails(true))
+  it('should create a new travel people', () => canCreate(true))
+  it('should update an existing travel people', () => canUpdate(true))
+
   it('should show error on create failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_people*',
@@ -99,6 +124,7 @@ describe('E2E: Travel People', () => {
   })
 
   it('should show error on update failure', () => {
+    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/travel_people*',
@@ -108,4 +134,9 @@ describe('E2E: Travel People', () => {
     cy.wait('@updateTravelPeopleFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
+
+  it('should display travel peoples list on mobile', () => showList(false))
+  it('should show travel people details on mobile', () => showDetails(false))
+  it('should create a new travel people on mobile', () => canCreate(false))
+  it('should update an existing travel people on mobile', () => canUpdate(false))
 })
