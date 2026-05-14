@@ -30,7 +30,7 @@ export const AppBar = () => {
     prevPath === '/login' || prevPath === '/register' || prevPath.startsWith('/auth')
 
   return (
-    <RAAppBar sx={appBarStyles.appBar}>
+    <RAAppBar sx={appBarStyles.appBar} data-testid={'menu-item-selector-home'}>
       <Tooltip title="Retour à l'accueil">
         <IconButton onClick={() => navigate('/')} color="inherit" sx={{ mr: 0.5 }}>
           <HomeIcon />

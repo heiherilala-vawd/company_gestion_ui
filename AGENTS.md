@@ -12,16 +12,23 @@
 - `npm run type-check` - TypeScript check (`tsc --noEmit`)
 - `npm run lint` - ESLint with auto-fix
 - `npm run format` - Prettier format src/
+- `npm run test` - Run Vitest unit tests (`vitest run`)
+- `npm run test:watch` - Vitest watch mode
+- `npm run test:coverage` - Vitest unit tests with coverage
 
 ## Architecture
 
 - **React Admin v5** with React 19
-- **Auth**: Custom `authProvider` in `src/auth/authProvider.tsx`, uses `/auth/login`, `/auth/whoami` endpoints
+- **Auth**: Custom auth in `src/auth/` (`authProvider.tsx`, `LoginPage.tsx`, `RegisterPage.tsx`, `CustomLogin.tsx`), uses `/auth/login`, `/auth/whoami` endpoints
   - Uses `import.meta.env.VITE_API_URL ?? ''` for API base URL (currently empty = relative URLs)
 - **API client**: Generated code in `src/gen-ts/` from `api.yml` (regenerate with `gen:api`)
 - **Data provider**: `src/auth/dataProvider.ts` - uses helper functions from `src/config/dynamicResources.ts`
   - All API URLs are relative (no hardcoded backend URL)
-  - **NO** external REST client (`ra-data-simple-rest` removed)
+  - `ra-data-simple-rest` listed in dependencies but **unused** in source code
+- **Core app**: `src/core/` (App.tsx, AppBar.tsx, Layout.tsx, Menu.tsx)
+- **Reusable components**: `src/generic/` (FormToolbar, GenericContext, GenericSelector, ReferenceSelectWithCreate, ResponsiveDatagrid, SelectWithCreateProvider)
+- **Utilities**: `src/utili/` (index.tsx, utils.tsx)
+- **Feature pages**: `src/features/` (HomePage, activity components, money/storage/transversal sub-modules)
 - **Environment**: `.env` file contains `VITE_SIMPLE_REST_URL=http://localhost:8080` (not used in code)
 
 ## Theme System (Style Centralization)
@@ -31,14 +38,15 @@ All design tokens (colors, gradients, shadows, border radii, transitions, spacin
 ### File Hierarchy
 
 - **`src/style/themeConfig.ts`** — **SOURCE OF TRUTH**: all design tokens and helper functions
-  - `colors` — primary, secondary, status, light/dark mode colors, mode-aware backgrounds (`subtleBg`, `primaryBg`, `tableHeader`, `border`, `divider`)
-  - `gradients` — primary, secondary, sidebar, success, error
-  - `shadows` — light/dark variants (`sm`, `md`, `lg`, `primary`, `primaryHover`, `dialog`)
-  - `borderRadius` — `xs(4)`, `sm(8)`, `md(12)`, `lg(16)`, `xl(20)`, `xxl(24)`
+  - `colors` — primary, secondary, success, warning, error, info, light/dark mode colors, mode-aware backgrounds (`subtleBg`, `subtleBgHover`, `primaryBg`, `primaryBgHover`, `tableHeader`, `border`, `divider`)
+  - `gradients` — primary, primaryHorizontal, secondary, sidebar, success, error, +Dark variants
+  - `shadows` — light/dark variants (`sm`, `md`, `lg`, `primary`, `primaryHover`, `primaryActive`, `dialog`)
+  - `borderRadius` — `xs(1)`, `sm(2)`, `md(4)`, `lg(6)`, `xl(8)`, `xxl(10)`
   - `transitions` — `default(200ms)`, `fast(100ms)`, `slow(300ms)`, `spin`
   - `spacing` — `xs(4)`, `sm(8)`, `md(16)`, `lg(24)`, `xl(32)`, `xxl(48)`
   - `typography` — fontFamily, h1-h6, body1/2, caption, button
-  - Helpers: `getShadow()`, `getBorder()`, `getDivider()`, `getSubtleBg()`, `getPrimaryBg()`, `getTableHeader()`, `getModeValue()`
+  - Helpers: `getShadow()`, `getBorder()`, `getDivider()`, `getSubtleBg()`, `getSubtleBgHover()`, `getPrimaryBg()`, `getPrimaryBgHover()`, `getTableHeader()`, `getTextPrimary()`, `getTextSecondary()`, `getModeValue()`
+  - `commonHover` — interactive hover presets (`row`, `translateX`, `translateY`, `lift`)
 
 - **`src/style/theme.ts`** — MUI theme creation consuming `themeConfig`, exports `lightTheme`, `darkTheme`, `commonStyles`, plus component overrides for 20+ MUI components (`MuiButton`, `MuiCard`, `MuiTextField`, `MuiTable`, etc.)
 
@@ -102,7 +110,7 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 - **Coverage**: NYC/Istanbul via Cypress (`npm run cypress:coverage`)
 - **Test mocks**: `src/__tests__/mocks/responses/*.ts`
 - **Cypress config**: `src/__tests__/cypress.config.ts`
-- **Support utils**: `src/__tests__/support/utils.ts`
+- **Support utils**: `src/__tests__/support/utils.ts`, `commands.ts`, `e2e.ts`
 
 ### Test Execution (IMPORTANT: No dev server needed)
 
@@ -115,11 +123,20 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 
 - **Tool**: NYC (Istanbul) with `vite-plugin-istanbul` for instrumentation during build
 - **Threshold**: 60% minimum (lines, functions, branches, statements)
+- **Settings** (`.nycrc`):
+  - `"all": true` — include all files in `src/`
+  - `"include": ["src/**/*.ts", "src/**/*.tsx"]`
+  - `"extension": [".ts", ".tsx"]`
+  - `"check-coverage": true`
 - **Exclusions** (`.nycrc`):
   - `node_modules/**`
   - `src/gen-ts/**` (generated API code)
   - `src/__tests__/**`
   - `cypress/**`
+  - `**/*.d.ts`
+  - `**/coverage/**`
+  - `**/dist/**`
+  - `scripts/**`
 - **Reports**: `coverage/` directory (text, html, lcov)
 - **Command**: `npm run cypress:coverage` (builds with `NYC_CAFEOBJECT_COVERAGE=true`, serves statically, runs Cypress, generates report)
 
@@ -273,12 +290,16 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 - `materials.cy.ts` - Materials CRUD
 - `other-expenses.cy.ts` - Other expenses CRUD
 - `purchases.cy.ts` - Purchases CRUD
-- `travel-equipments.cy.ts` - **NEW** Travel equipments CRUD
+- `travel-equipments.cy.ts` - Travel equipments CRUD
 - `travel-expenses.cy.ts` - Travel expenses CRUD
 - `travel-materials.cy.ts` - Travel materials CRUD
 - `travel-peoples.cy.ts` - Travel peoples CRUD
 - `users.cy.ts` - Users CRUD
 - `warehouses.cy.ts` - Warehouses CRUD
+
+### Existing Mock Files
+
+- `auth-api.ts`, `bank-fees-api.ts`, `companies-api.ts`, `employee-payments-api.ts`, `equipment-api.ts`, `expenses-api.ts`, `histories-api.ts`, `incomes-api.ts`, `jobs-api.ts`, `materials-api.ts`, `other-expenses-api.ts`, `purchases-api.ts`, `travel-equipment-api.ts`, `travel-expenses-api.ts`, `travel-materials-api.ts`, `travel-people-api.ts`, `users-api.ts`, `warehouses-api.ts`, `index.ts`
 
 ### Security Measures (Prevent backend leaks during tests)
 
@@ -302,17 +323,15 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 
 ### Workflow: `.github/workflows/ci.yml`
 
+Both jobs share setup: `actions/checkout@v4`, `actions/setup-node@v4` (Node 20, npm cache), `npm ci`.
+
 1. **Job: `lint-and-typecheck`**
    - Runs `npm run lint`
    - Runs `npm run type-check`
 
 2. **Job: `cypress-with-coverage`**
-   - Builds app with coverage instrumentation (`NYC_CAFEOBJECT_COVERAGE=true npm run build`)
-   - Starts static server (`serve -s dist -l 5173`)
-   - Runs Cypress tests (`npm run cypress:run`)
-   - Generates coverage report (`npx nyc report`)
-   - **Checks 60% coverage threshold** (`npx nyc check-coverage --lines 60 --functions 60 --branches 60 --statements 60`)
-   - Uploads coverage artifact
+   - Delegates to `npm run cypress:coverage` (builds with coverage, serves statically, runs E2E tests, checks 60% threshold)
+   - Uploads coverage report artifact via `actions/upload-artifact@v4`
 
 ### Running CI locally (simulate)
 
@@ -331,7 +350,7 @@ npm run cypress:run  # Requires: npm run dev in another terminal
 - Cypress config is in `src/__tests__/`, not root - scripts pass `--config-file src/__tests__/cypress.config.ts`
 - React Admin login form uses `username` field (not `email`) even though API expects email
 - Generated API client uses OpenAPI Generator with `typescript-fetch` template
-- Path contains spaces: `/home/herilala/Documents/react admin/firt project/test-admin/`
+- Path contains spaces: `/home/herilala/Documents/react admin/firt project/test-admin/` (original path; current: `/home/vawd/Bureau/company_gestion_ui`)
 - Cypress tests import mocks inline (not from `mocks/responses/`) to avoid compilation issues
 - **Tests use Build + Static Serve** (not `npm run dev`) - this avoids dev server dependency and proxy issues
 - **Coverage excludes**: `src/gen-ts/**` (generated code), `node_modules/**`, `src/__tests__/**`

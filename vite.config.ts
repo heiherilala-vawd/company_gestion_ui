@@ -70,6 +70,10 @@ export default defineConfig(({ mode }) => ({
         secure: false,
       },
     },
+    allowedHosts: [
+      'faceted-banked-outthink.ngrok-free.dev',
+      '.ngrok-free.dev', // autorise tous les sous-domaines ngrok
+    ],
   },
   build: {
     sourcemap: mode === 'development',

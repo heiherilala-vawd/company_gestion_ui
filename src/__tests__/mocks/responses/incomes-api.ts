@@ -2,6 +2,21 @@ import { IncomeMoney, CrupdateIncomeMoney, IncomeType } from '../../../gen-ts/sr
 import { user1Mock } from './users-api.ts'
 import { job1Mock } from './jobs-api.ts'
 
+
+export const incomesType1: IncomeType = {
+  id: 'inctype1_id',
+  name: 'incomeType1 name',
+  description: 'IncomeType1 description',
+}
+
+export const incomesType2: IncomeType = {
+  id: 'inctype1_id',
+  name: 'incomeType1 name',
+  description: 'IncomeType1 description',
+}
+
+export const incomesTypes: IncomeType[] = [incomesType1, incomesType2]
+
 export const income1Mock: IncomeMoney = {
   id: 'inc1_id',
   amount: 100000,
@@ -37,6 +52,7 @@ export const income1Mock: IncomeMoney = {
     sex: user1Mock.sex,
     email: user1Mock.email,
   },
+  income_type: incomesType1,
 }
 
 export const income2Mock: IncomeMoney = {
@@ -74,6 +90,7 @@ export const income2Mock: IncomeMoney = {
     sex: user1Mock.sex,
     email: user1Mock.email,
   },
+  income_type: incomesType1,
 }
 
 export const incomesMock: IncomeMoney[] = [income1Mock, income2Mock]
@@ -133,17 +150,3 @@ export const createOrUpdateIncomes = (incomes: CrupdateIncomeMoney[]): IncomeMon
     },
   }))
 }
-
-export const incomesType1: IncomeType = {
-  id: 'inctype1_id',
-  name: 'incomeType1 name',
-  description: 'IncomeType1 description',
-}
-
-export const incomesType2: IncomeType = {
-  id: 'inctype1_id',
-  name: 'incomeType1 name',
-  description: 'IncomeType1 description',
-}
-
-export const incomesTypes: IncomeType[] = [incomesType1, incomesType2]

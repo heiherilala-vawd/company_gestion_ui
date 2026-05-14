@@ -21,6 +21,8 @@ describe('E2E: Incomes', () => {
     } else {
       cy.contains(<string>income1Mock.description).click()
       cy.wait('@getIncome')
+      cy.wait(500)
+
       cy.get('.RaEditButton-root').click()
     }
     selectIncomeType('income_type_id')

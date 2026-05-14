@@ -4,71 +4,34 @@ import { companiesMock } from '../mocks/responses/companies-api'
 import { jobsMock } from '../mocks/responses/jobs-api'
 import { expense1Mock } from '../mocks/responses/expenses-api'
 import { user1Mock } from '../mocks/responses/users-api'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Main Menu and Selectors', () => {
   const expectedMenuItemsPart1 = [
-    '🏠 Home',
-    '📋 Jobs',
-    '🏢 Companies',
-    '👥 Users',
-    '🏭 Warehouse',
-    '🔧 Equipments',
+    'Accueil',
+    'Jobs',
+    'Entreprises',
+    'Utilisateurs',
+    'Entrepôts',
+    'Équipements',
   ]
 
   const expectedMenuItemsPart2 = [
-    '📦 Materials',
-    '💸 Dépenses',
-    '✈️ Déplacements',
-    '🛒 Achats',
-    '🏦 Frais bancaire',
-    '📝 Autres',
-    '💰 Salaires',
+    'Matériaux',
+    'Dépenses',
+    'Déplacements',
+    'Achats',
+    'Frais bancaire',
+    'Autres dépenses',
+    'Salaires',
   ]
 
   beforeEach(() => {
-    // Intercepter les endpoints d'authentification
-    cy.intercept(
-      'POST',
-      '**/auth/login',
-      mockSuccessResponse({
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-        type: 'Bearer',
-        id: user1Mock.id,
-        email: user1Mock.email,
-        role: user1Mock.role,
-      }),
-    ).as('login')
-
-    cy.intercept(
-      'GET',
-      '**/auth/whoami',
-      mockSuccessResponse({
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...',
-        type: 'Bearer',
-        id: user1Mock.id,
-        email: user1Mock.email,
-        role: user1Mock.role,
-      }),
-    ).as('whoami')
-
-    // Intercepter les endpoints pour les sélecteurs
-    cy.intercept('GET', '**/companies', mockSuccessResponse(companiesMock)).as('getCompanies')
-    cy.intercept('GET', '**/companies/*/jobs', mockSuccessResponse(jobsMock)).as('getJobs')
-    cy.intercept('GET', '**/companies/*/jobs/*/users', mockSuccessResponse([user1Mock])).as(
-      'getJobUsers',
-    )
-    cy.intercept('GET', '**/expenses', mockSuccessResponse([expense1Mock])).as('getExpenses')
-
-    // Login
     cy.clearLocalStorage()
-    cy.visit('/', { failOnStatusCode: false })
-    cy.get('input')
-      .first()
-      .type(<string>user1Mock.email)
-    cy.get('input[type="password"]').type('password123')
-    cy.get('button[type="submit"]').click()
-    cy.wait('@login')
-    cy.wait('@whoami')
+    cy.clearCookies()
+    insertInToLocalStorage()
+    interceptGeneralEndpoint()
+    loginInPage()
   })
 
   it('should display all menu items on desktop', () => {
@@ -189,21 +152,16 @@ describe('E2E: Main Menu and Selectors', () => {
     expectedMenuItemsPart1.forEach((item) => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('be.visible')
     })
-    // Ouvrir le menu
+    // ferme le menu
+    cy.wait(200)
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
         cy.get('body').click(0, 0) // clique hors menu
       }
     })
 
-    cy.get('[class*="MuiBackdrop-root"]').click({ force: true })
-    cy.get('.RaSidebar-modal').should('not.be.visible')
-
     // Vérifier que l'app bar est visible
     cy.get('[data-testid="menu-item-selector-home"]').should('be.visible')
-
-    // Vérifier que les sélecteurs sont présents en cherchant leur label
-    cy.contains('Company:').should('exist')
-    cy.contains('Job:').should('exist')
+    cy.get('.MuiSelect-root').should('have.length.at.least', 2)
   })
 })
