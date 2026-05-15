@@ -1,16 +1,11 @@
 import { TravelExpense, CrupdateTravelExpense } from '../../../gen-ts/src'
 import { expense1Mock } from './expenses-api.ts'
 import { warehouse1Mock, warehouse2Mock } from './warehouses-api.ts'
+import { toCrupdateExpenseMoneyMapper } from '../../support/mappers.ts'
 
 export const travelExpense1Mock: TravelExpense = {
   id: 'te1_id',
-  expense: {
-    id: expense1Mock.id,
-    amount: expense1Mock.amount,
-    description: expense1Mock.description,
-    job_id: expense1Mock.job.id,
-    comment: expense1Mock.comment,
-  },
+  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
   departure_location: warehouse1Mock,
   arrival_location: warehouse2Mock,
   departure_date: '2022-02-10T06:00:00Z',
@@ -19,13 +14,7 @@ export const travelExpense1Mock: TravelExpense = {
 
 export const travelExpense2Mock: TravelExpense = {
   id: 'te2_id',
-  expense: {
-    id: expense1Mock.id,
-    amount: expense1Mock.amount,
-    description: expense1Mock.description,
-    job_id: expense1Mock.job.id,
-    comment: expense1Mock.comment,
-  },
+  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
   departure_location: warehouse1Mock,
   arrival_location: warehouse2Mock,
   departure_date: '2022-03-20T08:00:00Z',
@@ -37,13 +26,7 @@ export const travelExpensesMock: TravelExpense[] = [travelExpense1Mock, travelEx
 export const crupdateTravelExpensesMock: CrupdateTravelExpense[] = [
   {
     id: 'te1_id',
-    expense: {
-      id: expense1Mock.id,
-      amount: expense1Mock.amount,
-      description: expense1Mock.description,
-      job_id: expense1Mock.job.id,
-      comment: expense1Mock.comment,
-    },
+    expense: toCrupdateExpenseMoneyMapper(expense1Mock),
     departure_location: warehouse1Mock,
     arrival_location: warehouse2Mock,
     departure_date: '2022-02-10T06:30:00Z',
@@ -51,13 +34,7 @@ export const crupdateTravelExpensesMock: CrupdateTravelExpense[] = [
   },
   {
     id: 'te3_id',
-    expense: {
-      id: expense1Mock.id,
-      amount: expense1Mock.amount,
-      description: expense1Mock.description,
-      job_id: expense1Mock.job.id,
-      comment: expense1Mock.comment,
-    },
+    expense: toCrupdateExpenseMoneyMapper(expense1Mock),
     departure_location: warehouse1Mock,
     arrival_location: warehouse2Mock,
     departure_date: '2022-04-15T09:00:00Z',
@@ -72,10 +49,10 @@ export const createOrUpdateTravelExpenses = (
     ...te,
     id: `newId`,
     expense: {
-      id: te.expense?.id || expense1Mock.id,
+      id: te.expense?.id || expense1Mock?.id,
       amount: expense1Mock.amount,
       description: expense1Mock.description,
-      job_id: expense1Mock.job.id,
+      job_id: expense1Mock.job?.id,
       comment: expense1Mock.comment,
     },
     created_at: te.id ? travelExpense1Mock.departure_date : new Date().toISOString(),

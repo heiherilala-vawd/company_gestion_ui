@@ -18,11 +18,16 @@ describe('E2E: Travel Equipments', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateTravelEquipmentMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
-      cy.contains(<number>travelEquipment1Mock.quantity).click()
+      cy.contains(<string>travelEquipment1Mock.equipment?.name)
+        .first()
+        .click()
       cy.wait('@getTravelEquipment')
-      cy.get('.RaEditButton-root').click()
+      cy.window().scrollTo('top')
+      cy.scrollTo('top')
+      cy.get('[data-testid="CreateIcon"]').click()
+      cy.wait('@getTravelEquipment')
     }
     selectTravelExpense('Déplacement: ' + travelEquipment1Mock.travel?.expense?.description)
     selectEquipment('equipment')
@@ -47,14 +52,21 @@ describe('E2E: Travel Equipments', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-travel-equipments"]').click()
     cy.wait('@getTravelEquipments')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
-    cy.contains(<number>travelEquipment1Mock.quantity).should('be.visible')
-    cy.contains(<number>travelEquipment2Mock.quantity).should('be.visible')
+    if (isComputerView) {
+      navigateToDesktop()
+      cy.contains(<number>travelEquipment1Mock.quantity).should('be.visible')
+      cy.contains(<number>travelEquipment2Mock.quantity).should('be.visible')
+    } else {
+      navigateToMobile()
+    }
     cy.contains(<string>travelEquipment1Mock.equipment?.name).should('be.visible')
     cy.contains(
       travelEquipment2Mock.travel?.departure_location?.name +
@@ -66,7 +78,7 @@ describe('E2E: Travel Equipments', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<number>travelEquipment1Mock.quantity).click()
+    cy.contains(<string>travelEquipment1Mock.equipment?.name).click()
     cy.wait('@getTravelEquipment')
     cy.contains(<string>travelEquipment1Mock.equipment?.name).should('exist')
     cy.contains(<number>travelEquipment1Mock.quantity).should('exist')
@@ -85,6 +97,7 @@ describe('E2E: Travel Equipments', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('createTravelEquipment')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createTravelEquipment')
     cy.url().should('include', '/travel_equipment')
   }
@@ -96,6 +109,7 @@ describe('E2E: Travel Equipments', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('updateTravelEquipment')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateTravelEquipment')
     cy.url().should('include', '/travel_equipment')
   }

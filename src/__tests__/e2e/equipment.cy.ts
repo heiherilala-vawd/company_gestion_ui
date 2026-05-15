@@ -16,7 +16,7 @@ describe('E2E: Equipment', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateEquipmentMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>equipment1Mock.name).click()
       cy.wait('@getEquipment')
@@ -31,10 +31,10 @@ describe('E2E: Equipment', () => {
     selectWarehouse(null)
     cy.get('[data-testid="input-floor_number"] input')
       .clear()
-      .type(<string>crupdatedData.floor_number)
+      .type(String(<number>crupdatedData.floor_number))
     cy.get('[data-testid="input-storage_number"] input')
       .clear()
-      .type(<string>crupdatedData.storage_number)
+      .type(String(<number>crupdatedData.storage_number))
     cy.get('button[type="submit"]').click()
   }
 
@@ -48,7 +48,11 @@ describe('E2E: Equipment', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-equipments"]').click()
     cy.wait('@getEquipments')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -74,6 +78,7 @@ describe('E2E: Equipment', () => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('createEquipment')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createEquipment')
     cy.url().should('include', '/equipment')
   }
@@ -85,6 +90,7 @@ describe('E2E: Equipment', () => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('updateEquipment')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateEquipment')
     cy.url().should('include', '/equipment')
   }

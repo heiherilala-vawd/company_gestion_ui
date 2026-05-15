@@ -18,9 +18,9 @@ describe('E2E: Employee Payments', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateEmployeePaymentsMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
-      cy.contains('January salary advance').click()
+      cy.contains(<string>employeePayment1Mock.employee?.first_name).click()
       cy.wait('@getEmployeePayment')
       cy.get('.RaEditButton-root').click()
     }
@@ -55,23 +55,27 @@ describe('E2E: Employee Payments', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-employee-payments"]').click()
     cy.wait('@getEmployeePayments')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
-    cy.contains(<string>employeePayment2Mock.payment_description).should('exist')
+    cy.contains(<string>employeePayment1Mock.employee?.first_name).should('exist')
+    cy.contains(<string>employeePayment2Mock.employee?.first_name).should('exist')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.payment_description).click()
+    cy.contains(<string>employeePayment1Mock.employee?.first_name).click()
     cy.wait('@getEmployeePayment')
-    cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
     cy.contains(<string>employeePayment1Mock.employee?.first_name).should('exist')
+    cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {
@@ -81,6 +85,7 @@ describe('E2E: Employee Payments', () => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('createEmployeePayment')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createEmployeePayment')
     cy.url().should('include', '/employee_payments')
   }
@@ -92,6 +97,7 @@ describe('E2E: Employee Payments', () => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('updateEmployeePayment')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateEmployeePayment')
     cy.url().should('include', '/employee_payments')
   }

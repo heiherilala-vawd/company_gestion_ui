@@ -17,7 +17,7 @@ describe('E2E: Jobs', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateJobsMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>job1Mock.description).click()
       cy.wait('@getJob')
@@ -49,7 +49,12 @@ describe('E2E: Jobs', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-jobs"]').click()
     cy.wait('@getJobs')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.wait(200)
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -75,6 +80,7 @@ describe('E2E: Jobs', () => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('createJob')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createJob')
     cy.url().should('include', '/jobs')
   }
@@ -86,6 +92,7 @@ describe('E2E: Jobs', () => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('updateJob')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateJob')
     cy.url().should('include', '/jobs')
   }

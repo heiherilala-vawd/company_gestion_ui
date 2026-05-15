@@ -16,7 +16,7 @@ describe('E2E: Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateExpensesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>expense1Mock.description).click()
       cy.wait('@getExpense')
@@ -48,7 +48,11 @@ describe('E2E: Expenses', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-expenses"]').click()
     cy.wait('@getExpenses')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -74,6 +78,7 @@ describe('E2E: Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateExpenses(req.body)))
     }).as('createExpense')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createExpense')
     cy.url().should('include', '/expenses')
   }
@@ -85,6 +90,7 @@ describe('E2E: Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateExpenses(req.body)))
     }).as('updateExpense')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateExpense')
     cy.url().should('include', '/expenses')
   }

@@ -37,9 +37,14 @@ const TravelEquipmentFilters = [
 export default function TravelEquipmentList() {
   return (
     <List resource="travel_equipment" filters={TravelEquipmentFilters} perPage={25}>
-      <ResponsiveDatagrid
-        priorityFields={['equipment.name', 'arrival_date', 'status', 'arrival_location.name']}
-      >
+      <ResponsiveDatagrid priorityFields={['equipment.name', 'arrival_date', 'status', 'travel']}>
+        <FunctionField
+          source="travel"
+          label="Déplacement"
+          render={(record) =>
+            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
+          }
+        />
         <TextField source="equipment.name" label="Équipement" />
         <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <DateField source="arrival_date" label="Date d'arrivée" />
@@ -52,12 +57,6 @@ export default function TravelEquipmentList() {
             { id: 'LOST', name: 'Perdu' },
             { id: 'ARRIVED', name: 'Arrivé' },
           ]}
-        />
-        <FunctionField
-          label="Déplacement"
-          render={(record) =>
-            `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
-          }
         />
         <EditButton />
       </ResponsiveDatagrid>

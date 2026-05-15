@@ -19,9 +19,9 @@ import {
 describe('E2E: Purchases', () => {
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
-      cy.contains(<number>purchase1Mock.quantity).click()
+      cy.contains(<string>purchase1Mock.equipment?.name).click()
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click()
     }
@@ -42,7 +42,7 @@ describe('E2E: Purchases', () => {
   function creatOrUpdateMaterial(isCreating: boolean) {
     const crupdatedData = crupdatePurchasesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<number>purchase1Mock.quantity).click()
       cy.wait('@getPurchase')
@@ -59,7 +59,7 @@ describe('E2E: Purchases', () => {
     }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
-      .type('10000')
+      .type('1520')
 
     cy.get('button[type="submit"]').click()
   }
@@ -78,20 +78,24 @@ describe('E2E: Purchases', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-purchases"]').click()
     cy.wait('@getPurchases')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<number>purchase1Mock.quantity).should('be.visible')
-    cy.contains(<number>purchase2Mock.expense?.amount).should('be.visible')
+    cy.contains(<string>purchase1Mock.equipment?.name).should('be.visible')
+    cy.contains(<string>purchase2Mock.equipment?.name).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<number>purchase1Mock.quantity).click()
+    cy.contains(<string>purchase1Mock.equipment?.name).click()
     cy.wait('@getPurchase')
     cy.contains(<number>purchase1Mock.quantity).should('exist')
     cy.contains(<number>purchase1Mock.expense?.amount).should('exist')
@@ -108,6 +112,7 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateEquipment(true)
+    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -119,6 +124,7 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateMaterial(true)
+    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -130,6 +136,7 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('updatePurchase')
     creatOrUpdateMaterial(false)
+    cy.wait(3000)
     cy.wait('@updatePurchase')
     cy.url().should('include', '/purchases')
   }

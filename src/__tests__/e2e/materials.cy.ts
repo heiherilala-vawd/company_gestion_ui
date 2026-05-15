@@ -11,7 +11,7 @@ describe('E2E: Materials', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateMaterialsMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>material1Mock.name).click()
       cy.wait('@getMaterial')
@@ -38,7 +38,11 @@ describe('E2E: Materials', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-materials"]').click()
     cy.wait('@getMaterials')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -64,6 +68,7 @@ describe('E2E: Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('createMaterial')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createMaterial')
     cy.url().should('include', '/materials')
   }
@@ -75,6 +80,7 @@ describe('E2E: Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('updateMaterial')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateMaterial')
     cy.url().should('include', '/materials')
   }

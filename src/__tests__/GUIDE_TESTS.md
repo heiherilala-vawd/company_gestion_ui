@@ -60,7 +60,7 @@ import { company1Mock, company2Mock } from './companies-api.ts'
 export const job1Mock: Job = {
   id: 'job1_id',
   company: {
-    id: company1Mock.id,
+    id: company1Mock?.id,
     name: company1Mock.name,
     rib: company1Mock.rib,
     description: company1Mock.description,
@@ -76,7 +76,7 @@ export const job1Mock: Job = {
   created_at: '2022-01-05T08:00:00Z',
   updated_at: '2022-03-15T10:30:00Z',
   created_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -84,7 +84,7 @@ export const job1Mock: Job = {
     email: user1Mock.email,
   },
   updated_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -102,7 +102,7 @@ export const jobsMock: Job[] = [job1Mock, job2Mock, job3Mock]
 export const crupdateJobsMock: CrupdateJob[] = [
   {
     id: 'job1_id',              // Présent pour UPDATE
-    company_id: company1Mock.id,
+    company_id: company1Mock?.id,
     description: 'Construction of Building A - Updated',
     contract_signature_date: '2022-01-10',
     start_date: '2022-02-01',
@@ -112,7 +112,7 @@ export const crupdateJobsMock: CrupdateJob[] = [
   },
   {
     id: 'job4_id',              // Nouvel ID pour CREATE
-    company_id: company2Mock.id,
+    company_id: company2Mock?.id,
     description: 'New Landscaping Project',
     contract_signature_date: '2022-07-01',
     start_date: '2022-08-01',
@@ -133,7 +133,7 @@ export const createOrUpdateJobs = (jobs: CrupdateJob[]): Job[] => {
     ...job,
     id: job.id || `job_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
     company: {
-      id: job.company_id || company1Mock.id,
+      id: job.company_id || company1Mock?.id,
       name: job.company_id === company2Mock.id ? company2Mock.name : company1Mock.name,
       rib: job.company_id === company2Mock.id ? company2Mock.rib : company1Mock.rib,
       description:
@@ -144,22 +144,8 @@ export const createOrUpdateJobs = (jobs: CrupdateJob[]): Job[] => {
     },
     created_at: job.id ? job1Mock.created_at : new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    created_by: {
-      id: user1Mock.id,
-      role: user1Mock.role,
-      first_name: user1Mock.first_name,
-      last_name: user1Mock.last_name,
-      sex: user1Mock.sex,
-      email: user1Mock.email,
-    },
-    updated_by: {
-      id: user1Mock.id,
-      role: user1Mock.role,
-      first_name: user1Mock.first_name,
-      last_name: user1Mock.last_name,
-      sex: user1Mock.sex,
-      email: user1Mock.email,
-    },
+    created_by: toAuditUserMapper(user1Mock),
+    updated_by: toAuditUserMapper(user1Mock),
   }))
 }
 ```

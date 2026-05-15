@@ -11,7 +11,7 @@ export default function EmployeePaymentEdit() {
         select: (data) => ({
           ...data,
           // Ajouter des champs calculés
-          employee_id: data.employee.id,
+          employee_id: data.employee?.id,
         }),
       }}
     >

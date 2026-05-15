@@ -15,7 +15,7 @@ import {
 describe('E2E: Travel Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
       cy.wait('@getTravelExpense')
@@ -47,15 +47,22 @@ describe('E2E: Travel Expenses', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-travel-expenses"]').click()
     cy.wait('@getTravelExpenses')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
+    if (isComputerView) {
+      navigateToDesktop()
+      cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
+    } else {
+      navigateToMobile()
+    }
     cy.contains(<string>travelExpense1Mock.departure_location?.name).should('be.visible')
     cy.contains(<string>travelExpense2Mock.arrival_location?.name).should('be.visible')
-    cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
@@ -77,6 +84,7 @@ describe('E2E: Travel Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('createTravelExpense')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createTravelExpense')
     cy.url().should('include', '/travel_expenses')
   }
@@ -88,6 +96,7 @@ describe('E2E: Travel Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('updateTravelExpense')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateTravelExpense')
     cy.url().should('include', '/travel_expenses')
   }

@@ -11,7 +11,7 @@ export const company1Mock: Company = {
   created_at: '2021-01-20T10:00:00Z',
   updated_at: '2022-07-01T09:30:00Z',
   created_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -19,7 +19,7 @@ export const company1Mock: Company = {
     email: user1Mock.email,
   },
   updated_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -38,7 +38,7 @@ export const company2Mock: Company = {
   created_at: '2021-02-15T11:00:00Z',
   updated_at: '2022-06-15T14:00:00Z',
   created_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -46,7 +46,7 @@ export const company2Mock: Company = {
     email: user1Mock.email,
   },
   updated_by: {
-    id: user1Mock.id,
+    id: user1Mock?.id,
     role: user1Mock.role,
     first_name: user1Mock.first_name,
     last_name: user1Mock.last_name,
@@ -85,7 +85,7 @@ export const createOrUpdateCompanies = (companies: CrupdateCompany[]): Company[]
     created_by: company.id
       ? company1Mock.created_by
       : {
-          id: user1Mock.id,
+          id: user1Mock?.id,
           role: user1Mock.role,
           first_name: user1Mock.first_name,
           last_name: user1Mock.last_name,
@@ -93,7 +93,7 @@ export const createOrUpdateCompanies = (companies: CrupdateCompany[]): Company[]
           email: user1Mock.email,
         },
     updated_by: {
-      id: user1Mock.id,
+      id: user1Mock?.id,
       role: user1Mock.role,
       first_name: user1Mock.first_name,
       last_name: user1Mock.last_name,

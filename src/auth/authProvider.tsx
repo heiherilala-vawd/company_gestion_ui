@@ -273,7 +273,7 @@ const authProvider: AuthProvider = {
       })
 
       return Promise.resolve({
-        id: user.id,
+        id: user?.id,
         fullName: user.email,
         email: user.email,
         role: user.role,

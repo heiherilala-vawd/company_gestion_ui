@@ -6,12 +6,16 @@ export default function TravelMaterialEdit() {
   return (
     <Edit
       redirect="list"
+      transform={(data) => ({
+        ...data,
+        travel: undefined,
+      })}
       queryOptions={{
-        // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          travel_id: data.travel.id,
-          material: data.material.id,
+          travel_id: data.travel?.id,
+          material: data.material?.id,
+          arrival_location: data.arrival_location?.id,
         }),
       }}
     >

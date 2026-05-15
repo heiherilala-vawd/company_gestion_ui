@@ -15,7 +15,7 @@ describe('E2E: Other Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateOtherExpensesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains('Office supplies').click()
       cy.wait('@getOtherExpense')
@@ -50,7 +50,11 @@ describe('E2E: Other Expenses', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-other-expenses"]').click()
     cy.wait('@getOtherExpenses')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -74,6 +78,7 @@ describe('E2E: Other Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateOtherExpenses(req.body)))
     }).as('createOtherExpense')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createOtherExpense')
     cy.url().should('include', '/other_expenses')
   }
@@ -85,6 +90,7 @@ describe('E2E: Other Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateOtherExpenses(req.body)))
     }).as('updateOtherExpense')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateOtherExpense')
     cy.url().should('include', '/other_expenses')
   }

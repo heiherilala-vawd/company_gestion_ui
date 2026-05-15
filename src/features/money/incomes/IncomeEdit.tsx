@@ -10,8 +10,8 @@ export default function IncomeEdit() {
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          job_id: data.job.id,
-          income_type_id: data.income_type.id,
+          job_id: data.job?.id,
+          income_type_id: data.income_type?.id,
         }),
       }}
     >

@@ -6,12 +6,16 @@ export default function TravelPeopleEdit() {
   return (
     <Edit
       redirect="list"
+      transform={(data) => ({
+        ...data,
+        travel: undefined,
+      })}
       queryOptions={{
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          travel_id: data.travel.id,
-          user_id: data.user.id,
+          travel_id: data.travel?.id,
+          user_id: data.user?.id,
         }),
       }}
     >

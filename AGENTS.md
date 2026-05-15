@@ -226,7 +226,7 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
      function creatOrUpdate(isCreating: boolean) {
        const crupdatedData = crupdateEntitiesMock[0]
        if (isCreating) {
-         cy.contains('Create').click()
+         cy.get('[data-testid="AddIcon"]').click()
        } else {
          cy.contains(<string>entity1Mock.name).click()
          cy.wait('@getEntity')

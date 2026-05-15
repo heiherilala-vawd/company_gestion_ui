@@ -24,10 +24,9 @@ export default function ExpenseList() {
         priorityFields={['job.description', 'amount', 'description']}
         rowClick="show"
       >
-        <TextField source="job.description" label="Chantier" />
-
-        <NumberField source="amount" label="Montant" />
         <TextField source="description" label="Description" />
+        <NumberField source="amount" label="Montant" />
+        <TextField source="job.description" label="Chantier" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>
