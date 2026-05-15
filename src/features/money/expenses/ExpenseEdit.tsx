@@ -10,7 +10,7 @@ export default function ExpenseEdit() {
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          job_id: data.job.id,
+          job_id: data.job?.id,
         }),
       }}
     >

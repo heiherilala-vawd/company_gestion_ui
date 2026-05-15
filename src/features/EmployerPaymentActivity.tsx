@@ -101,7 +101,7 @@ function LoanTable({
                       type="number"
                       size="small"
                       value={payAmount ?? ''}
-                      onChange={(e) => onAmountChange(loan.id, Number(e.target.value))}
+                      onChange={(e) => onAmountChange(loan?.id, Number(e.target.value))}
                       inputProps={{ min: 0, step: 0.01, style: { width: 120 } }}
                     />
                   </TableCell>
@@ -233,7 +233,7 @@ export default function EmployerPaymentActivity() {
           id: confirmTarget.receiptId,
           payment_date: new Date().toISOString(),
           amount,
-          income_id: income.id,
+          income_id: income?.id,
           comment: `Paiement reçu pour la facture ${income.invoice_reference || 'N/A'}`,
         },
       ]
@@ -284,7 +284,7 @@ export default function EmployerPaymentActivity() {
           id: confirmRepayTarget.repaymentId,
           payment_date: new Date().toISOString(),
           amount,
-          loan_id: loan.id,
+          loan_id: loan?.id,
           comment: `Remboursement pour le prêt ${loan.lender} — ${amount} €`,
         },
       ]

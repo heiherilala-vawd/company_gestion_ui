@@ -29,23 +29,19 @@ export default function TravelPeopleList() {
   return (
     <List resource="travel_people" filters={TravelPeopleFilters} perPage={25}>
       <ResponsiveDatagrid
-        priorityFields={[
-          'arrival_location.name',
-          'arrival_date',
-          'user.first_name',
-          'user.last_name',
-        ]}
+        priorityFields={['arrival_location.name', 'travel', 'user.first_name', 'user.last_name']}
       >
-        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
-        <DateField source="arrival_date" label="Date d'arrivée" />
-        <TextField source="user.first_name" label="Prénom" />
-        <TextField source="user.last_name" label="Nom" />
         <FunctionField
+          source="travel"
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
+        <TextField source="user.first_name" label="Prénom" />
+        <TextField source="user.last_name" label="Nom" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

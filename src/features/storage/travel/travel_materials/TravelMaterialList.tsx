@@ -32,24 +32,20 @@ export default function TravelMaterialList() {
   return (
     <List resource="travel_materials" filters={TravelMaterialFilters} perPage={25}>
       <ResponsiveDatagrid
-        priorityFields={[
-          'material.name',
-          'arrival_location.name',
-          'quantity_received',
-          'arrival_date',
-        ]}
+        priorityFields={['material.name', 'travel', 'quantity_received', 'arrival_date']}
       >
-        <TextField source="material.name" label="Matériau" />
-        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
-        <DateField source="arrival_date" label="Date d'arrivée" />
-        <NumberField source="quantity" label="Quantité" />
-        <NumberField source="quantity_received" label="Reçue" />
         <FunctionField
+          source="travel"
           label="Déplacement"
           render={(record) =>
             `${record.travel?.departure_location.name || ''} → ${record.travel?.arrival_location.name || ''}`
           }
         />
+        <TextField source="material.name" label="Matériau" />
+        <NumberField source="quantity" label="Quantité" />
+        <NumberField source="quantity_received" label="Reçue" />
+        <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+        <DateField source="arrival_date" label="Date d'arrivée" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

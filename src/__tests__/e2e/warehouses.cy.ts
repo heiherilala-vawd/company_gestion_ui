@@ -16,7 +16,7 @@ describe('E2E: Warehouses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateWarehousesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>warehouse1Mock.name).click()
       cy.wait('@getWarehouse')
@@ -44,7 +44,11 @@ describe('E2E: Warehouses', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-warehouses"]').click()
     cy.wait('@getWarehouses')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -70,6 +74,7 @@ describe('E2E: Warehouses', () => {
       req.reply(mockSuccessResponse(createOrUpdateWarehouses(req.body)))
     }).as('createWarehouse')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createWarehouse')
     cy.url().should('include', '/warehouses')
   }
@@ -81,6 +86,7 @@ describe('E2E: Warehouses', () => {
       req.reply(mockSuccessResponse(createOrUpdateWarehouses(req.body)))
     }).as('updateWarehouse')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateWarehouse')
     cy.url().should('include', '/warehouses')
   }

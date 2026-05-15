@@ -11,7 +11,7 @@ describe('E2E: Users', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateUsersMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>user1Mock.first_name).click()
       cy.wait('@getUser')
@@ -46,7 +46,11 @@ describe('E2E: Users', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-users"]').click()
     cy.wait('@getUsers')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -68,10 +72,11 @@ describe('E2E: Users', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/users', (req) => {
+    cy.intercept('PUT', '**/users*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
     }).as('updateUser')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateUser')
     cy.url().should('include', '/users')
   }

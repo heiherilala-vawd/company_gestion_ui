@@ -6,11 +6,13 @@ import { datagridStyles } from '../style/components'
 interface ResponsiveDatagridProps extends Omit<DatagridProps, 'children'> {
   children: ReactNode
   priorityFields?: string[]
+  descriptionNumber?: number
 }
 
 export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
   children,
   priorityFields,
+  descriptionNumber = 2,
   ...props
 }) => {
   const theme = useMuiTheme()
@@ -40,9 +42,9 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
 
     const actions = childArray.filter((child) => !isValidElement(child) || !child.props.source)
 
-    if (isXs) return [...actions, ...priority.slice(0, 2)]
-    if (isSm) return [...actions, ...priority.slice(0, 3)]
-    if (isMd) return [...actions, ...priority.slice(0, 5)]
+    if (isXs) return [...actions, ...priority.slice(0, descriptionNumber)]
+    if (isSm) return [...actions, ...priority.slice(0, descriptionNumber + 1)]
+    if (isMd) return [...actions, ...priority.slice(0, descriptionNumber + 3)]
 
     const data = [...priority, ...others].slice(0, 8)
     return [...actions, ...data]
@@ -56,6 +58,7 @@ export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
         ...datagridStyles.responsive,
       }}
       rowClick="show"
+      bulkActionButtons={false}
     >
       {getVisibleFields()}
     </Datagrid>

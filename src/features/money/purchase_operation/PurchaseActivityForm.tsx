@@ -87,7 +87,7 @@ const PurchaseActivityForm = () => {
 
   const onSubmit = async (data: any) => {
     const payload = {
-      id: data.id,
+      id: data?.id,
       supplier_id: data.departure_warehouse,
       equipment_lines: (data.equipment_lines || []).map((line: any) => ({
         equipment: {

@@ -15,7 +15,7 @@ import {
 describe('E2E: Travel People', () => {
   function creatOrUpdate(isCreating: boolean) {
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
       cy.contains(<string>travelPeople1Mock.arrival_location?.name).click()
       cy.wait('@getTravelPeople')
@@ -41,7 +41,11 @@ describe('E2E: Travel People', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-travel-peoples"]').click()
     cy.wait('@getTravelPeoples')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -83,6 +87,7 @@ describe('E2E: Travel People', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelPeoples(req.body)))
     }).as('createTravelPeople')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createTravelPeople')
     cy.url().should('include', '/travel_people')
   }
@@ -94,6 +99,7 @@ describe('E2E: Travel People', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelPeoples(req.body)))
     }).as('updateTravelPeople')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateTravelPeople')
     cy.url().should('include', '/travel_people')
   }

@@ -31,12 +31,14 @@ export default function EmployeePaymentList() {
       <ResponsiveDatagrid
         priorityFields={[
           'expense.amount',
-          'payment_type',
           'employee.first_name',
           'employee.last_name',
+          'payment_type',
         ]}
       >
         <TextField source="expense.amount" label="Montant" />
+        <TextField source="employee.first_name" label="Prénom" />
+        <TextField source="employee.last_name" label="Nom" />
         <SelectField
           source="payment_type"
           label="Type"
@@ -46,8 +48,6 @@ export default function EmployeePaymentList() {
             { id: 'OTHER', name: 'Autre' },
           ]}
         />
-        <TextField source="employee.first_name" label="Prénom" />
-        <TextField source="employee.last_name" label="Nom" />
         <TextField source="payment_description" label="Description" />
         <TextField source="expense.comment" label="Commentaire" />
         <EditButton />

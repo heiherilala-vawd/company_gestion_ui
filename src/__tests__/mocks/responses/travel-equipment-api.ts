@@ -1,96 +1,37 @@
 import { TravelEquipment, CrupdateTravelEquipment, TransportStatus } from '../../../gen-ts/src'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
-import { equipment1Mock } from './equipment-api.ts'
+import { equipment1Mock, equipment2Mock } from './equipment-api.ts'
 import { user1Mock } from './users-api.ts'
+import {
+  toCrupdateEquipmentMapper,
+  toCrupdateTravelExpenseMapper,
+  toAuditUserMapper,
+} from '../../support/mappers.ts'
 
 export const travelEquipment1Mock: TravelEquipment = {
   id: 'teq1_id',
-  travel: {
-    id: travelExpense1Mock.id,
-    expense: travelExpense1Mock.expense,
-    departure_location: travelExpense1Mock.departure_location,
-    arrival_location: travelExpense1Mock.arrival_location,
-    departure_date: travelExpense1Mock.departure_date,
-    arrival_date: travelExpense1Mock.arrival_date,
-  },
-  equipment: {
-    id: equipment1Mock.id,
-    name: equipment1Mock.name,
-    description: equipment1Mock.description,
-    warehouse_id: equipment1Mock.warehouse.id,
-    floor_number: equipment1Mock.floor_number,
-    storage_number: equipment1Mock.storage_number,
-    comment: equipment1Mock.comment,
-  },
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  equipment: toCrupdateEquipmentMapper(equipment1Mock),
   quantity: 1,
   status: 'IN_PROGRESS' as TransportStatus,
   comment: 'Excavator transport to site',
   created_at: '2022-02-11T09:00:00Z',
   updated_at: '2022-02-12T14:00:00Z',
-  created_by: {
-    id: user1Mock.id,
-    role: user1Mock.role,
-    first_name: user1Mock.first_name,
-    last_name: user1Mock.last_name,
-    sex: user1Mock.sex,
-    email: user1Mock.email,
-  },
-  updated_by: {
-    id: user1Mock.id,
-    role: user1Mock.role,
-    first_name: user1Mock.first_name,
-    last_name: user1Mock.last_name,
-    sex: user1Mock.sex,
-    email: user1Mock.email,
-  },
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
 }
 
 export const travelEquipment2Mock: TravelEquipment = {
   id: 'teq2_id',
-  travel: {
-    id: travelExpense1Mock.id,
-    expense: {
-      id: travelExpense1Mock.expense?.id || '',
-      amount: travelExpense1Mock.expense?.amount || 0,
-      description: travelExpense1Mock.expense?.description || '',
-      job_id: travelExpense1Mock.expense?.job_id || '',
-      comment: travelExpense1Mock.expense?.comment || '',
-    },
-    departure_location: travelExpense1Mock.departure_location,
-    arrival_location: travelExpense1Mock.arrival_location,
-    departure_date: travelExpense1Mock.departure_date,
-    arrival_date: travelExpense1Mock.arrival_date,
-  },
-  equipment: {
-    id: equipment1Mock.id,
-    name: equipment1Mock.name,
-    description: equipment1Mock.description,
-    warehouse_id: equipment1Mock.warehouse.id,
-    floor_number: equipment1Mock.floor_number,
-    storage_number: equipment1Mock.storage_number,
-    comment: equipment1Mock.comment,
-  },
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  equipment: toCrupdateEquipmentMapper(equipment2Mock),
   quantity: 2,
   status: 'ARRIVED' as TransportStatus,
   comment: 'Equipment arrived safely',
   created_at: '2022-03-22T10:00:00Z',
   updated_at: '2022-03-22T10:00:00Z',
-  created_by: {
-    id: user1Mock.id,
-    role: user1Mock.role,
-    first_name: user1Mock.first_name,
-    last_name: user1Mock.last_name,
-    sex: user1Mock.sex,
-    email: user1Mock.email,
-  },
-  updated_by: {
-    id: user1Mock.id,
-    role: user1Mock.role,
-    first_name: user1Mock.first_name,
-    last_name: user1Mock.last_name,
-    sex: user1Mock.sex,
-    email: user1Mock.email,
-  },
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
 }
 
 export const travelEquipmentMock: TravelEquipment[] = [travelEquipment1Mock, travelEquipment2Mock]
@@ -99,16 +40,16 @@ export const travelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock, tr
 export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
   {
     id: 'teq1_id',
-    travel_id: travelExpense1Mock.id,
-    equipment: equipment1Mock.id,
+    travel_id: travelExpense1Mock?.id,
+    equipment: equipment1Mock?.id,
     quantity: 1,
     status: 'ARRIVED' as TransportStatus,
     comment: 'Equipment arrived',
   },
   {
     id: 'teq3_id',
-    travel_id: travelExpense1Mock.id,
-    equipment: equipment1Mock.id,
+    travel_id: travelExpense1Mock?.id,
+    equipment: equipment1Mock?.id,
     quantity: 3,
     status: 'IN_PROGRESS' as TransportStatus,
     comment: 'New equipment transport',
@@ -122,39 +63,16 @@ export const createOrUpdateTravelEquipments = (
     ...te,
     id: `newId`,
     travel: {
-      id: te.travel_id || travelExpense1Mock.id,
-      expense_id: travelExpense1Mock.expense.id,
-      departure_location: travelExpense1Mock.departure_location,
-      arrival_location: travelExpense1Mock.arrival_location,
-      departure_date: travelExpense1Mock.departure_date,
-      arrival_date: travelExpense1Mock.arrival_date,
+      ...toCrupdateTravelExpenseMapper(travelExpense1Mock),
+      id: te.travel_id || travelExpense1Mock?.id,
     },
     equipment: {
-      id: typeof te.equipment === 'string' ? te.equipment : equipment1Mock.id,
-      name: equipment1Mock.name,
-      description: equipment1Mock.description,
-      warehouse_id: equipment1Mock.warehouse.id,
-      floor_number: equipment1Mock.floor_number,
-      storage_number: equipment1Mock.storage_number,
-      comment: equipment1Mock.comment,
+      ...toCrupdateEquipmentMapper(equipment1Mock),
+      id: typeof te.equipment === 'string' ? te.equipment : equipment1Mock?.id,
     },
     created_at: te.id ? travelEquipment1Mock.created_at : new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    created_by: {
-      id: user1Mock.id,
-      role: user1Mock.role,
-      first_name: user1Mock.first_name,
-      last_name: user1Mock.last_name,
-      sex: user1Mock.sex,
-      email: user1Mock.email,
-    },
-    updated_by: {
-      id: user1Mock.id,
-      role: user1Mock.role,
-      first_name: user1Mock.first_name,
-      last_name: user1Mock.last_name,
-      sex: user1Mock.sex,
-      email: user1Mock.email,
-    },
+    created_by: toAuditUserMapper(user1Mock),
+    updated_by: toAuditUserMapper(user1Mock),
   }))
 }

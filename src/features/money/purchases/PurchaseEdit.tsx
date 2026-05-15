@@ -17,7 +17,7 @@ export default function PurchaseEdit() {
           ...data,
           equipment: data.equipment?.id,
           material: data.material?.id,
-          supplier_id: data.supplier.id,
+          supplier_id: data.supplier?.id,
         }),
       }}
     >

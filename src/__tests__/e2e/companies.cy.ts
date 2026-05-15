@@ -16,7 +16,7 @@ describe('E2E: Companies', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateCompaniesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
       selectEnumType('input-company-type', <string>crupdatedData.company_type)
     } else {
       cy.contains(<string>company1Mock.name).click()
@@ -46,7 +46,11 @@ describe('E2E: Companies', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-companies"]').click()
     cy.wait('@getCompanies')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -73,6 +77,7 @@ describe('E2E: Companies', () => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createCompany')
     cy.url().should('include', '/companies')
   }
@@ -84,6 +89,7 @@ describe('E2E: Companies', () => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateCompany')
     cy.url().should('include', '/companies')
   }

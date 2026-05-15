@@ -17,9 +17,11 @@ describe('E2E: Incomes', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateIncomesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
-      cy.contains(<string>income1Mock.description).click()
+      cy.contains(<string>income1Mock.source_organization)
+        .first()
+        .click()
       cy.wait('@getIncome')
       cy.wait(500)
 
@@ -55,20 +57,28 @@ describe('E2E: Incomes', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-incomes"]').click()
     cy.wait('@getIncomes')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>income1Mock.description).should('be.visible')
-    cy.contains(<string>income2Mock.description).should('be.visible')
+    cy.contains(<string>income1Mock.source_organization).should('be.visible')
+    cy.contains(<string>income2Mock.source_organization).should('be.visible')
+    cy.contains(<number>income1Mock.amount).should('be.visible')
+    cy.contains(<number>income2Mock.amount).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>income1Mock.description).click()
+    cy.contains(<string>income1Mock.source_organization)
+      .first()
+      .click()
     cy.wait('@getIncome')
     cy.contains(<string>income1Mock.description).should('exist')
     cy.contains(<string>income1Mock.source_organization).should('exist')
@@ -81,6 +91,7 @@ describe('E2E: Incomes', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('createIncome')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createIncome')
     cy.url().should('include', '/incomes')
   }
@@ -92,6 +103,7 @@ describe('E2E: Incomes', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('updateIncome')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateIncome')
     cy.url().should('include', '/incomes')
   }

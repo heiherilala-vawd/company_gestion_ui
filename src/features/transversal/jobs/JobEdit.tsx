@@ -10,7 +10,7 @@ export default function JobEdit() {
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          company_id: data.company.id,
+          company_id: data.company?.id,
         }),
       }}
     >

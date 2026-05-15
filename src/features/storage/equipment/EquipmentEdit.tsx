@@ -10,7 +10,7 @@ export default function EquipmentEdit() {
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          warehouse_id: data.warehouse.id,
+          warehouse_id: data.warehouse?.id,
         }),
       }}
     >

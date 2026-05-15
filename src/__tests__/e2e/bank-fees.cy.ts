@@ -16,7 +16,7 @@ describe('E2E: Bank Fees', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateBankFeesMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
       cy.get('[data-testid="input-id"] input').then(($input) => {
         $input.val('newId')
         $input.trigger('change')
@@ -58,7 +58,11 @@ describe('E2E: Bank Fees', () => {
     cy.wait(200)
     cy.get('[data-testid="menu-bank-fees"]').click()
     cy.wait('@getBankFees')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -83,6 +87,7 @@ describe('E2E: Bank Fees', () => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('createBankFee')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createBankFee')
     cy.url().should('include', '/bank_fees')
   }
@@ -94,6 +99,7 @@ describe('E2E: Bank Fees', () => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('updateBankFee')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateBankFee')
     cy.url().should('include', '/bank_fees')
   }

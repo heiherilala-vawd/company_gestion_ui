@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AppBar as RAAppBar, TitlePortal } from 'react-admin'
-import { Box, IconButton, Button, Tooltip } from '@mui/material'
+import { Box, IconButton, Button, Tooltip, useMediaQuery } from '@mui/material'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -10,6 +10,7 @@ import { appBarStyles } from '../style/components'
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
 import { JobSelector } from '../features/transversal/jobs/JobSelector'
 import { useThemeMode } from '../style/ThemeContext'
+import { useTheme } from '@mui/material/styles'
 
 export const AppBar = () => {
   const navigate = useNavigate()
@@ -17,7 +18,8 @@ export const AppBar = () => {
   const { mode, toggleMode } = useThemeMode()
   const prevPathRef = useRef(location.pathname)
   const prevPath = prevPathRef.current
-
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   useEffect(() => {
     prevPathRef.current = location.pathname
   }, [location])
@@ -36,11 +38,20 @@ export const AppBar = () => {
           <HomeIcon />
         </IconButton>
       </Tooltip>
-      {!isAuthPage && window.history.length > 1 && !prevIsAuth && (
-        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} color="inherit">
-          Retour
-        </Button>
-      )}
+      {!isAuthPage &&
+        window.history.length > 1 &&
+        !prevIsAuth &&
+        (isMobile ? (
+          <Tooltip title="Retour">
+            <IconButton onClick={() => navigate(-1)} color="inherit">
+              <ArrowBackIcon />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} color="inherit">
+            Retour
+          </Button>
+        ))}
       <TitlePortal />
       <Box sx={{ flex: 1 }} />
       <Box sx={appBarStyles.container}>

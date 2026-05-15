@@ -1,9 +1,11 @@
-import { TextInput, NumberInput, SelectInput } from 'react-admin'
+import { TextInput, NumberInput, SelectInput, DateTimeInput } from 'react-admin'
 import generateId from '../../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
   renderTravelExpenseSelect,
+  renderWarehouseSelect,
 } from '../../../../generic/SelectWithCreateProvider.tsx'
+import React from 'react'
 
 // eslint-disable-next-line react/prop-types
 export default function TravelEquipmentForm({ isCreate = false, isCreateForm = false }) {
@@ -23,6 +25,13 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
       )}
       {renderTravelExpenseSelect(null, null)}
       {renderEquipmentSelect('equipment', null)}
+      {renderWarehouseSelect('arrival_location', "Lieu d'arrivée")}
+      <DateTimeInput
+        source="arrival_date"
+        label="Date d'arrivée"
+        defaultValue={new Date().toISOString()}
+        data-testid="input-arrival_date"
+      />
       <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <SelectInput
         source="status"

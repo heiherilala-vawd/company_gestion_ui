@@ -151,7 +151,7 @@ export default function TravelMaterialActivity() {
     try {
       if (entityType === 'equipment') {
         const body = selectedItems.map((item: any) => ({
-          id: item.id,
+          id: item?.id,
           name: item.name,
           description: item.description,
           warehouse_id: selectedLocation,

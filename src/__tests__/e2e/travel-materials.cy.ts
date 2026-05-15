@@ -17,9 +17,11 @@ describe('E2E: Travel Materials', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateTravelMaterialsMock[0]
     if (isCreating) {
-      cy.contains('Create').click()
+      cy.get('[data-testid="AddIcon"]').click()
     } else {
-      cy.contains(<number>travelMaterials1Mock.quantity).click()
+      cy.contains(<string>travelMaterials1Mock.material?.name)
+        .first()
+        .click()
       cy.wait('@getTravelMaterial')
       cy.get('.RaEditButton-root').click()
     }
@@ -41,14 +43,19 @@ describe('E2E: Travel Materials', () => {
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     cy.get('[data-testid="menu-travel-materials"]').click()
     cy.wait('@getTravelMaterials')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0) // clique hors menu
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
-    cy.contains(<number>travelMaterials1Mock.quantity).should('be.visible')
-    cy.contains(<number>travelMaterials1Mock.quantity_received).should('be.visible')
+    if (isComputerView) {
+      navigateToDesktop()
+      cy.contains(<number>travelMaterials1Mock.quantity).should('be.visible')
+      cy.contains(<number>travelMaterials1Mock.quantity_received).should('be.visible')
+    } else navigateToMobile()
     cy.contains(<string>travelMaterials1Mock.material?.name).should('be.visible')
     cy.contains(
       travelMaterials2Mock.travel?.departure_location?.name +
@@ -60,7 +67,9 @@ describe('E2E: Travel Materials', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<number>travelMaterials1Mock.quantity).click()
+    cy.contains(<string>travelMaterials1Mock.material?.name)
+      .first()
+      .click()
     cy.wait('@getTravelMaterial')
     cy.contains('Cement bags').should('exist')
     cy.contains(<number>travelMaterials1Mock.quantity).should('exist')
@@ -80,6 +89,7 @@ describe('E2E: Travel Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('createTravelMaterial')
     creatOrUpdate(true)
+    cy.wait(3000)
     cy.wait('@createTravelMaterial')
     cy.url().should('include', '/travel_materials')
   }
@@ -91,6 +101,7 @@ describe('E2E: Travel Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('updateTravelMaterial')
     creatOrUpdate(false)
+    cy.wait(3000)
     cy.wait('@updateTravelMaterial')
     cy.url().should('include', '/travel_materials')
   }
