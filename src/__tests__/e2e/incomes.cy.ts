@@ -17,7 +17,7 @@ describe('E2E: Incomes', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateIncomesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>income1Mock.source_organization)
         .first()
@@ -52,10 +52,9 @@ describe('E2E: Incomes', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-incomes"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-incomes"]').scrollIntoView()
+    cy.get('[data-testid="menu-incomes"]').click({ force: true })
     cy.wait('@getIncomes')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

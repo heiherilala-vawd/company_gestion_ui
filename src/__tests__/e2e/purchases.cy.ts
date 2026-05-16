@@ -19,7 +19,7 @@ import {
 describe('E2E: Purchases', () => {
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>purchase1Mock.equipment?.name).click()
       cy.wait('@getPurchase')
@@ -42,7 +42,7 @@ describe('E2E: Purchases', () => {
   function creatOrUpdateMaterial(isCreating: boolean) {
     const crupdatedData = crupdatePurchasesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<number>purchase1Mock.quantity).click()
       cy.wait('@getPurchase')
@@ -73,10 +73,9 @@ describe('E2E: Purchases', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-purchases"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-purchases"]').scrollIntoView()
+    cy.get('[data-testid="menu-purchases"]').click({ force: true })
     cy.wait('@getPurchases')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

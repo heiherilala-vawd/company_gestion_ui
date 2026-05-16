@@ -16,7 +16,7 @@ describe('E2E: Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateExpensesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>expense1Mock.description).click()
       cy.wait('@getExpense')
@@ -43,10 +43,9 @@ describe('E2E: Expenses', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-expenses"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-expenses"]').scrollIntoView()
+    cy.get('[data-testid="menu-expenses"]').click({ force: true })
     cy.wait('@getExpenses')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

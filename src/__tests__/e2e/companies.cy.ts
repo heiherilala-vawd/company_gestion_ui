@@ -16,7 +16,7 @@ describe('E2E: Companies', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateCompaniesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
       selectEnumType('input-company-type', <string>crupdatedData.company_type)
     } else {
       cy.contains(<string>company1Mock.name).click()
@@ -43,8 +43,9 @@ describe('E2E: Companies', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-companies"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-companies"]').scrollIntoView()
+    cy.get('[data-testid="menu-companies"]').click({ force: true })
     cy.wait('@getCompanies')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

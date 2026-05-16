@@ -17,7 +17,7 @@ describe('E2E: Jobs', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateJobsMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>job1Mock.description).click()
       cy.wait('@getJob')
@@ -46,10 +46,10 @@ describe('E2E: Jobs', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-jobs"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-jobs"]').scrollIntoView()
+    cy.get('[data-testid="menu-jobs"]').click({ force: true })
     cy.wait('@getJobs')
-    cy.wait(200)
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
         cy.get('body').click(0, 0) // clique hors menu

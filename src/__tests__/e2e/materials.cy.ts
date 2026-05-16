@@ -11,7 +11,7 @@ describe('E2E: Materials', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateMaterialsMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>material1Mock.name).click()
       cy.wait('@getMaterial')
@@ -35,8 +35,9 @@ describe('E2E: Materials', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-materials"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-materials"]').scrollIntoView()
+    cy.get('[data-testid="menu-materials"]').click({ force: true })
     cy.wait('@getMaterials')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

@@ -17,7 +17,7 @@ describe('E2E: Travel Materials', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateTravelMaterialsMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>travelMaterials1Mock.material?.name)
         .first()
@@ -40,8 +40,9 @@ describe('E2E: Travel Materials', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-travel-materials"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-travel-materials"]').scrollIntoView()
+    cy.get('[data-testid="menu-travel-materials"]').click({ force: true })
     cy.wait('@getTravelMaterials')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

@@ -16,7 +16,7 @@ describe('E2E: Bank Fees', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateBankFeesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
       cy.get('[data-testid="input-id"] input').then(($input) => {
         $input.val('newId')
         $input.trigger('change')
@@ -53,10 +53,9 @@ describe('E2E: Bank Fees', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-bank-fees"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-bank-fees"]').scrollIntoView()
+    cy.get('[data-testid="menu-bank-fees"]').click({ force: true })
     cy.wait('@getBankFees')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

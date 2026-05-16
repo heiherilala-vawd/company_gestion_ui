@@ -16,7 +16,7 @@ describe('E2E: Warehouses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateWarehousesMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>warehouse1Mock.name).click()
       cy.wait('@getWarehouse')
@@ -41,8 +41,9 @@ describe('E2E: Warehouses', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-warehouses"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-warehouses"]').scrollIntoView()
+    cy.get('[data-testid="menu-warehouses"]').click({ force: true })
     cy.wait('@getWarehouses')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

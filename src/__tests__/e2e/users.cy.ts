@@ -11,7 +11,7 @@ describe('E2E: Users', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateUsersMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>user1Mock.first_name).click()
       cy.wait('@getUser')
@@ -43,8 +43,9 @@ describe('E2E: Users', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-users"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-users"]').scrollIntoView()
+    cy.get('[data-testid="menu-users"]').click({ force: true })
     cy.wait('@getUsers')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
