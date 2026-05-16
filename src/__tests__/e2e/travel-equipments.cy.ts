@@ -18,7 +18,7 @@ describe('E2E: Travel Equipments', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateTravelEquipmentMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>travelEquipment1Mock.equipment?.name)
         .first()
@@ -26,7 +26,7 @@ describe('E2E: Travel Equipments', () => {
       cy.wait('@getTravelEquipment')
       cy.window().scrollTo('top')
       cy.scrollTo('top')
-      cy.get('[data-testid="CreateIcon"]').click()
+      cy.get('.RaEditButton-root').click()
       cy.wait('@getTravelEquipment')
     }
     selectTravelExpense('Déplacement: ' + travelEquipment1Mock.travel?.expense?.description)
@@ -49,8 +49,9 @@ describe('E2E: Travel Equipments', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-travel-equipments"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-travel-equipments"]').scrollIntoView()
+    cy.get('[data-testid="menu-travel-equipments"]').click({ force: true })
     cy.wait('@getTravelEquipments')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

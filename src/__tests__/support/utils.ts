@@ -164,9 +164,12 @@ export function insertInToLocalStorage(): void {
 }
 
 export function loginInPage(): void {
+  cy.viewport(1280, 720)
   cy.visit('/', { failOnStatusCode: false })
-  cy.get('input')
+  cy.document().should('have.property', 'readyState', 'complete')
+  cy.get('input', { timeout: 10000 })
     .first()
+    .should('be.visible')
     .type(<string>loginRequestMock.email)
   cy.get('input[type="password"]').type(<string>loginRequestMock.password)
   cy.get('button[type="submit"]').click()

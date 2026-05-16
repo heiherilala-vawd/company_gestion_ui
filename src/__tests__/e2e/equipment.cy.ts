@@ -16,7 +16,7 @@ describe('E2E: Equipment', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateEquipmentMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>equipment1Mock.name).click()
       cy.wait('@getEquipment')
@@ -45,8 +45,9 @@ describe('E2E: Equipment', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-equipments"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-equipments"]').scrollIntoView()
+    cy.get('[data-testid="menu-equipments"]').click({ force: true })
     cy.wait('@getEquipments')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

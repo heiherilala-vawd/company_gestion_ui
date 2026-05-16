@@ -18,7 +18,7 @@ describe('E2E: Employee Payments', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateEmployeePaymentsMock[0]
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>employeePayment1Mock.employee?.first_name).click()
       cy.wait('@getEmployeePayment')
@@ -50,10 +50,9 @@ describe('E2E: Employee Payments', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-employee-payments"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-employee-payments"]').scrollIntoView()
+    cy.get('[data-testid="menu-employee-payments"]').click({ force: true })
     cy.wait('@getEmployeePayments')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

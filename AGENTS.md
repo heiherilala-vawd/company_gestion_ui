@@ -309,6 +309,38 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 - `auth-api.ts`, `bank-fees-api.ts`, `companies-api.ts`, `employee-payments-api.ts`, `equipment-api.ts`, `expenses-api.ts`, `histories-api.ts`, `incomes-api.ts`, `jobs-api.ts`, `materials-api.ts`, `other-expenses-api.ts`, `purchases-api.ts`, `travel-equipment-api.ts`, `travel-expenses-api.ts`, `travel-materials-api.ts`, `travel-people-api.ts`, `users-api.ts`, `warehouses-api.ts`, `index.ts`
 - Loans mocks should go in `loans-api.ts` (not yet created) — mock `Loan` and `CrupdateLoan` types with `lender`, `amount`, `interest_rate`, `start_date`, `status`, `remaining_amount`. Repayment mocks use `CrupdateLoanRepayment`. Add interceptors in `utils.ts`: `GET **/loans*`, `PUT **/loans`, `POST **/loans/*/repayments`.
 
+### Mapper Functions
+
+All mapper functions live in `src/__tests__/support/mappers.ts` and convert a full entity (schema) to its `Crupdate` equivalent, flattening nested objects to FK fields and dropping audit/computed fields.
+
+```typescript
+import { toCrupdateEquipmentMapper, toAuditUserMapper } from '../../support/mappers.ts'
+
+// Before (manual):
+equipment: {
+  id: equipment1Mock.id,
+  name: equipment1Mock.name,
+  description: equipment1Mock.description,
+  warehouse_id: equipment1Mock.warehouse.id,
+  floor_number: equipment1Mock.floor_number,
+  storage_number: equipment1Mock.storage_number,
+  comment: equipment1Mock.comment,
+}
+
+// After (mapper):
+equipment: toCrupdateEquipmentMapper(equipment1Mock)
+
+// Audit fields:
+created_by: toAuditUserMapper(user1Mock),
+updated_by: toAuditUserMapper(user1Mock),
+```
+
+**Available mappers** (`toCrupdateXxxMapper`): `ExpenseMoney`, `Job`, `Warehouse`, `Equipment`, `Material`, `Company`, `User`, `IncomeMoney`, `Loan`, `TravelExpense`, `TravelEquipment`, `TravelMaterials`, `TravelPeople`, `EmployeePayment`, `Purchase`, `BankFee`, `OtherExpense`, `LoanRepayment`, `IncomeType`.
+
+**`toAuditUserMapper(user)`** — extracts `{ id, role, first_name, last_name, sex, email }` from a `User` for `created_by`/`updated_by`.
+
+**Pattern**: mapper drops `created_at`, `updated_at`, `created_by`, `updated_by` (audit), flattens nested objects (e.g., `job.id` → `job_id`, `warehouse.id` → `warehouse_id`), and drops computed fields (`remaining_amount`, `principal_portion`, `interest_portion`) and nested arrays (`repayments`, `receipts`, `material_warehouses`).
+
 ### Security Measures (Prevent backend leaks during tests)
 
 1. **`VITE_API_URL` forced to empty** in `scripts/run-cypress-coverage.sh`:

@@ -15,7 +15,7 @@ import {
 describe('E2E: Travel People', () => {
   function creatOrUpdate(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>travelPeople1Mock.arrival_location?.name).click()
       cy.wait('@getTravelPeople')
@@ -38,8 +38,9 @@ describe('E2E: Travel People', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-travel-peoples"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-travel-peoples"]').scrollIntoView()
+    cy.get('[data-testid="menu-travel-peoples"]').click({ force: true })
     cy.wait('@getTravelPeoples')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

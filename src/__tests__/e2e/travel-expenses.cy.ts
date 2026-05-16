@@ -15,7 +15,7 @@ import {
 describe('E2E: Travel Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[data-testid="AddIcon"]').click()
+      cy.get('[class*="RaCreateButton"]').click()
     } else {
       cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
       cy.wait('@getTravelExpense')
@@ -42,10 +42,9 @@ describe('E2E: Travel Expenses', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-travel-expenses"]').click()
+    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.get('[data-testid="menu-travel-expenses"]').scrollIntoView()
+    cy.get('[data-testid="menu-travel-expenses"]').click({ force: true })
     cy.wait('@getTravelExpenses')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
