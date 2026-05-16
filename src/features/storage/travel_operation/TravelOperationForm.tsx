@@ -147,6 +147,7 @@ const TravelOperationForm = () => {
                 rows={3}
                 fullWidth
                 sx={operationFormStyles.flexFull}
+                data-testid="input-comment"
               />
             </Box>
 
@@ -166,6 +167,7 @@ const TravelOperationForm = () => {
                     transform: isTravelOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: transitions.spin,
                   }}
+                  data-testid="toggle-travel-details"
                 >
                   <ExpandMoreIcon />
                 </IconButton>
@@ -187,6 +189,7 @@ const TravelOperationForm = () => {
                           setDepartureLocationId(event.target.value)
                         }}
                         sx={operationFormStyles.flexFull}
+                        data-testid="input-departure_location_id"
                       />
                     </ReferenceInput>
 
@@ -207,16 +210,24 @@ const TravelOperationForm = () => {
                       label="Date de départ"
                       sx={operationFormStyles.flexFull}
                       defaultValue={new Date().toISOString()}
+                      data-testid="input-departure_date"
                     />
                     <DateTimeInput
                       source="arrival_date"
                       label="Date d'arrivée"
                       sx={operationFormStyles.flexFull}
                       defaultValue={new Date().toISOString()}
+                      data-testid="input-arrival_date"
                     />
                   </Box>
 
-                  <NumberInput source="fee" label="Frais de déplacement" fullWidth sx={{ mt: 2 }} />
+                  <NumberInput
+                    source="fee"
+                    label="Frais de déplacement"
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    data-testid="input-fee"
+                  />
                 </Box>
               </Collapse>
             </Box>
@@ -272,6 +283,7 @@ const TravelOperationForm = () => {
                     source="material_quantity"
                     label="Quantité"
                     sx={operationFormStyles.flexFull}
+                    data-testid="input-material_quantity"
                   />
                 </Box>
               </SimpleFormIterator>
@@ -303,7 +315,7 @@ const TravelOperationForm = () => {
             </ArrayInput>
 
             <Box sx={operationFormStyles.submitBox}>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary" data-testid="submit-travel">
                 Créer l'opération de déplacement
               </Button>
               <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ ml: 1 }}>

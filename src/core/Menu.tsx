@@ -46,7 +46,7 @@ const MenuRoot = () => {
   if (!sidebarOpen) return null
 
   const transversalItems: ResourceItem[] = [
-    { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/' },
+    { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
     { name: 'jobs', label: 'Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
       name: 'companies',

@@ -18,16 +18,25 @@ function LoanForm() {
   return (
     <>
       <TextInput source="id" readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
-      <TextInput source="lender" label="Prêteur" />
-      <NumberInput source="amount" label="Montant" />
-      <NumberInput source="interest_rate" label="Taux d'intérêt annuel (en points de base)" />
+      <TextInput source="lender" label="Prêteur" data-testid="input-lender" />
+      <NumberInput source="amount" label="Montant" data-testid="input-amount" />
+      <NumberInput
+        source="interest_rate"
+        label="Taux d'intérêt annuel (en points de base)"
+        data-testid="input-interest_rate"
+      />
       <DateTimeInput
         source="start_date"
         label="Date de début"
         defaultValue={new Date().toISOString()}
-        data-testid="input-departure_date"
       />
-      <TextInput source="description" label="Description" multiline rows={3} />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        data-testid="input-description"
+      />
       <TextInput source="status" readOnly defaultValue="ACTIVE" sx={{ display: 'none' }} />
     </>
   )

@@ -23,7 +23,6 @@ import {
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useForm, FormProvider } from 'react-hook-form'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
@@ -55,20 +54,6 @@ const PurchaseActivityForm = () => {
   const notify = useNotify()
 
   const { isLoading: identityLoading } = useGetIdentity()
-
-  const methods = useForm({
-    defaultValues: {
-      supplier_id: '',
-      comment: '',
-      equipment_lines: [initialEquipmentLine],
-      material_lines: [initialMaterialLine],
-      departure_warehouse: null,
-      arrival_warehouse: null,
-      departure_date: new Date().toISOString(),
-      arrival_date: new Date().toISOString(),
-      travel_fee: '',
-    },
-  })
 
   const toInstant = (date: string) => {
     if (!date) return null
@@ -172,172 +157,200 @@ const PurchaseActivityForm = () => {
       <Card sx={operationFormStyles.card}>
         <CardContent>
           <Title title="Nouvelle Opération d'Achat" />
-          <FormProvider {...methods}>
-            <Form onSubmit={onSubmit}>
-              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-                📋 Informations Générales
-              </Typography>
-              {add_autogenaration_id('id')}
-              {add_autogenaration_id('travel_expense_id')}
-              {add_autogenaration_id('travel_id')}
-              <Box sx={operationFormStyles.flexRow}>
-                <TextInput
-                  source="comment"
-                  label="Commentaire"
-                  multiline
-                  fullWidth
-                  sx={operationFormStyles.flexDouble}
-                />
-              </Box>
-              <Divider sx={operationFormStyles.divider} />
+          <Form
+            onSubmit={onSubmit}
+            defaultValues={{
+              supplier_id: '',
+              comment: '',
+              equipment_lines: [initialEquipmentLine],
+              material_lines: [initialMaterialLine],
+              departure_warehouse: null,
+              arrival_warehouse: null,
+              departure_date: new Date().toISOString(),
+              arrival_date: new Date().toISOString(),
+              travel_fee: '',
+            }}
+          >
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
+              📋 Informations Générales
+            </Typography>
+            {add_autogenaration_id('id')}
+            {add_autogenaration_id('travel_expense_id')}
+            {add_autogenaration_id('travel_id')}
+            <Box sx={operationFormStyles.flexRow}>
+              <TextInput
+                source="comment"
+                label="Commentaire"
+                multiline
+                fullWidth
+                sx={operationFormStyles.flexDouble}
+                data-testid="input-comment"
+              />
+            </Box>
+            <Divider sx={operationFormStyles.divider} />
 
-              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-                🔧 Équipements
-              </Typography>
-              <ArrayInput source="equipment_lines" label="">
-                <SimpleFormIterator inline>
-                  <Box sx={operationFormStyles.flexRowTight}>
-                    <TextInput
-                      source="equipment_id"
-                      label="ID Équipement"
-                      readOnly
-                      defaultValue={generateId()}
-                      sx={{ display: 'none' }}
-                    />
-                    <TextInput
-                      source="equipment_name"
-                      label="Nom"
-                      sx={operationFormStyles.flexFull}
-                    />
-                    <TextInput
-                      source="description"
-                      label="Description"
-                      sx={operationFormStyles.flexFull}
-                    />
-                    <NumberInput
-                      source="unit_price"
-                      label="Prix"
-                      sx={operationFormStyles.flexFull}
-                    />
-                    {add_autogenaration_id('expense_id')}
-                    {add_autogenaration_id('purchase_id')}
-                    {add_autogenaration_id('travel_equipment_id')}
-                  </Box>
-                </SimpleFormIterator>
-              </ArrayInput>
-              <Divider sx={operationFormStyles.divider} />
-
-              <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-                📦 Matériaux
-              </Typography>
-              <ArrayInput source="material_lines" label="">
-                <SimpleFormIterator inline>
-                  <Box sx={operationFormStyles.flexRowAlign}>
-                    <ReferenceSelectWithCreate
-                      source="material"
-                      reference="materials"
-                      label="Matériau"
-                      optionText={(record) => `${record.name} / ${record.unit}`}
-                      createUrlEnd={getMiddleUrl('materials')}
-                      createForm={<MaterialForm isCreateForm />}
-                      sx={operationFormStyles.flexFull}
-                      extractionPath={'material_lines'}
-                    />
-                    <NumberInput
-                      source="quantity"
-                      label="Quantité"
-                      sx={operationFormStyles.flexFull}
-                    />
-                    <NumberInput
-                      source="unit_price"
-                      label="Prix Unitaire"
-                      sx={operationFormStyles.flexFull}
-                    />
-                    {add_autogenaration_id('expense_id')}
-                    {add_autogenaration_id('purchase_id')}
-                    {add_autogenaration_id('travel_material_id')}
-                  </Box>
-                </SimpleFormIterator>
-              </ArrayInput>
-              <Divider sx={operationFormStyles.divider} />
-
-              <Box sx={{ mb: 2 }}>
-                <Box
-                  onClick={() => setShowTransport(!showTransport)}
-                  sx={operationFormStyles.toggleBox}
-                >
-                  <Typography variant="h6" color="primary" sx={operationFormStyles.flexFull}>
-                    🚚 Transport
-                  </Typography>
-                  <Button onClick={() => setIsTravelOpen((prev) => !prev)}>
-                    <IconButton
-                      size="small"
-                      sx={{
-                        transform: showTransport ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: transitions.spin,
-                      }}
-                    >
-                      <ExpandMoreIcon />
-                    </IconButton>
-                  </Button>
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
+              🔧 Équipements
+            </Typography>
+            <ArrayInput source="equipment_lines" label="">
+              <SimpleFormIterator inline>
+                <Box sx={operationFormStyles.flexRowTight}>
+                  <TextInput
+                    source="equipment_id"
+                    label="ID Équipement"
+                    readOnly
+                    defaultValue={generateId()}
+                    sx={{ display: 'none' }}
+                  />
+                  <TextInput
+                    source="equipment_name"
+                    label="Nom"
+                    sx={operationFormStyles.flexFull}
+                    data-testid="input-equipment_name"
+                  />
+                  <TextInput
+                    source="description"
+                    label="Description"
+                    sx={operationFormStyles.flexFull}
+                    data-testid="input-equipment_description"
+                  />
+                  <NumberInput
+                    source="unit_price"
+                    label="Prix"
+                    sx={operationFormStyles.flexFull}
+                    data-testid="input-unit_price"
+                  />
+                  {add_autogenaration_id('expense_id')}
+                  {add_autogenaration_id('purchase_id')}
+                  {add_autogenaration_id('travel_equipment_id')}
                 </Box>
+              </SimpleFormIterator>
+            </ArrayInput>
+            <Divider sx={operationFormStyles.divider} />
 
-                <Collapse in={isTravelOpen}>
-                  <Box sx={operationFormStyles.collapseContent}>
-                    <Box sx={operationFormStyles.flexRow}>
-                      <ReferenceSelectWithCreate
-                        source="departure_warehouse"
-                        reference="warehouses"
-                        label="Entrepôt de départ"
-                        optionText="name"
-                        createUrlEnd={getMiddleUrl('warehouses')}
-                        createForm={<WarehouseForm isCreateForm />}
-                        sx={operationFormStyles.flexFull}
-                      />
-                      <ReferenceSelectWithCreate
-                        source="arrival_warehouse"
-                        reference="warehouses"
-                        label="Entrepôt d'arrivée"
-                        optionText="name"
-                        createUrlEnd={getMiddleUrl('warehouses')}
-                        createForm={<WarehouseForm isCreateForm />}
-                        sx={operationFormStyles.flexFull}
-                      />
-                    </Box>
-                    <Box sx={operationFormStyles.collapseRow}>
-                      <DateTimeInput
-                        source="departure_date"
-                        label="Date de départ"
-                        sx={operationFormStyles.flexFull}
-                        defaultValue={new Date().toISOString()}
-                      />
-                      <DateTimeInput
-                        source="arrival_date"
-                        label="Date d'arrivée"
-                        sx={operationFormStyles.flexFull}
-                        defaultValue={new Date().toISOString()}
-                      />
-                    </Box>
-                    <NumberInput
-                      source="travel_fee"
-                      label="Frais de transport"
-                      fullWidth
-                      sx={{ mt: 2 }}
+            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
+              📦 Matériaux
+            </Typography>
+            <ArrayInput source="material_lines" label="">
+              <SimpleFormIterator inline>
+                <Box sx={operationFormStyles.flexRowAlign}>
+                  <ReferenceSelectWithCreate
+                    source="material"
+                    reference="materials"
+                    label="Matériau"
+                    optionText={(record) => `${record.name} / ${record.unit}`}
+                    createUrlEnd={getMiddleUrl('materials')}
+                    createForm={<MaterialForm isCreateForm />}
+                    sx={operationFormStyles.flexFull}
+                    extractionPath={'material_lines'}
+                  />
+                  <NumberInput
+                    source="quantity"
+                    label="Quantité"
+                    sx={operationFormStyles.flexFull}
+                    data-testid="input-material_quantity"
+                  />
+                  <NumberInput
+                    source="unit_price"
+                    label="Prix Unitaire"
+                    sx={operationFormStyles.flexFull}
+                    data-testid="input-material_unit_price"
+                  />
+                  {add_autogenaration_id('expense_id')}
+                  {add_autogenaration_id('purchase_id')}
+                  {add_autogenaration_id('travel_material_id')}
+                </Box>
+              </SimpleFormIterator>
+            </ArrayInput>
+            <Divider sx={operationFormStyles.divider} />
+
+            <Box sx={{ mb: 2 }}>
+              <Box
+                onClick={() => setShowTransport(!showTransport)}
+                sx={operationFormStyles.toggleBox}
+              >
+                <Typography variant="h6" color="primary" sx={operationFormStyles.flexFull}>
+                  🚚 Transport
+                </Typography>
+                <Button
+                  onClick={() => setIsTravelOpen((prev) => !prev)}
+                  data-testid="toggle-transport"
+                >
+                  <IconButton
+                    size="small"
+                    sx={{
+                      transform: showTransport ? 'rotate(180deg)' : 'rotate(0deg)',
+                      transition: transitions.spin,
+                    }}
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+                </Button>
+              </Box>
+
+              <Collapse in={isTravelOpen}>
+                <Box sx={operationFormStyles.collapseContent}>
+                  <Box sx={operationFormStyles.flexRow}>
+                    <ReferenceSelectWithCreate
+                      source="departure_warehouse"
+                      reference="warehouses"
+                      label="Entrepôt de départ"
+                      optionText="name"
+                      createUrlEnd={getMiddleUrl('warehouses')}
+                      createForm={<WarehouseForm isCreateForm />}
+                      sx={operationFormStyles.flexFull}
+                    />
+                    <ReferenceSelectWithCreate
+                      source="arrival_warehouse"
+                      reference="warehouses"
+                      label="Entrepôt d'arrivée"
+                      optionText="name"
+                      createUrlEnd={getMiddleUrl('warehouses')}
+                      createForm={<WarehouseForm isCreateForm />}
+                      sx={operationFormStyles.flexFull}
                     />
                   </Box>
-                </Collapse>
-              </Box>
+                  <Box sx={operationFormStyles.collapseRow}>
+                    <DateTimeInput
+                      source="departure_date"
+                      label="Date de départ"
+                      sx={operationFormStyles.flexFull}
+                      defaultValue={new Date().toISOString()}
+                      data-testid="input-departure_date"
+                    />
+                    <DateTimeInput
+                      source="arrival_date"
+                      label="Date d'arrivée"
+                      sx={operationFormStyles.flexFull}
+                      defaultValue={new Date().toISOString()}
+                      data-testid="input-arrival_date"
+                    />
+                  </Box>
+                  <NumberInput
+                    source="travel_fee"
+                    label="Frais de transport"
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    data-testid="input-travel_fee"
+                  />
+                </Box>
+              </Collapse>
+            </Box>
 
-              <Box sx={operationFormStyles.submitBox}>
-                <Button type="submit" variant="contained" color="primary">
-                  Créer l'opération d'achat
-                </Button>
-                <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ ml: 1 }}>
-                  Retour
-                </Button>
-              </Box>
-            </Form>
-          </FormProvider>
+            <Box sx={operationFormStyles.submitBox}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                data-testid="submit-purchase"
+              >
+                Créer l'opération d'achat
+              </Button>
+              <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} sx={{ ml: 1 }}>
+                Retour
+              </Button>
+            </Box>
+          </Form>
         </CardContent>
       </Card>
     </ResourceContextProvider>

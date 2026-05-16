@@ -38,6 +38,9 @@ import {
   incomesType1,
   incomesTypes,
   warehouse2Mock,
+  loansActiveMock,
+  loansDefaultedMock,
+  materialWarehousesMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -153,6 +156,32 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/travel_equipment/teq1_id*', mockSuccessResponse(travelEquipment1Mock)).as(
     'getTravelEquipment',
   )
+
+  // ---------------------- LOANS ------------------------------------------
+  cy.intercept('GET', '**/loans*status=ACTIVE*', mockSuccessResponse(loansActiveMock)).as(
+    'getLoansActive',
+  )
+  cy.intercept('GET', '**/loans*status=DEFAULTED*', mockSuccessResponse(loansDefaultedMock)).as(
+    'getLoansDefaulted',
+  )
+
+  // ---------------------- MATERIAL WAREHOUSE ------------------------------------------
+  cy.intercept('GET', '**/material_warehouse*', mockSuccessResponse(materialWarehousesMock)).as(
+    'getMaterialWarehouses',
+  )
+
+  // ---------------------- SPA ROUTE PASSTHROUGH (evite que les patterns glob attrapent les routes SPA) --------
+  const spaRoutes = [
+    '/expenses_activity',
+    '/incomes_activity',
+    '/travel_materials_activity',
+    '/travel_equipment_activity',
+    '/employer_payments_activity',
+    '/purchases_activity',
+  ]
+  spaRoutes.forEach((route) => {
+    cy.intercept('GET', route, (req) => req.continue())
+  })
 }
 
 export function insertInToLocalStorage(): void {
@@ -190,20 +219,20 @@ export function selectReferenceWithCreate(
   entitySelection: string,
   elementIndex: number = 0,
 ): void {
-  // Ouvrir le dropdown en cliquant sur l'élément MUI Select réel
   cy.get(`[data-testid="${testId}"]`)
     .eq(elementIndex)
+    .scrollIntoView()
     .within(() => {
       cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
     })
   cy.get(`#menu-${menuId}`).should('be.visible')
-  cy.get(`#menu-${menuId}`).contains(entitySelection).click({ force: true })
+  cy.get(`#menu-${menuId}`).contains(entitySelection).scrollIntoView().click({ force: true })
   cy.get(`#menu-${menuId}`).should('not.be.visible')
 }
 
 export function selectEnumType(testId: string, selection: string): void {
-  cy.get(`[data-testid="${testId}"]`).click()
-  cy.get('li[aria-selected]').contains(selection).click({ force: true })
+  cy.get(`[data-testid="${testId}"]`).scrollIntoView().click()
+  cy.get('li[aria-selected]').contains(selection).scrollIntoView().click({ force: true })
   cy.get('li[aria-selected]').should('not.be.visible')
 }
 
