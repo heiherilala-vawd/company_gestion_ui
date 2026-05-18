@@ -6,7 +6,8 @@ import { toCrupdateExpenseMoneyMapper } from '../../support/mappers.ts'
 export const employeePayment1Mock: EmployeePayment = {
   id: 'ep1_id',
   expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-  employee: user2Mock,
+  users: [user2Mock],
+  is_for_team: false,
   payment_description: 'January salary advance',
   payment_type: 'ADVANCE' as PaymentType,
 }
@@ -14,7 +15,8 @@ export const employeePayment1Mock: EmployeePayment = {
 export const employeePayment2Mock: EmployeePayment = {
   id: 'ep2_id',
   expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-  employee: user2Mock,
+  users: [user2Mock],
+  is_for_team: false,
   payment_description: 'Monthly salary payment',
   payment_type: 'MONTHLY' as PaymentType,
 }
@@ -25,14 +27,16 @@ export const crupdateEmployeePaymentsMock: CrupdateEmployeePayment[] = [
   {
     id: 'ep1_id',
     expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-    employee_id: user2Mock?.id,
+    user_ids: [user2Mock?.id || ''],
+    is_for_team: false,
     payment_description: 'Updated January advance',
     payment_type: 'ADVANCE' as PaymentType,
   },
   {
     id: 'ep3_id',
     expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-    employee_id: user2Mock?.id,
+    user_ids: [user2Mock?.id || ''],
+    is_for_team: false,
     payment_description: 'Bonus payment',
     payment_type: 'OTHER' as PaymentType,
   },
@@ -51,6 +55,6 @@ export const createOrUpdateEmployeePayments = (
       job_id: expense1Mock.job?.id,
       comment: expense1Mock.comment,
     },
-    employee: user2Mock,
+    users: [user2Mock],
   }))
 }

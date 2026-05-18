@@ -2,15 +2,16 @@
 
 ## Properties
 
-| Name             | Type   |
-| ---------------- | ------ |
-| `comment`        | string |
-| `id`             | string |
-| `name`           | string |
-| `description`    | string |
-| `warehouse_id`   | string |
-| `floor_number`   | number |
-| `storage_number` | number |
+| Name             | Type    |
+| ---------------- | ------- |
+| `comment`        | string  |
+| `id`             | string  |
+| `name`           | string  |
+| `description`    | string  |
+| `warehouse_id`   | string  |
+| `floor_number`   | number  |
+| `storage_number` | number  |
+| `est_en_panne`   | boolean |
 
 ## Example
 
@@ -26,6 +27,7 @@ const example = {
   "warehouse_id": wh_001,
   "floor_number": 1,
   "storage_number": 5,
+  "est_en_panne": false,
 } satisfies CrupdateEquipment
 
 console.log(example)

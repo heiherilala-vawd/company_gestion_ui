@@ -40,6 +40,12 @@ export interface CrupdateOtherExpense {
    */
   expense?: CrupdateExpenseMoney
   /**
+   * ID of the other expense type associated with this expense
+   * @type {string}
+   * @memberof CrupdateOtherExpense
+   */
+  other_expense_type_id?: string
+  /**
    *
    * @type {string}
    * @memberof CrupdateOtherExpense
@@ -68,6 +74,8 @@ export function CrupdateOtherExpenseFromJSONTyped(
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
+    other_expense_type_id:
+      json['other_expense_type_id'] == null ? undefined : json['other_expense_type_id'],
     description: json['description'] == null ? undefined : json['description'],
   }
 }
@@ -87,6 +95,7 @@ export function CrupdateOtherExpenseToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
+    other_expense_type_id: value['other_expense_type_id'],
     description: value['description'],
   }
 }

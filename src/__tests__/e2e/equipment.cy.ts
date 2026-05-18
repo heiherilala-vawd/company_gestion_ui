@@ -35,6 +35,7 @@ describe('E2E: Equipment', () => {
     cy.get('[data-testid="input-storage_number"] input')
       .clear()
       .type(String(<number>crupdatedData.storage_number))
+    cy.get('[data-testid="input-est_en_panne"] input[type="checkbox"]').check({ force: true })
     cy.get('button[type="submit"]').click()
   }
 

@@ -20,7 +20,7 @@ describe('E2E: Employee Payments', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
-      cy.contains(<string>employeePayment1Mock.employee?.first_name).click()
+      cy.contains(<string>employeePayment1Mock.users[0].first_name).click()
       cy.wait('@getEmployeePayment')
       cy.get('.RaEditButton-root').click()
     }
@@ -64,16 +64,16 @@ describe('E2E: Employee Payments', () => {
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.employee?.first_name).should('exist')
-    cy.contains(<string>employeePayment2Mock.employee?.first_name).should('exist')
+    cy.contains(<string>employeePayment1Mock.users[0].first_name).should('exist')
+    cy.contains(<string>employeePayment2Mock.users[0].first_name).should('exist')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.employee?.first_name).click()
+    cy.contains(<string>employeePayment1Mock.users[0].first_name).click()
     cy.wait('@getEmployeePayment')
-    cy.contains(<string>employeePayment1Mock.employee?.first_name).should('exist')
+    cy.contains(<string>employeePayment1Mock.users[0].first_name).should('exist')
     cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
   }
 

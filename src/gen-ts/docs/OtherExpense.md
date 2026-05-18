@@ -2,11 +2,12 @@
 
 ## Properties
 
-| Name          | Type                                            |
-| ------------- | ----------------------------------------------- |
-| `id`          | string                                          |
-| `expense`     | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `description` | string                                          |
+| Name                 | Type                                            |
+| -------------------- | ----------------------------------------------- |
+| `id`                 | string                                          |
+| `expense`            | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `other_expense_type` | [OtherExpenseType](OtherExpenseType.md)         |
+| `description`        | string                                          |
 
 ## Example
 
@@ -17,6 +18,7 @@ import type { OtherExpense } from 'api-client'
 const example = {
   "id": other_001,
   "expense": null,
+  "other_expense_type": null,
   "description": Frais de carburant pour grues,
 } satisfies OtherExpense
 

@@ -34,6 +34,7 @@ export const EntityType = {
   PURCHASE: 'PURCHASE',
   BANK_FEE: 'BANK_FEE',
   OTHER_EXPENSE: 'OTHER_EXPENSE',
+  TEAM: 'TEAM',
 } as const
 export type EntityType = (typeof EntityType)[keyof typeof EntityType]
 

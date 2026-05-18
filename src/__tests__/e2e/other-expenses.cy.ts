@@ -9,6 +9,7 @@ import {
   loginInPage,
   selectExpense,
   selectJob,
+  selectOtherExpenseType,
 } from '../support/utils.ts'
 
 describe('E2E: Other Expenses', () => {
@@ -21,6 +22,10 @@ describe('E2E: Other Expenses', () => {
       cy.wait('@getOtherExpense')
       cy.get('.RaEditButton-root').click()
     }
+    if (isCreating) {
+      selectOtherExpenseType(null)
+    }
+
     cy.get('[data-testid="input-description"] textarea:visible')
       .first()
       .clear()

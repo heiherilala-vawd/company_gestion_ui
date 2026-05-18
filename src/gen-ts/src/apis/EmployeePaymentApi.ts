@@ -77,7 +77,7 @@ export interface GetEmployeePaymentsRequest {
   userId: string
   page?: number
   pageSize?: number
-  employeeId?: string
+  userIds?: Array<string>
   paymentDescription?: string
   paymentType?: PaymentType
 }
@@ -381,8 +381,8 @@ export class EmployeePaymentApi extends runtime.BaseAPI {
       queryParameters['page_size'] = requestParameters['pageSize']
     }
 
-    if (requestParameters['employeeId'] != null) {
-      queryParameters['employee_id'] = requestParameters['employeeId']
+    if (requestParameters['userIds'] != null) {
+      queryParameters['user_ids'] = requestParameters['userIds']
     }
 
     if (requestParameters['paymentDescription'] != null) {

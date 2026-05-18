@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime'
+import type { OtherExpenseType } from './OtherExpenseType'
+import {
+  OtherExpenseTypeFromJSON,
+  OtherExpenseTypeFromJSONTyped,
+  OtherExpenseTypeToJSON,
+  OtherExpenseTypeToJSONTyped,
+} from './OtherExpenseType'
 import type { CrupdateExpenseMoney } from './CrupdateExpenseMoney'
 import {
   CrupdateExpenseMoneyFromJSON,
@@ -40,6 +47,12 @@ export interface OtherExpense {
    */
   expense?: CrupdateExpenseMoney
   /**
+   * Type of other expense associated with this expense
+   * @type {OtherExpenseType}
+   * @memberof OtherExpense
+   */
+  other_expense_type?: OtherExpenseType
+  /**
    *
    * @type {string}
    * @memberof OtherExpense
@@ -65,6 +78,10 @@ export function OtherExpenseFromJSONTyped(json: any, ignoreDiscriminator: boolea
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
+    other_expense_type:
+      json['other_expense_type'] == null
+        ? undefined
+        : OtherExpenseTypeFromJSON(json['other_expense_type']),
     description: json['description'] == null ? undefined : json['description'],
   }
 }
@@ -84,6 +101,7 @@ export function OtherExpenseToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
+    other_expense_type: OtherExpenseTypeToJSON(value['other_expense_type']),
     description: value['description'],
   }
 }

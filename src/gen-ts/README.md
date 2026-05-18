@@ -101,6 +101,10 @@ All URIs are relative to *https://api-dev.company.com*
 | _LoanRepaymentApi_     | [**deleteLoanRepaymentById**](docs/LoanRepaymentApi.md#deleteloanrepaymentbyid)           | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/loans/{loan_id}/repayments/{id}                            | Delete loan repayment by identifier                            |
 | _LoanRepaymentApi_     | [**getLoanRepaymentById**](docs/LoanRepaymentApi.md#getloanrepaymentbyid)                 | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/loans/{loan_id}/repayments/{id}                               | Get loan repayment by identifier                               |
 | _LoanRepaymentApi_     | [**getLoanRepayments**](docs/LoanRepaymentApi.md#getloanrepayments)                       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/loans/{loan_id}/repayments                                    | Get all repayments for a loan                                  |
+| _MaintenanceApi_       | [**crupdateMaintenances**](docs/MaintenanceApi.md#crupdatemaintenances)                   | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances                         | Create new maintenances or update existing ones                |
+| _MaintenanceApi_       | [**deleteMaintenanceById**](docs/MaintenanceApi.md#deletemaintenancebyid)                 | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id}                 | Delete maintenance by identifier                               |
+| _MaintenanceApi_       | [**getMaintenanceById**](docs/MaintenanceApi.md#getmaintenancebyid)                       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id}                    | Get maintenance by identifier                                  |
+| _MaintenanceApi_       | [**getMaintenances**](docs/MaintenanceApi.md#getmaintenances)                             | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances                         | Get all maintenances for equipment                             |
 | _MaterialApi_          | [**crupdateMaterials**](docs/MaterialApi.md#crupdatematerials)                            | **PUT** /companies/{comp_id}/materials                                                                                 | Create new materials or update existing materials              |
 | _MaterialApi_          | [**deleteMaterialById**](docs/MaterialApi.md#deletematerialbyid)                          | **DELETE** /companies/{comp_id}/materials/{id}                                                                         | Delete material by identifier                                  |
 | _MaterialApi_          | [**getMaterialById**](docs/MaterialApi.md#getmaterialbyid)                                | **GET** /companies/{comp_id}/materials/{id}                                                                            | Get material by identifier                                     |
@@ -111,12 +115,20 @@ All URIs are relative to *https://api-dev.company.com*
 | _OtherExpenseApi_      | [**deleteOtherExpenseById**](docs/OtherExpenseApi.md#deleteotherexpensebyid)              | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/other_expenses/{id}                                        | Delete other expense by identifier                             |
 | _OtherExpenseApi_      | [**getOtherExpenseById**](docs/OtherExpenseApi.md#getotherexpensebyid)                    | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/other_expenses/{id}                                           | Get other expense by identifier                                |
 | _OtherExpenseApi_      | [**getOtherExpenses**](docs/OtherExpenseApi.md#getotherexpenses)                          | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/other_expenses                                                | Get all other expenses                                         |
+| _OtherExpenseTypeApi_  | [**crupdateOtherExpenseTypes**](docs/OtherExpenseTypeApi.md#crupdateotherexpensetypes)    | **PUT** /companies/{comp_id}/other_expense_types                                                                       | Create new other expense types or update existing ones         |
+| _OtherExpenseTypeApi_  | [**deleteOtherExpenseTypeById**](docs/OtherExpenseTypeApi.md#deleteotherexpensetypebyid)  | **DELETE** /companies/{comp_id}/other_expense_types/{id}                                                               | Delete an other expense type by identifier                     |
+| _OtherExpenseTypeApi_  | [**getOtherExpenseTypeById**](docs/OtherExpenseTypeApi.md#getotherexpensetypebyid)        | **GET** /companies/{comp_id}/other_expense_types/{id}                                                                  | Get an other expense type by identifier                        |
+| _OtherExpenseTypeApi_  | [**getOtherExpenseTypes**](docs/OtherExpenseTypeApi.md#getotherexpensetypes)              | **GET** /companies/{comp_id}/other_expense_types                                                                       | Get all other expense types for a company                      |
 | _PurchaseApi_          | [**crupdatePurchases**](docs/PurchaseApi.md#crupdatepurchases)                            | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases                                                     | Create new purchases or update existing ones                   |
 | _PurchaseApi_          | [**deletePurchaseById**](docs/PurchaseApi.md#deletepurchasebyid)                          | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases/{id}                                             | Delete purchase by identifier                                  |
 | _PurchaseApi_          | [**getPurchaseById**](docs/PurchaseApi.md#getpurchasebyid)                                | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases/{id}                                                | Get purchase by identifier                                     |
 | _PurchaseApi_          | [**getPurchases**](docs/PurchaseApi.md#getpurchases)                                      | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases                                                     | Get all purchases                                              |
 | _PurchaseOperationApi_ | [**createPurchaseOperation**](docs/PurchaseOperationApi.md#createpurchaseoperation)       | **POST** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchase_operations                                          | Register a purchase operation with optional travel             |
 | _ReportApi_            | [**companiesCompIdYearlyReportGet**](docs/ReportApi.md#companiescompidyearlyreportget)    | **GET** /companies/{comp_id}/yearly-report                                                                             | Get yearly report with job financials                          |
+| _TeamApi_              | [**crupdateTeams**](docs/TeamApi.md#crupdateteams)                                        | **PUT** /companies/{comp_id}/teams                                                                                     | Create new teams or update existing teams                      |
+| _TeamApi_              | [**deleteTeamById**](docs/TeamApi.md#deleteteambyid)                                      | **DELETE** /companies/{comp_id}/teams/{id}                                                                             | Delete team by identifier                                      |
+| _TeamApi_              | [**getTeamById**](docs/TeamApi.md#getteambyid)                                            | **GET** /companies/{comp_id}/teams/{id}                                                                                | Get team by identifier                                         |
+| _TeamApi_              | [**getTeams**](docs/TeamApi.md#getteams)                                                  | **GET** /companies/{comp_id}/teams                                                                                     | Get all teams                                                  |
 | _TravelEquipmentApi_   | [**crupdateTravelEquipment**](docs/TravelEquipmentApi.md#crupdatetravelequipment)         | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_equipment         | Create new travel equipment or update existing ones            |
 | _TravelEquipmentApi_   | [**deleteTravelEquipmentById**](docs/TravelEquipmentApi.md#deletetravelequipmentbyid)     | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_equipment/{id} | Delete travel equipment by identifier                          |
 | _TravelEquipmentApi_   | [**getTravelEquipment**](docs/TravelEquipmentApi.md#gettravelequipment)                   | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/travel_expenses/{travel_expenses_id}/travel_equipment         | Get all travel equipment                                       |
@@ -165,11 +177,14 @@ All URIs are relative to *https://api-dev.company.com*
 - [CrupdateJob](docs/CrupdateJob.md)
 - [CrupdateLoan](docs/CrupdateLoan.md)
 - [CrupdateLoanRepayment](docs/CrupdateLoanRepayment.md)
+- [CrupdateMaintenance](docs/CrupdateMaintenance.md)
 - [CrupdateMaterial](docs/CrupdateMaterial.md)
 - [CrupdateMaterialWarehouse](docs/CrupdateMaterialWarehouse.md)
 - [CrupdateMonetaryMovement](docs/CrupdateMonetaryMovement.md)
 - [CrupdateOtherExpense](docs/CrupdateOtherExpense.md)
+- [CrupdateOtherExpenseType](docs/CrupdateOtherExpenseType.md)
 - [CrupdatePurchase](docs/CrupdatePurchase.md)
+- [CrupdateTeam](docs/CrupdateTeam.md)
 - [CrupdateTravelEquipment](docs/CrupdateTravelEquipment.md)
 - [CrupdateTravelExpense](docs/CrupdateTravelExpense.md)
 - [CrupdateTravelMaterials](docs/CrupdateTravelMaterials.md)
@@ -192,6 +207,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [LoanRepayment](docs/LoanRepayment.md)
 - [LoanStatus](docs/LoanStatus.md)
 - [LoginRequest](docs/LoginRequest.md)
+- [Maintenance](docs/Maintenance.md)
 - [Material](docs/Material.md)
 - [MaterialUnit](docs/MaterialUnit.md)
 - [MaterialWarehouseInfo](docs/MaterialWarehouseInfo.md)
@@ -199,6 +215,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [MonetaryMovement](docs/MonetaryMovement.md)
 - [NotAuthorizedException](docs/NotAuthorizedException.md)
 - [OtherExpense](docs/OtherExpense.md)
+- [OtherExpenseType](docs/OtherExpenseType.md)
 - [PaymentType](docs/PaymentType.md)
 - [Purchase](docs/Purchase.md)
 - [PurchaseOperationEquipmentLine](docs/PurchaseOperationEquipmentLine.md)
@@ -208,6 +225,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [ResourceNotFoundException](docs/ResourceNotFoundException.md)
 - [Role](docs/Role.md)
 - [Sex](docs/Sex.md)
+- [Team](docs/Team.md)
 - [TooManyRequestsException](docs/TooManyRequestsException.md)
 - [TransportStatus](docs/TransportStatus.md)
 - [TravelEquipment](docs/TravelEquipment.md)

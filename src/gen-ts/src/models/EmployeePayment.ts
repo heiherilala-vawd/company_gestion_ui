@@ -29,6 +29,8 @@ import {
   PaymentTypeToJSON,
   PaymentTypeToJSONTyped,
 } from './PaymentType'
+import type { Team } from './Team'
+import { TeamFromJSON, TeamFromJSONTyped, TeamToJSON, TeamToJSONTyped } from './Team'
 
 /**
  *
@@ -50,10 +52,22 @@ export interface EmployeePayment {
   expense?: CrupdateExpenseMoney
   /**
    *
-   * @type {User}
+   * @type {Array<User>}
    * @memberof EmployeePayment
    */
-  employee?: User
+  users?: Array<User>
+  /**
+   *
+   * @type {boolean}
+   * @memberof EmployeePayment
+   */
+  is_for_team?: boolean
+  /**
+   *
+   * @type {Team}
+   * @memberof EmployeePayment
+   */
+  team?: Team
   /**
    *
    * @type {string}
@@ -89,7 +103,9 @@ export function EmployeePaymentFromJSONTyped(
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
-    employee: json['employee'] == null ? undefined : UserFromJSON(json['employee']),
+    users: json['users'] == null ? undefined : (json['users'] as Array<any>).map(UserFromJSON),
+    is_for_team: json['is_for_team'] == null ? undefined : json['is_for_team'],
+    team: json['team'] == null ? undefined : TeamFromJSON(json['team']),
     payment_description:
       json['payment_description'] == null ? undefined : json['payment_description'],
     payment_type:
@@ -112,7 +128,9 @@ export function EmployeePaymentToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
-    employee: UserToJSON(value['employee']),
+    users: value['users'] == null ? undefined : (value['users'] as Array<any>).map(UserToJSON),
+    is_for_team: value['is_for_team'],
+    team: TeamToJSON(value['team']),
     payment_description: value['payment_description'],
     payment_type: PaymentTypeToJSON(value['payment_type']),
   }

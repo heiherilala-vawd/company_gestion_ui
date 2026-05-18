@@ -41,6 +41,9 @@ import {
   loansActiveMock,
   loansDefaultedMock,
   materialWarehousesMock,
+  otherExpenseType1Mock,
+  otherExpenseTypesMock,
+  teamsMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -169,6 +172,14 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/material_warehouse*', mockSuccessResponse(materialWarehousesMock)).as(
     'getMaterialWarehouses',
   )
+
+  // ---------------------- OTHER EXPENSE TYPES ------------------------------------------
+  cy.intercept('GET', '**/other_expense_types*', mockSuccessResponse(otherExpenseTypesMock)).as(
+    'getOtherExpenseTypes',
+  )
+
+  // ---------------------- TEAMS ------------------------------------------
+  cy.intercept('GET', '**/teams*', mockSuccessResponse(teamsMock)).as('getTeams')
 
   // ---------------------- SPA ROUTE PASSTHROUGH (evite que les patterns glob attrapent les routes SPA) --------
   const spaRoutes = [
@@ -300,5 +311,13 @@ export function selectIncomeType(menuId: string | null): void {
     'input-income_types-id',
     menuId ? menuId : 'income_type',
     <string>incomesType1.name,
+  )
+}
+
+export function selectOtherExpenseType(menuId: string | null): void {
+  selectReferenceWithCreate(
+    'input-other_expense_types-id',
+    menuId ? menuId : 'other_expense_type_id',
+    <string>otherExpenseType1Mock.name,
   )
 }

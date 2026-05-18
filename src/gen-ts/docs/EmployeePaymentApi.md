@@ -41,7 +41,7 @@ async function example() {
       {
         id: 'emp_pay_001',
         expense: { id: 'exp_004', amount: 5000, job_id: 'job_004' },
-        employee_id: 'usr_123456',
+        user_ids: ['usr_123456'],
         payment_description: 'Salaire février 2024 + prime',
         payment_type: 'MONTHLY',
       },
@@ -253,7 +253,7 @@ example().catch(console.error)
 
 ## getEmployeePayments
 
-> Array&lt;EmployeePayment&gt; getEmployeePayments(compId, jobId, userId, page, pageSize, employeeId, paymentDescription, paymentType)
+> Array&lt;EmployeePayment&gt; getEmployeePayments(compId, jobId, userId, page, pageSize, userIds, paymentDescription, paymentType)
 
 Get all employee payments
 
@@ -282,8 +282,8 @@ async function example() {
     page: 1,
     // number (optional)
     pageSize: 20,
-    // string (optional)
-    employeeId: usr_123456,
+    // Array<string> | Filter by user IDs (comma-separated) (optional)
+    userIds: usr_123456,
     // string | Filter employee payments by description, case is ignored (optional)
     paymentDescription: salaire,
     // PaymentType (optional)
@@ -304,16 +304,16 @@ example().catch(console.error)
 
 ### Parameters
 
-| Name                   | Type          | Description                                              | Notes                                                                |
-| ---------------------- | ------------- | -------------------------------------------------------- | -------------------------------------------------------------------- |
-| **compId**             | `string`      |                                                          | [Defaults to `undefined`]                                            |
-| **jobId**              | `string`      |                                                          | [Defaults to `undefined`]                                            |
-| **userId**             | `string`      |                                                          | [Defaults to `undefined`]                                            |
-| **page**               | `number`      |                                                          | [Optional] [Defaults to `undefined`]                                 |
-| **pageSize**           | `number`      |                                                          | [Optional] [Defaults to `undefined`]                                 |
-| **employeeId**         | `string`      |                                                          | [Optional] [Defaults to `undefined`]                                 |
-| **paymentDescription** | `string`      | Filter employee payments by description, case is ignored | [Optional] [Defaults to `undefined`]                                 |
-| **paymentType**        | `PaymentType` |                                                          | [Optional] [Defaults to `undefined`] [Enum: ADVANCE, MONTHLY, OTHER] |
+| Name                   | Type            | Description                                              | Notes                                                                |
+| ---------------------- | --------------- | -------------------------------------------------------- | -------------------------------------------------------------------- |
+| **compId**             | `string`        |                                                          | [Defaults to `undefined`]                                            |
+| **jobId**              | `string`        |                                                          | [Defaults to `undefined`]                                            |
+| **userId**             | `string`        |                                                          | [Defaults to `undefined`]                                            |
+| **page**               | `number`        |                                                          | [Optional] [Defaults to `undefined`]                                 |
+| **pageSize**           | `number`        |                                                          | [Optional] [Defaults to `undefined`]                                 |
+| **userIds**            | `Array<string>` | Filter by user IDs (comma-separated)                     | [Optional]                                                           |
+| **paymentDescription** | `string`        | Filter employee payments by description, case is ignored | [Optional] [Defaults to `undefined`]                                 |
+| **paymentType**        | `PaymentType`   |                                                          | [Optional] [Defaults to `undefined`] [Enum: ADVANCE, MONTHLY, OTHER] |
 
 ### Return type
 

@@ -6,6 +6,7 @@ import {
   SearchInput,
   TextInput,
   BooleanInput,
+  BooleanField,
   ReferenceInput,
   SelectInput,
   FunctionField,
@@ -23,6 +24,7 @@ const EquipmentFilters = [
   <TextInput source="floor_number" label="N° étage" />,
   <TextInput source="storage_number" label="N° rangement" />,
   <BooleanInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="est_en_panne" label="Hors d'usage" />,
 ]
 
 export default function EquipmentList() {
@@ -36,6 +38,7 @@ export default function EquipmentList() {
         <TextField source="warehouse.name" label="Entrepôt" />
         <NumberField source="floor_number" label="Étage" />
         <NumberField source="storage_number" label="Emplacement" />
+        <BooleanField source="est_en_panne" label="Hors d'usage" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

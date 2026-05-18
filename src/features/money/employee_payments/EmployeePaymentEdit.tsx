@@ -7,11 +7,10 @@ export default function EmployeePaymentEdit() {
     <Edit
       redirect="list"
       queryOptions={{
-        // Intercepter et modifier les données après le fetch
         select: (data) => ({
           ...data,
-          // Ajouter des champs calculés
-          employee_id: data.employee?.id,
+          employee_id: data.users?.[0]?.id,
+          is_for_team: data.is_for_team || false,
         }),
       }}
     >

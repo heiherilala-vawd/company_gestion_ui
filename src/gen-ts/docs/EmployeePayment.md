@@ -6,7 +6,9 @@
 | --------------------- | ----------------------------------------------- |
 | `id`                  | string                                          |
 | `expense`             | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `employee`            | [User](User.md)                                 |
+| `users`               | [Array&lt;User&gt;](User.md)                    |
+| `is_for_team`         | boolean                                         |
+| `team`                | [Team](Team.md)                                 |
 | `payment_description` | string                                          |
 | `payment_type`        | [PaymentType](PaymentType.md)                   |
 
@@ -19,7 +21,9 @@ import type { EmployeePayment } from 'api-client'
 const example = {
   "id": emp_pay_001,
   "expense": null,
-  "employee": null,
+  "users": null,
+  "is_for_team": false,
+  "team": null,
   "payment_description": Salaire février 2024,
   "payment_type": null,
 } satisfies EmployeePayment

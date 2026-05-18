@@ -14,11 +14,6 @@ import {
   TableRow,
   TablePagination,
   TextField,
-  Checkbox,
-  Select,
-  MenuItem,
-  InputLabel,
-  FormControl,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -223,26 +218,38 @@ export default function TravelMaterialActivity() {
       </Typography>
 
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', mb: 2 }}>
-        <FormControl size="small" sx={{ minWidth: 200 }}>
-          <InputLabel>Lieu de réception</InputLabel>
-          <Select
+        <Box sx={{ minWidth: 200 }}>
+          <Typography variant="body2" sx={{ mb: 0.5, fontWeight: 500, color: 'text.secondary' }}>
+            Lieu de réception
+          </Typography>
+          <select
             value={selectedLocation}
-            label="Lieu de réception"
             onChange={(e) => setSelectedLocation(e.target.value)}
+            data-testid="warehouse-select"
+            style={{
+              width: '100%',
+              padding: '8px',
+              fontSize: '0.875rem',
+              borderRadius: '4px',
+              border: '1px solid #bdbdbd',
+              background: '#fff',
+            }}
           >
-            <MenuItem value="">
-              <em>Aucun</em>
-            </MenuItem>
+            <option value="">Aucun</option>
             {warehouses.map((w: any) => (
-              <MenuItem key={w.id} value={w.id}>
+              <option key={w.id} value={w.id}>
                 {w.name}
-              </MenuItem>
+              </option>
             ))}
-          </Select>
-        </FormControl>
+          </select>
+        </Box>
         <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange}>
-          <ToggleButton value="materials">Matériaux</ToggleButton>
-          <ToggleButton value="equipment">Équipement</ToggleButton>
+          <ToggleButton value="materials" data-testid="toggle-materials">
+            Matériaux
+          </ToggleButton>
+          <ToggleButton value="equipment" data-testid="toggle-equipment">
+            Équipement
+          </ToggleButton>
         </ToggleButtonGroup>
       </Box>
 
@@ -337,10 +344,16 @@ export default function TravelMaterialActivity() {
                     hover
                     selected={selectedItems.some((i) => i.id === item.id)}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
+                    <TableCell
+                      padding="checkbox"
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => toggleSelect(item)}
+                    >
+                      <input
+                        type="checkbox"
                         checked={selectedItems.some((i) => i.id === item.id)}
                         onChange={() => toggleSelect(item)}
+                        data-testid={'checkbox-' + item.id}
                       />
                     </TableCell>
                     {entityType === 'materials' ? (

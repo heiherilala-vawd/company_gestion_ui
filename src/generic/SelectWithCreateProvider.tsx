@@ -10,6 +10,7 @@ import WarehouseForm from '../features/storage/warehouses/WarehouseForm.tsx'
 import CompanyForm from '../features/transversal/companies/CompanyForm.tsx'
 import UserForm from '../features/transversal/usersSetup/UserForm.tsx'
 import IncomeTypeForm from '../features/money/incomeType/IncomeTypeForm.tsx'
+import OtherExpenseTypeForm from '../features/money/otherExpenseType/OtherExpenseTypeForm.tsx'
 
 export const renderTravelExpenseSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
@@ -107,5 +108,16 @@ export const renderWarehouseSelect = (source: any, label: any) => (
     optionText="name"
     createUrlEnd={getMiddleUrl('warehouses')}
     createForm={<WarehouseForm isCreateForm />}
+  />
+)
+
+export const renderOtherExpenseTypeSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'other_expense_type_id'}
+    reference="other_expense_types"
+    label={label ? label : "Type d'autre dépense"}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('other_expense_types')}
+    createForm={<OtherExpenseTypeForm isCreateForm />}
   />
 )
