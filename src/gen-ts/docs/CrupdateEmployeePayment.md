@@ -6,7 +6,9 @@
 | --------------------- | ----------------------------------------------- |
 | `id`                  | string                                          |
 | `expense`             | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `employee_id`         | string                                          |
+| `user_ids`            | Array&lt;string&gt;                             |
+| `is_for_team`         | boolean                                         |
+| `team_id`             | string                                          |
 | `payment_description` | string                                          |
 | `payment_type`        | [PaymentType](PaymentType.md)                   |
 
@@ -19,7 +21,9 @@ import type { CrupdateEmployeePayment } from 'api-client'
 const example = {
   "id": emp_pay_001,
   "expense": null,
-  "employee_id": usr_123456,
+  "user_ids": ["usr_123456"],
+  "is_for_team": false,
+  "team_id": team_001,
   "payment_description": Salaire février 2024,
   "payment_type": null,
 } satisfies CrupdateEmployeePayment

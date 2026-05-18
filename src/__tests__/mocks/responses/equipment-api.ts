@@ -11,6 +11,7 @@ export const equipment1Mock: Equipment = {
   floor_number: 1,
   storage_number: 101,
   comment: 'Main excavator',
+  est_en_panne: false,
   created_at: '2022-02-01T08:00:00Z',
   updated_at: '2022-05-15T10:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
@@ -25,6 +26,7 @@ export const equipment2Mock: Equipment = {
   floor_number: 2,
   storage_number: 205,
   comment: 'Concrete preparation',
+  est_en_panne: false,
   created_at: '2022-02-15T09:00:00Z',
   updated_at: '2022-04-20T14:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
@@ -42,6 +44,7 @@ export const crupdateEquipmentMock: CrupdateEquipment[] = [
     floor_number: 1,
     storage_number: 102,
     comment: 'Relocated equipment',
+    est_en_panne: false,
   },
   {
     id: 'eq3_id',
@@ -51,6 +54,7 @@ export const crupdateEquipmentMock: CrupdateEquipment[] = [
     floor_number: 1,
     storage_number: 103,
     comment: 'New equipment addition',
+    est_en_panne: false,
   },
 ]
 
@@ -65,6 +69,7 @@ export const createOrUpdateEquipments = (equipment: CrupdateEquipment[]): Equipm
       job_id: warehouse1Mock.job?.id,
       comment: warehouse1Mock.comment,
     },
+    est_en_panne: eq.est_en_panne || false,
     created_at: eq.id ? equipment1Mock.created_at : new Date().toISOString(),
     updated_at: new Date().toISOString(),
     created_by: toAuditUserMapper(user1Mock),

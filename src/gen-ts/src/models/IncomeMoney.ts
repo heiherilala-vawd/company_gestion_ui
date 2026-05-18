@@ -115,6 +115,12 @@ export interface IncomeMoney {
    */
   billing_start_date?: Date
   /**
+   * Date when the client started providing the invoice
+   * @type {Date}
+   * @memberof IncomeMoney
+   */
+  facturation_date?: Date
+  /**
    * Job this income is related to
    * @type {CrupdateJob}
    * @memberof IncomeMoney
@@ -169,6 +175,8 @@ export function IncomeMoneyFromJSONTyped(json: any, ignoreDiscriminator: boolean
     invoice_reference: json['invoice_reference'] == null ? undefined : json['invoice_reference'],
     billing_start_date:
       json['billing_start_date'] == null ? undefined : new Date(json['billing_start_date']),
+    facturation_date:
+      json['facturation_date'] == null ? undefined : new Date(json['facturation_date']),
     job: json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
     income_type: json['income_type'] == null ? undefined : IncomeTypeFromJSON(json['income_type']),
     receipts:
@@ -208,6 +216,10 @@ export function IncomeMoneyToJSONTyped(
       value['billing_start_date'] == null
         ? value['billing_start_date']
         : value['billing_start_date'].toISOString().substring(0, 10),
+    facturation_date:
+      value['facturation_date'] == null
+        ? value['facturation_date']
+        : value['facturation_date'].toISOString(),
     job: CrupdateJobToJSON(value['job']),
     income_type: IncomeTypeToJSON(value['income_type']),
     receipts:

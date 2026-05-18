@@ -1,4 +1,4 @@
-import { required, TextInput, NumberInput } from 'react-admin'
+import { required, TextInput, NumberInput, BooleanInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderWarehouseSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
@@ -29,6 +29,7 @@ export default function EquipmentForm({ isCreate = false, isCreateForm = false }
         <NumberInput source="floor_number" label="Étage" />
       </div>
       <NumberInput source="storage_number" label="Emplacement" data-testid="input-storage_number" />
+      <BooleanInput source="est_en_panne" label="Hors d'usage" data-testid="input-est_en_panne" />
     </>
   )
 }

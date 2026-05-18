@@ -48,10 +48,22 @@ export interface CrupdateEmployeePayment {
   expense?: CrupdateExpenseMoney
   /**
    *
+   * @type {Array<string>}
+   * @memberof CrupdateEmployeePayment
+   */
+  user_ids?: Array<string>
+  /**
+   *
+   * @type {boolean}
+   * @memberof CrupdateEmployeePayment
+   */
+  is_for_team?: boolean
+  /**
+   *
    * @type {string}
    * @memberof CrupdateEmployeePayment
    */
-  employee_id?: string
+  team_id?: string
   /**
    *
    * @type {string}
@@ -87,7 +99,9 @@ export function CrupdateEmployeePaymentFromJSONTyped(
   return {
     id: json['id'] == null ? undefined : json['id'],
     expense: json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
-    employee_id: json['employee_id'] == null ? undefined : json['employee_id'],
+    user_ids: json['user_ids'] == null ? undefined : json['user_ids'],
+    is_for_team: json['is_for_team'] == null ? undefined : json['is_for_team'],
+    team_id: json['team_id'] == null ? undefined : json['team_id'],
     payment_description:
       json['payment_description'] == null ? undefined : json['payment_description'],
     payment_type:
@@ -110,7 +124,9 @@ export function CrupdateEmployeePaymentToJSONTyped(
   return {
     id: value['id'],
     expense: CrupdateExpenseMoneyToJSON(value['expense']),
-    employee_id: value['employee_id'],
+    user_ids: value['user_ids'],
+    is_for_team: value['is_for_team'],
+    team_id: value['team_id'],
     payment_description: value['payment_description'],
     payment_type: PaymentTypeToJSON(value['payment_type']),
   }

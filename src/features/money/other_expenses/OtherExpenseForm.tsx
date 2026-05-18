@@ -2,6 +2,7 @@ import { TextInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { Typography } from '@mui/material'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
+import { renderOtherExpenseTypeSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import React from 'react'
 
 // eslint-disable-next-line react/prop-types
@@ -20,6 +21,7 @@ export default function OtherExpenseForm({ isCreate = false, isCreateForm = fals
         />
       )}{' '}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {renderOtherExpenseTypeSelect('other_expense_type_id', "Type d'autre dépense")}
       <TextInput
         source="description"
         label="Description"

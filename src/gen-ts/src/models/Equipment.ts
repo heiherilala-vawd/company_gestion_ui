@@ -27,6 +27,13 @@ import {
   CrupdateWarehouseToJSON,
   CrupdateWarehouseToJSONTyped,
 } from './CrupdateWarehouse'
+import type { Maintenance } from './Maintenance'
+import {
+  MaintenanceFromJSON,
+  MaintenanceFromJSONTyped,
+  MaintenanceToJSON,
+  MaintenanceToJSONTyped,
+} from './Maintenance'
 
 /**
  *
@@ -100,6 +107,18 @@ export interface Equipment {
    * @memberof Equipment
    */
   storage_number?: number
+  /**
+   * Whether the equipment is broken
+   * @type {boolean}
+   * @memberof Equipment
+   */
+  est_en_panne?: boolean
+  /**
+   * Maintenance records for this equipment
+   * @type {Array<Maintenance>}
+   * @memberof Equipment
+   */
+  maintenances?: Array<Maintenance>
 }
 
 /**
@@ -129,6 +148,11 @@ export function EquipmentFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     warehouse: json['warehouse'] == null ? undefined : CrupdateWarehouseFromJSON(json['warehouse']),
     floor_number: json['floor_number'] == null ? undefined : json['floor_number'],
     storage_number: json['storage_number'] == null ? undefined : json['storage_number'],
+    est_en_panne: json['est_en_panne'] == null ? undefined : json['est_en_panne'],
+    maintenances:
+      json['maintenances'] == null
+        ? undefined
+        : (json['maintenances'] as Array<any>).map(MaintenanceFromJSON),
   }
 }
 
@@ -158,5 +182,10 @@ export function EquipmentToJSONTyped(
     warehouse: CrupdateWarehouseToJSON(value['warehouse']),
     floor_number: value['floor_number'],
     storage_number: value['storage_number'],
+    est_en_panne: value['est_en_panne'],
+    maintenances:
+      value['maintenances'] == null
+        ? undefined
+        : (value['maintenances'] as Array<any>).map(MaintenanceToJSON),
   }
 }

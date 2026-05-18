@@ -6,10 +6,20 @@ export default function EmployeePaymentCreate() {
   return (
     <Create
       redirect="list"
-      transform={(data) => ({
-        ...data,
-        expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
-      })}
+      transform={(data) => {
+        const transformed: any = {
+          ...data,
+          expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
+        }
+        if (data.is_for_team) {
+          transformed.user_ids = []
+          delete transformed.employee_id
+        } else {
+          transformed.user_ids = data.employee_id ? [data.employee_id] : []
+          delete transformed.employee_id
+        }
+        return transformed
+      }}
     >
       <SimpleForm toolbar={<FormToolbar />}>
         <EmployeePaymentForm isCreate />

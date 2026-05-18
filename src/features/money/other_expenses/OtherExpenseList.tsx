@@ -17,6 +17,7 @@ export default function OtherExpenseList() {
       <ResponsiveDatagrid priorityFields={['expense.amount', 'description']}>
         <TextField source="expense.amount" label="Montant" />
         <TextField source="description" label="Description" />
+        <TextField source="other_expense_type.name" label="Type" />
         <TextField source="expense.comment" label="Commentaire" />
         <EditButton />
       </ResponsiveDatagrid>

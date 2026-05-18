@@ -61,6 +61,12 @@ export interface CrupdateEquipment {
    * @memberof CrupdateEquipment
    */
   storage_number?: number
+  /**
+   * Whether the equipment is broken
+   * @type {boolean}
+   * @memberof CrupdateEquipment
+   */
+  est_en_panne?: boolean
 }
 
 /**
@@ -89,6 +95,7 @@ export function CrupdateEquipmentFromJSONTyped(
     warehouse_id: json['warehouse_id'] == null ? undefined : json['warehouse_id'],
     floor_number: json['floor_number'] == null ? undefined : json['floor_number'],
     storage_number: json['storage_number'] == null ? undefined : json['storage_number'],
+    est_en_panne: json['est_en_panne'] == null ? undefined : json['est_en_panne'],
   }
 }
 
@@ -112,5 +119,6 @@ export function CrupdateEquipmentToJSONTyped(
     warehouse_id: value['warehouse_id'],
     floor_number: value['floor_number'],
     storage_number: value['storage_number'],
+    est_en_panne: value['est_en_panne'],
   }
 }

@@ -9,6 +9,7 @@ import {
   DeleteButton,
   DateField,
   FunctionField,
+  BooleanField,
 } from 'react-admin'
 import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
@@ -28,17 +29,15 @@ const EmployerPaymentFilters = [
 export default function EmployeePaymentList() {
   return (
     <List resource="employee_payments" filters={EmployerPaymentFilters} perPage={25}>
-      <ResponsiveDatagrid
-        priorityFields={[
-          'expense.amount',
-          'employee.first_name',
-          'employee.last_name',
-          'payment_type',
-        ]}
-      >
+      <ResponsiveDatagrid priorityFields={['expense.amount', 'users.0.first_name', 'payment_type']}>
         <TextField source="expense.amount" label="Montant" />
-        <TextField source="employee.first_name" label="Prénom" />
-        <TextField source="employee.last_name" label="Nom" />
+        <FunctionField
+          label="Employés"
+          render={(record: any) =>
+            record.users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') || ''
+          }
+        />
+        <BooleanField source="is_for_team" label="Équipe" />
         <SelectField
           source="payment_type"
           label="Type"

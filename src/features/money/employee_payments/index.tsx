@@ -10,5 +10,5 @@ export default {
   edit: EmployeePaymentEdit,
   show: EmployeePaymentShow,
   icon: PaymentsIcon,
-  recordRepresentation: (record: any) => `${record.employee_id} - ${record.payment_description}`,
+  recordRepresentation: (record: any) => `${record.payment_description}`,
 }

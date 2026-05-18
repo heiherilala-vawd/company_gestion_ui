@@ -8,6 +8,7 @@ export default function OtherExpenseShow() {
         <TextField source="expense.amount" label="Montant" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
+        <TextField source="other_expense_type.name" label="Type de dépense" />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />

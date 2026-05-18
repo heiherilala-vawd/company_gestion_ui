@@ -4,6 +4,7 @@ import {
   TextField,
   SelectField,
   DateField,
+  BooleanField,
   FunctionField,
 } from 'react-admin'
 
@@ -15,8 +16,14 @@ export default function EmployeePaymentShow() {
         <TextField source="expense.amount" label="Pris dépense" />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
-        <TextField source="employee.first_name" label="Nom persone" />
-        <TextField source="employee.last_name" label="Prénomm persone" />
+        <BooleanField source="is_for_team" label="Paiement pour équipe" />
+        <FunctionField
+          label="Employés"
+          render={(record: any) =>
+            record.users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') || ''
+          }
+        />
+        <TextField source="team.name" label="Équipe" />
         <TextField source="payment_description" label="Description" />
         <SelectField
           source="payment_type"
@@ -29,7 +36,6 @@ export default function EmployeePaymentShow() {
         />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
-        {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"
           render={(record) => (
@@ -38,8 +44,6 @@ export default function EmployeePaymentShow() {
             </span>
           )}
         />
-
-        {/* Nom complet du modificateur */}
         <FunctionField
           label="Modifié par"
           render={(record) => (

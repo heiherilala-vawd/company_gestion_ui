@@ -82,6 +82,7 @@ export function toCrupdateEquipmentMapper(equipment: Equipment): CrupdateEquipme
     floor_number: equipment.floor_number,
     storage_number: equipment.storage_number,
     comment: equipment.comment,
+    est_en_panne: equipment.est_en_panne,
   }
 }
 
@@ -187,7 +188,9 @@ export function toCrupdateEmployeePaymentMapper(ep: EmployeePayment): CrupdateEm
   return {
     id: ep?.id,
     expense: ep.expense,
-    employee_id: ep.employee?.id,
+    user_ids: ep.users?.map((u: any) => u.id),
+    is_for_team: ep.is_for_team,
+    team_id: ep.team?.id,
     payment_description: ep.payment_description,
     payment_type: ep.payment_type,
   }
@@ -218,6 +221,7 @@ export function toCrupdateOtherExpenseMapper(oe: OtherExpense): CrupdateOtherExp
   return {
     id: oe?.id,
     expense: oe.expense,
+    other_expense_type_id: oe.other_expense_type?.id,
     description: oe.description,
   }
 }

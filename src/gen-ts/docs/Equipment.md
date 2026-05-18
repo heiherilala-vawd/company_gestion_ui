@@ -2,19 +2,21 @@
 
 ## Properties
 
-| Name             | Type                                      |
-| ---------------- | ----------------------------------------- |
-| `comment`        | string                                    |
-| `created_at`     | Date                                      |
-| `updated_at`     | Date                                      |
-| `created_by`     | [AuditUser](AuditUser.md)                 |
-| `updated_by`     | [AuditUser](AuditUser.md)                 |
-| `id`             | string                                    |
-| `name`           | string                                    |
-| `description`    | string                                    |
-| `warehouse`      | [CrupdateWarehouse](CrupdateWarehouse.md) |
-| `floor_number`   | number                                    |
-| `storage_number` | number                                    |
+| Name             | Type                                       |
+| ---------------- | ------------------------------------------ |
+| `comment`        | string                                     |
+| `created_at`     | Date                                       |
+| `updated_at`     | Date                                       |
+| `created_by`     | [AuditUser](AuditUser.md)                  |
+| `updated_by`     | [AuditUser](AuditUser.md)                  |
+| `id`             | string                                     |
+| `name`           | string                                     |
+| `description`    | string                                     |
+| `warehouse`      | [CrupdateWarehouse](CrupdateWarehouse.md)  |
+| `floor_number`   | number                                     |
+| `storage_number` | number                                     |
+| `est_en_panne`   | boolean                                    |
+| `maintenances`   | [Array&lt;Maintenance&gt;](Maintenance.md) |
 
 ## Example
 
@@ -34,6 +36,8 @@ const example = {
   "warehouse": null,
   "floor_number": 1,
   "storage_number": 5,
+  "est_en_panne": false,
+  "maintenances": null,
 } satisfies Equipment
 
 console.log(example)
