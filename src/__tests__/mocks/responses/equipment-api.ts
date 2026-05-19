@@ -58,6 +58,8 @@ export const crupdateEquipmentMock: CrupdateEquipment[] = [
   },
 ]
 
+export const maintenanceResponseMock = { success: true }
+
 export const createOrUpdateEquipments = (equipment: CrupdateEquipment[]): Equipment[] => {
   return equipment.map((eq) => ({
     ...eq,

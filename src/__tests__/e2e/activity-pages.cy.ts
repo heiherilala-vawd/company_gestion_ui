@@ -8,11 +8,11 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectEmployee,
   selectEnumType,
   selectIncomeType,
   selectMaterial,
 } from '../support/utils.ts'
+import { user1Mock } from '../mocks/responses/users-api.ts'
 import { materialWarehouse1Mock } from '../mocks/responses/material-warehouse-api'
 import { warehouse1Mock } from '../mocks/responses/warehouses-api'
 import { material1Mock } from '../mocks/responses/materials-api'
@@ -225,7 +225,8 @@ describe('E2E: Activity Pages', () => {
 
     cy.contains('Paiement salarié').scrollIntoView().click({ force: true })
     cy.wait(300)
-    selectEmployee()
+    cy.get(`[data-testid="employee-item-${user1Mock.id}"]`).click()
+    cy.get('[data-testid="payer-button"]').click()
     cy.get('[data-testid="input-payment_description"] textarea:visible').clear().type('Test salary')
     selectEnumType('input-payment_type', 'Mensuel')
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')

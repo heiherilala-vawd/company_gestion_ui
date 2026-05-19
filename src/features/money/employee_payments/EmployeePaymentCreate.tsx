@@ -12,10 +12,10 @@ export default function EmployeePaymentCreate() {
           expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
         }
         if (data.is_for_team) {
-          transformed.user_ids = []
+          transformed.user_ids = data.user_ids || []
           delete transformed.employee_id
         } else {
-          transformed.user_ids = data.employee_id ? [data.employee_id] : []
+          transformed.user_ids = data.user_ids || []
           delete transformed.employee_id
         }
         return transformed
