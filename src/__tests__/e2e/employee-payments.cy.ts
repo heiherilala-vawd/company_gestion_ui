@@ -9,22 +9,23 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectEmployee,
   selectJob,
   selectEnumType,
 } from '../support/utils.ts'
+import { user2Mock } from '../mocks/responses/users-api.ts'
 
 describe('E2E: Employee Payments', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateEmployeePaymentsMock[0]
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
+      cy.get(`[data-testid="employee-item-${user2Mock.id}"]`).click()
+      cy.get('[data-testid="payer-button"]').click()
     } else {
       cy.contains(<string>employeePayment1Mock.users[0].first_name).click()
       cy.wait('@getEmployeePayment')
       cy.get('.RaEditButton-root').click()
     }
-    selectEmployee()
     cy.get('[data-testid="input-payment_description"] textarea:visible')
       .first()
       .clear()

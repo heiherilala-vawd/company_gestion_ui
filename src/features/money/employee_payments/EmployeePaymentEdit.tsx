@@ -9,7 +9,7 @@ export default function EmployeePaymentEdit() {
       queryOptions={{
         select: (data) => ({
           ...data,
-          employee_id: data.users?.[0]?.id,
+          user_ids: data.users?.map((u: any) => u.id) || [],
           is_for_team: data.is_for_team || false,
         }),
       }}

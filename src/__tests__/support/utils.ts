@@ -5,6 +5,7 @@ import {
   companiesMock,
   employeePayment1Mock,
   equipment1Mock,
+  maintenanceResponseMock,
   expense1Mock,
   income1Mock,
   job1Mock,
@@ -84,6 +85,12 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/equipment/eq1_id*', mockSuccessResponse(equipment1Mock)).as(
     'getEquipment',
   )
+
+  cy.intercept(
+    'PUT',
+    '**/equipment/*/maintenances',
+    mockSuccessResponse(maintenanceResponseMock),
+  ).as('maintenance')
 
   // ---------------------- EXPENSE ------------------------------------------
   cy.intercept('GET', '**/expenses*', mockSuccessResponse(expensesMock)).as('getExpenses')

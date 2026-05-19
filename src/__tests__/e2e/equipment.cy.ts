@@ -134,6 +134,23 @@ describe('E2E: Equipment', () => {
     cy.get('.RaNotification-error').should('be.visible')
   })
 
+  function canMaintain(isComputerView: boolean) {
+    if (isComputerView) navigateToDesktop()
+    else navigateToMobile()
+    cy.contains(<string>equipment1Mock.name).click()
+    cy.wait('@getEquipment')
+    cy.get('[data-testid="maintenance-button"]').click()
+    cy.get('[data-testid="input-maintenance-description"]').type('Oil change')
+    cy.get('[data-testid="input-maintenance-amount"]').type('150')
+    cy.get('[data-testid="input-maintenance-comment"]').type('Routine maintenance')
+    cy.contains('button', "Effectuer l'entretien").click()
+    cy.wait('@maintenance')
+    cy.get('[data-testid="maintenance-button"]').should('be.visible')
+  }
+
+  it('should maintain equipment on desktop', () => canMaintain(true))
+  it('should maintain equipment on mobile', () => canMaintain(false))
+
   it('should display equipment list on mobile', () => showList(false))
   it('should show equipment details on mobile', () => showDetails(false))
   it('should create a new equipment on mobile', () => canCreate(false))

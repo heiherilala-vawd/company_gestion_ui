@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogActions,
   TextField as MuiTextField,
+  Button as MuiButton,
 } from '@mui/material'
 import BuildIcon from '@mui/icons-material/Build'
 import { getMiddleUrlDynamicJobResource } from '../../../config/dynamicResources'
@@ -119,20 +120,23 @@ function MaintenanceButton() {
   const [open, setOpen] = useState(false)
   return (
     <>
-      <Button
-        label="Entretien"
+      <MuiButton
+        variant="contained"
         startIcon={<BuildIcon />}
         onClick={() => setOpen(true)}
         sx={{ mt: 2 }}
-      />
+        data-testid="maintenance-button"
+      >
+        Maintenir
+      </MuiButton>
       <MaintenanceDialog open={open} onClose={() => setOpen(false)} equipmentId={record?.id} />
     </>
   )
 }
 
-export default function EquipmentShow() {
+function ShowContent() {
   return (
-    <Show title="Détails équipement">
+    <>
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />
@@ -160,8 +164,16 @@ export default function EquipmentShow() {
             </span>
           )}
         />
-        <MaintenanceButton />
       </SimpleShowLayout>
+      <MaintenanceButton />
+    </>
+  )
+}
+
+export default function EquipmentShow() {
+  return (
+    <Show title="Détails équipement">
+      <ShowContent />
     </Show>
   )
 }

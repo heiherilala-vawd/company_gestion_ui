@@ -121,3 +121,12 @@ export const renderOtherExpenseTypeSelect = (source: any, label: any) => (
     createForm={<OtherExpenseTypeForm isCreateForm />}
   />
 )
+
+export const renderEquipeSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'team_id'}
+    reference="teams"
+    label={label ? label : 'Équipe'}
+    optionText="name"
+  />
+)
