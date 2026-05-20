@@ -183,6 +183,44 @@ export const menuStyles = {
     borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
   } as const,
 
+  sectionHeaderPurple: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    color: (theme: Theme) => (theme.palette.mode === 'light' ? '#1a1a2e' : '#fff'),
+    fontSize: '0.75rem',
+    fontWeight: 700,
+    letterSpacing: '1.5px',
+    py: 0.75,
+    px: 2,
+    mb: 0.75,
+    mx: 1,
+    mt: 1.5,
+    borderLeft: '3px solid #9C27B0',
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(156, 39, 176, 0.08)' : 'rgba(156, 39, 176, 0.15)',
+    borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
+  } as const,
+
+  sectionHeaderOrange: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    color: (theme: Theme) => (theme.palette.mode === 'light' ? '#1a1a2e' : '#fff'),
+    fontSize: '0.75rem',
+    fontWeight: 700,
+    letterSpacing: '1.5px',
+    py: 0.75,
+    px: 2,
+    mb: 0.75,
+    mx: 1,
+    mt: 1.5,
+    borderLeft: '3px solid #FB8C00',
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? 'rgba(251, 140, 0, 0.08)' : 'rgba(251, 140, 0, 0.15)',
+    borderRadius: `0 ${br.xs}px ${br.xs}px 0`,
+  } as const,
+
   listItem: {
     borderRadius: br.sm,
     mx: 1,

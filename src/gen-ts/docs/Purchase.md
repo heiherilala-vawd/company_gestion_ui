@@ -11,6 +11,9 @@
 | `material`     | [CrupdateMaterial](CrupdateMaterial.md)         |
 | `quantity`     | number                                          |
 | `is_equipment` | boolean                                         |
+| `invoice_date` | Date                                            |
+| `due_date`     | Date                                            |
+| `paid_at`      | Date                                            |
 
 ## Example
 
@@ -19,13 +22,16 @@ import type { Purchase } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: purch_001,
-  expense: null,
-  supplier: null,
-  equipment: null,
-  material: null,
-  quantity: 200,
-  is_equipment: false,
+  "id": purch_001,
+  "expense": null,
+  "supplier": null,
+  "equipment": null,
+  "material": null,
+  "quantity": 200,
+  "is_equipment": false,
+  "invoice_date": Mon Jan 15 03:00:00 EAT 2024,
+  "due_date": Thu Feb 15 03:00:00 EAT 2024,
+  "paid_at": Sat Feb 10 03:00:00 EAT 2024,
 } satisfies Purchase
 
 console.log(example)

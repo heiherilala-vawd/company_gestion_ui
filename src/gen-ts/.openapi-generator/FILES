@@ -13,9 +13,13 @@ docs/BankFeeApi.md
 docs/Comment.md
 docs/Company.md
 docs/CompanyApi.md
+docs/CompanyFixedCost.md
+docs/CompanyFixedCostApi.md
 docs/CompanyType.md
 docs/CrupdateBankFee.md
 docs/CrupdateCompany.md
+docs/CrupdateCompanyFixedCost.md
+docs/CrupdateEmployeeLeaveConfig.md
 docs/CrupdateEmployeePayment.md
 docs/CrupdateEquipment.md
 docs/CrupdateExpenseMoney.md
@@ -23,6 +27,8 @@ docs/CrupdateIncomeMoney.md
 docs/CrupdateIncomeReceipt.md
 docs/CrupdateIncomeType.md
 docs/CrupdateJob.md
+docs/CrupdateLeave.md
+docs/CrupdateLeaveType.md
 docs/CrupdateLoan.md
 docs/CrupdateLoanRepayment.md
 docs/CrupdateMaintenance.md
@@ -39,6 +45,7 @@ docs/CrupdateTravelMaterials.md
 docs/CrupdateTravelPeople.md
 docs/CrupdateUser.md
 docs/CrupdateWarehouse.md
+docs/EmployeeLeaveConfig.md
 docs/EmployeePayment.md
 docs/EmployeePaymentApi.md
 docs/EntityType.md
@@ -46,6 +53,7 @@ docs/Equipment.md
 docs/EquipmentApi.md
 docs/ExpenseApi.md
 docs/ExpenseMoney.md
+docs/HRApi.md
 docs/History.md
 docs/HistoryApi.md
 docs/IncomeApi.md
@@ -59,6 +67,10 @@ docs/Job.md
 docs/JobApi.md
 docs/JobStatus.md
 docs/JobWithFinancials.md
+docs/Leave.md
+docs/LeaveBalance.md
+docs/LeaveStatus.md
+docs/LeaveType.md
 docs/Loan.md
 docs/LoanApi.md
 docs/LoanRepayment.md
@@ -119,9 +131,11 @@ package.json
 src/apis/AuthApi.ts
 src/apis/BankFeeApi.ts
 src/apis/CompanyApi.ts
+src/apis/CompanyFixedCostApi.ts
 src/apis/EmployeePaymentApi.ts
 src/apis/EquipmentApi.ts
 src/apis/ExpenseApi.ts
+src/apis/HRApi.ts
 src/apis/HistoryApi.ts
 src/apis/IncomeApi.ts
 src/apis/IncomeReceiptApi.ts
@@ -155,9 +169,12 @@ src/models/BadRequestException.ts
 src/models/BankFee.ts
 src/models/Comment.ts
 src/models/Company.ts
+src/models/CompanyFixedCost.ts
 src/models/CompanyType.ts
 src/models/CrupdateBankFee.ts
 src/models/CrupdateCompany.ts
+src/models/CrupdateCompanyFixedCost.ts
+src/models/CrupdateEmployeeLeaveConfig.ts
 src/models/CrupdateEmployeePayment.ts
 src/models/CrupdateEquipment.ts
 src/models/CrupdateExpenseMoney.ts
@@ -165,6 +182,8 @@ src/models/CrupdateIncomeMoney.ts
 src/models/CrupdateIncomeReceipt.ts
 src/models/CrupdateIncomeType.ts
 src/models/CrupdateJob.ts
+src/models/CrupdateLeave.ts
+src/models/CrupdateLeaveType.ts
 src/models/CrupdateLoan.ts
 src/models/CrupdateLoanRepayment.ts
 src/models/CrupdateMaintenance.ts
@@ -181,6 +200,7 @@ src/models/CrupdateTravelMaterials.ts
 src/models/CrupdateTravelPeople.ts
 src/models/CrupdateUser.ts
 src/models/CrupdateWarehouse.ts
+src/models/EmployeeLeaveConfig.ts
 src/models/EmployeePayment.ts
 src/models/EntityType.ts
 src/models/Equipment.ts
@@ -193,6 +213,10 @@ src/models/InternalServerException.ts
 src/models/Job.ts
 src/models/JobStatus.ts
 src/models/JobWithFinancials.ts
+src/models/Leave.ts
+src/models/LeaveBalance.ts
+src/models/LeaveStatus.ts
+src/models/LeaveType.ts
 src/models/Loan.ts
 src/models/LoanRepayment.ts
 src/models/LoanStatus.ts

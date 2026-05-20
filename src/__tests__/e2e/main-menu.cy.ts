@@ -12,18 +12,22 @@ describe('E2E: Main Menu and Selectors', () => {
     'Jobs',
     'Entreprises',
     'Utilisateurs',
+    'Salaires',
+    'Personnel',
     'Entrepôts',
-    'Équipements',
+    'Matériaux',
+    'Matériaux dépl.',
   ]
 
   const expectedMenuItemsPart2 = [
-    'Matériaux',
+    'Achats',
+    'Équipements',
+    'Équipement dépl.',
     'Dépenses',
     'Déplacements',
-    'Achats',
     'Frais bancaire',
     'Autres dépenses',
-    'Salaires',
+    'Revenus',
   ]
 
   beforeEach(() => {

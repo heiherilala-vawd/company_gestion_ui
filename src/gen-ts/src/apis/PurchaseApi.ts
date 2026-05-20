@@ -74,6 +74,9 @@ export interface GetPurchasesRequest {
   pageSize?: number
   supplierId?: string
   isEquipment?: boolean
+  invoiceDateFrom?: Date
+  invoiceDateTo?: Date
+  paid?: boolean
 }
 
 /**
@@ -379,6 +382,22 @@ export class PurchaseApi extends runtime.BaseAPI {
 
     if (requestParameters['isEquipment'] != null) {
       queryParameters['is_equipment'] = requestParameters['isEquipment']
+    }
+
+    if (requestParameters['invoiceDateFrom'] != null) {
+      queryParameters['invoice_date_from'] = (requestParameters['invoiceDateFrom'] as any)
+        .toISOString()
+        .substring(0, 10)
+    }
+
+    if (requestParameters['invoiceDateTo'] != null) {
+      queryParameters['invoice_date_to'] = (requestParameters['invoiceDateTo'] as any)
+        .toISOString()
+        .substring(0, 10)
+    }
+
+    if (requestParameters['paid'] != null) {
+      queryParameters['paid'] = requestParameters['paid']
     }
 
     const headerParameters: runtime.HTTPHeaders = {}

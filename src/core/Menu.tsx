@@ -1,17 +1,6 @@
-import { useState } from 'react'
 import { useSidebarState } from 'react-admin'
-import {
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-  Box,
-  Typography,
-} from '@mui/material'
+import { List, ListItemButton, ListItemIcon, ListItemText, Box, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
 import HomeIcon from '@mui/icons-material/Home'
 import WorkIcon from '@mui/icons-material/Work'
 import BusinessIcon from '@mui/icons-material/Business'
@@ -26,6 +15,7 @@ import PaidIcon from '@mui/icons-material/Paid'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import { menuStyles } from '../style/components'
 import { canAccessResource } from '../auth/authProvider'
 
@@ -38,14 +28,40 @@ interface ResourceItem {
   resource?: string
 }
 
+const SectionHeader = ({
+  label,
+  color,
+  sx,
+}: {
+  label: string
+  color: string
+  sx: Record<string, unknown>
+}) => (
+  <Box sx={sx as object}>
+    <Box
+      sx={{
+        width: 8,
+        height: 8,
+        borderRadius: '50%',
+        backgroundColor: color,
+        flexShrink: 0,
+      }}
+    />
+    <Typography
+      variant="caption"
+      sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}
+    >
+      {label}
+    </Typography>
+  </Box>
+)
+
 const MenuRoot = () => {
-  const [openStorage, setOpenStorage] = useState(true)
-  const [openExpenses, setOpenExpenses] = useState(true)
   const [sidebarOpen] = useSidebarState()
 
   if (!sidebarOpen) return null
 
-  const transversalItems: ResourceItem[] = [
+  const generalItems: ResourceItem[] = [
     { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
     { name: 'jobs', label: 'Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
@@ -55,10 +71,35 @@ const MenuRoot = () => {
       to: '/companies',
       testId: 'menu-companies',
     },
-    { name: 'users', label: 'Utilisateurs', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
   ]
 
-  const storageMain: ResourceItem[] = [
+  const rhItems: ResourceItem[] = [
+    { name: 'users', label: 'Utilisateurs', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
+    {
+      name: 'employer_payments',
+      label: 'Salaires',
+      icon: PaymentsIcon,
+      to: '/employee_payments',
+      testId: 'menu-employee-payments',
+      resource: 'employee_payments',
+    },
+    {
+      name: 'travel_people',
+      label: 'Personnel',
+      icon: PeopleAltIcon,
+      to: '/travel_people',
+      testId: 'menu-travel-peoples',
+    },
+    {
+      name: 'leaves',
+      label: 'Congés',
+      icon: CalendarMonthIcon,
+      to: '/leaves',
+      testId: 'menu-leaves',
+    },
+  ]
+
+  const stockItems: ResourceItem[] = [
     {
       name: 'warehouses',
       label: 'Entrepôts',
@@ -67,28 +108,11 @@ const MenuRoot = () => {
       testId: 'menu-warehouses',
     },
     {
-      name: 'equipment',
-      label: 'Équipements',
-      icon: BuildIcon,
-      to: '/equipment',
-      testId: 'menu-equipments',
-    },
-    {
       name: 'materials',
       label: 'Matériaux',
       icon: CategoryIcon,
       to: '/materials',
       testId: 'menu-materials',
-    },
-  ]
-
-  const storageSub: ResourceItem[] = [
-    {
-      name: 'travel_people',
-      label: 'Personnel',
-      icon: PeopleAltIcon,
-      to: '/travel_people',
-      testId: 'menu-travel-peoples',
     },
     {
       name: 'travel_materials',
@@ -98,15 +122,39 @@ const MenuRoot = () => {
       testId: 'menu-travel-materials',
     },
     {
+      name: 'purchases',
+      label: 'Achats',
+      icon: ShoppingCartIcon,
+      to: '/purchases?isMaterial=true',
+      testId: 'menu-purchases',
+    },
+  ]
+
+  const equipmentItems: ResourceItem[] = [
+    {
+      name: 'equipment',
+      label: 'Équipements',
+      icon: BuildIcon,
+      to: '/equipment',
+      testId: 'menu-equipments',
+    },
+    {
       name: 'travel_equipment',
       label: 'Équipement dépl.',
       icon: BuildIcon,
       to: '/travel_equipment',
       testId: 'menu-travel-equipments',
     },
+    {
+      name: 'purchases',
+      label: 'Achats',
+      icon: ShoppingCartIcon,
+      to: '/purchases?isEquipment=true',
+      testId: 'menu-purchases',
+    },
   ]
 
-  const expenses: ResourceItem[] = [
+  const monetaryItems: ResourceItem[] = [
     {
       name: 'expenses',
       label: 'Dépenses',
@@ -120,13 +168,6 @@ const MenuRoot = () => {
       icon: FlightTakeoffIcon,
       to: '/travel_expenses',
       testId: 'menu-travel-expenses',
-    },
-    {
-      name: 'purchases',
-      label: 'Achats',
-      icon: ShoppingCartIcon,
-      to: '/purchases',
-      testId: 'menu-purchases',
     },
     {
       name: 'bank_fees',
@@ -143,29 +184,24 @@ const MenuRoot = () => {
       testId: 'menu-other-expenses',
     },
     {
-      name: 'employer_payments',
-      label: 'Salaires',
-      icon: PaymentsIcon,
-      to: '/employee_payments',
-      testId: 'menu-employee-payments',
-      resource: 'employee_payments',
-    },
-  ]
-
-  const incomes: ResourceItem[] = [
-    {
       name: 'incomes',
       label: 'Revenus',
       icon: PaidIcon,
       to: '/incomes',
       testId: 'menu-incomes',
     },
+    {
+      name: 'purchases',
+      label: 'Achats',
+      icon: ShoppingCartIcon,
+      to: '/purchases',
+      testId: 'menu-purchases',
+    },
   ]
 
-  const renderItems = (items: ResourceItem[], nested = false) =>
+  const renderItems = (items: ResourceItem[]) =>
     items
       .filter((item) => {
-        if (item.name === 'home') return true
         const resource = item.resource || item.name
         return canAccessResource(resource, 'list')
       })
@@ -174,9 +210,7 @@ const MenuRoot = () => {
           key={item.name}
           component={Link}
           to={item.to}
-          sx={{
-            ...(nested ? menuStyles.nested : menuStyles.listItem),
-          }}
+          sx={menuStyles.listItem}
           data-testid={item.testId}
         >
           <ListItemIcon sx={menuStyles.listItemIcon}>
@@ -197,100 +231,28 @@ const MenuRoot = () => {
         </Typography>
       </Box>
 
-      <Box sx={menuStyles.sectionHeaderBlue}>
-        <Box
-          sx={{
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            backgroundColor: '#4285F4',
-            flexShrink: 0,
-          }}
-        />
-        <Typography
-          variant="caption"
-          sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}
-        >
-          PRINCIPAL
-        </Typography>
-      </Box>
       <List component="nav" dense sx={{ mb: 1 }}>
-        {renderItems(transversalItems)}
+        {renderItems(generalItems)}
       </List>
 
-      <Box sx={menuStyles.sectionHeaderGreen}>
-        <Box
-          sx={{
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            backgroundColor: '#34A853',
-            flexShrink: 0,
-          }}
-        />
-        <Typography
-          variant="caption"
-          sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}
-        >
-          STOCKAGE
-        </Typography>
-      </Box>
+      <SectionHeader label="RH" color="#9C27B0" sx={menuStyles.sectionHeaderPurple} />
       <List component="nav" dense sx={{ mb: 1 }}>
-        {renderItems(storageMain)}
+        {renderItems(rhItems)}
       </List>
 
-      <ListItemButton
-        onClick={() => setOpenStorage(!openStorage)}
-        sx={menuStyles.collapsibleButton}
-      >
-        <ListItemIcon sx={menuStyles.listItemIcon}>
-          <PeopleAltIcon fontSize="small" />
-        </ListItemIcon>
-        <ListItemText primary="Déplacements" primaryTypographyProps={menuStyles.listItemText} />
-        {openStorage ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openStorage} timeout="auto" unmountOnExit>
-        <List component="nav" dense disablePadding>
-          {renderItems(storageSub, true)}
-        </List>
-      </Collapse>
+      <SectionHeader label="STOCK" color="#34A853" sx={menuStyles.sectionHeaderGreen} />
+      <List component="nav" dense sx={{ mb: 1 }}>
+        {renderItems(stockItems)}
+      </List>
 
-      <Box sx={menuStyles.sectionHeaderRed}>
-        <Box
-          sx={{
-            width: 8,
-            height: 8,
-            borderRadius: '50%',
-            backgroundColor: '#EA4335',
-            flexShrink: 0,
-          }}
-        />
-        <Typography
-          variant="caption"
-          sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}
-        >
-          FINANCES
-        </Typography>
-      </Box>
+      <SectionHeader label="ÉQUIPEMENT" color="#FB8C00" sx={menuStyles.sectionHeaderOrange} />
+      <List component="nav" dense sx={{ mb: 1 }}>
+        {renderItems(equipmentItems)}
+      </List>
 
-      <ListItemButton
-        onClick={() => setOpenExpenses(!openExpenses)}
-        sx={menuStyles.collapsibleButton}
-      >
-        <ListItemIcon sx={menuStyles.listItemIcon}>
-          <MoneyOffIcon fontSize="small" />
-        </ListItemIcon>
-        <ListItemText primary="Dépenses" primaryTypographyProps={menuStyles.listItemText} />
-        {openExpenses ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={openExpenses} timeout="auto" unmountOnExit>
-        <List component="nav" dense disablePadding>
-          {renderItems(expenses, true)}
-        </List>
-      </Collapse>
-
-      <List component="nav" dense>
-        {renderItems(incomes)}
+      <SectionHeader label="MONÉTAIRE" color="#EA4335" sx={menuStyles.sectionHeaderRed} />
+      <List component="nav" dense sx={{ mb: 1 }}>
+        {renderItems(monetaryItems)}
       </List>
     </Box>
   )

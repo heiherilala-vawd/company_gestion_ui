@@ -11,6 +11,8 @@ import CompanyForm from '../features/transversal/companies/CompanyForm.tsx'
 import UserForm from '../features/transversal/usersSetup/UserForm.tsx'
 import IncomeTypeForm from '../features/money/incomeType/IncomeTypeForm.tsx'
 import OtherExpenseTypeForm from '../features/money/otherExpenseType/OtherExpenseTypeForm.tsx'
+import LeaveTypeForm from '../features/hr/leave_types/LeaveTypeForm.tsx'
+import LeaveConfigForm from '../features/hr/leave_configs/LeaveConfigForm.tsx'
 
 export const renderTravelExpenseSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
@@ -119,6 +121,33 @@ export const renderOtherExpenseTypeSelect = (source: any, label: any) => (
     optionText="name"
     createUrlEnd={getMiddleUrl('other_expense_types')}
     createForm={<OtherExpenseTypeForm isCreateForm />}
+  />
+)
+
+export const renderLeaveTypesSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'leave_type_id'}
+    reference="leave_types"
+    label={label ? label : 'Type de congé'}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('leave_types')}
+    createForm={<LeaveTypeForm isCreateForm />}
+  />
+)
+
+export const renderLeaveConfigSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'leave_config_id'}
+    reference="leave_configs"
+    label={label ? label : 'Configuration congés'}
+    optionText={(record: any) =>
+      (record?.contract_type || '') +
+      ' - ' +
+      (record?.vacation_days_per_month || '') +
+      ' jours/mois'
+    }
+    createUrlEnd={getMiddleUrl('leave_configs')}
+    createForm={<LeaveConfigForm isCreateForm />}
   />
 )
 

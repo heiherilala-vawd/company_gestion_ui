@@ -68,6 +68,18 @@ export interface CrupdateIncomeMoney {
    */
   facturation_date?: Date
   /**
+   * Due date for payment of the invoice
+   * @type {Date}
+   * @memberof CrupdateIncomeMoney
+   */
+  due_date?: Date
+  /**
+   * Payment terms (e.g. NET-30, 30J fin de mois)
+   * @type {string}
+   * @memberof CrupdateIncomeMoney
+   */
+  payment_terms?: string
+  /**
    * ID of the job this income is related to
    * @type {string}
    * @memberof CrupdateIncomeMoney
@@ -111,6 +123,8 @@ export function CrupdateIncomeMoneyFromJSONTyped(
       json['billing_start_date'] == null ? undefined : new Date(json['billing_start_date']),
     facturation_date:
       json['facturation_date'] == null ? undefined : new Date(json['facturation_date']),
+    due_date: json['due_date'] == null ? undefined : new Date(json['due_date']),
+    payment_terms: json['payment_terms'] == null ? undefined : json['payment_terms'],
     job_id: json['job_id'] == null ? undefined : json['job_id'],
     income_type_id: json['income_type_id'] == null ? undefined : json['income_type_id'],
   }
@@ -143,6 +157,11 @@ export function CrupdateIncomeMoneyToJSONTyped(
       value['facturation_date'] == null
         ? value['facturation_date']
         : value['facturation_date'].toISOString(),
+    due_date:
+      value['due_date'] == null
+        ? value['due_date']
+        : value['due_date'].toISOString().substring(0, 10),
+    payment_terms: value['payment_terms'],
     job_id: value['job_id'],
     income_type_id: value['income_type_id'],
   }

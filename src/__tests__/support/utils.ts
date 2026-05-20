@@ -45,6 +45,11 @@ import {
   otherExpenseType1Mock,
   otherExpenseTypesMock,
   teamsMock,
+  leaveTypesMock,
+  leavesMock,
+  leave1Mock,
+  leave2Mock,
+  leaveType1Mock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -188,6 +193,17 @@ export function interceptGeneralEndpoint(): void {
   // ---------------------- TEAMS ------------------------------------------
   cy.intercept('GET', '**/teams*', mockSuccessResponse(teamsMock)).as('getTeams')
 
+  // ---------------------- LEAVE TYPES ------------------------------------------
+  cy.intercept('GET', '**/leave_types*', mockSuccessResponse(leaveTypesMock)).as('getLeaveTypes')
+
+  // ---------------------- LEAVE CONFIGS ------------------------------------------
+  cy.intercept('GET', '**/leave_configs*', mockSuccessResponse([])).as('getLeaveConfigs')
+
+  // ---------------------- LEAVES ------------------------------------------
+  cy.intercept('GET', '**/leaves*', mockSuccessResponse(leavesMock)).as('getLeaves')
+  cy.intercept('GET', '**/leaves/leave1_id*', mockSuccessResponse(leave1Mock)).as('getLeave')
+  cy.intercept('GET', '**/leaves/leave2_id*', mockSuccessResponse(leave2Mock)).as('getLeave2')
+
   // ---------------------- SPA ROUTE PASSTHROUGH (evite que les patterns glob attrapent les routes SPA) --------
   const spaRoutes = [
     '/expenses_activity',
@@ -327,4 +343,8 @@ export function selectOtherExpenseType(menuId: string | null): void {
     menuId ? menuId : 'other_expense_type_id',
     <string>otherExpenseType1Mock.name,
   )
+}
+
+export function selectLeaveType(): void {
+  selectReferenceWithCreate('input-leave_types-id', 'leave_type_id', <string>leaveType1Mock.name)
 }

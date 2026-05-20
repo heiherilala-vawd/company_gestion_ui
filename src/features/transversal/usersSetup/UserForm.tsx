@@ -1,5 +1,6 @@
 import { required, email, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import { renderLeaveConfigSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
 // eslint-disable-next-line react/prop-types
 export default function UserForm({ isCreate = false, isCreateForm = false }) {
@@ -55,6 +56,7 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
         validate={[required()]}
         data-testid="input-role"
       />
+      {renderLeaveConfigSelect('leave_config_id', 'Configuration congés')}
       <TextInput
         source="password"
         label="Mot de passe"

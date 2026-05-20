@@ -24,6 +24,7 @@ import BankFeeResource from '../features/money/bank_fees'
 import OtherExpenseResource from '../features/money/other_expenses'
 import EmployerPaymentResource from '../features/money/employee_payments'
 import IncomeResource from '../features/money/incomes'
+import LeavesResource from '../features/hr/leaves'
 
 import HomePage from '../features/HomePage'
 import EmployerPaymentActivity from '../features/EmployerPaymentActivity'
@@ -82,6 +83,9 @@ const ThemedAdmin = () => {
             <Resource name="travel_materials" {...TravelMaterialResource} />
             <Resource name="travel_equipment" {...TravelEquipmentResource} />
             <Resource name="incomes" {...IncomeResource} />
+            <Resource name="leave_types" />
+            <Resource name="leave_configs" />
+            <Resource name="leaves" {...LeavesResource} />
           </Admin>
         </ExpenseProvider>
       </JobProvider>
