@@ -60,6 +60,10 @@ All URIs are relative to *https://api-dev.company.com*
 | _CompanyApi_           | [**deleteCompanyById**](docs/CompanyApi.md#deletecompanybyid)                             | **DELETE** /companies/{id}                                                                                             | Delete a company by identifier                                 |
 | _CompanyApi_           | [**getCompanies**](docs/CompanyApi.md#getcompanies)                                       | **GET** /companies                                                                                                     | Get all companies                                              |
 | _CompanyApi_           | [**getCompanyById**](docs/CompanyApi.md#getcompanybyid)                                   | **GET** /companies/{id}                                                                                                | Get company by identifier                                      |
+| _CompanyFixedCostApi_  | [**crupdateCompanyFixedCosts**](docs/CompanyFixedCostApi.md#crupdatecompanyfixedcosts)    | **PUT** /companies/{comp_id}/fixed-costs                                                                               | Create new fixed costs or update existing ones                 |
+| _CompanyFixedCostApi_  | [**deleteCompanyFixedCostById**](docs/CompanyFixedCostApi.md#deletecompanyfixedcostbyid)  | **DELETE** /companies/{comp_id}/fixed-costs/{id}                                                                       | Delete a fixed cost by identifier                              |
+| _CompanyFixedCostApi_  | [**getCompanyFixedCostById**](docs/CompanyFixedCostApi.md#getcompanyfixedcostbyid)        | **GET** /companies/{comp_id}/fixed-costs/{id}                                                                          | Get a fixed cost by identifier                                 |
+| _CompanyFixedCostApi_  | [**getCompanyFixedCosts**](docs/CompanyFixedCostApi.md#getcompanyfixedcosts)              | **GET** /companies/{comp_id}/fixed-costs                                                                               | Get all fixed costs for a company                              |
 | _EmployeePaymentApi_   | [**crupdateEmployeePayments**](docs/EmployeePaymentApi.md#crupdateemployeepayments)       | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/employee_payments                                             | Create new employee payments or update existing ones           |
 | _EmployeePaymentApi_   | [**deleteEmployeePaymentById**](docs/EmployeePaymentApi.md#deleteemployeepaymentbyid)     | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/employee_payments/{id}                                     | Delete employee payment by identifier                          |
 | _EmployeePaymentApi_   | [**getEmployeePaymentById**](docs/EmployeePaymentApi.md#getemployeepaymentbyid)           | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/employee_payments/{id}                                        | Get employee payment by identifier                             |
@@ -72,6 +76,17 @@ All URIs are relative to *https://api-dev.company.com*
 | _ExpenseApi_           | [**deleteExpenseById**](docs/ExpenseApi.md#deleteexpensebyid)                             | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id}                                              | Delete expense by identifier                                   |
 | _ExpenseApi_           | [**getExpenseById**](docs/ExpenseApi.md#getexpensebyid)                                   | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id}                                                 | Get expense by identifier                                      |
 | _ExpenseApi_           | [**getExpenses**](docs/ExpenseApi.md#getexpenses)                                         | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses                                                      | Get all expenses                                               |
+| _HRApi_                | [**crupdateEmployeeLeaveConfigs**](docs/HRApi.md#crupdateemployeeleaveconfigs)            | **PUT** /companies/{comp_id}/leave-configs                                                                             | Create or update employee leave configs                        |
+| _HRApi_                | [**crupdateLeaveTypes**](docs/HRApi.md#crupdateleavetypes)                                | **PUT** /companies/{comp_id}/leave-types                                                                               | Create or update leave types                                   |
+| _HRApi_                | [**crupdateLeaves**](docs/HRApi.md#crupdateleaves)                                        | **PUT** /companies/{comp_id}/leaves                                                                                    | Create or update leaves                                        |
+| _HRApi_                | [**deleteLeaveById**](docs/HRApi.md#deleteleavebyid)                                      | **DELETE** /companies/{comp_id}/leaves/{id}                                                                            | Delete leave by identifier                                     |
+| _HRApi_                | [**getEmployeeLeaveConfigByUserId**](docs/HRApi.md#getemployeeleaveconfigbyuserid)        | **GET** /companies/{comp_id}/leave-configs/{user_id}                                                                   | Get leave config for a specific user                           |
+| _HRApi_                | [**getEmployeeLeaveConfigs**](docs/HRApi.md#getemployeeleaveconfigs)                      | **GET** /companies/{comp_id}/leave-configs                                                                             | Get all employee leave configs                                 |
+| _HRApi_                | [**getEmployeesWithoutLeave**](docs/HRApi.md#getemployeeswithoutleave)                    | **GET** /companies/{comp_id}/leave-balances/employees-without-leave                                                    | Get employees who haven\&#39;t taken any leave                 |
+| _HRApi_                | [**getLeaveBalances**](docs/HRApi.md#getleavebalances)                                    | **GET** /companies/{comp_id}/leave-balances                                                                            | Get leave balances for all employees in a company              |
+| _HRApi_                | [**getLeaveById**](docs/HRApi.md#getleavebyid)                                            | **GET** /companies/{comp_id}/leaves/{id}                                                                               | Get leave by identifier                                        |
+| _HRApi_                | [**getLeaveTypes**](docs/HRApi.md#getleavetypes)                                          | **GET** /companies/{comp_id}/leave-types                                                                               | Get all leave types                                            |
+| _HRApi_                | [**getLeaves**](docs/HRApi.md#getleaves)                                                  | **GET** /companies/{comp_id}/leaves                                                                                    | Get all leaves                                                 |
 | _HistoryApi_           | [**getHistories**](docs/HistoryApi.md#gethistories)                                       | **GET** /histories                                                                                                     | Get modification history with filters                          |
 | _IncomeApi_            | [**crupdateIncomes**](docs/IncomeApi.md#crupdateincomes)                                  | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes                                                       | Create new incomes or update existing ones                     |
 | _IncomeApi_            | [**deleteIncomeById**](docs/IncomeApi.md#deleteincomebyid)                                | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/incomes/{id}                                               | Delete income by identifier                                    |
@@ -165,9 +180,12 @@ All URIs are relative to *https://api-dev.company.com*
 - [BankFee](docs/BankFee.md)
 - [Comment](docs/Comment.md)
 - [Company](docs/Company.md)
+- [CompanyFixedCost](docs/CompanyFixedCost.md)
 - [CompanyType](docs/CompanyType.md)
 - [CrupdateBankFee](docs/CrupdateBankFee.md)
 - [CrupdateCompany](docs/CrupdateCompany.md)
+- [CrupdateCompanyFixedCost](docs/CrupdateCompanyFixedCost.md)
+- [CrupdateEmployeeLeaveConfig](docs/CrupdateEmployeeLeaveConfig.md)
 - [CrupdateEmployeePayment](docs/CrupdateEmployeePayment.md)
 - [CrupdateEquipment](docs/CrupdateEquipment.md)
 - [CrupdateExpenseMoney](docs/CrupdateExpenseMoney.md)
@@ -175,6 +193,8 @@ All URIs are relative to *https://api-dev.company.com*
 - [CrupdateIncomeReceipt](docs/CrupdateIncomeReceipt.md)
 - [CrupdateIncomeType](docs/CrupdateIncomeType.md)
 - [CrupdateJob](docs/CrupdateJob.md)
+- [CrupdateLeave](docs/CrupdateLeave.md)
+- [CrupdateLeaveType](docs/CrupdateLeaveType.md)
 - [CrupdateLoan](docs/CrupdateLoan.md)
 - [CrupdateLoanRepayment](docs/CrupdateLoanRepayment.md)
 - [CrupdateMaintenance](docs/CrupdateMaintenance.md)
@@ -191,6 +211,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [CrupdateTravelPeople](docs/CrupdateTravelPeople.md)
 - [CrupdateUser](docs/CrupdateUser.md)
 - [CrupdateWarehouse](docs/CrupdateWarehouse.md)
+- [EmployeeLeaveConfig](docs/EmployeeLeaveConfig.md)
 - [EmployeePayment](docs/EmployeePayment.md)
 - [EntityType](docs/EntityType.md)
 - [Equipment](docs/Equipment.md)
@@ -203,6 +224,10 @@ All URIs are relative to *https://api-dev.company.com*
 - [Job](docs/Job.md)
 - [JobStatus](docs/JobStatus.md)
 - [JobWithFinancials](docs/JobWithFinancials.md)
+- [Leave](docs/Leave.md)
+- [LeaveBalance](docs/LeaveBalance.md)
+- [LeaveStatus](docs/LeaveStatus.md)
+- [LeaveType](docs/LeaveType.md)
 - [Loan](docs/Loan.md)
 - [LoanRepayment](docs/LoanRepayment.md)
 - [LoanStatus](docs/LoanStatus.md)

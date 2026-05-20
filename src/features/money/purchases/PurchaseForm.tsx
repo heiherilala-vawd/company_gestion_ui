@@ -10,9 +10,14 @@ import { Typography } from '@mui/material'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
 import React from 'react'
 
-// eslint-disable-next-line react/prop-types
-export default function PurchaseForm({ isCreate = false, isCreateForm = false }) {
+export default function PurchaseForm({
+  isCreate = false,
+  isCreateForm = false,
+  isEquipment = false,
+  isMaterial = false,
+}) {
   const id = generateId()
+  const forceEquipment = isEquipment || isMaterial
 
   return (
     <>
@@ -30,11 +35,14 @@ export default function PurchaseForm({ isCreate = false, isCreateForm = false })
       <BooleanInput
         source="is_equipment"
         label="Est un équipement"
+        defaultValue={isEquipment}
+        disabled={forceEquipment}
         data-testid="input-is_equipment"
       />
       <FormDataConsumer>
-        {({ formData }) =>
-          formData?.is_equipment ? (
+        {({ formData }) => {
+          const showEquipment = formData?.is_equipment ?? isEquipment
+          return showEquipment ? (
             renderEquipmentSelect('equipment', 'Équipement')
           ) : (
             <>
@@ -42,7 +50,7 @@ export default function PurchaseForm({ isCreate = false, isCreateForm = false })
               <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
             </>
           )
-        }
+        }}
       </FormDataConsumer>
       <div data-testid="input-expense-form" style={{ width: '100%' }}>
         <Typography variant="h6" color="primary" sx={{ flex: 1 }}>

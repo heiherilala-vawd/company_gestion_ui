@@ -88,6 +88,10 @@ function canAccess(
       'loans',
       'income_types',
       'income_receipts',
+      'leave_types',
+      'leave_configs',
+      'leaves',
+      'leave_balances',
     ]
     if (fullCRUDResources.includes(resource) && canReadWrite(action)) return true
 

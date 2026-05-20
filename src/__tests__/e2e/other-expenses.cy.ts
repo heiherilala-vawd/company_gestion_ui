@@ -12,6 +12,16 @@ import {
   selectOtherExpenseType,
 } from '../support/utils.ts'
 
+function selectOtherExpenseTypeLocal() {
+  cy.get('[data-testid="input-other_expense_types-id"]').scrollIntoView()
+  cy.get('[data-testid="input-other_expense_types-id"]').within(() => {
+    cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+  })
+  cy.get('[role="option"]', { timeout: 5000 }).should('be.visible')
+  cy.get('[role="option"]').contains('Bureau').click()
+  cy.get('[role="option"]').should('not.exist')
+}
+
 describe('E2E: Other Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateOtherExpensesMock[0]
@@ -21,22 +31,24 @@ describe('E2E: Other Expenses', () => {
       cy.contains('Office supplies').click()
       cy.wait('@getOtherExpense')
       cy.get('.RaEditButton-root').click()
+      cy.wait('@getOtherExpense')
     }
     if (isCreating) {
-      selectOtherExpenseType(null)
+      cy.wait('@getOtherExpenseTypes')
+      selectOtherExpenseTypeLocal()
     }
 
-    cy.get('[data-testid="input-description"] textarea:visible')
+    cy.get('[data-testid="input-description"] textarea')
       .first()
-      .clear()
+      .clear({ force: true })
       .type(<string>crupdatedData.description, { force: true })
 
     if (!isCreating) {
       selectJob('expense\\.job_id')
     }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
-      .clear()
-      .type('10000')
+      .clear({ force: true })
+      .type('10000', { force: true })
 
     cy.get('button[type="submit"]').click()
   }
@@ -109,6 +121,20 @@ describe('E2E: Other Expenses', () => {
 
   it('should display other expenses list', () => showList(true))
   it('should show other expense details', () => showDetails(true))
+
+  it('should verify other_expense_types API call', () => {
+    navigateToDesktop()
+    cy.get('[class*="RaCreateButton"]').click()
+    cy.wait('@getOtherExpenseTypes', { timeout: 15000 })
+    cy.get('[data-testid="input-other_expense_types-id"]').should('exist')
+    cy.get('[data-testid="input-other_expense_types-id"] [role="combobox"]').as('combobox')
+    cy.get('@combobox').should('not.be.disabled')
+    cy.get('@combobox').click({ force: true })
+    cy.wait(2000)
+    cy.get('[role="option"]', { timeout: 5000 }).should('be.visible')
+    cy.get('[role="option"]').contains('Bureau').click()
+  })
+
   it('should create a new other expense', () => canCreate(true))
   it('should update an existing other expense', () => canUpdate(true))
 

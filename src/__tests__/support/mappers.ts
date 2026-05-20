@@ -38,6 +38,10 @@ import type {
   IncomeType,
   CrupdateIncomeType,
   AuditUser,
+  LeaveType,
+  CrupdateLeaveType,
+  Leave,
+  CrupdateLeave,
 } from '../../gen-ts/src'
 
 export function toCrupdateExpenseMoneyMapper(expense: ExpenseMoney): CrupdateExpenseMoney {
@@ -254,6 +258,33 @@ export function toCrupdateIncomeTypeMapper(incType: IncomeType): CrupdateIncomeT
     description: incType.description,
     comment: incType.comment,
     company_id: incType.company_id,
+  }
+}
+
+export function toCrupdateLeaveTypeMapper(lt: LeaveType): CrupdateLeaveType {
+  return {
+    id: lt?.id,
+    name: lt.name,
+    description: lt.description,
+    paid: lt.paid,
+    deduct_from_balance: lt.deduct_from_balance,
+    color: lt.color,
+    days_per_year: lt.days_per_year,
+    comment: lt.comment,
+  }
+}
+
+export function toCrupdateLeaveMapper(l: Leave): CrupdateLeave {
+  return {
+    id: l?.id,
+    user_id: l.user?.id,
+    leave_type_id: l.leave_type?.id,
+    start_date: l.start_date,
+    end_date: l.end_date,
+    duration_days: l.duration_days,
+    status: l.status,
+    reason: l.reason,
+    comment: l.comment,
   }
 }
 

@@ -1,8 +1,17 @@
 import { Create, SimpleForm } from 'react-admin'
+import { useSearchParams } from 'react-router-dom'
 import FormToolbar from '../../../generic/FormToolbar'
 import PurchaseForm from './PurchaseForm'
 
 export default function PurchaseCreate() {
+  const [searchParams] = useSearchParams()
+  const isEquipment =
+    searchParams.get('isEquipment') === 'true' ||
+    sessionStorage.getItem('purchaseMode') === 'equipment'
+  const isMaterial =
+    searchParams.get('isMaterial') === 'true' ||
+    sessionStorage.getItem('purchaseMode') === 'material'
+
   return (
     <Create
       redirect="list"
@@ -14,7 +23,7 @@ export default function PurchaseCreate() {
       })}
     >
       <SimpleForm toolbar={<FormToolbar />}>
-        <PurchaseForm isCreate />
+        <PurchaseForm isCreate isEquipment={isEquipment} isMaterial={isMaterial} />
       </SimpleForm>
     </Create>
   )

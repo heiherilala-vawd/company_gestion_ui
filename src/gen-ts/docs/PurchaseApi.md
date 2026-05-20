@@ -259,23 +259,26 @@ example().catch(console.error)
 
 ## getPurchases
 
-> Array&lt;Purchase&gt; getPurchases(compId, jobId, userId, page, pageSize, supplierId, isEquipment)
+> Array&lt;Purchase&gt; getPurchases(compId, jobId, userId, page, pageSize, supplierId, isEquipment, invoiceDateFrom, invoiceDateTo, paid)
 
 Get all purchases
 
 ### Example
 
 ```ts
-import { Configuration, PurchaseApi } from 'api-client'
-import type { GetPurchasesRequest } from 'api-client'
+import {
+  Configuration,
+  PurchaseApi,
+} from 'api-client';
+import type { GetPurchasesRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
+  console.log("🚀 Testing api-client SDK...");
   const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new PurchaseApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new PurchaseApi(config);
 
   const body = {
     // string
@@ -292,31 +295,40 @@ async function example() {
     supplierId: supp_001,
     // boolean (optional)
     isEquipment: false,
-  } satisfies GetPurchasesRequest
+    // Date | Filter by invoice date from (inclusive) (optional)
+    invoiceDateFrom: 2024-01-01,
+    // Date | Filter by invoice date to (inclusive) (optional)
+    invoiceDateTo: 2024-12-31,
+    // boolean | Filter by payment status (true = paid, false = unpaid) (optional)
+    paid: false,
+  } satisfies GetPurchasesRequest;
 
   try {
-    const data = await api.getPurchases(body)
-    console.log(data)
+    const data = await api.getPurchases(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name            | Type      | Description                     | Notes                                |
-| --------------- | --------- | ------------------------------- | ------------------------------------ |
-| **compId**      | `string`  |                                 | [Defaults to `undefined`]            |
-| **jobId**       | `string`  |                                 | [Defaults to `undefined`]            |
-| **userId**      | `string`  |                                 | [Defaults to `undefined`]            |
-| **page**        | `number`  |                                 | [Optional] [Defaults to `undefined`] |
-| **pageSize**    | `number`  |                                 | [Optional] [Defaults to `undefined`] |
-| **supplierId**  | `string`  | Filter purchases by supplier id | [Optional] [Defaults to `undefined`] |
-| **isEquipment** | `boolean` |                                 | [Optional] [Defaults to `undefined`] |
+| Name                | Type      | Description                                                      | Notes                                |
+| ------------------- | --------- | ---------------------------------------------------------------- | ------------------------------------ |
+| **compId**          | `string`  |                                                                  | [Defaults to `undefined`]            |
+| **jobId**           | `string`  |                                                                  | [Defaults to `undefined`]            |
+| **userId**          | `string`  |                                                                  | [Defaults to `undefined`]            |
+| **page**            | `number`  |                                                                  | [Optional] [Defaults to `undefined`] |
+| **pageSize**        | `number`  |                                                                  | [Optional] [Defaults to `undefined`] |
+| **supplierId**      | `string`  | Filter purchases by supplier id                                  | [Optional] [Defaults to `undefined`] |
+| **isEquipment**     | `boolean` |                                                                  | [Optional] [Defaults to `undefined`] |
+| **invoiceDateFrom** | `Date`    | Filter by invoice date from (inclusive)                          | [Optional] [Defaults to `undefined`] |
+| **invoiceDateTo**   | `Date`    | Filter by invoice date to (inclusive)                            | [Optional] [Defaults to `undefined`] |
+| **paid**            | `boolean` | Filter by payment status (true &#x3D; paid, false &#x3D; unpaid) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

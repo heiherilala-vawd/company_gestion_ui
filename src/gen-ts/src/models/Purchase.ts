@@ -90,6 +90,24 @@ export interface Purchase {
    * @memberof Purchase
    */
   is_equipment?: boolean
+  /**
+   *
+   * @type {Date}
+   * @memberof Purchase
+   */
+  invoice_date?: Date
+  /**
+   *
+   * @type {Date}
+   * @memberof Purchase
+   */
+  due_date?: Date
+  /**
+   *
+   * @type {Date}
+   * @memberof Purchase
+   */
+  paid_at?: Date
 }
 
 /**
@@ -115,6 +133,9 @@ export function PurchaseFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     material: json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
     quantity: json['quantity'] == null ? undefined : json['quantity'],
     is_equipment: json['is_equipment'] == null ? undefined : json['is_equipment'],
+    invoice_date: json['invoice_date'] == null ? undefined : new Date(json['invoice_date']),
+    due_date: json['due_date'] == null ? undefined : new Date(json['due_date']),
+    paid_at: json['paid_at'] == null ? undefined : new Date(json['paid_at']),
   }
 }
 
@@ -138,5 +159,15 @@ export function PurchaseToJSONTyped(
     material: CrupdateMaterialToJSON(value['material']),
     quantity: value['quantity'],
     is_equipment: value['is_equipment'],
+    invoice_date:
+      value['invoice_date'] == null
+        ? value['invoice_date']
+        : value['invoice_date'].toISOString().substring(0, 10),
+    due_date:
+      value['due_date'] == null
+        ? value['due_date']
+        : value['due_date'].toISOString().substring(0, 10),
+    paid_at:
+      value['paid_at'] == null ? value['paid_at'] : value['paid_at'].toISOString().substring(0, 10),
   }
 }

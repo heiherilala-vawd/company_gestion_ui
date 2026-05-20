@@ -15,6 +15,10 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'users',
   'other_expense_types',
   'teams',
+  'leave_types',
+  'leave_configs',
+  'leaves',
+  'leave_balances',
 ] as const
 
 // Type pour les ressources dynamiques (TypeScript)

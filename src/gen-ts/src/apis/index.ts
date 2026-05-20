@@ -1,11 +1,13 @@
 /* tslint:disable */
-
+/* eslint-disable */
 export * from './AuthApi'
 export * from './BankFeeApi'
 export * from './CompanyApi'
+export * from './CompanyFixedCostApi'
 export * from './EmployeePaymentApi'
 export * from './EquipmentApi'
 export * from './ExpenseApi'
+export * from './HRApi'
 export * from './HistoryApi'
 export * from './IncomeApi'
 export * from './IncomeReceiptApi'
