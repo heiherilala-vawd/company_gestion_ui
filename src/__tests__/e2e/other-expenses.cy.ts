@@ -38,7 +38,7 @@ describe('E2E: Other Expenses', () => {
       selectOtherExpenseTypeLocal()
     }
 
-    cy.get('[data-testid="input-description"] textarea')
+    cy.get('[data-testid="input-description"] textarea:visible')
       .first()
       .clear({ force: true })
       .type(<string>crupdatedData.description, { force: true })

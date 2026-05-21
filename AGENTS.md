@@ -9,6 +9,8 @@
 - `npm run cypress:open` - Open Cypress UI for visual E2E testing
 - `npm run cypress:run` - Run Cypress tests headless
 - `npm run cypress:coverage` - **Run Cypress tests with coverage (Build + Static Serve)** - NO dev server needed
+- `npm run cypress:docker` - **Run Cypress tests in Docker** (builds + tests in containers)
+- `npm run cypress:docker:ci` - Same as above with video enabled for CI
 - `npm run type-check` - TypeScript check (`tsc --noEmit`)
 - `npm run lint` - ESLint with auto-fix
 - `npm run format` - Prettier format src/ (`prettier --write ./src`)
@@ -121,7 +123,9 @@ All MUI component overrides (and React Admin component overrides) are in `src/st
 
 - **Prerequisite**: NO dev server needed! Tests use **Build + Static Serve** approach
 - **E2E + Coverage**: `npm run cypress:coverage` (builds app, serves statically, runs E2E tests with NYC coverage at 60%)
-- **Run single test**: `npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__tests__/e2e/auth.cy.ts"`
+- **Docker (local)**: `npm run cypress:docker` - builds & runs tests in isolated containers (no host Node/Cypress needed)
+- **Docker (CI)**: `npm run cypress:docker:ci` - same with video enabled for failure debugging
+- **Run single test (local)**: `npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__tests__/e2e/auth.cy.ts"`
 - **Local dev testing**: `npx cypress open --config-file src/__tests__/cypress.config.ts`
 
 ### Coverage Configuration (E2E only)
@@ -359,23 +363,86 @@ updated_by: toAuditUserMapper(user1Mock),
    ```
 3. **Static serve** uses built app (no proxy to backend)
 
+### Environment Variables Reference
+
+Environment variables separate test config from dev. All default to safe local values.
+
+#### Où placer chaque variable
+
+| Variable | `.env` | `.env.local` | `.env.test` | `.env.ci` | `docker-compose` | `github-ci` |
+|----------|--------|-------------|-------------|-----------|-----------------|-------------|
+| `VITE_SIMPLE_REST_URL` | ✅ | | | | | |
+| `VITE_API_URL` | | ✅ | ✅ | ✅ | ✅ | |
+| `CYPRESS_BASE_URL` | | | ✅ | ✅ | ✅ | |
+| `CYPRESS_VIDEO` | | | ✅ | ✅ | | ✅ |
+| `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | | | ✅ | | | |
+| `CYPRESS_VIEWPORT_WIDTH` | | | ✅ | | | |
+| `CYPRESS_VIEWPORT_HEIGHT` | | | ✅ | | | |
+| `NYC_CAFEOBJECT_COVERAGE` | | | ✅ | ✅ | ✅ | ✅ |
+| `TEST_APP_PORT` | | | | | (port mapping) | |
+
+#### Descriptions
+
+| Variable | Default | Where used | Description |
+|----------|---------|-----------|-------------|
+| `CYPRESS_BASE_URL` | `http://localhost:5173` | `cypress.config.ts` | URL of the app under test |
+| `CYPRESS_VIDEO` | `false` | `cypress.config.ts` | Record test video |
+| `CYPRESS_VIEWPORT_WIDTH` | `1280` | `cypress.config.ts` | Viewport width |
+| `CYPRESS_VIEWPORT_HEIGHT` | `720` | `cypress.config.ts` | Viewport height |
+| `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | `10000` | `cypress.config.ts` | Default command timeout (ms) |
+| `VITE_API_URL` | `''` (empty) | App source code | Backend API URL (empty = mocked) |
+| `NYC_CAFEOBJECT_COVERAGE` | `true` | `vite.config.ts` | Enable Istanbul instrumentation |
+| `TEST_APP_PORT` | `5173` | `docker-compose.yml` | Port for the static server |
+
+**How to override:**
+- **Locally**: edit `.env.test` (versioned, shared with team)
+- **CI**: set via GitHub Actions `env:` block or `.env.ci` (not versioned)
+- **Docker**: pass via `docker-compose.yml` `environment:` block
+- **Ad-hoc**: prefix the command (e.g., `CYPRESS_VIDEO=true npm run cypress:coverage`)
+
+### Docker Test Architecture
+
+```mermaid
+graph LR
+    A[Source Code] -->|docker compose build| B[Dockerfile]
+    B -->|target: server| C[nginx container<br/>port 5173]
+    B -->|target: cypress-runner| D[Cypress container<br/>cypress/base]
+    C -->|http://app:5173| D
+    D -->|reports| E[./coverage/]
+```
+
+- **Two containers**: `app` (nginx serving built app) and `cypress` (test runner)
+- **Network isolation**: Cypress container reaches app via Docker DNS (`http://app:5173`)
+- **No host Cypress/Node needed** for `npm run cypress:docker`
+- **Coverage output** written to `./coverage/` via bind mount
+
 ## CI/CD
 
 ### Workflow: `.github/workflows/ci.yml`
 
-Both jobs share setup: `actions/checkout@v4`, `actions/setup-node@v4` (Node 20, npm cache), `npm ci`.
-
 1. **Job: `lint-and-typecheck`**
    - Runs `npm run lint`
    - Runs `npm run type-check`
+   - Uses Node 20 directly on the runner
 
 2. **Job: `cypress-with-coverage`**
-   - Delegates to `npm run cypress:coverage` (builds with coverage, serves statically, runs E2E tests, checks 60% threshold)
+   - Runs in Docker via `npm run cypress:docker:ci` (uses `docker compose`)
+   - Builds the app with coverage instrumentation
+   - Runs E2E tests in isolated containers (no Cypress/Node on host needed)
+   - Generates and checks coverage report (60% threshold)
    - Uploads coverage report artifact via `actions/upload-artifact@v4`
+   - Docker layer caching enabled for faster CI
 
 ### Running CI locally (simulate)
 
 ```bash
+# Same command CI uses (Docker-based)
+npm run cypress:docker:ci
+
+# Or without video
+npm run cypress:docker
+
+# Or traditional approach (no Docker)
 npm run cypress:coverage
 ```
 

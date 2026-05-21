@@ -1,15 +1,16 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  numTestsKeptInMemory: 10,
   e2e: {
-    baseUrl: 'http://localhost:5173',
+    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:5173',
     supportFile: 'src/__tests__/support/e2e.ts',
     specPattern: 'src/__tests__/e2e/**/*.cy.{js,jsx,ts,tsx}',
-    video: false,
+    video: process.env.CYPRESS_VIDEO === 'true',
     screenshotOnRunFailure: true,
-    viewportWidth: 1280,
-    viewportHeight: 720,
-    defaultCommandTimeout: 10000,
+    viewportWidth: Number(process.env.CYPRESS_VIEWPORT_WIDTH) || 1280,
+    viewportHeight: Number(process.env.CYPRESS_VIEWPORT_HEIGHT) || 720,
+    defaultCommandTimeout: Number(process.env.CYPRESS_DEFAULT_COMMAND_TIMEOUT) || 10000,
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config)
       return config

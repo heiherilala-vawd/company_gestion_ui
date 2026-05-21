@@ -14,7 +14,9 @@
     "test:coverage": "vitest run --coverage",
     "cypress:open": "cypress open --config-file src/__tests__/cypress.config.ts",
     "cypress:run": "cypress run --config-file src/__tests__/cypress.config.ts",
-    "cypress:coverage": "bash scripts/run-cypress-coverage.sh"
+    "cypress:coverage": "bash scripts/run-cypress-coverage.sh",
+    "cypress:docker": "docker compose up --build --abort-on-container-exit cypress",
+    "cypress:docker:ci": "CYPRESS_VIDEO=true docker compose up --build --abort-on-container-exit cypress"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

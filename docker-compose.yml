@@ -1,0 +1,37 @@
+# ───────────────────────────────────────────
+# Docker Compose for E2E tests
+# ───────────────────────────────────────────
+# Usage:
+#   docker compose up --build --abort-on-container-exit cypress
+# ───────────────────────────────────────────
+
+services:
+  # ── App server ──────────────────────────
+  # Serves the pre-built app with coverage instrumentation
+  app:
+    build:
+      context: .
+      target: server
+    ports:
+      - "${TEST_APP_PORT:-5173}:5173"
+    # No healthcheck needed; Cypress waits for HTTP 200
+
+  # ── Cypress runner ──────────────────────
+  # Runs E2E tests against the app service
+  cypress:
+    build:
+      context: .
+      target: cypress-runner
+    depends_on:
+      - app
+    environment:
+      # Override base URL to point to the app container
+      CYPRESS_BASE_URL: "http://app:5173"
+      # Enable coverage collection
+      NYC_CAFEOBJECT_COVERAGE: "true"
+      CYPRESS_COVERAGE: "true"
+      VITE_API_URL: ""
+    # Persist coverage output to host
+    volumes:
+      - ./coverage:/app/coverage
+      - ./.nyc_output:/app/.nyc_output
