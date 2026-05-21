@@ -13,7 +13,7 @@ services:
       context: .
       target: server
     ports:
-      - "${TEST_APP_PORT:-5173}:5173"
+      - "${TEST_APP_PORT:-5174}:5173"
     # No healthcheck needed; Cypress waits for HTTP 200
 
   # ── Cypress runner ──────────────────────

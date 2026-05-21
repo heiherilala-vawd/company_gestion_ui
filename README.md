@@ -90,13 +90,16 @@ npx cypress open --config-file src/__tests__/cypress.config.ts
 **`.env.test`** — lu automatiquement par `scripts/run-cypress-coverage.sh` :
 ```
 VITE_API_URL=
-CYPRESS_BASE_URL=http://localhost:5173
+CYPRESS_BASE_URL=http://localhost:5174
 CYPRESS_VIDEO=false
 CYPRESS_DEFAULT_COMMAND_TIMEOUT=10000
 CYPRESS_VIEWPORT_WIDTH=1280
 CYPRESS_VIEWPORT_HEIGHT=720
 NYC_CAFEOBJECT_COVERAGE=true
+TEST_APP_PORT=5174
 ```
+
+> Le port 5174 est dédié aux tests. Il ne conflit jamais avec `npm run dev` (5173).
 
 ---
 
@@ -113,6 +116,7 @@ graph LR
 
 - **Deux containers**: `app` (nginx) + `cypress` (test runner)
 - **Isolation réseau**: Cypress joint l'app via `http://app:5173`
+- **Port hôte**: mappé sur 5174 par défaut (`TEST_APP_PORT=5174`)
 - **Couverture**: écrite dans `./coverage/` via bind mount
 
 ### Fichiers
@@ -148,13 +152,13 @@ graph LR
 |----------|---------|-----|-------------|
 | `VITE_SIMPLE_REST_URL` | — | App (non utilisé) | URL de l'API REST (legacy) |
 | `VITE_API_URL` | `''` | App source | URL du backend API (vide = mocké ou proxy) |
-| `CYPRESS_BASE_URL` | `http://localhost:5173` | `cypress.config.ts` | URL de l'app sous test |
+| `CYPRESS_BASE_URL` | `http://localhost:5174` | `cypress.config.ts` | URL de l'app sous test |
 | `CYPRESS_VIDEO` | `false` | `cypress.config.ts` | Enregistrement vidéo des tests |
 | `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | `10000` | `cypress.config.ts` | Timeout par défaut (ms) |
 | `CYPRESS_VIEWPORT_WIDTH` | `1280` | `cypress.config.ts` | Largeur viewport |
 | `CYPRESS_VIEWPORT_HEIGHT` | `720` | `cypress.config.ts` | Hauteur viewport |
 | `NYC_CAFEOBJECT_COVERAGE` | `true` | `vite.config.ts` | Active l'instrumentation Istanbul |
-| `TEST_APP_PORT` | `5173` | `docker-compose.yml` | Port du serveur statique |
+| `TEST_APP_PORT` | `5174` | `scripts/run-cypress-coverage.sh` | Port du serveur statique (dédié tests) |
 
 ### Sécurité
 
