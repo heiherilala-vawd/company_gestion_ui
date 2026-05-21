@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main, master, develop]
 
+env:
+  # Passed to docker compose; enables coverage instrumentation
+  NYC_CAFEOBJECT_COVERAGE: "true"
+  CYPRESS_VIDEO: "true"
+
 jobs:
   lint-and-typecheck:
     runs-on: ubuntu-latest
@@ -28,15 +33,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Cache Docker layers
+        uses: actions/cache@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
 
-      - run: npm ci
-
-      - name: Run Cypress tests with coverage
-        run: npm run cypress:coverage
+      - name: Build and run Cypress tests in Docker
+        run: npm run cypress:docker:ci
 
       - name: Upload coverage report
         if: always()

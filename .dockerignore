@@ -1,0 +1,16 @@
+node_modules
+dist
+coverage
+.nyc_output
+src/__tests__/coverage
+src/__tests__/.nyc_output
+.git
+.gitignore
+*.md
+AGENTS.md
+.env
+.env.local
+.env.*.local
+.gitkeep
+.nycrc
+src/__tests__/.nycrc
