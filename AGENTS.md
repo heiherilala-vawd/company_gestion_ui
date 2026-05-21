@@ -351,16 +351,7 @@ updated_by: toAuditUserMapper(user1Mock),
    ```bash
    export VITE_API_URL=''
    ```
-2. **Global security check** in `src/__tests__/support/e2e.ts`:
-   ```typescript
-   before(() => {
-     cy.intercept('**', (req) => {
-       if (!req.url.startsWith('http://localhost:5173')) {
-         console.warn('⚠️ Potential backend leak detected:', req.url)
-       }
-     }).as('securityCheck')
-   })
-   ```
+2. **Dedicated test port (5174)**: Tests run on port 5174, never conflicting with `npm run dev` on 5173.
 3. **Static serve** uses built app (no proxy to backend)
 
 ### Environment Variables Reference
@@ -385,14 +376,14 @@ Environment variables separate test config from dev. All default to safe local v
 
 | Variable | Default | Where used | Description |
 |----------|---------|-----------|-------------|
-| `CYPRESS_BASE_URL` | `http://localhost:5173` | `cypress.config.ts` | URL of the app under test |
+| `CYPRESS_BASE_URL` | `http://localhost:5174` | `cypress.config.ts` | URL of the app under test |
 | `CYPRESS_VIDEO` | `false` | `cypress.config.ts` | Record test video |
 | `CYPRESS_VIEWPORT_WIDTH` | `1280` | `cypress.config.ts` | Viewport width |
 | `CYPRESS_VIEWPORT_HEIGHT` | `720` | `cypress.config.ts` | Viewport height |
 | `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | `10000` | `cypress.config.ts` | Default command timeout (ms) |
 | `VITE_API_URL` | `''` (empty) | App source code | Backend API URL (empty = mocked) |
 | `NYC_CAFEOBJECT_COVERAGE` | `true` | `vite.config.ts` | Enable Istanbul instrumentation |
-| `TEST_APP_PORT` | `5173` | `docker-compose.yml` | Port for the static server |
+| `TEST_APP_PORT` | `5174` | `scripts/run-cypress-coverage.sh` / `docker-compose.yml` | Port for the static server |
 
 **How to override:**
 - **Locally**: edit `.env.test` (versioned, shared with team)
