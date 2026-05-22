@@ -1,3 +1,14 @@
+---
+name: clean-code-ui-ux
+description: >
+  Clean code principles for React Admin + MUI UI/UX development. Covers strict
+  separation of style tokens (themeConfig.ts), reusable SxProps (components.ts),
+  theme overrides (theme.ts), dark mode support, and shared generic components.
+  Use this whenever you need to write or refactor UI code following the project's
+  design system, ensure proper style/logic separation, or understand the 3-layer
+  styling architecture (tokens → style objects → theme overrides).
+---
+
 # Clean Code UI/UX — React Admin + MUI
 
 ## Principles
