@@ -52,14 +52,3 @@ echo "Stopping static server..."
 kill $SERVER_PID || true
 
 echo "Done!"
-
-echo "Generating coverage report..."
-npx nyc report --reporter=text-summary --reporter=html
-
-echo "Checking coverage thresholds..."
-npx nyc check-coverage --lines 57 --functions 60 --branches 45 --statements 55
-
-echo "Stopping static server..."
-kill $SERVER_PID || true
-
-echo "Done!"
