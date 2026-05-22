@@ -1,3 +1,13 @@
+---
+name: select-with-create
+description: >
+  Reference select with inline create dialog pattern for React Admin. Covers the
+  ReferenceSelectWithCreate wrapper component, SelectWithCreateProvider factory
+  functions, and form components with dual-mode behavior (standalone create vs
+  inline dialog). Use this when implementing a dropdown that needs inline creation
+  of related records, or when adding a new entity factory to the provider.
+---
+
 # Select + Create Pattern
 
 ## Concept
