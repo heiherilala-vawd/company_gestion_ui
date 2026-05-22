@@ -1,0 +1,66 @@
+import { FunctionComponent, ReactNode, Children, isValidElement } from 'react'
+import { Datagrid, DatagridProps } from 'react-admin'
+import { useMediaQuery, useTheme as useMuiTheme } from '@mui/material'
+import { datagridStyles } from '../style/components'
+
+interface ResponsiveDatagridProps extends Omit<DatagridProps, 'children'> {
+  children: ReactNode
+  priorityFields?: string[]
+  descriptionNumber?: number
+}
+
+export const ResponsiveDatagrid: FunctionComponent<ResponsiveDatagridProps> = ({
+  children,
+  priorityFields,
+  descriptionNumber = 2,
+  ...props
+}) => {
+  const theme = useMuiTheme()
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'))
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'))
+  const isMd = useMediaQuery(theme.breakpoints.only('md'))
+
+  const childArray = Children.toArray(children)
+
+  const getVisibleFields = () => {
+    if (!priorityFields || priorityFields.length === 0) return childArray
+
+    const prioritySet = new Set(priorityFields)
+    const priority = childArray.filter((child) => {
+      if (isValidElement(child)) {
+        return child.props.source && prioritySet.has(child.props.source)
+      }
+      return false
+    })
+
+    const others = childArray.filter((child) => {
+      if (isValidElement(child)) {
+        return child.props.source && !prioritySet.has(child.props.source)
+      }
+      return true
+    })
+
+    const actions = childArray.filter((child) => !isValidElement(child) || !child.props.source)
+
+    if (isXs) return [...actions, ...priority.slice(0, descriptionNumber)]
+    if (isSm) return [...actions, ...priority.slice(0, descriptionNumber + 1)]
+    if (isMd) return [...actions, ...priority.slice(0, descriptionNumber + 3)]
+
+    const data = [...priority, ...others].slice(0, 8)
+    return [...actions, ...data]
+  }
+
+  return (
+    <Datagrid
+      {...props}
+      sx={{
+        ...datagridStyles.container,
+        ...datagridStyles.responsive,
+      }}
+      rowClick="show"
+      bulkActionButtons={false}
+    >
+      {getVisibleFields()}
+    </Datagrid>
+  )
+}
