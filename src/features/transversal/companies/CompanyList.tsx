@@ -17,7 +17,7 @@ import { CompanyType } from '../../../gen-ts/src/models/CompanyType'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const CompanyFilters = [
-  <SearchInput source="name" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="rib" label="RIB" />,
   <TextInput source="description" label="Description" />,
   <SelectInput

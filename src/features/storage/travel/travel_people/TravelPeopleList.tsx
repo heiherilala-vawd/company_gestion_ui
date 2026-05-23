@@ -2,6 +2,8 @@ import {
   List,
   TextField,
   DateField,
+  DateTimeInput,
+  SearchInput,
   TextInput,
   BooleanInput,
   ReferenceInput,
@@ -13,15 +15,18 @@ import {
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelPeopleFilters = [
-  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100} alwaysOn>
+  <SearchInput source="q" alwaysOn />,
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
     <SelectInput optionText="expense.description" label="Voyage" />
   </ReferenceInput>,
   <ReferenceInput source="user_id" reference="users" perPage={100}>
     <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Utilisateur" />
   </ReferenceInput>,
-  <TextInput source="arrival_location" label="Lieu d'arrivée" />,
-  <TextInput source="arrival_date_min" label="Date arrivée min" />,
-  <TextInput source="arrival_date_max" label="Date arrivée max" />,
+  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+    <SelectInput optionText="name" label="Lieu d'arrivée" />
+  </ReferenceInput>,
+  <DateTimeInput source="arrival_date_min" label="Date arrivée min" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
+  <DateTimeInput source="arrival_date_max" label="Date arrivée max" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
   <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 

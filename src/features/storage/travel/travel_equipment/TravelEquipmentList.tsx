@@ -4,6 +4,8 @@ import {
   NumberField,
   SelectField,
   DateField,
+  DateTimeInput,
+  SearchInput,
   TextInput,
   SelectInput,
   BooleanInput,
@@ -16,7 +18,8 @@ import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelEquipmentFilters = [
-  <ReferenceInput source="equipment_id" reference="equipment" perPage={100} alwaysOn>
+  <SearchInput source="q" alwaysOn />,
+  <ReferenceInput source="equipment_id" reference="equipment" perPage={100}>
     <SelectInput optionText="name" label="Équipement" />
   </ReferenceInput>,
   <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
@@ -28,9 +31,11 @@ const TravelEquipmentFilters = [
     label="Statut"
     choices={Object.entries(TransportStatus).map(([k, v]) => ({ id: v, name: k }))}
   />,
-  <TextInput source="arrival_location" label="Lieu d'arrivée" />,
-  <TextInput source="arrival_date_min" label="Date arrivée min" />,
-  <TextInput source="arrival_date_max" label="Date arrivée max" />,
+  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+    <SelectInput optionText="name" label="Lieu d'arrivée" />
+  </ReferenceInput>,
+  <DateTimeInput source="arrival_date_min" label="Date arrivée min" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
+  <DateTimeInput source="arrival_date_max" label="Date arrivée max" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
   <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 

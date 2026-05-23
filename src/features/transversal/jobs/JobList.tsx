@@ -15,7 +15,7 @@ import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 import { JobStatus } from '../../../gen-ts/src/models/JobStatus'
 
 const JobFilters = [
-  <SearchInput source="description" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <SelectInput
     source="status"
     label="Statut"

@@ -12,7 +12,7 @@ import {
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const WarehouseFilters = [
-  <SearchInput source="name" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="description" label="Description" />,
   <ReferenceInput source="job_id" reference="jobs" perPage={100}>
     <SelectInput optionText="description" label="Chantier" />

@@ -19,7 +19,7 @@ const formatEnumLabel = (key: string) =>
     .join(' ')
 
 const UserFilters = [
-  <SearchInput source="email" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="first_name" label="Prénom" />,
   <TextInput source="last_name" label="Nom" />,
   <SelectInput

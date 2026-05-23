@@ -13,7 +13,7 @@ import {
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const IncomeFilters = [
-  <SearchInput source="source_organization" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="invoice_reference" label="Réf. facture" />,
   <TextInput source="description" label="Description" />,
   <TextInput source="amount" label="Montant" />,
