@@ -4,6 +4,7 @@ import { Box } from '@mui/material'
 import { AppBar } from './AppBar'
 import { Menu } from './Menu'
 import { Sidebar } from 'react-admin'
+import { BottomNav } from './BottomNav'
 import { layoutStyles } from '../style/components'
 
 interface LayoutProps {
@@ -34,6 +35,7 @@ export const Layout = ({ children, appBar, menu, sidebar }: LayoutProps) => {
       <Box sx={layoutStyles.container}>
         <Box sx={layoutStyles.content}>{children}</Box>
       </Box>
+      <BottomNav />
       <CheckForApplicationUpdate />
     </RALayout>
   )

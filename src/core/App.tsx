@@ -33,6 +33,10 @@ import ExpensesActivity from '../features/ExpensesActivity'
 import TravelMaterialActivity from '../features/TravelMaterialActivity'
 import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm'
 import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
+import RHPage from '../features/sections/RHPage'
+import StockPage from '../features/sections/StockPage'
+import EquipmentPage from '../features/sections/EquipmentPage'
+import MonetaryPage from '../features/sections/MonetaryPage'
 import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
@@ -66,6 +70,10 @@ const ThemedAdmin = () => {
               <Route path="/employer_payments_activity" element={<EmployerPaymentActivity />} />
               <Route path="/incomes_activity" element={<IncomesActivity />} />
               <Route path="/travel_materials_activity" element={<TravelMaterialActivity />} />
+              <Route path="/rh" element={<RHPage />} />
+              <Route path="/stock" element={<StockPage />} />
+              <Route path="/equipment-hub" element={<EquipmentPage />} />
+              <Route path="/monetary" element={<MonetaryPage />} />
             </CustomRoutes>
             <Resource name="jobs" {...JobResource} />
             <Resource name="companies" {...CompanyResource} />

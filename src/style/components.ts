@@ -606,6 +606,50 @@ export const homePageStyles = {
   } as const,
 }
 
+export const bottomNavStyles = {
+  paper: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1200,
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.85) : alpha('#0F2F23', 0.85),
+    backdropFilter: 'blur(16px)',
+    borderTop: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    backgroundImage: 'none',
+    transition: transitions.default,
+  } as const,
+  nav: {
+    backgroundColor: 'transparent',
+    height: { xs: 60, sm: 64 },
+    '& .MuiBottomNavigationAction-root': {
+      minWidth: 0,
+      padding: '4px 0',
+    },
+    '& .MuiBottomNavigationAction-label': {
+      fontSize: { xs: '0.6rem', sm: '0.65rem' },
+      fontWeight: 500,
+    },
+    '& .Mui-selected .MuiBottomNavigationAction-label': {
+      fontSize: { xs: '0.6rem', sm: '0.65rem' },
+      fontWeight: 700,
+    },
+    '& .MuiBottomNavigationAction-root.Mui-selected': {
+      color: (theme: Theme) => theme.palette.primary.main,
+    },
+  } as const,
+  action: {
+    color: 'text.secondary',
+    '& .MuiSvgIcon-root': {
+      fontSize: { xs: 20, sm: 22 },
+    },
+    '&.Mui-selected .MuiSvgIcon-root': {
+      color: (theme: Theme) => theme.palette.primary.main,
+    },
+  } as const,
+}
+
 export const emptyStateStyles: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
@@ -627,6 +671,7 @@ export const layoutStyles = {
     display: 'flex',
     flexDirection: 'column',
     p: { xs: 1, sm: 2, md: 2.5 },
+    pb: { xs: 8, sm: 9 },
     backgroundColor: 'background.default',
     minHeight: '100vh',
     transition: transitions.default,

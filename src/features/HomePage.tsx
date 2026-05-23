@@ -23,8 +23,8 @@ function IllustrationCard({ btn }: { btn: (typeof quickActionButtons)[0] }) {
         }}
       >
         <Icon sx={homePageStyles.illustrationIcon} />
-        </Box>
-        <Typography sx={homePageStyles.illustrationDesc}>{btn.desc}</Typography>
+      </Box>
+      <Typography sx={homePageStyles.illustrationDesc}>{btn.desc}</Typography>
     </Box>
   )
 }
