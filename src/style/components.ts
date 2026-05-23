@@ -552,8 +552,11 @@ export const homePageStyles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     cursor: 'pointer',
     transition: transitions.spring,
+    width: { xs: 90, sm: 110 },
+    height: { xs: 110, sm: 130 },
     '&:hover': {
       transform: 'translateY(-4px)',
     },
@@ -594,19 +597,12 @@ export const homePageStyles = {
     zIndex: 1,
   } as const,
 
-  illustrationLabel: {
-    fontWeight: 600,
-    fontSize: { xs: '0.7rem', sm: '0.8rem' },
-    textAlign: 'center',
-    color: 'text.primary',
-    lineHeight: 1.3,
-  } as const,
-
   illustrationDesc: {
     fontSize: { xs: '0.55rem', sm: '0.6rem' },
     color: 'text.secondary',
     textAlign: 'center',
     mt: 0.25,
+    whiteSpace: 'pre-line',
   } as const,
 }
 

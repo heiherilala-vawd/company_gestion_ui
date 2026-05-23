@@ -2,7 +2,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import PaidIcon from '@mui/icons-material/Paid'
 import MoneyOffIcon from '@mui/icons-material/MoneyOff'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import { canAccessResource } from '../auth/authProvider'
 import { alpha } from '@mui/material/styles'
@@ -90,9 +90,9 @@ export const quickActionButtons: HomeButton[] = [
 export const validationButtons: HomeButton[] = [
   {
     label: 'Valider paiement / Retourner emprunt',
-    icon: CheckCircleIcon,
+    icon: CurrencyExchangeIcon,
     to: '/employer_payments_activity',
-    desc: 'Valider',
+    desc: 'Reçu\nretourné',
     color: 'moss',
     checkResources: ['incomes', 'loans'],
   },
