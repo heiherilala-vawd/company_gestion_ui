@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AppBar as RAAppBar, TitlePortal } from 'react-admin'
-import { Box, IconButton, Button, Tooltip, useMediaQuery } from '@mui/material'
+import { Box, IconButton, Button, Tooltip, useMediaQuery, Collapse } from '@mui/material'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HomeIcon from '@mui/icons-material/Home'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import { appBarStyles } from '../style/components'
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
 import { JobSelector } from '../features/transversal/jobs/JobSelector'
@@ -20,6 +22,7 @@ export const AppBar = () => {
   const prevPath = prevPathRef.current
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const [showSelectors, setShowSelectors] = useState(false)
   useEffect(() => {
     prevPathRef.current = location.pathname
   }, [location])
@@ -32,48 +35,76 @@ export const AppBar = () => {
     prevPath === '/login' || prevPath === '/register' || prevPath.startsWith('/auth')
 
   return (
-    <RAAppBar sx={appBarStyles.appBar} data-testid={'menu-item-selector-home'}>
-      <Tooltip title="Accueil">
-        <IconButton onClick={() => navigate('/')} color="inherit" sx={appBarStyles.iconButton}>
-          <HomeIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-      {!isAuthPage &&
-        window.history.length > 1 &&
-        !prevIsAuth &&
-        (isMobile ? (
-          <Tooltip title="Retour">
-            <IconButton onClick={() => navigate(-1)} color="inherit" sx={appBarStyles.iconButton}>
-              <ArrowBackIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Button
-            startIcon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
-            color="inherit"
-            size="small"
-            sx={{ color: 'text.secondary', fontWeight: 500 }}
-          >
-            Retour
-          </Button>
-        ))}
-      <TitlePortal />
-      <Box sx={{ flex: 1 }} />
-      <Box sx={appBarStyles.container}>
-        <Tooltip title={mode === 'dark' ? 'Mode clair' : 'Mode sombre'}>
-          <IconButton onClick={toggleMode} color="inherit" sx={appBarStyles.iconButton}>
-            {mode === 'dark' ? (
-              <LightModeIcon fontSize="small" />
-            ) : (
-              <DarkModeIcon fontSize="small" />
-            )}
+    <>
+      <RAAppBar sx={appBarStyles.appBar} data-testid={'menu-item-selector-home'}>
+        <Tooltip title="Accueil">
+          <IconButton onClick={() => navigate('/')} color="inherit" sx={appBarStyles.iconButton}>
+            <HomeIcon fontSize="small" />
           </IconButton>
         </Tooltip>
-        <CompanySelector />
-        <JobSelector />
-      </Box>
-    </RAAppBar>
+        {!isAuthPage &&
+          window.history.length > 1 &&
+          !prevIsAuth &&
+          (isMobile ? (
+            <Tooltip title="Retour">
+              <IconButton onClick={() => navigate(-1)} color="inherit" sx={appBarStyles.iconButton}>
+                <ArrowBackIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Button
+              startIcon={<ArrowBackIcon />}
+              onClick={() => navigate(-1)}
+              color="inherit"
+              size="small"
+              sx={{ color: 'text.secondary', fontWeight: 500 }}
+            >
+              Retour
+            </Button>
+          ))}
+        <TitlePortal />
+        <Box sx={{ flex: 1 }} />
+        <Box sx={appBarStyles.container}>
+          <Tooltip title={mode === 'dark' ? 'Mode clair' : 'Mode sombre'}>
+            <IconButton onClick={toggleMode} color="inherit" sx={appBarStyles.iconButton}>
+              {mode === 'dark' ? (
+                <LightModeIcon fontSize="small" />
+              ) : (
+                <DarkModeIcon fontSize="small" />
+              )}
+            </IconButton>
+          </Tooltip>
+          {isMobile ? (
+            <Tooltip title={showSelectors ? 'Masquer les sélecteurs' : 'Afficher les sélecteurs'}>
+              <IconButton
+                onClick={() => setShowSelectors((prev) => !prev)}
+                color="inherit"
+                sx={appBarStyles.iconButton}
+              >
+                {showSelectors ? (
+                  <ExpandLessIcon fontSize="small" />
+                ) : (
+                  <ExpandMoreIcon fontSize="small" />
+                )}
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <>
+              <CompanySelector />
+              <JobSelector />
+            </>
+          )}
+        </Box>
+      </RAAppBar>
+      {isMobile && (
+        <Collapse in={showSelectors}>
+          <Box sx={appBarStyles.expandedSection}>
+            <CompanySelector />
+            <JobSelector />
+          </Box>
+        </Collapse>
+      )}
+    </>
   )
 }
 
