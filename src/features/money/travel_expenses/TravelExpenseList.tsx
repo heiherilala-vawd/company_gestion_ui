@@ -3,15 +3,21 @@ import {
   TextField,
   DateField,
   SearchInput,
-  TextInput,
+  ReferenceInput,
+  SelectInput,
   EditButton,
   DeleteButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const TravelExpenseFilters = [
-  <SearchInput source="departure_location" alwaysOn />,
-  <TextInput source="arrival_location" label="Arrivée" />,
+  <SearchInput source="q" alwaysOn />,
+  <ReferenceInput source="departure_location" reference="warehouses" perPage={100}>
+    <SelectInput optionText="name" label="Départ" />
+  </ReferenceInput>,
+  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+    <SelectInput optionText="name" label="Arrivée" />
+  </ReferenceInput>,
 ]
 
 export default function TravelExpenseList() {

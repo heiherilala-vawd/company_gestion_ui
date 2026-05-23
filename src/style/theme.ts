@@ -863,12 +863,72 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   RaFilterForm: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
+        backgroundColor: mode === 'light' ? alpha('#D4A76A', 0.04) : alpha('#D4A76A', 0.06),
         borderRadius: br.lg,
-        padding: { xs: 2, md: 3 },
+        padding: { xs: 1.25, md: 1.5 },
         boxShadow: getShadow(mode, 'card'),
-        border: `1px solid ${getBorder(mode)}`,
-        marginBottom: { xs: 2, md: 3 },
+        border: `1px solid ${alpha('#D4A76A', mode === 'light' ? 0.15 : 0.25)}`,
+        marginBottom: { xs: 1.5, md: 2 },
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: { xs: 0.75, md: 1 },
+        '& .MuiFormControl-root': {
+          marginBottom: 0,
+          minWidth: { xs: 140, sm: 180 },
+        },
+        '& .MuiInputBase-root': {
+          fontSize: { xs: '0.75rem', sm: '0.8125rem' },
+        },
+        '& .MuiOutlinedInput-root': {
+          backgroundColor: (t: { palette: { mode: string } }) =>
+            t.palette.mode === 'light' ? '#ffffff' : '#1E4038',
+          '&:hover': {
+            '& fieldset': {
+              borderColor: alpha('#D4A76A', 0.4),
+            },
+          },
+          '&.Mui-focused': {
+            boxShadow: `0 0 0 3px ${alpha('#D4A76A', 0.2)}`,
+            '& fieldset': {
+              borderColor: '#D4A76A',
+              borderWidth: '1.5px',
+            },
+          },
+          '& input': {
+            padding: { xs: '6px 10px', sm: '8px 12px' },
+          },
+        },
+        '& .MuiSelect-select': {
+          padding: { xs: '6px 10px', sm: '8px 12px' },
+          minHeight: 0,
+        },
+        '& .MuiInputLabel-root': {
+          fontSize: '0.75rem',
+          marginBottom: '4px',
+          color: (t: { palette: { mode: string } }) =>
+            t.palette.mode === 'light' ? alpha('#D4A76A', 0.8) : alpha('#D4A76A', 0.7),
+          '&.Mui-focused': {
+            color: '#D4A76A',
+          },
+        },
+        '& .MuiSelect-icon': {
+          color: '#D4A76A',
+        },
+      },
+    },
+  },
+
+  RaFilterFormInput: {
+    styleOverrides: {
+      root: {
+        margin: 0,
+        padding: 0,
+        '& .MuiFormControl-root': {
+          marginBottom: 0,
+        },
+        '&:first-of-type': {
+          marginLeft: 0,
+        },
       },
     },
   },

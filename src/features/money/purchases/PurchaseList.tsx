@@ -4,6 +4,7 @@ import {
   List,
   TextField,
   NumberField,
+  SearchInput,
   BooleanInput,
   ReferenceInput,
   SelectInput,
@@ -33,7 +34,8 @@ export default function PurchaseList() {
       : undefined
 
   const PurchaseFilters = [
-    <ReferenceInput source="supplier_id" reference="warehouses" perPage={100} alwaysOn>
+    <SearchInput source="q" alwaysOn />,
+    <ReferenceInput source="supplier_id" reference="warehouses" perPage={100}>
       <SelectInput optionText="name" label="Fournisseur" />
     </ReferenceInput>,
     ...(!isEquipment && !isMaterial

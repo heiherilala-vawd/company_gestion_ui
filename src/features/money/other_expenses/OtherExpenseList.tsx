@@ -9,7 +9,7 @@ import {
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const OtherExpenseFilters = [<SearchInput source="description" alwaysOn />]
+const OtherExpenseFilters = [<SearchInput source="q" alwaysOn />]
 
 export default function OtherExpenseList() {
   return (

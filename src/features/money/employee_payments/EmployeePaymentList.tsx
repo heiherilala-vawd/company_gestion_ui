@@ -15,7 +15,7 @@ import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EmployerPaymentFilters = [
-  <SearchInput source="payment_description" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <ReferenceInput source="employee_id" reference="users" perPage={100}>
     <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Employé" />
   </ReferenceInput>,

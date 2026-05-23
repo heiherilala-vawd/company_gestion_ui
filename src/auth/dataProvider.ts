@@ -79,7 +79,10 @@ export const dataProvider = {
   getList: async (resource: string, params: GetListParams) => {
     const page = params.pagination?.page ?? 1
     const perPage = params.pagination?.perPage ?? 10
+    const searchQuery = params.filter?.q
     const filters = { ...params.filter }
+    delete filters.q
+
     const query = new URLSearchParams({
       page: page.toString(),
       page_size: perPage.toString(),
@@ -90,7 +93,20 @@ export const dataProvider = {
 
     const response = await fetchWithToken<{ data: T[]; total?: number }>(url)
 
-    const rawData: any[] = Array.isArray(response) ? response : response.data || []
+    let rawData: any[] = Array.isArray(response) ? response : response.data || []
+
+    if (searchQuery) {
+      const lower = searchQuery.toLowerCase()
+      const collectTexts = (val: any, depth = 0): string[] => {
+        if (typeof val === 'string') return [val.toLowerCase()]
+        if (typeof val === 'number') return [val.toString()]
+        if (!val || typeof val !== 'object' || depth > 1) return []
+        return Object.values(val).flatMap((v: any) => collectTexts(v, depth + 1))
+      }
+      rawData = rawData.filter((item: any) =>
+        collectTexts(item).some((t: string) => t.includes(lower)),
+      )
+    }
 
     const data = rawData.map((item: any) => {
       if (item.id) return item
@@ -100,9 +116,11 @@ export const dataProvider = {
       return { ...item, id: crypto.randomUUID() }
     })
 
+    const start = (page - 1) * perPage
+
     return {
-      data,
-      total: (response as any).total || (Array.isArray(response) ? response.length : 0),
+      data: data.slice(start, start + perPage),
+      total: data.length,
     }
   },
 

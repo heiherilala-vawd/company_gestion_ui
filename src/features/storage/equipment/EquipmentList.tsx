@@ -16,7 +16,7 @@ import {
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EquipmentFilters = [
-  <SearchInput source="name" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="description" label="Description" />,
   <ReferenceInput source="warehouse_id" reference="warehouses" perPage={100}>
     <SelectInput optionText="name" label="Entrepôt" />

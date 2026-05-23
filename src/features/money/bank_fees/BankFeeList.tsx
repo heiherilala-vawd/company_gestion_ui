@@ -11,7 +11,7 @@ import {
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const BankFeeFilters = [
-  <SearchInput source="bank_name" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="description" label="Description" />,
 ]
 

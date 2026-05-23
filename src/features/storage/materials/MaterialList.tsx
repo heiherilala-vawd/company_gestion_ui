@@ -21,7 +21,7 @@ const formatEnumLabel = (key: string) =>
     .join(' ')
 
 const MaterialFilters = [
-  <SearchInput source="name" alwaysOn />,
+  <SearchInput source="q" alwaysOn />,
   <TextInput source="description" label="Description" />,
   <SelectInput
     source="unit"

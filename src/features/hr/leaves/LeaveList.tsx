@@ -23,7 +23,6 @@ const LeaveFilters = [
       { id: 'REJECTED', name: 'Rejeté' },
       { id: 'CANCELLED', name: 'Annulé' },
     ]}
-    alwaysOn
   />,
 ]
 
