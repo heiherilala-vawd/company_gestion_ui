@@ -24,6 +24,7 @@ interface Props {
   createForm?: React.ReactNode
   onSuccess?: (newRecord: any) => void
   extractionPath?: string
+  sx?: Record<string, any>
 }
 
 export default function ReferenceSelectWithCreate({
@@ -38,6 +39,7 @@ export default function ReferenceSelectWithCreate({
   createForm,
   onSuccess,
   extractionPath,
+  sx,
 }: Props) {
   const refresh = useRefresh()
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -91,12 +93,23 @@ export default function ReferenceSelectWithCreate({
     <>
       <Box
         display="flex"
-        alignItems="center"
+        alignItems="flex-start"
         gap={1}
         data-testid={'input-' + reference + '-id'}
-        sx={{ width: '100%' }}
+        sx={{ width: '100%', ...sx }}
       >
-        <Box flex={1}>
+        <Box
+          flex={1}
+          sx={{
+            minWidth: 0,
+            '& .MuiSelect-select, & .MuiNativeSelect-select': {
+              whiteSpace: 'normal !important' as any,
+              overflowWrap: 'break-word !important',
+              height: 'auto !important',
+              minHeight: 'auto !important',
+            },
+          }}
+        >
           <ReferenceInput
             source={source}
             reference={reference}
@@ -109,7 +122,7 @@ export default function ReferenceSelectWithCreate({
           </ReferenceInput>
         </Box>
         {createForm && (
-          <IconButton onClick={() => setDialogOpen(true)} color="primary">
+          <IconButton onClick={() => setDialogOpen(true)} color="primary" sx={{ flexShrink: 0, mt: 0.5 }}>
             <AddIcon />
           </IconButton>
         )}

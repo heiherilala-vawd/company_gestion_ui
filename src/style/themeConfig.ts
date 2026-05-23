@@ -97,6 +97,25 @@ export const colors = {
   },
 }
 
+export const natureColors = {
+  forest: { main: '#2D5A27', light: '#4A7A42', dark: '#1A3D16' },
+  moss: { main: '#5A7A4A', light: '#7A9E68', dark: '#3D5A30' },
+  earth: { main: '#8B6F47', light: '#A88B63', dark: '#6D532F' },
+  clay: { main: '#B87D5B', light: '#D4A084', dark: '#9A6040' },
+  bark: { main: '#6B4C3B', light: '#8B6C5B', dark: '#4D3020' },
+  leaf: { main: '#7CB342', light: '#9CCC65', dark: '#558B2F' },
+  charcoal: { main: '#2C2C2C', light: '#4A4A4A', dark: '#1A1A1A' },
+}
+
+export const natureGradients = {
+  forest: 'linear-gradient(135deg, #2D5A27 0%, #4A7A42 100%)',
+  earth: 'linear-gradient(135deg, #8B6F47 0%, #6D532F 100%)',
+  clay: 'linear-gradient(135deg, #B87D5B 0%, #9A6040 100%)',
+  bark: 'linear-gradient(135deg, #6B4C3B 0%, #4D3020 100%)',
+  moss: 'linear-gradient(135deg, #5A7A4A 0%, #3D5A30 100%)',
+  leaf: 'linear-gradient(135deg, #7CB342 0%, #558B2F 100%)',
+}
+
 export const gradients = {
   primary: 'linear-gradient(135deg, #6CA568 0%, #4E8B56 100%)',
   primaryHorizontal: 'linear-gradient(90deg, #6CA568 0%, #4E8B56 100%)',
@@ -143,7 +162,7 @@ export const shadows = {
 }
 
 export const borderRadius = {
-  xs: 4,
+  xs: 2,
   sm: 8,
   md: 12,
   lg: 16,
@@ -245,6 +264,8 @@ export const getTextSecondary = (mode: 'light' | 'dark') => {
 export const themeConfig = {
   colors,
   gradients,
+  natureColors,
+  natureGradients,
   shadows,
   borderRadius,
   transitions,
