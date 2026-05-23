@@ -49,6 +49,19 @@ export const appBarStyles = {
       transform: 'translateY(-1px)',
     },
   } as const,
+
+  expandedSection: {
+    backgroundColor: (theme: Theme) =>
+      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.8) : alpha('#0F2F23', 0.85),
+    backdropFilter: 'blur(16px)',
+    borderBottom: (theme: Theme) =>
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    px: { xs: 1.5, sm: 2.5 },
+    py: 1,
+    display: 'flex',
+    gap: 1,
+    alignItems: 'center',
+  } as const,
 }
 
 export const menuStyles = {
