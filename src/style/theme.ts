@@ -55,11 +55,11 @@ export const commonStyles = {
   },
   card: {
     p: { xs: 2, md: 3 },
-    borderRadius: br.xxl,
+    borderRadius: br.lg,
     boxShadow: 1,
   },
   floatingContainer: {
-    borderRadius: br.xxl,
+    borderRadius: br.lg,
     backgroundColor: 'background.paper',
     boxShadow: (theme: { palette: { mode: string } }) =>
       getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
@@ -204,7 +204,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: br.xxl,
+        borderRadius: '0px',
         boxShadow: getShadow(mode, 'card'),
         transition: transitions.default,
         backgroundColor: mode === 'light' ? colors.light.background.paper : '#1E4038',
@@ -220,7 +220,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiPaper: {
     styleOverrides: {
       root: {
-        borderRadius: br.lg,
+        borderRadius: '0px',
         transition: transitions.default,
         backgroundImage: 'none',
       },
@@ -321,7 +321,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiTable: {
     styleOverrides: {
       root: {
-        borderRadius: br.xxl,
+        borderRadius: br.lg,
         overflow: 'hidden',
       },
     },
@@ -330,7 +330,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiTableContainer: {
     styleOverrides: {
       root: {
-        borderRadius: br.xxl,
+        borderRadius: br.lg,
         border: `1px solid ${getBorder(mode)}`,
         boxShadow: getShadow(mode, 'card'),
         overflow: 'auto',
@@ -382,13 +382,13 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiDataGrid: {
     styleOverrides: {
       root: {
-        borderRadius: br.xxl,
+        borderRadius: br.lg,
         border: `1px solid ${getBorder(mode)}`,
         boxShadow: getShadow(mode, 'card'),
         backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
         '& .MuiDataGrid-columnHeaders': {
           backgroundColor: getSubtleBg(mode),
-          borderRadius: `${br.xxl}px ${br.xxl}px 0 0`,
+          borderRadius: `${br.lg}px ${br.lg}px 0 0`,
           borderBottom: `2px solid ${getBorder(mode)}`,
           '& .MuiDataGrid-columnHeader': {
             padding: { xs: '10px 16px', sm: '14px 20px' },
@@ -545,7 +545,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: br.xxl,
+        borderRadius: br.lg,
         boxShadow: getShadow(mode, 'dialog'),
         '@media (max-width: 600px)': {
           margin: '16px',
@@ -670,6 +670,11 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         boxShadow: 'none',
         maxWidth: { xs: '100%', md: '900px' },
         margin: { xs: '8px', sm: '16px', md: '24px auto' },
+        '& .MuiCard-root': {
+          borderRadius: 0,
+          boxShadow: 'none',
+          border: 'none',
+        },
       },
     },
   },
@@ -687,6 +692,11 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         boxShadow: 'none',
         maxWidth: { xs: '100%', md: '900px' },
         margin: { xs: '8px', sm: '16px', md: '24px auto' },
+        '& .MuiCard-root': {
+          borderRadius: 0,
+          boxShadow: 'none',
+          border: 'none',
+        },
       },
     },
   },
@@ -704,6 +714,11 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         boxShadow: 'none',
         maxWidth: { xs: '100%', md: '900px' },
         margin: { xs: '8px', sm: '16px', md: '24px auto' },
+        '& .MuiCard-root': {
+          borderRadius: 0,
+          boxShadow: 'none',
+          border: 'none',
+        },
       },
     },
   },
@@ -712,7 +727,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
-        borderRadius: br.xxl,
+        borderRadius: 0,
         padding: { xs: 2.5, sm: 3, md: 4 },
         boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
@@ -727,7 +742,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
-        borderRadius: br.xxl,
+        borderRadius: 0,
         boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
         overflow: 'hidden',
@@ -836,6 +851,11 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
       main: {
         backgroundColor: 'transparent',
         boxShadow: 'none',
+        '& .MuiCard-root': {
+          borderRadius: 0,
+          boxShadow: 'none',
+          border: 'none',
+        },
       },
     },
   },
@@ -844,7 +864,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
-        borderRadius: br.xxl,
+        borderRadius: br.lg,
         padding: { xs: 2, md: 3 },
         boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
@@ -958,7 +978,7 @@ export const createAppTheme = (mode: 'light' | 'dark') => {
     },
     spacing: SPACING_UNIT,
     shape: {
-      borderRadius: br.md,
+      borderRadius: 0,
     },
     components: commonComponentOverrides(mode),
     breakpoints: {

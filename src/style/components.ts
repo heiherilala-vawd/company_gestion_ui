@@ -227,7 +227,7 @@ export const formStyles = {
   } as const,
 
   card: {
-    borderRadius: br.xxl,
+    borderRadius: br.lg,
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
     overflow: 'hidden',
     '&:hover': {
@@ -295,7 +295,7 @@ export const datagridStyles = {
   container: {
     '& .MuiDataGrid-root': {
       border: 'none',
-      borderRadius: br.xxl,
+      borderRadius: br.lg,
     },
     '& .MuiDataGrid-cell': {
       fontSize: '0.875rem',
@@ -324,11 +324,11 @@ export const datagridStyles = {
   } as const,
 
   responsive: {
-    borderRadius: br.xxl,
+    borderRadius: br.lg,
     overflow: 'hidden',
     border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
     '& .RaDatagrid-root': {
-      borderRadius: br.xxl,
+      borderRadius: br.lg,
     },
     '& .RaDatagrid-header': {
       backgroundColor: (theme: Theme) => getTableHeader(theme.palette.mode as 'light' | 'dark'),
@@ -367,7 +367,7 @@ export const showStyles = {
   } as const,
 
   card: {
-    borderRadius: br.xxl,
+    borderRadius: br.lg,
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
     overflow: 'hidden',
     '&:hover': {
@@ -393,7 +393,7 @@ export const showStyles = {
 
   tabbedLayout: {
     '& .RaTabbedShowLayout-root': {
-      borderRadius: br.xxl,
+      borderRadius: br.lg,
       overflow: 'hidden',
     },
     '& .RaTabbedShowLayout-tabs': {
@@ -477,9 +477,7 @@ export const homePageStyles = {
     textAlign: 'center',
     mb: 5,
     p: { xs: 3, sm: 5 },
-    borderRadius: br.xxl,
-    background: (theme: Theme) =>
-      theme.palette.mode === 'light' ? gradients.card : gradients.dashboard,
+    borderRadius: br.lg,
     border: (theme: Theme) =>
       `1px solid ${alpha('#6CA568', theme.palette.mode === 'light' ? 0.12 : 0.2)}`,
     maxWidth: 640,
@@ -534,41 +532,68 @@ export const homePageStyles = {
 
   gridItem: {
     display: 'flex',
+    justifyContent: 'center',
   } as const,
 
-  actionButton: {
-    height: { xs: 120, sm: 140 },
-    minWidth: 140,
+  illustrationCard: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 1,
-    py: 2,
-    fontSize: { xs: '0.8rem', sm: '0.9rem' },
-    fontWeight: 600,
-    borderRadius: br.xl,
-    textTransform: 'none',
-    color: '#fff',
+    cursor: 'pointer',
     transition: transitions.spring,
     '&:hover': {
-      transform: 'translateY(-4px) scale(1.02)',
-      filter: 'brightness(1.08)',
+      transform: 'translateY(-4px)',
+    },
+    '&:active': {
+      transform: 'translateY(-2px)',
     },
   } as const,
 
-  buttonLabel: {
+  illustrationCircle: {
+    width: { xs: 52, sm: 64 },
+    height: { xs: 52, sm: 64 },
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    mb: 1,
+    position: 'relative' as const,
+    overflow: 'hidden',
+    transition: transitions.default,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      background:
+        'linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%, rgba(0,0,0,0.08) 100%)',
+      borderRadius: '50%',
+      pointerEvents: 'none',
+    },
+    '&:hover': {
+      transform: 'scale(1.08)',
+    },
+  } as const,
+
+  illustrationIcon: {
+    fontSize: { xs: 20, sm: 26 },
+    color: '#F3F6ED',
+    position: 'relative' as const,
+    zIndex: 1,
+  } as const,
+
+  illustrationLabel: {
     fontWeight: 600,
+    fontSize: { xs: '0.7rem', sm: '0.8rem' },
+    textAlign: 'center',
+    color: 'text.primary',
+    lineHeight: 1.3,
   } as const,
 
-  buttonDesc: {
-    fontSize: { xs: '0.65rem', sm: '0.7rem' },
-    opacity: 0.8,
-    color: 'inherit',
-  } as const,
-
-  icon: {
-    fontSize: { xs: 32, sm: 36 },
+  illustrationDesc: {
+    fontSize: { xs: '0.55rem', sm: '0.6rem' },
+    color: 'text.secondary',
+    textAlign: 'center',
+    mt: 0.25,
   } as const,
 }
 
@@ -601,7 +626,7 @@ export const layoutStyles = {
   content: {
     flex: 1,
     backgroundColor: 'background.paper',
-    borderRadius: br.xxl,
+    borderRadius: br.xs,
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
     border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
     overflow: 'hidden',
