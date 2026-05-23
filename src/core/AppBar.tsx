@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AppBar as RAAppBar, TitlePortal } from 'react-admin'
 import { Box, IconButton, Button, Tooltip, useMediaQuery } from '@mui/material'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
+import LightModeIcon from '@mui/icons-material/LightMode'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HomeIcon from '@mui/icons-material/Home'
 import { appBarStyles } from '../style/components'
@@ -33,9 +33,9 @@ export const AppBar = () => {
 
   return (
     <RAAppBar sx={appBarStyles.appBar} data-testid={'menu-item-selector-home'}>
-      <Tooltip title="Retour à l'accueil">
-        <IconButton onClick={() => navigate('/')} color="inherit" sx={{ mr: 0.5 }}>
-          <HomeIcon />
+      <Tooltip title="Accueil">
+        <IconButton onClick={() => navigate('/')} color="inherit" sx={appBarStyles.iconButton}>
+          <HomeIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       {!isAuthPage &&
@@ -43,25 +43,35 @@ export const AppBar = () => {
         !prevIsAuth &&
         (isMobile ? (
           <Tooltip title="Retour">
-            <IconButton onClick={() => navigate(-1)} color="inherit">
-              <ArrowBackIcon />
+            <IconButton onClick={() => navigate(-1)} color="inherit" sx={appBarStyles.iconButton}>
+              <ArrowBackIcon fontSize="small" />
             </IconButton>
           </Tooltip>
         ) : (
-          <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} color="inherit">
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate(-1)}
+            color="inherit"
+            size="small"
+            sx={{ color: 'text.secondary', fontWeight: 500 }}
+          >
             Retour
           </Button>
         ))}
       <TitlePortal />
       <Box sx={{ flex: 1 }} />
       <Box sx={appBarStyles.container}>
-        <IconButton onClick={toggleMode} color="inherit" sx={{ mr: 1 }}>
-          {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
-        <>
-          <CompanySelector />
-          <JobSelector />
-        </>
+        <Tooltip title={mode === 'dark' ? 'Mode clair' : 'Mode sombre'}>
+          <IconButton onClick={toggleMode} color="inherit" sx={appBarStyles.iconButton}>
+            {mode === 'dark' ? (
+              <LightModeIcon fontSize="small" />
+            ) : (
+              <DarkModeIcon fontSize="small" />
+            )}
+          </IconButton>
+        </Tooltip>
+        <CompanySelector />
+        <JobSelector />
       </Box>
     </RAAppBar>
   )

@@ -1,153 +1,162 @@
-import type { Alpha } from '@mui/material/styles' // eslint-disable-line @typescript-eslint/no-unused-vars
 import { alpha } from '@mui/material/styles'
 
 export const colors = {
   primary: {
-    main: '#4285F4',
-    light: '#5B9CF6',
-    dark: '#3367D6',
-    contrastText: '#ffffff',
+    main: '#6CA568',
+    light: '#8BCB7B',
+    dark: '#4E8B56',
+    contrastText: '#F3F6ED',
   },
 
   secondary: {
-    main: '#EA4335',
-    light: '#E8756A',
-    dark: '#C5221F',
-    contrastText: '#ffffff',
+    main: '#D4A76A',
+    light: '#E8C48A',
+    dark: '#B8894A',
+    contrastText: '#071F16',
   },
 
   success: {
-    main: '#34A853',
-    light: '#5BBF75',
-    dark: '#1E8E3E',
+    main: '#6CA568',
+    light: '#8BCB7B',
+    dark: '#4E8B56',
   },
   warning: {
-    main: '#FBBC05',
-    light: '#FCCA40',
-    dark: '#F59E00',
+    main: '#E8B84B',
+    light: '#F0CC7A',
+    dark: '#C49A2E',
   },
   error: {
-    main: '#D93025',
-    light: '#E0635E',
-    dark: '#B3261E',
+    main: '#E57A7A',
+    light: '#EF9F9F',
+    dark: '#C45A5A',
   },
   info: {
-    main: '#5B9CF6',
-    light: '#7BB3F8',
-    dark: '#3367D6',
+    main: '#7AB8D4',
+    light: '#9ECDE3',
+    dark: '#5A9BB8',
   },
 
   light: {
     background: {
-      default: '#f0f4f9',
-      paper: '#ffffff',
+      default: '#F2F0EB',
+      paper: '#FFFFFF',
     },
     grey: {
-      50: '#fafafa',
-      100: '#f5f5f5',
-      200: '#eeeeee',
-      300: '#e0e0e0',
-      400: '#bdbdbd',
-      500: '#9e9e9e',
-      600: '#757575',
-      700: '#616161',
-      800: '#424242',
-      900: '#212121',
+      50: '#F8F7F4',
+      100: '#EDEBE6',
+      200: '#DDDAD3',
+      300: '#C4C0B8',
+      400: '#A39F97',
+      500: '#838078',
+      600: '#65625C',
+      700: '#4A4843',
+      800: '#302E2B',
+      900: '#1A1917',
     },
     text: {
-      primary: '#1a1a2e',
-      secondary: '#5f6368',
+      primary: '#1A2920',
+      secondary: '#5A6B5E',
     },
-    divider: 'rgba(0, 0, 0, 0.08)',
-    border: 'rgba(0,0,0,0.04)',
-    subtleBg: 'rgba(0,0,0,0.02)',
-    subtleBgHover: 'rgba(0,0,0,0.04)',
-    primaryBg: alpha('#4285F4', 0.04),
-    primaryBgHover: alpha('#4285F4', 0.08),
-    tableHeader: '#f0f4f9',
+    divider: 'rgba(0, 0, 0, 0.06)',
+    border: 'rgba(0, 0, 0, 0.07)',
+    subtleBg: 'rgba(108, 165, 104, 0.03)',
+    subtleBgHover: 'rgba(108, 165, 104, 0.06)',
+    primaryBg: alpha('#6CA568', 0.05),
+    primaryBgHover: alpha('#6CA568', 0.09),
+    tableHeader: '#EDEBE6',
   },
 
   dark: {
     background: {
-      default: '#0f172a',
-      paper: '#1e293b',
+      default: '#071F16',
+      paper: '#0F2F23',
     },
     grey: {
-      50: '#0f172a',
-      100: '#1e293b',
-      200: '#334155',
-      300: '#475569',
-      400: '#64748b',
-      500: '#94a3b8',
-      600: '#cbd5e1',
-      700: '#e2e8f0',
-      800: '#f1f5f9',
-      900: '#f8fafc',
+      50: '#0A281D',
+      100: '#0F2F23',
+      200: '#1A3D30',
+      300: '#2A4F3F',
+      400: '#426854',
+      500: '#5E826D',
+      600: '#7C9E89',
+      700: '#9FBAA8',
+      800: '#C3D6C8',
+      900: '#E3EDE6',
     },
     text: {
-      primary: '#f1f5f9',
-      secondary: '#94a3b8',
+      primary: '#F3F6ED',
+      secondary: '#9FBAA8',
     },
-    divider: 'rgba(255, 255, 255, 0.08)',
-    border: 'rgba(255,255,255,0.04)',
-    subtleBg: 'rgba(255,255,255,0.02)',
-    subtleBgHover: 'rgba(255,255,255,0.04)',
-    primaryBg: alpha('#4285F4', 0.08),
-    primaryBgHover: alpha('#4285F4', 0.12),
-    tableHeader: '#273548',
+    divider: 'rgba(255, 255, 255, 0.06)',
+    border: 'rgba(255, 255, 255, 0.07)',
+    subtleBg: 'rgba(108, 165, 104, 0.04)',
+    subtleBgHover: 'rgba(108, 165, 104, 0.08)',
+    primaryBg: alpha('#6CA568', 0.08),
+    primaryBgHover: alpha('#6CA568', 0.12),
+    tableHeader: '#1A3D30',
   },
 }
 
 export const gradients = {
-  primary: 'linear-gradient(135deg, #4285F4 0%, #5B9CF6 100%)',
-  primaryHorizontal: 'linear-gradient(90deg, #4285F4 0%, #5B9CF6 100%)',
-  primaryDark: 'linear-gradient(135deg, #5B9CF6 0%, #85C1FF 100%)',
-  secondary: 'linear-gradient(135deg, #EA4335 0%, #E8756A 100%)',
-  secondaryDark: 'linear-gradient(135deg, #E8756A 0%, #F5A099 100%)',
-  sidebar: 'linear-gradient(180deg, #4285F4 0%, #3367D6 100%)',
-  sidebarDark: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
+  primary: 'linear-gradient(135deg, #6CA568 0%, #4E8B56 100%)',
+  primaryHorizontal: 'linear-gradient(90deg, #6CA568 0%, #4E8B56 100%)',
+  primaryDark: 'linear-gradient(135deg, #4E8B56 0%, #3D7044 100%)',
+  secondary: 'linear-gradient(135deg, #D4A76A 0%, #E8C48A 100%)',
+  secondaryDark: 'linear-gradient(135deg, #B8894A 0%, #D4A76A 100%)',
+  sidebar: 'linear-gradient(180deg, #0A281D 0%, #071F16 100%)',
+  sidebarDark: 'linear-gradient(180deg, #071F16 0%, #071F16 100%)',
+  card: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)',
+  cardHover: 'linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%)',
+  dashboard: 'linear-gradient(135deg, #071F16 0%, #0E2E24 45%, #13372B 100%)',
   success: `linear-gradient(135deg, ${colors.success.light} 0%, ${colors.success.main} 100%)`,
-  successDark: `linear-gradient(135deg, #5BBF75 0%, #85D699 100%)`,
+  successDark: `linear-gradient(135deg, #4E8B56 0%, #6CA568 100%)`,
   warning: `linear-gradient(135deg, ${colors.warning.light} 0%, ${colors.warning.main} 100%)`,
-  warningDark: `linear-gradient(135deg, #FCCA40 0%, #FDE07A 100%)`,
+  warningDark: `linear-gradient(135deg, #C49A2E 0%, #E8B84B 100%)`,
   error: `linear-gradient(135deg, ${colors.error.light} 0%, ${colors.error.main} 100%)`,
 }
 
 export const shadows = {
   light: {
-    sm: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.02)',
-    md: '0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)',
-    lg: '0 4px 12px rgba(0,0,0,0.08), 0 16px 48px rgba(0,0,0,0.04)',
-    primary: '0 2px 8px rgba(66, 133, 244, 0.25)',
-    primaryHover: '0 4px 12px rgba(66, 133, 244, 0.35)',
-    primaryActive: '0 8px 24px rgba(66, 133, 244, 0.4)',
-    dialog: '0 20px 60px rgba(0,0,0,0.15)',
+    sm: '0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03)',
+    md: '0 4px 16px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04)',
+    lg: '0 8px 32px rgba(0,0,0,0.06), 0 4px 8px rgba(0,0,0,0.04)',
+    primary: '0 4px 14px rgba(108, 165, 104, 0.25)',
+    primaryHover: '0 8px 25px rgba(108, 165, 104, 0.35)',
+    primaryActive: '0 12px 35px rgba(108, 165, 104, 0.4)',
+    dialog: '0 24px 80px rgba(0,0,0,0.15)',
+    sidebar: '2px 0 20px rgba(0,0,0,0.08)',
+    card: '0 10px 30px rgba(0,0,0,0.08)',
+    cardHover: '0 16px 40px rgba(0,0,0,0.12)',
   },
   dark: {
-    sm: '0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1)',
-    md: '0 2px 8px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2)',
-    lg: '0 4px 12px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.3)',
-    primary: '0 2px 8px rgba(66, 133, 244, 0.2)',
-    primaryHover: '0 4px 12px rgba(66, 133, 244, 0.3)',
-    primaryActive: '0 8px 24px rgba(66, 133, 244, 0.4)',
-    dialog: '0 20px 60px rgba(0,0,0,0.5)',
+    sm: '0 2px 8px rgba(0,0,0,0.2), 0 1px 2px rgba(0,0,0,0.15)',
+    md: '0 4px 16px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.2)',
+    lg: '0 8px 32px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.25)',
+    primary: '0 4px 14px rgba(108, 165, 104, 0.3)',
+    primaryHover: '0 8px 25px rgba(108, 165, 104, 0.4)',
+    primaryActive: '0 12px 35px rgba(108, 165, 104, 0.5)',
+    dialog: '0 24px 80px rgba(0,0,0,0.6)',
+    sidebar: '2px 0 20px rgba(0,0,0,0.3)',
+    card: '0 10px 30px rgba(0,0,0,0.25)',
+    cardHover: '0 16px 40px rgba(0,0,0,0.35)',
   },
 }
 
 export const borderRadius = {
-  xs: 1,
-  sm: 2,
-  md: 4,
-  lg: 6,
-  xl: 8,
-  xxl: 10,
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 20,
+  xxl: 24,
+  pill: 9999,
 }
 
 export const transitions = {
-  default: 'all 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-  fast: 'all 100ms cubic-bezier(0.4, 0, 0.2, 1)',
-  slow: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
-  spin: 'transform 0.3s ease',
+  default: 'all 0.25s ease',
+  fast: 'all 0.15s ease',
+  slow: 'all 0.4s ease',
+  spring: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
 }
 
 export const spacing = {
@@ -160,17 +169,33 @@ export const spacing = {
 }
 
 export const typography = {
-  fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-  h1: { fontSize: '2rem', fontWeight: 700, letterSpacing: '-0.025em' },
-  h2: { fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.025em' },
-  h3: { fontSize: '1.25rem', fontWeight: 600 },
-  h4: { fontSize: '1.125rem', fontWeight: 600 },
-  h5: { fontSize: '1rem', fontWeight: 600 },
+  fontFamily:
+    '"Inter", "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  h1: {
+    fontSize: '1.75rem',
+    fontWeight: 600,
+    letterSpacing: '-0.02em',
+    lineHeight: 1.3,
+  },
+  h2: {
+    fontSize: '1.375rem',
+    fontWeight: 600,
+    letterSpacing: '-0.02em',
+    lineHeight: 1.35,
+  },
+  h3: { fontSize: '1.125rem', fontWeight: 600, letterSpacing: '-0.015em' },
+  h4: { fontSize: '1rem', fontWeight: 600 },
+  h5: { fontSize: '0.9375rem', fontWeight: 600 },
   h6: { fontSize: '0.875rem', fontWeight: 600 },
-  body1: { fontSize: '0.875rem', lineHeight: 1.6 },
-  body2: { fontSize: '0.8125rem', lineHeight: 1.6 },
-  caption: { fontSize: '0.75rem' },
-  button: { fontSize: '0.875rem', fontWeight: 500, textTransform: 'none' as const },
+  body1: { fontSize: '0.9375rem', lineHeight: 1.6, fontWeight: 400 },
+  body2: { fontSize: '0.875rem', lineHeight: 1.6, fontWeight: 400 },
+  caption: { fontSize: '0.75rem', letterSpacing: '0.02em', fontWeight: 400 },
+  button: {
+    fontSize: '0.875rem',
+    fontWeight: 600,
+    textTransform: 'none' as const,
+    letterSpacing: '0.01em',
+  },
 }
 
 export const getShadow = (mode: 'light' | 'dark', size: keyof typeof shadows.light) => {
@@ -217,28 +242,6 @@ export const getTextSecondary = (mode: 'light' | 'dark') => {
   return mode === 'light' ? colors.light.text.secondary : colors.dark.text.secondary
 }
 
-export const commonHover = {
-  row: (mode: 'light' | 'dark') => ({
-    backgroundColor: getPrimaryBg(mode),
-    transition: transitions.default,
-  }),
-  translateX: {
-    '&:hover': {
-      transform: 'translateX(4px)',
-    },
-  },
-  translateY: {
-    '&:hover': {
-      transform: 'translateY(-1px)',
-    },
-  },
-  lift: {
-    '&:hover': {
-      transform: 'translateY(-4px)',
-    },
-  },
-}
-
 export const themeConfig = {
   colors,
   gradients,
@@ -258,7 +261,6 @@ export const themeConfig = {
   getDivider,
   getTextPrimary,
   getTextSecondary,
-  commonHover,
 }
 
 export default themeConfig
