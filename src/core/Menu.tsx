@@ -28,29 +28,23 @@ interface ResourceItem {
   resource?: string
 }
 
-const SectionHeader = ({
-  label,
-  color,
-  sx,
-}: {
-  label: string
-  color: string
-  sx: Record<string, unknown>
-}) => (
-  <Box sx={sx as object}>
+const sectionColors: Record<string, string> = {
+  Général: '#6CA568',
+  RH: '#A78BFA',
+  Stock: '#4ADE80',
+  Équipement: '#FBBF24',
+  Monétaire: '#F87171',
+}
+
+const SectionHeader = ({ label }: { label: string }) => (
+  <Box sx={menuStyles.sectionHeader}>
     <Box
       sx={{
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        backgroundColor: color,
-        flexShrink: 0,
+        ...menuStyles.sectionDot,
+        backgroundColor: sectionColors[label] || '#6CA568',
       }}
     />
-    <Typography
-      variant="caption"
-      sx={{ fontWeight: 700, letterSpacing: '1.5px', fontSize: '0.75rem', color: 'inherit' }}
-    >
+    <Typography variant="caption" sx={{ color: 'inherit', fontWeight: 600 }}>
       {label}
     </Typography>
   </Box>
@@ -63,7 +57,7 @@ const MenuRoot = () => {
 
   const generalItems: ResourceItem[] = [
     { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
-    { name: 'jobs', label: 'Jobs', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
+    { name: 'jobs', label: 'Chantiers', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
       name: 'companies',
       label: 'Entreprises',
@@ -224,7 +218,7 @@ const MenuRoot = () => {
     <Box sx={menuStyles.container} data-testid="menu-item-home">
       <Box sx={menuStyles.headerBox}>
         <Typography variant="h6" sx={menuStyles.appTitle}>
-          Test Admin
+          GestPro
         </Typography>
         <Typography variant="caption" sx={menuStyles.appSubtitle}>
           Gestion d&apos;entreprise
@@ -235,22 +229,22 @@ const MenuRoot = () => {
         {renderItems(generalItems)}
       </List>
 
-      <SectionHeader label="RH" color="#9C27B0" sx={menuStyles.sectionHeaderPurple} />
+      <SectionHeader label="RH" />
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(rhItems)}
       </List>
 
-      <SectionHeader label="STOCK" color="#34A853" sx={menuStyles.sectionHeaderGreen} />
+      <SectionHeader label="Stock" />
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(stockItems)}
       </List>
 
-      <SectionHeader label="ÉQUIPEMENT" color="#FB8C00" sx={menuStyles.sectionHeaderOrange} />
+      <SectionHeader label="Équipement" />
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(equipmentItems)}
       </List>
 
-      <SectionHeader label="MONÉTAIRE" color="#EA4335" sx={menuStyles.sectionHeaderRed} />
+      <SectionHeader label="Monétaire" />
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(monetaryItems)}
       </List>

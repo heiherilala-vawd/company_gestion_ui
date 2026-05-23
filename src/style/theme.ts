@@ -1,5 +1,3 @@
-// theme.ts - Version améliorée avec surcharges React Admin complètes
-
 import { createTheme, ThemeOptions, alpha } from '@mui/material/styles'
 import {
   colors,
@@ -57,18 +55,17 @@ export const commonStyles = {
   },
   card: {
     p: { xs: 2, md: 3 },
-    borderRadius: br.lg,
+    borderRadius: br.xxl,
     boxShadow: 1,
   },
   floatingContainer: {
-    borderRadius: br.lg,
+    borderRadius: br.xxl,
     backgroundColor: 'background.paper',
     boxShadow: (theme: { palette: { mode: string } }) =>
-      getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
+      getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
     m: { xs: 1, md: 2 },
     p: { xs: 2, md: 3 },
   },
-  // Grilles responsives pour formulaires
   formGrid: {
     display: 'grid',
     gap: { xs: 2, md: 3 },
@@ -88,7 +85,6 @@ export const commonStyles = {
     gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr 1fr' },
     gap: { xs: 2, md: 3 },
   },
-  // Grille avec unités intégrées
   dimensionGrid: {
     display: 'grid',
     gridTemplateColumns: { xs: '1fr 1fr', sm: 'repeat(3, 1fr)' },
@@ -100,7 +96,6 @@ export const commonStyles = {
     gap: { xs: 2, md: 3 },
     alignItems: 'end',
   },
-  // Navigation entre étapes
   navigationButtons: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -110,7 +105,6 @@ export const commonStyles = {
     borderTop: (theme: { palette: { mode: string } }) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
   },
-  // Section de formulaire
   formSection: {
     mb: { xs: 3, md: 4 },
   },
@@ -118,11 +112,10 @@ export const commonStyles = {
     fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' },
     fontWeight: 600,
     mb: { xs: 2, md: 3 },
-    pb: 1,
+    pb: 1.5,
     borderBottom: (theme: { palette: { mode: string } }) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
   },
-  // Input avec unité
   inputWithUnit: {
     display: 'flex',
     alignItems: 'center',
@@ -153,35 +146,44 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       body: {
         fontFamily: typoConfig.fontFamily,
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
       },
     },
   },
 
-  // ==================== BOUTONS ====================
   MuiButton: {
     styleOverrides: {
       root: {
-        borderRadius: br.md,
+        borderRadius: br.lg,
         textTransform: 'none',
-        fontWeight: 500,
+        fontWeight: 600,
         transition: transitions.default,
-        padding: { xs: '8px 16px', sm: '8px 20px' },
+        padding: { xs: '10px 20px', sm: '12px 24px' },
         fontSize: { xs: '0.8125rem', sm: '0.875rem' },
+        lineHeight: 1.4,
         '&:hover': {
-          transform: 'translateY(-1px)',
-          boxShadow: getShadow(mode, 'primary'),
+          transform: 'translateY(-2px)',
+          boxShadow: getShadow(mode, 'md'),
+        },
+        '&:active': {
+          transform: 'translateY(0)',
         },
       },
       containedPrimary: {
         background: gradients.primary,
-        boxShadow: getShadow(mode, 'primary'),
+        boxShadow: `0 4px 14px ${alpha('#6CA568', 0.3)}`,
         '&:hover': {
           background: gradients.primary,
-          filter: 'brightness(1.1)',
+          filter: 'brightness(1.08)',
+          boxShadow: `0 8px 25px ${alpha('#6CA568', 0.4)}`,
         },
       },
       containedSecondary: {
         background: gradients.secondary,
+        '&:hover': {
+          filter: 'brightness(1.08)',
+        },
       },
       outlined: {
         borderColor: mode === 'light' ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)',
@@ -190,7 +192,6 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
           backgroundColor: alpha(colors.primary.main, 0.04),
         },
       },
-      // Bouton "Back" secondaire
       textSecondary: {
         color: getTextSecondary(mode),
         '&:hover': {
@@ -200,18 +201,17 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== CARTES ====================
   MuiCard: {
     styleOverrides: {
       root: {
-        borderRadius: br.lg,
-        boxShadow: getShadow(mode, 'sm'),
+        borderRadius: br.xxl,
+        boxShadow: getShadow(mode, 'card'),
         transition: transitions.default,
-        backgroundColor:
-          mode === 'light' ? colors.light.background.paper : colors.dark.background.paper,
+        backgroundColor: mode === 'light' ? colors.light.background.paper : '#1E4038',
         border: `1px solid ${getBorder(mode)}`,
         '&:hover': {
-          boxShadow: getShadow(mode, 'md'),
+          boxShadow: getShadow(mode, 'cardHover'),
+          transform: 'translateY(-3px)',
         },
       },
     },
@@ -220,7 +220,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiPaper: {
     styleOverrides: {
       root: {
-        borderRadius: br.md,
+        borderRadius: br.lg,
         transition: transitions.default,
         backgroundImage: 'none',
       },
@@ -233,28 +233,28 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== CHAMPS DE FORMULAIRE ====================
   MuiTextField: {
     styleOverrides: {
       root: {
         marginBottom: 0,
         width: '100%',
         '& .MuiOutlinedInput-root': {
-          borderRadius: br.md,
+          borderRadius: br.lg,
           transition: transitions.default,
           backgroundColor: getSubtleBg(mode),
           fontSize: { xs: '0.875rem', sm: '0.9375rem' },
           '&:hover': {
             backgroundColor: getSubtleBgHover(mode),
             '& fieldset': {
-              borderColor: alpha(colors.primary.main, 0.5),
+              borderColor: alpha(colors.primary.main, 0.4),
             },
           },
           '&.Mui-focused': {
-            backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
-            boxShadow: `0 0 0 3px ${alpha(colors.primary.main, 0.12)}`,
+            backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
+            boxShadow: `0 0 0 4px ${alpha('#6CA568', 0.15)}`,
             '& fieldset': {
-              borderColor: colors.primary.main,
+              borderColor: '#6CA568',
+              borderWidth: '1.5px',
             },
           },
           '& fieldset': {
@@ -262,7 +262,10 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
             transition: transitions.default,
           },
           '& input': {
-            padding: { xs: '10px 14px', sm: '12px 16px' },
+            padding: { xs: '12px 16px', sm: '14px 18px' },
+          },
+          '& textarea': {
+            padding: { xs: '12px 16px', sm: '14px 18px' },
           },
         },
         '& .MuiInputLabel-root': {
@@ -283,11 +286,11 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiSelect: {
     styleOverrides: {
       select: {
-        borderRadius: br.md,
+        borderRadius: br.lg,
         backgroundColor: getSubtleBg(mode),
         transition: transitions.default,
-        minHeight: 36,
-        padding: { xs: '10px 14px', sm: '12px 16px' },
+        minHeight: 44,
+        padding: { xs: '12px 16px', sm: '14px 18px' },
       },
     },
   },
@@ -295,7 +298,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiFormControl: {
     styleOverrides: {
       root: {
-        marginBottom: { xs: 2, md: 3 },
+        marginBottom: { xs: 2, md: 2.5 },
         width: '100%',
       },
     },
@@ -315,11 +318,10 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== TABLEAUX / DATAGRID ====================
   MuiTable: {
     styleOverrides: {
       root: {
-        borderRadius: br.lg,
+        borderRadius: br.xxl,
         overflow: 'hidden',
       },
     },
@@ -328,9 +330,9 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiTableContainer: {
     styleOverrides: {
       root: {
-        borderRadius: br.lg,
+        borderRadius: br.xxl,
         border: `1px solid ${getBorder(mode)}`,
-        boxShadow: getShadow(mode, 'sm'),
+        boxShadow: getShadow(mode, 'card'),
         overflow: 'auto',
       },
     },
@@ -344,10 +346,10 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
           fontWeight: 600,
           fontSize: { xs: '0.6875rem', sm: '0.75rem' },
           textTransform: 'uppercase',
-          letterSpacing: '0.5px',
+          letterSpacing: '0.04em',
           color: getTextSecondary(mode),
           borderBottom: `2px solid ${getBorder(mode)}`,
-          padding: { xs: '8px 12px', sm: '12px 16px' },
+          padding: { xs: '10px 16px', sm: '14px 20px' },
           whiteSpace: 'nowrap',
         },
       },
@@ -359,7 +361,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
       root: {
         '& .MuiTableCell-body': {
           borderBottom: `1px solid ${getBorder(mode)}`,
-          padding: { xs: '8px 12px', sm: '12px 16px' },
+          padding: { xs: '10px 16px', sm: '14px 20px' },
           fontSize: { xs: '0.8125rem', sm: '0.875rem' },
           transition: transitions.default,
           color: mode === 'light' ? colors.light.text.primary : colors.dark.text.primary,
@@ -367,7 +369,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         '& .MuiTableRow-root': {
           transition: transitions.default,
           '&:hover': {
-            backgroundColor: alpha(colors.primary.main, mode === 'light' ? 0.04 : 0.08),
+            backgroundColor: alpha('#6CA568', mode === 'light' ? 0.03 : 0.05),
           },
           '&:last-child .MuiTableCell-body': {
             borderBottom: 'none',
@@ -377,43 +379,42 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== DATAGRID (React Admin) ====================
   MuiDataGrid: {
     styleOverrides: {
       root: {
-        borderRadius: br.lg,
+        borderRadius: br.xxl,
         border: `1px solid ${getBorder(mode)}`,
-        boxShadow: getShadow(mode, 'sm'),
-        backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
+        boxShadow: getShadow(mode, 'card'),
+        backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
         '& .MuiDataGrid-columnHeaders': {
           backgroundColor: getSubtleBg(mode),
-          borderRadius: `${br.lg}px ${br.lg}px 0 0`,
+          borderRadius: `${br.xxl}px ${br.xxl}px 0 0`,
           borderBottom: `2px solid ${getBorder(mode)}`,
           '& .MuiDataGrid-columnHeader': {
-            padding: { xs: '8px 12px', sm: '12px 16px' },
+            padding: { xs: '10px 16px', sm: '14px 20px' },
           },
           '& .MuiDataGrid-columnHeaderTitle': {
             fontWeight: 600,
             color: getTextSecondary(mode),
             fontSize: '0.75rem',
             textTransform: 'uppercase',
-            letterSpacing: '0.05em',
+            letterSpacing: '0.04em',
           },
         },
         '& .MuiDataGrid-cell': {
           borderBottom: `1px solid ${getBorder(mode)}`,
-          padding: { xs: '8px 12px', sm: '12px 16px' },
+          padding: { xs: '10px 16px', sm: '14px 20px' },
           fontSize: '0.875rem',
         },
         '& .MuiDataGrid-row': {
           transition: transitions.default,
           '&:hover': {
-            backgroundColor: alpha(colors.primary.main, mode === 'light' ? 0.04 : 0.08),
+            backgroundColor: alpha('#6CA568', mode === 'light' ? 0.03 : 0.05),
           },
           '&.Mui-selected': {
-            backgroundColor: alpha(colors.primary.main, mode === 'light' ? 0.08 : 0.12),
+            backgroundColor: alpha('#6CA568', mode === 'light' ? 0.06 : 0.08),
             '&:hover': {
-              backgroundColor: alpha(colors.primary.main, mode === 'light' ? 0.12 : 0.16),
+              backgroundColor: alpha('#6CA568', mode === 'light' ? 0.1 : 0.12),
             },
           },
         },
@@ -425,17 +426,18 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== CHIPS & ALERTES ====================
   MuiChip: {
     styleOverrides: {
       root: {
         borderRadius: br.sm,
         fontWeight: 500,
         transition: transitions.default,
+        height: 28,
+        fontSize: '0.8125rem',
       },
       colorPrimary: {
-        backgroundColor: alpha(colors.primary.main, 0.1),
-        color: colors.primary.main,
+        backgroundColor: alpha(colors.primary.main, 0.12),
+        color: mode === 'light' ? '#4E8B56' : '#A8D5A2',
       },
     },
   },
@@ -443,38 +445,38 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiAlert: {
     styleOverrides: {
       root: {
-        borderRadius: br.md,
+        borderRadius: br.lg,
         border: 'none',
+        fontSize: '0.875rem',
       },
       standardSuccess: {
-        backgroundColor: alpha(colors.success.main, 0.1),
+        backgroundColor: alpha(colors.success.main, 0.08),
         color: mode === 'light' ? colors.success.dark : colors.success.light,
       },
       standardError: {
-        backgroundColor: alpha(colors.error.main, 0.1),
+        backgroundColor: alpha(colors.error.main, 0.08),
         color: mode === 'light' ? colors.error.dark : colors.error.light,
       },
       standardWarning: {
-        backgroundColor: alpha(colors.warning.main, 0.1),
+        backgroundColor: alpha(colors.warning.main, 0.08),
         color: mode === 'light' ? colors.warning.dark : colors.warning.light,
       },
       standardInfo: {
-        backgroundColor: alpha(colors.info.main, 0.1),
+        backgroundColor: alpha(colors.info.main, 0.08),
         color: mode === 'light' ? colors.info.dark : colors.info.light,
       },
     },
   },
 
-  // ==================== PROGRESS & SKELETON ====================
   MuiLinearProgress: {
     styleOverrides: {
       root: {
-        borderRadius: br.xl,
-        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
+        borderRadius: br.pill,
+        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
         height: 6,
       },
       bar: {
-        borderRadius: br.xl,
+        borderRadius: br.pill,
         background: gradients.primary,
       },
     },
@@ -483,13 +485,12 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   MuiSkeleton: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)',
+        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.04)',
         borderRadius: br.sm,
       },
     },
   },
 
-  // ==================== TYPOGRAPHIE ====================
   MuiTypography: {
     styleOverrides: {
       h1: { ...typoConfig.h1 },
@@ -521,7 +522,6 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== SIDEBAR & NAVIGATION ====================
   MuiListItemButton: {
     styleOverrides: {
       root: {
@@ -529,26 +529,24 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
         margin: '2px 8px',
         transition: transitions.default,
         '&.Mui-selected': {
-          backgroundColor: alpha(colors.primary.main, 0.1),
-          color: colors.primary.main,
+          backgroundColor: alpha('#6CA568', 0.08),
+          color: mode === 'light' ? '#4E8B56' : '#A8D5A2',
           '&:hover': {
-            backgroundColor: alpha(colors.primary.main, 0.15),
+            backgroundColor: alpha('#6CA568', 0.12),
           },
           '& .MuiListItemIcon-root': {
-            color: colors.primary.main,
+            color: mode === 'light' ? '#4E8B56' : '#A8D5A2',
           },
         },
       },
     },
   },
 
-  // ==================== DIALOG ====================
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: br.xl,
-        boxShadow:
-          mode === 'light' ? '0 20px 60px rgba(0,0,0,0.15)' : '0 20px 60px rgba(0,0,0,0.5)',
+        borderRadius: br.xxl,
+        boxShadow: getShadow(mode, 'dialog'),
         '@media (max-width: 600px)': {
           margin: '16px',
           maxWidth: 'calc(100% - 32px)',
@@ -558,24 +556,22 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== TOOLTIP ====================
   MuiTooltip: {
     styleOverrides: {
       tooltip: {
         borderRadius: br.sm,
-        backgroundColor: mode === 'light' ? colors.light.text.primary : colors.dark.text.primary,
-        color: mode === 'light' ? '#ffffff' : colors.light.text.primary,
+        backgroundColor: mode === 'light' ? '#1A2920' : '#6CA568',
+        color: mode === 'light' ? '#F3F6ED' : '#071F16',
         fontSize: '0.75rem',
         padding: '6px 12px',
         boxShadow: getShadow(mode, 'sm'),
       },
       arrow: {
-        color: mode === 'light' ? colors.light.text.primary : colors.dark.text.primary,
+        color: mode === 'light' ? '#1A2920' : '#6CA568',
       },
     },
   },
 
-  // ==================== TABS (pour TabbedForm) ====================
   MuiTabs: {
     styleOverrides: {
       root: {
@@ -601,35 +597,66 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // ==================== STEPPER (pour formulaire en étapes) ====================
-  MuiStepper: {
+  MuiCheckbox: {
     styleOverrides: {
       root: {
-        padding: { xs: 2, md: 3 },
-        marginBottom: { xs: 2, md: 3 },
+        borderRadius: br.sm,
+        transition: transitions.default,
       },
     },
   },
 
-  MuiStepLabel: {
+  MuiSwitch: {
     styleOverrides: {
-      label: {
-        fontSize: '0.875rem',
-        fontWeight: 500,
-        '&.Mui-active': {
-          fontWeight: 600,
-          color: colors.primary.main,
+      root: {
+        transition: transitions.default,
+      },
+      track: {
+        borderRadius: br.pill,
+        backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)',
+      },
+      thumb: {
+        boxShadow: getShadow(mode, 'sm'),
+      },
+    },
+  },
+
+  MuiDivider: {
+    styleOverrides: {
+      root: {
+        borderColor: getDivider(mode),
+      },
+    },
+  },
+
+  MuiAccordion: {
+    styleOverrides: {
+      root: {
+        borderRadius: br.lg,
+        border: `1px solid ${getBorder(mode)}`,
+        boxShadow: 'none',
+        '&:before': {
+          display: 'none',
         },
-        '&.Mui-completed': {
-          color: colors.success.main,
+        '&.Mui-expanded': {
+          margin: '0 0 8px',
         },
       },
     },
   },
 
-  // ==================== REACT ADMIN - SURCHARGES SPÉCIFIQUES ====================
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        borderRadius: br.lg,
+        padding: '0 16px',
+        '&.Mui-expanded': {
+          borderBottom: `1px solid ${getBorder(mode)}`,
+        },
+      },
+    },
+  },
 
-  // Container principal des pages Create/Edit/Show
   RaCreate: {
     defaultProps: {
       sx: {
@@ -681,17 +708,16 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // SimpleForm / TabbedForm
   RaSimpleForm: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
-        borderRadius: br.lg,
-        padding: { xs: 2, sm: 3, md: 4 },
-        boxShadow: getShadow(mode, 'sm'),
+        backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
+        borderRadius: br.xxl,
+        padding: { xs: 2.5, sm: 3, md: 4 },
+        boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
         '& .MuiFormControl-root': {
-          marginBottom: { xs: 2, md: 3 },
+          marginBottom: { xs: 2, md: 2.5 },
         },
       },
     },
@@ -700,23 +726,22 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
   RaTabbedForm: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
-        borderRadius: br.lg,
-        boxShadow: getShadow(mode, 'sm'),
+        backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
+        borderRadius: br.xxl,
+        boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
         overflow: 'hidden',
       },
     },
   },
 
-  // Toolbar (boutons Save/Delete en bas du formulaire)
   RaToolbar: {
     styleOverrides: {
       root: {
         display: 'flex',
         justifyContent: 'flex-end',
         gap: spConfig.md,
-        padding: { xs: 2, md: 3 },
+        padding: { xs: 2, md: 2.5 },
         marginTop: { xs: 2, md: 3 },
         borderTop: `1px solid ${getDivider(mode)}`,
         backgroundColor: 'transparent',
@@ -734,27 +759,26 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // SaveButton
   RaSaveButton: {
     styleOverrides: {
       root: {
         background: gradients.primary,
-        borderRadius: br.md,
+        borderRadius: br.lg,
         textTransform: 'none',
-        fontWeight: 500,
-        padding: '10px 24px',
-        boxShadow: getShadow(mode, 'primary'),
+        fontWeight: 600,
+        padding: '10px 28px',
+        boxShadow: `0 4px 14px ${alpha('#6CA568', 0.3)}`,
         transition: transitions.default,
         '&:hover': {
           background: gradients.primary,
-          filter: 'brightness(1.1)',
-          boxShadow: getShadow(mode, 'primaryHover'),
+          filter: 'brightness(1.08)',
+          boxShadow: `0 8px 25px ${alpha('#6CA568', 0.4)}`,
+          transform: 'translateY(-2px)',
         },
       },
     },
   },
 
-  // EditButton
   RaEditButton: {
     defaultProps: {
       size: 'small',
@@ -763,18 +787,21 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         minWidth: 0,
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 28,
         borderRadius: '50%',
         padding: 0,
+        transition: transitions.default,
         '& .MuiSvgIcon-root': {
           fontSize: 14,
+        },
+        '&:hover': {
+          backgroundColor: alpha(colors.primary.main, 0.1),
         },
       },
     },
   },
 
-  // DeleteButton
   RaDeleteButton: {
     defaultProps: {
       size: 'small',
@@ -783,8 +810,8 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     styleOverrides: {
       root: {
         minWidth: 0,
-        width: 24,
-        height: 24,
+        width: 28,
+        height: 28,
         borderRadius: '50%',
         padding: 0,
         textTransform: 'none',
@@ -800,7 +827,6 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // List / Datagrid container
   RaList: {
     styleOverrides: {
       content: {
@@ -814,21 +840,19 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // Filter form dans la liste
   RaFilterForm: {
     styleOverrides: {
       root: {
-        backgroundColor: mode === 'light' ? '#ffffff' : colors.dark.background.paper,
-        borderRadius: br.lg,
+        backgroundColor: mode === 'light' ? '#ffffff' : '#1E4038',
+        borderRadius: br.xxl,
         padding: { xs: 2, md: 3 },
-        boxShadow: getShadow(mode, 'sm'),
+        boxShadow: getShadow(mode, 'card'),
         border: `1px solid ${getBorder(mode)}`,
         marginBottom: { xs: 2, md: 3 },
       },
     },
   },
 
-  // Show component - champs
   RaLabeled: {
     styleOverrides: {
       root: {
@@ -837,7 +861,6 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // Surcharge pour les champs en mode Show
   RaTextField: {
     styleOverrides: {
       root: {
@@ -846,7 +869,7 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
           fontSize: '0.75rem',
           textTransform: 'uppercase',
           fontWeight: 500,
-          letterSpacing: '0.05em',
+          letterSpacing: '0.04em',
           marginBottom: '4px',
         },
         '& .MuiTypography-root:last-child': {
@@ -858,19 +881,17 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // Breadcrumb
   RaBreadcrumb: {
     styleOverrides: {
       root: {
         marginBottom: { xs: 1, md: 2 },
         '& .MuiTypography-root': {
-          fontSize: '0.875rem',
+          fontSize: '0.8125rem',
         },
       },
     },
   },
 
-  // TopToolbar (bouton Create en haut de la liste)
   RaTopToolbar: {
     styleOverrides: {
       root: {
@@ -882,18 +903,16 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // BulkActionsBar
   RaBulkActionsToolbar: {
     styleOverrides: {
       root: {
-        backgroundColor: alpha(colors.primary.main, 0.08),
+        backgroundColor: alpha(colors.primary.main, 0.06),
         borderRadius: br.md,
         padding: '8px 16px',
       },
     },
   },
 
-  // Empty state
   RaEmpty: {
     styleOverrides: {
       root: {
@@ -906,7 +925,6 @@ const commonComponentOverrides = (mode: 'light' | 'dark'): ThemeOptions['compone
     },
   },
 
-  // Loading indicator
   RaLoading: {
     styleOverrides: {
       root: {
