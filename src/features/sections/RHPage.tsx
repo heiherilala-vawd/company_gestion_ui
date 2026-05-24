@@ -1,16 +1,24 @@
 import { SectionHub } from '../../generic/SectionHub'
-import PeopleIcon from '@mui/icons-material/People'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import PaymentsIcon from '@mui/icons-material/Payments'
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
 
 const items = [
-  { label: 'Utilisateurs', icon: PeopleIcon, to: '/users', color: 'moss' as const },
-  { label: 'Congés', icon: CalendarMonthIcon, to: '/leaves', color: 'moss' as const },
-  { label: 'Salaires', icon: PaymentsIcon, to: '/employee_payments', color: 'moss' as const },
-  { label: 'Personnel', icon: PeopleAltIcon, to: '/travel_people', color: 'moss' as const },
+  {
+    label: 'Paiement',
+    icon: PaymentsIcon,
+    to: '/employer_payments_activity',
+    color: 'moss' as const,
+    desc: 'Payer employé',
+  },
+  {
+    label: 'Déplacement',
+    icon: FlightTakeoffIcon,
+    to: '/travel_equipment_activity',
+    color: 'moss' as const,
+    desc: 'Transport personnel',
+  },
 ]
 
 export default function RHPage() {
-  return <SectionHub title="Ressources Humaines" items={items} />
+  return <SectionHub title="Actions RH" items={items} />
 }

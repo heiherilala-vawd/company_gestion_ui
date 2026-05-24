@@ -12,7 +12,7 @@ export default function ExpenseShow() {
     <Show title="Détails dépense">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="job.description" label="Chantier" />
+        <TextField source="job.description" label="Travail" />
         <NumberField source="amount" label="Montant" />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />

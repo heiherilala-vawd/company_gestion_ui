@@ -7,7 +7,7 @@ export default function WarehouseShow() {
         <TextField source="id" />
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
-        <TextField source="job.description" label="Chantier" />
+        <TextField source="job.description" label="Travail" />
         <TextField source="comment" label="Commentaire" />
         {/* Nom complet du créateur */}
         <FunctionField

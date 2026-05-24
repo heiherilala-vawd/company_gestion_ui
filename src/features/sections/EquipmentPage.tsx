@@ -1,18 +1,24 @@
 import { SectionHub } from '../../generic/SectionHub'
-import BuildIcon from '@mui/icons-material/Build'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 
 const items = [
-  { label: 'Équipements', icon: BuildIcon, to: '/equipment', color: 'earth' as const },
-  { label: 'Équipement dépl.', icon: BuildIcon, to: '/travel_equipment', color: 'earth' as const },
   {
-    label: 'Achats',
+    label: 'Achat',
     icon: ShoppingCartIcon,
-    to: '/purchases?isEquipment=true',
+    to: '/purchases_activity',
     color: 'earth' as const,
+    desc: 'Acheter équipement',
+  },
+  {
+    label: 'Déplacement',
+    icon: LocalShippingIcon,
+    to: '/travel_equipment_activity',
+    color: 'earth' as const,
+    desc: 'Déplacer',
   },
 ]
 
 export default function EquipmentPage() {
-  return <SectionHub title="Équipement" items={items} />
+  return <SectionHub title="Actions Équipement" items={items} />
 }

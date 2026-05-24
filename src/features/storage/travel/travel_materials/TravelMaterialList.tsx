@@ -28,8 +28,16 @@ const TravelMaterialFilters = [
   <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
     <SelectInput optionText="name" label="Lieu d'arrivée" />
   </ReferenceInput>,
-  <DateTimeInput source="arrival_date_min" label="Date arrivée min" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
-  <DateTimeInput source="arrival_date_max" label="Date arrivée max" parse={(v: string) => (v ? `${v}:00Z` : v)} />,
+  <DateTimeInput
+    source="arrival_date_min"
+    label="Date arrivée min"
+    parse={(v: string) => (v ? `${v}:00Z` : v)}
+  />,
+  <DateTimeInput
+    source="arrival_date_max"
+    label="Date arrivée max"
+    parse={(v: string) => (v ? `${v}:00Z` : v)}
+  />,
   <BooleanInput source="not_arrived" label="Non arrivé" />,
 ]
 

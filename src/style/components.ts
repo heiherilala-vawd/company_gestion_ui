@@ -367,7 +367,7 @@ export const datagridStyles = {
 export const listFilters = [
   { source: 'description', label: 'Recherche' },
   { source: 'status', label: 'Statut' },
-  { source: 'job_id', label: 'Chantier' },
+  { source: 'job_id', label: 'Travail' },
   { source: 'name', label: 'Nom' },
 ]
 

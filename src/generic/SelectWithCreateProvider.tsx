@@ -1,4 +1,3 @@
-import { data } from 'react-router'
 import ReferenceSelectWithCreate from './ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../config/dynamicResources.ts'
 import TravelExpenseForm from '../features/money/travel_expenses/TravelExpenseForm.tsx'
@@ -13,6 +12,7 @@ import IncomeTypeForm from '../features/money/incomeType/IncomeTypeForm.tsx'
 import OtherExpenseTypeForm from '../features/money/otherExpenseType/OtherExpenseTypeForm.tsx'
 import LeaveTypeForm from '../features/hr/leave_types/LeaveTypeForm.tsx'
 import LeaveConfigForm from '../features/hr/leave_configs/LeaveConfigForm.tsx'
+import TeamForm from '../features/transversal/teams/TeamForm.tsx'
 
 export const renderTravelExpenseSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
@@ -84,7 +84,7 @@ export const renderJobSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
     source={source ? source : 'job_id'}
     reference="jobs"
-    label={label ? label : 'Chantier'}
+    label={label ? label : 'Travail'}
     optionText="description"
     createUrlEnd={getMiddleUrl('jobs')}
     createForm={<JobForm isCreateForm />}
@@ -157,5 +157,7 @@ export const renderEquipeSelect = (source: any, label: any) => (
     reference="teams"
     label={label ? label : 'Équipe'}
     optionText="name"
+    createUrlEnd={getMiddleUrl('teams')}
+    createForm={<TeamForm isCreateForm />}
   />
 )

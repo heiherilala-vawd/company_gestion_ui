@@ -15,6 +15,16 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'users',
   'other_expense_types',
   'teams',
+  'fixed_costs',
+  'tasks',
+  'task_schedules',
+  'departments',
+  'budget_lines',
+  'cash_accounts',
+  'cash_transactions',
+  'equipment_usage',
+  'material_consumption',
+  'maintenances',
   'leave_types',
   'leave_configs',
   'leaves',
@@ -140,6 +150,72 @@ export const getMiddleUrlDynamicTravelExpensesResource = (resource: string): str
   )
 }
 
+//---------------------------------------------------LOANS-------------------------------------------------------------
+/**
+ * Liste des ressources qui nécessitent un LOAN dans l'URL
+ */
+export const DYNAMIC_LOANS_RESOURCES = ['loan_repayments'] as const
+
+// Type pour les ressources dynamiques (TypeScript)
+export type DynamicLoansResource = (typeof DYNAMIC_LOANS_RESOURCES)[number]
+
+/**
+ * Vérifie si une ressource est dynamique (nécessite loanId)
+ */
+export const isDynamicLoansResource = (resource: string): boolean => {
+  return DYNAMIC_LOANS_RESOURCES.includes(resource as DynamicLoansResource)
+}
+export const getMiddleUrlDynamicLoansResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
+  const loanId = localStorage.getItem('currentLoanId')
+  return (
+    '/companies/' +
+    companyId +
+    '/job/' +
+    jobId +
+    '/user/' +
+    userId +
+    '/loans/' +
+    loanId +
+    '/' +
+    resource
+  )
+}
+
+//---------------------------------------------------INCOMES-------------------------------------------------------------
+/**
+ * Liste des ressources qui nécessitent un INCOME dans l'URL
+ */
+export const DYNAMIC_INCOMES_RESOURCES = ['receipts'] as const
+
+// Type pour les ressources dynamiques (TypeScript)
+export type DynamicIncomesResource = (typeof DYNAMIC_INCOMES_RESOURCES)[number]
+
+/**
+ * Vérifie si une ressource est dynamique (nécessite incomeId)
+ */
+export const isDynamicIncomesResource = (resource: string): boolean => {
+  return DYNAMIC_INCOMES_RESOURCES.includes(resource as DynamicIncomesResource)
+}
+export const getMiddleUrlDynamicIncomesResource = (resource: string): string => {
+  const companyId = localStorage.getItem('currentCompanyId')
+  const jobId = localStorage.getItem('currentJobId')
+  const incomeId = localStorage.getItem('currentIncomeId')
+  return (
+    '/companies/' +
+    companyId +
+    '/job/' +
+    jobId +
+    '/user/' +
+    userId +
+    '/incomes/' +
+    incomeId +
+    '/' +
+    resource
+  )
+}
+
 //----------------------------------------------------------------------------------------------------------
 
 export const getMiddleUrl = (resource: string): string => {
@@ -152,6 +228,10 @@ export const getMiddleUrl = (resource: string): string => {
     url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}`
   } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}`
+  } else if (isDynamicLoansResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicLoansResource(resource)}`
+  } else if (isDynamicIncomesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicIncomesResource(resource)}`
   }
   return url
 }
@@ -166,6 +246,10 @@ export const getMiddleUrlWithId = (resource: string, resourceId: string): string
     url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}/${resourceId}`
   } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}/${resourceId}`
+  } else if (isDynamicLoansResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicLoansResource(resource)}/${resourceId}`
+  } else if (isDynamicIncomesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicIncomesResource(resource)}/${resourceId}`
   }
   return url
 }
@@ -184,6 +268,10 @@ export const getMiddleUrlWithQuery = (
     url = `${API_URL}${getMiddleUrlDynamicExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
   } else if (isDynamicTravelExpensesResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicTravelExpensesResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicLoansResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicLoansResource(resource)}${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicIncomesResource(resource)) {
+    url = `${API_URL}${getMiddleUrlDynamicIncomesResource(resource)}${queryString ? `?${queryString}` : ''}`
   }
   return url
 }

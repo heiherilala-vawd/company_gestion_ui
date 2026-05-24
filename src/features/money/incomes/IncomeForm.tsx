@@ -35,7 +35,7 @@ export default function IncomeForm({ isCreate = false, isCreateForm = false }) {
         defaultValue={new Date().toISOString()}
       />
       {renderIncomeTypeSelect('income_type_id', 'Type de revenu')}
-      {!isCreate && renderJobSelect('job_id', 'Chantier')}
+      {!isCreate && renderJobSelect('job_id', 'Travail')}
       <NumberInput source="amount" label="Montant" data-testid="input-amount" />
       <TextInput
         source="description"

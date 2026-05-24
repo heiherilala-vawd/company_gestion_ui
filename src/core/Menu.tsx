@@ -16,6 +16,22 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
 import PaymentsIcon from '@mui/icons-material/Payments'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import ScheduleIcon from '@mui/icons-material/Schedule'
+import EventBusyIcon from '@mui/icons-material/EventBusy'
+import PersonOffIcon from '@mui/icons-material/PersonOff'
+import Inventory2Icon from '@mui/icons-material/Inventory2'
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
+import TimelineIcon from '@mui/icons-material/Timeline'
+import BuildCircleIcon from '@mui/icons-material/BuildCircle'
+import CreditCardIcon from '@mui/icons-material/CreditCard'
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
+import ReceiptIcon from '@mui/icons-material/Receipt'
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import CachedIcon from '@mui/icons-material/Cached'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import HistoryIcon from '@mui/icons-material/History'
 import { menuStyles } from '../style/components'
 import { canAccessResource } from '../auth/authProvider'
 
@@ -30,6 +46,7 @@ interface ResourceItem {
 
 const sectionColors: Record<string, string> = {
   Général: '#6CA568',
+  Société: '#60A5FA',
   RH: '#A78BFA',
   Stock: '#4ADE80',
   Équipement: '#FBBF24',
@@ -50,6 +67,25 @@ const SectionHeader = ({ label }: { label: string }) => (
   </Box>
 )
 
+const SubSectionHeader = ({ label }: { label: string }) => (
+  <Typography
+    variant="caption"
+    sx={{
+      display: 'block',
+      color: 'text.disabled',
+      fontSize: '0.6rem',
+      fontWeight: 600,
+      letterSpacing: '0.06em',
+      py: 0.4,
+      px: 2.5,
+      mt: 0.5,
+      textTransform: 'uppercase' as const,
+    }}
+  >
+    {label}
+  </Typography>
+)
+
 const MenuRoot = () => {
   const [sidebarOpen] = useSidebarState()
 
@@ -57,13 +93,37 @@ const MenuRoot = () => {
 
   const generalItems: ResourceItem[] = [
     { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
-    { name: 'jobs', label: 'Chantiers', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
+  ]
+
+  const companyItems: ResourceItem[] = [
     {
       name: 'companies',
       label: 'Entreprises',
       icon: BusinessIcon,
       to: '/companies',
       testId: 'menu-companies',
+    },
+    {
+      name: 'company-hub',
+      label: 'Tableau de bord',
+      icon: BusinessIcon,
+      to: '/company',
+      testId: 'menu-company-hub',
+    },
+    { name: 'jobs', label: 'Travaux', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
+    {
+      name: 'tasks',
+      label: 'Tâches',
+      icon: AssignmentIcon,
+      to: '/tasks',
+      testId: 'menu-tasks',
+    },
+    {
+      name: 'task_schedules',
+      label: 'Planification',
+      icon: ScheduleIcon,
+      to: '/task_schedules',
+      testId: 'menu-task-schedules',
     },
   ]
 
@@ -79,7 +139,7 @@ const MenuRoot = () => {
     },
     {
       name: 'travel_people',
-      label: 'Personnel',
+      label: 'Transport personnel',
       icon: PeopleAltIcon,
       to: '/travel_people',
       testId: 'menu-travel-peoples',
@@ -90,6 +150,20 @@ const MenuRoot = () => {
       icon: CalendarMonthIcon,
       to: '/leaves',
       testId: 'menu-leaves',
+    },
+    {
+      name: 'leave_balances',
+      label: 'Soldes congés',
+      icon: EventBusyIcon,
+      to: '/leave_balances',
+      testId: 'menu-leave-balances',
+    },
+    {
+      name: 'employees_without_leave',
+      label: 'Sans congé',
+      icon: PersonOffIcon,
+      to: '/employees_without_leave',
+      testId: 'menu-employees-without-leave',
     },
   ]
 
@@ -122,6 +196,20 @@ const MenuRoot = () => {
       to: '/purchases?isMaterial=true',
       testId: 'menu-purchases',
     },
+    {
+      name: 'material_warehouse',
+      label: 'Stock',
+      icon: Inventory2Icon,
+      to: '/material_warehouse',
+      testId: 'menu-stock',
+    },
+    {
+      name: 'material_consumption',
+      label: 'Conso. matériaux',
+      icon: DeleteSweepIcon,
+      to: '/material_consumption',
+      testId: 'menu-material-consumption',
+    },
   ]
 
   const equipmentItems: ResourceItem[] = [
@@ -146,9 +234,47 @@ const MenuRoot = () => {
       to: '/purchases?isEquipment=true',
       testId: 'menu-purchases',
     },
+    {
+      name: 'equipment_usage',
+      label: 'Utilisation',
+      icon: TimelineIcon,
+      to: '/equipment_usage',
+      testId: 'menu-equipment-usage',
+    },
+    {
+      name: 'maintenances',
+      label: 'Maintenance',
+      icon: BuildCircleIcon,
+      to: '/maintenances',
+      testId: 'menu-maintenances',
+    },
   ]
 
-  const monetaryItems: ResourceItem[] = [
+  const monetaryInItems: ResourceItem[] = [
+    {
+      name: 'incomes',
+      label: 'Revenus',
+      icon: PaidIcon,
+      to: '/incomes',
+      testId: 'menu-incomes',
+    },
+    {
+      name: 'receipts',
+      label: 'Reçus',
+      icon: ReceiptIcon,
+      to: '/receipts',
+      testId: 'menu-receipts',
+    },
+    {
+      name: 'loans',
+      label: 'Emprunts',
+      icon: CreditCardIcon,
+      to: '/loans',
+      testId: 'menu-loans',
+    },
+  ]
+
+  const monetaryOutPonctuelItems: ResourceItem[] = [
     {
       name: 'expenses',
       label: 'Dépenses',
@@ -164,11 +290,11 @@ const MenuRoot = () => {
       testId: 'menu-travel-expenses',
     },
     {
-      name: 'bank_fees',
-      label: 'Frais bancaire',
-      icon: AccountBalanceIcon,
-      to: '/bank_fees',
-      testId: 'menu-bank-fees',
+      name: 'purchases',
+      label: 'Achats',
+      icon: ShoppingCartIcon,
+      to: '/purchases',
+      testId: 'menu-purchases',
     },
     {
       name: 'other_expenses',
@@ -178,18 +304,66 @@ const MenuRoot = () => {
       testId: 'menu-other-expenses',
     },
     {
-      name: 'incomes',
-      label: 'Revenus',
-      icon: PaidIcon,
-      to: '/incomes',
-      testId: 'menu-incomes',
+      name: 'loan_repayments',
+      label: 'Remb. emprunts',
+      icon: CurrencyExchangeIcon,
+      to: '/loan_repayments',
+      testId: 'menu-loan-repayments',
+    },
+  ]
+
+  const monetaryOutContinueItems: ResourceItem[] = [
+    {
+      name: 'bank_fees',
+      label: 'Frais bancaire',
+      icon: AccountBalanceIcon,
+      to: '/bank_fees',
+      testId: 'menu-bank-fees',
     },
     {
-      name: 'purchases',
-      label: 'Achats',
-      icon: ShoppingCartIcon,
-      to: '/purchases',
-      testId: 'menu-purchases',
+      name: 'fixed_costs',
+      label: 'Charges fixes',
+      icon: ReceiptLongIcon,
+      to: '/fixed_costs',
+      testId: 'menu-fixed-costs',
+    },
+    {
+      name: 'budget_lines',
+      label: 'Budgets',
+      icon: AccountBalanceWalletIcon,
+      to: '/budget_lines',
+      testId: 'menu-budgets',
+    },
+  ]
+
+  const monetaryOtherItems: ResourceItem[] = [
+    {
+      name: 'cash_accounts',
+      label: 'Comptes caisse',
+      icon: AccountBalanceIcon,
+      to: '/cash_accounts',
+      testId: 'menu-cash-accounts',
+    },
+    {
+      name: 'cash_transactions',
+      label: 'Trans. caisse',
+      icon: CachedIcon,
+      to: '/cash_transactions',
+      testId: 'menu-cash-transactions',
+    },
+    {
+      name: 'yearly-report',
+      label: 'Rapport annuel',
+      icon: AssessmentIcon,
+      to: '/yearly-report',
+      testId: 'menu-yearly-report',
+    },
+    {
+      name: 'history',
+      label: 'Historique',
+      icon: HistoryIcon,
+      to: '/history',
+      testId: 'menu-history',
     },
   ]
 
@@ -229,6 +403,11 @@ const MenuRoot = () => {
         {renderItems(generalItems)}
       </List>
 
+      <SectionHeader label="Société" />
+      <List component="nav" dense sx={{ mb: 1 }}>
+        {renderItems(companyItems)}
+      </List>
+
       <SectionHeader label="RH" />
       <List component="nav" dense sx={{ mb: 1 }}>
         {renderItems(rhItems)}
@@ -246,7 +425,14 @@ const MenuRoot = () => {
 
       <SectionHeader label="Monétaire" />
       <List component="nav" dense sx={{ mb: 1 }}>
-        {renderItems(monetaryItems)}
+        <SubSectionHeader label="Entrées" />
+        {renderItems(monetaryInItems)}
+        <SubSectionHeader label="Sorties ponctuelles" />
+        {renderItems(monetaryOutPonctuelItems)}
+        <SubSectionHeader label="Sorties continues" />
+        {renderItems(monetaryOutContinueItems)}
+        <SubSectionHeader label="Trésorerie" />
+        {renderItems(monetaryOtherItems)}
       </List>
     </Box>
   )

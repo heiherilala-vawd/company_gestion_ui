@@ -1,25 +1,32 @@
 import { SectionHub } from '../../generic/SectionHub'
-import WarehouseIcon from '@mui/icons-material/Warehouse'
-import CategoryIcon from '@mui/icons-material/Category'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import InventoryIcon from '@mui/icons-material/Inventory'
 
 const items = [
-  { label: 'Entrepôts', icon: WarehouseIcon, to: '/warehouses', color: 'forest' as const },
-  { label: 'Matériaux', icon: CategoryIcon, to: '/materials', color: 'forest' as const },
   {
-    label: 'Matériaux dépl.',
-    icon: CategoryIcon,
-    to: '/travel_materials',
+    label: 'Achat',
+    icon: ShoppingCartIcon,
+    to: '/purchases_activity',
     color: 'forest' as const,
+    desc: 'Acheter',
   },
   {
-    label: 'Achats',
-    icon: ShoppingCartIcon,
-    to: '/purchases?isMaterial=true',
+    label: 'Déplacement',
+    icon: LocalShippingIcon,
+    to: '/travel_equipment_activity',
     color: 'forest' as const,
+    desc: 'Déplacer',
+  },
+  {
+    label: 'Réception',
+    icon: InventoryIcon,
+    to: '/travel_materials_activity',
+    color: 'forest' as const,
+    desc: 'Valider réception',
   },
 ]
 
 export default function StockPage() {
-  return <SectionHub title="Stock" items={items} />
+  return <SectionHub title="Actions Stock" items={items} />
 }

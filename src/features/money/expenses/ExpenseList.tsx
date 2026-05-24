@@ -26,7 +26,7 @@ export default function ExpenseList() {
       >
         <TextField source="description" label="Description" />
         <NumberField source="amount" label="Montant" />
-        <TextField source="job.description" label="Chantier" />
+        <TextField source="job.description" label="Travail" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>
