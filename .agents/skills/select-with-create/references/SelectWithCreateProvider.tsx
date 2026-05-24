@@ -84,7 +84,7 @@ export const renderJobSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
     source={source ? source : 'job_id'}
     reference="jobs"
-    label={label ? label : 'Chantier'}
+    label={label ? label : 'Travail'}
     optionText="description"
     createUrlEnd={getMiddleUrl('jobs')}
     createForm={<JobForm isCreateForm />}

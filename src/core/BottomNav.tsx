@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
+import BusinessIcon from '@mui/icons-material/Business'
 import BadgeIcon from '@mui/icons-material/Badge'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing'
@@ -9,6 +10,7 @@ import { bottomNavStyles } from '../style/components'
 
 const navItems = [
   { label: 'Accueil', icon: HomeIcon, to: '/' },
+  { label: 'Société', icon: BusinessIcon, to: '/company' },
   { label: 'RH', icon: BadgeIcon, to: '/rh' },
   { label: 'Stock', icon: InventoryIcon, to: '/stock' },
   { label: 'Équipement', icon: PrecisionManufacturingIcon, to: '/equipment-hub' },
@@ -17,10 +19,11 @@ const navItems = [
 
 function getActiveIndex(pathname: string): number {
   if (pathname === '/' || pathname === '/home') return 0
-  if (pathname.startsWith('/rh')) return 1
-  if (pathname.startsWith('/stock')) return 2
-  if (pathname.startsWith('/equipment-hub')) return 3
-  if (pathname.startsWith('/monetary')) return 4
+  if (pathname.startsWith('/company')) return 1
+  if (pathname.startsWith('/rh')) return 2
+  if (pathname.startsWith('/stock')) return 3
+  if (pathname.startsWith('/equipment-hub')) return 4
+  if (pathname.startsWith('/monetary')) return 5
   return -1
 }
 

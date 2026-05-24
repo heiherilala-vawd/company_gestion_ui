@@ -51,7 +51,7 @@ export default function CompanyShow() {
           <CompanyInformations />
         </Tab>
 
-        <Tab label="Chantiers">
+        <Tab label="Travaux">
           {isLoading ? (
             <p>Chargement...</p>
           ) : record?.id ? (

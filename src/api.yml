@@ -3,7 +3,7 @@ info:
   version: '1.0'
   title: Company Management API
   description: |
-    API CRUD pour la gestion des entreprises, chantiers, entrepôts, équipements, matériaux,
+    API CRUD pour la gestion des entreprises, travaux, entrepôts, équipements, matériaux,
     mouvements financiers, dépenses, achats et frais de transport.
     Basée sur le schéma de base de données fourni.
 
@@ -1762,7 +1762,7 @@ paths:
                   email: 'jean.dupont@example.com'
                   role: 'EMPLOYEE'
                   sex: 'M'
-                  comment: 'Responsable de chantier'
+                  comment: 'Responsable de travail'
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   created_by:
@@ -1845,7 +1845,7 @@ paths:
               example:
                 id: 'wh_001'
                 name: 'Entrepôt Nord'
-                description: 'Entrepôt principal pour le chantier de Lyon'
+                description: 'Entrepôt principal pour le travail de Lyon'
                 job:
                   id: 'job_001'
                   company_id: 'comp_btp001'
@@ -1964,7 +1964,7 @@ paths:
               example:
                 - id: 'wh_001'
                   name: 'Entrepôt Nord'
-                  description: 'Entrepôt principal pour le chantier de Lyon'
+                  description: 'Entrepôt principal pour le travail de Lyon'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -2043,7 +2043,7 @@ paths:
             example:
               - id: 'wh_001'
                 name: 'Entrepôt Nord'
-                description: 'Entrepôt principal pour le chantier de Lyon'
+                description: 'Entrepôt principal pour le travail de Lyon'
                 job_id: 'job_001'
                 comment: "Agrandissement de l'entrepôt"
               - name: 'Entrepôt Est'
@@ -2062,7 +2062,7 @@ paths:
               example:
                 - id: 'wh_001'
                   name: 'Entrepôt Nord'
-                  description: 'Entrepôt principal pour le chantier de Lyon'
+                  description: 'Entrepôt principal pour le travail de Lyon'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -2155,7 +2155,7 @@ paths:
                 warehouse:
                   id: 'wh_001'
                   name: 'Entrepôt Nord'
-                  description: 'Entrepôt principal pour le chantier de Lyon'
+                  description: 'Entrepôt principal pour le travail de Lyon'
                 floor_number: 1
                 storage_number: 5
                 comment: 'Machine en bon état'
@@ -3166,7 +3166,7 @@ paths:
               example:
                 id: 'exp_001'
                 amount: 15000
-                description: 'Achat de matériaux pour le chantier'
+                description: 'Achat de matériaux pour le travail'
                 job:
                   id: 'job_001'
                   company_id: 'comp_btp001'
@@ -3299,7 +3299,7 @@ paths:
               example:
                 - id: 'exp_001'
                   amount: 15000
-                  description: 'Achat de matériaux pour le chantier'
+                  description: 'Achat de matériaux pour le travail'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -3388,7 +3388,7 @@ paths:
             example:
               - id: 'exp_001'
                 amount: 16200
-                description: 'Achat de matériaux pour le chantier'
+                description: 'Achat de matériaux pour le travail'
                 job_id: 'job_001'
                 comment: 'Facture N°F-2024-001 révisée'
               - amount: 2800
@@ -3407,7 +3407,7 @@ paths:
               example:
                 - id: 'exp_001'
                   amount: 16200
-                  description: 'Achat de matériaux pour le chantier'
+                  description: 'Achat de matériaux pour le travail'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -3845,7 +3845,7 @@ paths:
                 source_organization: 'Client Principal'
                 invoice_reference: 'FACT-2024-001'
                 billing_start_date: '2024-01-15'
-                description: 'Premier acompte pour le chantier'
+                description: 'Premier acompte pour le travail'
                 job:
                   id: 'job_001'
                   company_id: 'comp_btp001'
@@ -4010,7 +4010,7 @@ paths:
                   source_organization: 'Client Principal'
                   invoice_reference: 'FACT-2024-001'
                   billing_start_date: '2024-01-15'
-                  description: 'Premier acompte pour le chantier'
+                  description: 'Premier acompte pour le travail'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -4116,7 +4116,7 @@ paths:
                 invoice_reference: 'FACT-2024-001'
                 billing_start_date: '2024-01-15'
                 income_type_id: 'income_type_001'
-                description: 'Premier acompte pour le chantier (révisé)'
+                description: 'Premier acompte pour le travail (révisé)'
                 job_id: 'job_001'
                 comment: 'Acompte révisé à 33%'
               - amount: 40000
@@ -4142,7 +4142,7 @@ paths:
                   source_organization: 'Client Principal'
                   invoice_reference: 'FACT-2024-001'
                   billing_start_date: '2024-01-15'
-                  description: 'Premier acompte pour le chantier (révisé)'
+                  description: 'Premier acompte pour le travail (révisé)'
                   job:
                     id: 'job_001'
                     company_id: 'comp_btp001'
@@ -5231,7 +5231,7 @@ paths:
                 expense:
                   id: 'exp_001'
                   amount: 15000
-                  description: 'Achat de matériaux pour le chantier'
+                  description: 'Achat de matériaux pour le travail'
                 supplier:
                   id: 'supp_001'
                   name: 'Fournisseur A'
@@ -5375,7 +5375,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   supplier:
                     id: 'supp_001'
                     name: 'Fournisseur A'
@@ -5393,7 +5393,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   supplier:
                     id: 'supp_001'
                     name: 'Fournisseur A'
@@ -5477,7 +5477,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   supplier:
                     id: 'supp_001'
                     name: 'Fournisseur A'
@@ -5577,7 +5577,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   supplier:
                     id: 'supp_001'
                     name: 'Fournisseur A'
@@ -5735,7 +5735,7 @@ paths:
                 expense:
                   id: 'exp_001'
                   amount: 15000
-                  description: 'Achat de matériaux pour le chantier'
+                  description: 'Achat de matériaux pour le travail'
                 bank_name: 'BNP Paribas'
                 description: 'Frais de virement international'
         '400':
@@ -5852,7 +5852,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   bank_name: 'BNP Paribas'
                   description: 'Frais de virement international'
         '400':
@@ -5919,7 +5919,7 @@ paths:
                   expense:
                     id: 'exp_001'
                     amount: 15000
-                    description: 'Achat de matériaux pour le chantier'
+                    description: 'Achat de matériaux pour le travail'
                   bank_name: 'BNP Paribas'
                   description: 'Frais de virement international révisés'
         '400':
@@ -8068,7 +8068,7 @@ components:
           example: 'team_001'
         name:
           type: string
-          example: 'Équipe chantier A'
+          example: 'Équipe travail A'
         leader:
           $ref: '#/components/schemas/User'
         members:
@@ -8084,7 +8084,7 @@ components:
           example: 'team_001'
         name:
           type: string
-          example: 'Équipe chantier A'
+          example: 'Équipe travail A'
         leader_id:
           type: string
           example: 'usr_123456'
@@ -8206,7 +8206,7 @@ components:
           example: 'Entrepôt Nord'
         description:
           type: string
-          example: 'Entrepôt principal pour le chantier de Lyon'
+          example: 'Entrepôt principal pour le travail de Lyon'
         job:
           $ref: '#/components/schemas/CrupdateJob'
     CrupdateWarehouse:
@@ -8221,7 +8221,7 @@ components:
           example: 'Entrepôt Nord'
         description:
           type: string
-          example: 'Entrepôt principal pour le chantier de Lyon'
+          example: 'Entrepôt principal pour le travail de Lyon'
         job_id:
           type: string
           example: 'job_001'
@@ -8516,7 +8516,7 @@ components:
           example: 15000
         description:
           type: string
-          example: 'Achat de matériaux pour le chantier'
+          example: 'Achat de matériaux pour le travail'
     CrupdateMonetaryMovement:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -8526,7 +8526,7 @@ components:
           example: 15000
         description:
           type: string
-          example: 'Achat de matériaux pour le chantier'
+          example: 'Achat de matériaux pour le travail'
 
     # =========================
     # INCOME TYPE

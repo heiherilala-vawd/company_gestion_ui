@@ -13,7 +13,7 @@ describe('E2E: Main Menu and Selectors', () => {
     'Entreprises',
     'Utilisateurs',
     'Salaires',
-    'Personnel',
+    'Transport personnel',
     'Entrepôts',
     'Matériaux',
     'Matériaux dépl.',

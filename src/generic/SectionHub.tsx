@@ -1,13 +1,14 @@
 import { Box, Typography, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { alpha } from '@mui/material/styles'
-import { natureGradients } from '../style/themeConfig'
+import { natureGradients, transitions } from '../style/themeConfig'
 
 interface HubItem {
   label: string
   icon: React.ElementType
   to: string
   color: keyof typeof natureGradients
+  desc?: string
 }
 
 export function SectionHub({ title, items }: { title: string; items: HubItem[] }) {
@@ -31,6 +32,7 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
         {items.map((item) => {
           const Icon = item.icon
           const grad = natureGradients[item.color]
+          const isAction = !!item.desc
           return (
             <Grid
               item
@@ -41,25 +43,40 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
             >
               <Box
                 onClick={() => navigate(item.to)}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                  width: { xs: 88, sm: 100 },
-                  py: 1.5,
-                  borderRadius: 2,
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    bgcolor: 'action.hover',
-                    transform: 'translateY(-2px)',
-                  },
-                }}
+                sx={
+                  isAction
+                    ? {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: transitions.spring,
+                        width: { xs: 90, sm: 110 },
+                        height: { xs: 110, sm: 130 },
+                        '&:hover': { transform: 'translateY(-4px)' },
+                        '&:active': { transform: 'translateY(-2px)' },
+                      }
+                    : {
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                        width: { xs: 88, sm: 100 },
+                        py: 1.5,
+                        borderRadius: 2,
+                        transition: 'all 0.2s',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          transform: 'translateY(-2px)',
+                        },
+                      }
+                }
               >
                 <Box
                   sx={{
-                    width: { xs: 48, sm: 52 },
-                    height: { xs: 48, sm: 52 },
+                    width: isAction ? { xs: 52, sm: 64 } : { xs: 48, sm: 52 },
+                    height: isAction ? { xs: 52, sm: 64 } : { xs: 48, sm: 52 },
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -69,6 +86,7 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
                     mb: 1,
                     position: 'relative',
                     overflow: 'hidden',
+                    transition: isAction ? transitions.default : undefined,
                     '&::after': {
                       content: '""',
                       position: 'absolute',
@@ -78,11 +96,14 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
                       borderRadius: '50%',
                       pointerEvents: 'none',
                     },
+                    ...(isAction && {
+                      '&:hover': { transform: 'scale(1.08)' },
+                    }),
                   }}
                 >
                   <Icon
                     sx={{
-                      fontSize: { xs: 20, sm: 24 },
+                      fontSize: isAction ? { xs: 20, sm: 26 } : { xs: 20, sm: 24 },
                       color: '#F3F6ED',
                       position: 'relative',
                       zIndex: 1,
@@ -100,6 +121,19 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
                 >
                   {item.label}
                 </Typography>
+                {item.desc && (
+                  <Typography
+                    sx={{
+                      fontSize: { xs: '0.5rem', sm: '0.55rem' },
+                      color: 'text.secondary',
+                      textAlign: 'center',
+                      mt: 0.15,
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {item.desc}
+                  </Typography>
+                )}
               </Box>
             </Grid>
           )

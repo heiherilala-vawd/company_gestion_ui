@@ -17,7 +17,7 @@ export default function IncomeShow() {
         <NumberField source="amount" label="Montant" />
         <NumberField source="remaining_amount" label="Reste à recevoir" />
         <TextField source="description" label="Description" />
-        <TextField source="job.description" label="Chantier" />
+        <TextField source="job.description" label="Travail" />
         <TextField source="income_type.name" label="Type de revenu" />
         <DateField source="billing_start_date" label="Date début facturation" />
         <TextField source="comment" label="Commentaire" />

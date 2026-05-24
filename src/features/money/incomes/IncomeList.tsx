@@ -31,7 +31,7 @@ export default function IncomeList() {
         <NumberField source="amount" label="Montant" />
         <TextField source="invoice_reference" label="Réf. facture" />
         <TextField source="description" label="Description" />
-        <TextField source="job.description" label="Chantier" />
+        <TextField source="job.description" label="Travail" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

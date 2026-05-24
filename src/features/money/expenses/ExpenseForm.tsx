@@ -19,7 +19,7 @@ export default function ExpenseForm({
         />
       )}{' '}
       {isCreateForm && <TextInput source={souce + 'newId'} readOnly defaultValue={generateId()} />}
-      {!isCreate && renderJobSelect(souce + 'job_id', 'Chantier')}
+      {!isCreate && renderJobSelect(souce + 'job_id', 'Travail')}
       <NumberInput source={souce + 'amount'} label="Montant" data-testid="input-amount" />
       {description === '' ? (
         <TextInput

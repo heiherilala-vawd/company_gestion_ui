@@ -23,7 +23,7 @@ src/__tests__/
 ├── e2e/
 │   ├── auth.cy.ts          # Tests d'authentification
 │   ├── companies.cy.ts     # Tests des entreprises
-│   ├── jobs.cy.ts          # Tests des chantiers
+│   ├── jobs.cy.ts          # Tests des travaux
 │   └── main-menu.cy.ts     # Tests du menu principal
 ├── mocks/
 │   └── responses/

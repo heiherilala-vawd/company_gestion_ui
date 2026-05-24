@@ -37,7 +37,6 @@ import {
   travelPeoplesMock,
   travelEquipmentsMock,
   incomesType1,
-  incomesTypes,
   warehouse2Mock,
   loansActiveMock,
   loansDefaultedMock,
@@ -50,6 +49,36 @@ import {
   leave1Mock,
   leave2Mock,
   leaveType1Mock,
+  fixedCost1Mock,
+  fixedCostsMock,
+  task1Mock,
+  tasksMock,
+  taskSchedule1Mock,
+  taskSchedulesMock,
+  department1Mock,
+  departmentsMock,
+  budgetLine1Mock,
+  budgetLinesMock,
+  cashAccount1Mock,
+  cashAccountsMock,
+  cashTransaction1Mock,
+  cashTransactionsMock,
+  equipmentUsage1Mock,
+  equipmentUsagesMock,
+  materialConsumption1Mock,
+  materialConsumptionsMock,
+  maintenance1Mock,
+  maintenancesMock,
+  loanRepayment1Mock,
+  loanRepaymentsMock,
+  receipt1Mock,
+  receiptsMock,
+  incomeType1Mock,
+  incomeTypesMock,
+  leaveConfig1Mock,
+  leaveConfigsMock,
+  yearlyReportMock,
+  leaveBalancesMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -105,13 +134,13 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/incomes*', mockSuccessResponse(incomesMock)).as('getIncomes')
   cy.intercept('GET', '**/incomes/inc1_id*', mockSuccessResponse(income1Mock)).as('getIncome')
 
-  // ---------------------- INCOMES TYPES ------------------------------------------
-  cy.intercept('GET', '**/income_types*', mockSuccessResponse(incomesTypes)).as('getIncomes')
+  // ---------------------- INCOME TYPES ------------------------------------------
+  cy.intercept('GET', '**/income_types*', mockSuccessResponse(incomeTypesMock)).as('getIncomeTypes')
   cy.intercept(
     'GET',
-    '**/income_types/' + incomesType1.id + '*',
-    mockSuccessResponse(incomesType1),
-  ).as('getIncome')
+    '**/income_types/' + incomeType1Mock.id + '*',
+    mockSuccessResponse(incomeType1Mock),
+  ).as('getIncomeType')
 
   // ---------------------- BANK FEES ------------------------------------------
   cy.intercept('GET', '**/bank_fees*', mockSuccessResponse(bankFeesMock)).as('getBankFees')
@@ -203,6 +232,108 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/leaves*', mockSuccessResponse(leavesMock)).as('getLeaves')
   cy.intercept('GET', '**/leaves/leave1_id*', mockSuccessResponse(leave1Mock)).as('getLeave')
   cy.intercept('GET', '**/leaves/leave2_id*', mockSuccessResponse(leave2Mock)).as('getLeave2')
+
+  // ---------------------- FIXED COSTS ------------------------------------------
+  cy.intercept('GET', '**/fixed_costs*', mockSuccessResponse(fixedCostsMock)).as('getFixedCosts')
+  cy.intercept('GET', '**/fixed_costs/fc1_id*', mockSuccessResponse(fixedCost1Mock)).as(
+    'getFixedCost',
+  )
+
+  // ---------------------- TASKS ------------------------------------------
+  cy.intercept('GET', '**/tasks*', mockSuccessResponse(tasksMock)).as('getTasks')
+  cy.intercept('GET', '**/tasks/task1_id*', mockSuccessResponse(task1Mock)).as('getTask')
+
+  // ---------------------- TASK SCHEDULES ------------------------------------------
+  cy.intercept('GET', '**/task_schedules*', mockSuccessResponse(taskSchedulesMock)).as(
+    'getTaskSchedules',
+  )
+  cy.intercept('GET', '**/task_schedules/ts1_id*', mockSuccessResponse(taskSchedule1Mock)).as(
+    'getTaskSchedule',
+  )
+
+  // ---------------------- DEPARTMENTS ------------------------------------------
+  cy.intercept('GET', '**/departments*', mockSuccessResponse(departmentsMock)).as('getDepartments')
+  cy.intercept('GET', '**/departments/dept1_id*', mockSuccessResponse(department1Mock)).as(
+    'getDepartment',
+  )
+
+  // ---------------------- BUDGET LINES ------------------------------------------
+  cy.intercept('GET', '**/budget_lines*', mockSuccessResponse(budgetLinesMock)).as('getBudgetLines')
+  cy.intercept('GET', '**/budget_lines/bl1_id*', mockSuccessResponse(budgetLine1Mock)).as(
+    'getBudgetLine',
+  )
+
+  // ---------------------- CASH ACCOUNTS ------------------------------------------
+  cy.intercept('GET', '**/cash_accounts*', mockSuccessResponse(cashAccountsMock)).as(
+    'getCashAccounts',
+  )
+  cy.intercept('GET', '**/cash_accounts/ca1_id*', mockSuccessResponse(cashAccount1Mock)).as(
+    'getCashAccount',
+  )
+
+  // ---------------------- CASH TRANSACTIONS ------------------------------------------
+  cy.intercept('GET', '**/cash_transactions*', mockSuccessResponse(cashTransactionsMock)).as(
+    'getCashTransactions',
+  )
+  cy.intercept('GET', '**/cash_transactions/ct1_id*', mockSuccessResponse(cashTransaction1Mock)).as(
+    'getCashTransaction',
+  )
+
+  // ---------------------- EQUIPMENT USAGE ------------------------------------------
+  cy.intercept('GET', '**/equipment_usage*', mockSuccessResponse(equipmentUsagesMock)).as(
+    'getEquipmentUsages',
+  )
+  cy.intercept('GET', '**/equipment_usage/eu1_id*', mockSuccessResponse(equipmentUsage1Mock)).as(
+    'getEquipmentUsage',
+  )
+
+  // ---------------------- MATERIAL CONSUMPTION ------------------------------------------
+  cy.intercept('GET', '**/material_consumption*', mockSuccessResponse(materialConsumptionsMock)).as(
+    'getMaterialConsumptions',
+  )
+  cy.intercept(
+    'GET',
+    '**/material_consumption/mc1_id*',
+    mockSuccessResponse(materialConsumption1Mock),
+  ).as('getMaterialConsumption')
+
+  // ---------------------- MAINTENANCES ------------------------------------------
+  cy.intercept('GET', '**/maintenances*', mockSuccessResponse(maintenancesMock)).as(
+    'getMaintenances',
+  )
+  cy.intercept('GET', '**/maintenances/maint1_id*', mockSuccessResponse(maintenance1Mock)).as(
+    'getMaintenance',
+  )
+
+  // ---------------------- LOAN REPAYMENTS ------------------------------------------
+  cy.intercept('GET', '**/loan_repayments*', mockSuccessResponse(loanRepaymentsMock)).as(
+    'getLoanRepayments',
+  )
+  cy.intercept('GET', '**/loan_repayments/lr1_id*', mockSuccessResponse(loanRepayment1Mock)).as(
+    'getLoanRepayment',
+  )
+
+  // ---------------------- RECEIPTS (income receipts) --------------------------------
+  cy.intercept('GET', '**/receipts*', mockSuccessResponse(receiptsMock)).as('getReceipts')
+  cy.intercept('GET', '**/receipts/rec1_id*', mockSuccessResponse(receipt1Mock)).as('getReceipt')
+
+  // ---------------------- LEAVE CONFIGS ------------------------------------------
+  cy.intercept('GET', '**/leave_configs*', mockSuccessResponse(leaveConfigsMock)).as(
+    'getLeaveConfigs',
+  )
+  cy.intercept('GET', '**/leave_configs/lc1_id*', mockSuccessResponse(leaveConfig1Mock)).as(
+    'getLeaveConfig',
+  )
+
+  // ---------------------- YEARLY REPORT ------------------------------------------
+  cy.intercept('GET', '**/yearly_report*', mockSuccessResponse(yearlyReportMock)).as(
+    'getYearlyReport',
+  )
+
+  // ---------------------- LEAVE BALANCES ------------------------------------------
+  cy.intercept('GET', '**/leave_balances*', mockSuccessResponse(leaveBalancesMock)).as(
+    'getLeaveBalances',
+  )
 
   // ---------------------- SPA ROUTE PASSTHROUGH (evite que les patterns glob attrapent les routes SPA) --------
   const spaRoutes = [

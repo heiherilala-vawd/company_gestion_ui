@@ -15,7 +15,7 @@ const WarehouseFilters = [
   <SearchInput source="q" alwaysOn />,
   <TextInput source="description" label="Description" />,
   <ReferenceInput source="job_id" reference="jobs" perPage={100}>
-    <SelectInput optionText="description" label="Chantier" />
+    <SelectInput optionText="description" label="Travail" />
   </ReferenceInput>,
 ]
 
@@ -25,7 +25,7 @@ export default function WarehouseList() {
       <ResponsiveDatagrid priorityFields={['name', 'description', 'job.description']}>
         <TextField source="name" label="Nom" />
         <TextField source="description" label="Description" />
-        <TextField source="job.description" label="ID Chantier" />
+        <TextField source="job.description" label="ID Travail" />
         <EditButton />
       </ResponsiveDatagrid>
     </List>
