@@ -30,7 +30,7 @@ describe('E2E: Travel Materials', () => {
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(String(<number>crupdatedData.quantity))
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

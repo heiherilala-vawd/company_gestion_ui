@@ -46,7 +46,7 @@ export default function YearlyReport() {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
-      const url = `${apiUrl}/companies/${companyId}/yearly-report?year=${year}`
+      const url = `${apiUrl}/companies/${companyId}/yearly_report?year=${year}`
 
       const response = await fetch(url, {
         headers: {

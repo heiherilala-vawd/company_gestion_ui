@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Loan, CrupdateLoan, CrupdateLoanRepayment } from '../../../gen-ts/src'
 import { job1Mock } from './jobs-api.ts'
 import { user1Mock } from './users-api.ts'

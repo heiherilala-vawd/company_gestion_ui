@@ -33,7 +33,7 @@ describe('E2E: Companies', () => {
     cy.get('[data-testid="input-comment"] input')
       .clear()
       .type(<string>crupdatedData.comment)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

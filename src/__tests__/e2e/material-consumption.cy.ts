@@ -14,7 +14,6 @@ import {
 } from '../support/utils.ts'
 import { material1Mock } from '../mocks/responses/materials-api'
 import { warehouse1Mock } from '../mocks/responses/warehouses-api'
-import { job1Mock } from '../mocks/responses/jobs-api'
 
 describe('E2E: Material Consumption', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -30,13 +29,23 @@ describe('E2E: Material Consumption', () => {
       cy.wait('@getMaterialConsumption')
       cy.get('.RaEditButton-root').click()
     }
+    cy.wait('@getJobs')
+    cy.get('[data-testid="input-material_id"]').should('be.visible')
+    cy.get('[data-testid="input-warehouse_id"]').should('be.visible')
+    cy.get('[data-testid="input-job_id"]').should('be.visible')
     selectReferenceWithCreate('input-material_id', 'material_id', <string>material1Mock.name)
     selectReferenceWithCreate('input-warehouse_id', 'warehouse_id', <string>warehouse1Mock.name)
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(<string>(<unknown>crupdatedData.quantity))
-    selectReferenceWithCreate('input-job_id', 'job_id', <string>job1Mock.description)
-    cy.get('button[type="submit"]').click()
+    cy.get('[data-testid="input-job_id"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+      })
+    cy.get('#menu-job_id li', { timeout: 10000 }).should('have.length.of.at.least', 1)
+    cy.get('#menu-job_id li').eq(1).click({ force: true })
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

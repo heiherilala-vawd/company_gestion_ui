@@ -121,7 +121,7 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
     }
 
     fetchEntities()
-  }, [apiEndpoint])
+  }, [apiEndpoint]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleEntityChange = (entityId: string) => {
     if (showAllOption && entityId === 'all') {

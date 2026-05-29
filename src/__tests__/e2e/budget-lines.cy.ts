@@ -6,62 +6,76 @@ import {
   crupdateBudgetLinesMock,
   createOrUpdateBudgetLines,
 } from '../mocks/responses/budget-lines-api'
-import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
+import {
+  expandMonetarySections,
+  insertInToLocalStorage,
+  interceptGeneralEndpoint,
+  loginInPage,
+  openMobileSidebar,
+} from '../support/utils.ts'
 
 describe('E2E: Budget Lines', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateBudgetLinesMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
       cy.get('[data-testid="input-id"] input').then(($input) => {
         $input.val('newId')
         $input.trigger('change')
       })
     } else {
-      cy.contains(<string>budgetLine1Mock.category).click()
+      cy.get('[class*="RaDatagrid"]')
+        .contains(<string>budgetLine1Mock.category)
+        .click({ force: true })
+      cy.wait(500)
       cy.wait('@getBudgetLine')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-category"] input')
-      .clear()
-      .type(<string>crupdatedData.category)
+      .clear({ force: true })
+      .type(<string>crupdatedData.category, { force: true })
     cy.get('[data-testid="input-planned_amount"] input')
-      .clear()
-      .type(<string>(<unknown>crupdatedData.planned_amount))
-    cy.get('button[type="submit"]').click()
+      .clear({ force: true })
+      .type(<string>(<unknown>crupdatedData.planned_amount), { force: true })
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
-    cy.get('[data-testid="menu-budget-lines"]').click()
+    expandMonetarySections()
+    cy.get('[data-testid="menu-budgets"]').click({ force: true })
     cy.wait('@getBudgetLines')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-budget-lines"]').scrollIntoView()
-    cy.get('[data-testid="menu-budget-lines"]').click({ force: true })
+    cy.visit('/')
+    cy.reload()
+    openMobileSidebar()
+    expandMonetarySections()
+    cy.get('[data-testid="menu-budgets"]').click({ force: true })
     cy.wait('@getBudgetLines')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>budgetLine1Mock.category).should('be.visible')
-    cy.contains(<string>budgetLine2Mock.category).should('be.visible')
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>budgetLine1Mock.category)
+      .should('be.visible')
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>budgetLine2Mock.category)
+      .should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>budgetLine1Mock.category).click()
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>budgetLine1Mock.category)
+      .click({ force: true })
+    cy.wait(500)
     cy.wait('@getBudgetLine')
     cy.contains(<string>budgetLine1Mock.category).should('exist')
     cy.contains(<string>budgetLine1Mock.description).should('exist')

@@ -2,16 +2,16 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                               | HTTP request                                                                                           | Description                                     |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
-| [**crupdateMaintenances**](MaintenanceApi.md#crupdatemaintenances)   | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances         | Create new maintenances or update existing ones |
-| [**deleteMaintenanceById**](MaintenanceApi.md#deletemaintenancebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id} | Delete maintenance by identifier                |
-| [**getMaintenanceById**](MaintenanceApi.md#getmaintenancebyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id}    | Get maintenance by identifier                   |
-| [**getMaintenances**](MaintenanceApi.md#getmaintenances)             | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances         | Get all maintenances for equipment              |
+| Method                                                               | HTTP request                                                               | Description                                     |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------- |
+| [**crupdateMaintenances**](MaintenanceApi.md#crupdatemaintenances)   | **PUT** /companies/{comp_id}/equipment/{equipment_id}/maintenances         | Create new maintenances or update existing ones |
+| [**deleteMaintenanceById**](MaintenanceApi.md#deletemaintenancebyid) | **DELETE** /companies/{comp_id}/equipment/{equipment_id}/maintenances/{id} | Delete maintenance by identifier                |
+| [**getMaintenanceById**](MaintenanceApi.md#getmaintenancebyid)       | **GET** /companies/{comp_id}/equipment/{equipment_id}/maintenances/{id}    | Get maintenance by identifier                   |
+| [**getMaintenances**](MaintenanceApi.md#getmaintenances)             | **GET** /companies/{comp_id}/equipment/{equipment_id}/maintenances         | Get all maintenances for equipment              |
 
 ## crupdateMaintenances
 
-> Array&lt;Maintenance&gt; crupdateMaintenances(compId, jobId, userId, equipmentId, crupdateMaintenance)
+> Array&lt;Maintenance&gt; crupdateMaintenances(compId, equipmentId, crupdateMaintenance)
 
 Create new maintenances or update existing ones
 
@@ -32,10 +32,6 @@ async function example() {
   const body = {
     // string
     compId: comp_btp001,
-    // string
-    jobId: job_001,
-    // string
-    userId: usr_123456,
     // string
     equipmentId: eq_001,
     // Array<CrupdateMaintenance>
@@ -65,8 +61,6 @@ example().catch(console.error)
 | Name                    | Type                         | Description | Notes                     |
 | ----------------------- | ---------------------------- | ----------- | ------------------------- |
 | **compId**              | `string`                     |             | [Defaults to `undefined`] |
-| **jobId**               | `string`                     |             | [Defaults to `undefined`] |
-| **userId**              | `string`                     |             | [Defaults to `undefined`] |
 | **equipmentId**         | `string`                     |             | [Defaults to `undefined`] |
 | **crupdateMaintenance** | `Array<CrupdateMaintenance>` |             |                           |
 
@@ -98,7 +92,7 @@ example().catch(console.error)
 
 ## deleteMaintenanceById
 
-> deleteMaintenanceById(compId, jobId, userId, equipmentId, id)
+> deleteMaintenanceById(compId, equipmentId, id)
 
 Delete maintenance by identifier
 
@@ -119,10 +113,6 @@ async function example() {
   const body = {
     // string
     compId: comp_btp001,
-    // string
-    jobId: job_001,
-    // string
-    userId: usr_123456,
     // string
     equipmentId: eq_001,
     // string
@@ -146,8 +136,6 @@ example().catch(console.error)
 | Name            | Type     | Description | Notes                     |
 | --------------- | -------- | ----------- | ------------------------- |
 | **compId**      | `string` |             | [Defaults to `undefined`] |
-| **jobId**       | `string` |             | [Defaults to `undefined`] |
-| **userId**      | `string` |             | [Defaults to `undefined`] |
 | **equipmentId** | `string` |             | [Defaults to `undefined`] |
 | **id**          | `string` |             | [Defaults to `undefined`] |
 
@@ -179,7 +167,7 @@ example().catch(console.error)
 
 ## getMaintenanceById
 
-> Maintenance getMaintenanceById(compId, jobId, userId, equipmentId, id)
+> Maintenance getMaintenanceById(compId, equipmentId, id)
 
 Get maintenance by identifier
 
@@ -200,10 +188,6 @@ async function example() {
   const body = {
     // string
     compId: comp_btp001,
-    // string
-    jobId: job_001,
-    // string
-    userId: usr_123456,
     // string
     equipmentId: eq_001,
     // string
@@ -227,8 +211,6 @@ example().catch(console.error)
 | Name            | Type     | Description | Notes                     |
 | --------------- | -------- | ----------- | ------------------------- |
 | **compId**      | `string` |             | [Defaults to `undefined`] |
-| **jobId**       | `string` |             | [Defaults to `undefined`] |
-| **userId**      | `string` |             | [Defaults to `undefined`] |
 | **equipmentId** | `string` |             | [Defaults to `undefined`] |
 | **id**          | `string` |             | [Defaults to `undefined`] |
 
@@ -260,7 +242,7 @@ example().catch(console.error)
 
 ## getMaintenances
 
-> Array&lt;Maintenance&gt; getMaintenances(compId, jobId, userId, equipmentId, page, pageSize, description)
+> Array&lt;Maintenance&gt; getMaintenances(compId, equipmentId, page, pageSize, description)
 
 Get all maintenances for equipment
 
@@ -281,10 +263,6 @@ async function example() {
   const body = {
     // string
     compId: comp_btp001,
-    // string
-    jobId: job_001,
-    // string
-    userId: usr_123456,
     // string
     equipmentId: eq_001,
     // number (optional)
@@ -312,8 +290,6 @@ example().catch(console.error)
 | Name            | Type     | Description                                         | Notes                                |
 | --------------- | -------- | --------------------------------------------------- | ------------------------------------ |
 | **compId**      | `string` |                                                     | [Defaults to `undefined`]            |
-| **jobId**       | `string` |                                                     | [Defaults to `undefined`]            |
-| **userId**      | `string` |                                                     | [Defaults to `undefined`]            |
 | **equipmentId** | `string` |                                                     | [Defaults to `undefined`]            |
 | **page**        | `number` |                                                     | [Optional] [Defaults to `undefined`] |
 | **pageSize**    | `number` |                                                     | [Optional] [Defaults to `undefined`] |

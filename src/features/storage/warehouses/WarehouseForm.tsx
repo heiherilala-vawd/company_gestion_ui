@@ -1,10 +1,7 @@
 import { TextInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
-import JobForm from '../../transversal/jobs/JobForm.tsx'
-import { getMiddleUrl } from '../../../config/dynamicResources.ts'
 import { renderJobSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function WarehouseForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

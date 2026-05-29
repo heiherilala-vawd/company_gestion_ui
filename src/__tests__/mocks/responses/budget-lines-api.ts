@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const budgetLine1Mock = {
   id: 'bl1_id',
   category: 'Matériaux',

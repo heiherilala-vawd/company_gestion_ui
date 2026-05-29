@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface TaskSchedule {
   id?: string
   task_id?: string

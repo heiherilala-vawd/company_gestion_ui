@@ -78,6 +78,24 @@ export interface CrupdateUser {
    * @memberof CrupdateUser
    */
   company_id?: string
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateUser
+   */
+  birth_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateUser
+   */
+  manager_id?: string
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateUser
+   */
+  department_id?: string
 }
 
 /**
@@ -105,6 +123,9 @@ export function CrupdateUserFromJSONTyped(json: any, ignoreDiscriminator: boolea
     email: json['email'] == null ? undefined : json['email'],
     password: json['password'] == null ? undefined : json['password'],
     company_id: json['company_id'] == null ? undefined : json['company_id'],
+    birth_date: json['birth_date'] == null ? undefined : new Date(json['birth_date']),
+    manager_id: json['manager_id'] == null ? undefined : json['manager_id'],
+    department_id: json['department_id'] == null ? undefined : json['department_id'],
   }
 }
 
@@ -130,5 +151,11 @@ export function CrupdateUserToJSONTyped(
     email: value['email'],
     password: value['password'],
     company_id: value['company_id'],
+    birth_date:
+      value['birth_date'] == null
+        ? value['birth_date']
+        : value['birth_date'].toISOString().substring(0, 10),
+    manager_id: value['manager_id'],
+    department_id: value['department_id'],
   }
 }

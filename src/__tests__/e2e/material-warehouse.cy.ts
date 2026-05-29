@@ -29,21 +29,21 @@ describe('E2E: Material Warehouse', () => {
     selectReferenceWithCreate('input-material_id', 'material_id', <string>material1Mock.name)
     selectReferenceWithCreate('input-warehouse_id', 'warehouse_id', <string>warehouse1Mock.name)
     cy.get('[data-testid="input-quantity"] input').clear().type('100')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
-    cy.get('[data-testid="menu-material-warehouse"]').click()
+    cy.get('[data-testid="menu-stock"]').click()
     cy.wait('@getMaterialWarehouses')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
     cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-material-warehouse"]').scrollIntoView()
-    cy.get('[data-testid="menu-material-warehouse"]').click({ force: true })
+    cy.get('[data-testid="menu-stock"]').scrollIntoView()
+    cy.get('[data-testid="menu-stock"]').click({ force: true })
     cy.wait('@getMaterialWarehouses')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {

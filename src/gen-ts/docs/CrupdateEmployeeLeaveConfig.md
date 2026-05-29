@@ -5,10 +5,11 @@
 | Name                      | Type   |
 | ------------------------- | ------ |
 | `id`                      | string |
-| `user_id`                 | string |
 | `hire_date`               | Date   |
 | `contract_type`           | string |
 | `vacation_days_per_month` | number |
+| `end_date`                | Date   |
+| `weekly_hours`            | number |
 | `comment`                 | string |
 
 ## Example
@@ -19,10 +20,11 @@ import type { CrupdateEmployeeLeaveConfig } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": config_1,
-  "user_id": usr_123456,
   "hire_date": Thu Jun 01 03:00:00 EAT 2023,
   "contract_type": CDI,
   "vacation_days_per_month": 2.5,
+  "end_date": Thu Dec 31 03:00:00 EAT 2026,
+  "weekly_hours": 35,
   "comment": Nouveau contrat,
 } satisfies CrupdateEmployeeLeaveConfig
 

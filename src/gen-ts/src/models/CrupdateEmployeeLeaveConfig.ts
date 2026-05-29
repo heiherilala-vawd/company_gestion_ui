@@ -27,12 +27,6 @@ export interface CrupdateEmployeeLeaveConfig {
   id?: string
   /**
    *
-   * @type {string}
-   * @memberof CrupdateEmployeeLeaveConfig
-   */
-  user_id?: string
-  /**
-   *
    * @type {Date}
    * @memberof CrupdateEmployeeLeaveConfig
    */
@@ -49,6 +43,18 @@ export interface CrupdateEmployeeLeaveConfig {
    * @memberof CrupdateEmployeeLeaveConfig
    */
   vacation_days_per_month?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateEmployeeLeaveConfig
+   */
+  end_date?: Date
+  /**
+   *
+   * @type {number}
+   * @memberof CrupdateEmployeeLeaveConfig
+   */
+  weekly_hours?: number
   /**
    *
    * @type {string}
@@ -79,11 +85,12 @@ export function CrupdateEmployeeLeaveConfigFromJSONTyped(
   }
   return {
     id: json['id'] == null ? undefined : json['id'],
-    user_id: json['user_id'] == null ? undefined : json['user_id'],
     hire_date: json['hire_date'] == null ? undefined : new Date(json['hire_date']),
     contract_type: json['contract_type'] == null ? undefined : json['contract_type'],
     vacation_days_per_month:
       json['vacation_days_per_month'] == null ? undefined : json['vacation_days_per_month'],
+    end_date: json['end_date'] == null ? undefined : new Date(json['end_date']),
+    weekly_hours: json['weekly_hours'] == null ? undefined : json['weekly_hours'],
     comment: json['comment'] == null ? undefined : json['comment'],
   }
 }
@@ -102,13 +109,17 @@ export function CrupdateEmployeeLeaveConfigToJSONTyped(
 
   return {
     id: value['id'],
-    user_id: value['user_id'],
     hire_date:
       value['hire_date'] == null
         ? value['hire_date']
         : value['hire_date'].toISOString().substring(0, 10),
     contract_type: value['contract_type'],
     vacation_days_per_month: value['vacation_days_per_month'],
+    end_date:
+      value['end_date'] == null
+        ? value['end_date']
+        : value['end_date'].toISOString().substring(0, 10),
+    weekly_hours: value['weekly_hours'],
     comment: value['comment'],
   }
 }

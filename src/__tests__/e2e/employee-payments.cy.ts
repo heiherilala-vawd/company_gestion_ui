@@ -39,7 +39,7 @@ describe('E2E: Employee Payments', () => {
       .clear()
       .type('10000')
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

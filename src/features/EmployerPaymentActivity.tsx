@@ -25,7 +25,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
@@ -126,7 +126,7 @@ function LoanTable({
 }
 
 export default function EmployerPaymentActivity() {
-  const navigate = useNavigate()
+  useNavigate()
 
   const [entityType, setEntityType] = useState<'payment' | 'loans'>('payment')
   const [page, setPage] = useState(0)

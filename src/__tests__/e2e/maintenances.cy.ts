@@ -39,7 +39,7 @@ describe('E2E: Maintenances', () => {
     cy.get('[data-testid="input-expense.comment"] input')
       .clear()
       .type(<string>crupdatedData.expense.comment)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
@@ -51,15 +51,15 @@ describe('E2E: Maintenances', () => {
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
     cy.get('[data-testid="menu-maintenances"]').scrollIntoView()
     cy.get('[data-testid="menu-maintenances"]').click({ force: true })
     cy.wait('@getMaintenances')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -81,7 +81,7 @@ describe('E2E: Maintenances', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment/*/maintenances', (req) => {
+    cy.intercept('PUT', '**/maintenances*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaintenances(req.body)))
     }).as('createMaintenance')
     creatOrUpdate(true)
@@ -93,7 +93,7 @@ describe('E2E: Maintenances', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment/*/maintenances', (req) => {
+    cy.intercept('PUT', '**/maintenances*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaintenances(req.body)))
     }).as('updateMaintenance')
     creatOrUpdate(false)
@@ -105,7 +105,6 @@ describe('E2E: Maintenances', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/maintenances*', mockSuccessResponse(maintenancesMock)).as(
       'getMaintenances',
@@ -117,6 +116,7 @@ describe('E2E: Maintenances', () => {
       'getMaintenanceCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display maintenances list', () => showList(true))
@@ -128,7 +128,7 @@ describe('E2E: Maintenances', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment/*/maintenances',
+      '**/maintenances*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createMaintenanceFail')
     creatOrUpdate(true)
@@ -140,7 +140,7 @@ describe('E2E: Maintenances', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment/*/maintenances',
+      '**/maintenances*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateMaintenanceFail')
     creatOrUpdate(false)

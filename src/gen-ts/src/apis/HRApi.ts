@@ -83,9 +83,9 @@ export interface DeleteLeaveByIdRequest {
   id: string
 }
 
-export interface GetEmployeeLeaveConfigByUserIdRequest {
+export interface GetEmployeeLeaveConfigByIdRequest {
   compId: string
-  userId: string
+  id: string
 }
 
 export interface GetEmployeeLeaveConfigsRequest {
@@ -103,6 +103,11 @@ export interface GetLeaveBalancesRequest {
 }
 
 export interface GetLeaveByIdRequest {
+  compId: string
+  id: string
+}
+
+export interface GetLeaveTypeByIdRequest {
   compId: string
   id: string
 }
@@ -160,7 +165,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-configs`
+    let urlPath = `/companies/{comp_id}/leave_configs`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -235,7 +240,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-types`
+    let urlPath = `/companies/{comp_id}/leave_types`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -411,22 +416,22 @@ export class HRApi extends runtime.BaseAPI {
   }
 
   /**
-   * Creates request options for getEmployeeLeaveConfigByUserId without sending the request
+   * Creates request options for getEmployeeLeaveConfigById without sending the request
    */
-  async getEmployeeLeaveConfigByUserIdRequestOpts(
-    requestParameters: GetEmployeeLeaveConfigByUserIdRequest,
+  async getEmployeeLeaveConfigByIdRequestOpts(
+    requestParameters: GetEmployeeLeaveConfigByIdRequest,
   ): Promise<runtime.RequestOpts> {
     if (requestParameters['compId'] == null) {
       throw new runtime.RequiredError(
         'compId',
-        'Required parameter "compId" was null or undefined when calling getEmployeeLeaveConfigByUserId().',
+        'Required parameter "compId" was null or undefined when calling getEmployeeLeaveConfigById().',
       )
     }
 
-    if (requestParameters['userId'] == null) {
+    if (requestParameters['id'] == null) {
       throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling getEmployeeLeaveConfigByUserId().',
+        'id',
+        'Required parameter "id" was null or undefined when calling getEmployeeLeaveConfigById().',
       )
     }
 
@@ -443,9 +448,9 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-configs/{user_id}`
+    let urlPath = `/companies/{comp_id}/leave_configs/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
+    urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
     return {
       path: urlPath,
@@ -456,13 +461,13 @@ export class HRApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get leave config for a specific user
+   * Get a leave config by id
    */
-  async getEmployeeLeaveConfigByUserIdRaw(
-    requestParameters: GetEmployeeLeaveConfigByUserIdRequest,
+  async getEmployeeLeaveConfigByIdRaw(
+    requestParameters: GetEmployeeLeaveConfigByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<runtime.ApiResponse<EmployeeLeaveConfig>> {
-    const requestOptions = await this.getEmployeeLeaveConfigByUserIdRequestOpts(requestParameters)
+    const requestOptions = await this.getEmployeeLeaveConfigByIdRequestOpts(requestParameters)
     const response = await this.request(requestOptions, initOverrides)
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
@@ -471,13 +476,13 @@ export class HRApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get leave config for a specific user
+   * Get a leave config by id
    */
-  async getEmployeeLeaveConfigByUserId(
-    requestParameters: GetEmployeeLeaveConfigByUserIdRequest,
+  async getEmployeeLeaveConfigById(
+    requestParameters: GetEmployeeLeaveConfigByIdRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<EmployeeLeaveConfig> {
-    const response = await this.getEmployeeLeaveConfigByUserIdRaw(requestParameters, initOverrides)
+    const response = await this.getEmployeeLeaveConfigByIdRaw(requestParameters, initOverrides)
     return await response.value()
   }
 
@@ -507,7 +512,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-configs`
+    let urlPath = `/companies/{comp_id}/leave_configs`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -581,7 +586,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-balances/employees-without-leave`
+    let urlPath = `/companies/{comp_id}/leave_balances/employees_without_leave`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -653,7 +658,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-balances`
+    let urlPath = `/companies/{comp_id}/leave_balances`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -758,6 +763,75 @@ export class HRApi extends runtime.BaseAPI {
   }
 
   /**
+   * Creates request options for getLeaveTypeById without sending the request
+   */
+  async getLeaveTypeByIdRequestOpts(
+    requestParameters: GetLeaveTypeByIdRequest,
+  ): Promise<runtime.RequestOpts> {
+    if (requestParameters['compId'] == null) {
+      throw new runtime.RequiredError(
+        'compId',
+        'Required parameter "compId" was null or undefined when calling getLeaveTypeById().',
+      )
+    }
+
+    if (requestParameters['id'] == null) {
+      throw new runtime.RequiredError(
+        'id',
+        'Required parameter "id" was null or undefined when calling getLeaveTypeById().',
+      )
+    }
+
+    const queryParameters: any = {}
+
+    const headerParameters: runtime.HTTPHeaders = {}
+
+    if (this.configuration && this.configuration.accessToken) {
+      const token = this.configuration.accessToken
+      const tokenString = await token('BearerAuth', [])
+
+      if (tokenString) {
+        headerParameters['Authorization'] = `Bearer ${tokenString}`
+      }
+    }
+
+    let urlPath = `/companies/{comp_id}/leave_types/{id}`
+    urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
+    urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
+
+    return {
+      path: urlPath,
+      method: 'GET',
+      headers: headerParameters,
+      query: queryParameters,
+    }
+  }
+
+  /**
+   * Get a leave type by id
+   */
+  async getLeaveTypeByIdRaw(
+    requestParameters: GetLeaveTypeByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction,
+  ): Promise<runtime.ApiResponse<LeaveType>> {
+    const requestOptions = await this.getLeaveTypeByIdRequestOpts(requestParameters)
+    const response = await this.request(requestOptions, initOverrides)
+
+    return new runtime.JSONApiResponse(response, (jsonValue) => LeaveTypeFromJSON(jsonValue))
+  }
+
+  /**
+   * Get a leave type by id
+   */
+  async getLeaveTypeById(
+    requestParameters: GetLeaveTypeByIdRequest,
+    initOverrides?: RequestInit | runtime.InitOverrideFunction,
+  ): Promise<LeaveType> {
+    const response = await this.getLeaveTypeByIdRaw(requestParameters, initOverrides)
+    return await response.value()
+  }
+
+  /**
    * Creates request options for getLeaveTypes without sending the request
    */
   async getLeaveTypesRequestOpts(
@@ -783,7 +857,7 @@ export class HRApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/leave-types`
+    let urlPath = `/companies/{comp_id}/leave_types`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {

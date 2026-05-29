@@ -6,8 +6,6 @@ import {
   SelectInput,
   ReferenceInput,
   EditButton,
-  DeleteButton,
-  DateField,
   FunctionField,
   BooleanField,
 } from 'react-admin'
@@ -15,13 +13,14 @@ import { PaymentType } from '../../../gen-ts/src/models/PaymentType'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EmployerPaymentFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="employee_id" reference="users" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <ReferenceInput source="employee_id" reference="users" perPage={100} key="employee_id">
     <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Employé" />
   </ReferenceInput>,
   <SelectInput
     source="payment_type"
     label="Type de paiement"
+    key="payment_type"
     choices={Object.entries(PaymentType).map(([k, v]) => ({ id: v, name: k }))}
   />,
 ]

@@ -1,7 +1,7 @@
 import { List, TextField, SearchInput, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const EquipmentUsageFilters = [<SearchInput source="q" alwaysOn />]
+const EquipmentUsageFilters = [<SearchInput source="q" alwaysOn key="search" />]
 
 export default function EquipmentUsageList() {
   return (

@@ -33,7 +33,7 @@ describe('E2E: Users', () => {
     cy.get('[data-testid="input-password"] input')
       .clear()
       .type(<string>crupdatedData.password || 'password123')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

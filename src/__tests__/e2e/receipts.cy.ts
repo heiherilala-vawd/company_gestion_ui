@@ -7,12 +7,19 @@ import {
   createOrUpdateReceipts,
 } from '../mocks/responses/receipts-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
   selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { income1Mock } from '../mocks/responses/incomes-api'
+
+function toAmountRegex(amount: number): RegExp {
+  const str = String(amount)
+  const pattern = str.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1[.,\\s\\u202f]*')
+  return new RegExp(pattern)
+}
 
 describe('E2E: Receipts', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -24,7 +31,7 @@ describe('E2E: Receipts', () => {
         $input.trigger('change')
       })
     } else {
-      cy.contains(String(receipt1Mock.amount)).click()
+      cy.contains(toAmountRegex(receipt1Mock.amount)).click()
       cy.wait('@getReceipt')
       cy.get('.RaEditButton-root').click()
     }
@@ -37,79 +44,77 @@ describe('E2E: Receipts', () => {
       'income_id',
       <string>income1Mock.source_organization,
     )
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-receipts"]').click()
     cy.wait('@getReceipts')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-receipts"]').scrollIntoView()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
+    expandMonetarySections()
     cy.get('[data-testid="menu-receipts"]').click({ force: true })
     cy.wait('@getReceipts')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(receipt1Mock.amount)).should('be.visible')
-    cy.contains(String(receipt2Mock.amount)).should('be.visible')
+    cy.contains(toAmountRegex(receipt1Mock.amount)).should('be.visible')
+    cy.contains(toAmountRegex(receipt2Mock.amount)).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(receipt1Mock.amount)).click()
+    cy.contains(toAmountRegex(receipt1Mock.amount)).click()
     cy.wait('@getReceipt')
-    cy.contains(String(receipt1Mock.amount)).should('exist')
+    cy.contains(toAmountRegex(receipt1Mock.amount)).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/receipts', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateReceipts(req.body)))
-    }).as('createReceipt')
     creatOrUpdate(true)
-    cy.wait(3000)
-    cy.wait('@createReceipt')
+    cy.wait('@createReceipt', { timeout: 15000 })
     cy.url().should('include', '/receipts')
   }
 
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/receipts', (req) => {
+    cy.intercept('PUT', '**/incomes_receipts', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateReceipts(req.body)))
     }).as('updateReceipt')
     creatOrUpdate(false)
-    cy.wait(3000)
-    cy.wait('@updateReceipt')
+    cy.wait('@updateReceipt', { timeout: 15000 })
     cy.url().should('include', '/receipts')
   }
 
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
-    cy.intercept('GET', '**/receipts*', mockSuccessResponse(receiptsMock)).as('getReceipts')
-    cy.intercept('GET', '**/receipts/rec1_id', mockSuccessResponse(receipt1Mock)).as('getReceipt')
-    cy.intercept('GET', '**/receipts/newId', mockSuccessResponse(receipt1Mock)).as(
-      'getReceiptCreate',
-    )
     loginInPage()
+    insertInToLocalStorage()
+    cy.intercept('GET', '**/incomes_receipts*', mockSuccessResponse(receiptsMock)).as('getReceipts')
+    cy.intercept('GET', '**/incomes_receipts/rec1_id', mockSuccessResponse(receipt1Mock)).as(
+      'getReceipt',
+    )
+    cy.intercept('PUT', '**/incomes_receipts', (req) => {
+      req.reply(mockSuccessResponse(createOrUpdateReceipts(req.body)))
+    }).as('createReceipt')
   })
 
   it('should display receipts list', () => showList(true))
@@ -121,7 +126,7 @@ describe('E2E: Receipts', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/receipts',
+      '**/incomes_receipts',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createReceiptFail')
     creatOrUpdate(true)
@@ -133,7 +138,7 @@ describe('E2E: Receipts', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/receipts',
+      '**/incomes_receipts',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateReceiptFail')
     creatOrUpdate(false)

@@ -1,7 +1,6 @@
-import { TextInput, NumberInput } from 'react-admin'
+import { TextInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function IncomeTypeForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

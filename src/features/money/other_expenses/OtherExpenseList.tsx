@@ -1,15 +1,7 @@
-import {
-  List,
-  TextField,
-  SearchInput,
-  EditButton,
-  DeleteButton,
-  DateField,
-  FunctionField,
-} from 'react-admin'
+import { List, TextField, SearchInput, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const OtherExpenseFilters = [<SearchInput source="q" alwaysOn />]
+const OtherExpenseFilters = [<SearchInput source="q" alwaysOn key="q" />]
 
 export default function OtherExpenseList() {
   return (

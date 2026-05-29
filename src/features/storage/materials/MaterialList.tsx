@@ -1,15 +1,12 @@
 import {
   List,
   TextField,
-  DateField,
   SearchInput,
   TextInput,
   SelectInput,
   SelectField,
   BooleanInput,
-  FunctionField,
   EditButton,
-  DeleteButton,
 } from 'react-admin'
 import { MaterialUnit } from '../../../gen-ts/src/models/MaterialUnit'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
@@ -21,14 +18,15 @@ const formatEnumLabel = (key: string) =>
     .join(' ')
 
 const MaterialFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="description" label="Description" />,
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="description" label="Description" key="description" />,
   <SelectInput
     source="unit"
     label="Unité"
+    key="unit"
     choices={Object.entries(MaterialUnit).map(([k, v]) => ({ id: v, name: formatEnumLabel(k) }))}
   />,
-  <BooleanInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
 export default function MaterialList() {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const incomeType1Mock = {
   id: 'inctype1_id',
   name: 'Vente service',

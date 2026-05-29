@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+import coverageTask from '@cypress/code-coverage/task'
 
 export default defineConfig({
   numTestsKeptInMemory: 10,
@@ -12,7 +13,7 @@ export default defineConfig({
     viewportHeight: Number(process.env.CYPRESS_VIEWPORT_HEIGHT) || 720,
     defaultCommandTimeout: Number(process.env.CYPRESS_DEFAULT_COMMAND_TIMEOUT) || 10000,
     setupNodeEvents(on, config) {
-      require('@cypress/code-coverage/task')(on, config)
+      coverageTask(on, config)
       return config
     },
   },

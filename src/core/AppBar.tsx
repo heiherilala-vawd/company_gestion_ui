@@ -80,6 +80,7 @@ export const AppBar = () => {
                 onClick={() => setShowSelectors((prev) => !prev)}
                 color="inherit"
                 sx={appBarStyles.iconButton}
+                data-testid="toggle-selectors"
               >
                 {showSelectors ? (
                   <ExpandLessIcon fontSize="small" />

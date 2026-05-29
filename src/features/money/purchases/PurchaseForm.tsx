@@ -2,7 +2,6 @@ import { TextInput, NumberInput, BooleanInput, FormDataConsumer } from 'react-ad
 import generateId from '../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
-  renderExpenseSelect,
   renderMaterialSelect,
   renderWarehouseSelect,
 } from '../../../generic/SelectWithCreateProvider.tsx'

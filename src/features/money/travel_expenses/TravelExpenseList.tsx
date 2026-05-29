@@ -6,16 +6,25 @@ import {
   ReferenceInput,
   SelectInput,
   EditButton,
-  DeleteButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const TravelExpenseFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="departure_location" reference="warehouses" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <ReferenceInput
+    source="departure_location"
+    reference="warehouses"
+    perPage={100}
+    key="departure_location"
+  >
     <SelectInput optionText="name" label="Départ" />
   </ReferenceInput>,
-  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+  <ReferenceInput
+    source="arrival_location"
+    reference="warehouses"
+    perPage={100}
+    key="arrival_location"
+  >
     <SelectInput optionText="name" label="Arrivée" />
   </ReferenceInput>,
 ]

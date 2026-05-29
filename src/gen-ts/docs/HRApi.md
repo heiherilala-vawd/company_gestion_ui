@@ -2,19 +2,20 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                                        | HTTP request                                                        | Description                                       |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
-| [**crupdateEmployeeLeaveConfigs**](HRApi.md#crupdateemployeeleaveconfigs)     | **PUT** /companies/{comp_id}/leave-configs                          | Create or update employee leave configs           |
-| [**crupdateLeaveTypes**](HRApi.md#crupdateleavetypes)                         | **PUT** /companies/{comp_id}/leave-types                            | Create or update leave types                      |
-| [**crupdateLeaves**](HRApi.md#crupdateleaves)                                 | **PUT** /companies/{comp_id}/leaves                                 | Create or update leaves                           |
-| [**deleteLeaveById**](HRApi.md#deleteleavebyid)                               | **DELETE** /companies/{comp_id}/leaves/{id}                         | Delete leave by identifier                        |
-| [**getEmployeeLeaveConfigByUserId**](HRApi.md#getemployeeleaveconfigbyuserid) | **GET** /companies/{comp_id}/leave-configs/{user_id}                | Get leave config for a specific user              |
-| [**getEmployeeLeaveConfigs**](HRApi.md#getemployeeleaveconfigs)               | **GET** /companies/{comp_id}/leave-configs                          | Get all employee leave configs                    |
-| [**getEmployeesWithoutLeave**](HRApi.md#getemployeeswithoutleave)             | **GET** /companies/{comp_id}/leave-balances/employees-without-leave | Get employees who haven\&#39;t taken any leave    |
-| [**getLeaveBalances**](HRApi.md#getleavebalances)                             | **GET** /companies/{comp_id}/leave-balances                         | Get leave balances for all employees in a company |
-| [**getLeaveById**](HRApi.md#getleavebyid)                                     | **GET** /companies/{comp_id}/leaves/{id}                            | Get leave by identifier                           |
-| [**getLeaveTypes**](HRApi.md#getleavetypes)                                   | **GET** /companies/{comp_id}/leave-types                            | Get all leave types                               |
-| [**getLeaves**](HRApi.md#getleaves)                                           | **GET** /companies/{comp_id}/leaves                                 | Get all leaves                                    |
+| Method                                                                    | HTTP request                                                        | Description                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
+| [**crupdateEmployeeLeaveConfigs**](HRApi.md#crupdateemployeeleaveconfigs) | **PUT** /companies/{comp_id}/leave_configs                          | Create or update employee leave configs           |
+| [**crupdateLeaveTypes**](HRApi.md#crupdateleavetypes)                     | **PUT** /companies/{comp_id}/leave_types                            | Create or update leave types                      |
+| [**crupdateLeaves**](HRApi.md#crupdateleaves)                             | **PUT** /companies/{comp_id}/leaves                                 | Create or update leaves                           |
+| [**deleteLeaveById**](HRApi.md#deleteleavebyid)                           | **DELETE** /companies/{comp_id}/leaves/{id}                         | Delete leave by identifier                        |
+| [**getEmployeeLeaveConfigById**](HRApi.md#getemployeeleaveconfigbyid)     | **GET** /companies/{comp_id}/leave_configs/{id}                     | Get a leave config by id                          |
+| [**getEmployeeLeaveConfigs**](HRApi.md#getemployeeleaveconfigs)           | **GET** /companies/{comp_id}/leave_configs                          | Get all employee leave configs                    |
+| [**getEmployeesWithoutLeave**](HRApi.md#getemployeeswithoutleave)         | **GET** /companies/{comp_id}/leave_balances/employees_without_leave | Get employees who haven\&#39;t taken any leave    |
+| [**getLeaveBalances**](HRApi.md#getleavebalances)                         | **GET** /companies/{comp_id}/leave_balances                         | Get leave balances for all employees in a company |
+| [**getLeaveById**](HRApi.md#getleavebyid)                                 | **GET** /companies/{comp_id}/leaves/{id}                            | Get leave by identifier                           |
+| [**getLeaveTypeById**](HRApi.md#getleavetypebyid)                         | **GET** /companies/{comp_id}/leave_types/{id}                       | Get a leave type by id                            |
+| [**getLeaveTypes**](HRApi.md#getleavetypes)                               | **GET** /companies/{comp_id}/leave_types                            | Get all leave types                               |
+| [**getLeaves**](HRApi.md#getleaves)                                       | **GET** /companies/{comp_id}/leaves                                 | Get all leaves                                    |
 
 ## crupdateEmployeeLeaveConfigs
 
@@ -313,17 +314,17 @@ example().catch(console.error)
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
-## getEmployeeLeaveConfigByUserId
+## getEmployeeLeaveConfigById
 
-> EmployeeLeaveConfig getEmployeeLeaveConfigByUserId(compId, userId)
+> EmployeeLeaveConfig getEmployeeLeaveConfigById(compId, id)
 
-Get leave config for a specific user
+Get a leave config by id
 
 ### Example
 
 ```ts
 import { Configuration, HRApi } from 'api-client'
-import type { GetEmployeeLeaveConfigByUserIdRequest } from 'api-client'
+import type { GetEmployeeLeaveConfigByIdRequest } from 'api-client'
 
 async function example() {
   console.log('🚀 Testing api-client SDK...')
@@ -337,11 +338,11 @@ async function example() {
     // string
     compId: comp_btp001,
     // string
-    userId: usr_123456,
-  } satisfies GetEmployeeLeaveConfigByUserIdRequest
+    id: config_1,
+  } satisfies GetEmployeeLeaveConfigByIdRequest
 
   try {
-    const data = await api.getEmployeeLeaveConfigByUserId(body)
+    const data = await api.getEmployeeLeaveConfigById(body)
     console.log(data)
   } catch (error) {
     console.error(error)
@@ -357,7 +358,7 @@ example().catch(console.error)
 | Name       | Type     | Description | Notes                     |
 | ---------- | -------- | ----------- | ------------------------- |
 | **compId** | `string` |             | [Defaults to `undefined`] |
-| **userId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -662,6 +663,78 @@ example().catch(console.error)
 | Status code | Description                  | Response headers |
 | ----------- | ---------------------------- | ---------------- |
 | **200**     | The identified leave         | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+## getLeaveTypeById
+
+> LeaveType getLeaveTypeById(compId, id)
+
+Get a leave type by id
+
+### Example
+
+```ts
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeaveTypeByIdRequest } from 'api-client'
+
+async function example() {
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
+
+  const body = {
+    // string
+    compId: comp_btp001,
+    // string
+    id: leave_type_1,
+  } satisfies GetLeaveTypeByIdRequest
+
+  try {
+    const data = await api.getLeaveTypeById(body)
+    console.log(data)
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+// Run the test
+example().catch(console.error)
+```
+
+### Parameters
+
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
+
+### Return type
+
+[**LeaveType**](LeaveType.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: `application/json`
+
+### HTTP response details
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The leave type               | -                |
 | **400**     | Bad request                  | -                |
 | **403**     | Forbidden                    | -                |
 | **404**     | Not found                    | -                |

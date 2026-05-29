@@ -1,18 +1,9 @@
-import {
-  List,
-  TextField,
-  SearchInput,
-  TextInput,
-  EditButton,
-  DeleteButton,
-  DateField,
-  FunctionField,
-} from 'react-admin'
+import { List, TextField, SearchInput, TextInput, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const BankFeeFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="description" label="Description" />,
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="description" label="Description" key="description" />,
 ]
 
 export default function BankFeeList() {

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const loanRepayment1Mock = {
   id: 'lr1_id',
   loan_id: 'loan1_id',

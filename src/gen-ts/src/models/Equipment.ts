@@ -114,6 +114,24 @@ export interface Equipment {
    */
   est_en_panne?: boolean
   /**
+   *
+   * @type {number}
+   * @memberof Equipment
+   */
+  purchase_price?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof Equipment
+   */
+  purchase_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof Equipment
+   */
+  category?: string
+  /**
    * Maintenance records for this equipment
    * @type {Array<Maintenance>}
    * @memberof Equipment
@@ -149,6 +167,9 @@ export function EquipmentFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     floor_number: json['floor_number'] == null ? undefined : json['floor_number'],
     storage_number: json['storage_number'] == null ? undefined : json['storage_number'],
     est_en_panne: json['est_en_panne'] == null ? undefined : json['est_en_panne'],
+    purchase_price: json['purchase_price'] == null ? undefined : json['purchase_price'],
+    purchase_date: json['purchase_date'] == null ? undefined : new Date(json['purchase_date']),
+    category: json['category'] == null ? undefined : json['category'],
     maintenances:
       json['maintenances'] == null
         ? undefined
@@ -183,6 +204,12 @@ export function EquipmentToJSONTyped(
     floor_number: value['floor_number'],
     storage_number: value['storage_number'],
     est_en_panne: value['est_en_panne'],
+    purchase_price: value['purchase_price'],
+    purchase_date:
+      value['purchase_date'] == null
+        ? value['purchase_date']
+        : value['purchase_date'].toISOString().substring(0, 10),
+    category: value['category'],
     maintenances:
       value['maintenances'] == null
         ? undefined

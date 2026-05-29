@@ -25,7 +25,7 @@ describe('E2E: Authentication', () => {
 
     cy.get('input').first().type('wrong@email.com')
     cy.get('input[type="password"]').type('wrongpassword')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
 
     cy.wait('@failedLogin')
 
@@ -48,7 +48,7 @@ describe('E2E: Authentication', () => {
       .first()
       .type(<string>loginRequestMock.email)
     cy.get('input[type="password"]').type(<string>loginRequestMock.password)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
 
     cy.wait('@successfulLogin')
     cy.wait('@whoamiRequest')
@@ -75,7 +75,7 @@ describe('E2E: Authentication', () => {
       .first()
       .type(<string>loginRequestMock.email)
     cy.get('input[type="password"]').type(<string>loginRequestMock.password)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
     cy.wait('@loginRequest')
     cy.wait('@whoamiRequest')
 

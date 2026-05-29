@@ -31,7 +31,7 @@ describe('E2E: Warehouses', () => {
     if (!isCreating) {
       selectJob()
     }
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

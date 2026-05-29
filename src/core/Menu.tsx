@@ -1,5 +1,16 @@
+import { useState } from 'react'
 import { useSidebarState } from 'react-admin'
-import { List, ListItemButton, ListItemIcon, ListItemText, Box, Typography } from '@mui/material'
+import {
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
+  Collapse,
+} from '@mui/material'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import { Link } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import WorkIcon from '@mui/icons-material/Work'
@@ -19,7 +30,6 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import ScheduleIcon from '@mui/icons-material/Schedule'
 import EventBusyIcon from '@mui/icons-material/EventBusy'
-import PersonOffIcon from '@mui/icons-material/PersonOff'
 import Inventory2Icon from '@mui/icons-material/Inventory2'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import TimelineIcon from '@mui/icons-material/Timeline'
@@ -67,11 +77,22 @@ const SectionHeader = ({ label }: { label: string }) => (
   </Box>
 )
 
-const SubSectionHeader = ({ label }: { label: string }) => (
-  <Typography
-    variant="caption"
+const SubSectionHeader = ({
+  label,
+  open,
+  onClick,
+}: {
+  label: string
+  open?: boolean
+  onClick?: () => void
+}) => (
+  <Box
+    onClick={onClick}
     sx={{
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      cursor: onClick ? 'pointer' : 'default',
       color: 'text.disabled',
       fontSize: '0.6rem',
       fontWeight: 600,
@@ -80,14 +101,36 @@ const SubSectionHeader = ({ label }: { label: string }) => (
       px: 2.5,
       mt: 0.5,
       textTransform: 'uppercase' as const,
+      '&:hover': onClick ? { color: 'text.primary' } : undefined,
     }}
   >
-    {label}
-  </Typography>
+    <Typography
+      variant="caption"
+      sx={{
+        color: 'inherit',
+        fontSize: 'inherit',
+        fontWeight: 'inherit',
+        letterSpacing: 'inherit',
+      }}
+    >
+      {label}
+    </Typography>
+    {onClick &&
+      (open ? <ExpandLess sx={{ fontSize: 14 }} /> : <ExpandMore sx={{ fontSize: 14 }} />)}
+  </Box>
 )
 
 const MenuRoot = () => {
   const [sidebarOpen] = useSidebarState()
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    Entrées: false,
+    'Sorties ponctuelles': false,
+    'Sorties continues': false,
+    Trésorerie: false,
+  })
+
+  const toggleSection = (section: string) =>
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }))
 
   if (!sidebarOpen) return null
 
@@ -153,17 +196,10 @@ const MenuRoot = () => {
     },
     {
       name: 'leave_balances',
-      label: 'Soldes congés',
+      label: 'Jour de congés',
       icon: EventBusyIcon,
       to: '/leave_balances',
       testId: 'menu-leave-balances',
-    },
-    {
-      name: 'employees_without_leave',
-      label: 'Sans congé',
-      icon: PersonOffIcon,
-      to: '/employees_without_leave',
-      testId: 'menu-employees-without-leave',
     },
   ]
 
@@ -425,14 +461,38 @@ const MenuRoot = () => {
 
       <SectionHeader label="Monétaire" />
       <List component="nav" dense sx={{ mb: 1 }}>
-        <SubSectionHeader label="Entrées" />
-        {renderItems(monetaryInItems)}
-        <SubSectionHeader label="Sorties ponctuelles" />
-        {renderItems(monetaryOutPonctuelItems)}
-        <SubSectionHeader label="Sorties continues" />
-        {renderItems(monetaryOutContinueItems)}
-        <SubSectionHeader label="Trésorerie" />
-        {renderItems(monetaryOtherItems)}
+        <SubSectionHeader
+          label="Entrées"
+          open={openSections['Entrées']}
+          onClick={() => toggleSection('Entrées')}
+        />
+        <Collapse in={openSections['Entrées']} timeout={200}>
+          {renderItems(monetaryInItems)}
+        </Collapse>
+        <SubSectionHeader
+          label="Sorties ponctuelles"
+          open={openSections['Sorties ponctuelles']}
+          onClick={() => toggleSection('Sorties ponctuelles')}
+        />
+        <Collapse in={openSections['Sorties ponctuelles']} timeout={200}>
+          {renderItems(monetaryOutPonctuelItems)}
+        </Collapse>
+        <SubSectionHeader
+          label="Sorties continues"
+          open={openSections['Sorties continues']}
+          onClick={() => toggleSection('Sorties continues')}
+        />
+        <Collapse in={openSections['Sorties continues']} timeout={200}>
+          {renderItems(monetaryOutContinueItems)}
+        </Collapse>
+        <SubSectionHeader
+          label="Trésorerie"
+          open={openSections['Trésorerie']}
+          onClick={() => toggleSection('Trésorerie')}
+        />
+        <Collapse in={openSections['Trésorerie']} timeout={200}>
+          {renderItems(monetaryOtherItems)}
+        </Collapse>
       </List>
     </Box>
   )

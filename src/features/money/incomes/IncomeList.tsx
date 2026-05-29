@@ -2,23 +2,20 @@ import {
   List,
   TextField,
   NumberField,
-  DateField,
   SearchInput,
   TextInput,
   BooleanInput,
-  FunctionField,
   EditButton,
-  DeleteButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const IncomeFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="invoice_reference" label="Réf. facture" />,
-  <TextInput source="description" label="Description" />,
-  <TextInput source="amount" label="Montant" />,
-  <TextInput source="income_type_id" label="Type de revenu" />,
-  <BooleanInput source="money_received" label="Argent reçu" />,
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="invoice_reference" label="Réf. facture" key="invoice_reference" />,
+  <TextInput source="description" label="Description" key="description" />,
+  <TextInput source="amount" label="Montant" key="amount" />,
+  <TextInput source="income_type_id" label="Type de revenu" key="income_type_id" />,
+  <BooleanInput source="money_received" label="Argent reçu" key="money_received" />,
 ]
 
 export default function IncomeList() {

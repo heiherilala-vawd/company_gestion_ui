@@ -7,12 +7,19 @@ import {
   createOrUpdateLoanRepayments,
 } from '../mocks/responses/loan-repayments-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
   selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { loan1Mock } from '../mocks/responses/loans-api'
+
+function toAmountRegex(amount: number): RegExp {
+  const str = String(amount)
+  const pattern = str.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1[.,\\s\\u202f]*')
+  return new RegExp(pattern)
+}
 
 describe('E2E: Loan Repayments', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -24,7 +31,7 @@ describe('E2E: Loan Repayments', () => {
         $input.trigger('change')
       })
     } else {
-      cy.contains(String(loanRepayment1Mock.amount)).click()
+      cy.contains(toAmountRegex(loanRepayment1Mock.amount)).click()
       cy.wait('@getLoanRepayment')
       cy.get('.RaEditButton-root').click()
     }
@@ -32,49 +39,52 @@ describe('E2E: Loan Repayments', () => {
     cy.get('[data-testid="input-amount"] input')
       .clear()
       .type(<string>(<unknown>crupdatedData.amount))
-    selectReferenceWithCreate('input-loan_id', 'loan_id', <string>loan1Mock.lender)
-    cy.get('button[type="submit"]').click()
+    if (isCreating) {
+      selectReferenceWithCreate('input-loan_id', 'loan_id', <string>loan1Mock.lender)
+    }
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-loan-repayments"]').click()
     cy.wait('@getLoanRepayments')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-loan-repayments"]').scrollIntoView()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
+    expandMonetarySections()
     cy.get('[data-testid="menu-loan-repayments"]').click({ force: true })
     cy.wait('@getLoanRepayments')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(loanRepayment1Mock.amount)).should('be.visible')
-    cy.contains(String(loanRepayment2Mock.amount)).should('be.visible')
+    cy.contains(toAmountRegex(loanRepayment1Mock.amount)).should('be.visible')
+    cy.contains(toAmountRegex(loanRepayment2Mock.amount)).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(loanRepayment1Mock.amount)).click()
+    cy.contains(toAmountRegex(loanRepayment1Mock.amount)).click()
     cy.wait('@getLoanRepayment')
-    cy.contains(String(loanRepayment1Mock.amount)).should('exist')
+    cy.contains(toAmountRegex(loanRepayment1Mock.amount)).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/loan_repayments', (req) => {
+    cy.intercept('PUT', '**/loans_repayment', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('createLoanRepayment')
     creatOrUpdate(true)
@@ -86,7 +96,7 @@ describe('E2E: Loan Repayments', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/loan_repayments', (req) => {
+    cy.intercept('PUT', '**/loans_repayment', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('updateLoanRepayment')
     creatOrUpdate(false)
@@ -98,18 +108,18 @@ describe('E2E: Loan Repayments', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
-    cy.intercept('GET', '**/loan_repayments*', mockSuccessResponse(loanRepaymentsMock)).as(
+    cy.intercept('GET', '**/loans_repayment*', mockSuccessResponse(loanRepaymentsMock)).as(
       'getLoanRepayments',
     )
-    cy.intercept('GET', '**/loan_repayments/lr1_id', mockSuccessResponse(loanRepayment1Mock)).as(
+    cy.intercept('GET', '**/loans_repayment/lr1_id', mockSuccessResponse(loanRepayment1Mock)).as(
       'getLoanRepayment',
     )
-    cy.intercept('GET', '**/loan_repayments/newId', mockSuccessResponse(loanRepayment1Mock)).as(
+    cy.intercept('GET', '**/loans_repayment/newId', mockSuccessResponse(loanRepayment1Mock)).as(
       'getLoanRepaymentCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display loan repayments list', () => showList(true))
@@ -121,7 +131,7 @@ describe('E2E: Loan Repayments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/loan_repayments',
+      '**/loans_repayment',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createLoanRepaymentFail')
     creatOrUpdate(true)
@@ -133,7 +143,7 @@ describe('E2E: Loan Repayments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/loan_repayments',
+      '**/loans_repayment',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateLoanRepaymentFail')
     creatOrUpdate(false)

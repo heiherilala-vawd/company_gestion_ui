@@ -91,6 +91,12 @@ export interface Material {
   description?: string
   /**
    *
+   * @type {number}
+   * @memberof Material
+   */
+  unit_price?: number
+  /**
+   *
    * @type {MaterialUnit}
    * @memberof Material
    */
@@ -133,6 +139,7 @@ export function MaterialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     id: json['id'] == null ? undefined : json['id'],
     name: json['name'] == null ? undefined : json['name'],
     description: json['description'] == null ? undefined : json['description'],
+    unit_price: json['unit_price'] == null ? undefined : json['unit_price'],
     unit: json['unit'] == null ? undefined : MaterialUnitFromJSON(json['unit']),
     company_id: json['company_id'] == null ? undefined : json['company_id'],
     material_warehouses:
@@ -165,6 +172,7 @@ export function MaterialToJSONTyped(
     id: value['id'],
     name: value['name'],
     description: value['description'],
+    unit_price: value['unit_price'],
     unit: MaterialUnitToJSON(value['unit']),
     company_id: value['company_id'],
     material_warehouses:

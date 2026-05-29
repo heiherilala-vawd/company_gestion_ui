@@ -96,7 +96,7 @@ export class ReportApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/yearly-report`
+    let urlPath = `/companies/{comp_id}/yearly_report`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {

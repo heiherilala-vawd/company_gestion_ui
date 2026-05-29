@@ -107,7 +107,7 @@ export class CompanyFixedCostApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/fixed-costs`
+    let urlPath = `/companies/{comp_id}/fixed_costs`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {
@@ -178,7 +178,7 @@ export class CompanyFixedCostApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/fixed-costs/{id}`
+    let urlPath = `/companies/{comp_id}/fixed_costs/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
@@ -246,7 +246,7 @@ export class CompanyFixedCostApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/fixed-costs/{id}`
+    let urlPath = `/companies/{comp_id}/fixed_costs/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
     urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])))
 
@@ -308,7 +308,7 @@ export class CompanyFixedCostApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/fixed-costs`
+    let urlPath = `/companies/{comp_id}/fixed_costs`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
 
     return {

@@ -39,6 +39,18 @@ export interface MaterialWarehouseInfo {
    * @memberof MaterialWarehouseInfo
    */
   quantity?: number
+  /**
+   *
+   * @type {number}
+   * @memberof MaterialWarehouseInfo
+   */
+  min_stock?: number
+  /**
+   *
+   * @type {number}
+   * @memberof MaterialWarehouseInfo
+   */
+  max_stock?: number
 }
 
 /**
@@ -62,6 +74,8 @@ export function MaterialWarehouseInfoFromJSONTyped(
   return {
     warehouse: json['warehouse'] == null ? undefined : WarehouseFromJSON(json['warehouse']),
     quantity: json['quantity'] == null ? undefined : json['quantity'],
+    min_stock: json['min_stock'] == null ? undefined : json['min_stock'],
+    max_stock: json['max_stock'] == null ? undefined : json['max_stock'],
   }
 }
 
@@ -80,5 +94,7 @@ export function MaterialWarehouseInfoToJSONTyped(
   return {
     warehouse: WarehouseToJSON(value['warehouse']),
     quantity: value['quantity'],
+    min_stock: value['min_stock'],
+    max_stock: value['max_stock'],
   }
 }

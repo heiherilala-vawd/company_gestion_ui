@@ -39,7 +39,7 @@ describe('E2E: Travel Equipments', () => {
     cy.get('[data-testid="input-comment"] textarea:visible')
       .clear()
       .type(<string>crupdatedData.comment)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

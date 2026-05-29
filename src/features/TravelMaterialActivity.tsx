@@ -25,7 +25,7 @@ import {
   ToggleButton,
   InputAdornment,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListIcon from '@mui/icons-material/FilterList'
 
@@ -40,7 +40,7 @@ function cleanFilters(raw: Record<string, string | boolean>) {
 }
 
 export default function TravelMaterialActivity() {
-  const navigate = useNavigate()
+  useNavigate()
 
   const [entityType, setEntityType] = useState<'materials' | 'equipment'>('materials')
   const [selectedItems, setSelectedItems] = useState<any[]>([])

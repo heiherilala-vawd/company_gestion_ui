@@ -36,7 +36,6 @@ import {
   travelMaterialsMock,
   travelPeoplesMock,
   travelEquipmentsMock,
-  incomesType1,
   warehouse2Mock,
   loansActiveMock,
   loansDefaultedMock,
@@ -202,6 +201,7 @@ export function interceptGeneralEndpoint(): void {
   )
 
   // ---------------------- LOANS ------------------------------------------
+  cy.intercept('GET', '**/loans*', mockSuccessResponse(loansActiveMock)).as('getLoansGeneral')
   cy.intercept('GET', '**/loans*status=ACTIVE*', mockSuccessResponse(loansActiveMock)).as(
     'getLoansActive',
   )
@@ -266,6 +266,9 @@ export function interceptGeneralEndpoint(): void {
   // ---------------------- CASH ACCOUNTS ------------------------------------------
   cy.intercept('GET', '**/cash_accounts*', mockSuccessResponse(cashAccountsMock)).as(
     'getCashAccounts',
+  )
+  cy.intercept('GET', '**/cash_accounts/ca1_id', mockSuccessResponse(cashAccount1Mock)).as(
+    'getCashAccount',
   )
   cy.intercept('GET', '**/cash_accounts/ca1_id*', mockSuccessResponse(cashAccount1Mock)).as(
     'getCashAccount',
@@ -335,8 +338,27 @@ export function interceptGeneralEndpoint(): void {
     'getLeaveBalances',
   )
 
-  // ---------------------- SPA ROUTE PASSTHROUGH (evite que les patterns glob attrapent les routes SPA) --------
+  // ---------------------- SPA ROUTE PASSTHROUGH (exact pathname matching pour cy.visit) --------
   const spaRoutes = [
+    '/bank_fees',
+    '/budget_lines',
+    '/cash_accounts',
+    '/cash_transactions',
+    '/expenses',
+    '/fixed_costs',
+    '/incomes',
+    '/loans',
+    '/loan_repayments',
+    '/other_expenses',
+    '/purchases',
+    '/receipts',
+    '/travel_expenses',
+    '/material_warehouse',
+    '/material_consumption',
+    '/equipment_usage',
+    '/maintenances',
+    '/history',
+    '/yearly-report',
     '/expenses_activity',
     '/incomes_activity',
     '/travel_materials_activity',
@@ -345,8 +367,31 @@ export function interceptGeneralEndpoint(): void {
     '/purchases_activity',
   ]
   spaRoutes.forEach((route) => {
-    cy.intercept('GET', route, (req) => req.continue())
+    cy.intercept('GET', new RegExp(`^${route}$`), (req) => req.continue())
   })
+}
+
+/**
+ * Expand all monetary sub-sections in the sidebar menu.
+ * Safe to call even if sections are already expanded (clicking open section keeps it open).
+ */
+export function expandMonetarySections(): void {
+  cy.get('[data-testid="menu-item-home"]', { timeout: 5000 }).should('exist')
+  cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 300 })
+  cy.get('[data-testid="menu-item-home"]').within(() => {
+    cy.contains('Entrées').click({ force: true })
+    cy.contains('Sorties ponctuelles').click({ force: true })
+    cy.contains('Sorties continues').click({ force: true })
+    cy.contains('Trésorerie').click({ force: true })
+  })
+  cy.wait(100)
+}
+
+export function openMobileSidebar(): void {
+  cy.wait(1000)
+  cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+  cy.wait(1000)
+  cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
 }
 
 export function insertInToLocalStorage(): void {
@@ -354,6 +399,8 @@ export function insertInToLocalStorage(): void {
     win.localStorage.setItem('currentCompanyId', 'company_localStorage_id')
     win.localStorage.setItem('currentExpenseId', 'expense_localStorage_id')
     win.localStorage.setItem('currentJobId', 'job_localStorage_id')
+    win.localStorage.setItem('currentCashAccountId', 'cash_account_localStorage_id')
+    win.localStorage.removeItem('sidebar.open')
   })
 }
 
@@ -390,9 +437,19 @@ export function selectReferenceWithCreate(
     .within(() => {
       cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
     })
-  cy.get(`#menu-${menuId}`).should('be.visible')
-  cy.get(`#menu-${menuId}`).contains(entitySelection).scrollIntoView().click({ force: true })
-  cy.get(`#menu-${menuId}`).should('not.be.visible')
+  cy.get('[role="option"]', { timeout: 15000 }).should('be.visible')
+  cy.get('body').then(($body) => {
+    const options = $body.find('[role="option"]')
+    cy.log(
+      `Options found: ${options.length}, text: "${options
+        .map((_, el) => Cypress.$(el).text().trim())
+        .get()
+        .join(' | ')}"`,
+    )
+  })
+  cy.contains('[role="option"]', entitySelection).scrollIntoView().click({ force: true })
+  cy.get('[role="option"]').should('not.exist')
+  cy.wait(200)
 }
 
 export function selectEnumType(testId: string, selection: string): void {
@@ -464,7 +521,7 @@ export function selectIncomeType(menuId: string | null): void {
   selectReferenceWithCreate(
     'input-income_types-id',
     menuId ? menuId : 'income_type',
-    <string>incomesType1.name,
+    <string>incomeType1Mock.name,
   )
 }
 

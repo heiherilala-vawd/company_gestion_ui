@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const task1Mock = {
   id: 'task1_id',
   title: 'Finaliser rapport travaux A',

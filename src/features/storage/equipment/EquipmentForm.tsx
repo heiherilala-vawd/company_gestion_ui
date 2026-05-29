@@ -2,7 +2,6 @@ import { required, TextInput, NumberInput, BooleanInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderWarehouseSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function EquipmentForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

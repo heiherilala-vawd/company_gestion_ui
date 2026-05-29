@@ -4,12 +4,11 @@ import {
   crupdateOtherExpensesMock,
 } from '../mocks/responses/other-expenses-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectExpense,
   selectJob,
-  selectOtherExpenseType,
 } from '../support/utils.ts'
 
 function selectOtherExpenseTypeLocal() {
@@ -26,11 +25,11 @@ describe('E2E: Other Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateOtherExpensesMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains('Office supplies').click()
+      cy.get('[class*="RaDatagrid"]').contains('Office supplies').click({ force: true })
       cy.wait('@getOtherExpense')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
       cy.wait('@getOtherExpense')
     }
     if (isCreating) {
@@ -44,45 +43,44 @@ describe('E2E: Other Expenses', () => {
       .type(<string>crupdatedData.description, { force: true })
 
     if (!isCreating) {
-      selectJob('expense\\.job_id')
+      selectJob()
     }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear({ force: true })
       .type('10000', { force: true })
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-other-expenses"]').click()
     cy.wait('@getOtherExpenses')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-other-expenses"]').scrollIntoView()
+    cy.visit('/')
+    cy.reload()
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    expandMonetarySections()
     cy.get('[data-testid="menu-other-expenses"]').click({ force: true })
     cy.wait('@getOtherExpenses')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
-      }
-    })
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains('Office supplies').should('be.visible')
+    cy.get('[class*="RaDatagrid"]').contains('Office supplies').should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains('Office supplies').click()
+    cy.get('[class*="RaDatagrid"]').contains('Office supplies').click({ force: true })
     cy.wait('@getOtherExpense')
     cy.contains('Office supplies').should('exist')
   }

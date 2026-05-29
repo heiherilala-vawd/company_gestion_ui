@@ -1,7 +1,7 @@
 import { List, TextField, SearchInput, EditButton, SelectField, FunctionField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const TaskFilters = [<SearchInput source="q" alwaysOn />]
+const TaskFilters = [<SearchInput source="q" alwaysOn key="search" />]
 
 export default function TaskList() {
   return (

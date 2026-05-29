@@ -4,7 +4,7 @@ All URIs are relative to *https://api-dev.company.com*
 
 | Method                                                                            | HTTP request                               | Description                           |
 | --------------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------- |
-| [**companiesCompIdYearlyReportGet**](ReportApi.md#companiescompidyearlyreportget) | **GET** /companies/{comp_id}/yearly-report | Get yearly report with job financials |
+| [**companiesCompIdYearlyReportGet**](ReportApi.md#companiescompidyearlyreportget) | **GET** /companies/{comp_id}/yearly_report | Get yearly report with job financials |
 
 ## companiesCompIdYearlyReportGet
 

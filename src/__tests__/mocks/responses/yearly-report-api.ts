@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { YearlyReport, YearlyReportSummary, JobWithFinancials } from '../../../gen-ts/src'
 
 export const yearlyReportMock: YearlyReport = {

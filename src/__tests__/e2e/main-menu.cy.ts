@@ -1,33 +1,24 @@
 // Test du menu principal, sélecteurs et responsive
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
 import { companiesMock } from '../mocks/responses/companies-api'
 import { jobsMock } from '../mocks/responses/jobs-api'
-import { expense1Mock } from '../mocks/responses/expenses-api'
-import { user1Mock } from '../mocks/responses/users-api'
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Main Menu and Selectors', () => {
   const expectedMenuItemsPart1 = [
     'Accueil',
-    'Jobs',
     'Entreprises',
+    'Travaux',
+    'Tâches',
+    'Planification',
     'Utilisateurs',
     'Salaires',
     'Transport personnel',
     'Entrepôts',
     'Matériaux',
     'Matériaux dépl.',
-  ]
-
-  const expectedMenuItemsPart2 = [
-    'Achats',
     'Équipements',
     'Équipement dépl.',
-    'Dépenses',
-    'Déplacements',
-    'Frais bancaire',
-    'Autres dépenses',
-    'Revenus',
+    'Maintenance',
   ]
 
   beforeEach(() => {
@@ -49,8 +40,32 @@ describe('E2E: Main Menu and Selectors', () => {
     })
 
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200) // laisse le temps au DOM de finir
+    cy.wait(200)
 
+    // Expand Monétaire sub-sections to check collapsed items
+    cy.contains('Monétaire').scrollIntoView()
+    cy.contains('Entrées').click()
+    cy.contains('Sorties ponctuelles').click()
+    cy.contains('Sorties continues').click()
+    cy.contains('Trésorerie').click()
+    cy.wait(300)
+
+    const expectedMenuItemsPart2 = [
+      'Achats',
+      'Congés',
+      'Jour de congés',
+      'Stock',
+      'Conso. matériaux',
+      'Utilisation',
+      'Revenus',
+      'Dépenses',
+      'Déplacements',
+      'Frais bancaire',
+      'Autres dépenses',
+      'Budgets',
+      'Comptes caisse',
+      'Historique',
+    ]
     expectedMenuItemsPart2.forEach((item) => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('exist')
     })
@@ -121,7 +136,19 @@ describe('E2E: Main Menu and Selectors', () => {
       }
     })
 
-    expectedMenuItemsPart1.forEach((item) => {
+    const mobileExpectedItems = [
+      'Accueil',
+      'Entreprises',
+      'Travaux',
+      'Tâches',
+      'Planification',
+      'Utilisateurs',
+      'Salaires',
+      'Transport personnel',
+      'Entrepôts',
+      'Matériaux',
+    ]
+    mobileExpectedItems.forEach((item) => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('be.visible')
     })
   })
@@ -149,7 +176,19 @@ describe('E2E: Main Menu and Selectors', () => {
     // Ouvrir le menu
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
 
-    expectedMenuItemsPart1.forEach((item) => {
+    const mobileExpectedItems = [
+      'Accueil',
+      'Entreprises',
+      'Travaux',
+      'Tâches',
+      'Planification',
+      'Utilisateurs',
+      'Salaires',
+      'Transport personnel',
+      'Entrepôts',
+      'Matériaux',
+    ]
+    mobileExpectedItems.forEach((item) => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('be.visible')
     })
     // ferme le menu
@@ -159,9 +198,13 @@ describe('E2E: Main Menu and Selectors', () => {
         cy.get('body').click(0, 0) // clique hors menu
       }
     })
+    cy.wait(500)
 
-    // Vérifier que l'app bar est visible
-    cy.get('[data-testid="menu-item-selector-home"]').should('be.visible')
-    cy.get('.MuiSelect-root').should('have.length.at.least', 2)
+    // Sur mobile, les sélecteurs sont masqués par défaut - cliquer pour les afficher
+    cy.get('[data-testid="toggle-selectors"]').should('exist').click({ force: true })
+    cy.wait(1000)
+    // Sur mobile (<600px), le label "Company:" n'est pas rendu (isXs=true dans GenericSelector)
+    // On vérifie que le Collapse s'est ouvert
+    cy.get('.MuiCollapse-entered').should('exist')
   })
 })

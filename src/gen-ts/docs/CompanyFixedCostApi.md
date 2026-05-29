@@ -4,10 +4,10 @@ All URIs are relative to *https://api-dev.company.com*
 
 | Method                                                                              | HTTP request                                     | Description                                    |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
-| [**crupdateCompanyFixedCosts**](CompanyFixedCostApi.md#crupdatecompanyfixedcosts)   | **PUT** /companies/{comp_id}/fixed-costs         | Create new fixed costs or update existing ones |
-| [**deleteCompanyFixedCostById**](CompanyFixedCostApi.md#deletecompanyfixedcostbyid) | **DELETE** /companies/{comp_id}/fixed-costs/{id} | Delete a fixed cost by identifier              |
-| [**getCompanyFixedCostById**](CompanyFixedCostApi.md#getcompanyfixedcostbyid)       | **GET** /companies/{comp_id}/fixed-costs/{id}    | Get a fixed cost by identifier                 |
-| [**getCompanyFixedCosts**](CompanyFixedCostApi.md#getcompanyfixedcosts)             | **GET** /companies/{comp_id}/fixed-costs         | Get all fixed costs for a company              |
+| [**crupdateCompanyFixedCosts**](CompanyFixedCostApi.md#crupdatecompanyfixedcosts)   | **PUT** /companies/{comp_id}/fixed_costs         | Create new fixed costs or update existing ones |
+| [**deleteCompanyFixedCostById**](CompanyFixedCostApi.md#deletecompanyfixedcostbyid) | **DELETE** /companies/{comp_id}/fixed_costs/{id} | Delete a fixed cost by identifier              |
+| [**getCompanyFixedCostById**](CompanyFixedCostApi.md#getcompanyfixedcostbyid)       | **GET** /companies/{comp_id}/fixed_costs/{id}    | Get a fixed cost by identifier                 |
+| [**getCompanyFixedCosts**](CompanyFixedCostApi.md#getcompanyfixedcosts)             | **GET** /companies/{comp_id}/fixed_costs         | Get all fixed costs for a company              |
 
 ## crupdateCompanyFixedCosts
 

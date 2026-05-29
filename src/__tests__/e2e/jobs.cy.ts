@@ -9,7 +9,6 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectCompany,
   selectEnumType,
 } from '../support/utils.ts'
 
@@ -36,7 +35,7 @@ describe('E2E: Jobs', () => {
       .clear()
       .type('2022-12-31T00:00')
     selectEnumType('input-status', 'En cours')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

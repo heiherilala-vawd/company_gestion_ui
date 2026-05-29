@@ -36,7 +36,7 @@ describe('E2E: Equipment', () => {
       .clear()
       .type(String(<number>crupdatedData.storage_number))
     cy.get('[data-testid="input-est_en_panne"] input[type="checkbox"]').check({ force: true })
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
@@ -139,7 +139,7 @@ describe('E2E: Equipment', () => {
     else navigateToMobile()
     cy.contains(<string>equipment1Mock.name).click()
     cy.wait('@getEquipment')
-    cy.get('[data-testid="maintenance-button"]').click()
+    cy.get('[data-testid="maintenance-button"]').click({ force: true })
     cy.get('[data-testid="input-maintenance-description"]').type('Oil change')
     cy.get('[data-testid="input-maintenance-amount"]').type('150')
     cy.get('[data-testid="input-maintenance-comment"]').type('Routine maintenance')
