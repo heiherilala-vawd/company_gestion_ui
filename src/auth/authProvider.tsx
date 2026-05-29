@@ -10,39 +10,28 @@ const API_BASE_URL = import.meta.env.VITE_API_URL ?? ''
 // Helper pour les requêtes API
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE_URL}${endpoint}`
-  try {
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...((options.headers as Record<string, string>) || {}),
-      },
-    })
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...((options.headers as Record<string, string>) || {}),
+    },
+  })
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({}))
-      throw new Error(error.message || `API Error: ${response.status}`)
-    }
-
-    if (response.status === 204) {
-      return {} as T
-    }
-
-    return await response.json()
-  } catch (err) {
-    // Laisser l'appelant gérer l'erreur
-    throw err
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}))
+    throw new Error(error.message || `API Error: ${response.status}`)
   }
+
+  if (response.status === 204) {
+    return {} as T
+  }
+
+  return await response.json()
 }
 
 // Vérifie si l'utilisateur a accès à une ressource/action
-function canAccess(
-  role: Role | null,
-  resource: string,
-  action: string,
-  userId?: string,
-  recordUserId?: string,
-): boolean {
+function canAccess(role: Role | null, resource: string, action: string): boolean {
   if (!role) return false
 
   // ADMIN a tous les droits
@@ -87,7 +76,10 @@ function canAccess(
       'travel_equipment',
       'loans',
       'income_types',
-      'income_receipts',
+      'receipts',
+      'suppliers',
+      'purchase_orders',
+      'cash_transactions',
       'leave_types',
       'leave_configs',
       'leaves',
@@ -282,7 +274,7 @@ const authProvider: AuthProvider = {
         email: user.email,
         role: user.role,
       })
-    } catch (error) {
+    } catch {
       const id = localStorage.getItem('user_id')
       const email = localStorage.getItem('user_email')
       const role = localStorage.getItem('user_role')
@@ -320,7 +312,7 @@ const authProvider: AuthProvider = {
       return record.user_id === userId
     }
 
-    return canAccess(role, resource, action, userId, record?.user_id)
+    return canAccess(role, resource, action)
   },
 
   getToken: () => {

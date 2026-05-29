@@ -36,7 +36,7 @@ describe('E2E: Tasks', () => {
       .type(<string>crupdatedData.description, { force: true })
     selectEnumType('input-status', 'Terminé')
     selectEnumType('input-priority', 'Haute')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

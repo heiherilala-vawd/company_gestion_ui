@@ -1,7 +1,7 @@
 import { List, TextField, SearchInput, EditButton, NumberField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const FixedCostFilters = [<SearchInput source="q" alwaysOn />]
+const FixedCostFilters = [<SearchInput source="q" alwaysOn key="search" />]
 
 export default function FixedCostList() {
   return (

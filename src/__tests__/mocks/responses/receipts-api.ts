@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const receipt1Mock = {
   id: 'rec1_id',
   income_id: 'inc1_id',

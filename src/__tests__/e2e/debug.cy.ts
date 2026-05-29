@@ -1,19 +1,23 @@
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
-import { otherExpenseTypesMock } from '../mocks/responses/other-expense-type-api'
-import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
+import {
+  expandMonetarySections,
+  insertInToLocalStorage,
+  interceptGeneralEndpoint,
+  loginInPage,
+} from '../support/utils.ts'
 
 describe('Other Expenses Debug', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('check create form selects', () => {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 }).wait(200)
-    cy.get('[data-testid="menu-other-expenses"]').click()
+    expandMonetarySections()
+    cy.get('[data-testid="menu-other-expenses"]').click({ force: true })
     cy.wait('@getOtherExpenses')
     cy.get('[class*="RaCreateButton"]').click()
     cy.wait(4000)

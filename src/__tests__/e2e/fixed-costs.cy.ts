@@ -6,21 +6,26 @@ import {
   crupdateFixedCostsMock,
   createOrUpdateFixedCosts,
 } from '../mocks/responses/fixed-costs-api'
-import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
+import {
+  expandMonetarySections,
+  insertInToLocalStorage,
+  interceptGeneralEndpoint,
+  loginInPage,
+} from '../support/utils.ts'
 
-describe('E2E: Fixed Costs', () => {
+describe('E2E: Fixed Costs Mobile', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateFixedCostsMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
       cy.get('[data-testid="input-id"] input').then(($input) => {
         $input.val('newId')
         $input.trigger('change')
       })
     } else {
-      cy.contains(<string>fixedCost1Mock.name).click()
+      cy.contains(<string>fixedCost1Mock.name).click({ force: true })
       cy.wait('@getFixedCost')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-name"] input')
       .clear()
@@ -32,27 +37,31 @@ describe('E2E: Fixed Costs', () => {
       .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    cy.get('[data-testid="menu-item-home"]').within(() => {
+      cy.contains('Entrées').click({ force: true })
+      cy.contains('Sorties continues').click({ force: true })
+    })
     cy.get('[data-testid="menu-fixed-costs"]').click()
     cy.wait('@getFixedCosts')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-fixed-costs"]').scrollIntoView()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
+    expandMonetarySections()
     cy.get('[data-testid="menu-fixed-costs"]').click({ force: true })
     cy.wait('@getFixedCosts')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -65,7 +74,7 @@ describe('E2E: Fixed Costs', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>fixedCost1Mock.name).click()
+    cy.contains(<string>fixedCost1Mock.name).click({ force: true })
     cy.wait('@getFixedCost')
     cy.contains(<string>fixedCost1Mock.name).should('exist')
     cy.contains(<string>fixedCost1Mock.description).should('exist')
@@ -98,7 +107,6 @@ describe('E2E: Fixed Costs', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/fixed_costs*', mockSuccessResponse(fixedCostsMock)).as('getFixedCosts')
     cy.intercept('GET', '**/fixed_costs/fc1_id', mockSuccessResponse(fixedCost1Mock)).as(
@@ -108,6 +116,7 @@ describe('E2E: Fixed Costs', () => {
       'getFixedCostCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display fixed costs list', () => showList(true))

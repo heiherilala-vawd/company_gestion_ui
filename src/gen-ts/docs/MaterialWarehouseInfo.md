@@ -6,6 +6,8 @@
 | ----------- | ------------------------- |
 | `warehouse` | [Warehouse](Warehouse.md) |
 | `quantity`  | number                    |
+| `min_stock` | number                    |
+| `max_stock` | number                    |
 
 ## Example
 
@@ -16,6 +18,8 @@ import type { MaterialWarehouseInfo } from 'api-client'
 const example = {
   warehouse: null,
   quantity: 50,
+  min_stock: 10,
+  max_stock: 200,
 } satisfies MaterialWarehouseInfo
 
 console.log(example)

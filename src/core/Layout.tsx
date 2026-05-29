@@ -20,16 +20,7 @@ export const Layout = ({ children, appBar, menu, sidebar }: LayoutProps) => {
       appBar={appBar || AppBar}
       menu={menu || Menu}
       sidebar={
-        sidebar ||
-        ((props) => (
-          <Sidebar
-            {...props}
-            DrawerProps={{
-              keepMounted: false,
-            }}
-            sx={layoutStyles.sidebar}
-          />
-        ))
+        sidebar || ((props) => <Sidebar {...props} keepMounted={true} sx={layoutStyles.sidebar} />)
       }
     >
       <Box sx={layoutStyles.container}>

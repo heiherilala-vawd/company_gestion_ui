@@ -12,6 +12,7 @@
 | `id`                  | string                                                         |
 | `name`                | string                                                         |
 | `description`         | string                                                         |
+| `unit_price`          | number                                                         |
 | `unit`                | [MaterialUnit](MaterialUnit.md)                                |
 | `company_id`          | string                                                         |
 | `material_warehouses` | [Array&lt;MaterialWarehouseInfo&gt;](MaterialWarehouseInfo.md) |
@@ -31,6 +32,7 @@ const example = {
   "id": mat_001,
   "name": Ciment Portland,
   "description": Ciment Portland de qualité supérieure pour béton armé,
+  "unit_price": 12.5,
   "unit": null,
   "company_id": comp_001,
   "material_warehouses": null,

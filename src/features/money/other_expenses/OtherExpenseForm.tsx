@@ -5,7 +5,6 @@ import ExpenseForm from '../expenses/ExpenseForm.tsx'
 import { renderOtherExpenseTypeSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import React from 'react'
 
-// eslint-disable-next-line react/prop-types
 export default function OtherExpenseForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
 

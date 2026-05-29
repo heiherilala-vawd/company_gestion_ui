@@ -5,11 +5,10 @@ import FormToolbar from '../generic/FormToolbar'
 import BankFeeForm from './money/bank_fees/BankFeeForm.tsx'
 import EmployeePaymentForm from './money/employee_payments/EmployeePaymentForm.tsx'
 import OtherExpenseForm from './money/other_expenses/OtherExpenseForm.tsx'
-import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
 
 export default function ExpensesActivity() {
-  const navigate = useNavigate()
+  useNavigate()
   const [entityType, setEntityType] = useState<'bank_fee' | 'employee_payment' | 'other_expense'>(
     'bank_fee',
   )

@@ -2,18 +2,19 @@
 
 ## Properties
 
-| Name                      | Type                            |
-| ------------------------- | ------------------------------- |
-| `comment`                 | string                          |
-| `created_at`              | Date                            |
-| `updated_at`              | Date                            |
-| `created_by`              | [AuditUser](AuditUser.md)       |
-| `updated_by`              | [AuditUser](AuditUser.md)       |
-| `id`                      | string                          |
-| `user`                    | [CrupdateUser](CrupdateUser.md) |
-| `hire_date`               | Date                            |
-| `contract_type`           | string                          |
-| `vacation_days_per_month` | number                          |
+| Name                      | Type                      |
+| ------------------------- | ------------------------- |
+| `comment`                 | string                    |
+| `created_at`              | Date                      |
+| `updated_at`              | Date                      |
+| `created_by`              | [AuditUser](AuditUser.md) |
+| `updated_by`              | [AuditUser](AuditUser.md) |
+| `id`                      | string                    |
+| `hire_date`               | Date                      |
+| `contract_type`           | string                    |
+| `vacation_days_per_month` | number                    |
+| `end_date`                | Date                      |
+| `weekly_hours`            | number                    |
 
 ## Example
 
@@ -28,10 +29,11 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": config_1,
-  "user": null,
   "hire_date": Thu Jun 01 03:00:00 EAT 2023,
   "contract_type": CDI,
   "vacation_days_per_month": 2.5,
+  "end_date": Thu Dec 31 03:00:00 EAT 2026,
+  "weekly_hours": 35,
 } satisfies EmployeeLeaveConfig
 
 console.log(example)

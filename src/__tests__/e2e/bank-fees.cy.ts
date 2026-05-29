@@ -5,10 +5,11 @@ import {
   createOrUpdateBankFees,
 } from '../mocks/responses/bank-fees-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectExpense,
+  openMobileSidebar,
   selectJob,
 } from '../support/utils.ts'
 
@@ -41,27 +42,25 @@ describe('E2E: Bank Fees', () => {
       .clear()
       .type('10000')
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-bank-fees"]').click()
     cy.wait('@getBankFees')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-bank-fees"]').scrollIntoView()
-    cy.get('[data-testid="menu-bank-fees"]').click({ force: true })
+    openMobileSidebar()
+    expandMonetarySections()
+    cy.get('[data-testid="menu-bank-fees"]').click()
     cy.wait('@getBankFees')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

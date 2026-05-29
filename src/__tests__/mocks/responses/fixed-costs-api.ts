@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const fixedCost1Mock = {
   id: 'fc1_id',
   name: 'Assurance',

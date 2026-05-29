@@ -7,7 +7,6 @@ import {
 } from '../../../../generic/SelectWithCreateProvider.tsx'
 import React from 'react'
 
-// eslint-disable-next-line react/prop-types
 export default function TravelMaterialForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

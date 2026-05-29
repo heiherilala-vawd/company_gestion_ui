@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const materialConsumption1Mock = {
   id: 'mc1_id',
   material_id: 'mat1_id',

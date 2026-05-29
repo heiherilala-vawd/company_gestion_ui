@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime'
-import type { CrupdateUser } from './CrupdateUser'
-import {
-  CrupdateUserFromJSON,
-  CrupdateUserFromJSONTyped,
-  CrupdateUserToJSON,
-  CrupdateUserToJSONTyped,
-} from './CrupdateUser'
 import type { AuditUser } from './AuditUser'
 import {
   AuditUserFromJSON,
@@ -72,12 +65,6 @@ export interface EmployeeLeaveConfig {
   id?: string
   /**
    *
-   * @type {CrupdateUser}
-   * @memberof EmployeeLeaveConfig
-   */
-  user?: CrupdateUser
-  /**
-   *
    * @type {Date}
    * @memberof EmployeeLeaveConfig
    */
@@ -94,6 +81,18 @@ export interface EmployeeLeaveConfig {
    * @memberof EmployeeLeaveConfig
    */
   vacation_days_per_month?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof EmployeeLeaveConfig
+   */
+  end_date?: Date
+  /**
+   *
+   * @type {number}
+   * @memberof EmployeeLeaveConfig
+   */
+  weekly_hours?: number
 }
 
 /**
@@ -121,11 +120,12 @@ export function EmployeeLeaveConfigFromJSONTyped(
     created_by: json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
     updated_by: json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
     id: json['id'] == null ? undefined : json['id'],
-    user: json['user'] == null ? undefined : CrupdateUserFromJSON(json['user']),
     hire_date: json['hire_date'] == null ? undefined : new Date(json['hire_date']),
     contract_type: json['contract_type'] == null ? undefined : json['contract_type'],
     vacation_days_per_month:
       json['vacation_days_per_month'] == null ? undefined : json['vacation_days_per_month'],
+    end_date: json['end_date'] == null ? undefined : new Date(json['end_date']),
+    weekly_hours: json['weekly_hours'] == null ? undefined : json['weekly_hours'],
   }
 }
 
@@ -150,12 +150,16 @@ export function EmployeeLeaveConfigToJSONTyped(
     created_by: AuditUserToJSON(value['created_by']),
     updated_by: AuditUserToJSON(value['updated_by']),
     id: value['id'],
-    user: CrupdateUserToJSON(value['user']),
     hire_date:
       value['hire_date'] == null
         ? value['hire_date']
         : value['hire_date'].toISOString().substring(0, 10),
     contract_type: value['contract_type'],
     vacation_days_per_month: value['vacation_days_per_month'],
+    end_date:
+      value['end_date'] == null
+        ? value['end_date']
+        : value['end_date'].toISOString().substring(0, 10),
+    weekly_hours: value['weekly_hours'],
   }
 }

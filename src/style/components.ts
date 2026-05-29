@@ -71,6 +71,7 @@ export const menuStyles = {
     borderRight: (theme: Theme) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     p: 2,
+    pb: { xs: 9, sm: 10 },
     overflowY: 'auto',
     overflowX: 'hidden',
     '&::-webkit-scrollbar': {
@@ -236,6 +237,7 @@ export const formStyles = {
     '& .RaCreate-main, & .RaEdit-main': {
       backgroundColor: 'transparent',
       boxShadow: 'none',
+      pb: { xs: 8, sm: 9 },
     },
   } as const,
 

@@ -5,7 +5,6 @@ import { Typography } from '@mui/material'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
 import React from 'react'
 
-// eslint-disable-next-line react/prop-types
 export default function TravelExpenseForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
 

@@ -25,7 +25,7 @@ describe('E2E: Materials', () => {
       .type(<string>crupdatedData.description, { force: true })
     cy.get('[data-testid="input-unit"]').click()
     cy.contains('Litre').click({ force: true })
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

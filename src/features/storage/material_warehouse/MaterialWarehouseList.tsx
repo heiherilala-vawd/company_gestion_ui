@@ -1,7 +1,7 @@
-import { List, TextField, SearchInput, EditButton, NumberField, FunctionField } from 'react-admin'
+import { List, SearchInput, EditButton, NumberField, FunctionField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const MaterialWarehouseFilters = [<SearchInput source="q" alwaysOn />]
+const MaterialWarehouseFilters = [<SearchInput source="q" alwaysOn key="q" />]
 
 export default function MaterialWarehouseList() {
   return (

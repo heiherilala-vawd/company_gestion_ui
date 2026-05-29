@@ -6,10 +6,10 @@ import {
   createOrUpdatePurchases,
 } from '../mocks/responses/purchases-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectExpense,
   selectEquipment,
   selectMaterial,
   selectWarehouse,
@@ -17,58 +17,68 @@ import {
 } from '../support/utils.ts'
 
 describe('E2E: Purchases', () => {
+  function selectReferenceMobile(testId: string, optionText: string) {
+    cy.get(`[data-testid="${testId}"]`)
+      .scrollIntoView()
+      .within(() => {
+        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+      })
+    cy.get('[role="option"]', { timeout: 10000 }).should('be.visible')
+    cy.contains('[role="option"]', optionText).click({ force: true })
+  }
+
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<string>purchase1Mock.equipment?.name).click()
+      cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
     }
-    selectWarehouse('supplier_id')
-    cy.get('[data-testid="input-is_equipment"]').click()
-    selectEquipment('equipment')
+    selectReferenceMobile('input-warehouses-id', 'Main Warehouse')
+    cy.get('[data-testid="input-is_equipment"]').click({ force: true })
+    selectReferenceMobile('input-equipment-id', 'Excavator')
 
     if (!isCreating) {
-      selectJob('expense\\.job_id')
+      selectReferenceMobile('input-jobs-id', 'Construction of Building A')
     }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
-      .clear()
-      .type('10000')
+      .clear({ force: true })
+      .type('10000', { force: true })
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function creatOrUpdateMaterial(isCreating: boolean) {
     const crupdatedData = crupdatePurchasesMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<number>purchase1Mock.quantity).click()
+      cy.contains(<number>purchase1Mock.quantity).click({ force: true })
       cy.wait('@getPurchase')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
     }
-    selectWarehouse('supplier_id')
-    selectMaterial('material')
+    selectReferenceMobile('input-warehouses-id', 'Main Warehouse')
+    selectReferenceMobile('input-materials-id', 'Cement')
     cy.get('[data-testid="input-quantity"] input')
-      .clear()
-      .type(String(<number>crupdatedData.quantity))
+      .clear({ force: true })
+      .type(String(<number>crupdatedData.quantity), { force: true })
 
     if (!isCreating) {
-      selectJob('expense\\.job_id')
+      selectReferenceMobile('input-jobs-id', 'Construction of Building A')
     }
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
-      .clear()
-      .type('1520')
+      .clear({ force: true })
+      .type('1520', { force: true })
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function creatOrUpdateEquipmentForced(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<string>purchase1Mock.equipment?.name).click()
+      cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click()
     }
@@ -82,15 +92,15 @@ describe('E2E: Purchases', () => {
       .clear()
       .type('10000')
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function creatOrUpdateMaterialForced(isCreating: boolean) {
     const crupdatedData = crupdatePurchasesMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<number>purchase1Mock.quantity).click()
+      cy.contains(<number>purchase1Mock.quantity).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click()
     }
@@ -107,21 +117,25 @@ describe('E2E: Purchases', () => {
       .clear()
       .type('1520')
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
-  function navigateToDesktop(menuIndex = 2) {
+  function navigateToDesktop(_menuIndex = 2) {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
-    cy.get('[data-testid="menu-purchases"]').eq(menuIndex).click()
+    expandMonetarySections()
+    cy.get('[data-testid="menu-purchases"]').eq(_menuIndex).click()
     cy.wait('@getPurchases')
   }
 
-  function navigateToMobile(menuIndex = 2) {
+  function navigateToMobile(_menuIndex = 2) {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-purchases"]').eq(menuIndex).scrollIntoView()
-    cy.get('[data-testid="menu-purchases"]').eq(menuIndex).click({ force: true })
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().should('be.visible')
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.wait(500)
+    expandMonetarySections()
+    cy.get('[data-testid="menu-purchases"]').eq(_menuIndex).click({ force: true })
     cy.wait('@getPurchases')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
@@ -204,17 +218,6 @@ describe('E2E: Purchases', () => {
     cy.url().should('include', '/purchases')
   }
 
-  function canUpdatePurchaseForced(menuIndex = 2) {
-    navigateToDesktop(menuIndex)
-    cy.intercept('PUT', '**/purchases', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
-    }).as('updatePurchase')
-    creatOrUpdateMaterialForced(false)
-    cy.wait(3000)
-    cy.wait('@updatePurchase')
-    cy.url().should('include', '/purchases')
-  }
-
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
@@ -264,7 +267,7 @@ describe('E2E: Purchases', () => {
 
     it('should show purchase details on mobile', () => {
       navigateToMobile(2)
-      cy.contains(<string>purchase1Mock.equipment?.name).click()
+      cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
       cy.contains(<number>purchase1Mock.quantity).should('exist')
       cy.contains(<number>purchase1Mock.expense?.amount).should('exist')

@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import { TextInput, SelectInput, BooleanInput, useGetList } from 'react-admin'
 import { useFormContext } from 'react-hook-form'
 import generateId from '../../../utili/utils.tsx'
-import { renderUserSelect, renderEquipeSelect } from '../../../generic/SelectWithCreateProvider.tsx'
+import { renderEquipeSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import {
   Typography,
-  Box,
   Checkbox,
   Button,
   List,
@@ -33,7 +32,7 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
       setSelectedEmployees(existingIds)
       setShowPaymentForm(true)
     }
-  }, [])
+  }, [isCreate, watch])
 
   const handleToggle = (userId: string) => {
     const currentIndex = selectedEmployees.indexOf(userId)

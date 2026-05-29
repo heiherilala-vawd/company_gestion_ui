@@ -1,20 +1,18 @@
 import {
   List,
   TextField,
-  DateField,
   SearchInput,
   TextInput,
   ReferenceInput,
   SelectInput,
-  FunctionField,
   EditButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const WarehouseFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="description" label="Description" />,
-  <ReferenceInput source="job_id" reference="jobs" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="description" label="Description" key="description" />,
+  <ReferenceInput source="job_id" reference="jobs" perPage={100} key="job_id">
     <SelectInput optionText="description" label="Travail" />
   </ReferenceInput>,
 ]

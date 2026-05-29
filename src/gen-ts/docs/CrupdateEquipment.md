@@ -12,6 +12,9 @@
 | `floor_number`   | number  |
 | `storage_number` | number  |
 | `est_en_panne`   | boolean |
+| `purchase_price` | number  |
+| `purchase_date`  | Date    |
+| `category`       | string  |
 
 ## Example
 
@@ -28,6 +31,9 @@ const example = {
   "floor_number": 1,
   "storage_number": 5,
   "est_en_panne": false,
+  "purchase_price": 150000.0,
+  "purchase_date": Mon Jan 15 03:00:00 EAT 2024,
+  "category": Engins de terrassement,
 } satisfies CrupdateEquipment
 
 console.log(example)

@@ -11,8 +11,7 @@ import {
 import FormToolbar from '../generic/FormToolbar'
 import IncomeForm from './money/incomes/IncomeForm.tsx'
 import generateId from '../utili/utils.tsx'
-import { Box, Button, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
 
 function LoanForm() {
   return (
@@ -43,7 +42,7 @@ function LoanForm() {
 }
 
 export default function IncomesActivity() {
-  const navigate = useNavigate()
+  useNavigate()
   const [entityType, setEntityType] = useState<'income' | 'loan'>('income')
 
   const handleEntityChange = (_: any, value: 'income' | 'loan' | null) => {

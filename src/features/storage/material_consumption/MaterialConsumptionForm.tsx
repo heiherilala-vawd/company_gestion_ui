@@ -28,8 +28,8 @@ export default function MaterialConsumptionForm({ isCreate = false, isCreateForm
         label="Date consommation"
         data-testid="input-consumption_date"
       />
-      <ReferenceInput source="job_id" reference="jobs" label="Travail">
-        <SelectInput optionText="name" data-testid="input-job_id" />
+      <ReferenceInput source="job_id" reference="jobs" label="Travail" optionText="description">
+        <SelectInput optionText="description" data-testid="input-job_id" />
       </ReferenceInput>
       <TextInput source="reason" label="Raison" multiline data-testid="input-reason" />
     </>

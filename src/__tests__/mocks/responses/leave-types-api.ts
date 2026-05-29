@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LeaveType, CrupdateLeaveType } from '../../../gen-ts/src'
 import { user1Mock } from './users-api.ts'
 import { toAuditUserMapper } from '../../support/mappers.ts'

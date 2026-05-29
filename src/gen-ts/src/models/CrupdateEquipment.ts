@@ -67,6 +67,24 @@ export interface CrupdateEquipment {
    * @memberof CrupdateEquipment
    */
   est_en_panne?: boolean
+  /**
+   *
+   * @type {number}
+   * @memberof CrupdateEquipment
+   */
+  purchase_price?: number
+  /**
+   *
+   * @type {Date}
+   * @memberof CrupdateEquipment
+   */
+  purchase_date?: Date
+  /**
+   *
+   * @type {string}
+   * @memberof CrupdateEquipment
+   */
+  category?: string
 }
 
 /**
@@ -96,6 +114,9 @@ export function CrupdateEquipmentFromJSONTyped(
     floor_number: json['floor_number'] == null ? undefined : json['floor_number'],
     storage_number: json['storage_number'] == null ? undefined : json['storage_number'],
     est_en_panne: json['est_en_panne'] == null ? undefined : json['est_en_panne'],
+    purchase_price: json['purchase_price'] == null ? undefined : json['purchase_price'],
+    purchase_date: json['purchase_date'] == null ? undefined : new Date(json['purchase_date']),
+    category: json['category'] == null ? undefined : json['category'],
   }
 }
 
@@ -120,5 +141,11 @@ export function CrupdateEquipmentToJSONTyped(
     floor_number: value['floor_number'],
     storage_number: value['storage_number'],
     est_en_panne: value['est_en_panne'],
+    purchase_price: value['purchase_price'],
+    purchase_date:
+      value['purchase_date'] == null
+        ? value['purchase_date']
+        : value['purchase_date'].toISOString().substring(0, 10),
+    category: value['category'],
   }
 }

@@ -28,7 +28,7 @@ describe('E2E: Travel People', () => {
       .first()
       .clear()
       .type('new comment')
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {

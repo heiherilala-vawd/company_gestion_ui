@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const leaveConfig1Mock = {
   id: 'lc1_id',
   hire_date: new Date('2020-03-01'),

@@ -5,6 +5,7 @@ import {
   travelExpense2Mock,
 } from '../mocks/responses/travel-expenses-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
@@ -15,11 +16,11 @@ import {
 describe('E2E: Travel Expenses', () => {
   function creatOrUpdate(isCreating: boolean) {
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
+      cy.contains(<string>travelExpense1Mock.departure_location?.name).click({ force: true })
       cy.wait('@getTravelExpense')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     selectWarehouse('departure_location_id')
     selectWarehouse('arrival_location_id', 1)
@@ -30,27 +31,28 @@ describe('E2E: Travel Expenses', () => {
       .clear()
       .type('10000')
 
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-travel-expenses"]').click()
     cy.wait('@getTravelExpenses')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-travel-expenses"]').scrollIntoView()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
+    expandMonetarySections()
     cy.get('[data-testid="menu-travel-expenses"]').click({ force: true })
     cy.wait('@getTravelExpenses')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -103,9 +105,9 @@ describe('E2E: Travel Expenses', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display travel expenses list', () => showList(true))

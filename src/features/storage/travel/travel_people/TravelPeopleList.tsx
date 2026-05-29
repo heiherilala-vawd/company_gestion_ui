@@ -4,38 +4,43 @@ import {
   DateField,
   DateTimeInput,
   SearchInput,
-  TextInput,
   BooleanInput,
   ReferenceInput,
   SelectInput,
   EditButton,
-  DeleteButton,
   FunctionField,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelPeopleFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100} key="travel_id">
     <SelectInput optionText="expense.description" label="Voyage" />
   </ReferenceInput>,
-  <ReferenceInput source="user_id" reference="users" perPage={100}>
+  <ReferenceInput source="user_id" reference="users" perPage={100} key="user_id">
     <SelectInput optionText={(r: any) => `${r.first_name} ${r.last_name}`} label="Utilisateur" />
   </ReferenceInput>,
-  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+  <ReferenceInput
+    source="arrival_location"
+    reference="warehouses"
+    perPage={100}
+    key="arrival_location"
+  >
     <SelectInput optionText="name" label="Lieu d'arrivée" />
   </ReferenceInput>,
   <DateTimeInput
     source="arrival_date_min"
     label="Date arrivée min"
+    key="arrival_date_min"
     parse={(v: string) => (v ? `${v}:00Z` : v)}
   />,
   <DateTimeInput
     source="arrival_date_max"
     label="Date arrivée max"
+    key="arrival_date_max"
     parse={(v: string) => (v ? `${v}:00Z` : v)}
   />,
-  <BooleanInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
 export default function TravelPeopleList() {

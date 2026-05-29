@@ -34,8 +34,8 @@ export default function PurchaseList() {
       : undefined
 
   const PurchaseFilters = [
-    <SearchInput source="q" alwaysOn />,
-    <ReferenceInput source="supplier_id" reference="warehouses" perPage={100}>
+    <SearchInput source="q" alwaysOn key="search" />,
+    <ReferenceInput source="supplier_id" reference="warehouses" perPage={100} key="supplier">
       <SelectInput optionText="name" label="Fournisseur" />
     </ReferenceInput>,
     ...(!isEquipment && !isMaterial

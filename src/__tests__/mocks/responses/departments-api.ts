@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const department1Mock = {
   id: 'dept1_id',
   name: 'Construction',

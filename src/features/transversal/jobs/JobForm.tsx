@@ -2,7 +2,6 @@ import { TextInput, SelectInput, DateTimeInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderCompanySelect } from '../../../generic/SelectWithCreateProvider.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function JobForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

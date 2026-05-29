@@ -6,6 +6,7 @@ import {
   createOrUpdateLoans,
 } from '../mocks/responses/loans-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
@@ -41,27 +42,28 @@ describe('E2E: Loans', () => {
       .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-loans"]').click()
     cy.wait('@getLoans')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-loans"]').scrollIntoView()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
+    expandMonetarySections()
     cy.get('[data-testid="menu-loans"]').click({ force: true })
     cy.wait('@getLoans')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -107,10 +109,11 @@ describe('E2E: Loans', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/loans*', mockSuccessResponse([loan1Mock, loan3Mock])).as('getLoans')
+    cy.intercept('GET', '**/loans/loan1_id', mockSuccessResponse(loan1Mock)).as('getLoan')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display loans list', () => showList(true))

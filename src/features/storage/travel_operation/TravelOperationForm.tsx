@@ -118,7 +118,7 @@ const TravelOperationForm = () => {
         throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
       }
 
-      const result = await response.json()
+      await response.json()
       notify('Opération de déplacement créée avec succès !', { type: 'success' })
       navigate(`/`)
     } catch (error: any) {

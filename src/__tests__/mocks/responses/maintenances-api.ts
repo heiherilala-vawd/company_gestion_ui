@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export const maintenance1Mock = {
   id: 'maint1_id',
   equipment_id: 'eq1_id',

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface CashTransaction {
   id?: string
   cash_account_id?: string

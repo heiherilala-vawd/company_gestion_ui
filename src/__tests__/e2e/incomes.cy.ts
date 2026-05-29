@@ -6,18 +6,18 @@ import {
   income2Mock,
 } from '../mocks/responses/incomes-api'
 import {
+  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
   selectIncomeType,
-  selectJob,
 } from '../support/utils.ts'
 
 describe('E2E: Incomes', () => {
   function creatOrUpdate(isCreating: boolean) {
     const crupdatedData = crupdateIncomesMock[0]
     if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
+      cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
       cy.contains(<string>income1Mock.source_organization)
         .first()
@@ -27,6 +27,7 @@ describe('E2E: Incomes', () => {
 
       cy.get('.RaEditButton-root').click()
     }
+    cy.wait('@getIncomeTypes')
     selectIncomeType('income_type_id')
     cy.get('[data-testid="input-source_organization"] input')
       .clear()
@@ -40,27 +41,28 @@ describe('E2E: Incomes', () => {
     cy.get('[data-testid="input-description"] textarea:visible')
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
+    expandMonetarySections()
     cy.get('[data-testid="menu-incomes"]').click()
     cy.wait('@getIncomes')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-incomes"]').scrollIntoView()
+    cy.reload()
+    cy.wait(1000)
+    cy.get('[class*="RaSidebarToggleButton"]').first().click()
+    cy.wait(1000)
+    expandMonetarySections()
     cy.get('[data-testid="menu-incomes"]').click({ force: true })
     cy.wait('@getIncomes')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
-      }
-    })
+    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -77,7 +79,7 @@ describe('E2E: Incomes', () => {
     else navigateToMobile()
     cy.contains(<string>income1Mock.source_organization)
       .first()
-      .click()
+      .click({ force: true })
     cy.wait('@getIncome')
     cy.contains(<string>income1Mock.description).should('exist')
     cy.contains(<string>income1Mock.source_organization).should('exist')

@@ -1,7 +1,7 @@
 import { List, TextField, SearchInput, EditButton, NumberField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const BudgetLineFilters = [<SearchInput source="q" alwaysOn />]
+const BudgetLineFilters = [<SearchInput source="q" alwaysOn key="search" />]
 
 export default function BudgetLineList() {
   return (

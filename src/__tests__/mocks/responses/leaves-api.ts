@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Leave, CrupdateLeave } from '../../../gen-ts/src'
 import { user1Mock } from './users-api.ts'
 import { leaveType1Mock, leaveType2Mock } from './leave-types-api.ts'

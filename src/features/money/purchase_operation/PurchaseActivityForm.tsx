@@ -141,7 +141,7 @@ const PurchaseActivityForm = () => {
         throw new Error(`Erreur HTTP ${response.status}`)
       }
 
-      const result = await response.json()
+      await response.json()
       notify("Opération d'achat créée avec succès !", { type: 'success' })
       navigate('/')
     } catch (error) {

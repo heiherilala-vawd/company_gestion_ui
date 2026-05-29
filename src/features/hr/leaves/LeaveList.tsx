@@ -2,7 +2,6 @@ import {
   List,
   TextField,
   DateField,
-  SelectField,
   SearchInput,
   SelectInput,
   NumberField,
@@ -10,13 +9,13 @@ import {
   EditButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
-import { LeaveStatus } from '../../../../gen-ts'
 
 const LeaveFilters = [
-  <SearchInput source="q" alwaysOn />,
+  <SearchInput source="q" alwaysOn key="q" />,
   <SelectInput
     source="status"
     label="Statut"
+    key="status"
     choices={[
       { id: 'PENDING', name: 'En attente' },
       { id: 'APPROVED', name: 'Approuvé' },

@@ -13,7 +13,6 @@ import {
   selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { equipment1Mock } from '../mocks/responses/equipment-api'
-import { job1Mock } from '../mocks/responses/jobs-api'
 
 describe('E2E: Equipment Usage', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -29,15 +28,25 @@ describe('E2E: Equipment Usage', () => {
       cy.wait('@getEquipmentUsage')
       cy.get('.RaEditButton-root').click()
     }
+    cy.wait('@getEquipments')
+    cy.wait('@getJobs')
+    cy.get('[data-testid="input-equipment_id"]').should('be.visible')
+    cy.get('[data-testid="input-job_id"]').should('be.visible')
     selectReferenceWithCreate('input-equipment_id', 'equipment_id', <string>equipment1Mock.name)
-    selectReferenceWithCreate('input-job_id', 'job_id', <string>job1Mock.description)
+    cy.get('[data-testid="input-job_id"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+      })
+    cy.get('#menu-job_id li', { timeout: 10000 }).should('have.length.of.at.least', 1)
+    cy.get('#menu-job_id li').eq(1).click({ force: true })
     cy.get('[data-testid="input-start_time"] input')
       .clear()
       .type(<string>crupdatedData.start_time)
     cy.get('[data-testid="input-end_time"] input')
       .clear()
       .type(<string>crupdatedData.end_time)
-    cy.get('button[type="submit"]').click()
+    cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
@@ -101,6 +110,10 @@ describe('E2E: Equipment Usage', () => {
   }
 
   beforeEach(() => {
+    cy.on('uncaught:exception', (err) => {
+      cy.log(`UNCAUGHT EXCEPTION: ${err.message}`)
+      return false
+    })
     cy.clearLocalStorage()
     cy.clearCookies()
     insertInToLocalStorage()

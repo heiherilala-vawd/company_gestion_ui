@@ -47,32 +47,24 @@ import {
 
 export interface CrupdateMaintenancesRequest {
   compId: string
-  jobId: string
-  userId: string
   equipmentId: string
   crupdateMaintenance: Array<CrupdateMaintenance>
 }
 
 export interface DeleteMaintenanceByIdRequest {
   compId: string
-  jobId: string
-  userId: string
   equipmentId: string
   id: string
 }
 
 export interface GetMaintenanceByIdRequest {
   compId: string
-  jobId: string
-  userId: string
   equipmentId: string
   id: string
 }
 
 export interface GetMaintenancesRequest {
   compId: string
-  jobId: string
-  userId: string
   equipmentId: string
   page?: number
   pageSize?: number
@@ -93,20 +85,6 @@ export class MaintenanceApi extends runtime.BaseAPI {
       throw new runtime.RequiredError(
         'compId',
         'Required parameter "compId" was null or undefined when calling crupdateMaintenances().',
-      )
-    }
-
-    if (requestParameters['jobId'] == null) {
-      throw new runtime.RequiredError(
-        'jobId',
-        'Required parameter "jobId" was null or undefined when calling crupdateMaintenances().',
-      )
-    }
-
-    if (requestParameters['userId'] == null) {
-      throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling crupdateMaintenances().',
       )
     }
 
@@ -139,10 +117,8 @@ export class MaintenanceApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances`
+    let urlPath = `/companies/{comp_id}/equipment/{equipment_id}/maintenances`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
     urlPath = urlPath.replace(
       '{equipment_id}',
       encodeURIComponent(String(requestParameters['equipmentId'])),
@@ -194,20 +170,6 @@ export class MaintenanceApi extends runtime.BaseAPI {
       )
     }
 
-    if (requestParameters['jobId'] == null) {
-      throw new runtime.RequiredError(
-        'jobId',
-        'Required parameter "jobId" was null or undefined when calling deleteMaintenanceById().',
-      )
-    }
-
-    if (requestParameters['userId'] == null) {
-      throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling deleteMaintenanceById().',
-      )
-    }
-
     if (requestParameters['equipmentId'] == null) {
       throw new runtime.RequiredError(
         'equipmentId',
@@ -235,10 +197,8 @@ export class MaintenanceApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id}`
+    let urlPath = `/companies/{comp_id}/equipment/{equipment_id}/maintenances/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
     urlPath = urlPath.replace(
       '{equipment_id}',
       encodeURIComponent(String(requestParameters['equipmentId'])),
@@ -289,20 +249,6 @@ export class MaintenanceApi extends runtime.BaseAPI {
       )
     }
 
-    if (requestParameters['jobId'] == null) {
-      throw new runtime.RequiredError(
-        'jobId',
-        'Required parameter "jobId" was null or undefined when calling getMaintenanceById().',
-      )
-    }
-
-    if (requestParameters['userId'] == null) {
-      throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling getMaintenanceById().',
-      )
-    }
-
     if (requestParameters['equipmentId'] == null) {
       throw new runtime.RequiredError(
         'equipmentId',
@@ -330,10 +276,8 @@ export class MaintenanceApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances/{id}`
+    let urlPath = `/companies/{comp_id}/equipment/{equipment_id}/maintenances/{id}`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
     urlPath = urlPath.replace(
       '{equipment_id}',
       encodeURIComponent(String(requestParameters['equipmentId'])),
@@ -385,20 +329,6 @@ export class MaintenanceApi extends runtime.BaseAPI {
       )
     }
 
-    if (requestParameters['jobId'] == null) {
-      throw new runtime.RequiredError(
-        'jobId',
-        'Required parameter "jobId" was null or undefined when calling getMaintenances().',
-      )
-    }
-
-    if (requestParameters['userId'] == null) {
-      throw new runtime.RequiredError(
-        'userId',
-        'Required parameter "userId" was null or undefined when calling getMaintenances().',
-      )
-    }
-
     if (requestParameters['equipmentId'] == null) {
       throw new runtime.RequiredError(
         'equipmentId',
@@ -431,10 +361,8 @@ export class MaintenanceApi extends runtime.BaseAPI {
       }
     }
 
-    let urlPath = `/companies/{comp_id}/job/{job_id}/user/{user_id}/equipment/{equipment_id}/maintenances`
+    let urlPath = `/companies/{comp_id}/equipment/{equipment_id}/maintenances`
     urlPath = urlPath.replace('{comp_id}', encodeURIComponent(String(requestParameters['compId'])))
-    urlPath = urlPath.replace('{job_id}', encodeURIComponent(String(requestParameters['jobId'])))
-    urlPath = urlPath.replace('{user_id}', encodeURIComponent(String(requestParameters['userId'])))
     urlPath = urlPath.replace(
       '{equipment_id}',
       encodeURIComponent(String(requestParameters['equipmentId'])),

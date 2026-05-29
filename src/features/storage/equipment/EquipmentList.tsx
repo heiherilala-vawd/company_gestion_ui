@@ -2,29 +2,26 @@ import {
   List,
   TextField,
   NumberField,
-  DateField,
   SearchInput,
   TextInput,
   BooleanInput,
   BooleanField,
   ReferenceInput,
   SelectInput,
-  FunctionField,
   EditButton,
-  DeleteButton,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const EquipmentFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="description" label="Description" />,
-  <ReferenceInput source="warehouse_id" reference="warehouses" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="description" label="Description" key="description" />,
+  <ReferenceInput source="warehouse_id" reference="warehouses" perPage={100} key="warehouse_id">
     <SelectInput optionText="name" label="Entrepôt" />
   </ReferenceInput>,
-  <TextInput source="floor_number" label="N° étage" />,
-  <TextInput source="storage_number" label="N° rangement" />,
-  <BooleanInput source="not_arrived" label="Non arrivé" />,
-  <BooleanInput source="est_en_panne" label="Hors d'usage" />,
+  <TextInput source="floor_number" label="N° étage" key="floor_number" />,
+  <TextInput source="storage_number" label="N° rangement" key="storage_number" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
+  <BooleanInput source="est_en_panne" label="Hors d'usage" key="est_en_panne" />,
 ]
 
 export default function EquipmentList() {

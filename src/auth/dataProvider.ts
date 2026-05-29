@@ -1,5 +1,4 @@
 // dataProvider.ts
-import { stringify } from 'query-string'
 import { DeleteParams, GetListParams, GetManyParams, GetOneParams, UpdateParams } from 'react-admin'
 import { getMiddleUrl, getMiddleUrlWithId, getMiddleUrlWithQuery } from '../config/dynamicResources'
 
@@ -64,14 +63,6 @@ const fetchWithToken = async <T = any>(url: string, options: RequestInit = {}): 
   }
 
   return response.json()
-}
-
-// Helper pour construire les query params
-const buildQueryString = (params: Record<string, any>): string => {
-  const filteredParams = Object.fromEntries(
-    Object.entries(params).filter(([_, v]) => v !== undefined && v !== null && v !== ''),
-  )
-  return stringify(filteredParams)
 }
 
 export const dataProvider = {

@@ -1,29 +1,37 @@
 import { SectionHub } from '../../generic/SectionHub'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import LocalShippingIcon from '@mui/icons-material/LocalShipping'
-import InventoryIcon from '@mui/icons-material/Inventory'
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
+import Inventory2Icon from '@mui/icons-material/Inventory2'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const items = [
   {
     label: 'Achat',
     icon: ShoppingCartIcon,
-    to: '/purchases_activity',
+    to: '/purchases?isMaterial=true',
     color: 'forest' as const,
     desc: 'Acheter',
   },
   {
-    label: 'Déplacement',
-    icon: LocalShippingIcon,
-    to: '/travel_equipment_activity',
+    label: 'Consommation',
+    icon: DeleteSweepIcon,
+    to: '/material_consumption',
     color: 'forest' as const,
-    desc: 'Déplacer',
+    desc: 'Consommer',
   },
   {
-    label: 'Réception',
-    icon: InventoryIcon,
-    to: '/travel_materials_activity',
+    label: 'Retour',
+    icon: Inventory2Icon,
+    to: '/material_warehouse',
     color: 'forest' as const,
-    desc: 'Valider réception',
+    desc: 'Retourner stock',
+  },
+  {
+    label: 'Rebut',
+    icon: DeleteForeverIcon,
+    to: '/material_warehouse',
+    color: 'forest' as const,
+    desc: 'Délasser',
   },
 ]
 

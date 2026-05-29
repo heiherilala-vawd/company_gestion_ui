@@ -1,7 +1,7 @@
 import { List, TextField, SearchInput, EditButton, NumberField, SelectField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
-const CashTransactionFilters = [<SearchInput source="q" alwaysOn />]
+const CashTransactionFilters = [<SearchInput source="q" alwaysOn key="search" />]
 
 export default function CashTransactionList() {
   return (

@@ -5,7 +5,6 @@ import {
   renderJobSelect,
 } from '../../../generic/SelectWithCreateProvider.tsx'
 
-// eslint-disable-next-line react/prop-types
 export default function IncomeForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>

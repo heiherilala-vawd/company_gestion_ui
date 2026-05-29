@@ -11,40 +11,47 @@ import {
   BooleanInput,
   ReferenceInput,
   EditButton,
-  DeleteButton,
   FunctionField,
 } from 'react-admin'
 import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelEquipmentFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <ReferenceInput source="equipment_id" reference="equipment" perPage={100}>
+  <SearchInput source="q" alwaysOn key="q" />,
+  <ReferenceInput source="equipment_id" reference="equipment" perPage={100} key="equipment_id">
     <SelectInput optionText="name" label="Équipement" />
   </ReferenceInput>,
-  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100}>
+  <ReferenceInput source="travel_id" reference="travel_expenses" perPage={100} key="travel_id">
     <SelectInput optionText="expense.description" label="Voyage" />
   </ReferenceInput>,
-  <TextInput source="quantity" label="Quantité" />,
+  <TextInput source="quantity" label="Quantité" key="quantity" />,
   <SelectInput
     source="status"
     label="Statut"
+    key="status"
     choices={Object.entries(TransportStatus).map(([k, v]) => ({ id: v, name: k }))}
   />,
-  <ReferenceInput source="arrival_location" reference="warehouses" perPage={100}>
+  <ReferenceInput
+    source="arrival_location"
+    reference="warehouses"
+    perPage={100}
+    key="arrival_location"
+  >
     <SelectInput optionText="name" label="Lieu d'arrivée" />
   </ReferenceInput>,
   <DateTimeInput
     source="arrival_date_min"
     label="Date arrivée min"
+    key="arrival_date_min"
     parse={(v: string) => (v ? `${v}:00Z` : v)}
   />,
   <DateTimeInput
     source="arrival_date_max"
     label="Date arrivée max"
+    key="arrival_date_max"
     parse={(v: string) => (v ? `${v}:00Z` : v)}
   />,
-  <BooleanInput source="not_arrived" label="Non arrivé" />,
+  <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
 export default function TravelEquipmentList() {

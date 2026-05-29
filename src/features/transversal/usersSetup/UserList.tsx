@@ -19,12 +19,13 @@ const formatEnumLabel = (key: string) =>
     .join(' ')
 
 const UserFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="first_name" label="Prénom" />,
-  <TextInput source="last_name" label="Nom" />,
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="first_name" label="Prénom" key="first_name" />,
+  <TextInput source="last_name" label="Nom" key="last_name" />,
   <SelectInput
     source="role"
     label="Rôle"
+    key="role"
     choices={Object.entries(Role).map(([k, v]) => ({ id: v, name: formatEnumLabel(k) }))}
   />,
 ]

@@ -1,14 +1,11 @@
 import {
   List,
   TextField,
-  DateField,
   SelectField,
   SearchInput,
   TextInput,
   SelectInput,
-  FunctionField,
   EditButton,
-  DeleteButton,
 } from 'react-admin'
 import { Card } from '@mui/material'
 import { formStyles } from '../../../style/components'
@@ -17,12 +14,13 @@ import { CompanyType } from '../../../gen-ts/src/models/CompanyType'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const CompanyFilters = [
-  <SearchInput source="q" alwaysOn />,
-  <TextInput source="rib" label="RIB" />,
-  <TextInput source="description" label="Description" />,
+  <SearchInput source="q" alwaysOn key="q" />,
+  <TextInput source="rib" label="RIB" key="rib" />,
+  <TextInput source="description" label="Description" key="description" />,
   <SelectInput
     source="company_type"
     label="Type"
+    key="company_type"
     choices={Object.entries(CompanyType).map(([k, v]) => ({ id: v, name: k }))}
   />,
 ]
