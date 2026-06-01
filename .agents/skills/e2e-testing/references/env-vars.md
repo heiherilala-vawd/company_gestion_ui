@@ -4,7 +4,7 @@
 
 | File | Purpose |
 |------|---------|
-| `.env` | Default dev config (`VITE_SIMPLE_REST_URL`) |
+| `.env.example` | Template commitée dans git — documente les variables requises |
 | `.env.local` | Gitignored — dev overrides (`VITE_API_URL` points to backend) |
 | `.env.test` | Versioned — test defaults (loaded by `scripts/run-cypress-coverage.sh`) |
 | `.env.ci.example` | CI template |
@@ -14,7 +14,7 @@
 | Variable | Used In | Required Value for Tests |
 |----------|---------|--------------------------|
 | `VITE_API_URL` | Vite proxy, data provider | **Must be empty string** — all calls intercepted by `cy.intercept()` |
-| `VITE_SIMPLE_REST_URL` | Fallback in data provider | Not used in tests |
+| `VITE_PROXY_TARGET` | `vite.config.ts` proxy target | Not used in tests (dev only) |
 | `CYPRESS_BASE_URL` | Cypress config `baseUrl` | `http://localhost:5174` (static serve port, not dev server) |
 | `CYPRESS_VIDEO` | Cypress config | `false` for local, `true` for CI |
 | `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | Cypress config | `10000` (10 seconds) |

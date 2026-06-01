@@ -11,7 +11,7 @@ export default function ReceiptCreate() {
         income_id: localStorage.getItem('currentIncomeId'),
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="receipt-create-form" toolbar={<FormToolbar />}>
         <ReceiptForm isCreate />
       </SimpleForm>
     </Create>

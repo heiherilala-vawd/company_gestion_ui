@@ -19,7 +19,7 @@ export default function TravelPeopleEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="travel-people-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <TravelPeopleForm />
       </SimpleForm>

@@ -158,6 +158,7 @@ const PurchaseActivityForm = () => {
         <CardContent>
           <Title title="Nouvelle Opération d'Achat" />
           <Form
+            id="purchase-activity-form"
             onSubmit={onSubmit}
             defaultValues={{
               supplier_id: '',

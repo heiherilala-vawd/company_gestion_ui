@@ -76,6 +76,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
       'travel_equipment',
       'loans',
       'income_types',
+      'other_expense_types',
       'receipts',
       'suppliers',
       'purchase_orders',
@@ -84,6 +85,8 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
       'leave_configs',
       'leaves',
       'leave_balances',
+      'departments',
+      'teams',
     ]
     if (fullCRUDResources.includes(resource) && canReadWrite(action)) return true
 

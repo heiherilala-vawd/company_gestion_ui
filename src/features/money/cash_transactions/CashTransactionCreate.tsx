@@ -5,7 +5,7 @@ import CashTransactionForm from './CashTransactionForm'
 export default function CashTransactionCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="cash-transaction-create-form" toolbar={<FormToolbar />}>
         <CashTransactionForm isCreate />
       </SimpleForm>
     </Create>

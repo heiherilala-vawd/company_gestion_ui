@@ -13,6 +13,7 @@ import OtherExpenseTypeForm from '../features/money/otherExpenseType/OtherExpens
 import LeaveTypeForm from '../features/hr/leave_types/LeaveTypeForm.tsx'
 import LeaveConfigForm from '../features/hr/leave_configs/LeaveConfigForm.tsx'
 import TeamForm from '../features/transversal/teams/TeamForm.tsx'
+import SupplierForm from '../features/transversal/suppliers/SupplierForm.tsx'
 
 export const renderTravelExpenseSelect = (source: any, label: any) => (
   <ReferenceSelectWithCreate
@@ -148,6 +149,17 @@ export const renderLeaveConfigSelect = (source: any, label: any) => (
     }
     createUrlEnd={getMiddleUrl('leave_configs')}
     createForm={<LeaveConfigForm isCreateForm />}
+  />
+)
+
+export const renderSupplierSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'supplier_id'}
+    reference="suppliers"
+    label={label ? label : 'Fournisseur'}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('suppliers')}
+    createForm={<SupplierForm isCreateForm />}
   />
 )
 

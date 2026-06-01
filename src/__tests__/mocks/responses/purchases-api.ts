@@ -4,6 +4,7 @@ import { equipment1Mock } from './equipment-api.ts'
 import { material1Mock } from './materials-api.ts'
 import { user1Mock } from './users-api.ts'
 import { warehouse1Mock } from './warehouses-api.ts'
+import { supplier1Mock } from './suppliers-api.ts'
 import {
   toCrupdateExpenseMoneyMapper,
   toCrupdateWarehouseMapper,
@@ -15,7 +16,7 @@ import {
 export const purchase1Mock: Purchase = {
   id: 'pur1_id',
   expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-  supplier: toCrupdateWarehouseMapper(warehouse1Mock),
+  supplier: { ...toCrupdateWarehouseMapper(warehouse1Mock), id: supplier1Mock.id },
   equipment: toCrupdateEquipmentMapper(equipment1Mock),
   material: toCrupdateMaterialMapper(material1Mock),
   quantity: 2,
@@ -25,7 +26,7 @@ export const purchase1Mock: Purchase = {
 export const purchase2Mock: Purchase = {
   id: 'pur2_id',
   expense: toCrupdateExpenseMoneyMapper(expense1Mock),
-  supplier: toCrupdateWarehouseMapper(warehouse1Mock),
+  supplier: { ...toCrupdateWarehouseMapper(warehouse1Mock), id: supplier1Mock.id },
   equipment: toCrupdateEquipmentMapper(equipment1Mock),
   material: toCrupdateMaterialMapper(material1Mock),
   quantity: 50,

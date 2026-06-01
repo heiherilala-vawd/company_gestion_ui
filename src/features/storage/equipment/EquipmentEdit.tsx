@@ -14,7 +14,7 @@ export default function EquipmentEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="equipment-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <EquipmentForm />
       </SimpleForm>

@@ -5,7 +5,7 @@ import BankFeeForm from './BankFeeForm.tsx'
 export default function BankFeeEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="bank-fee-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <BankFeeForm />
       </SimpleForm>

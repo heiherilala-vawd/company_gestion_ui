@@ -20,7 +20,12 @@ export default function LeaveForm({ isCreate = false, isCreateForm = false }) {
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
       {renderUserSelect('user_id', 'Employé')}
       {renderLeaveTypesSelect('leave_type_id', 'Type de congé')}
-      <TextInput source="start_date" label="Date début" data-testid="input-start_date" />
+      <TextInput
+        source="start_date"
+        label="Date début"
+        defaultValue={new Date().toISOString()}
+        data-testid="input-start_date"
+      />
       <TextInput source="end_date" label="Date fin" data-testid="input-end_date" />
       <NumberInput source="duration_days" label="Durée (jours)" data-testid="input-duration_days" />
       <SelectInput

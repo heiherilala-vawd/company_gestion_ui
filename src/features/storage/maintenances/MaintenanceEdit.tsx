@@ -5,7 +5,7 @@ import MaintenanceForm from './MaintenanceForm'
 export default function MaintenanceEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="maintenance-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <MaintenanceForm />
       </SimpleForm>

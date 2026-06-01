@@ -21,7 +21,7 @@ export default function EmployeePaymentCreate() {
         return transformed
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="employee-payment-create-form" toolbar={<FormToolbar />}>
         <EmployeePaymentForm isCreate />
       </SimpleForm>
     </Create>

@@ -14,7 +14,7 @@ export default function EmployeePaymentEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="employee-payment-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <EmployeePaymentForm />
       </SimpleForm>

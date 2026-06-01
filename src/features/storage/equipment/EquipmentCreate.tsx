@@ -5,7 +5,7 @@ import EquipmentForm from './EquipmentForm'
 export default function EquipmentCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="equipment-create-form" toolbar={<FormToolbar />}>
         <EquipmentForm isCreate />
       </SimpleForm>
     </Create>

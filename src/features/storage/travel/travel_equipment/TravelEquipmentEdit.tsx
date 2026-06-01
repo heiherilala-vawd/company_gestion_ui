@@ -20,7 +20,7 @@ export default function TravelEquipmentEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="travel-equipment-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <TravelEquipmentForm />
       </SimpleForm>

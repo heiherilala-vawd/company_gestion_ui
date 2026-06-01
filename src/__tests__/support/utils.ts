@@ -42,6 +42,7 @@ import {
   materialWarehousesMock,
   otherExpenseType1Mock,
   otherExpenseTypesMock,
+  team1Mock,
   teamsMock,
   leaveTypesMock,
   leavesMock,
@@ -78,6 +79,20 @@ import {
   leaveConfigsMock,
   yearlyReportMock,
   leaveBalancesMock,
+  supplier1Mock,
+  suppliersMock,
+  purchaseOrder1Mock,
+  purchaseOrdersMock,
+  materialDashboardSummaryMock,
+  materialDashboardBreakdownMock,
+  materialDashboardExpiringMock,
+  equipmentDashboardSummaryMock,
+  equipmentDashboardBreakdownMock,
+  hrDashboardSummaryMock,
+  hrDashboardBreakdownMock,
+  monetaryDashboardSummaryMock,
+  monetaryDashboardBreakdownMock,
+  monetaryTimeSeriesMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -218,9 +233,16 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/other_expense_types*', mockSuccessResponse(otherExpenseTypesMock)).as(
     'getOtherExpenseTypes',
   )
+  cy.intercept('GET', '**/other_expense_types/oet1_id*', mockSuccessResponse(otherExpenseType1Mock)).as(
+    'getOtherExpenseType',
+  )
 
   // ---------------------- TEAMS ------------------------------------------
   cy.intercept('GET', '**/teams*', mockSuccessResponse(teamsMock)).as('getTeams')
+  cy.intercept('GET', '**/teams/team1_id*', mockSuccessResponse(team1Mock)).as('getTeam')
+
+  // ---------------------- JOB_USERS ------------------------------------------
+  cy.intercept('GET', '**/job_users*', mockSuccessResponse([])).as('getJobUsers')
 
   // ---------------------- LEAVE TYPES ------------------------------------------
   cy.intercept('GET', '**/leave_types*', mockSuccessResponse(leaveTypesMock)).as('getLeaveTypes')
@@ -273,6 +295,82 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/cash_accounts/ca1_id*', mockSuccessResponse(cashAccount1Mock)).as(
     'getCashAccount',
   )
+
+  // ---------------------- SUPPLIERS ------------------------------------------
+  cy.intercept('GET', '/companies/*/suppliers*', mockSuccessResponse(suppliersMock)).as(
+    'getSuppliers',
+  )
+  cy.intercept('GET', '/companies/*/suppliers/sup1_id*', mockSuccessResponse(supplier1Mock)).as(
+    'getSupplier',
+  )
+
+  // ---------------------- PURCHASE ORDERS ------------------------------------------
+  cy.intercept('GET', '/companies/*/purchase_orders*', mockSuccessResponse(purchaseOrdersMock)).as(
+    'getPurchaseOrders',
+  )
+  cy.intercept('GET', '/companies/*/purchase_orders/po1_id*', mockSuccessResponse(purchaseOrder1Mock)).as(
+    'getPurchaseOrder',
+  )
+
+  // ---------------------- MATERIAL DASHBOARD ------------------------------------------
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/materials/summary*',
+    mockSuccessResponse(materialDashboardSummaryMock),
+  ).as('getMaterialDashboardSummary')
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/materials/breakdown*',
+    mockSuccessResponse(materialDashboardBreakdownMock),
+  ).as('getMaterialDashboardBreakdown')
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/materials/expiring*',
+    mockSuccessResponse(materialDashboardExpiringMock),
+  ).as('getMaterialDashboardExpiring')
+
+  // ---------------------- EQUIPMENT DASHBOARD ------------------------------------------
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/equipment/summary*',
+    mockSuccessResponse(equipmentDashboardSummaryMock),
+  ).as('getEquipmentDashboardSummary')
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/equipment/breakdown*',
+    mockSuccessResponse(equipmentDashboardBreakdownMock),
+  ).as('getEquipmentDashboardBreakdown')
+
+  // ---------------------- HR DASHBOARD ------------------------------------------
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/hr/summary*',
+    mockSuccessResponse(hrDashboardSummaryMock),
+  ).as('getHrDashboardSummary')
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/hr/breakdown*',
+    mockSuccessResponse(hrDashboardBreakdownMock),
+  ).as('getHrDashboardBreakdown')
+
+  // ---------------------- MONETARY DASHBOARD ------------------------------------------
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/monetary/summary*',
+    mockSuccessResponse(monetaryDashboardSummaryMock),
+  ).as('getMonetaryDashboardSummary')
+  cy.intercept(
+    'GET',
+    '/companies/*/dashboard/monetary/breakdown*',
+    mockSuccessResponse(monetaryDashboardBreakdownMock),
+  ).as('getMonetaryDashboardBreakdown')
+  ;['revenue', 'expenses', 'cashflow', 'profit'].forEach((type) => {
+    cy.intercept(
+      'GET',
+      `/companies/*/dashboard/monetary/${type}*`,
+      mockSuccessResponse(monetaryTimeSeriesMock),
+    ).as(`getMonetaryDashboard${type.charAt(0).toUpperCase() + type.slice(1)}`)
+  })
 
   // ---------------------- CASH TRANSACTIONS ------------------------------------------
   cy.intercept('GET', '**/cash_transactions*', mockSuccessResponse(cashTransactionsMock)).as(
@@ -364,7 +462,35 @@ export function interceptGeneralEndpoint(): void {
     '/travel_materials_activity',
     '/travel_equipment_activity',
     '/employer_payments_activity',
+    '/employee_payment_activity',
     '/purchases_activity',
+    '/team_activity',
+    '/job_assignment_activity',
+    '/travel_people_activity',
+    '/purchases_material_activity',
+    '/material_consumption_activity',
+    '/material_return_activity',
+    '/travel_material_activity',
+    '/purchases_equipment_activity',
+    '/equipment_usage_activity',
+    '/equipment_return_activity',
+    '/maintenance_activity',
+    '/scheduled_maintenance_activity',
+    '/company',
+    '/rh',
+    '/stock',
+    '/equipment-hub',
+    '/monetary',
+    '/suppliers',
+    '/purchase_orders',
+    '/departments',
+    '/teams',
+    '/income_types',
+    '/other_expense_types',
+    '/material-dashboard',
+    '/equipment-dashboard',
+    '/hr-dashboard',
+    '/monetary-dashboard',
   ]
   spaRoutes.forEach((route) => {
     cy.intercept('GET', new RegExp(`^${route}$`), (req) => req.continue())

@@ -11,7 +11,7 @@ export default function OtherExpenseCreate() {
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="other-expense-create-form" toolbar={<FormToolbar />}>
         <OtherExpenseForm isCreate />
       </SimpleForm>
     </Create>

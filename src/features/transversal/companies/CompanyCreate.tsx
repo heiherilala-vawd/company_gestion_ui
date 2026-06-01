@@ -5,7 +5,7 @@ import CompanyForm from './CompanyForm'
 export default function CompanyCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="company-create-form" toolbar={<FormToolbar />}>
         <CompanyForm isCreate />
       </SimpleForm>
     </Create>

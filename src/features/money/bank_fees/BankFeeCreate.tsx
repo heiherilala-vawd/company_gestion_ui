@@ -11,7 +11,7 @@ export default function BankFeeCreate() {
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="bank-fee-create-form" toolbar={<FormToolbar />}>
         <BankFeeForm isCreate />
       </SimpleForm>
     </Create>

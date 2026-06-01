@@ -5,7 +5,7 @@ import BudgetLineForm from './BudgetLineForm'
 export default function BudgetLineCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="budget-line-create-form" toolbar={<FormToolbar />}>
         <BudgetLineForm isCreate />
       </SimpleForm>
     </Create>

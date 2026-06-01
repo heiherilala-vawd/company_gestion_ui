@@ -5,7 +5,7 @@ import BudgetLineForm from './BudgetLineForm'
 export default function BudgetLineEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="budget-line-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <BudgetLineForm />
       </SimpleForm>

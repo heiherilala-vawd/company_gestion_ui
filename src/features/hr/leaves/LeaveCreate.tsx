@@ -5,7 +5,7 @@ import LeaveForm from './LeaveForm'
 export default function LeaveCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="leave-create-form" toolbar={<FormToolbar />}>
         <LeaveForm isCreate />
       </SimpleForm>
     </Create>

@@ -15,7 +15,10 @@ export function SectionHub({ title, items }: { title: string; items: HubItem[] }
   const navigate = useNavigate()
 
   return (
-    <Box sx={{ p: { xs: 2.5, sm: 4 }, width: '100%', maxWidth: 600, mx: 'auto' }}>
+    <Box
+      sx={{ p: { xs: 2.5, sm: 4 }, width: '100%', maxWidth: 600, mx: 'auto' }}
+      data-testid="section-hub"
+    >
       <Typography
         variant="h5"
         sx={{

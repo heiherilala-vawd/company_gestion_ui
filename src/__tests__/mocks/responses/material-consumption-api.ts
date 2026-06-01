@@ -6,6 +6,7 @@ export const materialConsumption1Mock = {
   consumption_date: new Date('2024-06-01'),
   job_id: 'job1_id',
   reason: 'Utilisation pour fondations travail A',
+  consumption_status: 'IN_PROGRESS',
 }
 
 export const materialConsumption2Mock = {
@@ -16,6 +17,7 @@ export const materialConsumption2Mock = {
   consumption_date: new Date('2024-06-05'),
   job_id: 'job1_id',
   reason: 'Utilisation pour murs travail A',
+  consumption_status: 'IN_PROGRESS',
 }
 
 export const materialConsumptionsMock = [materialConsumption1Mock, materialConsumption2Mock]

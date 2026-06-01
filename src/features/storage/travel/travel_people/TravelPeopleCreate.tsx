@@ -5,7 +5,7 @@ import TravelPeopleForm from './TravelPeopleForm.tsx'
 export default function TravelPeopleCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="travel-people-create-form" toolbar={<FormToolbar />}>
         <TravelPeopleForm isCreate />
       </SimpleForm>
     </Create>

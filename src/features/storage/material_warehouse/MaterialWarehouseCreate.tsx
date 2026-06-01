@@ -5,7 +5,7 @@ import MaterialWarehouseForm from './MaterialWarehouseForm'
 export default function MaterialWarehouseCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-warehouse-create-form" toolbar={<FormToolbar />}>
         <MaterialWarehouseForm isCreate />
       </SimpleForm>
     </Create>

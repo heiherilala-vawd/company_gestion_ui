@@ -21,7 +21,12 @@ export default function LoanForm({ isCreate = false, isCreateForm = false }) {
         label="Taux d'intérêt (points de base)"
         data-testid="input-interest_rate"
       />
-      <TextInput source="start_date" label="Date début" data-testid="input-start_date" />
+      <TextInput
+        source="start_date"
+        label="Date début"
+        defaultValue={new Date().toISOString()}
+        data-testid="input-start_date"
+      />
       <TextInput source="due_date" label="Date échéance" data-testid="input-due_date" />
       <SelectInput
         source="status"

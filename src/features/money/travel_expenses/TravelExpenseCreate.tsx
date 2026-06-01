@@ -13,7 +13,7 @@ export default function TravelExpenseCreate() {
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="travel-expense-create-form" toolbar={<FormToolbar />}>
         <TravelExpenseForm isCreate />
       </SimpleForm>
     </Create>

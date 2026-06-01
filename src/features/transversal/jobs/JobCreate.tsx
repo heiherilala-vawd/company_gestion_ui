@@ -11,7 +11,7 @@ export default function JobCreate() {
         company_id: localStorage.getItem('currentCompanyId'),
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="job-create-form" toolbar={<FormToolbar />}>
         <JobForm isCreate />
       </SimpleForm>
     </Create>

@@ -45,7 +45,7 @@ export default function ExpensesActivity() {
 
       <ResourceContextProvider value={resource}>
         <Create redirect="list" title=" ">
-          <SimpleForm toolbar={<FormToolbar />}>
+          <SimpleForm id="expenses-activity-form" toolbar={<FormToolbar />}>
             <FormComponent isCreate />
           </SimpleForm>
         </Create>
