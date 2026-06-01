@@ -2,6 +2,14 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import istanbul from 'vite-plugin-istanbul'
 
+const PROXY_TARGET = process.env.VITE_PROXY_TARGET || 'http://localhost:8080'
+const NGROK_HOST = process.env.VITE_NGROK_HOST || ''
+
+const allowedHosts: string[] = []
+if (NGROK_HOST) {
+  allowedHosts.push(NGROK_HOST, `.${NGROK_HOST.replace(/^\.?/, '')}`)
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
@@ -23,58 +31,55 @@ export default defineConfig(({ mode }) => ({
     port: 5173,
     proxy: {
       '/auth': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
-        configure: (proxy, options) => {
+        configure: (proxy) => {
           proxy.on('error', (err, req, res) => {
             console.log('proxy error', err)
           })
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            console.log('Proxying:', req.method, req.url, '->', 'http://localhost:8080' + req.url)
+          proxy.on('proxyReq', (proxyReq, req) => {
+            console.log('Proxying:', req.method, req.url, '->', PROXY_TARGET + req.url)
           })
         },
       },
       '/users': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/companies': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/materials': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/equipment': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/warehouses': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/histories': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
       '/jobs': {
-        target: 'http://localhost:8080',
+        target: PROXY_TARGET,
         changeOrigin: true,
         secure: false,
       },
     },
-    allowedHosts: [
-      'faceted-banked-outthink.ngrok-free.dev',
-      '.ngrok-free.dev', // autorise tous les sous-domaines ngrok
-    ],
+    allowedHosts: allowedHosts.length > 0 ? allowedHosts : undefined,
   },
   build: {
     sourcemap: mode === 'development',

@@ -18,11 +18,10 @@ export default function PurchaseCreate() {
       transform={(data) => ({
         ...data,
         quantity: data.quantity ? data.quantity : 1,
-        supplier: { id: data.supplier_id },
         expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="purchase-create-form" toolbar={<FormToolbar />}>
         <PurchaseForm isCreate isEquipment={isEquipment} isMaterial={isMaterial} />
       </SimpleForm>
     </Create>

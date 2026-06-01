@@ -11,7 +11,7 @@ export default function WarehouseCreate() {
         job_id: localStorage.getItem('currentJobId'),
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="warehouse-create-form" toolbar={<FormToolbar />}>
         <WarehouseForm isCreate />
       </SimpleForm>
     </Create>

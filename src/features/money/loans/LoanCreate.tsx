@@ -11,7 +11,7 @@ export default function LoanCreate() {
         job_id: localStorage.getItem('currentJobId'),
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="loan-create-form" toolbar={<FormToolbar />}>
         <LoanForm isCreate />
       </SimpleForm>
     </Create>

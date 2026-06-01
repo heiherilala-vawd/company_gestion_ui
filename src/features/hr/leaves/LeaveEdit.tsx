@@ -5,7 +5,7 @@ import LeaveForm from './LeaveForm'
 export default function LeaveEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="leave-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <LeaveForm />
       </SimpleForm>

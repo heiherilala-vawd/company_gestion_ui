@@ -5,6 +5,7 @@ import {
   crupdatePurchasesMock,
   createOrUpdatePurchases,
 } from '../mocks/responses/purchases-api'
+import { supplier1Mock } from '../mocks/responses/suppliers-api'
 import {
   expandMonetarySections,
   insertInToLocalStorage,
@@ -13,6 +14,7 @@ import {
   selectEquipment,
   selectMaterial,
   selectWarehouse,
+  selectReferenceWithCreate,
   selectJob,
 } from '../support/utils.ts'
 
@@ -27,6 +29,10 @@ describe('E2E: Purchases', () => {
     cy.contains('[role="option"]', optionText).click({ force: true })
   }
 
+  function selectSupplier() {
+    selectReferenceMobile('input-suppliers-id', 'Fournitures BTP SARL')
+  }
+
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
@@ -34,8 +40,9 @@ describe('E2E: Purchases', () => {
       cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click({ force: true })
+      cy.wait(1000)
     }
-    selectReferenceMobile('input-warehouses-id', 'Main Warehouse')
+    selectSupplier()
     cy.get('[data-testid="input-is_equipment"]').click({ force: true })
     selectReferenceMobile('input-equipment-id', 'Excavator')
 
@@ -57,8 +64,9 @@ describe('E2E: Purchases', () => {
       cy.contains(<number>purchase1Mock.quantity).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click({ force: true })
+      cy.wait(1000)
     }
-    selectReferenceMobile('input-warehouses-id', 'Main Warehouse')
+    selectSupplier()
     selectReferenceMobile('input-materials-id', 'Cement')
     cy.get('[data-testid="input-quantity"] input')
       .clear({ force: true })
@@ -74,6 +82,11 @@ describe('E2E: Purchases', () => {
     cy.get('button[type="submit"]').click({ force: true })
   }
 
+  function selectSupplierForced() {
+    cy.wait(1000)
+    selectReferenceWithCreate('input-suppliers-id', 'supplier', <string>supplier1Mock.name)
+  }
+
   function creatOrUpdateEquipmentForced(isCreating: boolean) {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
@@ -82,7 +95,7 @@ describe('E2E: Purchases', () => {
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click()
     }
-    selectWarehouse('supplier_id')
+    selectSupplierForced()
     selectEquipment('equipment')
 
     if (!isCreating) {
@@ -104,7 +117,7 @@ describe('E2E: Purchases', () => {
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click()
     }
-    selectWarehouse('supplier_id')
+    selectSupplierForced()
     selectMaterial('material')
     cy.get('[data-testid="input-quantity"] input')
       .clear()

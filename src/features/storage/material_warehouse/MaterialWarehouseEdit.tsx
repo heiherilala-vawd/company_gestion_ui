@@ -5,7 +5,7 @@ import MaterialWarehouseForm from './MaterialWarehouseForm'
 export default function MaterialWarehouseEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-warehouse-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <MaterialWarehouseForm />
       </SimpleForm>

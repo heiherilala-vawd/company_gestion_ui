@@ -68,10 +68,11 @@ NEVER hardcode colors/gradients/shadows/radii outside `src/style/`. Theme tokens
 
 ### Env vars placement
 
-| Variable | `.env` | `.env.local` | `.env.test` | `.env.ci` | docker-compose | CI workflow |
-|----------|--------|-------------|-------------|-----------|-----------------|-------------|
-| `VITE_SIMPLE_REST_URL` | ✅ | | | | | |
-| `VITE_API_URL` | | ✅ (dev) | ✅ (empty) | ✅ (empty) | ✅ (empty) | |
+| Variable | `.env.example` | `.env.local` | `.env.test` | `.env.ci` | docker-compose | CI workflow |
+|----------|----------------|-------------|-------------|-----------|-----------------|-------------|
+| `VITE_PROXY_TARGET` | `http://localhost:8080` | | | | | |
+| `VITE_API_URL` | (défini par l'utilisateur) | ✅ (dev) | ✅ (empty) | ✅ (empty) | ✅ (empty) | |
+| `VITE_NGROK_HOST` | (optionnel) | | | | | |
 | `CYPRESS_BASE_URL` | | | ✅ (5174) | ✅ (app:5173) | ✅ (app:5173) | |
 | `CYPRESS_VIDEO` | | | ✅ | ✅ | | ✅ |
 | `NYC_CAFEOBJECT_COVERAGE` | | | ✅ | ✅ | ✅ | ✅ |

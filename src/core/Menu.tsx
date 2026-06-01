@@ -42,6 +42,11 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import CachedIcon from '@mui/icons-material/Cached'
 import AssessmentIcon from '@mui/icons-material/Assessment'
 import HistoryIcon from '@mui/icons-material/History'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import DescriptionIcon from '@mui/icons-material/Description'
+import AccountTreeIcon from '@mui/icons-material/AccountTree'
+import GroupIcon from '@mui/icons-material/Group'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 import { menuStyles } from '../style/components'
 import { canAccessResource } from '../auth/authProvider'
 
@@ -168,6 +173,48 @@ const MenuRoot = () => {
       to: '/task_schedules',
       testId: 'menu-task-schedules',
     },
+    {
+      name: 'history',
+      label: 'Historique',
+      icon: HistoryIcon,
+      to: '/history',
+      testId: 'menu-history',
+    },
+    {
+      name: 'suppliers',
+      label: 'Fournisseurs',
+      icon: LocalShippingIcon,
+      to: '/suppliers',
+      testId: 'menu-suppliers',
+    },
+    {
+      name: 'purchase_orders',
+      label: 'Bons de commande',
+      icon: DescriptionIcon,
+      to: '/purchase_orders',
+      testId: 'menu-purchase-orders',
+    },
+    {
+      name: 'departments',
+      label: 'Départements',
+      icon: AccountTreeIcon,
+      to: '/departments',
+      testId: 'menu-departments',
+    },
+    {
+      name: 'income_types',
+      label: 'Types de revenus',
+      icon: CategoryIcon,
+      to: '/income_types',
+      testId: 'menu-income-types',
+    },
+    {
+      name: 'other_expense_types',
+      label: "Types d'autres dépenses",
+      icon: MoneyOffIcon,
+      to: '/other_expense_types',
+      testId: 'menu-other-expense-types',
+    },
   ]
 
   const rhItems: ResourceItem[] = [
@@ -188,6 +235,13 @@ const MenuRoot = () => {
       testId: 'menu-travel-peoples',
     },
     {
+      name: 'teams',
+      label: 'Équipes',
+      icon: GroupIcon,
+      to: '/teams',
+      testId: 'menu-teams',
+    },
+    {
       name: 'leaves',
       label: 'Congés',
       icon: CalendarMonthIcon,
@@ -200,6 +254,13 @@ const MenuRoot = () => {
       icon: EventBusyIcon,
       to: '/leave_balances',
       testId: 'menu-leave-balances',
+    },
+    {
+      name: 'hr-dashboard',
+      label: 'Dashboard RH',
+      icon: DashboardIcon,
+      to: '/hr-dashboard',
+      testId: 'menu-hr-dashboard',
     },
   ]
 
@@ -246,6 +307,13 @@ const MenuRoot = () => {
       to: '/material_consumption',
       testId: 'menu-material-consumption',
     },
+    {
+      name: 'material-dashboard',
+      label: 'Dashboard stock',
+      icon: DashboardIcon,
+      to: '/material-dashboard',
+      testId: 'menu-material-dashboard',
+    },
   ]
 
   const equipmentItems: ResourceItem[] = [
@@ -283,6 +351,13 @@ const MenuRoot = () => {
       icon: BuildCircleIcon,
       to: '/maintenances',
       testId: 'menu-maintenances',
+    },
+    {
+      name: 'equipment-dashboard',
+      label: 'Dashboard équipement',
+      icon: DashboardIcon,
+      to: '/equipment-dashboard',
+      testId: 'menu-equipment-dashboard',
     },
   ]
 
@@ -393,13 +468,6 @@ const MenuRoot = () => {
       icon: AssessmentIcon,
       to: '/yearly-report',
       testId: 'menu-yearly-report',
-    },
-    {
-      name: 'history',
-      label: 'Historique',
-      icon: HistoryIcon,
-      to: '/history',
-      testId: 'menu-history',
     },
   ]
 

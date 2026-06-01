@@ -70,7 +70,7 @@ export default function IncomesActivity() {
               job_id: localStorage.getItem('currentJobId'),
             })}
           >
-            <SimpleForm toolbar={<FormToolbar />}>
+            <SimpleForm id="income-activity-form" toolbar={<FormToolbar />}>
               <IncomeForm isCreate />
             </SimpleForm>
           </Create>
@@ -85,7 +85,7 @@ export default function IncomesActivity() {
               job_id: localStorage.getItem('currentJobId'),
             })}
           >
-            <SimpleForm toolbar={<FormToolbar />}>
+            <SimpleForm id="loan-activity-form" toolbar={<FormToolbar />}>
               <LoanForm />
             </SimpleForm>
           </Create>

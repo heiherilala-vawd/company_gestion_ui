@@ -134,7 +134,7 @@ const TravelOperationForm = () => {
       <Card sx={operationFormStyles.card}>
         <CardContent>
           <Title title="Nouvelle Opération de Déplacement" />
-          <Form onSubmit={onSubmit}>
+          <Form id="travel-operation-form" onSubmit={onSubmit}>
             <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               📋 Informations Générales
             </Typography>

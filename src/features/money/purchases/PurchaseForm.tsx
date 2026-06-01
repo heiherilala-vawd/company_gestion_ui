@@ -3,7 +3,7 @@ import generateId from '../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
   renderMaterialSelect,
-  renderWarehouseSelect,
+  renderSupplierSelect,
 } from '../../../generic/SelectWithCreateProvider.tsx'
 import { Typography } from '@mui/material'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
@@ -30,7 +30,7 @@ export default function PurchaseForm({
         />
       )}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
-      {renderWarehouseSelect('supplier_id', 'Fournisseur')}
+      {renderSupplierSelect('supplier_id', 'Fournisseur')}
       <BooleanInput
         source="is_equipment"
         label="Est un équipement"

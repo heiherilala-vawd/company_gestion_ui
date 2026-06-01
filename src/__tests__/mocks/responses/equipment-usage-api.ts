@@ -3,7 +3,9 @@ export const equipmentUsage1Mock = {
   equipment_id: 'eq1_id',
   job_id: 'job1_id',
   start_time: '2024-06-01T08:00:00Z',
-  end_time: '2024-06-01T17:00:00Z',
+  end_time: null,
+  usage_status: 'IN_USE',
+  used_by: 'user1_id',
 }
 
 export const equipmentUsage2Mock = {
@@ -12,6 +14,8 @@ export const equipmentUsage2Mock = {
   job_id: 'job1_id',
   start_time: '2024-06-02T09:00:00Z',
   end_time: '2024-06-02T16:00:00Z',
+  usage_status: 'COMPLETED',
+  used_by: 'user1_id',
 }
 
 export const equipmentUsagesMock = [equipmentUsage1Mock, equipmentUsage2Mock]

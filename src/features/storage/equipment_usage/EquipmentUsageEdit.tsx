@@ -5,7 +5,7 @@ import EquipmentUsageForm from './EquipmentUsageForm'
 export default function EquipmentUsageEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="equipment-usage-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <EquipmentUsageForm />
       </SimpleForm>

@@ -39,8 +39,18 @@ import MaterialConsumptionResource from '../features/storage/material_consumptio
 import MaterialWarehouseResource from '../features/storage/material_warehouse'
 import MaintenanceResource from '../features/storage/maintenances'
 import LeaveBalanceResource from '../features/hr/leave_balances'
+import SupplierResource from '../features/transversal/suppliers'
+import PurchaseOrderResource from '../features/transversal/purchase_orders'
+import DepartmentResource from '../features/transversal/departments'
+import TeamResource from '../features/transversal/teams'
+import IncomeTypeResource from '../features/money/incomeType'
+import OtherExpenseTypeResource from '../features/money/otherExpenseType'
 import YearlyReport from '../features/reports'
 import HistoryPage from '../features/reports/HistoryPage'
+import MaterialDashboard from '../features/reports/MaterialDashboard'
+import EquipmentDashboard from '../features/reports/EquipmentDashboard'
+import HrDashboard from '../features/reports/HrDashboard'
+import MonetaryDashboard from '../features/reports/MonetaryDashboard'
 
 import HomePage from '../features/HomePage'
 import EmployerPaymentActivity from '../features/EmployerPaymentActivity'
@@ -48,7 +58,21 @@ import IncomesActivity from '../features/IncomesActivity'
 import ExpensesActivity from '../features/ExpensesActivity'
 import TravelMaterialActivity from '../features/TravelMaterialActivity'
 import PurchaseActivityForm from '../features/money/purchase_operation/PurchaseActivityForm'
-import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
+
+import EmployeePaymentActivity from '../features/EmployeePaymentActivity'
+import TeamActivity from '../features/TeamActivity'
+import JobAssignmentActivity from '../features/JobAssignmentActivity'
+import TravelPeopleActivity from '../features/TravelPeopleActivity'
+import PurchaseMaterialActivity from '../features/PurchaseMaterialActivity'
+import MaterialConsumptionActivity from '../features/MaterialConsumptionActivity'
+import MaterialReturnActivity from '../features/MaterialReturnActivity'
+import TravelMaterialActivityForm from '../features/TravelMaterialActivityForm'
+import PurchaseEquipmentActivity from '../features/PurchaseEquipmentActivity'
+import EquipmentUsageActivity from '../features/EquipmentUsageActivity'
+import EquipmentReturnActivity from '../features/EquipmentReturnActivity'
+import TravelEquipmentActivityForm from '../features/TravelEquipmentActivityForm'
+import MaintenanceActivity from '../features/MaintenanceActivity'
+import ScheduledMaintenanceActivity from '../features/ScheduledMaintenanceActivity'
 import CompanyPage from '../features/sections/CompanyPage'
 import RHPage from '../features/sections/RHPage'
 import StockPage from '../features/sections/StockPage'
@@ -88,7 +112,10 @@ const ThemedAdmin = () => {
                   </CustomRoutes>
                   <CustomRoutes>
                     <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
-                    <Route path="/travel_equipment_activity" element={<TravelOperationForm />} />
+                    <Route
+                      path="/travel_equipment_activity"
+                      element={<TravelEquipmentActivityForm />}
+                    />
                     <Route path="/expenses_activity" element={<ExpensesActivity />} />
                     <Route
                       path="/employer_payments_activity"
@@ -96,6 +123,40 @@ const ThemedAdmin = () => {
                     />
                     <Route path="/incomes_activity" element={<IncomesActivity />} />
                     <Route path="/travel_materials_activity" element={<TravelMaterialActivity />} />
+                    <Route
+                      path="/employee_payment_activity"
+                      element={<EmployeePaymentActivity />}
+                    />
+                    <Route path="/team_activity" element={<TeamActivity />} />
+                    <Route path="/job_assignment_activity" element={<JobAssignmentActivity />} />
+                    <Route path="/travel_people_activity" element={<TravelPeopleActivity />} />
+                    <Route
+                      path="/purchases_material_activity"
+                      element={<PurchaseMaterialActivity />}
+                    />
+                    <Route
+                      path="/material_consumption_activity"
+                      element={<MaterialConsumptionActivity />}
+                    />
+                    <Route path="/material_return_activity" element={<MaterialReturnActivity />} />
+                    <Route
+                      path="/travel_material_activity"
+                      element={<TravelMaterialActivityForm />}
+                    />
+                    <Route
+                      path="/purchases_equipment_activity"
+                      element={<PurchaseEquipmentActivity />}
+                    />
+                    <Route path="/equipment_usage_activity" element={<EquipmentUsageActivity />} />
+                    <Route
+                      path="/equipment_return_activity"
+                      element={<EquipmentReturnActivity />}
+                    />
+                    <Route path="/maintenance_activity" element={<MaintenanceActivity />} />
+                    <Route
+                      path="/scheduled_maintenance_activity"
+                      element={<ScheduledMaintenanceActivity />}
+                    />
                     <Route path="/company" element={<CompanyPage />} />
                     <Route path="/rh" element={<RHPage />} />
                     <Route path="/stock" element={<StockPage />} />
@@ -104,6 +165,10 @@ const ThemedAdmin = () => {
                     <Route path="/yearly-report" element={<YearlyReport />} />
                     <Route path="/history" element={<HistoryPage />} />
                     <Route path="/leave_balances" element={<LeaveBalanceResource.list />} />
+                    <Route path="/material-dashboard" element={<MaterialDashboard />} />
+                    <Route path="/equipment-dashboard" element={<EquipmentDashboard />} />
+                    <Route path="/hr-dashboard" element={<HrDashboard />} />
+                    <Route path="/monetary-dashboard" element={<MonetaryDashboard />} />
                   </CustomRoutes>
                   <Resource name="jobs" {...JobResource} />
                   <Resource name="companies" {...CompanyResource} />
@@ -124,10 +189,12 @@ const ThemedAdmin = () => {
                   <Resource name="loans" {...LoanResource} />
                   <Resource name="loan_repayments" {...LoanRepaymentResource} />
                   <Resource name="receipts" {...ReceiptResource} />
-                  <Resource name="teams" />
-                  <Resource name="departments" />
-                  <Resource name="income_types" />
-                  <Resource name="other_expense_types" />
+                  <Resource name="suppliers" {...SupplierResource} />
+                  <Resource name="purchase_orders" {...PurchaseOrderResource} />
+                  <Resource name="teams" {...TeamResource} />
+                  <Resource name="departments" {...DepartmentResource} />
+                  <Resource name="income_types" {...IncomeTypeResource} />
+                  <Resource name="other_expense_types" {...OtherExpenseTypeResource} />
                   <Resource name="leave_types" />
                   <Resource name="leave_configs" />
                   <Resource name="fixed_costs" {...FixedCostResource} />

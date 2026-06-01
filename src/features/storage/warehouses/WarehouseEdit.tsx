@@ -14,7 +14,7 @@ export default function WarehouseEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="warehouse-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <WarehouseForm />
       </SimpleForm>

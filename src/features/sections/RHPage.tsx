@@ -4,19 +4,20 @@ import PaymentsIcon from '@mui/icons-material/Payments'
 import GroupIcon from '@mui/icons-material/Group'
 import WorkIcon from '@mui/icons-material/Work'
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 
 const items = [
   {
     label: 'Tâche',
     icon: AssignmentIcon,
-    to: '/tasks',
+    to: '/tasks/create',
     color: 'moss' as const,
     desc: 'Assigner tâche',
   },
   {
     label: 'Paiement',
     icon: PaymentsIcon,
-    to: '/employee_payments',
+    to: '/employee_payment_activity',
     color: 'moss' as const,
     desc: 'Payer employé',
   },
@@ -30,16 +31,23 @@ const items = [
   {
     label: 'Travail',
     icon: WorkIcon,
-    to: '/jobs',
+    to: '/job_assignment_activity',
     color: 'moss' as const,
     desc: 'Assigner travail',
   },
   {
     label: 'Déplacement',
     icon: FlightTakeoffIcon,
-    to: '/travel_people',
+    to: '/travel_people_activity',
     color: 'moss' as const,
     desc: 'Transport personnel',
+  },
+  {
+    label: 'Dashboard',
+    icon: DashboardIcon,
+    to: '/hr-dashboard',
+    color: 'moss' as const,
+    desc: "Vue d'ensemble",
   },
 ]
 

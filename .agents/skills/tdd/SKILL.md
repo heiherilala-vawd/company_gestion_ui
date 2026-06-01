@@ -1,6 +1,6 @@
 ---
 name: tdd
-description: Cypress E2E test-driven development with Red-Green-Refactor loop, HTTP-level mocking via cy.intercept(), and Istanbul coverage verification. Use when writing new features, fixing bugs, or modifying UI behavior in a React Admin project.
+description: Cypress E2E test-driven development with Red-Green-Refactor loop, HTTP-level mocking via cy.intercept(), and Istanbul coverage verification. Trigger on any code change — features, fixes, refactors, reorganizations, style, form updates, or any modification to source files — since the project uses E2E-only testing.
 ---
 
 # Test-Driven Development (Cypress E2E)
@@ -90,6 +90,15 @@ Improve code while keeping all tests green:
 - [ ] Remove speculative assertions
 
 **Never refactor while RED.** Get to GREEN first.
+
+## Project Context
+
+This project uses **E2E-only testing** (Cypress). There are no unit or integration tests. Every UI change — whether a new feature, a bug fix, a rename, or a reorganization — should follow the RED→GREEN loop. If the change doesn't break existing tests, no new test is needed, but the suite must remain green.
+
+Before starting any UI work:
+- [ ] Run `npm run cypress:coverage` to confirm the suite is GREEN
+- [ ] Write a failing test first for new behaviors (RED)
+- [ ] After changes, run `npm run cypress:coverage` to confirm GREEN + coverage thresholds
 
 ## Checklist Per Cycle
 

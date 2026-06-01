@@ -5,7 +5,7 @@ import TaskScheduleForm from './TaskScheduleForm'
 export default function TaskScheduleCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="task-schedule-create-form" toolbar={<FormToolbar />}>
         <TaskScheduleForm isCreate />
       </SimpleForm>
     </Create>

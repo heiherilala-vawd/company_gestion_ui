@@ -18,7 +18,6 @@ export default function PurchaseEdit() {
       transform={(data) => ({
         ...data,
         quantity: data.quantity ? data.quantity : 1,
-        supplier: { id: data.supplier_id },
       })}
       queryOptions={{
         // Intercepter et modifier les données après le fetch
@@ -32,7 +31,7 @@ export default function PurchaseEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="purchase-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <PurchaseForm isEquipment={isEquipment} isMaterial={isMaterial} />
       </SimpleForm>

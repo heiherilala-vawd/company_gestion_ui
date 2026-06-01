@@ -5,7 +5,7 @@ import TaskForm from './TaskForm'
 export default function TaskCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="task-create-form" toolbar={<FormToolbar />}>
         <TaskForm isCreate />
       </SimpleForm>
     </Create>

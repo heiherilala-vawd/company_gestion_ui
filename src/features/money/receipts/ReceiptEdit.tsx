@@ -5,7 +5,7 @@ import ReceiptForm from './ReceiptForm'
 export default function ReceiptEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="receipt-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <ReceiptForm />
       </SimpleForm>

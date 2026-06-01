@@ -11,7 +11,7 @@ export default function LoanRepaymentCreate() {
         loan_id: localStorage.getItem('currentLoanId'),
       })}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="loan-repayment-create-form" toolbar={<FormToolbar />}>
         <LoanRepaymentForm isCreate />
       </SimpleForm>
     </Create>

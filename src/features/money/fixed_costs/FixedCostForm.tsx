@@ -17,14 +17,24 @@ export default function FixedCostForm({ isCreate = false, isCreateForm = false }
       )}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       <TextInput source="name" label="Nom" data-testid="input-name" />
-      <NumberInput source="amount" label="Montant" data-testid="input-amount" />
+      <NumberInput
+        source="amount"
+        label="Montant mensuel"
+        helperText="Ce montant sera appliqué chaque mois"
+        data-testid="input-amount"
+      />
       <TextInput
         source="description"
         label="Description"
         multiline
         data-testid="input-description"
       />
-      <DateInput source="start_date" label="Date début" data-testid="input-start_date" />
+      <DateInput
+        source="start_date"
+        label="Date début"
+        defaultValue={new Date().toISOString()}
+        data-testid="input-start_date"
+      />
       <DateInput source="end_date" label="Date fin" data-testid="input-end_date" />
     </>
   )

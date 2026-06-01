@@ -5,7 +5,7 @@ import MaterialConsumptionForm from './MaterialConsumptionForm'
 export default function MaterialConsumptionEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-consumption-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <MaterialConsumptionForm />
       </SimpleForm>

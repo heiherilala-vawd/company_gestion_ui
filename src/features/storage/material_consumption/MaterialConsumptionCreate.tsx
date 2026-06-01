@@ -5,7 +5,7 @@ import MaterialConsumptionForm from './MaterialConsumptionForm'
 export default function MaterialConsumptionCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-consumption-create-form" toolbar={<FormToolbar />}>
         <MaterialConsumptionForm isCreate />
       </SimpleForm>
     </Create>

@@ -5,7 +5,7 @@ import CashAccountForm from './CashAccountForm'
 export default function CashAccountEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="cash-account-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <CashAccountForm />
       </SimpleForm>

@@ -5,7 +5,7 @@ import TaskForm from './TaskForm'
 export default function TaskEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="task-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <TaskForm />
       </SimpleForm>

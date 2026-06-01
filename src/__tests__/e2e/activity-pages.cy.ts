@@ -334,7 +334,7 @@ describe('E2E: Activity Pages', () => {
     clickHomeButton('Déplacer')
     cy.url({ timeout: 15000 }).should('include', '/travel_equipment_activity')
 
-    cy.contains('Nouvelle Opération de Déplacement', { timeout: 10000 }).should('exist')
+    cy.contains('Déplacer des équipements', { timeout: 10000 }).should('exist')
 
     cy.get('textarea[name="comment"]').clear().type('Test travel comment')
 

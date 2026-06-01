@@ -13,7 +13,7 @@ export default function OtherExpenseEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="other-expense-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <OtherExpenseForm />
       </SimpleForm>

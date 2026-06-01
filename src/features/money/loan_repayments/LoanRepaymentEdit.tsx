@@ -5,7 +5,7 @@ import LoanRepaymentForm from './LoanRepaymentForm'
 export default function LoanRepaymentEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="loan-repayment-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <LoanRepaymentForm />
       </SimpleForm>

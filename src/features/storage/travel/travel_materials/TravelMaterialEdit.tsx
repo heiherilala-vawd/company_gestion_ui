@@ -19,7 +19,7 @@ export default function TravelMaterialEdit() {
         }),
       }}
     >
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="travel-material-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <TravelMaterialForm />
       </SimpleForm>

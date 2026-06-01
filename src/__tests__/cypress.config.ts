@@ -3,6 +3,7 @@ import coverageTask from '@cypress/code-coverage/task'
 
 export default defineConfig({
   numTestsKeptInMemory: 10,
+  experimentalMemoryManagement: true,
   e2e: {
     baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:5174',
     supportFile: 'src/__tests__/support/e2e.ts',

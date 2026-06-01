@@ -6,7 +6,7 @@ import UserForm from './UserForm.tsx'
 export default function UserEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="user-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <UserForm />
       </SimpleForm>

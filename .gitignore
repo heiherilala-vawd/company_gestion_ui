@@ -29,7 +29,8 @@ coverage/
 src/__tests__/coverage/
 src/__tests__/.nyc_output/
 
-# Environment overrides (not committed)
+# Environment files (not committed — use .env.example as template)
+.env
 .env.local
 .env.*.local
 .env.production

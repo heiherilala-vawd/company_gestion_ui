@@ -5,7 +5,7 @@ import MaterialForm from './MaterialForm'
 export default function MaterialEdit() {
   return (
     <Edit redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <MaterialForm />
       </SimpleForm>

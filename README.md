@@ -134,10 +134,11 @@ graph LR
 
 ### Où placer chaque variable
 
-| Variable | `.env` | `.env.local` | `.env.test` | `.env.ci` | `docker-compose` | `github-ci` |
-|----------|--------|-------------|-------------|-----------|-----------------|-------------|
-| `VITE_SIMPLE_REST_URL` | ✅ | | | | | |
-| `VITE_API_URL` | | ✅ | ✅ | ✅ | ✅ | |
+| Variable | `.env.example` | `.env.local` | `.env.test` | `.env.ci` | `docker-compose` | `github-ci` |
+|----------|----------------|-------------|-------------|-----------|-----------------|-------------|
+| `VITE_PROXY_TARGET` | `http://localhost:8080` | | | | | |
+| `VITE_API_URL` | (défini par l'utilisateur) | ✅ | ✅ | ✅ | ✅ | |
+| `VITE_NGROK_HOST` | (optionnel) | | | | | |
 | `CYPRESS_BASE_URL` | | | ✅ | ✅ | ✅ | |
 | `CYPRESS_VIDEO` | | | ✅ | ✅ | | ✅ |
 | `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | | | ✅ | | | |
@@ -150,8 +151,9 @@ graph LR
 
 | Variable | Default | Où | Description |
 |----------|---------|-----|-------------|
-| `VITE_SIMPLE_REST_URL` | — | App (non utilisé) | URL de l'API REST (legacy) |
+| `VITE_PROXY_TARGET` | `http://localhost:8080` | `vite.config.ts` | Cible du proxy Vite pour les routes `/auth`, `/users`, etc. |
 | `VITE_API_URL` | `''` | App source | URL du backend API (vide = mocké ou proxy) |
+| `VITE_NGROK_HOST` | — | `vite.config.ts` | Host ngrok autorisé par le dev server |
 | `CYPRESS_BASE_URL` | `http://localhost:5174` | `cypress.config.ts` | URL de l'app sous test |
 | `CYPRESS_VIDEO` | `false` | `cypress.config.ts` | Enregistrement vidéo des tests |
 | `CYPRESS_DEFAULT_COMMAND_TIMEOUT` | `10000` | `cypress.config.ts` | Timeout par défaut (ms) |
@@ -162,6 +164,7 @@ graph LR
 
 ### Sécurité
 
+- `.env` est dans `.gitignore` — utilisez `.env.example` comme modèle : `cp .env.example .env`
 - `VITE_API_URL` reste **vide** dans les tests → toutes les requêtes sont interceptées par `cy.intercept()`
 - `src/__tests__/support/e2e.ts` contient un intercepteur global qui log les fuites potentielles vers un vrai backend
 - En Docker, l'isolation réseau empêche toute connexion意外e à un backend réel

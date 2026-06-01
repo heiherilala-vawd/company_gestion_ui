@@ -5,7 +5,7 @@ import MaterialForm from './MaterialForm'
 export default function MaterialCreate() {
   return (
     <Create redirect="list">
-      <SimpleForm toolbar={<FormToolbar />}>
+      <SimpleForm id="material-create-form" toolbar={<FormToolbar />}>
         <MaterialForm isCreate />
       </SimpleForm>
     </Create>

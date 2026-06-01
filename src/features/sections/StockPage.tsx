@@ -2,36 +2,44 @@ import { SectionHub } from '../../generic/SectionHub'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep'
 import Inventory2Icon from '@mui/icons-material/Inventory2'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import LocalShippingIcon from '@mui/icons-material/LocalShipping'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 
 const items = [
   {
-    label: 'Achat',
+    label: 'Acheter du matériau',
     icon: ShoppingCartIcon,
-    to: '/purchases?isMaterial=true',
+    to: '/purchases_material_activity',
     color: 'forest' as const,
     desc: 'Acheter',
   },
   {
-    label: 'Consommation',
+    label: 'Consommer un matériau',
     icon: DeleteSweepIcon,
-    to: '/material_consumption',
+    to: '/material_consumption_activity',
     color: 'forest' as const,
     desc: 'Consommer',
   },
   {
-    label: 'Retour',
+    label: 'Retourner les restes',
     icon: Inventory2Icon,
-    to: '/material_warehouse',
+    to: '/material_return_activity',
     color: 'forest' as const,
     desc: 'Retourner stock',
   },
   {
-    label: 'Rebut',
-    icon: DeleteForeverIcon,
-    to: '/material_warehouse',
+    label: 'Déplacer des matériaux',
+    icon: LocalShippingIcon,
+    to: '/travel_material_activity',
     color: 'forest' as const,
-    desc: 'Délasser',
+    desc: 'Déplacer',
+  },
+  {
+    label: 'Dashboard',
+    icon: DashboardIcon,
+    to: '/material-dashboard',
+    color: 'forest' as const,
+    desc: "Vue d'ensemble",
   },
 ]
 
