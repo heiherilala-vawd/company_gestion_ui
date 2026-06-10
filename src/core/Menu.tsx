@@ -515,7 +515,14 @@ const MenuRoot = () => {
     },
   ]
 
-  const PAUSED_RESOURCES = new Set<string>([])
+  const PAUSED_RESOURCES = new Set<string>([
+    'departments',
+    'receipts',
+    'loan_repayments',
+    'budget_lines',
+    'cash_accounts',
+    'cash_transactions',
+  ])
 
   const renderItems = (items: ResourceItem[]) =>
     items
