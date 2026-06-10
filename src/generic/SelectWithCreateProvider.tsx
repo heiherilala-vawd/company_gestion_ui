@@ -14,8 +14,9 @@ import LeaveTypeForm from '../features/hr/leave_types/LeaveTypeForm.tsx'
 import LeaveConfigForm from '../features/hr/leave_configs/LeaveConfigForm.tsx'
 import TeamForm from '../features/transversal/teams/TeamForm.tsx'
 import SupplierForm from '../features/transversal/suppliers/SupplierForm.tsx'
+import OrganizationForm from '../features/transversal/organizations/OrganizationForm.tsx'
 
-export const renderTravelExpenseSelect = (source: any, label: any) => (
+export const renderTravelExpenseSelect = (source: any, label: any, disabled = false) => (
   <ReferenceSelectWithCreate
     source={source ? source : 'travel_id'}
     reference="travel_expenses"
@@ -23,6 +24,7 @@ export const renderTravelExpenseSelect = (source: any, label: any) => (
     optionText={(record: any) => 'Déplacement: ' + (record?.expense?.description || '')}
     createUrlEnd={getMiddleUrl('travel_expenses')}
     createForm={<TravelExpenseForm isCreateForm />}
+    disabled={disabled}
   />
 )
 
@@ -42,7 +44,7 @@ export const renderMaterialSelect = (source: any, label: any) => (
     source={source ? source : 'material_id'}
     reference="materials"
     label={label ? label : 'Matériau'}
-    optionText="name"
+    optionText={(record: any) => `${record.name} / ${record.unit || ''}`}
     createUrlEnd={getMiddleUrl('materials')}
     createForm={<MaterialForm isCreateForm />}
   />
@@ -160,6 +162,17 @@ export const renderSupplierSelect = (source: any, label: any) => (
     optionText="name"
     createUrlEnd={getMiddleUrl('suppliers')}
     createForm={<SupplierForm isCreateForm />}
+  />
+)
+
+export const renderOrganizationSelect = (source: any, label: any) => (
+  <ReferenceSelectWithCreate
+    source={source ? source : 'organization_id'}
+    reference="organizations"
+    label={label ? label : 'Organisation'}
+    optionText="name"
+    createUrlEnd={getMiddleUrl('organizations')}
+    createForm={<OrganizationForm isCreateForm />}
   />
 )
 

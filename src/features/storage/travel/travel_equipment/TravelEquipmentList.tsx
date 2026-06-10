@@ -12,7 +12,11 @@ import {
   ReferenceInput,
   EditButton,
   FunctionField,
+  TopToolbar,
 } from 'react-admin'
+import { Button } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { useNavigate } from 'react-router-dom'
 import { TransportStatus } from '../../../../gen-ts/src/models/TransportStatus'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
@@ -54,9 +58,33 @@ const TravelEquipmentFilters = [
   <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
+const CreateTravelEquipmentButton = () => {
+  const navigate = useNavigate()
+  return (
+    <Button
+      variant="contained"
+      startIcon={<AddIcon />}
+      onClick={() => navigate('/travel_equipment_activity')}
+    >
+      Nouveau
+    </Button>
+  )
+}
+
+const ListActions = () => (
+  <TopToolbar>
+    <CreateTravelEquipmentButton />
+  </TopToolbar>
+)
+
 export default function TravelEquipmentList() {
   return (
-    <List resource="travel_equipment" filters={TravelEquipmentFilters} perPage={25}>
+    <List
+      resource="travel_equipment"
+      filters={TravelEquipmentFilters}
+      perPage={25}
+      actions={<ListActions />}
+    >
       <ResponsiveDatagrid priorityFields={['equipment.name', 'arrival_date', 'status', 'travel']}>
         <FunctionField
           source="travel"

@@ -22,6 +22,7 @@ export const Layout = ({ children, appBar, menu, sidebar }: LayoutProps) => {
       sidebar={
         sidebar || ((props) => <Sidebar {...props} keepMounted={true} sx={layoutStyles.sidebar} />)
       }
+      sx={layoutStyles.raLayout}
     >
       <Box sx={layoutStyles.container}>
         <Box sx={layoutStyles.content}>{children}</Box>

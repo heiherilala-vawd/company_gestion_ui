@@ -10,5 +10,6 @@ export default {
   edit: LoanEdit,
   show: LoanShow,
   icon: CreditCardIcon,
-  recordRepresentation: (record: any) => `${record.lender} - ${record.amount}`,
+  recordRepresentation: (record: any) =>
+    `${record.organization?.name ?? record.id} - ${record.amount} Ar`,
 }

@@ -1,23 +1,65 @@
 import { useState, useEffect } from 'react'
-import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material'
+import {
+  Box,
+  Card,
+  Typography,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material'
 import { useNotify, Loading } from 'react-admin'
 import DashboardFilters from './components/DashboardFilters'
 import { PieChartCard } from './components/ChartSection'
+import { dashboardStyles } from '../../style/components'
 
 interface Summary {
   total_equipment: number
-  available_count: number
-  broken_count: number
-  lost_count: number
-  avg_age_years: number
-  total_usage_hours: number
+  under_maintenance: number
+  total_rental_cost: number
+  total_repair_cost: number
 }
 
 interface Breakdown {
-  category_distribution: { category: string; count: number }[]
-  status_breakdown: { status: string; count: number }[]
-  usage_by_job: { job_description: string; hours_used: number }[]
+  equipment_by_type: { type: string; count: number }[]
+  equipment_by_warehouse: { warehouse: string; count: number }[]
+  equipment_due_maintenance: {
+    equipment_name: string
+    next_maintenance_date: string
+    warehouse: string
+  }[]
 }
+
+const metrics = [
+  {
+    key: 'total_equipment',
+    label: 'Total équipements',
+    color: 'primary.main',
+    fmt: (v: number) => `${v ?? 0}`,
+  },
+  {
+    key: 'under_maintenance',
+    label: 'En maintenance',
+    color: 'error.main',
+    fmt: (v: number) => `${v ?? 0}`,
+  },
+  {
+    key: 'total_rental_cost',
+    label: 'Coût location',
+    color: 'warning.main',
+    fmt: (v: number) => `${(v ?? 0)?.toLocaleString()} Ar`,
+  },
+  {
+    key: 'total_repair_cost',
+    label: 'Coût réparation',
+    color: 'info.main',
+    fmt: (v: number) => `${(v ?? 0)?.toLocaleString()} Ar`,
+  },
+] as const
 
 export default function EquipmentDashboard() {
   const [summary, setSummary] = useState<Summary | null>(null)
@@ -25,7 +67,6 @@ export default function EquipmentDashboard() {
   const [loading, setLoading] = useState(true)
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
-  const [jobId, setJobId] = useState('')
   const notify = useNotify()
 
   const fetchData = async () => {
@@ -33,20 +74,22 @@ export default function EquipmentDashboard() {
     try {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
+      const userId = localStorage.getItem('user_id')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
       const params = new URLSearchParams()
       if (dateFrom) params.set('date_from', dateFrom)
       if (dateTo) params.set('date_to', dateTo)
-      if (jobId) params.set('job_id', jobId)
 
+      const baseUrl = `${apiUrl}/users/${userId}/companies/${companyId}/dashboard/equipments`
       const [summaryRes, breakdownRes] = await Promise.all([
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/equipment/summary?${params}`, {
+        fetch(`${baseUrl}/summary?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/equipment/breakdown?${params}`, {
+        fetch(`${baseUrl}/breakdown?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ])
+      if (!summaryRes.ok && !breakdownRes.ok) throw new Error('Erreur API')
       if (summaryRes.ok) setSummary(await summaryRes.json())
       if (breakdownRes.ok) setBreakdown(await breakdownRes.json())
     } catch (err) {
@@ -64,130 +107,150 @@ export default function EquipmentDashboard() {
   if (loading) return <Loading loadingSecondary="Chargement du tableau de bord équipements..." />
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        Tableau de bord équipements
-      </Typography>
+    <Box sx={dashboardStyles.container}>
+      <Box sx={dashboardStyles.header}>
+        <Typography sx={dashboardStyles.title}>
+          <Box component="span" sx={dashboardStyles.titleAccent}>
+            Équipements
+          </Box>
+        </Typography>
+        <Typography sx={dashboardStyles.subtitle}>
+          Tableau de bord — Vue d&apos;ensemble du parc
+        </Typography>
+      </Box>
+
       <DashboardFilters
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateFromChange={setDateFrom}
         onDateToChange={setDateTo}
-        showJobFilter
-        jobId={jobId}
-        onJobIdChange={setJobId}
+        onApply={fetchData}
       />
-      <Button variant="contained" onClick={fetchData} sx={{ mb: 3 }} size="small">
-        Appliquer les filtres
-      </Button>
 
       {summary && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Total
+        <Card sx={{ ...dashboardStyles.metricsCard, mb: 4 }}>
+          <Box sx={dashboardStyles.metricsGrid}>
+            {metrics.map((m) => (
+              <Box key={m.key}>
+                <Typography sx={dashboardStyles.metricsLabel}>{m.label}</Typography>
+                <Typography sx={{ ...dashboardStyles.metricsValue, color: m.color }}>
+                  {m.fmt(summary[m.key as keyof Summary] as number)}
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.total_equipment}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Disponibles
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'success.main' }}>
-                  {summary.available_count}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  En panne
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'error.main' }}>
-                  {summary.broken_count}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Perdus
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'warning.main' }}>
-                  {summary.lost_count}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Âge moyen
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.avg_age_years?.toFixed(1)} ans
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Heures d'utilisation
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.total_usage_hours?.toLocaleString()} h
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+              </Box>
+            ))}
+          </Box>
+        </Card>
       )}
 
       {breakdown && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          {breakdown.category_distribution?.length > 0 && (
+        <Grid container spacing={2.5} sx={dashboardStyles.chartGrid}>
+          {breakdown.equipment_by_type?.length > 0 && (
             <Grid item xs={12} md={4}>
               <PieChartCard
-                title="Par catégorie"
-                data={breakdown.category_distribution.map((i) => ({
-                  name: i.category,
-                  value: i.count,
+                title="Équipements par type"
+                data={breakdown.equipment_by_type.map((i) => ({
+                  name: i.type ?? 'N/A',
+                  value: i.count ?? 0,
                 }))}
               />
             </Grid>
           )}
-          {breakdown.status_breakdown?.length > 0 && (
+          {breakdown.equipment_by_warehouse?.length > 0 && (
             <Grid item xs={12} md={4}>
               <PieChartCard
-                title="Par statut"
-                data={breakdown.status_breakdown.map((i) => ({ name: i.status, value: i.count }))}
+                title="Équipements par entrepôt"
+                data={breakdown.equipment_by_warehouse.map((i) => ({
+                  name: i.warehouse ?? 'N/A',
+                  value: i.count ?? 0,
+                }))}
               />
             </Grid>
           )}
-          {breakdown.usage_by_job?.length > 0 && (
+          {breakdown.equipment_due_maintenance?.length > 0 && (
             <Grid item xs={12} md={4}>
-              <PieChartCard
-                title="Utilisation par chantier"
-                data={breakdown.usage_by_job.map((i) => ({
-                  name: i.job_description,
-                  value: i.hours_used,
-                }))}
-              />
+              <Card sx={dashboardStyles.chartCard}>
+                <Box
+                  sx={{ p: { xs: 2, sm: 3 }, flex: 1, display: 'flex', flexDirection: 'column' }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'text.secondary',
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      mb: 1.5,
+                    }}
+                  >
+                    Maintenance à prévoir
+                  </Typography>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      borderRadius: 1.5,
+                      border: (theme) => `1px solid ${theme.palette.divider}`,
+                      boxShadow: 'none',
+                      flex: 1,
+                    }}
+                  >
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                          >
+                            Équipement
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                          >
+                            Entrepôt
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                            align="right"
+                          >
+                            Prochaine maintenance
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {breakdown.equipment_due_maintenance.map((m, i) => (
+                          <TableRow key={i}>
+                            <TableCell sx={{ fontSize: '0.8125rem' }}>
+                              {m.equipment_name ?? 'N/A'}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }}>
+                              {m.warehouse ?? 'N/A'}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }} align="right">
+                              {m.next_maintenance_date ?? 'N/A'}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </Card>
             </Grid>
           )}
         </Grid>

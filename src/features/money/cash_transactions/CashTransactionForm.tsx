@@ -1,5 +1,6 @@
 import { TextInput, NumberInput, DateInput, SelectInput, ReferenceInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function CashTransactionForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
@@ -7,15 +8,9 @@ export default function CashTransactionForm({ isCreate = false, isCreateForm = f
   return (
     <>
       {isCreate && (
-        <TextInput
-          source="id"
-          readOnly
-          defaultValue={id}
-          sx={{ display: 'none' }}
-          data-testid="input-id"
-        />
+        <TextInput source="id" sx={{ display: 'none' }} defaultValue={id} data-testid="input-id" />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={id} />}
       <ReferenceInput source="cash_account_id" reference="cash_accounts" label="Compte caisse">
         <SelectInput optionText="name" data-testid="input-cash_account_id" />
       </ReferenceInput>
@@ -24,12 +19,6 @@ export default function CashTransactionForm({ isCreate = false, isCreateForm = f
         source="transaction_date"
         label="Date transaction"
         data-testid="input-transaction_date"
-      />
-      <TextInput
-        source="description"
-        label="Description"
-        multiline
-        data-testid="input-description"
       />
       <SelectInput
         source="type"
@@ -40,6 +29,15 @@ export default function CashTransactionForm({ isCreate = false, isCreateForm = f
         ]}
         data-testid="input-type"
       />
+      <CollapsibleOptionalFields>
+        <TextInput
+          source="description"
+          label="Description"
+          multiline
+          data-testid="input-description"
+        />
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

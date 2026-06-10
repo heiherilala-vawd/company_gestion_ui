@@ -57,7 +57,7 @@ describe('E2E: Employee Payments', () => {
     cy.wait('@getEmployeePayments')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
+        cy.get('body').click(0, 0)
       }
     })
   }

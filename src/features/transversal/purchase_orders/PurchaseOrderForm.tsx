@@ -9,6 +9,7 @@ import {
 } from 'react-admin'
 import { Box } from '@mui/material'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function PurchaseOrderForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
@@ -16,13 +17,7 @@ export default function PurchaseOrderForm({ isCreate = false, isCreateForm = fal
   return (
     <>
       {isCreate && (
-        <TextInput
-          source="id"
-          readOnly
-          defaultValue={id}
-          sx={{ display: 'none' }}
-          data-testid="input-id"
-        />
+        <TextInput source="id" sx={{ display: 'none' }} defaultValue={id} data-testid="input-id" />
       )}
       {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
       <ReferenceInput source="supplier_id" reference="suppliers" label="Fournisseur">
@@ -45,18 +40,27 @@ export default function PurchaseOrderForm({ isCreate = false, isCreateForm = fal
       <ReferenceInput source="job_id" reference="jobs" label="Travail">
         <SelectInput optionText="description" data-testid="input-job_id" />
       </ReferenceInput>
-      <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
-      <ArrayInput source="lines" label="Lignes de commande">
-        <SimpleFormIterator inline>
-          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
-            <ReferenceInput source="material_id" reference="materials" label="Matériau">
-              <SelectInput optionText="name" data-testid="input-material_id" />
-            </ReferenceInput>
-            <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
-            <NumberInput source="unit_price" label="Prix unitaire" data-testid="input-unit_price" />
-          </Box>
-        </SimpleFormIterator>
-      </ArrayInput>
+      <CollapsibleOptionalFields>
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+        <ArrayInput source="lines" label="Lignes de commande">
+          <SimpleFormIterator inline>
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', flexWrap: 'wrap' }}>
+              <ReferenceInput source="material_id" reference="materials" label="Matériau">
+                <SelectInput
+                  optionText={(record: any) => `${record.name} / ${record.unit || ''}`}
+                  data-testid="input-material_id"
+                />
+              </ReferenceInput>
+              <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
+              <NumberInput
+                source="unit_price"
+                label="Prix unitaire"
+                data-testid="input-unit_price"
+              />
+            </Box>
+          </SimpleFormIterator>
+        </ArrayInput>
+      </CollapsibleOptionalFields>
     </>
   )
 }

@@ -10,5 +10,5 @@ export default {
   edit: ReceiptEdit,
   show: ReceiptShow,
   icon: ReceiptIcon,
-  recordRepresentation: (record: any) => `${record.payment_date} - ${record.amount}`,
+  recordRepresentation: (record: any) => `${record.payment_date} - ${record.amount} Ar`,
 }

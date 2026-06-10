@@ -6,7 +6,7 @@ export default function SupplierShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />
-        <TextField source="siret" label="SIRET" />
+        <TextField source="company_registration_number" label="N° d'enregistrement" />
         <TextField source="email" label="Email" />
         <TextField source="address" label="Adresse" />
         <TextField source="phone" label="Téléphone" />

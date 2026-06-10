@@ -1,11 +1,11 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import JobForm from './JobForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function JobCreate() {
   return (
-    <Create
-      redirect="list"
+    <GenericCreate
       transform={(data) => ({
         ...data,
         company_id: localStorage.getItem('currentCompanyId'),
@@ -14,6 +14,6 @@ export default function JobCreate() {
       <SimpleForm id="job-create-form" toolbar={<FormToolbar />}>
         <JobForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

@@ -8,7 +8,11 @@ export default function CashAccountList() {
     <List resource="cash_accounts" filters={CashAccountFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['name', 'balance']}>
         <TextField source="name" label="Nom" />
-        <NumberField source="balance" label="Solde" />
+        <NumberField
+          source="balance"
+          label="Solde"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <EditButton />
       </ResponsiveDatagrid>

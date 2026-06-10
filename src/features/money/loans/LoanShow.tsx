@@ -13,9 +13,13 @@ export default function LoanShow() {
     <Show title="Détails prêt">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="lender" label="Prêteur" />
-        <NumberField source="amount" label="Montant" />
-        <NumberField source="interest_rate" label="Taux d'intérêt" />
+        <TextField source="organization.name" label="Prêteur" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField source="interest_rate" label="Taux d'intérêt (% par mois)" />
         <DateField source="start_date" label="Date début" />
         <DateField source="due_date" label="Date échéance" />
         <SelectField
@@ -28,7 +32,11 @@ export default function LoanShow() {
           ]}
         />
         <TextField source="description" label="Description" />
-        <NumberField source="remaining_amount" label="Reste dû" />
+        <NumberField
+          source="remaining_amount"
+          label="Reste dû"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         <FunctionField

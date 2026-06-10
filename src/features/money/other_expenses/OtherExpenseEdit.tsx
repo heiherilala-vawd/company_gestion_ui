@@ -1,11 +1,18 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { SimpleForm, TextInput } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import OtherExpenseForm from './OtherExpenseForm'
+import GenericEdit from '../../../generic/GenericEdit'
 
 export default function OtherExpenseEdit() {
   return (
-    <Edit
-      redirect="list"
+    <GenericEdit
+      transform={(data) => {
+        if (!data.expense?.description && data.expense?._generated_desc) {
+          data.expense.description = data.expense._generated_desc
+        }
+        delete data.expense?._generated_desc
+        return data
+      }}
       queryOptions={{
         select: (data) => ({
           ...data,
@@ -17,6 +24,6 @@ export default function OtherExpenseEdit() {
         <TextInput source="id" sx={{ display: 'none' }} />
         <OtherExpenseForm />
       </SimpleForm>
-    </Edit>
+    </GenericEdit>
   )
 }

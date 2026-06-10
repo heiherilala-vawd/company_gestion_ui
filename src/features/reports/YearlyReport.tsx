@@ -45,8 +45,9 @@ export default function YearlyReport() {
     try {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
+      const userId = localStorage.getItem('user_id')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
-      const url = `${apiUrl}/companies/${companyId}/yearly_report?year=${year}`
+      const url = `${apiUrl}/users/${userId}/companies/${companyId}/yearly_report?year=${year}`
 
       const response = await fetch(url, {
         headers: {
@@ -102,7 +103,7 @@ export default function YearlyReport() {
                     Revenus totaux
                   </Typography>
                   <Typography variant="h5" sx={{ fontWeight: 600, color: 'success.main' }}>
-                    {data.summary.total_income.toLocaleString()} €
+                    {(data.summary.total_income ?? 0).toLocaleString()} Ar
                   </Typography>
                 </CardContent>
               </Card>
@@ -114,7 +115,7 @@ export default function YearlyReport() {
                     Dépenses totales
                   </Typography>
                   <Typography variant="h5" sx={{ fontWeight: 600, color: 'error.main' }}>
-                    {data.summary.total_expense.toLocaleString()} €
+                    {(data.summary.total_expense ?? 0).toLocaleString()} Ar
                   </Typography>
                 </CardContent>
               </Card>
@@ -129,10 +130,10 @@ export default function YearlyReport() {
                     variant="h5"
                     sx={{
                       fontWeight: 600,
-                      color: data.summary.net_profit >= 0 ? 'success.main' : 'error.main',
+                      color: (data.summary.net_profit ?? 0) >= 0 ? 'success.main' : 'error.main',
                     }}
                   >
-                    {data.summary.net_profit.toLocaleString()} €
+                    {(data.summary.net_profit ?? 0).toLocaleString()} Ar
                   </Typography>
                 </CardContent>
               </Card>
@@ -152,17 +153,21 @@ export default function YearlyReport() {
               <TableBody>
                 {data.jobs_with_financials.map((item) => (
                   <TableRow key={item.job.id}>
-                    <TableCell>{item.job.description}</TableCell>
-                    <TableCell align="right">{item.total_income.toLocaleString()} €</TableCell>
-                    <TableCell align="right">{item.total_expense.toLocaleString()} €</TableCell>
+                    <TableCell>{item.job?.description ?? 'N/A'}</TableCell>
+                    <TableCell align="right">
+                      {(item.total_income ?? 0).toLocaleString()} Ar
+                    </TableCell>
+                    <TableCell align="right">
+                      {(item.total_expense ?? 0).toLocaleString()} Ar
+                    </TableCell>
                     <TableCell
                       align="right"
                       sx={{
-                        color: item.net_profit >= 0 ? 'success.main' : 'error.main',
+                        color: (item.net_profit ?? 0) >= 0 ? 'success.main' : 'error.main',
                         fontWeight: 600,
                       }}
                     >
-                      {item.net_profit.toLocaleString()} €
+                      {(item.net_profit ?? 0).toLocaleString()} Ar
                     </TableCell>
                   </TableRow>
                 ))}

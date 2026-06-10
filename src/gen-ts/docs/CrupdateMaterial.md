@@ -1,16 +1,18 @@
+
 # CrupdateMaterial
+
 
 ## Properties
 
-| Name          | Type                            |
-| ------------- | ------------------------------- |
-| `comment`     | string                          |
-| `id`          | string                          |
-| `name`        | string                          |
-| `description` | string                          |
-| `unit_price`  | number                          |
-| `unit`        | [MaterialUnit](MaterialUnit.md) |
-| `company_id`  | string                          |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`name` | string
+`description` | string
+`unit_price` | number
+`unit` | [MaterialUnit](MaterialUnit.md)
+`company_id` | string
 
 ## Example
 
@@ -40,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

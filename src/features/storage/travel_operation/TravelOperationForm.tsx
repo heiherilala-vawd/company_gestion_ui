@@ -48,9 +48,7 @@ const TravelOperationForm = () => {
   }
 
   const add_autogenaration_id = (source: string) => {
-    return (
-      <TextInput source={source} readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
-    )
+    return <TextInput source={source} sx={{ display: 'none' }} defaultValue={generateId()} />
   }
 
   const [isTravelOpen, setIsTravelOpen] = useState(true)

@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import CashAccountForm from './CashAccountForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function CashAccountCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="cash-account-create-form" toolbar={<FormToolbar />}>
         <CashAccountForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

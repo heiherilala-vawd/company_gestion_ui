@@ -1,14 +1,16 @@
+
 # CrupdateTeam
+
 
 ## Properties
 
-| Name         | Type                |
-| ------------ | ------------------- |
-| `comment`    | string              |
-| `id`         | string              |
-| `name`       | string              |
-| `leader_id`  | string              |
-| `member_ids` | Array&lt;string&gt; |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`name` | string
+`leader_id` | string
+`member_ids` | Array&lt;string&gt;
 
 ## Example
 
@@ -36,3 +38,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -13,7 +13,11 @@ export default function CashAccountShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />
-        <NumberField source="balance" label="Solde" />
+        <NumberField
+          source="balance"
+          label="Solde"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />

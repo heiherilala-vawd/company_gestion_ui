@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { TextInput, SelectInput, BooleanInput, useGetList } from 'react-admin'
 import { useFormContext } from 'react-hook-form'
 import generateId from '../../../utili/utils.tsx'
@@ -11,9 +11,10 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  TextField,
 } from '@mui/material'
 import ExpenseForm from '../expenses/ExpenseForm.tsx'
-import React from 'react'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function EmployeePaymentForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
@@ -21,10 +22,20 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
   const isForTeam = watch('is_for_team')
   const [selectedEmployees, setSelectedEmployees] = useState<string[]>([])
   const [showPaymentForm, setShowPaymentForm] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
   const { data: users = [] } = useGetList('users', {
     pagination: { page: 1, perPage: 100 },
   })
+
+  const filteredUsers = useMemo(
+    () =>
+      users.filter((user: any) => {
+        const fullName = `${user.last_name ?? ''} ${user.first_name ?? ''}`.toLowerCase()
+        return fullName.includes(searchTerm.toLowerCase())
+      }),
+    [users, searchTerm],
+  )
 
   useEffect(() => {
     const existingIds = watch('user_ids') || []
@@ -33,6 +44,40 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
       setShowPaymentForm(true)
     }
   }, [isCreate, watch])
+
+  const paymentType = watch('payment_type')
+  const expenseAmount = watch('expense.amount')
+  const teamId = watch('team_id')
+  const userIds = watch('user_ids') || []
+
+  const { data: teams = [] } = useGetList('teams', {
+    pagination: { page: 1, perPage: 100 },
+  })
+  const teamName = teamId ? teams.find((t: any) => t.id === teamId)?.name : undefined
+
+  const paymentTypeLabel =
+    paymentType === 'ADVANCE'
+      ? 'Avance'
+      : paymentType === 'MONTHLY'
+        ? 'Mensuel'
+        : paymentType === 'OTHER'
+          ? 'Autre'
+          : paymentType || '?'
+
+  const employeeNames = userIds
+    .map((uid: string) => {
+      const u = users.find((u: any) => u.id === uid)
+      return u ? `${u.first_name} ${u.last_name}` : ''
+    })
+    .filter(Boolean)
+    .join(', ')
+
+  const generatedDesc = useMemo(() => {
+    const target = isForTeam && teamName ? `équipe ${teamName}` : `employés ${employeeNames || '?'}`
+    const parts = [`Paiement ${target} - ${paymentTypeLabel}`]
+    if (expenseAmount) parts.push(`montant ${expenseAmount} Ar`)
+    return parts.join(' - ')
+  }, [isForTeam, teamName, employeeNames, paymentTypeLabel, expenseAmount])
 
   const handleToggle = (userId: string) => {
     const currentIndex = selectedEmployees.indexOf(userId)
@@ -55,15 +100,9 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
   return (
     <>
       {isCreate && (
-        <TextInput
-          source="id"
-          readOnly
-          defaultValue={id}
-          sx={{ display: 'none' }}
-          data-testid="input-id"
-        />
+        <TextInput source="id" defaultValue={id} sx={{ display: 'none' }} data-testid="input-id" />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={id} />}
       <BooleanInput
         source="is_for_team"
         label="Paiement pour une équipe"
@@ -77,8 +116,17 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
           <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
             Sélectionner les employés
           </Typography>
+          <TextField
+            label="Rechercher un employé"
+            variant="outlined"
+            size="small"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{ mb: 1, width: '100%' }}
+            data-testid="input-search-employee"
+          />
           <List dense data-testid="employee-list">
-            {users.map((user: any) => (
+            {filteredUsers.map((user: any) => (
               <ListItem
                 key={user.id}
                 button
@@ -123,12 +171,6 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
                 .join(', ')}
             </Typography>
           )}
-          <TextInput
-            source="payment_description"
-            label="Description du paiement"
-            multiline
-            data-testid="input-payment_description"
-          />
           <SelectInput
             source="payment_type"
             label="Type de paiement"
@@ -140,23 +182,24 @@ export default function EmployeePaymentForm({ isCreate = false, isCreateForm = f
             defaultValue="MONTHLY"
             data-testid="input-payment_type"
           />
+          <CollapsibleOptionalFields>
+            <TextInput
+              source="payment_description"
+              label="Description du paiement"
+              multiline
+              data-testid="input-payment_description"
+            />
+          </CollapsibleOptionalFields>
           <div data-testid="input-expense-form" style={{ width: '100%' }}>
             <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
               Dépense
             </Typography>
-            {!isCreate && <TextInput source="expense.id" readOnly />}
+            {!isCreate && <TextInput source="expense.id" sx={{ display: 'none' }} />}
             <ExpenseForm
               isCreate={isCreate}
               isCreateForm={isCreateForm}
               souce={'expense.'}
-              description={
-                'expence of ' +
-                EmployeePaymentForm.name +
-                ' from :' +
-                new Date().toISOString() +
-                '. And with id: ' +
-                id
-              }
+              description={generatedDesc}
             />
           </div>
         </>

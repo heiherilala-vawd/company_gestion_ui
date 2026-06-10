@@ -1,4 +1,4 @@
-import { List, TextField, SearchInput, TextInput, EditButton } from 'react-admin'
+import { List, TextField, NumberField, SearchInput, TextInput, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const BankFeeFilters = [
@@ -11,7 +11,11 @@ export default function BankFeeList() {
     <List resource="bank_fees" filters={BankFeeFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['bank_name', 'expense.amount', 'description']}>
         <TextField source="bank_name" label="Banque" />
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <TextField source="expense.comment" label="Commentaire" />
         <EditButton />

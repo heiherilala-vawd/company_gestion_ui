@@ -10,5 +10,5 @@ export default {
   edit: LoanRepaymentEdit,
   show: LoanRepaymentShow,
   icon: PaymentsIcon,
-  recordRepresentation: (record: any) => `${record.payment_date} - ${record.amount}`,
+  recordRepresentation: (record: any) => `${record.payment_date} - ${record.amount} Ar`,
 }

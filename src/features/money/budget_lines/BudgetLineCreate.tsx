@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import BudgetLineForm from './BudgetLineForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function BudgetLineCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="budget-line-create-form" toolbar={<FormToolbar />}>
         <BudgetLineForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

@@ -4,20 +4,37 @@ import {
   Show,
   SimpleShowLayout,
   TextField,
-  BooleanField,
+  SelectField,
 } from 'react-admin'
 
 export default function TaskScheduleShow() {
   return (
-    <Show title="Détails planification">
+    <Show title="Détails planification de tâches">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="task_id" label="Tâche" />
+        <TextField source="title" label="Titre" />
+        <TextField source="description" label="Description" />
+        <SelectField
+          source="priority"
+          label="Priorité"
+          choices={[
+            { id: 'LOW', name: 'Basse' },
+            { id: 'MEDIUM', name: 'Moyenne' },
+            { id: 'HIGH', name: 'Haute' },
+            { id: 'CRITICAL', name: 'Critique' },
+          ]}
+        />
+        <TextField source="frequency" label="Fréquence (cron)" />
         <TextField source="scheduled_date" label="Date planifiée" />
-        <TextField source="start_time" label="Heure début" />
-        <TextField source="end_time" label="Heure fin" />
-        <BooleanField source="recurring" label="Récurrent" />
-        <TextField source="recurrence_pattern" label="Récurrence" />
+        <SelectField
+          source="status"
+          label="Statut"
+          choices={[
+            { id: 'ACTIVE', name: 'Actif' },
+            { id: 'PAUSED', name: 'En pause' },
+            { id: 'DONE', name: 'Terminé' },
+          ]}
+        />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         <FunctionField

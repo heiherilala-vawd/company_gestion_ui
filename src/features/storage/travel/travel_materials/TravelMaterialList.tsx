@@ -11,7 +11,11 @@ import {
   SelectInput,
   EditButton,
   FunctionField,
+  TopToolbar,
 } from 'react-admin'
+import { Button } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { useNavigate } from 'react-router-dom'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelMaterialFilters = [
@@ -47,9 +51,33 @@ const TravelMaterialFilters = [
   <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
+const CreateTravelMaterialButton = () => {
+  const navigate = useNavigate()
+  return (
+    <Button
+      variant="contained"
+      startIcon={<AddIcon />}
+      onClick={() => navigate('/travel_material_activity')}
+    >
+      Nouveau
+    </Button>
+  )
+}
+
+const ListActions = () => (
+  <TopToolbar>
+    <CreateTravelMaterialButton />
+  </TopToolbar>
+)
+
 export default function TravelMaterialList() {
   return (
-    <List resource="travel_materials" filters={TravelMaterialFilters} perPage={25}>
+    <List
+      resource="travel_materials"
+      filters={TravelMaterialFilters}
+      perPage={25}
+      actions={<ListActions />}
+    >
       <ResponsiveDatagrid
         priorityFields={['material.name', 'travel', 'quantity_received', 'arrival_date']}
       >

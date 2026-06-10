@@ -13,12 +13,12 @@ export default function ExpenseForm({
       {isCreate && (
         <TextInput
           source={souce + 'id'}
-          readOnly
+          sx={{ display: 'none' }}
           defaultValue={generateId()}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source={souce + 'newId'} readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source={souce + 'newId'} sx={{ display: 'none' }} defaultValue={generateId()} />}
       {!isCreate && renderJobSelect(souce + 'job_id', 'Travail')}
       <NumberInput source={souce + 'amount'} label="Montant" data-testid="input-amount" />
       {description === '' ? (

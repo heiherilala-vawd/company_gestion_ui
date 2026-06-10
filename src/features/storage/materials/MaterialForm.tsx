@@ -1,5 +1,6 @@
 import { required, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function MaterialForm({ isCreate = false, isCreateForm = false }) {
   return (
@@ -7,24 +8,18 @@ export default function MaterialForm({ isCreate = false, isCreateForm = false })
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
-          defaultValue={generateId()}
           sx={{ display: 'none' }}
+          defaultValue={generateId()}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
+      )}
       <TextInput source="name" label="Nom" validate={[required()]} data-testid="input-name" />
-      <TextInput
-        source="description"
-        label="Description"
-        multiline
-        rows={3}
-        data-testid="input-description"
-      />
       <SelectInput
         source="unit"
-        label="unit"
+        label="Unité"
         choices={[
           { id: 'SAC', name: 'Sac' },
           { id: 'L', name: 'Litre' },
@@ -43,6 +38,22 @@ export default function MaterialForm({ isCreate = false, isCreateForm = false })
         ]}
         data-testid="input-unit"
       />
+      <TextInput
+        source="company_id"
+        label="ID Entreprise"
+        defaultValue={localStorage.getItem('currentCompanyId')}
+        sx={{ display: 'none' }}
+      />
+      <CollapsibleOptionalFields>
+        <TextInput
+          source="description"
+          label="Description"
+          multiline
+          rows={3}
+          data-testid="input-description"
+        />
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

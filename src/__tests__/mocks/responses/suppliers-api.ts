@@ -1,7 +1,7 @@
 export const supplier1Mock = {
   id: 'sup1_id',
   name: 'Fournitures BTP SARL',
-  siret: '12345678901234',
+  company_registration_number: '12345678901234',
   email: 'contact@fournitures-btp.fr',
   address: '12 Rue des Usines, 75001 Paris',
   phone: '01 23 45 67 89',
@@ -15,7 +15,7 @@ export const supplier1Mock = {
 export const supplier2Mock = {
   id: 'sup2_id',
   name: 'Matériaux Modernes SAS',
-  siret: '98765432109876',
+  company_registration_number: '98765432109876',
   email: 'commande@materiaux-modernes.fr',
   address: '5 Avenue des Travaux, 69001 Lyon',
   phone: '09 87 65 43 21',
@@ -32,7 +32,7 @@ export const crupdateSuppliersMock = [
   {
     id: 'sup1_id',
     name: 'Fournitures BTP SARL - Mis à jour',
-    siret: '12345678901234',
+    company_registration_number: '12345678901234',
     email: 'update@fournitures-btp.fr',
     address: '12 Rue des Usines, 75001 Paris',
     phone: '01 23 45 67 89',
@@ -41,7 +41,7 @@ export const crupdateSuppliersMock = [
   {
     id: 'sup3_id',
     name: 'Nouveau fournisseur',
-    siret: '11111111111111',
+    company_registration_number: '11111111111111',
     email: 'new@supplier.fr',
     address: '1 Rue Neuve, 75002 Paris',
     phone: '01 11 11 11 11',

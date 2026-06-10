@@ -1,7 +1,4 @@
-import { material1Mock } from './materials-api'
 import { user1Mock } from './users-api'
-import { job1Mock } from './jobs-api'
-import { supplier1Mock } from './suppliers-api'
 import { toAuditUserMapper } from '../../support/mappers'
 
 export const purchaseOrder1Mock = {
@@ -65,9 +62,7 @@ export const crupdatePurchaseOrdersMock = [
     total_amount: 5500,
     job_id: 'job1_id',
     comment: 'Commande livrée',
-    lines: [
-      { purchase_order_id: 'po1_id', material_id: 'mat1_id', quantity: 10, unit_price: 550 },
-    ],
+    lines: [{ purchase_order_id: 'po1_id', material_id: 'mat1_id', quantity: 10, unit_price: 550 }],
   },
   {
     id: 'po3_id',
@@ -77,9 +72,7 @@ export const crupdatePurchaseOrdersMock = [
     total_amount: 3000,
     job_id: 'job1_id',
     comment: 'Nouvelle commande',
-    lines: [
-      { purchase_order_id: 'po3_id', material_id: 'mat1_id', quantity: 5, unit_price: 600 },
-    ],
+    lines: [{ purchase_order_id: 'po3_id', material_id: 'mat1_id', quantity: 5, unit_price: 600 }],
   },
 ]
 

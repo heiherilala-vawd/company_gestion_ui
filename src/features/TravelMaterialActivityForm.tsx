@@ -47,7 +47,7 @@ const TravelMaterialActivityForm = () => {
   }
 
   const addAutoId = (source: string) => (
-    <TextInput source={source} readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
+    <TextInput source={source} sx={{ display: 'none' }} defaultValue={generateId()} />
   )
 
   const onSubmit = async (data: any) => {

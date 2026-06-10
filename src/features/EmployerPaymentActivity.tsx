@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetList } from 'react-admin'
-import { getMiddleUrlWithId } from '../config/dynamicResources'
+import { getMiddleUrl } from '../config/dynamicResources'
 import generateId from '../utili/utils.tsx'
 import {
   Box,
@@ -66,7 +66,7 @@ function LoanTable({
               <TableCell sx={{ fontWeight: 600 }}>Prêteur</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Montant</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Reste</TableCell>
-              <TableCell sx={{ fontWeight: 600 }}>Taux</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Taux (%/mois)</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Début</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Montant à retourner</TableCell>
               <TableCell sx={{ fontWeight: 600 }}>Action</TableCell>
@@ -77,12 +77,12 @@ function LoanTable({
               const payAmount = repaymentAmounts[loan.id]
               return (
                 <TableRow key={loan.id} hover>
-                  <TableCell>{loan.lender}</TableCell>
+                  <TableCell>{loan.organization?.name ?? 'N/A'}</TableCell>
                   <TableCell>
                     {Number(loan.amount).toLocaleString('fr-FR', {
                       minimumFractionDigits: 2,
                     })}{' '}
-                    €
+                    Ar
                   </TableCell>
                   <TableCell>
                     {loan.remaining_amount != null
@@ -90,7 +90,7 @@ function LoanTable({
                           minimumFractionDigits: 2,
                         })
                       : '-'}{' '}
-                    €
+                    Ar
                   </TableCell>
                   <TableCell>{loan.interest_rate ? `${loan.interest_rate / 100}%` : '-'}</TableCell>
                   <TableCell>
@@ -158,7 +158,7 @@ export default function EmployerPaymentActivity() {
     isLoading: loadingActive,
     refetch: refetchLoansActive,
   } = useGetList('loans', {
-    pagination: { page: 1, perPage: 499 },
+    pagination: { page: 1, perPage: 400 },
     filter: { status: 'ACTIVE' },
   })
 
@@ -167,7 +167,7 @@ export default function EmployerPaymentActivity() {
     isLoading: loadingDefaulted,
     refetch: refetchLoansDefaulted,
   } = useGetList('loans', {
-    pagination: { page: 1, perPage: 499 },
+    pagination: { page: 1, perPage: 400 },
     filter: { status: 'DEFAULTED' },
   })
 
@@ -181,7 +181,7 @@ export default function EmployerPaymentActivity() {
     isLoading: loadingIncomes,
     refetch,
   } = useGetList('incomes', {
-    pagination: { page: 1, perPage: 499 },
+    pagination: { page: 1, perPage: 400 },
     filter: queryFilters,
   })
 
@@ -227,7 +227,7 @@ export default function EmployerPaymentActivity() {
 
     try {
       const token = localStorage.getItem('token')
-      const url = getMiddleUrlWithId('incomes', income.id) + '/receipts'
+      const url = getMiddleUrl('receipts')
       const body = [
         {
           id: confirmTarget.receiptId,
@@ -278,14 +278,14 @@ export default function EmployerPaymentActivity() {
 
     try {
       const token = localStorage.getItem('token')
-      const url = getMiddleUrlWithId('loans', loan.id) + '/repayments'
+      const url = getMiddleUrl('loan_repayments')
       const body = [
         {
           id: confirmRepayTarget.repaymentId,
           payment_date: new Date().toISOString(),
           amount,
           loan_id: loan?.id,
-          comment: `Remboursement pour le prêt ${loan.lender} — ${amount} €`,
+          comment: `Remboursement pour le prêt ${loan.organization?.name ?? loan.id} — ${amount} Ar`,
         },
       ]
 
@@ -418,18 +418,18 @@ export default function EmployerPaymentActivity() {
 
                       return (
                         <TableRow key={income.id} hover>
-                          <TableCell>{income.source_organization}</TableCell>
+                          <TableCell>{income.organization?.name ?? 'N/A'}</TableCell>
                           <TableCell>
                             {Number(income.amount).toLocaleString('fr-FR', {
                               minimumFractionDigits: 2,
                             })}{' '}
-                            €
+                            Ar
                           </TableCell>
                           <TableCell>
                             {Number(remaining).toLocaleString('fr-FR', {
                               minimumFractionDigits: 2,
                             })}{' '}
-                            €
+                            Ar
                           </TableCell>
                           <TableCell>
                             <TextField
@@ -524,7 +524,7 @@ export default function EmployerPaymentActivity() {
           {confirmTarget && (
             <>
               <Typography sx={{ mb: 1 }}>
-                <strong>Organisation :</strong> {confirmTarget.income.source_organization}
+                <strong>Organisation :</strong> {confirmTarget.income.organization?.name ?? 'N/A'}
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Réf. facture :</strong> {confirmTarget.income.invoice_reference || 'N/A'}
@@ -534,7 +534,7 @@ export default function EmployerPaymentActivity() {
                 {Number(confirmTarget.income.amount).toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Reste à recevoir :</strong>{' '}
@@ -543,7 +543,7 @@ export default function EmployerPaymentActivity() {
                 ).toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Montant à recevoir :</strong>
@@ -552,7 +552,7 @@ export default function EmployerPaymentActivity() {
                 {confirmTarget.amount.toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
             </>
           )}
@@ -576,14 +576,14 @@ export default function EmployerPaymentActivity() {
           {confirmRepayTarget && (
             <>
               <Typography sx={{ mb: 1 }}>
-                <strong>Prêteur :</strong> {confirmRepayTarget.loan.lender}
+                <strong>Prêteur :</strong> {confirmRepayTarget.loan.organization?.name ?? 'N/A'}
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Montant total :</strong>{' '}
                 {Number(confirmRepayTarget.loan.amount).toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Reste à rembourser :</strong>{' '}
@@ -592,7 +592,7 @@ export default function EmployerPaymentActivity() {
                 ).toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
               <Typography sx={{ mb: 1 }}>
                 <strong>Montant à rembourser :</strong>
@@ -601,7 +601,7 @@ export default function EmployerPaymentActivity() {
                 {confirmRepayTarget.amount.toLocaleString('fr-FR', {
                   minimumFractionDigits: 2,
                 })}{' '}
-                €
+                Ar
               </Typography>
             </>
           )}

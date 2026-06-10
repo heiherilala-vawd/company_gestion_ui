@@ -5,11 +5,7 @@ import {
   createOrUpdatePurchaseOrders,
   crupdatePurchaseOrdersMock,
 } from '../mocks/responses/purchase-orders-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Purchase Orders', () => {
   function selectReferenceMobile(testId: string, optionText: string) {
@@ -92,7 +88,7 @@ describe('E2E: Purchase Orders', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/purchase_orders*', (req) => {
+    cy.intercept('PUT', '**/companies/*/purchase_orders*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchaseOrders(req.body)))
     }).as('createPurchaseOrder')
     creatOrUpdate(true, isComputerView)
@@ -104,7 +100,7 @@ describe('E2E: Purchase Orders', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/purchase_orders*', (req) => {
+    cy.intercept('PUT', '**/companies/*/purchase_orders*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdatePurchaseOrders(req.body)))
     }).as('updatePurchaseOrder')
     creatOrUpdate(false, isComputerView)
@@ -130,7 +126,7 @@ describe('E2E: Purchase Orders', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/purchase_orders*',
+      '**/companies/*/purchase_orders*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createPurchaseOrderFail')
     creatOrUpdate(true, true)
@@ -142,7 +138,7 @@ describe('E2E: Purchase Orders', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/purchase_orders*',
+      '**/companies/*/purchase_orders*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updatePurchaseOrderFail')
     creatOrUpdate(false, true)

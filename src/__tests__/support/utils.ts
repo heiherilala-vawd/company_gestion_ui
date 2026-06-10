@@ -106,23 +106,23 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/users/user2_id', mockSuccessResponse(user1Mock)).as('getUser2')
 
   // ---------------------- WAREHOUSE ------------------------------------------
-  cy.intercept('GET', '/companies/*/warehouses*', mockSuccessResponse(warehousesMock)).as(
+  cy.intercept('GET', '**/companies/*/warehouses*', mockSuccessResponse(warehousesMock)).as(
     'getWarehouses',
   )
-  cy.intercept('GET', '/companies/*/warehouses/wh1_id', mockSuccessResponse(warehouse1Mock)).as(
+  cy.intercept('GET', '**/companies/*/warehouses/wh1_id', mockSuccessResponse(warehouse1Mock)).as(
     'getWarehouse',
   )
-  cy.intercept('GET', '/companies/*/warehouses/wh2_id', mockSuccessResponse(warehouse2Mock)).as(
+  cy.intercept('GET', '**/companies/*/warehouses/wh2_id', mockSuccessResponse(warehouse2Mock)).as(
     'getWarehouse',
   )
 
   // ---------------------- JOB ------------------------------------------
-  cy.intercept('GET', '/companies/*/jobs*', mockSuccessResponse(jobsMock)).as('getJobs')
-  cy.intercept('GET', '/companies/*/jobs/job1_id', mockSuccessResponse(job1Mock)).as('getJob')
+  cy.intercept('GET', '**/companies/*/jobs*', mockSuccessResponse(jobsMock)).as('getJobs')
+  cy.intercept('GET', '**/companies/*/jobs/job1_id', mockSuccessResponse(job1Mock)).as('getJob')
 
   // ---------------------- COMPANY ------------------------------------------
-  cy.intercept('GET', '/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
-  cy.intercept('GET', '/companies/comp1_id', mockSuccessResponse(company1Mock)).as('getCompany')
+  cy.intercept('GET', '**/companies*', mockSuccessResponse(companiesMock)).as('getCompanies')
+  cy.intercept('GET', '**/companies/comp1_id', mockSuccessResponse(company1Mock)).as('getCompany')
 
   // ---------------------- MATERIAL ------------------------------------------
   cy.intercept('GET', '**/materials*', mockSuccessResponse(materialsMock)).as('getMaterials')
@@ -130,13 +130,13 @@ export function interceptGeneralEndpoint(): void {
 
   // ---------------------- EQUIPMENT ------------------------------------------
   cy.intercept('GET', '**/equipment*', mockSuccessResponse(equipmentsMock)).as('getEquipments')
-  cy.intercept('GET', '**/equipment/eq1_id*', mockSuccessResponse(equipment1Mock)).as(
+  cy.intercept('GET', '**/equipment*/eq1_id*', mockSuccessResponse(equipment1Mock)).as(
     'getEquipment',
   )
 
   cy.intercept(
     'PUT',
-    '**/equipment/*/maintenances',
+    '**/equipment*/**/maintenances',
     mockSuccessResponse(maintenanceResponseMock),
   ).as('maintenance')
 
@@ -233,9 +233,11 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/other_expense_types*', mockSuccessResponse(otherExpenseTypesMock)).as(
     'getOtherExpenseTypes',
   )
-  cy.intercept('GET', '**/other_expense_types/oet1_id*', mockSuccessResponse(otherExpenseType1Mock)).as(
-    'getOtherExpenseType',
-  )
+  cy.intercept(
+    'GET',
+    '**/other_expense_types/oet1_id*',
+    mockSuccessResponse(otherExpenseType1Mock),
+  ).as('getOtherExpenseType')
 
   // ---------------------- TEAMS ------------------------------------------
   cy.intercept('GET', '**/teams*', mockSuccessResponse(teamsMock)).as('getTeams')
@@ -297,77 +299,81 @@ export function interceptGeneralEndpoint(): void {
   )
 
   // ---------------------- SUPPLIERS ------------------------------------------
-  cy.intercept('GET', '/companies/*/suppliers*', mockSuccessResponse(suppliersMock)).as(
+  cy.intercept('GET', '**/companies/*/suppliers*', mockSuccessResponse(suppliersMock)).as(
     'getSuppliers',
   )
-  cy.intercept('GET', '/companies/*/suppliers/sup1_id*', mockSuccessResponse(supplier1Mock)).as(
+  cy.intercept('GET', '**/companies/*/suppliers/sup1_id*', mockSuccessResponse(supplier1Mock)).as(
     'getSupplier',
   )
 
   // ---------------------- PURCHASE ORDERS ------------------------------------------
-  cy.intercept('GET', '/companies/*/purchase_orders*', mockSuccessResponse(purchaseOrdersMock)).as(
-    'getPurchaseOrders',
-  )
-  cy.intercept('GET', '/companies/*/purchase_orders/po1_id*', mockSuccessResponse(purchaseOrder1Mock)).as(
-    'getPurchaseOrder',
-  )
+  cy.intercept(
+    'GET',
+    '**/companies/*/purchase_orders*',
+    mockSuccessResponse(purchaseOrdersMock),
+  ).as('getPurchaseOrders')
+  cy.intercept(
+    'GET',
+    '**/companies/*/purchase_orders/po1_id*',
+    mockSuccessResponse(purchaseOrder1Mock),
+  ).as('getPurchaseOrder')
 
   // ---------------------- MATERIAL DASHBOARD ------------------------------------------
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/materials/summary*',
+    '**/companies/*/dashboard/materials/summary*',
     mockSuccessResponse(materialDashboardSummaryMock),
   ).as('getMaterialDashboardSummary')
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/materials/breakdown*',
+    '**/companies/*/dashboard/materials/breakdown*',
     mockSuccessResponse(materialDashboardBreakdownMock),
   ).as('getMaterialDashboardBreakdown')
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/materials/expiring*',
+    '**/companies/*/dashboard/materials/expiring*',
     mockSuccessResponse(materialDashboardExpiringMock),
   ).as('getMaterialDashboardExpiring')
 
   // ---------------------- EQUIPMENT DASHBOARD ------------------------------------------
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/equipment/summary*',
+    '**/companies/*/dashboard/equipment/summary*',
     mockSuccessResponse(equipmentDashboardSummaryMock),
   ).as('getEquipmentDashboardSummary')
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/equipment/breakdown*',
+    '**/companies/*/dashboard/equipment/breakdown*',
     mockSuccessResponse(equipmentDashboardBreakdownMock),
   ).as('getEquipmentDashboardBreakdown')
 
   // ---------------------- HR DASHBOARD ------------------------------------------
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/hr/summary*',
+    '**/companies/*/dashboard/hr/summary*',
     mockSuccessResponse(hrDashboardSummaryMock),
   ).as('getHrDashboardSummary')
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/hr/breakdown*',
+    '**/companies/*/dashboard/hr/breakdown*',
     mockSuccessResponse(hrDashboardBreakdownMock),
   ).as('getHrDashboardBreakdown')
 
   // ---------------------- MONETARY DASHBOARD ------------------------------------------
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/monetary/summary*',
+    '**/companies/*/dashboard/monetary/summary*',
     mockSuccessResponse(monetaryDashboardSummaryMock),
   ).as('getMonetaryDashboardSummary')
   cy.intercept(
     'GET',
-    '/companies/*/dashboard/monetary/breakdown*',
+    '**/companies/*/dashboard/monetary/breakdown*',
     mockSuccessResponse(monetaryDashboardBreakdownMock),
   ).as('getMonetaryDashboardBreakdown')
   ;['revenue', 'expenses', 'cashflow', 'profit'].forEach((type) => {
     cy.intercept(
       'GET',
-      `/companies/*/dashboard/monetary/${type}*`,
+      `**/companies/*/dashboard/monetary/${type}*`,
       mockSuccessResponse(monetaryTimeSeriesMock),
     ).as(`getMonetaryDashboard${type.charAt(0).toUpperCase() + type.slice(1)}`)
   })

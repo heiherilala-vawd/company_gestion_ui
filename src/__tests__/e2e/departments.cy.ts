@@ -5,11 +5,7 @@ import {
   createOrUpdateDepartments,
   crupdateDepartmentsMock,
 } from '../mocks/responses/departments-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Departments', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -67,7 +63,7 @@ describe('E2E: Departments', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/departments*', (req) => {
+    cy.intercept('PUT', '**/companies/*/departments*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateDepartments(req.body)))
     }).as('createDepartment')
     creatOrUpdate(true)
@@ -79,7 +75,7 @@ describe('E2E: Departments', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/departments*', (req) => {
+    cy.intercept('PUT', '**/companies/*/departments*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateDepartments(req.body)))
     }).as('updateDepartment')
     creatOrUpdate(false)
@@ -105,7 +101,7 @@ describe('E2E: Departments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/departments*',
+      '**/companies/*/departments*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createDepartmentFail')
     creatOrUpdate(true)
@@ -117,7 +113,7 @@ describe('E2E: Departments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/departments*',
+      '**/companies/*/departments*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateDepartmentFail')
     creatOrUpdate(false)

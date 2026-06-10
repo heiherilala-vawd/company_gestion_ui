@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import MaterialForm from './MaterialForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function MaterialCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="material-create-form" toolbar={<FormToolbar />}>
         <MaterialForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

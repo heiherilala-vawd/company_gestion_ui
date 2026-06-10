@@ -1,6 +1,7 @@
-import { TextInput, SelectInput, DateTimeInput } from 'react-admin'
+import { TextInput, SelectInput, DateTimeInput, required } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderCompanySelect } from '../../../generic/SelectWithCreateProvider.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function JobForm({ isCreate = false, isCreateForm = false }) {
   return (
@@ -8,34 +9,15 @@ export default function JobForm({ isCreate = false, isCreateForm = false }) {
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
-          defaultValue={generateId()}
           sx={{ display: 'none' }}
+          defaultValue={generateId()}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
+      )}
       {!isCreate && renderCompanySelect('company_id', 'companies')}
-      <TextInput
-        source="description"
-        label="Description"
-        multiline
-        rows={3}
-        data-testid="input-description"
-      />
-      <DateTimeInput
-        source="contract_signature_date"
-        label="Date signature contrat"
-        defaultValue={new Date().toISOString()}
-        data-testid="input-contract-signature-date"
-      />
-      <DateTimeInput
-        source="start_date"
-        label="Date début"
-        defaultValue={new Date().toISOString()}
-        data-testid="input-start-date"
-      />
-      <DateTimeInput source="end_date" label="Date fin" data-testid="input-end-date" />
       <SelectInput
         source="status"
         label="Statut"
@@ -47,6 +29,30 @@ export default function JobForm({ isCreate = false, isCreateForm = false }) {
         defaultValue="PENDING_SIGNATURE"
         data-testid="input-status"
       />
+      <TextInput
+        source="description"
+        label="Description"
+        multiline
+        rows={3}
+        validate={[required()]}
+        data-testid="input-description"
+      />
+      <CollapsibleOptionalFields>
+        <DateTimeInput
+          source="contract_signature_date"
+          label="Date signature contrat"
+          defaultValue={new Date().toISOString()}
+          data-testid="input-contract-signature-date"
+        />
+        <DateTimeInput
+          source="start_date"
+          label="Date début"
+          defaultValue={new Date().toISOString()}
+          data-testid="input-start-date"
+        />
+        <DateTimeInput source="end_date" label="Date fin" data-testid="input-end-date" />
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

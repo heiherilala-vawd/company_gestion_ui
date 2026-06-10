@@ -1,7 +1,8 @@
-import { Create, SimpleForm, ResourceContextProvider } from 'react-admin'
+import { SimpleForm, ResourceContextProvider } from 'react-admin'
 import FormToolbar from '../generic/FormToolbar'
 import PurchaseForm from './money/purchases/PurchaseForm'
 import { Box, Typography } from '@mui/material'
+import GenericCreate from '../generic/GenericCreate'
 
 export default function PurchaseEquipmentActivity() {
   return (
@@ -10,8 +11,7 @@ export default function PurchaseEquipmentActivity() {
         Nouvelle Opération d'Achat Équipement
       </Typography>
       <ResourceContextProvider value="purchases">
-        <Create
-          redirect="list"
+        <GenericCreate
           title=" "
           transform={(data) => ({
             ...data,
@@ -20,10 +20,14 @@ export default function PurchaseEquipmentActivity() {
             expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
           })}
         >
-          <SimpleForm id="purchase-equipment-activity-form" toolbar={<FormToolbar />}>
+          <SimpleForm
+            id="purchase-equipment-activity-form"
+            toolbar={<FormToolbar />}
+            defaultValues={{ invoice_date: new Date(), due_date: new Date(), paid_at: new Date() }}
+          >
             <PurchaseForm isCreate isEquipment />
           </SimpleForm>
-        </Create>
+        </GenericCreate>
       </ResourceContextProvider>
     </Box>
   )

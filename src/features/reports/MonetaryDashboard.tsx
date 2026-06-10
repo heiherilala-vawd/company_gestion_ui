@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material'
+import { Box, Card, Typography, Grid } from '@mui/material'
 import { useNotify, Loading } from 'react-admin'
 import DashboardFilters from './components/DashboardFilters'
-import { PieChartCard, LineChartCard } from './components/ChartSection'
+import { PieChartCard, BarChartCard } from './components/ChartSection'
+import { dashboardStyles } from '../../style/components'
 
 interface MonetarySummary {
   total_revenue: number
@@ -25,6 +26,56 @@ interface TimeSeriesData {
   total: number
 }
 
+const cleanIntervals = (ts: TimeSeriesData | null) =>
+  ts
+    ? {
+        ...ts,
+        intervals: ts.intervals.map((iv) => ({ label: iv.label ?? 'N/A', value: iv.value ?? 0 })),
+      }
+    : null
+
+const fmtCurrency = (v: number) => `${(v ?? 0)?.toLocaleString()} Ar`
+
+const metrics = [
+  {
+    key: 'total_revenue',
+    label: 'Revenus',
+    color: 'success.main',
+    fmt: fmtCurrency,
+  },
+  {
+    key: 'total_expenses',
+    label: 'Dépenses',
+    color: 'error.main',
+    fmt: fmtCurrency,
+  },
+  {
+    key: 'gross_margin',
+    label: 'Marge brute',
+    getColor: (v: number) => (v >= 0 ? 'success.main' : 'error.main'),
+    fmt: (v: number, s: MonetarySummary) =>
+      `${(v ?? 0)?.toLocaleString()} Ar${s.total_revenue ? ` (${((v / s.total_revenue) * 100).toFixed(1)}%)` : ''}`,
+  },
+  {
+    key: 'expected_revenue',
+    label: 'Revenus attendus',
+    color: 'info.main',
+    fmt: fmtCurrency,
+  },
+  {
+    key: 'receivables',
+    label: 'Créances',
+    color: 'warning.main',
+    fmt: fmtCurrency,
+  },
+  {
+    key: 'fixed_costs_total',
+    label: 'Charges fixes',
+    color: 'text.secondary',
+    fmt: fmtCurrency,
+  },
+] as const
+
 export default function MonetaryDashboard() {
   const [summary, setSummary] = useState<MonetarySummary | null>(null)
   const [breakdown, setBreakdown] = useState<MonetaryBreakdown | null>(null)
@@ -44,6 +95,7 @@ export default function MonetaryDashboard() {
     try {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
+      const userId = localStorage.getItem('user_id')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
       const baseParams = new URLSearchParams()
       if (dateFrom) baseParams.set('date_from', dateFrom)
@@ -52,7 +104,7 @@ export default function MonetaryDashboard() {
       if (jobId) baseParams.set('job_id', jobId)
 
       const qs = baseParams.toString()
-      const baseUrl = `${apiUrl}/companies/${companyId}/dashboard/monetary`
+      const baseUrl = `${apiUrl}/users/${userId}/companies/${companyId}/dashboard/monetary`
 
       const [summaryRes, breakdownRes, revenueRes, expensesRes, cashflowRes, profitRes] =
         await Promise.all([
@@ -82,20 +134,22 @@ export default function MonetaryDashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const toChartData = (ts: TimeSeriesData | null) =>
-    ts?.intervals?.map((i, idx) => ({
-      label: i.label,
-      value: i.value,
-      cumulative: ts.cumulative?.[idx],
-    })) || []
-
-  if (loading) return <Loading loadingSecondary="Chargement du tableau de bord monétaire..." />
+  if (loading)
+    return <Loading loadingSecondary="Chargement du tableau de bord base de déplacement..." />
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        Tableau de bord monétaire
-      </Typography>
+    <Box sx={dashboardStyles.container}>
+      <Box sx={dashboardStyles.header}>
+        <Typography sx={dashboardStyles.title}>
+          <Box component="span" sx={dashboardStyles.titleAccent}>
+            Base de déplacement
+          </Box>
+        </Typography>
+        <Typography sx={dashboardStyles.subtitle}>
+          Tableau de bord — Vue d&apos;ensemble financière
+        </Typography>
+      </Box>
+
       <DashboardFilters
         dateFrom={dateFrom}
         dateTo={dateTo}
@@ -107,104 +161,38 @@ export default function MonetaryDashboard() {
         showJobFilter
         jobId={jobId}
         onJobIdChange={setJobId}
+        onApply={fetchData}
       />
-      <Button variant="contained" onClick={fetchData} sx={{ mb: 3 }} size="small">
-        Appliquer les filtres
-      </Button>
 
       {summary && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Revenus totaux
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'success.main' }}>
-                  {summary.total_revenue?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Dépenses totales
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'error.main' }}>
-                  {summary.total_expenses?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Marge brute
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    fontWeight: 600,
-                    color: (summary.gross_margin ?? 0) >= 0 ? 'success.main' : 'error.main',
-                  }}
-                >
-                  {summary.gross_margin?.toLocaleString()} €
-                  {summary.total_revenue
-                    ? ` (${((summary.gross_margin / summary.total_revenue) * 100).toFixed(1)}%)`
-                    : ''}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Revenus attendus
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'info.main' }}>
-                  {summary.expected_revenue?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Créances
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'warning.main' }}>
-                  {summary.receivables?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Charges fixes
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.fixed_costs_total?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <Card sx={{ ...dashboardStyles.metricsCard, mb: 4 }}>
+          <Box sx={dashboardStyles.metricsGrid}>
+            {metrics.map((m) => {
+              const val = summary[m.key as keyof MonetarySummary] as number
+              const color = 'getColor' in m ? m.getColor(val) : m.color
+              return (
+                <Box key={m.key}>
+                  <Typography sx={dashboardStyles.metricsLabel}>{m.label}</Typography>
+                  <Typography sx={{ ...dashboardStyles.metricsValue, color }}>
+                    {m.fmt(val, summary)}
+                  </Typography>
+                </Box>
+              )
+            })}
+          </Box>
+        </Card>
       )}
 
       {breakdown && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid container spacing={2.5} sx={dashboardStyles.chartGrid}>
           {breakdown.expenses_by_type?.length > 0 && (
             <Grid item xs={12} md={4}>
               <PieChartCard
                 title="Dépenses par type"
-                data={breakdown.expenses_by_type.map((i) => ({ name: i.type, value: i.total }))}
+                data={breakdown.expenses_by_type.map((i) => ({
+                  name: i.type ?? 'N/A',
+                  value: i.total ?? 0,
+                }))}
               />
             </Grid>
           )}
@@ -213,8 +201,8 @@ export default function MonetaryDashboard() {
               <PieChartCard
                 title="Revenus par chantier"
                 data={breakdown.revenue_by_job.map((i) => ({
-                  name: i.job_description,
-                  value: i.total,
+                  name: i.job_description ?? 'N/A',
+                  value: i.total ?? 0,
                 }))}
               />
             </Grid>
@@ -224,8 +212,8 @@ export default function MonetaryDashboard() {
               <PieChartCard
                 title="Profit par chantier"
                 data={breakdown.profitability_by_job.map((i) => ({
-                  name: i.job_description,
-                  value: i.profit,
+                  name: i.job_description ?? 'N/A',
+                  value: i.profit ?? 0,
                 }))}
               />
             </Grid>
@@ -233,32 +221,46 @@ export default function MonetaryDashboard() {
         </Grid>
       )}
 
-      <Typography variant="h5" sx={{ mb: 2, fontWeight: 600, mt: 2 }}>
-        Évolution temporelle
-      </Typography>
-      <Grid container spacing={3}>
+      <Typography sx={{ ...dashboardStyles.sectionTitle, mt: 2 }}>Évolution temporelle</Typography>
+      <Grid container spacing={2.5}>
         {revenue && (
           <Grid item xs={12} md={6}>
-            <LineChartCard title="Revenus" data={toChartData(revenue)} total={revenue.total} />
+            <BarChartCard
+              title="Revenus"
+              data={cleanIntervals(revenue)!.intervals}
+              total={cleanIntervals(revenue)!.total}
+              unit="Ar"
+            />
           </Grid>
         )}
         {expenses && (
           <Grid item xs={12} md={6}>
-            <LineChartCard title="Dépenses" data={toChartData(expenses)} total={expenses.total} />
+            <BarChartCard
+              title="Dépenses"
+              data={cleanIntervals(expenses)!.intervals}
+              total={cleanIntervals(expenses)!.total}
+              unit="Ar"
+            />
           </Grid>
         )}
         {cashflow && (
           <Grid item xs={12} md={6}>
-            <LineChartCard
+            <BarChartCard
               title="Flux de trésorerie"
-              data={toChartData(cashflow)}
-              total={cashflow.total}
+              data={cleanIntervals(cashflow)!.intervals}
+              total={cleanIntervals(cashflow)!.total}
+              unit="Ar"
             />
           </Grid>
         )}
         {profit && (
           <Grid item xs={12} md={6}>
-            <LineChartCard title="Profit" data={toChartData(profit)} total={profit.total} />
+            <BarChartCard
+              title="Profit"
+              data={cleanIntervals(profit)!.intervals}
+              total={cleanIntervals(profit)!.total}
+              unit="Ar"
+            />
           </Grid>
         )}
       </Grid>

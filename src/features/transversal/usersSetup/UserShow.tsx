@@ -1,4 +1,3 @@
-// users/UserShow.tsx
 import {
   SimpleShowLayout,
   TextField,
@@ -6,6 +5,7 @@ import {
   DateField,
   SelectField,
   FunctionField,
+  ReferenceField,
 } from 'react-admin'
 import { Show } from 'react-admin'
 
@@ -34,6 +34,17 @@ export default function UserShow() {
             { id: 'F', name: 'Femme' },
           ]}
         />
+        <ReferenceField
+          source="leave_config_id"
+          reference="leave_configs"
+          label="Configuration congés"
+        >
+          <FunctionField
+            render={(record: any) =>
+              `${record?.contract_type || ''} - ${record?.vacation_days_per_month || ''} jours/mois`
+            }
+          />
+        </ReferenceField>
         {/* Nom complet du créateur */}
         <FunctionField
           label="Créé par"

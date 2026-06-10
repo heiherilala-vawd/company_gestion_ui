@@ -10,9 +10,21 @@ export default function LoanRepaymentList() {
         priorityFields={['payment_date', 'amount', 'principal_portion', 'interest_portion']}
       >
         <DateField source="payment_date" label="Date paiement" />
-        <NumberField source="amount" label="Montant" />
-        <NumberField source="principal_portion" label="Part capital" />
-        <NumberField source="interest_portion" label="Part intérêts" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="principal_portion"
+          label="Part capital"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="interest_portion"
+          label="Part intérêts"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

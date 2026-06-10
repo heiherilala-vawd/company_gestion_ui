@@ -1,29 +1,22 @@
 import { required, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function CompanyForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
+      )}
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
-          defaultValue={generateId()}
           sx={{ display: 'none' }}
+          defaultValue={generateId()}
           data-testid="input-id"
         />
       )}
       <TextInput source="name" label="Nom" validate={[required()]} data-testid="input-name" />
-      <TextInput source="rib" label="RIB" data-testid="input-rib" />
-      <TextInput
-        source="description"
-        label="Description"
-        multiline
-        rows={3}
-        data-testid="input-description"
-      />
-      <TextInput source="comment" label="Commentaire" data-testid="input-comment" />
       <SelectInput
         source="company_type"
         label="Type"
@@ -34,6 +27,17 @@ export default function CompanyForm({ isCreate = false, isCreateForm = false }) 
         validate={[required()]}
         data-testid="input-company-type"
       />
+      <CollapsibleOptionalFields>
+        <TextInput source="rib" label="RIB" data-testid="input-rib" />
+        <TextInput
+          source="description"
+          label="Description"
+          multiline
+          rows={3}
+          data-testid="input-description"
+        />
+        <TextInput source="comment" label="Commentaire" data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

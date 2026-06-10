@@ -1,24 +1,21 @@
+
 # Leave
+
 
 ## Properties
 
-| Name            | Type                            |
-| --------------- | ------------------------------- |
-| `comment`       | string                          |
-| `created_at`    | Date                            |
-| `updated_at`    | Date                            |
-| `created_by`    | [AuditUser](AuditUser.md)       |
-| `updated_by`    | [AuditUser](AuditUser.md)       |
-| `id`            | string                          |
-| `user`          | [CrupdateUser](CrupdateUser.md) |
-| `leave_type`    | [LeaveType](LeaveType.md)       |
-| `start_date`    | Date                            |
-| `end_date`      | Date                            |
-| `duration_days` | number                          |
-| `status`        | [LeaveStatus](LeaveStatus.md)   |
-| `reason`        | string                          |
-| `approved_by`   | [CrupdateUser](CrupdateUser.md) |
-| `approved_at`   | Date                            |
+Name | Type
+------------ | -------------
+`id` | string
+`user` | [CrupdateUser](CrupdateUser.md)
+`leave_type` | [LeaveType](LeaveType.md)
+`start_date` | Date
+`end_date` | Date
+`duration_days` | number
+`status` | [LeaveStatus](LeaveStatus.md)
+`reason` | string
+`approved_by` | [CrupdateUser](CrupdateUser.md)
+`approved_at` | Date
 
 ## Example
 
@@ -27,11 +24,6 @@ import type { Leave } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "comment": Commentaire sur cette entité,
-  "created_at": 2024-01-15T09:30Z,
-  "updated_at": 2024-02-20T15:45Z,
-  "created_by": null,
-  "updated_by": null,
   "id": leave_1,
   "user": null,
   "leave_type": null,
@@ -56,3 +48,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

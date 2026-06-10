@@ -10,7 +10,6 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectEnumType,
 } from '../support/utils.ts'
 
 describe('E2E: Loans', () => {
@@ -37,7 +36,6 @@ describe('E2E: Loans', () => {
       .clear()
       .type(<string>(<unknown>crupdatedData.interest_rate))
     cy.get('[data-testid="input-start_date"] input').clear().type('2024-06-01')
-    selectEnumType('input-status', 'Actif')
     cy.get('[data-testid="input-description"] textarea:visible')
       .first()
       .clear()

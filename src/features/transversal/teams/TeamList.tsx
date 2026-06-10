@@ -1,4 +1,4 @@
-import { List, TextField, SearchInput, EditButton } from 'react-admin'
+import { List, TextField, SearchInput, EditButton, FunctionField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const TeamFilters = [<SearchInput source="q" alwaysOn key="search" />]
@@ -10,7 +10,13 @@ export default function TeamList() {
         <TextField source="name" label="Nom" />
         <TextField source="leader.first_name" label="Responsable prénom" />
         <TextField source="leader.last_name" label="Responsable nom" />
-        <TextField source="members" label="Membres" />
+        <FunctionField
+          source="members"
+          label="Membres"
+          render={(record) =>
+            record.members?.map((m: any) => `${m.first_name} ${m.last_name}`).join(', ') || ''
+          }
+        />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

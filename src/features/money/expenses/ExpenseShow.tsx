@@ -13,7 +13,11 @@ export default function ExpenseShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="job.description" label="Travail" />
-        <NumberField source="amount" label="Montant" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />

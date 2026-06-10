@@ -27,9 +27,27 @@ export const materialDashboardBreakdownMock = {
 }
 
 export const materialDashboardExpiringMock = [
-  { id: 'mat1_id', name: 'Ciment spécial', quantity: 100, unit: 'kg', expiration_date: '2026-07-15' },
-  { id: 'mat2_id', name: 'Peinture acrylique', quantity: 20, unit: 'L', expiration_date: '2026-08-01' },
-  { id: 'mat3_id', name: 'Adhésif industriel', quantity: 50, unit: 'L', expiration_date: '2026-06-30' },
+  {
+    id: 'mat1_id',
+    name: 'Ciment spécial',
+    quantity: 100,
+    unit: 'kg',
+    expiration_date: '2026-07-15',
+  },
+  {
+    id: 'mat2_id',
+    name: 'Peinture acrylique',
+    quantity: 20,
+    unit: 'L',
+    expiration_date: '2026-08-01',
+  },
+  {
+    id: 'mat3_id',
+    name: 'Adhésif industriel',
+    quantity: 50,
+    unit: 'L',
+    expiration_date: '2026-06-30',
+  },
 ]
 
 export const equipmentDashboardSummaryMock = {

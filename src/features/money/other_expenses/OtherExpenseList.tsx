@@ -1,4 +1,4 @@
-import { List, TextField, SearchInput, EditButton } from 'react-admin'
+import { List, TextField, NumberField, SearchInput, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const OtherExpenseFilters = [<SearchInput source="q" alwaysOn key="q" />]
@@ -7,7 +7,11 @@ export default function OtherExpenseList() {
   return (
     <List resource="other_expenses" filters={OtherExpenseFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['expense.amount', 'description']}>
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <TextField source="other_expense_type.name" label="Type" />
         <TextField source="expense.comment" label="Commentaire" />

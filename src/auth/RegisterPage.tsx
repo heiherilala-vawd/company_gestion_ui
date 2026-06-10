@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNotify, useAuthProvider } from 'react-admin'
 import {
   Card,
@@ -11,17 +11,28 @@ import {
   InputLabel,
   FormControl,
   Box,
+  Autocomplete,
+  Chip,
+  CircularProgress,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
-import { colors, gradients, getShadow, transitions } from '../style/themeConfig'
+import { colors, gradients, getShadow, transitions, borderRadius as br } from '../style/themeConfig'
 import generateId from '../utili/utils.tsx'
+
+interface CompanyOption {
+  id: string
+  name: string
+}
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [companyIds, setCompanyIds] = useState<string[]>([])
+  const [companies, setCompanies] = useState<CompanyOption[]>([])
+  const [companiesLoading, setCompaniesLoading] = useState(true)
   const [sex, setSex] = useState<'M' | 'F'>('M')
   const [id, setId] = useState('')
 
@@ -31,6 +42,19 @@ export const RegisterPage = () => {
   const navigate = useNavigate()
   const theme = useTheme()
   const mode = theme.palette.mode as 'light' | 'dark'
+
+  useEffect(() => {
+    fetch('/companies')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch companies')
+        return res.json()
+      })
+      .then((data: CompanyOption[]) => setCompanies(data))
+      .catch(() => {
+        setCompanies([])
+      })
+      .finally(() => setCompaniesLoading(false))
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,6 +66,7 @@ export const RegisterPage = () => {
         first_name: firstName,
         last_name: lastName,
         sex,
+        company_ids: companyIds,
         id,
       })
       notify('Compte créé avec succès', { type: 'success' })
@@ -68,6 +93,21 @@ export const RegisterPage = () => {
         alignItems: 'center',
         minHeight: '100vh',
         bgcolor: 'background.default',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: '-50%',
+          left: '-50%',
+          width: '200%',
+          height: '200%',
+          background:
+            mode === 'light'
+              ? 'radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.04) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 50%)'
+              : 'radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)',
+          pointerEvents: 'none',
+        },
       }}
     >
       <Card
@@ -75,20 +115,60 @@ export const RegisterPage = () => {
           maxWidth: 420,
           width: '100%',
           mx: 2,
-          borderRadius: 2,
-          boxShadow: getShadow(mode, 'lg'),
+          borderRadius: br.xl,
+          boxShadow: getShadow(mode, 'dialog'),
+          position: 'relative',
+          overflow: 'visible',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 4,
+            background: gradients.primaryHorizontal,
+            borderRadius: `${br.xl}px ${br.xl}px 0 0`,
+          },
         }}
       >
-        <CardContent sx={{ px: 3, pb: 3 }}>
-          <Typography variant="h5" sx={{ fontWeight: 700, mb: 3, textAlign: 'center' }}>
-            Créer un compte
-          </Typography>
+        <CardContent sx={{ px: { xs: 3, sm: 4 }, pt: { xs: 4, sm: 5 }, pb: { xs: 3, sm: 4 } }}>
+          <Box sx={{ textAlign: 'center', mb: 3 }}>
+            <Box
+              sx={{
+                width: 56,
+                height: 56,
+                borderRadius: '50%',
+                background: gradients.primary,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mx: 'auto',
+                mb: 2,
+                boxShadow: getShadow(mode, 'primary'),
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Box>
+            <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5, letterSpacing: '-0.02em' }}>
+              Créer un compte
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              Rejoignez GestPro
+            </Typography>
+          </Box>
           <Box
             component="form"
             onSubmit={handleSubmit}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
           >
-            {' '}
             <TextField
               label="ID"
               value={generateId()}
@@ -126,6 +206,43 @@ export const RegisterPage = () => {
               required
               fullWidth
             />
+            <Autocomplete
+              multiple
+              options={companies}
+              loading={companiesLoading}
+              value={companies.filter((c) => companyIds.includes(c.id))}
+              onChange={(_, newValue) => setCompanyIds(newValue.map((v) => v.id))}
+              getOptionLabel={(option) => `${option.name} (${option.id})`}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Entreprises"
+                  placeholder="Sélectionnez des entreprises"
+                  required
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {companiesLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    label={option.name}
+                    size="small"
+                    {...getTagProps({ index })}
+                    key={option.id}
+                  />
+                ))
+              }
+              fullWidth
+            />
             <FormControl fullWidth required>
               <InputLabel>Sexe</InputLabel>
               <Select
@@ -145,15 +262,19 @@ export const RegisterPage = () => {
               fullWidth
               sx={{
                 background: gradients.primary,
-                borderRadius: 1.5,
+                borderRadius: br.md,
                 textTransform: 'none',
                 fontWeight: 600,
-                py: 1.2,
+                py: 1.5,
+                fontSize: '0.9375rem',
                 mt: 1,
                 transition: transitions.default,
+                boxShadow: getShadow(mode, 'primary'),
                 '&:hover': {
                   background: gradients.primary,
                   filter: 'brightness(1.1)',
+                  boxShadow: getShadow(mode, 'primaryHover'),
+                  transform: 'translateY(-1px)',
                 },
               }}
             >
@@ -166,6 +287,7 @@ export const RegisterPage = () => {
                 textTransform: 'none',
                 fontWeight: 500,
                 color: colors.primary.main,
+                fontSize: '0.875rem',
                 transition: transitions.default,
                 '&:hover': {
                   bgcolor: 'transparent',
@@ -181,5 +303,3 @@ export const RegisterPage = () => {
     </Box>
   )
 }
-
-export default RegisterPage

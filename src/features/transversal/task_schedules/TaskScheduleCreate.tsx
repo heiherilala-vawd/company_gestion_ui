@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import TaskScheduleForm from './TaskScheduleForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function TaskScheduleCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="task-schedule-create-form" toolbar={<FormToolbar />}>
         <TaskScheduleForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

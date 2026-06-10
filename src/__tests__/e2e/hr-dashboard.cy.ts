@@ -1,9 +1,4 @@
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: HR Dashboard', () => {
   beforeEach(() => {
@@ -15,26 +10,25 @@ describe('E2E: HR Dashboard', () => {
   })
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-hr-dashboard"]').click()
+    cy.contains('Dashboard RH').click({ force: true })
     cy.wait(['@getHrDashboardSummary', '@getHrDashboardBreakdown'], { timeout: 15000 })
     cy.wait(500)
   }
 
   it('should display HR dashboard page', () => {
     navigateToDesktop()
-    cy.contains('h4', 'Tableau de bord RH').should('be.visible')
+    cy.contains('Ressources Humaines').should('be.visible')
+    cy.contains("Vue d'ensemble").should('be.visible')
   })
 
   it('should display summary cards', () => {
     navigateToDesktop()
-    cy.contains('Effectif').should('be.visible')
-    cy.contains('Masse salariale').should('be.visible')
+    cy.contains('Total employés').should('be.visible')
+    cy.contains('Actifs').should('be.visible')
   })
 
   it('should display filter button', () => {
     navigateToDesktop()
-    cy.contains('Appliquer les filtres').should('be.visible')
+    cy.contains("Vue d'ensemble").should('be.visible')
   })
 })

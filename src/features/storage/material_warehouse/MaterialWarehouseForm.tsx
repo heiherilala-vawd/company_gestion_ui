@@ -7,15 +7,9 @@ export default function MaterialWarehouseForm({ isCreate = false, isCreateForm =
   return (
     <>
       {isCreate && (
-        <TextInput
-          source="id"
-          readOnly
-          defaultValue={id}
-          sx={{ display: 'none' }}
-          data-testid="input-id"
-        />
+        <TextInput source="id" sx={{ display: 'none' }} defaultValue={id} data-testid="input-id" />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={id} />}
       <ReferenceInput source="material_id" reference="materials" label="Matériau">
         <SelectInput optionText="name" data-testid="input-material_id" />
       </ReferenceInput>

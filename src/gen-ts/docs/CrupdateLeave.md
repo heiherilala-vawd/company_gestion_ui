@@ -1,18 +1,20 @@
+
 # CrupdateLeave
+
 
 ## Properties
 
-| Name            | Type                          |
-| --------------- | ----------------------------- |
-| `id`            | string                        |
-| `user_id`       | string                        |
-| `leave_type_id` | string                        |
-| `start_date`    | Date                          |
-| `end_date`      | Date                          |
-| `duration_days` | number                        |
-| `status`        | [LeaveStatus](LeaveStatus.md) |
-| `reason`        | string                        |
-| `comment`       | string                        |
+Name | Type
+------------ | -------------
+`id` | string
+`user_id` | string
+`leave_type_id` | string
+`start_date` | Date
+`end_date` | Date
+`duration_days` | number
+`status` | [LeaveStatus](LeaveStatus.md)
+`reason` | string
+`comment` | string
 
 ## Example
 
@@ -44,3 +46,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -1,5 +1,6 @@
 import { TextInput, NumberInput, DateInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function BudgetLineForm({ isCreate = false, isCreateForm = false }) {
   const id = generateId()
@@ -7,15 +8,9 @@ export default function BudgetLineForm({ isCreate = false, isCreateForm = false 
   return (
     <>
       {isCreate && (
-        <TextInput
-          source="id"
-          readOnly
-          defaultValue={id}
-          sx={{ display: 'none' }}
-          data-testid="input-id"
-        />
+        <TextInput source="id" sx={{ display: 'none' }} defaultValue={id} data-testid="input-id" />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={id} />}
       <TextInput source="category" label="Catégorie" data-testid="input-category" />
       <NumberInput
         source="planned_amount"
@@ -26,11 +21,20 @@ export default function BudgetLineForm({ isCreate = false, isCreateForm = false 
       <DateInput source="period_start" label="Début période" data-testid="input-period_start" />
       <DateInput source="period_end" label="Fin période" data-testid="input-period_end" />
       <TextInput
-        source="description"
-        label="Description"
-        multiline
-        data-testid="input-description"
+        source="company_id"
+        label="ID Entreprise"
+        defaultValue={localStorage.getItem('currentCompanyId')}
+        sx={{ display: 'none' }}
       />
+      <CollapsibleOptionalFields>
+        <TextInput
+          source="description"
+          label="Description"
+          multiline
+          data-testid="input-description"
+        />
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

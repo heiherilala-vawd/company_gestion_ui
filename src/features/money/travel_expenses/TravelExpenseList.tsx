@@ -1,6 +1,7 @@
 import {
   List,
   TextField,
+  NumberField,
   DateField,
   SearchInput,
   ReferenceInput,
@@ -43,7 +44,11 @@ export default function TravelExpenseList() {
         <TextField source="departure_location.name" label="Départ" />
         <TextField source="arrival_location.name" label="Arrivée" />
         <DateField source="departure_date" label="Date départ" showTime />
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <DateField source="arrival_date" label="Date arrivée" showTime />
         <EditButton />

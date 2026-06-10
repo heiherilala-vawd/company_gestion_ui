@@ -1,14 +1,15 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { SimpleForm, TextInput } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import CashTransactionForm from './CashTransactionForm'
+import GenericEdit from '../../../generic/GenericEdit'
 
 export default function CashTransactionEdit() {
   return (
-    <Edit redirect="list">
+    <GenericEdit>
       <SimpleForm id="cash-transaction-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <CashTransactionForm />
       </SimpleForm>
-    </Edit>
+    </GenericEdit>
   )
 }

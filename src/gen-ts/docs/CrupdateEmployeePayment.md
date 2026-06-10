@@ -1,16 +1,18 @@
+
 # CrupdateEmployeePayment
+
 
 ## Properties
 
-| Name                  | Type                                            |
-| --------------------- | ----------------------------------------------- |
-| `id`                  | string                                          |
-| `expense`             | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `user_ids`            | Array&lt;string&gt;                             |
-| `is_for_team`         | boolean                                         |
-| `team_id`             | string                                          |
-| `payment_description` | string                                          |
-| `payment_type`        | [PaymentType](PaymentType.md)                   |
+Name | Type
+------------ | -------------
+`id` | string
+`expense_id` | string
+`user_ids` | Array&lt;string&gt;
+`is_for_team` | boolean
+`team_id` | string
+`payment_description` | string
+`payment_type` | [PaymentType](PaymentType.md)
 
 ## Example
 
@@ -20,7 +22,7 @@ import type { CrupdateEmployeePayment } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": emp_pay_001,
-  "expense": null,
+  "expense_id": exp_001,
   "user_ids": ["usr_123456"],
   "is_for_team": false,
   "team_id": team_001,
@@ -40,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

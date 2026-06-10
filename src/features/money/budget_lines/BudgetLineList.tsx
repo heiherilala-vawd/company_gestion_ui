@@ -8,8 +8,16 @@ export default function BudgetLineList() {
     <List resource="budget_lines" filters={BudgetLineFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['category', 'planned_amount']}>
         <TextField source="category" label="Catégorie" />
-        <NumberField source="planned_amount" label="Montant prévu" />
-        <NumberField source="actual_amount" label="Montant réel" />
+        <NumberField
+          source="planned_amount"
+          label="Montant prévu"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="actual_amount"
+          label="Montant réel"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="period_start" label="Début période" />
         <TextField source="period_end" label="Fin période" />
         <EditButton />

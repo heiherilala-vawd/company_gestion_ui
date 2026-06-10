@@ -30,6 +30,7 @@ export default function TaskList() {
           ]}
         />
         <FunctionField
+          source="assigned_to"
           label="Assigné à"
           render={(record) =>
             record.assigned_to

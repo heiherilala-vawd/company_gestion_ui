@@ -10,5 +10,5 @@ export default {
   edit: ExpenseEdit,
   show: ExpenseShow,
   icon: MoneyOffIcon,
-  recordRepresentation: (record: any) => `${record.description} - ${record.amount}€`,
+  recordRepresentation: (record: any) => `${record.description} - ${record.amount}Ar`,
 }

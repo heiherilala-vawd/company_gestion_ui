@@ -5,11 +5,7 @@ import {
   createOrUpdateSuppliers,
   crupdateSuppliersMock,
 } from '../mocks/responses/suppliers-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Suppliers', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -21,8 +17,12 @@ describe('E2E: Suppliers', () => {
       cy.wait('@getSupplier')
       cy.get('.RaEditButton-root').click()
     }
-    cy.get('[data-testid="input-name"] input').clear().type(<string>crupdatedData.name)
-    cy.get('[data-testid="input-siret"] input').clear().type(<string>crupdatedData.siret)
+    cy.get('[data-testid="input-name"] input')
+      .clear()
+      .type(<string>crupdatedData.name)
+    cy.get('[data-testid="input-company_registration_number"] input')
+      .clear()
+      .type(<string>crupdatedData.company_registration_number)
     cy.get('[data-testid="input-email"] input')
       .clear()
       .type(<string>crupdatedData.email)
@@ -75,7 +75,7 @@ describe('E2E: Suppliers', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/suppliers*', (req) => {
+    cy.intercept('PUT', '**/companies/*/suppliers*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateSuppliers(req.body)))
     }).as('createSupplier')
     creatOrUpdate(true)
@@ -87,7 +87,7 @@ describe('E2E: Suppliers', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/suppliers*', (req) => {
+    cy.intercept('PUT', '**/companies/*/suppliers*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateSuppliers(req.body)))
     }).as('updateSupplier')
     creatOrUpdate(false)
@@ -113,7 +113,7 @@ describe('E2E: Suppliers', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/suppliers*',
+      '**/companies/*/suppliers*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createSupplierFail')
     creatOrUpdate(true)
@@ -125,7 +125,7 @@ describe('E2E: Suppliers', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/suppliers*',
+      '**/companies/*/suppliers*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateSupplierFail')
     creatOrUpdate(false)

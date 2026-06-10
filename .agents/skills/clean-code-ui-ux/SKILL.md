@@ -159,7 +159,7 @@ RaSimpleForm: {
     },
   },
 },
-RaTabbedForm: { /* idem avec overflow hidden */ },
+RaTabbedForm: { /* idem */ },
 ```
 
 ## Barre d'outils (Save / Delete)
@@ -290,7 +290,96 @@ RaLoading: {
 
 ---
 
-# Gestion du dark mode
+# ⚠️ Piège : `overflow: hidden` + `borderRadius` sur les conteneurs
+
+Ne JAMAIS mettre `overflow: hidden` sur un conteneur parent qui a `borderRadius`, car cela **rogne** le contenu interne (menus déroulants, autocomplete, headers de tableau, infobulles, popovers, panels d'onglets…).
+
+## ❌ À éviter
+
+```ts
+// Dans theme.ts — MuiTable
+MuiTable: {
+  styleOverrides: {
+    root: {
+      borderRadius: br.lg,
+      overflow: 'hidden',   // ← rogne les en-têtes, tris, selects dans le tableau
+    },
+  },
+},
+
+// Dans components.ts — formStyles.card, showStyles.card, datagridStyles.responsive
+card: {
+  borderRadius: br.lg,
+  overflow: 'hidden',   // ← rogne les selects, autocomplete, datepickers dans le formulaire
+},
+
+// Dans components.ts — layoutStyles.content
+content: {
+  borderRadius: br.lg,
+  overflow: 'hidden',   // ← rogne TOUT le contenu de la page
+},
+
+// Dans theme.ts — RaTabbedForm
+RaTabbedForm: {
+  overflow: 'hidden',   // ← rogne les indicateurs d'onglet, les popups
+},
+```
+
+## ✅ Correct
+
+```ts
+// Ne pas définir overflow sur les conteneurs de page
+MuiTable: {
+  styleOverrides: {
+    root: {
+      borderCollapse: 'separate',
+      borderSpacing: 0,
+      // PAS de borderRadius ni overflow
+    },
+  },
+},
+
+// Pour les tableaux, c'est MuiTableContainer qui gère le cadre
+MuiTableContainer: {
+  styleOverrides: {
+    root: {
+      borderRadius: br.md,
+      border: `1px solid ${getBorder(mode)}`,
+      overflow: 'auto',  // auto pas hidden
+    },
+  },
+},
+```
+
+## Quand `overflow: hidden` est acceptable
+
+Uniquement sur des éléments **isolés et décoratifs** qui ne contiennent pas d'enfants interactifs :
+
+```ts
+// ✅ Avatar / cercle décoratif
+circle: {
+  borderRadius: '50%',
+  overflow: 'hidden',  // OK — contenu purement visuel
+}
+
+// ✅ Carte avec barre décorative via ::before
+summaryCard: {
+  borderRadius: br.lg,
+  overflow: 'hidden',  // OK — utilisé pour une pseudo-barre en haut, pas d'enfants interactifs
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0, left: 0, right: 0,
+    height: 3,
+  },
+}
+```
+
+## Règle générale
+
+- **Ne pas masquer le débordement** sur les composants qui contiennent des formulaires, tableaux, menus, popups.
+- Laisser `overflow: visible` (valeur par défaut) sur les conteneurs de page, les cartes de formulaire, les tableaux.
+- Si un élément décoratif dépasse (ombre portée, barre colorée), utiliser `position: relative` + `::before`/`::after` avec `position: absolute` plutôt que de couper le contenu.
 
 Le `ThemeContext` fournit `{ mode, toggleMode }` persistant dans localStorage.
 
@@ -318,3 +407,4 @@ sx={{
 - [ ] Les boutons Save/Delete/Edit sont stylisés dans le thème
 - [ ] Le dark mode est géré (tokens light/dark + closures)
 - [ ] Pas de magic numbers — utiliser les helpers ou `theme.spacing()`
+- [ ] **⚠️ Pas de `overflow: hidden` sur les conteneurs** (cards, forms, tables, layout) — voir section dédiée

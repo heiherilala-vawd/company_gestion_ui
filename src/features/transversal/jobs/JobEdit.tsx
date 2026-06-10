@@ -1,11 +1,11 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { SimpleForm, TextInput } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import JobForm from './JobForm'
+import GenericEdit from '../../../generic/GenericEdit'
 
 export default function JobEdit() {
   return (
-    <Edit
-      redirect="list"
+    <GenericEdit
       queryOptions={{
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
@@ -18,6 +18,6 @@ export default function JobEdit() {
         <TextInput source="id" sx={{ display: 'none' }} />
         <JobForm />
       </SimpleForm>
-    </Edit>
+    </GenericEdit>
   )
 }

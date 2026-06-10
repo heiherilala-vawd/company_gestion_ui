@@ -1,11 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL ?? ''
 
-const userId: string | null = localStorage.getItem('user_id')
+const getUserId = (): string | null => localStorage.getItem('user_id')
 
 const RESOURCE_URL_OVERRIDES: Record<string, string> = {
   receipts: 'incomes_receipts',
-  loan_repayments: 'loans_repayment',
+  equipment: 'equipments',
+  material_warehouse: 'material_warehouses',
+  equipment_usage: 'equipment_usages',
+  material_consumption: 'material_consumptions',
+  travel_equipment: 'travel_equipments',
 }
+
+const getUrlSegment = (resource: string): string => RESOURCE_URL_OVERRIDES[resource] || resource
 
 //---------------------------------------------------COMPANY-------------------------------------------------------------
 export const DYNAMIC_COMPANY_RESOURCES = [
@@ -21,6 +27,7 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'fixed_costs',
   'tasks',
   'task_schedules',
+  'maintenance_schedules',
   'departments',
   'budget_lines',
   'cash_accounts',
@@ -33,6 +40,9 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'leave_balances',
   'suppliers',
   'purchase_orders',
+  'organizations',
+  'voitures',
+  'notifications',
 ] as const
 
 export type DynamicCompanyResource = (typeof DYNAMIC_COMPANY_RESOURCES)[number]
@@ -42,8 +52,9 @@ export const isDynamicCompanyResource = (resource: string): boolean => {
 }
 
 export const getMiddleUrlDynamicCompanyResource = (resource: string): string => {
+  const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
-  return '/companies/' + companyId + '/' + resource
+  return `/users/${userId}/companies/${companyId}/${getUrlSegment(resource)}`
 }
 
 //---------------------------------------------------CASH_ACCOUNTS-------------------------------------------------------------
@@ -55,11 +66,11 @@ export const isDynamicCashAccountsResource = (resource: string): boolean => {
   return DYNAMIC_CASH_ACCOUNTS_RESOURCES.includes(resource as DynamicCashAccountsResource)
 }
 
-export const getMiddleUrlDynamicCashAccountsResource = (resource: string): string => {
-  void resource
+export const getMiddleUrlDynamicCashAccountsResource = (): string => {
+  const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
   const cashAccountId = localStorage.getItem('currentCashAccountId')
-  return '/companies/' + companyId + '/cash_accounts/' + cashAccountId + '/transactions'
+  return `/users/${userId}/companies/${companyId}/cash_accounts/${cashAccountId}/transactions`
 }
 
 //---------------------------------------------------JOB-------------------------------------------------------------
@@ -88,10 +99,10 @@ export const isDynamicJobResource = (resource: string): boolean => {
 }
 
 export const getMiddleUrlDynamicJobResource = (resource: string): string => {
+  const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
   const jobId = localStorage.getItem('currentJobId')
-  const urlSegment = RESOURCE_URL_OVERRIDES[resource] || resource
-  return '/companies/' + companyId + '/job/' + jobId + '/user/' + userId + '/' + urlSegment
+  return `/users/${userId}/companies/${companyId}/jobs/${jobId}/${getUrlSegment(resource)}`
 }
 
 //----------------------------------------------------------------------------------------------------------
@@ -103,19 +114,22 @@ export const getMiddleUrl = (resource: string): string => {
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}`
   } else if (isDynamicCashAccountsResource(resource)) {
-    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource(resource)}`
+    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource()}`
   }
   return url
 }
 
 export const getMiddleUrlWithId = (resource: string, resourceId: string): string => {
   let url = `${API_URL}/${resource}/${resourceId}`
-  if (isDynamicCompanyResource(resource)) {
+  if (resource === 'companies') {
+    const userId = getUserId()
+    url = `${API_URL}/users/${userId}/companies/${resourceId}`
+  } else if (isDynamicCompanyResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}/${resourceId}`
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}/${resourceId}`
   } else if (isDynamicCashAccountsResource(resource)) {
-    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource(resource)}/${resourceId}`
+    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource()}/${resourceId}`
   }
   return url
 }
@@ -132,7 +146,7 @@ export const getMiddleUrlWithQuery = (
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}${queryString ? `?${queryString}` : ''}`
   } else if (isDynamicCashAccountsResource(resource)) {
-    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource(resource)}${queryString ? `?${queryString}` : ''}`
+    url = `${API_URL}${getMiddleUrlDynamicCashAccountsResource()}${queryString ? `?${queryString}` : ''}`
   }
   return url
 }

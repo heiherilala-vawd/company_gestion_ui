@@ -42,8 +42,8 @@ describe('E2E: Main Menu and Selectors', () => {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
 
-    // Expand Monétaire sub-sections to check collapsed items
-    cy.contains('Monétaire').scrollIntoView()
+    // Expand Base de déplacement sub-sections to check collapsed items
+    cy.contains('Base de déplacement').scrollIntoView()
     cy.contains('Entrées').click()
     cy.contains('Sorties ponctuelles').click()
     cy.contains('Sorties continues').click()

@@ -23,14 +23,14 @@ export const appBarStyles = {
 
   appBar: {
     backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.8) : alpha('#0F2F23', 0.85),
+      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.8) : alpha('#131C2E', 0.85),
     color: 'text.primary',
     boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
     borderBottom: (theme: Theme) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
-    backdropFilter: 'blur(16px)',
+    backdropFilter: 'blur(20px)',
     backgroundImage: 'none',
-    transition: transitions.default,
+    transition: transitions.smooth,
     '& .MuiToolbar-root': {
       minHeight: { xs: 56, sm: 64 },
       px: { xs: 1.5, sm: 2.5 },
@@ -41,19 +41,18 @@ export const appBarStyles = {
     color: 'text.secondary',
     backgroundColor: 'transparent',
     borderRadius: br.md,
-    transition: transitions.default,
+    transition: transitions.smooth,
     width: 36,
     height: 36,
     '&:hover': {
       backgroundColor: (theme: Theme) => getPrimaryBg(theme.palette.mode as 'light' | 'dark'),
-      transform: 'translateY(-1px)',
     },
   } as const,
 
   expandedSection: {
     backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.8) : alpha('#0F2F23', 0.85),
-    backdropFilter: 'blur(16px)',
+      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.9) : alpha('#131C2E', 0.9),
+    backdropFilter: 'blur(20px)',
     borderBottom: (theme: Theme) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     px: { xs: 1.5, sm: 2.5 },
@@ -67,7 +66,7 @@ export const appBarStyles = {
 export const menuStyles = {
   container: {
     height: '100%',
-    backgroundColor: (theme: Theme) => (theme.palette.mode === 'light' ? '#FFFFFF' : '#0F2F23'),
+    backgroundColor: (theme: Theme) => (theme.palette.mode === 'light' ? '#FFFFFF' : '#131C2E'),
     borderRight: (theme: Theme) =>
       `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     p: 2,
@@ -79,7 +78,7 @@ export const menuStyles = {
     },
     '&::-webkit-scrollbar-thumb': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.1)' : 'rgba(108,165,104,0.2)',
+        theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(99,102,241,0.2)',
       borderRadius: '4px',
     },
   } as const,
@@ -94,14 +93,16 @@ export const menuStyles = {
 
   appTitle: {
     fontWeight: 700,
-    fontSize: '1.1rem',
-    letterSpacing: '-0.02em',
-    color: (theme: Theme) => (theme.palette.mode === 'light' ? '#1A2920' : '#A8D5A2'),
+    fontSize: '1.125rem',
+    letterSpacing: '-0.03em',
+    background: gradients.primary,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
   } as const,
 
   appSubtitle: {
     color: 'text.secondary',
-    fontSize: '0.7rem',
+    fontSize: '0.675rem',
     fontWeight: 500,
     mt: 0.25,
   } as const,
@@ -126,7 +127,7 @@ export const menuStyles = {
     height: 6,
     borderRadius: '50%',
     flexShrink: 0,
-    opacity: 0.7,
+    opacity: 0.8,
   } as const,
 
   listItem: {
@@ -135,26 +136,26 @@ export const menuStyles = {
     px: 1.5,
     py: 0.65,
     color: 'text.secondary',
-    transition: transitions.default,
+    transition: transitions.smooth,
     '&.Mui-selected': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? alpha('#6CA568', 0.08) : alpha('#6CA568', 0.15),
-      color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4E8B56' : '#A8D5A2'),
+        theme.palette.mode === 'light' ? alpha('#6366F1', 0.08) : alpha('#6366F1', 0.15),
+      color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4F46E5' : '#A5B4FC'),
       fontWeight: 600,
       '& .MuiListItemIcon-root': {
-        color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4E8B56' : '#A8D5A2'),
+        color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4F46E5' : '#A5B4FC'),
       },
       '&:hover': {
         backgroundColor: (theme: Theme) =>
-          theme.palette.mode === 'light' ? alpha('#6CA568', 0.12) : alpha('#6CA568', 0.2),
+          theme.palette.mode === 'light' ? alpha('#6366F1', 0.12) : alpha('#6366F1', 0.2),
       },
     },
     '&:hover': {
       backgroundColor: (theme: Theme) =>
-        theme.palette.mode === 'light' ? alpha('#6CA568', 0.04) : alpha('#6CA568', 0.08),
-      color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4E8B56' : '#C3D6C8'),
+        theme.palette.mode === 'light' ? alpha('#6366F1', 0.04) : alpha('#6366F1', 0.08),
+      color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4F46E5' : '#E2E8F0'),
       '& .MuiListItemIcon-root': {
-        color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4E8B56' : '#8BCB7B'),
+        color: (theme: Theme) => (theme.palette.mode === 'light' ? '#6366F1' : '#818CF8'),
       },
     },
   } as const,
@@ -168,7 +169,7 @@ export const menuStyles = {
   } as const,
 
   listItemText: {
-    fontSize: '0.825rem',
+    fontSize: '0.8125rem',
     fontWeight: 500,
   } as const,
 }
@@ -182,7 +183,7 @@ export const formStyles = {
     px: 1.25,
     py: 0.375,
     gap: 0.75,
-    transition: transitions.default,
+    transition: transitions.smooth,
     '&:hover': {
       backgroundColor: (theme: Theme) => alpha(theme.palette.primary.main, 0.12),
     },
@@ -237,18 +238,11 @@ export const formStyles = {
     '& .RaCreate-main, & .RaEdit-main': {
       backgroundColor: 'transparent',
       boxShadow: 'none',
-      pb: { xs: 8, sm: 9 },
     },
   } as const,
 
   card: {
-    borderRadius: br.lg,
-    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
-    overflow: 'hidden',
-    '&:hover': {
-      boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'cardHover'),
-      transform: 'translateY(-3px)',
-    },
+    '&:hover': {},
   } as const,
 
   titleBox: {
@@ -283,13 +277,13 @@ export const formStyles = {
   } as const,
 
   cancelButton: {
-    borderRadius: br.lg,
+    borderRadius: br.md,
     textTransform: 'none',
     fontWeight: 500,
   } as const,
 
   saveButton: {
-    borderRadius: br.lg,
+    borderRadius: br.md,
     textTransform: 'none',
     fontWeight: 600,
     background: gradients.primary,
@@ -300,7 +294,7 @@ export const formStyles = {
   } as const,
 
   deleteButton: {
-    borderRadius: br.lg,
+    borderRadius: br.md,
     textTransform: 'none',
     fontWeight: 500,
   } as const,
@@ -310,7 +304,6 @@ export const datagridStyles = {
   container: {
     '& .MuiDataGrid-root': {
       border: 'none',
-      borderRadius: br.lg,
     },
     '& .MuiDataGrid-cell': {
       fontSize: '0.875rem',
@@ -325,7 +318,7 @@ export const datagridStyles = {
       fontWeight: 600,
       fontSize: '0.75rem',
       textTransform: 'uppercase',
-      letterSpacing: '0.04em',
+      letterSpacing: '0.05em',
       color: (theme: Theme) =>
         theme.palette.mode === 'light' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)',
     },
@@ -339,29 +332,25 @@ export const datagridStyles = {
   } as const,
 
   responsive: {
-    borderRadius: br.lg,
-    overflow: 'hidden',
     border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
-    '& .RaDatagrid-root': {
-      borderRadius: br.lg,
-    },
+    '& .RaDatagrid-root': {},
     '& .RaDatagrid-header': {
       backgroundColor: (theme: Theme) => getTableHeader(theme.palette.mode as 'light' | 'dark'),
       '& .MuiTableCell-head': {
         fontWeight: 600,
         fontSize: '0.75rem',
         textTransform: 'uppercase',
-        letterSpacing: '0.04em',
+        letterSpacing: '0.05em',
         color: (theme: Theme) =>
           theme.palette.mode === 'light' ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.55)',
       },
     },
     '& .RaDatagrid-row:hover': {
       backgroundColor: (theme: Theme) =>
-        alpha('#6CA568', theme.palette.mode === 'light' ? 0.04 : 0.06),
+        alpha('#6366F1', theme.palette.mode === 'light' ? 0.04 : 0.06),
     },
     '& .RaDatagrid-row': {
-      transition: transitions.default,
+      transition: transitions.smooth,
     },
   } as const,
 }
@@ -382,60 +371,13 @@ export const showStyles = {
   } as const,
 
   card: {
-    borderRadius: br.lg,
-    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
-    overflow: 'hidden',
-    '&:hover': {
-      boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'cardHover'),
-    },
-  } as const,
-
-  titleBox: {
-    p: { xs: 2.5, md: 3 },
-    borderBottom: (theme: Theme) =>
-      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
-    backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
-  } as const,
-
-  titleText: {
-    fontWeight: 600,
-    fontSize: '1.125rem',
-  } as const,
-
-  cardContent: {
-    p: { xs: 2, md: 3 },
-  } as const,
-
-  tabbedLayout: {
-    '& .RaTabbedShowLayout-root': {
-      borderRadius: br.lg,
-      overflow: 'hidden',
-    },
-    '& .RaTabbedShowLayout-tabs': {
-      backgroundColor: (theme: Theme) => getSubtleBg(theme.palette.mode as 'light' | 'dark'),
-      borderBottom: (theme: Theme) =>
-        `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
-    },
-    '& .RaTabbedShowLayout-content': {
-      p: { xs: 2, md: 3 },
-    },
-  } as const,
-
-  tab: {
-    fontWeight: 500,
-    textTransform: 'none' as const,
-    fontSize: '0.875rem',
-    minHeight: 48,
+    '&:hover': {},
   } as const,
 
   infoCard: {
-    borderRadius: br.xl,
     mb: 2,
     boxShadow: 'none',
     border: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
-    '&:hover': {
-      boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'sm'),
-    },
   } as const,
 
   infoCardTitleBox: {
@@ -492,31 +434,30 @@ export const homePageStyles = {
     textAlign: 'center',
     mb: 5,
     p: { xs: 3, sm: 5 },
-    borderRadius: br.lg,
     border: (theme: Theme) =>
-      `1px solid ${alpha('#6CA568', theme.palette.mode === 'light' ? 0.12 : 0.2)}`,
+      `1px solid ${alpha('#6366F1', theme.palette.mode === 'light' ? 0.12 : 0.2)}`,
     maxWidth: 640,
     width: '100%',
     position: 'relative',
-    overflow: 'hidden',
-    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
     '&::before': {
       content: '""',
       position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
-      height: 3,
+      height: 4,
       background: gradients.primaryHorizontal,
     },
   } as const,
 
   title: {
     mb: 1,
-    fontWeight: 600,
-    fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
-    color: (theme: Theme) => (theme.palette.mode === 'light' ? '#4E8B56' : '#A8D5A2'),
-    letterSpacing: '-0.02em',
+    fontWeight: 700,
+    fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' },
+    letterSpacing: '-0.03em',
+    background: gradients.primary,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
   } as const,
 
   subtitle: {
@@ -577,13 +518,13 @@ export const homePageStyles = {
     mb: 1,
     position: 'relative' as const,
     overflow: 'hidden',
-    transition: transitions.default,
+    transition: transitions.smooth,
     '&::after': {
       content: '""',
       position: 'absolute',
       inset: 0,
       background:
-        'linear-gradient(135deg, rgba(255,255,255,0.18) 0%, transparent 50%, rgba(0,0,0,0.08) 100%)',
+        'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(0,0,0,0.08) 100%)',
       borderRadius: '50%',
       pointerEvents: 'none',
     },
@@ -594,7 +535,7 @@ export const homePageStyles = {
 
   illustrationIcon: {
     fontSize: { xs: 20, sm: 26 },
-    color: '#F3F6ED',
+    color: '#FFFFFF',
     position: 'relative' as const,
     zIndex: 1,
   } as const,
@@ -616,11 +557,11 @@ export const bottomNavStyles = {
     right: 0,
     zIndex: 1200,
     backgroundColor: (theme: Theme) =>
-      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.85) : alpha('#0F2F23', 0.85),
-    backdropFilter: 'blur(16px)',
+      theme.palette.mode === 'light' ? alpha('#FFFFFF', 0.88) : alpha('#131C2E', 0.88),
+    backdropFilter: 'blur(20px)',
     borderTop: (theme: Theme) => `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
     backgroundImage: 'none',
-    transition: transitions.default,
+    transition: transitions.smooth,
   } as const,
   nav: {
     backgroundColor: 'transparent',
@@ -673,26 +614,225 @@ export const layoutStyles = {
     display: 'flex',
     flexDirection: 'column',
     p: { xs: 1, sm: 2, md: 2.5 },
-    pb: { xs: 8, sm: 9 },
     backgroundColor: 'background.default',
-    minHeight: '100vh',
-    transition: transitions.default,
+    transition: transitions.smooth,
   } as const,
 
   content: {
     flex: 1,
-    backgroundColor: 'background.paper',
-    borderRadius: br.xs,
-    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
-    border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
-    overflow: 'hidden',
-    transition: transitions.default,
+    backgroundColor: 'transparent',
+    transition: transitions.smooth,
   } as const,
 
   sidebar: {
     '& .MuiModal-root': {
       pointerEvents: 'none',
     },
+  } as const,
+
+  raLayout: {
+    '& .RaLayout-content': {
+      paddingBottom: { xs: '72px', sm: '76px' },
+    },
+  } as const,
+}
+
+export const dashboardStyles = {
+  container: {
+    p: { xs: 2, sm: 3, md: 4 },
+    width: '100%',
+  } as const,
+
+  header: {
+    mb: 4,
+  } as const,
+
+  title: {
+    fontWeight: 700,
+    fontSize: { xs: '1.25rem', sm: '1.5rem' },
+    letterSpacing: '-0.02em',
+    mb: 0.5,
+  } as const,
+
+  titleAccent: {
+    background: gradients.primary,
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+  } as const,
+
+  subtitle: {
+    color: 'text.secondary',
+    fontSize: '0.875rem',
+  } as const,
+
+  filtersRow: {
+    display: 'flex',
+    gap: 2,
+    mb: 3,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  } as const,
+
+  sectionTitle: {
+    fontWeight: 600,
+    fontSize: '1.125rem',
+    mb: 2,
+    mt: 1,
+  } as const,
+
+  chartGrid: {
+    mb: 4,
+  } as const,
+
+  chartCard: {
+    height: '100%',
+    border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
+    transition: transitions.smooth,
+    display: 'flex',
+    flexDirection: 'column',
+  } as const,
+
+  metricsCard: {
+    border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
+    transition: transitions.smooth,
+    overflow: 'hidden',
+  } as const,
+
+  metricsGrid: {
+    display: 'grid',
+    gridTemplateColumns: { xs: '1fr 1fr', sm: 'repeat(4, 1fr)' },
+    gap: 0,
+    '& > *': {
+      p: { xs: 2, sm: 2.5 },
+      borderRight: (theme: Theme) =>
+        `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+      borderBottom: (theme: Theme) =>
+        `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+      '&:nth-of-type(even)': {
+        borderRight: { xs: 'none', sm: undefined },
+      },
+      '&:nth-of-type(n+3)': {
+        borderBottom: { xs: 'none', sm: undefined },
+      },
+      '&:nth-last-child(-n+4)': {
+        borderBottom: 'none',
+      },
+      '&:nth-child(4n)': {
+        borderRight: 'none',
+      },
+    },
+  } as const,
+
+  metricsLabel: {
+    color: 'text.secondary',
+    fontWeight: 500,
+    fontSize: '0.65rem',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.05em',
+    mb: 0.5,
+  } as const,
+
+  metricsValue: {
+    fontWeight: 700,
+    fontSize: { xs: '1rem', sm: '1.25rem' },
+    letterSpacing: '-0.02em',
+    lineHeight: 1.2,
+  } as const,
+}
+
+export const sectionHubStyles = {
+  container: {
+    p: { xs: 2.5, sm: 4 },
+    width: '100%',
+    maxWidth: 600,
+    mx: 'auto',
+  } as const,
+
+  title: {
+    fontWeight: 700,
+    fontSize: { xs: '1.1rem', sm: '1.25rem' },
+    mb: 3,
+    textAlign: 'center',
+    color: 'text.primary',
+    letterSpacing: '-0.02em',
+  } as const,
+
+  grid: {
+    justifyContent: 'center',
+  } as const,
+
+  gridItem: {
+    display: 'flex',
+    justifyContent: 'center',
+  } as const,
+
+  actionBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    transition: transitions.spring,
+    width: { xs: 90, sm: 110 },
+    height: { xs: 110, sm: 130 },
+    '&:hover': { transform: 'translateY(-4px)' },
+    '&:active': { transform: 'translateY(-2px)' },
+  } as const,
+
+  linkBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    cursor: 'pointer',
+    width: { xs: 88, sm: 100 },
+    py: 1.5,
+    borderRadius: br.md,
+    transition: transitions.smooth,
+    '&:hover': {
+      bgcolor: 'action.hover',
+      transform: 'translateY(-2px)',
+    },
+  } as const,
+
+  circle: {
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+    transition: transitions.smooth,
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      inset: 0,
+      background:
+        'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(0,0,0,0.08) 100%)',
+      borderRadius: '50%',
+      pointerEvents: 'none',
+    },
+  } as const,
+
+  circleIcon: {
+    color: '#FFFFFF',
+    position: 'relative',
+    zIndex: 1,
+  } as const,
+
+  label: {
+    fontWeight: 600,
+    fontSize: { xs: '0.65rem', sm: '0.7rem' },
+    textAlign: 'center',
+    color: 'text.primary',
+    lineHeight: 1.3,
+  } as const,
+
+  desc: {
+    fontSize: { xs: '0.5rem', sm: '0.55rem' },
+    color: 'text.secondary',
+    textAlign: 'center',
+    mt: 0.15,
+    whiteSpace: 'pre-line',
   } as const,
 }
 
@@ -754,7 +894,7 @@ export const operationFormStyles = {
     cursor: 'pointer',
     p: 1,
     borderRadius: br.md,
-    transition: transitions.default,
+    transition: transitions.smooth,
     '&:hover': {
       bgcolor: 'action.hover',
     },
@@ -808,3 +948,25 @@ export const skeletonStyles = {
     flex: 1,
   } as const,
 }
+
+export const pausedFeature = {
+  opacity: 0.45,
+  pointerEvents: 'none',
+  userSelect: 'none',
+  filter: 'grayscale(0.6)',
+} as const
+
+export const pausedBadge: SxProps<Theme> = {
+  fontSize: '0.6rem',
+  fontWeight: 600,
+  px: 0.6,
+  py: 0.15,
+  borderRadius: 0.8,
+  backgroundColor: (theme: Theme) =>
+    theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)',
+  color: 'text.disabled',
+  letterSpacing: '0.04em',
+  textTransform: 'uppercase',
+  lineHeight: 1.3,
+  whiteSpace: 'nowrap',
+} as const

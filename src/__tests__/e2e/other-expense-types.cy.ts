@@ -3,11 +3,7 @@ import {
   otherExpenseType1Mock,
   otherExpenseType2Mock,
 } from '../mocks/responses/other-expense-type-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Other Expense Types', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -18,9 +14,7 @@ describe('E2E: Other Expense Types', () => {
       cy.wait('@getOtherExpenseType')
       cy.get('.RaEditButton-root').click()
     }
-    cy.get('[data-testid="input-name"] input')
-      .clear()
-      .type('Type test')
+    cy.get('[data-testid="input-name"] input').clear().type('Type test')
     cy.get('[data-testid="input-description"] textarea:visible')
       .clear()
       .type('Description test', { force: true })

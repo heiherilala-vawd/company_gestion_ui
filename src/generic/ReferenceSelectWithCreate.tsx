@@ -24,6 +24,7 @@ interface Props {
   createForm?: React.ReactNode
   onSuccess?: (newRecord: any) => void
   extractionPath?: string
+  disabled?: boolean
   sx?: Record<string, any>
 }
 
@@ -39,6 +40,7 @@ export default function ReferenceSelectWithCreate({
   createForm,
   onSuccess,
   extractionPath,
+  disabled = false,
   sx,
 }: Props) {
   const refresh = useRefresh()
@@ -118,7 +120,7 @@ export default function ReferenceSelectWithCreate({
             perPage={perPage}
             optionText={optionText}
           >
-            <SelectInput optionText={optionText} label={label} fullWidth />
+            <SelectInput optionText={optionText} label={label} fullWidth disabled={disabled} />
           </ReferenceInput>
         </Box>
         {createForm && (

@@ -13,7 +13,6 @@ import {
   loginInPage,
   selectEquipment,
   selectMaterial,
-  selectWarehouse,
   selectReferenceWithCreate,
   selectJob,
 } from '../support/utils.ts'
@@ -27,6 +26,8 @@ describe('E2E: Purchases', () => {
       })
     cy.get('[role="option"]', { timeout: 10000 }).should('be.visible')
     cy.contains('[role="option"]', optionText).click({ force: true })
+    cy.get('[role="option"]').should('not.exist')
+    cy.wait(200)
   }
 
   function selectSupplier() {

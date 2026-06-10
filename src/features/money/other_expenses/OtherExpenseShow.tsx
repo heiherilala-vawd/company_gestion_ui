@@ -1,11 +1,22 @@
-import { DateField, FunctionField, Show, SimpleShowLayout, TextField } from 'react-admin'
+import {
+  DateField,
+  FunctionField,
+  NumberField,
+  Show,
+  SimpleShowLayout,
+  TextField,
+} from 'react-admin'
 
 export default function OtherExpenseShow() {
   return (
     <Show title="Détails autre dépense">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
         <TextField source="other_expense_type.name" label="Type de dépense" />

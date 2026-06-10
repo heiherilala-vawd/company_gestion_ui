@@ -5,7 +5,7 @@ import { toCrupdateJobMapper, toAuditUserMapper } from '../../support/mappers.ts
 
 export const loan1Mock: Loan = {
   id: 'loan1_id',
-  lender: 'Banque Populaire',
+  organization: { id: 'org_001', name: 'Banque Populaire' },
   amount: 50000,
   interest_rate: 1200,
   start_date: '2024-01-15T08:00:00Z' as any,
@@ -21,7 +21,7 @@ export const loan1Mock: Loan = {
 
 export const loan2Mock: Loan = {
   id: 'loan2_id',
-  lender: 'Crédit Mutuel',
+  organization: { id: 'org_001', name: 'Crédit Mutuel' },
   amount: 25000,
   interest_rate: 800,
   start_date: '2023-06-01T08:00:00Z' as any,
@@ -37,7 +37,7 @@ export const loan2Mock: Loan = {
 
 export const loan3Mock: Loan = {
   id: 'loan3_id',
-  lender: 'Société Générale',
+  organization: { id: 'org_001', name: 'Société Générale' },
   amount: 100000,
   interest_rate: 1500,
   start_date: '2024-02-01T08:00:00Z' as any,
@@ -57,7 +57,7 @@ export const loansDefaultedMock: Loan[] = [loan2Mock]
 export const crupdateLoanMock: CrupdateLoan[] = [
   {
     id: 'loan_new_id',
-    lender: 'Nouveau Prêteur',
+    organization_id: 'org_001',
     amount: 30000,
     interest_rate: 1000,
     start_date: new Date(),

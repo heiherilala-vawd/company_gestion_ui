@@ -1,11 +1,11 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import TeamForm from './TeamForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function TeamCreate() {
   return (
-    <Create
-      redirect="list"
+    <GenericCreate
       transform={(data) => ({
         ...data,
         company_id: localStorage.getItem('currentCompanyId'),
@@ -14,6 +14,6 @@ export default function TeamCreate() {
       <SimpleForm id="team-create-form" toolbar={<FormToolbar />}>
         <TeamForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

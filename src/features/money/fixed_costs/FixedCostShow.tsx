@@ -13,7 +13,11 @@ export default function FixedCostShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="name" label="Nom" />
-        <NumberField source="amount" label="Montant" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <TextField source="start_date" label="Date début" />
         <TextField source="end_date" label="Date fin" />

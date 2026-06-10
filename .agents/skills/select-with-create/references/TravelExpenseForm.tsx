@@ -14,13 +14,13 @@ export default function TravelExpenseForm({ isCreate = false, isCreateForm = fal
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
+          sx={{ display: 'none' }}
           defaultValue={id}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={id} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={id} />}
       {renderWarehouseSelect('departure_location_id', 'Lieu de départ')}
       {renderWarehouseSelect('arrival_location_id', "Lieu d'arrivée")}
       <DateTimeInput
@@ -39,7 +39,7 @@ export default function TravelExpenseForm({ isCreate = false, isCreateForm = fal
         <Typography variant="h6" color="primary" sx={{ flex: 1 }}>
           💰 Dépense
         </Typography>
-        {!isCreate && <TextInput source="expense.id" readOnly />}
+        {!isCreate && <TextInput source="expense.id" sx={{ display: 'none' }} />}
         <ExpenseForm
           isCreate={isCreate}
           isCreateForm={isCreateForm}

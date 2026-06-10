@@ -1,11 +1,11 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { SimpleForm, TextInput } from 'react-admin'
 import FormToolbar from '../../../../generic/FormToolbar'
 import TravelEquipmentForm from './TravelEquipmentForm.tsx'
+import GenericEdit from '../../../../generic/GenericEdit'
 
 export default function TravelEquipmentEdit() {
   return (
-    <Edit
-      redirect="list"
+    <GenericEdit
       transform={(data) => ({
         ...data,
         travel: undefined,
@@ -24,6 +24,6 @@ export default function TravelEquipmentEdit() {
         <TextInput source="id" sx={{ display: 'none' }} />
         <TravelEquipmentForm />
       </SimpleForm>
-    </Edit>
+    </GenericEdit>
   )
 }

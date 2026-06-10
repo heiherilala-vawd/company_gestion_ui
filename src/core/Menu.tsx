@@ -47,7 +47,8 @@ import DescriptionIcon from '@mui/icons-material/Description'
 import AccountTreeIcon from '@mui/icons-material/AccountTree'
 import GroupIcon from '@mui/icons-material/Group'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import { menuStyles } from '../style/components'
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
+import { menuStyles, pausedFeature, pausedBadge } from '../style/components'
 import { canAccessResource } from '../auth/authProvider'
 
 interface ResourceItem {
@@ -60,12 +61,12 @@ interface ResourceItem {
 }
 
 const sectionColors: Record<string, string> = {
-  Général: '#6CA568',
-  Société: '#60A5FA',
-  RH: '#A78BFA',
-  Stock: '#4ADE80',
-  Équipement: '#FBBF24',
-  Monétaire: '#F87171',
+  Général: '#6366F1',
+  Société: '#3B82F6',
+  RH: '#8B5CF6',
+  Stock: '#10B981',
+  Équipement: '#F59E0B',
+  'Base de déplacement': '#F43F5E',
 }
 
 const SectionHeader = ({ label }: { label: string }) => (
@@ -160,25 +161,11 @@ const MenuRoot = () => {
     },
     { name: 'jobs', label: 'Travaux', icon: WorkIcon, to: '/jobs', testId: 'menu-jobs' },
     {
-      name: 'tasks',
-      label: 'Tâches',
-      icon: AssignmentIcon,
-      to: '/tasks',
-      testId: 'menu-tasks',
-    },
-    {
-      name: 'task_schedules',
-      label: 'Planification',
-      icon: ScheduleIcon,
-      to: '/task_schedules',
-      testId: 'menu-task-schedules',
-    },
-    {
-      name: 'history',
+      name: 'histories',
       label: 'Historique',
       icon: HistoryIcon,
-      to: '/history',
-      testId: 'menu-history',
+      to: '/histories',
+      testId: 'menu-histories',
     },
     {
       name: 'suppliers',
@@ -193,6 +180,14 @@ const MenuRoot = () => {
       icon: DescriptionIcon,
       to: '/purchase_orders',
       testId: 'menu-purchase-orders',
+    },
+    {
+      name: 'organizations',
+      label: 'Organisations',
+      icon: BusinessIcon,
+      to: '/organizations',
+      testId: 'menu-organizations',
+      resource: 'organizations',
     },
     {
       name: 'departments',
@@ -215,9 +210,37 @@ const MenuRoot = () => {
       to: '/other_expense_types',
       testId: 'menu-other-expense-types',
     },
+    {
+      name: 'leave_configs',
+      label: 'Configuration congés',
+      icon: EventBusyIcon,
+      to: '/leave_configs',
+      testId: 'menu-leave-configs',
+    },
+    {
+      name: 'leave_types',
+      label: 'Types de congés',
+      icon: CalendarMonthIcon,
+      to: '/leave_types',
+      testId: 'menu-leave-types',
+    },
   ]
 
   const rhItems: ResourceItem[] = [
+    {
+      name: 'tasks',
+      label: 'Tâches',
+      icon: AssignmentIcon,
+      to: '/tasks',
+      testId: 'menu-tasks',
+    },
+    {
+      name: 'task_schedules',
+      label: 'Planification de tâches',
+      icon: ScheduleIcon,
+      to: '/task_schedules',
+      testId: 'menu-task-schedules',
+    },
     { name: 'users', label: 'Utilisateurs', icon: PeopleIcon, to: '/users', testId: 'menu-users' },
     {
       name: 'employer_payments',
@@ -353,6 +376,20 @@ const MenuRoot = () => {
       testId: 'menu-maintenances',
     },
     {
+      name: 'maintenance_schedules',
+      label: 'Planification maintenance',
+      icon: BuildCircleIcon,
+      to: '/maintenance_schedules',
+      testId: 'menu-maintenance-schedules',
+    },
+    {
+      name: 'voitures',
+      label: 'Véhicules',
+      icon: DirectionsCarIcon,
+      to: '/voitures',
+      testId: 'menu-voitures',
+    },
+    {
       name: 'equipment-dashboard',
       label: 'Dashboard équipement',
       icon: DashboardIcon,
@@ -449,6 +486,13 @@ const MenuRoot = () => {
 
   const monetaryOtherItems: ResourceItem[] = [
     {
+      name: 'histories',
+      label: 'Historique',
+      icon: TimelineIcon,
+      to: '/histories',
+      testId: 'menu-history',
+    },
+    {
       name: 'cash_accounts',
       label: 'Comptes caisse',
       icon: AccountBalanceIcon,
@@ -471,26 +515,53 @@ const MenuRoot = () => {
     },
   ]
 
+  const PAUSED_RESOURCES = new Set<string>([])
+
   const renderItems = (items: ResourceItem[]) =>
     items
       .filter((item) => {
         const resource = item.resource || item.name
         return canAccessResource(resource, 'list')
       })
-      .map((item) => (
-        <ListItemButton
-          key={item.name}
-          component={Link}
-          to={item.to}
-          sx={menuStyles.listItem}
-          data-testid={item.testId}
-        >
-          <ListItemIcon sx={menuStyles.listItemIcon}>
-            <item.icon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary={item.label} primaryTypographyProps={menuStyles.listItemText} />
-        </ListItemButton>
-      ))
+      .map((item) => {
+        const resource = item.resource || item.name
+        const isPaused = PAUSED_RESOURCES.has(resource)
+
+        return (
+          <ListItemButton
+            key={item.name}
+            component={isPaused ? 'div' : Link}
+            to={isPaused ? undefined : item.to}
+            sx={{
+              ...menuStyles.listItem,
+              ...(isPaused ? pausedFeature : {}),
+              cursor: isPaused ? 'default' : 'pointer',
+            }}
+            data-testid={item.testId}
+            disableRipple={isPaused}
+          >
+            <ListItemIcon sx={menuStyles.listItemIcon}>
+              <item.icon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Box
+                  component="span"
+                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.8 }}
+                >
+                  {item.label}
+                  {isPaused && (
+                    <Box component="span" sx={pausedBadge}>
+                      Bientôt
+                    </Box>
+                  )}
+                </Box>
+              }
+              primaryTypographyProps={menuStyles.listItemText}
+            />
+          </ListItemButton>
+        )
+      })
 
   return (
     <Box sx={menuStyles.container} data-testid="menu-item-home">
@@ -527,7 +598,7 @@ const MenuRoot = () => {
         {renderItems(equipmentItems)}
       </List>
 
-      <SectionHeader label="Monétaire" />
+      <SectionHeader label="Base de déplacement" />
       <List component="nav" dense sx={{ mb: 1 }}>
         <SubSectionHeader
           label="Entrées"
