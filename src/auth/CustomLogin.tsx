@@ -54,8 +54,8 @@ export const CustomLogin = () => {
           height: '200%',
           background:
             mode === 'light'
-              ? 'radial-gradient(ellipse at 30% 20%, rgba(45, 110, 145, 0.04) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(212, 96, 92, 0.03) 0%, transparent 50%)'
-              : 'radial-gradient(ellipse at 30% 20%, rgba(45, 110, 145, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(212, 96, 92, 0.05) 0%, transparent 50%)',
+              ? 'radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.04) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%)'
+              : 'radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%)',
           pointerEvents: 'none',
         },
       }}

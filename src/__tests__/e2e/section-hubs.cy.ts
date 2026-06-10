@@ -197,7 +197,7 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
 
   function testMonetaryDepenseRedirect(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    navigateViaBottomNav('Monétaire')
+    navigateViaBottomNav('Base de déplacement')
     cy.get('[data-testid="section-hub"]')
       .contains('Activité', { timeout: 10000 })
       .should('be.visible')
@@ -208,7 +208,7 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
 
   function testMonetaryRevenuRedirect(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    navigateViaBottomNav('Monétaire')
+    navigateViaBottomNav('Base de déplacement')
     cy.get('[data-testid="section-hub"]')
       .contains('Activité', { timeout: 10000 })
       .should('be.visible')

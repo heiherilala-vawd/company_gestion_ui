@@ -8,7 +8,11 @@ export default function ReceiptList() {
     <List resource="receipts" filters={ReceiptFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['payment_date', 'amount']}>
         <DateField source="payment_date" label="Date paiement" />
-        <NumberField source="amount" label="Montant" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <EditButton />
       </ResponsiveDatagrid>
     </List>

@@ -65,4 +65,5 @@ export const registerUserMock: CrupdateUser = {
   email: 'jane.smith@company.com',
   password: 'password123',
   comment: 'New employee registration',
+  company_ids: ['comp_001'],
 }

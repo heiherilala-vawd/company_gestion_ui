@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import {
   Box,
   Card,
-  CardContent,
   Typography,
   Grid,
   Table,
@@ -12,11 +11,11 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
 } from '@mui/material'
 import { useNotify, Loading } from 'react-admin'
 import DashboardFilters from './components/DashboardFilters'
-import { PieChartCard } from './components/ChartSection'
+import { PieChartCard, BarChartCard } from './components/ChartSection'
+import { dashboardStyles } from '../../style/components'
 
 interface Summary {
   stock_value_total: number
@@ -37,6 +36,33 @@ interface Breakdown {
   }[]
 }
 
+const metrics = [
+  {
+    key: 'stock_value_total',
+    label: 'Valeur stock',
+    color: 'primary.main',
+    fmt: (v: number) => `${(v ?? 0)?.toLocaleString()} Ar`,
+  },
+  {
+    key: 'consumption_cost_total',
+    label: 'Coût consommation',
+    color: 'error.main',
+    fmt: (v: number) => `${(v ?? 0)?.toLocaleString()} Ar`,
+  },
+  {
+    key: 'total_materials_count',
+    label: 'Total matériaux',
+    color: 'info.main',
+    fmt: (v: number) => `${v ?? 0}`,
+  },
+  {
+    key: 'expiring_count',
+    label: 'Expiration proche',
+    color: 'warning.main',
+    fmt: (v: number) => `${v ?? 0}`,
+  },
+] as const
+
 export default function MaterialDashboard() {
   const [summary, setSummary] = useState<Summary | null>(null)
   const [breakdown, setBreakdown] = useState<Breakdown | null>(null)
@@ -50,16 +76,18 @@ export default function MaterialDashboard() {
     try {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
+      const userId = localStorage.getItem('user_id')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
       const params = new URLSearchParams()
       if (dateFrom) params.set('date_from', dateFrom)
       if (dateTo) params.set('date_to', dateTo)
 
+      const baseUrl = `${apiUrl}/users/${userId}/companies/${companyId}/dashboard/materials`
       const [summaryRes, breakdownRes] = await Promise.all([
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/materials/summary?${params}`, {
+        fetch(`${baseUrl}/summary?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/materials/breakdown?${params}`, {
+        fetch(`${baseUrl}/breakdown?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ])
@@ -81,94 +109,64 @@ export default function MaterialDashboard() {
   if (loading) return <Loading loadingSecondary="Chargement du tableau de bord matériaux..." />
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        Tableau de bord matériaux
-      </Typography>
+    <Box sx={dashboardStyles.container}>
+      <Box sx={dashboardStyles.header}>
+        <Typography sx={dashboardStyles.title}>
+          <Box component="span" sx={dashboardStyles.titleAccent}>
+            Matériaux
+          </Box>
+        </Typography>
+        <Typography sx={dashboardStyles.subtitle}>
+          Tableau de bord — Vue d&apos;ensemble des stocks et consommations
+        </Typography>
+      </Box>
+
       <DashboardFilters
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateFromChange={setDateFrom}
         onDateToChange={setDateTo}
+        onApply={fetchData}
       />
-      <Button variant="contained" onClick={fetchData} sx={{ mb: 3 }} size="small">
-        Appliquer les filtres
-      </Button>
 
       {summary && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Valeur stock
+        <Card sx={{ ...dashboardStyles.metricsCard, mb: 4 }}>
+          <Box sx={dashboardStyles.metricsGrid}>
+            {metrics.map((m) => (
+              <Box key={m.key}>
+                <Typography sx={dashboardStyles.metricsLabel}>{m.label}</Typography>
+                <Typography sx={{ ...dashboardStyles.metricsValue, color: m.color }}>
+                  {m.fmt(summary[m.key as keyof Summary] as number)}
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                  {summary.stock_value_total?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Coût consommation
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'error.main' }}>
-                  {summary.consumption_cost_total?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Total matériaux
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.total_materials_count}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Expiration proche
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'warning.main' }}>
-                  {summary.expiring_count}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+              </Box>
+            ))}
+          </Box>
+        </Card>
       )}
 
       {breakdown && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid container spacing={2.5} sx={dashboardStyles.chartGrid}>
           {breakdown.top5_stock_value?.length > 0 && (
             <Grid item xs={12} md={6}>
-              <PieChartCard
+              <BarChartCard
                 title="Top 5 valeur de stock"
                 data={breakdown.top5_stock_value.map((i) => ({
-                  name: i.material_name,
-                  value: i.value,
+                  label: i.material_name ?? 'N/A',
+                  value: i.value ?? 0,
                 }))}
+                unit="Ar"
               />
             </Grid>
           )}
           {breakdown.top5_consumption_cost?.length > 0 && (
             <Grid item xs={12} md={6}>
-              <PieChartCard
+              <BarChartCard
                 title="Top 5 coût consommation"
                 data={breakdown.top5_consumption_cost.map((i) => ({
-                  name: i.material_name,
-                  value: i.cost,
+                  label: i.material_name ?? 'N/A',
+                  value: i.cost ?? 0,
                 }))}
+                unit="Ar"
               />
             </Grid>
           )}
@@ -177,42 +175,111 @@ export default function MaterialDashboard() {
               <PieChartCard
                 title="Valeur stock par entrepôt"
                 data={breakdown.stock_value_by_warehouse.map((i) => ({
-                  name: i.warehouse,
-                  value: i.total_value,
+                  name: i.warehouse ?? 'N/A',
+                  value: i.total_value ?? 0,
                 }))}
               />
             </Grid>
           )}
           {breakdown.expiring_materials?.length > 0 && (
             <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
+              <Card sx={dashboardStyles.chartCard}>
+                <Box
+                  sx={{ p: { xs: 2, sm: 3 }, flex: 1, display: 'flex', flexDirection: 'column' }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'text.secondary',
+                      fontWeight: 600,
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      mb: 1.5,
+                    }}
+                  >
                     Matériaux proches d'expiration
                   </Typography>
-                  <TableContainer component={Paper}>
+                  <TableContainer
+                    component={Paper}
+                    sx={{
+                      borderRadius: 1.5,
+                      border: (theme) => `1px solid ${theme.palette.divider}`,
+                      boxShadow: 'none',
+                      flex: 1,
+                    }}
+                  >
                     <Table size="small">
                       <TableHead>
                         <TableRow>
-                          <TableCell>Matériau</TableCell>
-                          <TableCell>Entrepôt</TableCell>
-                          <TableCell>Quantité</TableCell>
-                          <TableCell>Expire le</TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                          >
+                            Matériau
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                          >
+                            Entrepôt
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                            align="right"
+                          >
+                            Qté
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              fontWeight: 600,
+                              fontSize: '0.7rem',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.05em',
+                              color: 'text.secondary',
+                            }}
+                            align="right"
+                          >
+                            Expire le
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {breakdown.expiring_materials.map((m, i) => (
                           <TableRow key={i}>
-                            <TableCell>{m.material_name}</TableCell>
-                            <TableCell>{m.warehouse}</TableCell>
-                            <TableCell>{m.stock_quantity}</TableCell>
-                            <TableCell>{m.expiry_date}</TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }}>
+                              {m.material_name ?? 'N/A'}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }}>
+                              {m.warehouse ?? 'N/A'}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }} align="right">
+                              {m.stock_quantity ?? 0}
+                            </TableCell>
+                            <TableCell sx={{ fontSize: '0.8125rem' }} align="right">
+                              {m.expiry_date ?? 'N/A'}
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </CardContent>
+                </Box>
               </Card>
             </Grid>
           )}

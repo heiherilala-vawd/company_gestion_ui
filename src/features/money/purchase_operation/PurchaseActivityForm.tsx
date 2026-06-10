@@ -61,9 +61,7 @@ const PurchaseActivityForm = () => {
   }
 
   const add_autogenaration_id = (source: string) => {
-    return (
-      <TextInput source={source} readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
-    )
+    return <TextInput source={source} sx={{ display: 'none' }} defaultValue={generateId()} />
   }
 
   const [showTransport, setShowTransport] = useState(false)
@@ -199,9 +197,8 @@ const PurchaseActivityForm = () => {
                   <TextInput
                     source="equipment_id"
                     label="ID Équipement"
-                    readOnly
-                    defaultValue={generateId()}
                     sx={{ display: 'none' }}
+                    defaultValue={generateId()}
                   />
                   <TextInput
                     source="equipment_name"

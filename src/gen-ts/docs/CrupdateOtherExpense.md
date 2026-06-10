@@ -1,13 +1,15 @@
+
 # CrupdateOtherExpense
+
 
 ## Properties
 
-| Name                    | Type                                            |
-| ----------------------- | ----------------------------------------------- |
-| `id`                    | string                                          |
-| `expense`               | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `other_expense_type_id` | string                                          |
-| `description`           | string                                          |
+Name | Type
+------------ | -------------
+`id` | string
+`expense_id` | string
+`other_expense_type_id` | string
+`description` | string
 
 ## Example
 
@@ -17,7 +19,7 @@ import type { CrupdateOtherExpense } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": other_001,
-  "expense": null,
+  "expense_id": exp_001,
   "other_expense_type_id": other_exp_type_001,
   "description": Frais de carburant pour grues,
 } satisfies CrupdateOtherExpense
@@ -34,3 +36,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

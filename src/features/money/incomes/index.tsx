@@ -10,5 +10,6 @@ export default {
   edit: IncomeEdit,
   show: IncomeShow,
   icon: PaidIcon,
-  recordRepresentation: (record: any) => `${record.source_organization} - ${record.amount}€`,
+  recordRepresentation: (record: any) =>
+    `${record.organization?.name ?? record.id} - ${record.amount}Ar`,
 }

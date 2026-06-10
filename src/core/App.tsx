@@ -28,9 +28,12 @@ import LoanResource from '../features/money/loans'
 import LoanRepaymentResource from '../features/money/loan_repayments'
 import ReceiptResource from '../features/money/receipts'
 import LeavesResource from '../features/hr/leaves'
+import LeaveTypeResource from '../features/hr/leave_types'
+import LeaveConfigResource from '../features/hr/leave_configs'
 import FixedCostResource from '../features/money/fixed_costs'
 import TasksResource from '../features/transversal/tasks'
 import TaskScheduleResource from '../features/transversal/task_schedules'
+import MaintenanceScheduleResource from '../features/transversal/maintenance_schedules'
 import BudgetLineResource from '../features/money/budget_lines'
 import CashAccountResource from '../features/money/cash_accounts'
 import CashTransactionResource from '../features/money/cash_transactions'
@@ -38,15 +41,17 @@ import EquipmentUsageResource from '../features/storage/equipment_usage'
 import MaterialConsumptionResource from '../features/storage/material_consumption'
 import MaterialWarehouseResource from '../features/storage/material_warehouse'
 import MaintenanceResource from '../features/storage/maintenances'
+import VoitureResource from '../features/storage/voitures'
 import LeaveBalanceResource from '../features/hr/leave_balances'
 import SupplierResource from '../features/transversal/suppliers'
 import PurchaseOrderResource from '../features/transversal/purchase_orders'
+import OrganizationResource from '../features/transversal/organizations'
 import DepartmentResource from '../features/transversal/departments'
 import TeamResource from '../features/transversal/teams'
 import IncomeTypeResource from '../features/money/incomeType'
 import OtherExpenseTypeResource from '../features/money/otherExpenseType'
 import YearlyReport from '../features/reports'
-import HistoryPage from '../features/reports/HistoryPage'
+import HistoryResource from '../features/transversal/histories'
 import MaterialDashboard from '../features/reports/MaterialDashboard'
 import EquipmentDashboard from '../features/reports/EquipmentDashboard'
 import HrDashboard from '../features/reports/HrDashboard'
@@ -78,6 +83,7 @@ import RHPage from '../features/sections/RHPage'
 import StockPage from '../features/sections/StockPage'
 import EquipmentPage from '../features/sections/EquipmentPage'
 import MonetaryPage from '../features/sections/MonetaryPage'
+import NotificationsList from '../features/notifications/NotificationsList'
 import { CompanyProvider } from '../features/transversal/companies/CompanyContext.tsx'
 import { JobProvider } from '../features/transversal/jobs/JobContext.tsx'
 import { ExpenseProvider } from '../features/money/expenses/ExpenseContext.tsx'
@@ -163,12 +169,12 @@ const ThemedAdmin = () => {
                     <Route path="/equipment-hub" element={<EquipmentPage />} />
                     <Route path="/monetary" element={<MonetaryPage />} />
                     <Route path="/yearly-report" element={<YearlyReport />} />
-                    <Route path="/history" element={<HistoryPage />} />
                     <Route path="/leave_balances" element={<LeaveBalanceResource.list />} />
                     <Route path="/material-dashboard" element={<MaterialDashboard />} />
                     <Route path="/equipment-dashboard" element={<EquipmentDashboard />} />
                     <Route path="/hr-dashboard" element={<HrDashboard />} />
                     <Route path="/monetary-dashboard" element={<MonetaryDashboard />} />
+                    <Route path="/notifications" element={<NotificationsList />} />
                   </CustomRoutes>
                   <Resource name="jobs" {...JobResource} />
                   <Resource name="companies" {...CompanyResource} />
@@ -191,15 +197,17 @@ const ThemedAdmin = () => {
                   <Resource name="receipts" {...ReceiptResource} />
                   <Resource name="suppliers" {...SupplierResource} />
                   <Resource name="purchase_orders" {...PurchaseOrderResource} />
+                  <Resource name="organizations" {...OrganizationResource} />
                   <Resource name="teams" {...TeamResource} />
                   <Resource name="departments" {...DepartmentResource} />
                   <Resource name="income_types" {...IncomeTypeResource} />
                   <Resource name="other_expense_types" {...OtherExpenseTypeResource} />
-                  <Resource name="leave_types" />
-                  <Resource name="leave_configs" />
+                  <Resource name="leave_types" {...LeaveTypeResource} />
+                  <Resource name="leave_configs" {...LeaveConfigResource} />
                   <Resource name="fixed_costs" {...FixedCostResource} />
                   <Resource name="tasks" {...TasksResource} />
                   <Resource name="task_schedules" {...TaskScheduleResource} />
+                  <Resource name="maintenance_schedules" {...MaintenanceScheduleResource} />
                   <Resource name="budget_lines" {...BudgetLineResource} />
                   <Resource name="cash_accounts" {...CashAccountResource} />
                   <Resource name="cash_transactions" {...CashTransactionResource} />
@@ -207,6 +215,8 @@ const ThemedAdmin = () => {
                   <Resource name="material_consumption" {...MaterialConsumptionResource} />
                   <Resource name="material_warehouse" {...MaterialWarehouseResource} />
                   <Resource name="maintenances" {...MaintenanceResource} />
+                  <Resource name="voitures" {...VoitureResource} />
+                  <Resource name="histories" {...HistoryResource} />
                   <Resource name="leaves" {...LeavesResource} />
                 </Admin>
               </CashAccountProvider>

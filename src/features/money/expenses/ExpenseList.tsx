@@ -14,7 +14,11 @@ export default function ExpenseList() {
         rowClick="show"
       >
         <TextField source="description" label="Description" />
-        <NumberField source="amount" label="Montant" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="job.description" label="Travail" />
         <EditButton />
       </ResponsiveDatagrid>

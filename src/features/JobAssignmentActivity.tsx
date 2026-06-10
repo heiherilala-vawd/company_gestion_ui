@@ -108,7 +108,7 @@ export default function JobAssignmentActivity() {
               onChange={(e: any) => setJobId(e?.id || e?.target?.value || null)}
             >
               <SelectInput
-                optionText="name"
+                optionText="description"
                 sx={operationFormStyles.flexFull}
                 data-testid="input-job_id"
               />

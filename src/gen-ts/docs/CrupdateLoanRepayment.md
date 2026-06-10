@@ -1,14 +1,18 @@
+
 # CrupdateLoanRepayment
+
 
 ## Properties
 
-| Name           | Type   |
-| -------------- | ------ |
-| `id`           | string |
-| `payment_date` | Date   |
-| `amount`       | number |
-| `loan_id`      | string |
-| `comment`      | string |
+Name | Type
+------------ | -------------
+`id` | string
+`payment_date` | Date
+`amount` | number
+`loan_id` | string
+`principal_portion` | number
+`interest_portion` | number
+`comment` | string
 
 ## Example
 
@@ -21,6 +25,8 @@ const example = {
   "payment_date": Fri Mar 01 03:00:00 EAT 2024,
   "amount": 600000,
   "loan_id": loan_001,
+  "principal_portion": 500000,
+  "interest_portion": 100000,
   "comment": Remboursement mars 2024,
 } satisfies CrupdateLoanRepayment
 
@@ -36,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -14,6 +14,7 @@ const toInstant = (value: any): any => {
 
 const convertDates = (obj: any): any => {
   if (obj === null || obj === undefined) return obj
+  if (obj instanceof Date) return obj.toISOString()
   if (Array.isArray(obj)) return obj.map(convertDates)
   if (typeof obj === 'object') {
     const result: any = {}
@@ -23,6 +24,31 @@ const convertDates = (obj: any): any => {
     return result
   }
   return toInstant(obj)
+}
+
+const FLATTEN_TO_ID = new Set(['source_location', 'used_by'])
+
+const normalizeRecord = (record: any): any => {
+  if (!record || typeof record !== 'object') return record
+  if (Array.isArray(record)) return record.map(normalizeRecord)
+
+  const result: any = { ...record }
+  for (const [key, value] of Object.entries(result)) {
+    if (value && typeof value === 'object' && !Array.isArray(value) && 'id' in value) {
+      result[`${key}_id`] = value.id
+      if (FLATTEN_TO_ID.has(key)) {
+        result[key] = value.id
+      }
+      result[key] = normalizeRecord(value)
+    } else if (Array.isArray(value)) {
+      result[key] = value.map(normalizeRecord)
+      if (value.length > 0 && typeof value[0] === 'object' && 'id' in value[0]) {
+        const singular = key.endsWith('s') ? key.slice(0, -1) : key
+        result[`${singular}_ids`] = value.map((item: any) => item.id)
+      }
+    }
+  }
+  return result
 }
 
 // Fonction pour obtenir le token
@@ -49,12 +75,9 @@ const fetchWithToken = async <T = any>(url: string, options: RequestInit = {}): 
   })
 
   if (!response.ok) {
-    if (response.status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = '/login'
-      throw new Error('Session expirée')
-    }
-    throw new Error(`HTTP error! status: ${response.status}`)
+    const error = new Error(`HTTP error! status: ${response.status}`)
+    ;(error as any).status = response.status
+    throw error
   }
 
   // Pour les DELETE, il n'y a pas toujours de body
@@ -100,11 +123,20 @@ export const dataProvider = {
     }
 
     const data = rawData.map((item: any) => {
-      if (item.id) return item
-      if (item.material?.id && item.warehouse?.id) {
-        return { ...item, id: `${item.material.id}-${item.warehouse.id}` }
+      const normalized = normalizeRecord(item)
+      if (
+        normalized.id &&
+        typeof normalized.id === 'object' &&
+        normalized.id.equipment_id &&
+        normalized.id.warehouse_id
+      ) {
+        return { ...normalized, id: `${normalized.id.equipment_id}/${normalized.id.warehouse_id}` }
       }
-      return { ...item, id: crypto.randomUUID() }
+      if (normalized.id) return normalized
+      if (normalized.material?.id && normalized.warehouse?.id) {
+        return { ...normalized, id: `${normalized.material.id}-${normalized.warehouse.id}` }
+      }
+      return { ...normalized, id: crypto.randomUUID() }
     })
 
     const start = (page - 1) * perPage
@@ -119,7 +151,16 @@ export const dataProvider = {
   getOne: async (resource: string, params: GetOneParams) => {
     const url = getMiddleUrlWithId(resource, params.id)
     const data = await fetchWithToken<T>(url)
-    return { data }
+    const normalized = normalizeRecord(data)
+    if (
+      normalized.id &&
+      typeof normalized.id === 'object' &&
+      normalized.id.equipment_id &&
+      normalized.id.warehouse_id
+    ) {
+      normalized.id = `${normalized.id.equipment_id}/${normalized.id.warehouse_id}`
+    }
+    return { data: normalized }
   },
 
   // GET MANY
@@ -137,7 +178,7 @@ export const dataProvider = {
       body: JSON.stringify([convertDates(params.data)]),
     })
 
-    return { data: json[0] }
+    return { data: normalizeRecord(json[0]) }
   },
 
   // UPDATE
@@ -148,7 +189,7 @@ export const dataProvider = {
       body: JSON.stringify([convertDates({ ...params.data, id: params.id })]),
     })
 
-    return { data: json[0] }
+    return { data: normalizeRecord(json[0]) }
   },
 
   // DELETE ONE

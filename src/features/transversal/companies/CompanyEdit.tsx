@@ -6,7 +6,7 @@ import CompanyForm from './CompanyForm.tsx'
 export default function CompanyEdit() {
   return (
     <Edit>
-      <SimpleForm id="company-edit-form" redirect="list" toolbar={<FormToolbar />}>
+      <SimpleForm id="company-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
         <CompanyForm />
       </SimpleForm>

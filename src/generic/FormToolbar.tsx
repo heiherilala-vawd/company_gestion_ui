@@ -6,11 +6,11 @@ const FormToolbar = () => {
   const navigate = useNavigate()
 
   return (
-    <Toolbar>
-      <SaveButton />
-      <Button onClick={() => navigate(-1)} sx={{ ml: 1 }}>
+    <Toolbar sx={{ mb: { xs: 8, sm: 9 } }}>
+      <Button onClick={() => navigate(-1)} sx={{ mr: 'auto' }}>
         Retour
       </Button>
+      <SaveButton />
     </Toolbar>
   )
 }

@@ -2,6 +2,7 @@ import {
   Show,
   SimpleShowLayout,
   TextField,
+  NumberField,
   SelectField,
   DateField,
   BooleanField,
@@ -13,7 +14,11 @@ export default function EmployeePaymentShow() {
     <Show title="Détails paiement employé">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="expense.amount" label="Pris dépense" />
+        <NumberField
+          source="expense.amount"
+          label="Pris dépense"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
         <BooleanField source="is_for_team" label="Paiement pour équipe" />

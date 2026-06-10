@@ -5,7 +5,11 @@ export default function PurchaseShow() {
     <Show title="Détails achat">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="expense.amount" label="Pris dépense" />
+        <NumberField
+          source="expense.amount"
+          label="Pris dépense"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
         <TextField source="supplier.name" label="Fournisseur" />

@@ -9,7 +9,11 @@ import {
   SelectInput,
   EditButton,
   FunctionField,
+  TopToolbar,
 } from 'react-admin'
+import { Button } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import { useNavigate } from 'react-router-dom'
 import { ResponsiveDatagrid } from '../../../../generic/ResponsiveDatagrid'
 
 const TravelPeopleFilters = [
@@ -43,9 +47,33 @@ const TravelPeopleFilters = [
   <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
 ]
 
+const CreateTravelPeopleButton = () => {
+  const navigate = useNavigate()
+  return (
+    <Button
+      variant="contained"
+      startIcon={<AddIcon />}
+      onClick={() => navigate('/travel_people_activity')}
+    >
+      Nouveau
+    </Button>
+  )
+}
+
+const ListActions = () => (
+  <TopToolbar>
+    <CreateTravelPeopleButton />
+  </TopToolbar>
+)
+
 export default function TravelPeopleList() {
   return (
-    <List resource="travel_people" filters={TravelPeopleFilters} perPage={25}>
+    <List
+      resource="travel_people"
+      filters={TravelPeopleFilters}
+      perPage={25}
+      actions={<ListActions />}
+    >
       <ResponsiveDatagrid
         priorityFields={['arrival_location.name', 'travel', 'user.first_name', 'user.last_name']}
       >

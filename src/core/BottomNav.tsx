@@ -14,7 +14,7 @@ const navItems = [
   { label: 'RH', icon: BadgeIcon, to: '/rh' },
   { label: 'Stock', icon: InventoryIcon, to: '/stock' },
   { label: 'Équipement', icon: PrecisionManufacturingIcon, to: '/equipment-hub' },
-  { label: 'Monétaire', icon: EuroSymbolIcon, to: '/monetary' },
+  { label: 'Base de déplacement', icon: EuroSymbolIcon, to: '/monetary' },
 ]
 
 function getActiveIndex(pathname: string): number {

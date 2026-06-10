@@ -33,12 +33,6 @@ describe('E2E: Maintenances', () => {
       .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    cy.get('[data-testid="input-expense.amount"] input')
-      .clear()
-      .type(<string>(<unknown>crupdatedData.expense.amount))
-    cy.get('[data-testid="input-expense.comment"] input')
-      .clear()
-      .type(<string>crupdatedData.expense.comment)
     cy.get('button[type="submit"]').click({ force: true })
   }
 

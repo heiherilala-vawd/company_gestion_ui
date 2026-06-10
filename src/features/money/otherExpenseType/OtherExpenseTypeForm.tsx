@@ -1,5 +1,6 @@
 import { TextInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function OtherExpenseTypeForm({ isCreate = false, isCreateForm = false }) {
   return (
@@ -7,13 +8,14 @@ export default function OtherExpenseTypeForm({ isCreate = false, isCreateForm = 
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
-          defaultValue={generateId()}
           sx={{ display: 'none' }}
+          defaultValue={generateId()}
           data-testid="input-id"
         />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
+      )}
       <TextInput source="name" label="Nom" data-testid="input-name" />
       <TextInput
         source="company_id"
@@ -21,20 +23,22 @@ export default function OtherExpenseTypeForm({ isCreate = false, isCreateForm = 
         data-testid="input-company"
         sx={{ display: 'none' }}
       />
-      <TextInput
-        source="description"
-        label="Description"
-        multiline
-        rows={3}
-        data-testid="input-description"
-      />
-      <TextInput
-        source="comment"
-        label="Commentaire"
-        multiline
-        rows={3}
-        data-testid="input-comment"
-      />
+      <CollapsibleOptionalFields>
+        <TextInput
+          source="description"
+          label="Description"
+          multiline
+          rows={3}
+          data-testid="input-description"
+        />
+        <TextInput
+          source="comment"
+          label="Commentaire"
+          multiline
+          rows={3}
+          data-testid="input-comment"
+        />
+      </CollapsibleOptionalFields>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import {
   List,
   TextField,
+  NumberField,
   SelectField,
   SearchInput,
   SelectInput,
@@ -29,8 +30,13 @@ export default function EmployeePaymentList() {
   return (
     <List resource="employee_payments" filters={EmployerPaymentFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['expense.amount', 'users.0.first_name', 'payment_type']}>
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <FunctionField
+          source="users"
           label="Employés"
           render={(record: any) =>
             record.users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') || ''

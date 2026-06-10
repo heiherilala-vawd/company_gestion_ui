@@ -37,6 +37,7 @@ export default function LeaveList() {
     <List resource="leaves" filters={LeaveFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['user', 'leave_type.name', 'start_date', 'status']}>
         <FunctionField
+          source="user"
           label="Employé"
           render={(record: any) => record.user?.first_name + ' ' + record.user?.last_name || ''}
         />
@@ -45,6 +46,7 @@ export default function LeaveList() {
         <DateField source="end_date" label="Fin" />
         <NumberField source="duration_days" label="Jours" />
         <FunctionField
+          source="status"
           label="Statut"
           render={(record: any) => (
             <span

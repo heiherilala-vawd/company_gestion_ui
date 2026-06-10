@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
 import OtherExpenseTypeForm from './OtherExpenseTypeForm'
+import GenericCreate from '../../../generic/GenericCreate'
 
 export default function OtherExpenseTypeCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="other-expense-type-create-form" toolbar={<FormToolbar />}>
         <OtherExpenseTypeForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

@@ -1,12 +1,15 @@
+
 # CrupdateMaintenance
+
 
 ## Properties
 
-| Name          | Type                                            |
-| ------------- | ----------------------------------------------- |
-| `id`          | string                                          |
-| `expense`     | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `description` | string                                          |
+Name | Type
+------------ | -------------
+`id` | string
+`expense_id` | string
+`equipment_id` | string
+`description` | string
 
 ## Example
 
@@ -16,7 +19,8 @@ import type { CrupdateMaintenance } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": maint_001,
-  "expense": null,
+  "expense_id": exp_001,
+  "equipment_id": eq_001,
   "description": Révision moteur périodique,
 } satisfies CrupdateMaintenance
 
@@ -32,3 +36,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

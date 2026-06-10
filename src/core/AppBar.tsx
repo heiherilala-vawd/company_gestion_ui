@@ -13,6 +13,7 @@ import { CompanySelector } from '../features/transversal/companies/CompanySelect
 import { JobSelector } from '../features/transversal/jobs/JobSelector'
 import { useThemeMode } from '../style/ThemeContext'
 import { useTheme } from '@mui/material/styles'
+import NotificationBell from '../features/notifications/NotificationBell'
 
 export const AppBar = () => {
   const navigate = useNavigate()
@@ -57,13 +58,18 @@ export const AppBar = () => {
               onClick={() => navigate(-1)}
               color="inherit"
               size="small"
-              sx={{ color: 'text.secondary', fontWeight: 500 }}
+              sx={{
+                color: 'text.secondary',
+                fontWeight: 500,
+                '&:hover': { color: 'primary.main' },
+              }}
             >
               Retour
             </Button>
           ))}
         <TitlePortal />
         <Box sx={{ flex: 1 }} />
+        <NotificationBell />
         <Box sx={appBarStyles.container}>
           <Tooltip title={mode === 'dark' ? 'Mode clair' : 'Mode sombre'}>
             <IconButton onClick={toggleMode} color="inherit" sx={appBarStyles.iconButton}>

@@ -1,11 +1,15 @@
-import { Show, SimpleShowLayout, TextField, DateField } from 'react-admin'
+import { Show, SimpleShowLayout, TextField, NumberField, DateField } from 'react-admin'
 
 export default function TravelExpenseShow() {
   return (
     <Show title="Détails frais de déplacement">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="expense.amount" label="Pris dépense" />
+        <NumberField
+          source="expense.amount"
+          label="Pris dépense"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <TextField source="expense.job_id" label="Id travail" />
         <TextField source="departure_location.name" label="Lieu de départ" />

@@ -87,6 +87,9 @@ export function toCrupdateEquipmentMapper(equipment: Equipment): CrupdateEquipme
     storage_number: equipment.storage_number,
     comment: equipment.comment,
     est_en_panne: equipment.est_en_panne,
+    purchase_price: equipment.purchase_price,
+    purchase_date: equipment.purchase_date,
+    category: equipment.category,
   }
 }
 
@@ -97,6 +100,7 @@ export function toCrupdateMaterialMapper(material: Material): CrupdateMaterial {
     description: material.description,
     unit: material.unit,
     comment: material.comment,
+    company_id: material.company_id,
   }
 }
 
@@ -129,7 +133,7 @@ export function toCrupdateIncomeMoneyMapper(income: IncomeMoney): CrupdateIncome
     id: income?.id,
     amount: income.amount,
     description: income.description,
-    source_organization: income.source_organization,
+    source_organization: income.source_organization || (income as any).organization?.name,
     invoice_reference: income.invoice_reference,
     job_id: income.job?.id,
     income_type_id: income.income_type?.id,
@@ -142,7 +146,7 @@ export function toCrupdateLoanMapper(loan: Loan): CrupdateLoan {
     id: loan?.id,
     amount: loan.amount,
     description: loan.description,
-    lender: loan.lender,
+    organization_id: loan.organization?.id,
     interest_rate: loan.interest_rate,
     start_date: loan.start_date,
     due_date: loan.due_date,

@@ -9,13 +9,13 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
+          sx={{ display: 'none' }}
           defaultValue={generateId()}
           sx={{ display: 'none' }}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />}
       <TextInput
         source="email"
         label="Email"

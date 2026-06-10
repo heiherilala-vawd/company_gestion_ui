@@ -17,14 +17,22 @@ export default function PurchaseOrderShow() {
         <TextField source="supplier.name" label="Fournisseur" />
         <DateField source="order_date" label="Date commande" />
         <TextField source="status" label="Statut" />
-        <NumberField source="total_amount" label="Montant total" />
+        <NumberField
+          source="total_amount"
+          label="Montant total"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="job.description" label="Travail" />
         <TextField source="comment" label="Commentaire" />
         <ArrayField source="lines" label="Lignes">
           <Datagrid bulkActionButtons={false}>
             <TextField source="material.name" label="Matériau" />
             <NumberField source="quantity" label="Quantité" />
-            <NumberField source="unit_price" label="Prix unitaire" />
+            <NumberField
+              source="unit_price"
+              label="Prix unitaire"
+              options={{ style: 'currency', currency: 'MGA' }}
+            />
           </Datagrid>
         </ArrayField>
         <DateField source="created_at" label="Créé le" showTime />

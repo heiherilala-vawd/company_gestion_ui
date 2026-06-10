@@ -1,9 +1,4 @@
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Material Dashboard', () => {
   beforeEach(() => {
@@ -15,16 +10,14 @@ describe('E2E: Material Dashboard', () => {
   })
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-material-dashboard"]').click()
+    cy.contains('Dashboard stock').click({ force: true })
     cy.wait(['@getMaterialDashboardSummary', '@getMaterialDashboardBreakdown'], { timeout: 15000 })
     cy.wait(500)
   }
 
   it('should display material dashboard page', () => {
     navigateToDesktop()
-    cy.contains('h4', 'Tableau de bord matériaux').should('be.visible')
+    cy.contains("Vue d'ensemble").should('be.visible')
   })
 
   it('should display summary cards', () => {
@@ -37,6 +30,6 @@ describe('E2E: Material Dashboard', () => {
 
   it('should display filter button', () => {
     navigateToDesktop()
-    cy.contains('Appliquer les filtres').should('be.visible')
+    cy.contains('button', 'Appliquer').should('be.visible')
   })
 })

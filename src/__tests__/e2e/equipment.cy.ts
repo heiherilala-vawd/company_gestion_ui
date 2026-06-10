@@ -76,7 +76,7 @@ describe('E2E: Equipment', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment', (req) => {
+    cy.intercept('PUT', '**/equipments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('createEquipment')
     creatOrUpdate(true)
@@ -88,7 +88,7 @@ describe('E2E: Equipment', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment', (req) => {
+    cy.intercept('PUT', '**/equipments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipments(req.body)))
     }).as('updateEquipment')
     creatOrUpdate(false)
@@ -114,7 +114,7 @@ describe('E2E: Equipment', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment',
+      '**/equipments',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createEquipmentFail')
     creatOrUpdate(true)
@@ -126,7 +126,7 @@ describe('E2E: Equipment', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment',
+      '**/equipments',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateEquipmentFail')
     creatOrUpdate(false)

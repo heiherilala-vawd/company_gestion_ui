@@ -6,38 +6,43 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange'
 import InventoryIcon from '@mui/icons-material/Inventory'
 import { canAccessResource } from '../auth/authProvider'
 import { alpha } from '@mui/material/styles'
-import { natureGradients } from '../style/themeConfig'
+import { accentGradients } from '../style/themeConfig'
 
 export const buttonThemes = {
-  forest: {
-    gradient: natureGradients.forest,
-    glow: `0 4px 14px ${alpha('#2D5A27', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#2D5A27', 0.35)}`,
+  sapphire: {
+    gradient: accentGradients.sapphire,
+    glow: `0 4px 14px ${alpha('#3B82F6', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#3B82F6', 0.35)}`,
   },
-  earth: {
-    gradient: natureGradients.earth,
-    glow: `0 4px 14px ${alpha('#8B6F47', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#8B6F47', 0.35)}`,
+  emerald: {
+    gradient: accentGradients.emerald,
+    glow: `0 4px 14px ${alpha('#10B981', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#10B981', 0.35)}`,
   },
-  clay: {
-    gradient: natureGradients.clay,
-    glow: `0 4px 14px ${alpha('#B87D5B', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#B87D5B', 0.35)}`,
+  amber: {
+    gradient: accentGradients.amber,
+    glow: `0 4px 14px ${alpha('#F59E0B', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#F59E0B', 0.35)}`,
   },
-  bark: {
-    gradient: natureGradients.bark,
-    glow: `0 4px 14px ${alpha('#6B4C3B', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#6B4C3B', 0.35)}`,
+  rose: {
+    gradient: accentGradients.rose,
+    glow: `0 4px 14px ${alpha('#F43F5E', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#F43F5E', 0.35)}`,
   },
-  moss: {
-    gradient: natureGradients.moss,
-    glow: `0 4px 14px ${alpha('#5A7A4A', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#5A7A4A', 0.35)}`,
+  violet: {
+    gradient: accentGradients.violet,
+    glow: `0 4px 14px ${alpha('#8B5CF6', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#8B5CF6', 0.35)}`,
   },
-  leaf: {
-    gradient: natureGradients.leaf,
-    glow: `0 4px 14px ${alpha('#7CB342', 0.25)}`,
-    hoverGlow: `0 8px 25px ${alpha('#7CB342', 0.35)}`,
+  teal: {
+    gradient: accentGradients.teal,
+    glow: `0 4px 14px ${alpha('#14B8A6', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#14B8A6', 0.35)}`,
+  },
+  cyan: {
+    gradient: accentGradients.cyan,
+    glow: `0 4px 14px ${alpha('#06B6D4', 0.25)}`,
+    hoverGlow: `0 8px 25px ${alpha('#06B6D4', 0.35)}`,
   },
 } as const
 
@@ -58,7 +63,7 @@ export const quickActionButtons: HomeButton[] = [
     icon: ShoppingCartIcon,
     to: '/purchases_activity',
     desc: 'Acheter',
-    color: 'forest',
+    color: 'sapphire',
     checkResources: ['purchases', 'expenses'],
   },
   {
@@ -66,7 +71,7 @@ export const quickActionButtons: HomeButton[] = [
     icon: LocalShippingIcon,
     to: '/travel_equipment_activity',
     desc: 'Déplacer',
-    color: 'earth',
+    color: 'emerald',
     checkResources: ['travel_expenses', 'equipment'],
   },
   {
@@ -74,7 +79,7 @@ export const quickActionButtons: HomeButton[] = [
     icon: PaidIcon,
     to: '/incomes_activity',
     desc: 'Recevoir',
-    color: 'clay',
+    color: 'amber',
     checkResources: ['incomes', 'loans'],
   },
   {
@@ -82,7 +87,7 @@ export const quickActionButtons: HomeButton[] = [
     icon: MoneyOffIcon,
     to: '/expenses_activity',
     desc: 'Payer',
-    color: 'bark',
+    color: 'rose',
     checkResources: ['bank_fees', 'employee_payments', 'other_expenses'],
   },
 ]
@@ -93,7 +98,7 @@ export const validationButtons: HomeButton[] = [
     icon: CurrencyExchangeIcon,
     to: '/employer_payments_activity',
     desc: 'Reçu\nretourné',
-    color: 'moss',
+    color: 'violet',
     checkResources: ['incomes', 'loans'],
   },
   {
@@ -101,7 +106,7 @@ export const validationButtons: HomeButton[] = [
     icon: InventoryIcon,
     to: '/travel_materials_activity',
     desc: 'Réception',
-    color: 'leaf',
+    color: 'teal',
     checkResources: ['material_warehouse', 'equipment'],
   },
 ]

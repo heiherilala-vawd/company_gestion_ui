@@ -1,13 +1,14 @@
-import { Create, SimpleForm } from 'react-admin'
+import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../../generic/FormToolbar'
 import TravelPeopleForm from './TravelPeopleForm.tsx'
+import GenericCreate from '../../../../generic/GenericCreate'
 
 export default function TravelPeopleCreate() {
   return (
-    <Create redirect="list">
+    <GenericCreate>
       <SimpleForm id="travel-people-create-form" toolbar={<FormToolbar />}>
         <TravelPeopleForm isCreate />
       </SimpleForm>
-    </Create>
+    </GenericCreate>
   )
 }

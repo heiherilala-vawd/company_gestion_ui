@@ -86,7 +86,7 @@ export default function TravelMaterialActivity() {
     isLoading,
     refetch,
   } = useGetList(resource, {
-    pagination: { page: 1, perPage: 499 },
+    pagination: { page: 1, perPage: 400 },
     filter: queryFilters,
   })
 

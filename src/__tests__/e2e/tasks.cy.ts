@@ -34,7 +34,7 @@ describe('E2E: Tasks', () => {
       .first()
       .clear()
       .type(<string>crupdatedData.description, { force: true })
-    selectEnumType('input-status', 'Terminé')
+    cy.get('[data-testid="input-completed"] input').check({ force: true })
     selectEnumType('input-priority', 'Haute')
     cy.get('button[type="submit"]').click({ force: true })
   }

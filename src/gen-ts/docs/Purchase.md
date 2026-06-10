@@ -1,19 +1,22 @@
+
 # Purchase
+
 
 ## Properties
 
-| Name           | Type                                            |
-| -------------- | ----------------------------------------------- |
-| `id`           | string                                          |
-| `expense`      | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
-| `supplier`     | [CrupdateWarehouse](CrupdateWarehouse.md)       |
-| `equipment`    | [CrupdateEquipment](CrupdateEquipment.md)       |
-| `material`     | [CrupdateMaterial](CrupdateMaterial.md)         |
-| `quantity`     | number                                          |
-| `is_equipment` | boolean                                         |
-| `invoice_date` | Date                                            |
-| `due_date`     | Date                                            |
-| `paid_at`      | Date                                            |
+Name | Type
+------------ | -------------
+`id` | string
+`expense` | [CrupdateExpenseMoney](CrupdateExpenseMoney.md)
+`source_warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
+`supplier` | [Supplier](Supplier.md)
+`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
+`quantity` | number
+`is_equipment` | boolean
+`invoice_date` | Date
+`due_date` | Date
+`paid_at` | Date
 
 ## Example
 
@@ -24,6 +27,7 @@ import type { Purchase } from 'api-client'
 const example = {
   "id": purch_001,
   "expense": null,
+  "source_warehouse": null,
   "supplier": null,
   "equipment": null,
   "material": null,
@@ -46,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

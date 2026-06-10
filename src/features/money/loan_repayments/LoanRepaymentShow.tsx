@@ -13,12 +13,24 @@ export default function LoanRepaymentShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <ReferenceField source="loan_id" reference="loans" label="Prêt">
-          <TextField source="lender" />
+          <TextField source="organization.name" />
         </ReferenceField>
         <DateField source="payment_date" label="Date paiement" />
-        <NumberField source="amount" label="Montant" />
-        <NumberField source="principal_portion" label="Part capital" />
-        <NumberField source="interest_portion" label="Part intérêts" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="principal_portion"
+          label="Part capital"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="interest_portion"
+          label="Part intérêts"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
       </SimpleShowLayout>
     </Show>
   )

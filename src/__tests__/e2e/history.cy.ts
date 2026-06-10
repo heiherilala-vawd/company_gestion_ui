@@ -12,7 +12,7 @@ describe('E2E: History', () => {
     cy.clearLocalStorage()
     cy.clearCookies()
     interceptGeneralEndpoint()
-    cy.intercept('GET', '**/histories', mockSuccessResponse(historiesMock)).as('getHistories')
+    cy.intercept('GET', '**/histories*', mockSuccessResponse(historiesMock)).as('getHistories')
     loginInPage()
     insertInToLocalStorage()
   })
@@ -21,20 +21,20 @@ describe('E2E: History', () => {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
     cy.wait(200)
     expandMonetarySections()
-    cy.get('[data-testid="menu-history"]').click()
+    cy.get('[data-testid="menu-history"]').click({ force: true })
     cy.wait('@getHistories')
   }
 
   it('should display history page', () => {
     navigateToDesktop()
-    cy.contains('h4', 'Historique').should('be.visible')
+    cy.contains('Historique').should('be.visible')
   })
 
   it('should display history entries', () => {
     navigateToDesktop()
-    cy.contains('COMPANY').should('be.visible')
-    cy.contains('JOB').should('be.visible')
-    cy.contains('EXPENSEMONEY').should('be.visible')
+    cy.contains('Entreprise').should('be.visible')
+    cy.contains('Travail').should('be.visible')
+    cy.contains('Dépense').should('be.visible')
   })
 
   it('should display user information in entries', () => {

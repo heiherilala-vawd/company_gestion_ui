@@ -49,7 +49,11 @@ export default function PurchaseList() {
         {!isMaterial && <TextField source="equipment.name" label="Équipement" />}
         {!isEquipment && <TextField source="material.name" label="Matériau" />}
         <TextField source="supplier.name" label="Fournisseur" />
-        <TextField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <NumberField source="quantity" label="Quantité" />
         <EditButton />
       </ResponsiveDatagrid>

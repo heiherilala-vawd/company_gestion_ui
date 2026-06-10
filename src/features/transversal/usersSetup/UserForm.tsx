@@ -1,6 +1,7 @@
 import { required, email, TextInput, SelectInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderLeaveConfigSelect } from '../../../generic/SelectWithCreateProvider.tsx'
+import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
 export default function UserForm({ isCreate = false, isCreateForm = false }) {
   return (
@@ -8,13 +9,14 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
       {isCreate && (
         <TextInput
           source="id"
-          readOnly
-          defaultValue={generateId()}
           sx={{ display: 'none' }}
+          defaultValue={generateId()}
           data-testid="input-id"
         />
       )}{' '}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && (
+        <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
+      )}
       <TextInput
         source="email"
         label="Email"
@@ -55,13 +57,22 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
         validate={[required()]}
         data-testid="input-role"
       />
-      {renderLeaveConfigSelect('leave_config_id', 'Configuration congés')}
       <TextInput
         source="password"
         label="Mot de passe"
         type="password"
         data-testid="input-password"
       />
+      <TextInput
+        source="company_id"
+        label="ID Entreprise"
+        defaultValue={localStorage.getItem('currentCompanyId')}
+        sx={{ display: 'none' }}
+      />
+      <CollapsibleOptionalFields>
+        {renderLeaveConfigSelect('leave_config_id', 'Configuration congés')}
+        <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
+      </CollapsibleOptionalFields>
     </>
   )
 }

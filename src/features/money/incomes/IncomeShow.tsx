@@ -3,6 +3,7 @@ import {
   SimpleShowLayout,
   TextField,
   NumberField,
+  BooleanField,
   DateField,
   FunctionField,
 } from 'react-admin'
@@ -14,8 +15,17 @@ export default function IncomeShow() {
         <TextField source="id" />
         <TextField source="source_organization" label="Organisation source" />
         <TextField source="invoice_reference" label="Référence facture" />
-        <NumberField source="amount" label="Montant" />
-        <NumberField source="remaining_amount" label="Reste à recevoir" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <BooleanField source="paid" label="Payé" />
+        <NumberField
+          source="remaining_amount"
+          label="Reste à recevoir"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="description" label="Description" />
         <TextField source="job.description" label="Travail" />
         <TextField source="income_type.name" label="Type de revenu" />

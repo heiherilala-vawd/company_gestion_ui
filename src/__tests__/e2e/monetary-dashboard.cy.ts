@@ -1,9 +1,4 @@
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Monetary Dashboard', () => {
   beforeEach(() => {
@@ -15,11 +10,15 @@ describe('E2E: Monetary Dashboard', () => {
   })
 
   it('should display monetary dashboard page via section hub', () => {
-    cy.contains('[class*="MuiBottomNavigationAction"]', 'Monétaire').click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="section-hub"]').eq(2).within(() => {
-      cy.contains('Dashboard').click({ force: true })
+    cy.contains('[class*="MuiBottomNavigationAction"]', 'Base de déplacement').click({
+      force: true,
     })
+    cy.wait(1000)
+    cy.get('[data-testid="section-hub"]')
+      .eq(2)
+      .within(() => {
+        cy.contains('Dashboard').click({ force: true })
+      })
     cy.wait(
       [
         '@getMonetaryDashboardSummary',
@@ -32,15 +31,19 @@ describe('E2E: Monetary Dashboard', () => {
       { timeout: 20000 },
     )
     cy.wait(500)
-    cy.contains('h4', 'Tableau de bord monétaire').should('be.visible')
+    cy.contains("Vue d'ensemble").should('be.visible')
   })
 
   it('should display summary cards', () => {
-    cy.contains('[class*="MuiBottomNavigationAction"]', 'Monétaire').click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="section-hub"]').eq(2).within(() => {
-      cy.contains('Dashboard').click({ force: true })
+    cy.contains('[class*="MuiBottomNavigationAction"]', 'Base de déplacement').click({
+      force: true,
     })
+    cy.wait(1000)
+    cy.get('[data-testid="section-hub"]')
+      .eq(2)
+      .within(() => {
+        cy.contains('Dashboard').click({ force: true })
+      })
     cy.wait(
       [
         '@getMonetaryDashboardSummary',
@@ -59,11 +62,15 @@ describe('E2E: Monetary Dashboard', () => {
   })
 
   it('should display filter button', () => {
-    cy.contains('[class*="MuiBottomNavigationAction"]', 'Monétaire').click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="section-hub"]').eq(2).within(() => {
-      cy.contains('Dashboard').click({ force: true })
+    cy.contains('[class*="MuiBottomNavigationAction"]', 'Base de déplacement').click({
+      force: true,
     })
+    cy.wait(1000)
+    cy.get('[data-testid="section-hub"]')
+      .eq(2)
+      .within(() => {
+        cy.contains('Dashboard').click({ force: true })
+      })
     cy.wait(
       [
         '@getMonetaryDashboardSummary',
@@ -76,6 +83,6 @@ describe('E2E: Monetary Dashboard', () => {
       { timeout: 20000 },
     )
     cy.wait(500)
-    cy.contains('Appliquer les filtres').should('be.visible')
+    cy.contains('button', 'Appliquer').should('be.visible')
   })
 })

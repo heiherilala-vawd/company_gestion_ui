@@ -1,7 +1,8 @@
-import { Create, SimpleForm, ResourceContextProvider } from 'react-admin'
+import { SimpleForm, ResourceContextProvider } from 'react-admin'
 import FormToolbar from '../generic/FormToolbar'
 import MaintenanceForm from './storage/maintenances/MaintenanceForm'
 import { Box, Typography } from '@mui/material'
+import GenericCreate from '../generic/GenericCreate'
 
 export default function MaintenanceActivity() {
   return (
@@ -10,11 +11,11 @@ export default function MaintenanceActivity() {
         Faire une maintenance
       </Typography>
       <ResourceContextProvider value="maintenances">
-        <Create redirect="list" title=" ">
+        <GenericCreate title=" ">
           <SimpleForm id="maintenance-activity-form" toolbar={<FormToolbar />}>
             <MaintenanceForm isCreate />
           </SimpleForm>
-        </Create>
+        </GenericCreate>
       </ResourceContextProvider>
     </Box>
   )

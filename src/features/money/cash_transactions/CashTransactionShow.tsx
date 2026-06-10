@@ -14,7 +14,11 @@ export default function CashTransactionShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="cash_account_id" label="Compte caisse" />
-        <NumberField source="amount" label="Montant" />
+        <NumberField
+          source="amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="transaction_date" label="Date transaction" />
         <TextField source="description" label="Description" />
         <SelectField

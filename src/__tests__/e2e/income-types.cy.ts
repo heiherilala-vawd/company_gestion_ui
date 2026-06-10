@@ -2,15 +2,10 @@ import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-
 import {
   incomeType1Mock,
   incomeType2Mock,
-  incomeTypesMock,
   createOrUpdateIncomeTypes,
   crupdateIncomeTypesMock,
 } from '../mocks/responses/income-types-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Income Types', () => {
   function creatOrUpdate(isCreating: boolean) {

@@ -1,9 +1,4 @@
-import { mockSuccessResponse } from '../mocks/responses/auth-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Equipment Dashboard', () => {
   beforeEach(() => {
@@ -15,16 +10,16 @@ describe('E2E: Equipment Dashboard', () => {
   })
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-equipment-dashboard"]').click()
-    cy.wait(['@getEquipmentDashboardSummary', '@getEquipmentDashboardBreakdown'], { timeout: 15000 })
+    cy.contains('Dashboard équipement').click({ force: true })
+    cy.wait(['@getEquipmentDashboardSummary', '@getEquipmentDashboardBreakdown'], {
+      timeout: 15000,
+    })
     cy.wait(500)
   }
 
   it('should display equipment dashboard page', () => {
     navigateToDesktop()
-    cy.contains('h4', 'Tableau de bord équipements').should('be.visible')
+    cy.contains("Vue d'ensemble").should('be.visible')
   })
 
   it('should display summary cards', () => {
@@ -35,6 +30,6 @@ describe('E2E: Equipment Dashboard', () => {
 
   it('should display filter button', () => {
     navigateToDesktop()
-    cy.contains('Appliquer les filtres').should('be.visible')
+    cy.contains('button', 'Appliquer').should('be.visible')
   })
 })

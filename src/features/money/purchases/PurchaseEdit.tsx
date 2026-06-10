@@ -1,7 +1,8 @@
-import { Edit, SimpleForm, TextInput } from 'react-admin'
+import { SimpleForm, TextInput } from 'react-admin'
 import { useSearchParams } from 'react-router-dom'
 import FormToolbar from '../../../generic/FormToolbar'
 import PurchaseForm from './PurchaseForm'
+import GenericEdit from '../../../generic/GenericEdit'
 
 export default function PurchaseEdit() {
   const [searchParams] = useSearchParams()
@@ -13,12 +14,17 @@ export default function PurchaseEdit() {
     sessionStorage.getItem('purchaseMode') === 'material'
 
   return (
-    <Edit
-      redirect="list"
-      transform={(data) => ({
-        ...data,
-        quantity: data.quantity ? data.quantity : 1,
-      })}
+    <GenericEdit
+      transform={(data) => {
+        if (!data.expense?.description && data.expense?._generated_desc) {
+          data.expense.description = data.expense._generated_desc
+        }
+        delete data.expense?._generated_desc
+        return {
+          ...data,
+          quantity: data.quantity ? data.quantity : 1,
+        }
+      }}
       queryOptions={{
         // Intercepter et modifier les données après le fetch
         select: (data) => ({
@@ -35,6 +41,6 @@ export default function PurchaseEdit() {
         <TextInput source="id" sx={{ display: 'none' }} />
         <PurchaseForm isEquipment={isEquipment} isMaterial={isMaterial} />
       </SimpleForm>
-    </Edit>
+    </GenericEdit>
   )
 }

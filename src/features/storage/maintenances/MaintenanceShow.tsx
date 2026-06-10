@@ -14,7 +14,11 @@ export default function MaintenanceShow() {
         <TextField source="id" />
         <TextField source="equipment_id" label="Équipement" />
         <TextField source="description" label="Description" />
-        <NumberField source="expense.amount" label="Montant" />
+        <NumberField
+          source="expense.amount"
+          label="Montant"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="expense.comment" label="Commentaire" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />

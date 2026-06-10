@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Create, SimpleForm, ResourceContextProvider } from 'react-admin'
+import { SimpleForm, ResourceContextProvider } from 'react-admin'
 import FormToolbar from '../generic/FormToolbar'
 import BankFeeForm from './money/bank_fees/BankFeeForm.tsx'
 import EmployeePaymentForm from './money/employee_payments/EmployeePaymentForm.tsx'
 import OtherExpenseForm from './money/other_expenses/OtherExpenseForm.tsx'
 import { Box, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
+import GenericCreate from '../generic/GenericCreate'
 
 export default function ExpensesActivity() {
   useNavigate()
@@ -44,11 +45,11 @@ export default function ExpensesActivity() {
       </ToggleButtonGroup>
 
       <ResourceContextProvider value={resource}>
-        <Create redirect="list" title=" ">
+        <GenericCreate title=" ">
           <SimpleForm id="expenses-activity-form" toolbar={<FormToolbar />}>
             <FormComponent isCreate />
           </SimpleForm>
-        </Create>
+        </GenericCreate>
       </ResourceContextProvider>
     </Box>
   )

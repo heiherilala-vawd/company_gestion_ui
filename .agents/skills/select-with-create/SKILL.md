@@ -165,9 +165,9 @@ export default function MaterialForm({ isCreate = false, isCreateForm = false })
   return (
     <>
       {isCreate && (
-        <TextInput source="id" readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
+        <TextInput source="id" sx={{ display: 'none' }} defaultValue={generateId()} sx={{ display: 'none' }} />
       )}
-      {isCreateForm && <TextInput source="newId" readOnly defaultValue={generateId()} />}
+      {isCreateForm && <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />}
       <TextInput source="name" label="Nom" validate={[required()]} />
       <TextInput source="description" label="Description" multiline rows={3} />
       <SelectInput

@@ -1,13 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
-import {
-  team1Mock,
-  team2Mock,
-} from '../mocks/responses/teams-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { team1Mock, team2Mock } from '../mocks/responses/teams-api'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Teams', () => {
   function selectReferenceMobile(testId: string, optionText: string) {
@@ -28,9 +21,7 @@ describe('E2E: Teams', () => {
       cy.wait('@getTeam')
       cy.get('.RaEditButton-root').click({ force: true })
     }
-    cy.get('[data-testid="input-name"] input')
-      .clear()
-      .type('Équipe test')
+    cy.get('[data-testid="input-name"] input').clear().type('Équipe test')
     if (!isCreating) {
       selectReferenceMobile('input-leader_id', 'John Doe')
     }
@@ -73,7 +64,7 @@ describe('E2E: Teams', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/teams*', (req) => {
+    cy.intercept('PUT', '**/companies/*/teams*', (req) => {
       req.reply(mockSuccessResponse([{ id: 'newTeamId', ...req.body[0], name: 'Équipe test' }]))
     }).as('createTeam')
     creatOrUpdate(true)
@@ -85,7 +76,7 @@ describe('E2E: Teams', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies/*/teams*', (req) => {
+    cy.intercept('PUT', '**/companies/*/teams*', (req) => {
       req.reply(mockSuccessResponse([{ id: 'team1_id', ...req.body[0], name: 'Équipe test' }]))
     }).as('updateTeam')
     creatOrUpdate(false)
@@ -111,7 +102,7 @@ describe('E2E: Teams', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/teams*',
+      '**/companies/*/teams*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createTeamFail')
     creatOrUpdate(true)
@@ -123,7 +114,7 @@ describe('E2E: Teams', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies/*/teams*',
+      '**/companies/*/teams*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateTeamFail')
     creatOrUpdate(false)

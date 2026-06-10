@@ -1,25 +1,22 @@
+
 # Equipment
+
 
 ## Properties
 
-| Name             | Type                                       |
-| ---------------- | ------------------------------------------ |
-| `comment`        | string                                     |
-| `created_at`     | Date                                       |
-| `updated_at`     | Date                                       |
-| `created_by`     | [AuditUser](AuditUser.md)                  |
-| `updated_by`     | [AuditUser](AuditUser.md)                  |
-| `id`             | string                                     |
-| `name`           | string                                     |
-| `description`    | string                                     |
-| `warehouse`      | [CrupdateWarehouse](CrupdateWarehouse.md)  |
-| `floor_number`   | number                                     |
-| `storage_number` | number                                     |
-| `est_en_panne`   | boolean                                    |
-| `purchase_price` | number                                     |
-| `purchase_date`  | Date                                       |
-| `category`       | string                                     |
-| `maintenances`   | [Array&lt;Maintenance&gt;](Maintenance.md) |
+Name | Type
+------------ | -------------
+`id` | string
+`name` | string
+`description` | string
+`warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
+`floor_number` | number
+`storage_number` | number
+`est_en_panne` | boolean
+`purchase_price` | number
+`purchase_date` | Date
+`category` | string
+`maintenances` | [Array&lt;Maintenance&gt;](Maintenance.md)
 
 ## Example
 
@@ -28,11 +25,6 @@ import type { Equipment } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "comment": Commentaire sur cette entité,
-  "created_at": 2024-01-15T09:30Z,
-  "updated_at": 2024-02-20T15:45Z,
-  "created_by": null,
-  "updated_by": null,
   "id": eq_001,
   "name": Pelleteuse CAT 320,
   "description": Pelleteuse pour terrassement, 20 tonnes,
@@ -58,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

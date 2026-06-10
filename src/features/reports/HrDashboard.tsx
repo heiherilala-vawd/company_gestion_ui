@@ -1,24 +1,31 @@
 import { useState, useEffect } from 'react'
-import { Box, Card, CardContent, Typography, Grid, Button } from '@mui/material'
+import { Box, Card, Typography, Grid } from '@mui/material'
 import { useNotify, Loading } from 'react-admin'
 import DashboardFilters from './components/DashboardFilters'
-import { PieChartCard } from './components/ChartSection'
+import { PieChartCard, BarChartCard } from './components/ChartSection'
+import { dashboardStyles } from '../../style/components'
 
 interface Summary {
   total_employees: number
-  new_hires: number
-  payroll_total: number
-  tasks_completed: number
-  leave_days_approved: number
-  absence_rate: number
+  active_employees: number
+  pending_leaves: number
+  total_leaves_taken: number
 }
 
 interface Breakdown {
-  employees_by_department: { department: string; count: number }[]
-  leave_days_by_type: { leave_type: string; days: number }[]
-  payroll_by_type: { payment_type: string; total_amount: number }[]
-  employees_by_job: { job_description: string; count: number }[]
+  employees_by_department: { department_name: string; count: number }[]
+  leaves_by_type: { leave_type: string; count: number }[]
+  leaves_by_month: { month: string; count: number }[]
 }
+
+const fmtCount = (v: number) => `${v ?? 0}`
+
+const metrics = [
+  { key: 'total_employees', label: 'Total employés', color: 'primary.main', fmt: fmtCount },
+  { key: 'active_employees', label: 'Actifs', color: 'success.main', fmt: fmtCount },
+  { key: 'pending_leaves', label: 'Congés en attente', color: 'warning.main', fmt: fmtCount },
+  { key: 'total_leaves_taken', label: 'Congés pris', color: 'info.main', fmt: fmtCount },
+] as const
 
 export default function HrDashboard() {
   const [summary, setSummary] = useState<Summary | null>(null)
@@ -26,7 +33,6 @@ export default function HrDashboard() {
   const [loading, setLoading] = useState(true)
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
-  const [jobId, setJobId] = useState('')
   const notify = useNotify()
 
   const fetchData = async () => {
@@ -34,20 +40,22 @@ export default function HrDashboard() {
     try {
       const token = localStorage.getItem('token')
       const companyId = localStorage.getItem('currentCompanyId')
+      const userId = localStorage.getItem('user_id')
       const apiUrl = import.meta.env.VITE_API_URL ?? ''
       const params = new URLSearchParams()
       if (dateFrom) params.set('date_from', dateFrom)
       if (dateTo) params.set('date_to', dateTo)
-      if (jobId) params.set('job_id', jobId)
 
+      const baseUrl = `${apiUrl}/users/${userId}/companies/${companyId}/dashboard/hr`
       const [summaryRes, breakdownRes] = await Promise.all([
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/hr/summary?${params}`, {
+        fetch(`${baseUrl}/summary?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        fetch(`${apiUrl}/companies/${companyId}/dashboard/hr/breakdown?${params}`, {
+        fetch(`${baseUrl}/breakdown?${params}`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ])
+      if (!summaryRes.ok && !breakdownRes.ok) throw new Error('Erreur API')
       if (summaryRes.ok) setSummary(await summaryRes.json())
       if (breakdownRes.ok) setBreakdown(await breakdownRes.json())
     } catch (err) {
@@ -65,142 +73,72 @@ export default function HrDashboard() {
   if (loading) return <Loading loadingSecondary="Chargement du tableau de bord RH..." />
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
-        Tableau de bord RH
-      </Typography>
+    <Box sx={dashboardStyles.container}>
+      <Box sx={dashboardStyles.header}>
+        <Typography sx={dashboardStyles.title}>
+          <Box component="span" sx={dashboardStyles.titleAccent}>
+            Ressources Humaines
+          </Box>
+        </Typography>
+        <Typography sx={dashboardStyles.subtitle}>
+          Tableau de bord — Vue d&apos;ensemble des employés et congés
+        </Typography>
+      </Box>
+
       <DashboardFilters
         dateFrom={dateFrom}
         dateTo={dateTo}
         onDateFromChange={setDateFrom}
         onDateToChange={setDateTo}
-        showJobFilter
-        jobId={jobId}
-        onJobIdChange={setJobId}
+        onApply={fetchData}
       />
-      <Button variant="contained" onClick={fetchData} sx={{ mb: 3 }} size="small">
-        Appliquer les filtres
-      </Button>
 
       {summary && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Effectif
+        <Card sx={{ ...dashboardStyles.metricsCard, mb: 4 }}>
+          <Box sx={dashboardStyles.metricsGrid}>
+            {metrics.map((m) => (
+              <Box key={m.key}>
+                <Typography sx={dashboardStyles.metricsLabel}>{m.label}</Typography>
+                <Typography sx={{ ...dashboardStyles.metricsValue, color: m.color }}>
+                  {m.fmt(summary[m.key as keyof Summary] as number)}
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.total_employees}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Nouvelles embauches
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'success.main' }}>
-                  {summary.new_hires}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Masse salariale
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'primary.main' }}>
-                  {summary.payroll_total?.toLocaleString()} €
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Tâches complétées
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.tasks_completed}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Jours congés approuvés
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600 }}>
-                  {summary.leave_days_approved}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Card>
-              <CardContent>
-                <Typography variant="subtitle2" color="text.secondary">
-                  Taux d'absence
-                </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 600, color: 'warning.main' }}>
-                  {(summary.absence_rate * 100).toFixed(1)}%
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+              </Box>
+            ))}
+          </Box>
+        </Card>
       )}
 
       {breakdown && (
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <Grid container spacing={2.5} sx={dashboardStyles.chartGrid}>
           {breakdown.employees_by_department?.length > 0 && (
             <Grid item xs={12} md={4}>
-              <PieChartCard
-                title="Effectif par département"
+              <BarChartCard
+                title="Employés par département"
                 data={breakdown.employees_by_department.map((i) => ({
-                  name: i.department,
-                  value: i.count,
+                  label: i.department_name ?? 'N/A',
+                  value: i.count ?? 0,
                 }))}
               />
             </Grid>
           )}
-          {breakdown.leave_days_by_type?.length > 0 && (
+          {breakdown.leaves_by_type?.length > 0 && (
             <Grid item xs={12} md={4}>
               <PieChartCard
                 title="Congés par type"
-                data={breakdown.leave_days_by_type.map((i) => ({
-                  name: i.leave_type,
-                  value: i.days,
+                data={breakdown.leaves_by_type.map((i) => ({
+                  name: i.leave_type ?? 'N/A',
+                  value: i.count ?? 0,
                 }))}
               />
             </Grid>
           )}
-          {breakdown.payroll_by_type?.length > 0 && (
+          {breakdown.leaves_by_month?.length > 0 && (
             <Grid item xs={12} md={4}>
-              <PieChartCard
-                title="Paie par type"
-                data={breakdown.payroll_by_type.map((i) => ({
-                  name: i.payment_type,
-                  value: i.total_amount,
-                }))}
-              />
-            </Grid>
-          )}
-          {breakdown.employees_by_job?.length > 0 && (
-            <Grid item xs={12} md={4}>
-              <PieChartCard
-                title="Effectif par chantier"
-                data={breakdown.employees_by_job.map((i) => ({
-                  name: i.job_description,
-                  value: i.count,
+              <BarChartCard
+                title="Congés par mois"
+                data={breakdown.leaves_by_month.map((i) => ({
+                  label: i.month ?? 'N/A',
+                  value: i.count ?? 0,
                 }))}
               />
             </Grid>

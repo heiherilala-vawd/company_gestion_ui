@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Create,
   SimpleForm,
   ResourceContextProvider,
   TextInput,
@@ -10,18 +9,20 @@ import {
 } from 'react-admin'
 import FormToolbar from '../generic/FormToolbar'
 import IncomeForm from './money/incomes/IncomeForm.tsx'
+import { renderOrganizationSelect } from '../generic/SelectWithCreateProvider.tsx'
 import generateId from '../utili/utils.tsx'
 import { Box, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material'
+import GenericCreate from '../generic/GenericCreate'
 
 function LoanForm() {
   return (
     <>
-      <TextInput source="id" readOnly defaultValue={generateId()} sx={{ display: 'none' }} />
-      <TextInput source="lender" label="Prêteur" data-testid="input-lender" />
+      <TextInput source="id" sx={{ display: 'none' }} defaultValue={generateId()} />
+      {renderOrganizationSelect('organization_id', 'Prêteur')}
       <NumberInput source="amount" label="Montant" data-testid="input-amount" />
       <NumberInput
         source="interest_rate"
-        label="Taux d'intérêt annuel (en points de base)"
+        label="Taux d'intérêt (% par mois)"
         data-testid="input-interest_rate"
       />
       <DateTimeInput
@@ -36,7 +37,7 @@ function LoanForm() {
         rows={3}
         data-testid="input-description"
       />
-      <TextInput source="status" readOnly defaultValue="ACTIVE" sx={{ display: 'none' }} />
+      <TextInput source="status" sx={{ display: 'none' }} defaultValue="ACTIVE" />
     </>
   )
 }
@@ -62,8 +63,7 @@ export default function IncomesActivity() {
 
       {entityType === 'income' ? (
         <ResourceContextProvider value="incomes">
-          <Create
-            redirect="list"
+          <GenericCreate
             title=" "
             transform={(data) => ({
               ...data,
@@ -73,12 +73,11 @@ export default function IncomesActivity() {
             <SimpleForm id="income-activity-form" toolbar={<FormToolbar />}>
               <IncomeForm isCreate />
             </SimpleForm>
-          </Create>
+          </GenericCreate>
         </ResourceContextProvider>
       ) : (
         <ResourceContextProvider value="loans">
-          <Create
-            redirect="list"
+          <GenericCreate
             title=" "
             transform={(data) => ({
               ...data,
@@ -88,7 +87,7 @@ export default function IncomesActivity() {
             <SimpleForm id="loan-activity-form" toolbar={<FormToolbar />}>
               <LoanForm />
             </SimpleForm>
-          </Create>
+          </GenericCreate>
         </ResourceContextProvider>
       )}
     </Box>

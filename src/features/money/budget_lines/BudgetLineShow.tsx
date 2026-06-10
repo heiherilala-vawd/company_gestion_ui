@@ -13,8 +13,16 @@ export default function BudgetLineShow() {
       <SimpleShowLayout>
         <TextField source="id" />
         <TextField source="category" label="Catégorie" />
-        <NumberField source="planned_amount" label="Montant prévu" />
-        <NumberField source="actual_amount" label="Montant réel" />
+        <NumberField
+          source="planned_amount"
+          label="Montant prévu"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
+        <NumberField
+          source="actual_amount"
+          label="Montant réel"
+          options={{ style: 'currency', currency: 'MGA' }}
+        />
         <TextField source="period_start" label="Début période" />
         <TextField source="period_end" label="Fin période" />
         <TextField source="description" label="Description" />

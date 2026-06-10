@@ -213,6 +213,7 @@ const authProvider: AuthProvider = {
     first_name: string
     last_name: string
     sex: 'M' | 'F'
+    company_ids?: string[]
   }) => {
     console.log("📝 Tentative d'inscription:", { email: params.email })
 
@@ -241,18 +242,19 @@ const authProvider: AuthProvider = {
   },
 
   checkError: ({ status }: { status: number }) => {
-    if (status === 401 || status === 403) {
-      localStorage.setItem('not_authenticated', 'true')
+    if (status === 401) {
       return Promise.reject()
     }
     return Promise.resolve()
   },
 
   checkAuth: () => {
-    const token = localStorage.getItem('token')
-    const notAuthenticated = localStorage.getItem('not_authenticated')
-
-    if (!token || notAuthenticated) {
+    // Si l'utilisateur a été intentionnellement déconnecté ou redirigé,
+    // on résout pour éviter une boucle de redirection sur /login
+    if (localStorage.getItem('not_authenticated')) {
+      return Promise.resolve()
+    }
+    if (!localStorage.getItem('token')) {
       return Promise.reject()
     }
     return Promise.resolve()
