@@ -93,6 +93,8 @@ import {
   monetaryDashboardSummaryMock,
   monetaryDashboardBreakdownMock,
   monetaryTimeSeriesMock,
+  organization1Mock,
+  organizationsMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -282,20 +284,36 @@ export function interceptGeneralEndpoint(): void {
   )
 
   // ---------------------- BUDGET LINES ------------------------------------------
-  cy.intercept('GET', '**/budget_lines*', mockSuccessResponse(budgetLinesMock)).as('getBudgetLines')
+  cy.intercept(
+    'GET',
+    '**/users/*/companies/*/budget_lines*',
+    mockSuccessResponse(budgetLinesMock),
+  ).as('getBudgetLines')
   cy.intercept('GET', '**/budget_lines/bl1_id*', mockSuccessResponse(budgetLine1Mock)).as(
     'getBudgetLine',
   )
 
   // ---------------------- CASH ACCOUNTS ------------------------------------------
-  cy.intercept('GET', '**/cash_accounts*', mockSuccessResponse(cashAccountsMock)).as(
-    'getCashAccounts',
-  )
+  cy.intercept(
+    'GET',
+    '**/users/*/companies/*/cash_accounts*',
+    mockSuccessResponse(cashAccountsMock),
+  ).as('getCashAccounts')
   cy.intercept('GET', '**/cash_accounts/ca1_id', mockSuccessResponse(cashAccount1Mock)).as(
     'getCashAccount',
   )
   cy.intercept('GET', '**/cash_accounts/ca1_id*', mockSuccessResponse(cashAccount1Mock)).as(
     'getCashAccount',
+  )
+
+  // ---------------------- ORGANIZATIONS ------------------------------------------
+  cy.intercept(
+    'GET',
+    '**/users/*/companies/*/organizations*',
+    mockSuccessResponse(organizationsMock),
+  ).as('getOrganizations')
+  cy.intercept('GET', '**/organizations/org_001*', mockSuccessResponse(organization1Mock)).as(
+    'getOrganization',
   )
 
   // ---------------------- SUPPLIERS ------------------------------------------
@@ -338,12 +356,12 @@ export function interceptGeneralEndpoint(): void {
   // ---------------------- EQUIPMENT DASHBOARD ------------------------------------------
   cy.intercept(
     'GET',
-    '**/companies/*/dashboard/equipment/summary*',
+    '**/companies/*/dashboard/equipments/summary*',
     mockSuccessResponse(equipmentDashboardSummaryMock),
   ).as('getEquipmentDashboardSummary')
   cy.intercept(
     'GET',
-    '**/companies/*/dashboard/equipment/breakdown*',
+    '**/companies/*/dashboard/equipments/breakdown*',
     mockSuccessResponse(equipmentDashboardBreakdownMock),
   ).as('getEquipmentDashboardBreakdown')
 
@@ -413,15 +431,19 @@ export function interceptGeneralEndpoint(): void {
   )
 
   // ---------------------- LOAN REPAYMENTS ------------------------------------------
-  cy.intercept('GET', '**/loan_repayments*', mockSuccessResponse(loanRepaymentsMock)).as(
-    'getLoanRepayments',
-  )
+  cy.intercept(
+    'GET',
+    '**/users/*/companies/*/loan_repayments*',
+    mockSuccessResponse(loanRepaymentsMock),
+  ).as('getLoanRepayments')
   cy.intercept('GET', '**/loan_repayments/lr1_id*', mockSuccessResponse(loanRepayment1Mock)).as(
     'getLoanRepayment',
   )
 
   // ---------------------- RECEIPTS (income receipts) --------------------------------
-  cy.intercept('GET', '**/receipts*', mockSuccessResponse(receiptsMock)).as('getReceipts')
+  cy.intercept('GET', '**/users/*/companies/*/receipts*', mockSuccessResponse(receiptsMock)).as(
+    'getReceipts',
+  )
   cy.intercept('GET', '**/receipts/rec1_id*', mockSuccessResponse(receipt1Mock)).as('getReceipt')
 
   // ---------------------- LEAVE CONFIGS ------------------------------------------
@@ -497,9 +519,10 @@ export function interceptGeneralEndpoint(): void {
     '/equipment-dashboard',
     '/hr-dashboard',
     '/monetary-dashboard',
+    '/organizations',
   ]
   spaRoutes.forEach((route) => {
-    cy.intercept('GET', new RegExp(`^${route}$`), (req) => req.continue())
+    cy.intercept({ method: 'GET', pathname: route }, (req) => req.continue())
   })
 }
 
@@ -528,10 +551,10 @@ export function openMobileSidebar(): void {
 
 export function insertInToLocalStorage(): void {
   cy.window().then((win) => {
-    win.localStorage.setItem('currentCompanyId', 'company_localStorage_id')
-    win.localStorage.setItem('currentExpenseId', 'expense_localStorage_id')
-    win.localStorage.setItem('currentJobId', 'job_localStorage_id')
-    win.localStorage.setItem('currentCashAccountId', 'cash_account_localStorage_id')
+    win.localStorage.setItem('currentCompanyId', company1Mock.id)
+    win.localStorage.setItem('currentExpenseId', expense1Mock.id)
+    win.localStorage.setItem('currentJobId', job1Mock.id)
+    win.localStorage.setItem('currentCashAccountId', cashAccount1Mock.id)
     win.localStorage.removeItem('sidebar.open')
   })
 }
@@ -542,9 +565,9 @@ export function loginInPage(): void {
   cy.document().should('have.property', 'readyState', 'complete')
   cy.get('input', { timeout: 10000 })
     .first()
-    .should('be.visible')
-    .type(<string>loginRequestMock.email)
-  cy.get('input[type="password"]').type(<string>loginRequestMock.password)
+    .should('exist')
+    .type(<string>loginRequestMock.email, { force: true })
+  cy.get('input[type="password"]').type(<string>loginRequestMock.password, { force: true })
   cy.get('button[type="submit"]').click()
   cy.wait(['@login', '@whoami'])
   cy.url().should('not.include', '/login')

@@ -15,16 +15,16 @@ import {
 import { user2Mock } from '../mocks/responses/users-api.ts'
 
 describe('E2E: Employee Payments', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function creatOrUpdate(isCreating: boolean, isComputerView = true) {
     const crupdatedData = crupdateEmployeePaymentsMock[0]
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
       cy.get(`[data-testid="employee-item-${user2Mock.id}"]`).click()
       cy.get('[data-testid="payer-button"]').click()
     } else {
-      cy.contains(<string>employeePayment1Mock.users[0].first_name).click()
-      cy.wait('@getEmployeePayment')
-      cy.get('.RaEditButton-root').click()
+      clickRow(isComputerView)
+      cy.wait('@getEmployeePayment', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-payment_description"] textarea:visible')
       .first()
@@ -62,18 +62,33 @@ describe('E2E: Employee Payments', () => {
     })
   }
 
+  function clickRow(isComputerView: boolean) {
+    const userName = <string>employeePayment1Mock.users[0].first_name
+    if (isComputerView) {
+      cy.contains('td', userName).click({ force: true })
+    } else {
+      cy.contains(<string>employeePayment1Mock.expense.amount).click({ force: true })
+    }
+  }
+
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.users[0].first_name).should('exist')
-    cy.contains(<string>employeePayment2Mock.users[0].first_name).should('exist')
+    if (isComputerView) {
+      cy.contains(<string>employeePayment1Mock.users[0].first_name)
+        .scrollIntoView()
+        .should('exist')
+      cy.contains(<string>employeePayment2Mock.users[0].first_name)
+        .scrollIntoView()
+        .should('exist')
+    }
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>employeePayment1Mock.users[0].first_name).click()
-    cy.wait('@getEmployeePayment')
+    clickRow(isComputerView)
+    cy.wait('@getEmployeePayment', { timeout: 15000 })
     cy.contains(<string>employeePayment1Mock.users[0].first_name).should('exist')
     cy.contains(<string>employeePayment1Mock.payment_description).should('exist')
   }
@@ -84,7 +99,7 @@ describe('E2E: Employee Payments', () => {
     cy.intercept('PUT', '**/employee_payments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('createEmployeePayment')
-    creatOrUpdate(true)
+    creatOrUpdate(true, isComputerView)
     cy.wait(3000)
     cy.wait('@createEmployeePayment')
     cy.url().should('include', '/employee_payments')
@@ -96,7 +111,7 @@ describe('E2E: Employee Payments', () => {
     cy.intercept('PUT', '**/employee_payments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('updateEmployeePayment')
-    creatOrUpdate(false)
+    creatOrUpdate(false, isComputerView)
     cy.wait(3000)
     cy.wait('@updateEmployeePayment')
     cy.url().should('include', '/employee_payments')

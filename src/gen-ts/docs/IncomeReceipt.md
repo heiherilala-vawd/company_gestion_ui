@@ -1,15 +1,13 @@
-
 # IncomeReceipt
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`payment_date` | Date
-`amount` | number
-`income` | [IncomeMoney](IncomeMoney.md)
+| Name           | Type                          |
+| -------------- | ----------------------------- |
+| `id`           | string                        |
+| `payment_date` | Date                          |
+| `amount`       | number                        |
+| `income`       | [IncomeMoney](IncomeMoney.md) |
 
 ## Example
 
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

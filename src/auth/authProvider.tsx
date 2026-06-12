@@ -249,14 +249,22 @@ const authProvider: AuthProvider = {
   },
 
   checkAuth: () => {
-    // Si l'utilisateur a été intentionnellement déconnecté ou redirigé,
-    // on résout pour éviter une boucle de redirection sur /login
+    console.log(
+      'DEBUG checkAuth called',
+      'not_authenticated:',
+      localStorage.getItem('not_authenticated'),
+      'token:',
+      localStorage.getItem('token') ? 'SET' : 'NOT_SET',
+    )
     if (localStorage.getItem('not_authenticated')) {
+      console.log('DEBUG checkAuth: not_authenticated -> resolve')
       return Promise.resolve()
     }
     if (!localStorage.getItem('token')) {
+      console.log('DEBUG checkAuth: no token -> reject')
       return Promise.reject()
     }
+    console.log('DEBUG checkAuth: has token -> resolve')
     return Promise.resolve()
   },
 

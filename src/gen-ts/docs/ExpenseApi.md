@@ -2,14 +2,12 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**crupdateExpenses**](ExpenseApi.md#crupdateexpenses) | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses | Create new expenses or update existing ones |
-| [**deleteExpenseById**](ExpenseApi.md#deleteexpensebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id} | Delete expense by identifier |
-| [**getExpenseById**](ExpenseApi.md#getexpensebyid) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id} | Get expense by identifier |
-| [**getExpenses**](ExpenseApi.md#getexpenses) | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses | Get all expenses |
-
-
+| Method                                                   | HTTP request                                                              | Description                                 |
+| -------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------- |
+| [**crupdateExpenses**](ExpenseApi.md#crupdateexpenses)   | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses         | Create new expenses or update existing ones |
+| [**deleteExpenseById**](ExpenseApi.md#deleteexpensebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id} | Delete expense by identifier                |
+| [**getExpenseById**](ExpenseApi.md#getexpensebyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses/{id}    | Get expense by identifier                   |
+| [**getExpenses**](ExpenseApi.md#getexpenses)             | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/expenses         | Get all expenses                            |
 
 ## crupdateExpenses
 
@@ -20,19 +18,16 @@ Create new expenses or update existing ones
 ### Example
 
 ```ts
-import {
-  Configuration,
-  ExpenseApi,
-} from 'api-client';
-import type { CrupdateExpensesRequest } from 'api-client';
+import { Configuration, ExpenseApi } from 'api-client'
+import type { CrupdateExpensesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new ExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new ExpenseApi(config)
 
   const body = {
     // string
@@ -42,30 +37,43 @@ async function example() {
     // string
     userId: usr_123456,
     // Array<CrupdateExpenseMoney>
-    crupdateExpenseMoney: [{"id":"exp_001","amount":16200,"description":"Achat de matériaux pour le chantier","job_id":"job_001","comment":"Facture N°F-2024-001 révisée"},{"amount":2800,"description":"Frais de déplacement","job_id":"job_001","comment":"Déplacement sur site Marseille"}],
-  } satisfies CrupdateExpensesRequest;
+    crupdateExpenseMoney: [
+      {
+        id: 'exp_001',
+        amount: 16200,
+        description: 'Achat de matériaux pour le chantier',
+        job_id: 'job_001',
+        comment: 'Facture N°F-2024-001 révisée',
+      },
+      {
+        amount: 2800,
+        description: 'Frais de déplacement',
+        job_id: 'job_001',
+        comment: 'Déplacement sur site Marseille',
+      },
+    ],
+  } satisfies CrupdateExpensesRequest
 
   try {
-    const data = await api.crupdateExpenses(body);
-    console.log(data);
+    const data = await api.crupdateExpenses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateExpenseMoney** | `Array<CrupdateExpenseMoney>` |  | |
+| Name                     | Type                          | Description | Notes                     |
+| ------------------------ | ----------------------------- | ----------- | ------------------------- |
+| **compId**               | `string`                      |             | [Defaults to `undefined`] |
+| **jobId**                | `string`                      |             | [Defaults to `undefined`] |
+| **userId**               | `string`                      |             | [Defaults to `undefined`] |
+| **crupdateExpenseMoney** | `Array<CrupdateExpenseMoney>` |             |                           |
 
 ### Return type
 
@@ -80,19 +88,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated expenses |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                     | Response headers |
+| ----------- | ------------------------------- | ---------------- |
+| **200**     | The created or updated expenses | -                |
+| **400**     | Bad request                     | -                |
+| **403**     | Forbidden                       | -                |
+| **404**     | Not found                       | -                |
+| **429**     | Too many requests to the API    | -                |
+| **500**     | Internal server error           | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteExpenseById
 
@@ -103,19 +110,16 @@ Delete expense by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  ExpenseApi,
-} from 'api-client';
-import type { DeleteExpenseByIdRequest } from 'api-client';
+import { Configuration, ExpenseApi } from 'api-client'
+import type { DeleteExpenseByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new ExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new ExpenseApi(config)
 
   const body = {
     // string
@@ -126,29 +130,28 @@ async function example() {
     userId: usr_123456,
     // string
     id: exp_001,
-  } satisfies DeleteExpenseByIdRequest;
+  } satisfies DeleteExpenseByIdRequest
 
   try {
-    const data = await api.deleteExpenseById(body);
-    console.log(data);
+    const data = await api.deleteExpenseById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **jobId**  | `string` |             | [Defaults to `undefined`] |
+| **userId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -163,19 +166,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Expense deleted successfully |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **204**     | Expense deleted successfully | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getExpenseById
 
@@ -186,19 +188,16 @@ Get expense by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  ExpenseApi,
-} from 'api-client';
-import type { GetExpenseByIdRequest } from 'api-client';
+import { Configuration, ExpenseApi } from 'api-client'
+import type { GetExpenseByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new ExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new ExpenseApi(config)
 
   const body = {
     // string
@@ -209,29 +208,28 @@ async function example() {
     userId: usr_123456,
     // string
     id: exp_001,
-  } satisfies GetExpenseByIdRequest;
+  } satisfies GetExpenseByIdRequest
 
   try {
-    const data = await api.getExpenseById(body);
-    console.log(data);
+    const data = await api.getExpenseById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name       | Type     | Description | Notes                     |
+| ---------- | -------- | ----------- | ------------------------- |
+| **compId** | `string` |             | [Defaults to `undefined`] |
+| **jobId**  | `string` |             | [Defaults to `undefined`] |
+| **userId** | `string` |             | [Defaults to `undefined`] |
+| **id**     | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -246,19 +244,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The identified expense |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The identified expense       | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getExpenses
 
@@ -269,19 +266,16 @@ Get all expenses
 ### Example
 
 ```ts
-import {
-  Configuration,
-  ExpenseApi,
-} from 'api-client';
-import type { GetExpensesRequest } from 'api-client';
+import { Configuration, ExpenseApi } from 'api-client'
+import type { GetExpensesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new ExpenseApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new ExpenseApi(config)
 
   const body = {
     // string
@@ -298,32 +292,31 @@ async function example() {
     description: matériaux,
     // number (optional)
     amount: 15000,
-  } satisfies GetExpensesRequest;
+  } satisfies GetExpensesRequest
 
   try {
-    const data = await api.getExpenses(body);
-    console.log(data);
+    const data = await api.getExpenses(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **compId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| Name            | Type     | Description                                     | Notes                                |
+| --------------- | -------- | ----------------------------------------------- | ------------------------------------ |
+| **compId**      | `string` |                                                 | [Defaults to `undefined`]            |
+| **jobId**       | `string` |                                                 | [Defaults to `undefined`]            |
+| **userId**      | `string` |                                                 | [Defaults to `undefined`]            |
+| **page**        | `number` |                                                 | [Optional] [Defaults to `undefined`] |
+| **pageSize**    | `number` |                                                 | [Optional] [Defaults to `undefined`] |
 | **description** | `string` | Filter expenses by description, case is ignored | [Optional] [Defaults to `undefined`] |
-| **amount** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **amount**      | `number` |                                                 | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -338,16 +331,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of expenses |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of expenses             | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-

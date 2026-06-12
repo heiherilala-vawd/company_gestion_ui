@@ -2,6 +2,7 @@ import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-
 import {
   department1Mock,
   department2Mock,
+  departmentsMock,
   createOrUpdateDepartments,
   crupdateDepartmentsMock,
 } from '../mocks/responses/departments-api'
@@ -13,7 +14,9 @@ describe('E2E: Departments', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
-      cy.contains(<string>department1Mock.name).click()
+      cy.get('[class*="RaDatagrid"]')
+        .contains(<string>department1Mock.name)
+        .click()
       cy.wait('@getDepartment')
       cy.get('.RaEditButton-root').click()
     }
@@ -27,34 +30,37 @@ describe('E2E: Departments', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-departments"]').click()
+    cy.window().then((win) => {
+      win.location.hash = '#/departments'
+    })
     cy.wait('@getDepartments')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-departments"]').scrollIntoView()
-    cy.get('[data-testid="menu-departments"]').click({ force: true })
-    cy.wait('@getDepartments')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0)
-      }
+    cy.window().then((win) => {
+      win.location.hash = '#/departments'
     })
+    cy.wait('@getDepartments')
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>department1Mock.name).should('be.visible')
-    cy.contains(<string>department2Mock.name).should('be.visible')
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>department1Mock.name)
+      .should('be.visible')
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>department2Mock.name)
+      .should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>department1Mock.name).click()
+    cy.get('[class*="RaDatagrid"]')
+      .contains(<string>department1Mock.name)
+      .click()
     cy.wait('@getDepartment')
     cy.contains(<string>department1Mock.name).should('be.visible')
     cy.contains(<string>department1Mock.description).should('be.visible')
@@ -89,6 +95,15 @@ describe('E2E: Departments', () => {
     cy.clearCookies()
     insertInToLocalStorage()
     interceptGeneralEndpoint()
+    cy.intercept('GET', '**/departments*', mockSuccessResponse(departmentsMock)).as(
+      'getDepartments',
+    )
+    cy.intercept('GET', '**/departments/dept1_id', mockSuccessResponse(department1Mock)).as(
+      'getDepartment',
+    )
+    cy.intercept('GET', '**/departments/newId', mockSuccessResponse(department1Mock)).as(
+      'getDepartmentCreate',
+    )
     loginInPage()
   })
 

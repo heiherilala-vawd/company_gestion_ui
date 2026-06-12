@@ -1,15 +1,13 @@
-
 # Team
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`name` | string
-`leader` | [User](User.md)
-`members` | [Array&lt;User&gt;](User.md)
+| Name      | Type                         |
+| --------- | ---------------------------- |
+| `id`      | string                       |
+| `name`    | string                       |
+| `leader`  | [User](User.md)              |
+| `members` | [Array&lt;User&gt;](User.md) |
 
 ## Example
 
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

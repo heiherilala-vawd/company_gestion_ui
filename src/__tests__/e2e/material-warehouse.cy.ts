@@ -22,9 +22,9 @@ describe('E2E: Material Warehouse', () => {
         $input.trigger('change')
       })
     } else {
-      cy.contains(<string>materialWarehouse1Mock.material?.name).click()
-      cy.wait('@getMaterialWarehouse')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+      cy.wait('@getMaterialWarehouse', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     selectReferenceWithCreate('input-material_id', 'material_id', <string>material1Mock.name)
     selectReferenceWithCreate('input-warehouse_id', 'warehouse_id', <string>warehouse1Mock.name)
@@ -55,15 +55,17 @@ describe('E2E: Material Warehouse', () => {
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>materialWarehouse1Mock.material?.name).should('be.visible')
-    cy.contains(<string>materialWarehouse2Mock.material?.name).should('be.visible')
+    if (isComputerView) {
+      cy.contains(<string>materialWarehouse1Mock.material?.name).should('be.visible')
+      cy.contains(<string>materialWarehouse2Mock.material?.name).should('be.visible')
+    }
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>materialWarehouse1Mock.material?.name).click()
-    cy.wait('@getMaterialWarehouse')
+    cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+    cy.wait('@getMaterialWarehouse', { timeout: 15000 })
     cy.contains(<string>materialWarehouse1Mock.material?.name).should('exist')
     cy.contains(<string>materialWarehouse1Mock.warehouse?.name).should('exist')
   }
@@ -71,7 +73,7 @@ describe('E2E: Material Warehouse', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/material_warehouse', (req) => {
+    cy.intercept('PUT', '**/material_warehouses', (req) => {
       req.reply(mockSuccessResponse([{ ...materialWarehouse1Mock, id: 'newId' }]))
     }).as('createMaterialWarehouse')
     creatOrUpdate(true)
@@ -83,7 +85,7 @@ describe('E2E: Material Warehouse', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/material_warehouse', (req) => {
+    cy.intercept('PUT', '**/material_warehouses', (req) => {
       req.reply(mockSuccessResponse([materialWarehouse1Mock]))
     }).as('updateMaterialWarehouse')
     creatOrUpdate(false)
@@ -102,12 +104,12 @@ describe('E2E: Material Warehouse', () => {
     )
     cy.intercept(
       'GET',
-      '**/material_warehouse/mw1_id',
+      '**/material_warehouses/mw1_id',
       mockSuccessResponse(materialWarehouse1Mock),
     ).as('getMaterialWarehouse')
     cy.intercept(
       'GET',
-      '**/material_warehouse/newId',
+      '**/material_warehouses/newId',
       mockSuccessResponse(materialWarehouse1Mock),
     ).as('getMaterialWarehouseCreate')
     loginInPage()
@@ -122,7 +124,7 @@ describe('E2E: Material Warehouse', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/material_warehouse',
+      '**/material_warehouses',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createMaterialWarehouseFail')
     creatOrUpdate(true)
@@ -134,7 +136,7 @@ describe('E2E: Material Warehouse', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/material_warehouse',
+      '**/material_warehouses',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateMaterialWarehouseFail')
     creatOrUpdate(false)

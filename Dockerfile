@@ -17,6 +17,7 @@ RUN npm ci
 COPY . .
 ENV NYC_CAFEOBJECT_COVERAGE=true
 ENV VITE_API_URL=''
+ENV VITE_MUTATION_MODE=pessimistic
 RUN npm run build
 
 # ============================================

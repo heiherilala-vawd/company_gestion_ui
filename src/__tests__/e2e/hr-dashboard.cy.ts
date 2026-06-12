@@ -12,7 +12,6 @@ describe('E2E: HR Dashboard', () => {
   function navigateToDesktop() {
     cy.contains('Dashboard RH').click({ force: true })
     cy.wait(['@getHrDashboardSummary', '@getHrDashboardBreakdown'], { timeout: 15000 })
-    cy.wait(500)
   }
 
   it('should display HR dashboard page', () => {

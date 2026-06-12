@@ -1,22 +1,20 @@
-
 # Purchase
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`expense` | [CrupdateExpenseMoney](CrupdateExpenseMoney.md)
-`source_warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
-`supplier` | [Supplier](Supplier.md)
-`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
-`material` | [CrupdateMaterial](CrupdateMaterial.md)
-`quantity` | number
-`is_equipment` | boolean
-`invoice_date` | Date
-`due_date` | Date
-`paid_at` | Date
+| Name               | Type                                            |
+| ------------------ | ----------------------------------------------- |
+| `id`               | string                                          |
+| `expense`          | [CrupdateExpenseMoney](CrupdateExpenseMoney.md) |
+| `source_warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)       |
+| `supplier`         | [Supplier](Supplier.md)                         |
+| `equipment`        | [CrupdateEquipment](CrupdateEquipment.md)       |
+| `material`         | [CrupdateMaterial](CrupdateMaterial.md)         |
+| `quantity`         | number                                          |
+| `is_equipment`     | boolean                                         |
+| `invoice_date`     | Date                                            |
+| `due_date`         | Date                                            |
+| `paid_at`          | Date                                            |
 
 ## Example
 
@@ -50,5 +48,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

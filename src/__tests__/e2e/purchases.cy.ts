@@ -147,7 +147,6 @@ describe('E2E: Purchases', () => {
     cy.wait(1000)
     cy.get('[class*="RaSidebarToggleButton"]').first().should('be.visible')
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.wait(500)
     expandMonetarySections()
     cy.get('[data-testid="menu-purchases"]').eq(_menuIndex).click({ force: true })
     cy.wait('@getPurchases')

@@ -1,18 +1,16 @@
-
 # Material
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`name` | string
-`description` | string
-`unit_price` | number
-`unit` | [MaterialUnit](MaterialUnit.md)
-`company_id` | string
-`material_warehouses` | [Array&lt;MaterialWarehouseInfo&gt;](MaterialWarehouseInfo.md)
+| Name                  | Type                                                           |
+| --------------------- | -------------------------------------------------------------- |
+| `id`                  | string                                                         |
+| `name`                | string                                                         |
+| `description`         | string                                                         |
+| `unit_price`          | number                                                         |
+| `unit`                | [MaterialUnit](MaterialUnit.md)                                |
+| `company_id`          | string                                                         |
+| `material_warehouses` | [Array&lt;MaterialWarehouseInfo&gt;](MaterialWarehouseInfo.md) |
 
 ## Example
 
@@ -42,5 +40,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

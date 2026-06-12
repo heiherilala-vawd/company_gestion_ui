@@ -18,9 +18,9 @@ describe('E2E: Jobs', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
-      cy.contains(<string>job1Mock.description).click()
-      cy.wait('@getJob')
-      cy.get('.RaEditButton-root').click()
+      cy.contains('td', <string>job1Mock.description).click({ force: true })
+      cy.wait('@getJob', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-description"] textarea:visible')
       .clear()
@@ -66,8 +66,8 @@ describe('E2E: Jobs', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>job1Mock.description).click()
-    cy.wait('@getJob')
+    cy.contains('td', <string>job1Mock.description).click({ force: true })
+    cy.wait('@getJob', { timeout: 15000 })
     cy.contains(<string>job1Mock.description).should('be.visible')
     cy.contains('En cours').should('be.visible')
   }

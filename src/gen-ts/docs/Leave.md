@@ -1,21 +1,19 @@
-
 # Leave
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`user` | [CrupdateUser](CrupdateUser.md)
-`leave_type` | [LeaveType](LeaveType.md)
-`start_date` | Date
-`end_date` | Date
-`duration_days` | number
-`status` | [LeaveStatus](LeaveStatus.md)
-`reason` | string
-`approved_by` | [CrupdateUser](CrupdateUser.md)
-`approved_at` | Date
+| Name            | Type                            |
+| --------------- | ------------------------------- |
+| `id`            | string                          |
+| `user`          | [CrupdateUser](CrupdateUser.md) |
+| `leave_type`    | [LeaveType](LeaveType.md)       |
+| `start_date`    | Date                            |
+| `end_date`      | Date                            |
+| `duration_days` | number                          |
+| `status`        | [LeaveStatus](LeaveStatus.md)   |
+| `reason`        | string                          |
+| `approved_by`   | [CrupdateUser](CrupdateUser.md) |
+| `approved_at`   | Date                            |
 
 ## Example
 
@@ -48,5 +46,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

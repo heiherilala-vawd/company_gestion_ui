@@ -1,22 +1,20 @@
-
 # Equipment
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`name` | string
-`description` | string
-`warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
-`floor_number` | number
-`storage_number` | number
-`est_en_panne` | boolean
-`purchase_price` | number
-`purchase_date` | Date
-`category` | string
-`maintenances` | [Array&lt;Maintenance&gt;](Maintenance.md)
+| Name             | Type                                       |
+| ---------------- | ------------------------------------------ |
+| `id`             | string                                     |
+| `name`           | string                                     |
+| `description`    | string                                     |
+| `warehouse`      | [CrupdateWarehouse](CrupdateWarehouse.md)  |
+| `floor_number`   | number                                     |
+| `storage_number` | number                                     |
+| `est_en_panne`   | boolean                                    |
+| `purchase_price` | number                                     |
+| `purchase_date`  | Date                                       |
+| `category`       | string                                     |
+| `maintenances`   | [Array&lt;Maintenance&gt;](Maintenance.md) |
 
 ## Example
 
@@ -50,5 +48,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

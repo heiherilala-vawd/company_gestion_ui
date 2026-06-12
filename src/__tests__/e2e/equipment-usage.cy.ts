@@ -13,6 +13,7 @@ import {
   selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { equipment1Mock } from '../mocks/responses/equipment-api'
+import { warehouse1Mock } from '../mocks/responses/warehouses-api'
 
 describe('E2E: Equipment Usage', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -24,28 +25,20 @@ describe('E2E: Equipment Usage', () => {
         $input.trigger('change')
       })
     } else {
-      cy.contains(String(equipmentUsage1Mock.equipment_id)).click()
-      cy.wait('@getEquipmentUsage')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+      cy.wait('@getEquipmentUsage', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
-    cy.wait('@getEquipments')
-    cy.wait('@getJobs')
+    selectReferenceWithCreate('input-warehouse_id', 'warehouse_id', <string>warehouse1Mock.name)
+    cy.wait('@getEquipments', { timeout: 10000 })
     cy.get('[data-testid="input-equipment_id"]').should('be.visible')
-    cy.get('[data-testid="input-job_id"]').should('be.visible')
     selectReferenceWithCreate('input-equipment_id', 'equipment_id', <string>equipment1Mock.name)
-    cy.get('[data-testid="input-job_id"]')
-      .scrollIntoView()
-      .within(() => {
-        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
-      })
-    cy.get('#menu-job_id li', { timeout: 10000 }).should('have.length.of.at.least', 1)
-    cy.get('#menu-job_id li').eq(1).click({ force: true })
     cy.get('[data-testid="input-start_time"] input')
       .clear()
-      .type(<string>crupdatedData.start_time)
+      .type(<string>crupdatedData.start_time.replace('Z', ''))
     cy.get('[data-testid="input-end_time"] input')
       .clear()
-      .type(<string>crupdatedData.end_time)
+      .type(<string>crupdatedData.end_time.replace('Z', ''))
     cy.get('button[type="submit"]').click({ force: true })
   }
 
@@ -79,8 +72,8 @@ describe('E2E: Equipment Usage', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(equipmentUsage1Mock.equipment_id)).click()
-    cy.wait('@getEquipmentUsage')
+    cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+    cy.wait('@getEquipmentUsage', { timeout: 15000 })
     cy.contains(String(equipmentUsage1Mock.equipment_id)).should('exist')
     cy.contains(String(equipmentUsage1Mock.start_time)).should('exist')
   }
@@ -88,7 +81,7 @@ describe('E2E: Equipment Usage', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment_usage', (req) => {
+    cy.intercept('PUT', '**/equipment_usages', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipmentUsages(req.body)))
     }).as('createEquipmentUsage')
     creatOrUpdate(true)
@@ -100,7 +93,7 @@ describe('E2E: Equipment Usage', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/equipment_usage', (req) => {
+    cy.intercept('PUT', '**/equipment_usages', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateEquipmentUsages(req.body)))
     }).as('updateEquipmentUsage')
     creatOrUpdate(false)
@@ -118,13 +111,13 @@ describe('E2E: Equipment Usage', () => {
     cy.clearCookies()
     insertInToLocalStorage()
     interceptGeneralEndpoint()
-    cy.intercept('GET', '**/equipment_usage*', mockSuccessResponse(equipmentUsagesMock)).as(
+    cy.intercept('GET', '**/equipment_usages*', mockSuccessResponse(equipmentUsagesMock)).as(
       'getEquipmentUsages',
     )
-    cy.intercept('GET', '**/equipment_usage/eu1_id', mockSuccessResponse(equipmentUsage1Mock)).as(
+    cy.intercept('GET', '**/equipment_usages/eu1_id', mockSuccessResponse(equipmentUsage1Mock)).as(
       'getEquipmentUsage',
     )
-    cy.intercept('GET', '**/equipment_usage/newId', mockSuccessResponse(equipmentUsage1Mock)).as(
+    cy.intercept('GET', '**/equipment_usages/newId', mockSuccessResponse(equipmentUsage1Mock)).as(
       'getEquipmentUsageCreate',
     )
     loginInPage()
@@ -139,7 +132,7 @@ describe('E2E: Equipment Usage', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment_usage',
+      '**/equipment_usages',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createEquipmentUsageFail')
     creatOrUpdate(true)
@@ -151,7 +144,7 @@ describe('E2E: Equipment Usage', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/equipment_usage',
+      '**/equipment_usages',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateEquipmentUsageFail')
     creatOrUpdate(false)

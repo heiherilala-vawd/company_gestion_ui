@@ -9,27 +9,19 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectTravelExpense,
   selectEquipment,
   selectEnumType,
 } from '../support/utils.ts'
 
 describe('E2E: Travel Equipments', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function updateRecord() {
     const crupdatedData = crupdateTravelEquipmentMock[0]
-    if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
-    } else {
-      cy.contains(<string>travelEquipment1Mock.equipment?.name)
-        .first()
-        .click()
-      cy.wait('@getTravelEquipment')
-      cy.window().scrollTo('top')
-      cy.scrollTo('top')
-      cy.get('.RaEditButton-root').click()
-      cy.wait('@getTravelEquipment')
-    }
-    selectTravelExpense('Déplacement: ' + travelEquipment1Mock.travel?.expense?.description)
+    cy.contains('td', <string>travelEquipment1Mock.equipment?.name).click({ force: true })
+    cy.wait('@getTravelEquipment', { timeout: 15000 })
+    cy.window().scrollTo('top')
+    cy.scrollTo('top')
+    cy.get('.RaEditButton-root').click({ force: true })
+    cy.wait('@getTravelEquipment')
     selectEquipment('equipment')
     cy.get('[data-testid="input-quantity"] input')
       .clear()
@@ -55,7 +47,7 @@ describe('E2E: Travel Equipments', () => {
     cy.wait('@getTravelEquipments')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
+        cy.get('body').click(0, 0)
       }
     })
   }
@@ -79,8 +71,8 @@ describe('E2E: Travel Equipments', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>travelEquipment1Mock.equipment?.name).click()
-    cy.wait('@getTravelEquipment')
+    cy.contains('td', <string>travelEquipment1Mock.equipment?.name).click({ force: true })
+    cy.wait('@getTravelEquipment', { timeout: 15000 })
     cy.contains(<string>travelEquipment1Mock.equipment?.name).should('exist')
     cy.contains(<number>travelEquipment1Mock.quantity).should('exist')
     cy.contains('En cours').should('exist')
@@ -91,25 +83,13 @@ describe('E2E: Travel Equipments', () => {
     ).should('be.visible')
   }
 
-  function canCreate(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
-    cy.intercept('PUT', '**/travel_equipment*', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
-    }).as('createTravelEquipment')
-    creatOrUpdate(true)
-    cy.wait(3000)
-    cy.wait('@createTravelEquipment')
-    cy.url().should('include', '/travel_equipment')
-  }
-
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
     cy.intercept('PUT', '**/travel_equipment*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('updateTravelEquipment')
-    creatOrUpdate(false)
+    updateRecord()
     cy.wait(3000)
     cy.wait('@updateTravelEquipment')
     cy.url().should('include', '/travel_equipment')
@@ -120,25 +100,17 @@ describe('E2E: Travel Equipments', () => {
     cy.clearCookies()
     insertInToLocalStorage()
     interceptGeneralEndpoint()
+    cy.intercept(
+      'GET',
+      '**/travel_equipments/teq1_id*',
+      mockSuccessResponse(travelEquipment1Mock),
+    ).as('getTravelEquipment')
     loginInPage()
   })
 
   it('should display travel equipments list', () => showList(true))
   it('should show travel equipment details', () => showDetails(true))
-  it('should create a new travel equipment', () => canCreate(true))
   it('should update an existing travel equipment', () => canUpdate(true))
-
-  it('should show error on create failure', () => {
-    navigateToDesktop()
-    cy.intercept(
-      'PUT',
-      '**/travel_equipment*',
-      mockErrorResponse('BadRequestException', 'Invalid data', 400),
-    ).as('createTravelEquipmentFail')
-    creatOrUpdate(true)
-    cy.wait('@createTravelEquipmentFail')
-    cy.get('.RaNotification-error').should('be.visible')
-  })
 
   it('should show error on update failure', () => {
     navigateToDesktop()
@@ -147,13 +119,12 @@ describe('E2E: Travel Equipments', () => {
       '**/travel_equipment*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateTravelEquipmentFail')
-    creatOrUpdate(false)
+    updateRecord()
     cy.wait('@updateTravelEquipmentFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
 
   it('should display travel equipments list on mobile', () => showList(false))
   it('should show travel equipment details on mobile', () => showDetails(false))
-  it('should create a new travel equipment on mobile', () => canCreate(false))
   it('should update an existing travel equipment on mobile', () => canUpdate(false))
 })

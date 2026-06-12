@@ -1,20 +1,18 @@
-
 # CrupdateEmployeeLeaveConfig
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`user_id` | string
-`company_id` | string
-`hire_date` | Date
-`contract_type` | string
-`vacation_days_per_month` | number
-`end_date` | Date
-`weekly_hours` | number
-`comment` | string
+| Name                      | Type   |
+| ------------------------- | ------ |
+| `id`                      | string |
+| `user_id`                 | string |
+| `company_id`              | string |
+| `hire_date`               | Date   |
+| `contract_type`           | string |
+| `vacation_days_per_month` | number |
+| `end_date`                | Date   |
+| `weekly_hours`            | number |
+| `comment`                 | string |
 
 ## Example
 
@@ -46,5 +44,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

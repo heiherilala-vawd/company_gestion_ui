@@ -6,13 +6,7 @@ import {
   crupdateCashAccountsMock,
   createOrUpdateCashAccounts,
 } from '../mocks/responses/cash-accounts-api'
-import {
-  expandMonetarySections,
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-  openMobileSidebar,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Cash Accounts', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -42,21 +36,18 @@ describe('E2E: Cash Accounts', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-cash-accounts"]').click()
+    cy.window().then((win) => {
+      win.location.hash = '#/cash_accounts'
+    })
     cy.wait('@getCashAccounts')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    openMobileSidebar()
-    expandMonetarySections()
-    cy.get('[data-testid="menu-cash-accounts"]').click()
+    cy.window().then((win) => {
+      win.location.hash = '#/cash_accounts'
+    })
     cy.wait('@getCashAccounts')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

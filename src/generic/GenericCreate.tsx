@@ -7,6 +7,9 @@ export default function GenericCreate(props: CreateProps) {
     <Create
       {...props}
       redirect={false}
+      mutationMode={
+        import.meta.env.VITE_MUTATION_MODE === 'pessimistic' ? 'pessimistic' : undefined
+      }
       mutationOptions={{
         ...(props.mutationOptions as any),
         onSuccess: (...args: any[]) => {

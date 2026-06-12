@@ -4,17 +4,22 @@ describe('E2E: Equipment Dashboard', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
+    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    insertInToLocalStorage()
   })
 
   function navigateToDesktop() {
-    cy.contains('Dashboard équipement').click({ force: true })
+    cy.contains('[class*="MuiBottomNavigationAction"]', 'Équipement').click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="section-hub"]')
+      .first()
+      .within(() => {
+        cy.contains('Dashboard').click({ force: true })
+      })
     cy.wait(['@getEquipmentDashboardSummary', '@getEquipmentDashboardBreakdown'], {
       timeout: 15000,
     })
-    cy.wait(500)
   }
 
   it('should display equipment dashboard page', () => {
@@ -24,12 +29,12 @@ describe('E2E: Equipment Dashboard', () => {
 
   it('should display summary cards', () => {
     navigateToDesktop()
-    cy.contains('Total').should('be.visible')
-    cy.contains('Disponibles').should('be.visible')
+    cy.contains('Total équipements').should('be.visible')
+    cy.contains('En maintenance').should('be.visible')
   })
 
   it('should display filter button', () => {
     navigateToDesktop()
-    cy.contains('button', 'Appliquer').should('be.visible')
+    cy.contains('Actualiser').should('be.visible')
   })
 })
