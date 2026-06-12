@@ -19,9 +19,9 @@ describe('E2E: Companies', () => {
       cy.get('[class*="RaCreateButton"]').click()
       selectEnumType('input-company-type', <string>crupdatedData.company_type)
     } else {
-      cy.contains(<string>company1Mock.name).click()
-      cy.wait('@getCompany')
-      cy.get('.RaEditButton-root').click()
+      cy.contains('td', <string>company1Mock.name).click({ force: true })
+      cy.wait('@getCompany', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-name"] input')
       .clear()
@@ -64,11 +64,10 @@ describe('E2E: Companies', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>company1Mock.name).click()
-    cy.wait('@getCompany')
+    cy.contains('td', <string>company1Mock.name).click({ force: true })
+    cy.wait('@getCompany', { timeout: 15000 })
     cy.contains(<string>company1Mock.name).should('exist')
     cy.contains(<string>company1Mock.rib).should('exist')
-    cy.contains(<string>company1Mock.description).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {

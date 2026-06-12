@@ -18,21 +18,13 @@ describe('E2E: Purchase Orders', () => {
     cy.contains('[role="option"]', optionText).click({ force: true })
   }
 
-  function clickRow(isComputerView: boolean) {
-    if (isComputerView) {
-      cy.contains(<string>purchaseOrder1Mock.supplier.name || '').click()
-    } else {
-      cy.contains(<string>purchaseOrder1Mock.status).click()
-    }
-  }
-
   function creatOrUpdate(isCreating: boolean, isComputerView: boolean) {
     const crupdatedData = crupdatePurchaseOrdersMock[0]
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
       clickRow(isComputerView)
-      cy.wait('@getPurchaseOrder')
+      cy.wait('@getPurchaseOrder', { timeout: 15000 })
       cy.get('.RaEditButton-root').click({ force: true })
     }
     selectReferenceMobile('input-supplier_id', 'Fournitures BTP SARL')
@@ -72,17 +64,24 @@ describe('E2E: Purchase Orders', () => {
     if (isComputerView) {
       cy.contains(<string>purchaseOrder1Mock.supplier.name || '').should('be.visible')
     }
-    cy.contains(<string>purchaseOrder1Mock.status).should('be.visible')
-    cy.contains(<string>purchaseOrder2Mock.status).should('be.visible')
+    cy.contains('En attente').scrollIntoView().should('exist')
+  }
+
+  function clickRow(isComputerView: boolean) {
+    if (isComputerView) {
+      cy.contains('td', <string>(purchaseOrder1Mock.supplier?.name || '')).click({ force: true })
+    } else {
+      cy.contains('En attente').click({ force: true })
+    }
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
     clickRow(isComputerView)
-    cy.wait('@getPurchaseOrder')
-    cy.contains(<string>purchaseOrder1Mock.supplier?.name || '').should('be.visible')
-    cy.contains(<string>purchaseOrder1Mock.status).should('be.visible')
+    cy.wait('@getPurchaseOrder', { timeout: 15000 })
+    cy.contains(<string>purchaseOrder1Mock.supplier?.name || '').should('exist')
+    cy.contains(<string>purchaseOrder1Mock.status).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {

@@ -47,7 +47,6 @@ describe('E2E: Yearly Report', () => {
     expandMonetarySections()
     cy.get('[data-testid="menu-yearly-report"]').click()
     cy.wait('@getYearlyReport')
-    cy.wait(500)
   }
 
   it('should display yearly report page', () => {

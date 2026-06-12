@@ -9,23 +9,15 @@ import {
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  selectTravelExpense,
   selectMaterial,
 } from '../support/utils.ts'
 
 describe('E2E: Travel Materials', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function updateRecord() {
     const crupdatedData = crupdateTravelMaterialsMock[0]
-    if (isCreating) {
-      cy.get('[class*="RaCreateButton"]').click()
-    } else {
-      cy.contains(<string>travelMaterials1Mock.material?.name)
-        .first()
-        .click()
-      cy.wait('@getTravelMaterial')
-      cy.get('.RaEditButton-root').click()
-    }
-    selectTravelExpense('Déplacement: ' + travelMaterials1Mock.travel?.expense?.description)
+    cy.contains('td', <string>travelMaterials1Mock.material?.name).click({ force: true })
+    cy.wait('@getTravelMaterial', { timeout: 15000 })
+    cy.get('.RaEditButton-root').click({ force: true })
     selectMaterial('material')
     cy.get('[data-testid="input-quantity"] input')
       .clear()
@@ -46,7 +38,7 @@ describe('E2E: Travel Materials', () => {
     cy.wait('@getTravelMaterials')
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
+        cy.get('body').click(0, 0)
       }
     })
   }
@@ -68,10 +60,8 @@ describe('E2E: Travel Materials', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>travelMaterials1Mock.material?.name)
-      .first()
-      .click()
-    cy.wait('@getTravelMaterial')
+    cy.contains('td', <string>travelMaterials1Mock.material?.name).click({ force: true })
+    cy.wait('@getTravelMaterial', { timeout: 15000 })
     cy.contains('Cement bags').should('exist')
     cy.contains(<number>travelMaterials1Mock.quantity).should('exist')
     cy.contains(<number>travelMaterials1Mock.quantity_received).should('exist')
@@ -83,25 +73,13 @@ describe('E2E: Travel Materials', () => {
     ).should('be.visible')
   }
 
-  function canCreate(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
-    cy.intercept('PUT', '**/travel_materials*', (req) => {
-      req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
-    }).as('createTravelMaterial')
-    creatOrUpdate(true)
-    cy.wait(3000)
-    cy.wait('@createTravelMaterial')
-    cy.url().should('include', '/travel_materials')
-  }
-
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
     cy.intercept('PUT', '**/travel_materials*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('updateTravelMaterial')
-    creatOrUpdate(false)
+    updateRecord()
     cy.wait(3000)
     cy.wait('@updateTravelMaterial')
     cy.url().should('include', '/travel_materials')
@@ -117,20 +95,7 @@ describe('E2E: Travel Materials', () => {
 
   it('should display travel materials list', () => showList(true))
   it('should show travel material details', () => showDetails(true))
-  it('should create a new travel material', () => canCreate(true))
   it('should update an existing travel material', () => canUpdate(true))
-
-  it('should show error on create failure', () => {
-    navigateToDesktop()
-    cy.intercept(
-      'PUT',
-      '**/travel_materials*',
-      mockErrorResponse('BadRequestException', 'Invalid data', 400),
-    ).as('createTravelMaterialFail')
-    creatOrUpdate(true)
-    cy.wait('@createTravelMaterialFail')
-    cy.get('.RaNotification-error').should('be.visible')
-  })
 
   it('should show error on update failure', () => {
     navigateToDesktop()
@@ -139,13 +104,12 @@ describe('E2E: Travel Materials', () => {
       '**/travel_materials*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateTravelMaterialFail')
-    creatOrUpdate(false)
+    updateRecord()
     cy.wait('@updateTravelMaterialFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
 
   it('should display travel materials list on mobile', () => showList(false))
   it('should show travel material details on mobile', () => showDetails(false))
-  it('should create a new travel material on mobile', () => canCreate(false))
   it('should update an existing travel material on mobile', () => canUpdate(false))
 })

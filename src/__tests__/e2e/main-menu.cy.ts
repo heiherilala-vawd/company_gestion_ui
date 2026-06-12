@@ -198,7 +198,6 @@ describe('E2E: Main Menu and Selectors', () => {
         cy.get('body').click(0, 0) // clique hors menu
       }
     })
-    cy.wait(500)
 
     // Sur mobile, les sélecteurs sont masqués par défaut - cliquer pour les afficher
     cy.get('[data-testid="toggle-selectors"]').should('exist').click({ force: true })

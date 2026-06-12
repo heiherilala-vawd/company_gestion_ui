@@ -1,20 +1,18 @@
-
 # TaskSchedule
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`title` | string
-`description` | string
-`priority` | [TaskPriority](TaskPriority.md)
-`frequency` | string
-`scheduled_date` | Date
-`status` | [ScheduleStatus](ScheduleStatus.md)
-`company_id` | string
-`assigned_user_ids` | Array&lt;string&gt;
+| Name                | Type                                |
+| ------------------- | ----------------------------------- |
+| `id`                | string                              |
+| `title`             | string                              |
+| `description`       | string                              |
+| `priority`          | [TaskPriority](TaskPriority.md)     |
+| `frequency`         | string                              |
+| `scheduled_date`    | Date                                |
+| `status`            | [ScheduleStatus](ScheduleStatus.md) |
+| `company_id`        | string                              |
+| `assigned_user_ids` | Array&lt;string&gt;                 |
 
 ## Example
 
@@ -46,5 +44,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

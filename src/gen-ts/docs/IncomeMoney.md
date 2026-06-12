@@ -1,24 +1,22 @@
-
 # IncomeMoney
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`amount` | number
-`description` | string
-`id` | string
-`source_organization` | string
-`invoice_reference` | string
-`billing_start_date` | Date
-`facturation_date` | Date
-`due_date` | Date
-`payment_terms` | string
-`job` | [CrupdateJob](CrupdateJob.md)
-`income_type` | [IncomeType](IncomeType.md)
-`receipts` | [Array&lt;IncomeReceipt&gt;](IncomeReceipt.md)
-`remaining_amount` | number
+| Name                  | Type                                           |
+| --------------------- | ---------------------------------------------- |
+| `amount`              | number                                         |
+| `description`         | string                                         |
+| `id`                  | string                                         |
+| `source_organization` | string                                         |
+| `invoice_reference`   | string                                         |
+| `billing_start_date`  | Date                                           |
+| `facturation_date`    | Date                                           |
+| `due_date`            | Date                                           |
+| `payment_terms`       | string                                         |
+| `job`                 | [CrupdateJob](CrupdateJob.md)                  |
+| `income_type`         | [IncomeType](IncomeType.md)                    |
+| `receipts`            | [Array&lt;IncomeReceipt&gt;](IncomeReceipt.md) |
+| `remaining_amount`    | number                                         |
 
 ## Example
 
@@ -54,5 +52,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

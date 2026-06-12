@@ -22,13 +22,20 @@ describe('E2E: Loans', () => {
         $input.trigger('change')
       })
     } else {
-      cy.contains(<string>loan1Mock.lender).click()
+      cy.contains(<string>loan1Mock.organization.name).click()
       cy.wait('@getLoan')
       cy.get('.RaEditButton-root').click()
     }
-    cy.get('[data-testid="input-lender"] input')
-      .clear()
-      .type(<string>crupdatedData.lender)
+    cy.get('[data-testid="input-organizations-id"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+      })
+    cy.get('[role="option"]', { timeout: 15000 }).should('be.visible')
+    cy.contains('[role="option"]', <string>crupdatedData.lender)
+      .scrollIntoView()
+      .click({ force: true })
+    cy.get('[role="option"]').should('not.exist')
     cy.get('[data-testid="input-amount"] input')
       .clear()
       .type(<string>(<unknown>crupdatedData.amount))
@@ -61,22 +68,21 @@ describe('E2E: Loans', () => {
     cy.get('[data-testid="menu-loans"]').click({ force: true })
     cy.wait('@getLoans')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>loan1Mock.lender).should('be.visible')
-    cy.contains(<string>loan3Mock.lender).should('be.visible')
+    cy.contains(<string>loan1Mock.organization.name).should('be.visible')
+    cy.contains(<string>loan3Mock.organization.name).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>loan1Mock.lender).click()
+    cy.contains(<string>loan1Mock.organization.name).click()
     cy.wait('@getLoan')
-    cy.contains(<string>loan1Mock.lender).should('exist')
+    cy.contains(<string>loan1Mock.organization.name).should('exist')
     cy.contains(<string>loan1Mock.description).should('exist')
   }
 

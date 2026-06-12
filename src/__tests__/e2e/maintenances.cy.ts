@@ -53,7 +53,6 @@ describe('E2E: Maintenances', () => {
     cy.get('[data-testid="menu-maintenances"]').click({ force: true })
     cy.wait('@getMaintenances')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

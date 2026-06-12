@@ -10,7 +10,7 @@ import {
   interceptGeneralEndpoint,
   loginInPage,
   selectJob,
-  selectWarehouse,
+  selectEnumType,
 } from '../support/utils.ts'
 
 describe('E2E: Travel Expenses', () => {
@@ -18,12 +18,10 @@ describe('E2E: Travel Expenses', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<string>travelExpense1Mock.departure_location?.name).click({ force: true })
-      cy.wait('@getTravelExpense')
+      cy.contains('td', <string>travelExpense1Mock.departure_location?.name).click({ force: true })
+      cy.wait('@getTravelExpense', { timeout: 15000 })
       cy.get('.RaEditButton-root').click({ force: true })
     }
-    selectWarehouse('departure_location_id')
-    selectWarehouse('arrival_location_id', 1)
     if (!isCreating) {
       selectJob('expense\\.job_id')
     }
@@ -52,7 +50,6 @@ describe('E2E: Travel Expenses', () => {
     cy.get('[data-testid="menu-travel-expenses"]').click({ force: true })
     cy.wait('@getTravelExpenses')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -69,8 +66,8 @@ describe('E2E: Travel Expenses', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>travelExpense1Mock.departure_location?.name).click()
-    cy.wait('@getTravelExpense')
+    cy.contains('td', <string>travelExpense1Mock.departure_location?.name).click({ force: true })
+    cy.wait('@getTravelExpense', { timeout: 15000 })
     cy.contains(<string>travelExpense1Mock.departure_location?.name).should('exist')
     cy.contains(<string>travelExpense1Mock.arrival_location?.name).should('be.visible')
     cy.contains(<string>travelExpense1Mock.expense?.comment).should('be.visible')

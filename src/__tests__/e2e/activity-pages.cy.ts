@@ -26,7 +26,6 @@ describe('E2E: Activity Pages', () => {
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()
-    cy.wait(500)
   })
 
   function goHome() {
@@ -55,10 +54,9 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     clickHomeButton('Reçu')
     cy.url({ timeout: 15000 }).should('include', '/employer_payments_activity')
-    cy.wait(500)
 
     cy.contains('Valider paiement').should('be.visible')
-    cy.contains('Client Corp').should('be.visible')
+    cy.contains(income1Mock.organization?.name ?? 'Client Corp').should('be.visible')
 
     cy.contains('Retourner emprunt').scrollIntoView().click({ force: true })
     cy.wait(300)
@@ -71,20 +69,19 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     clickHomeButton('Reçu')
     cy.url({ timeout: 15000 }).should('include', '/employer_payments_activity')
-    cy.wait(500)
 
     // Make sure content is visible
-    cy.contains(income1Mock.source_organization).should('be.visible')
+    cy.contains(income1Mock.organization?.name ?? 'Client Corp').should('be.visible')
 
     // Find income row, type amount, click Valider
-    cy.contains('td', income1Mock.source_organization)
+    cy.contains('td', income1Mock.organization?.name ?? 'Client Corp')
       .parent('tr')
       .within(() => {
         cy.get('input[type="number"]').clear().type('5000')
       })
 
     // Click Valider button
-    cy.contains('td', income1Mock.source_organization)
+    cy.contains('td', income1Mock.organization?.name ?? 'Client Corp')
       .parent('tr')
       .contains('button', 'Valider')
       .click()
@@ -93,7 +90,7 @@ describe('E2E: Activity Pages', () => {
     cy.contains('Confirmer le paiement').should('be.visible')
 
     // Intercept and confirm
-    cy.intercept('PUT', '**/receipts', mockSuccessResponse({})).as('createReceipt')
+    cy.intercept('PUT', '**/incomes_receipts', mockSuccessResponse({})).as('createReceipt')
     cy.contains('button', 'Confirmer le paiement').click()
     cy.wait('@createReceipt', { timeout: 20000 })
   }
@@ -105,20 +102,22 @@ describe('E2E: Activity Pages', () => {
     cy.wait(300)
 
     cy.contains('Retourner emprunt').scrollIntoView().click({ force: true })
-    cy.wait(500)
     cy.contains('Emprunts actifs').should('be.visible')
-    cy.contains(loan1Mock.lender).should('be.visible')
+    cy.contains(loan1Mock.organization.name).should('be.visible')
 
-    cy.contains('td', loan1Mock.lender)
+    cy.contains('td', loan1Mock.organization.name)
       .parent('tr')
       .within(() => {
         cy.get('input[type="number"]').clear().type('5000')
       })
 
-    cy.contains('td', loan1Mock.lender).parent('tr').contains('button', 'Valider').click()
+    cy.contains('td', loan1Mock.organization.name)
+      .parent('tr')
+      .contains('button', 'Valider')
+      .click()
 
     cy.contains('Confirmer le remboursement').should('be.visible')
-    cy.intercept('PUT', '**/repayments', mockSuccessResponse({})).as('createRepayment')
+    cy.intercept('PUT', '**/loan_repayments', mockSuccessResponse({})).as('createRepayment')
     cy.contains('button', 'Confirmer le remboursement').click()
     cy.wait('@createRepayment', { timeout: 20000 })
   }
@@ -129,7 +128,6 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     clickHomeButton('Réception')
     cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
-    cy.wait(500)
 
     cy.contains('Lieu de réception').should('be.visible')
     cy.contains(materialWarehouse1Mock.material?.name).should('be.visible')
@@ -140,7 +138,6 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     clickHomeButton('Réception')
     cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
-    cy.wait(500)
 
     cy.contains(material1Mock.name).should('be.visible')
 
@@ -168,14 +165,12 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     clickHomeButton('Réception')
     cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
-    cy.wait(500)
 
     cy.get('[data-testid="toggle-equipment"]').scrollIntoView().click({ force: true })
     cy.wait('@getEquipments', { timeout: 10000 })
     cy.contains('td', equipment1Mock.name).should('be.visible')
 
     cy.contains('td', equipment1Mock.name).parent('tr').find('td').first().click({ force: true })
-    cy.wait(500)
     cy.contains('Lieu de réception').should('be.visible')
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
     cy.wait(300)
@@ -196,7 +191,10 @@ describe('E2E: Activity Pages', () => {
     cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
 
     cy.get('[data-testid="input-bank_name"] input').clear().type('BNP Paribas Test')
-    cy.get('[data-testid="input-description"] textarea:visible').clear().type('Test bank fee')
+    cy.get('[data-testid="input-description"] textarea:visible')
+      .first()
+      .clear()
+      .type('Test bank fee')
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
       .type('5000')
@@ -239,7 +237,10 @@ describe('E2E: Activity Pages', () => {
 
     cy.contains('Autre dépense').scrollIntoView().click({ force: true })
     cy.wait(300)
-    cy.get('[data-testid="input-description"] textarea:visible').clear().type('Test other expense')
+    cy.get('[data-testid="input-description"] textarea:visible')
+      .first()
+      .clear()
+      .type('Test other expense')
     cy.get('[data-testid="input-expense-form"] [data-testid="input-amount"] input')
       .clear()
       .type('2000')
@@ -279,7 +280,14 @@ describe('E2E: Activity Pages', () => {
 
     cy.contains('button', 'Emprunts').scrollIntoView().click({ force: true })
     cy.wait(300)
-    cy.get('[data-testid="input-lender"] input').clear().type('Test Bank')
+    cy.get('[data-testid="input-organizations-id"]')
+      .scrollIntoView()
+      .within(() => {
+        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+      })
+    cy.get('[role="option"]', { timeout: 15000 }).should('be.visible')
+    cy.contains('[role="option"]', 'Banque Populaire').scrollIntoView().click({ force: true })
+    cy.get('[role="option"]').should('not.exist')
     cy.get('[data-testid="input-amount"] input').clear().type('50000')
     cy.get('[data-testid="input-interest_rate"] input').clear().type('1200')
     cy.get('[data-testid="input-description"] textarea:visible').clear().type('Test loan')

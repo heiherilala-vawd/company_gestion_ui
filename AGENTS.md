@@ -83,6 +83,28 @@ NEVER hardcode colors/gradients/shadows/radii outside `src/style/`. Theme tokens
 - **`cypress-with-coverage`**: Docker-based (`npm run cypress:docker:ci`), coverage artifact upload
 - Docker layer caching via `actions/cache` with `/tmp/.buildx-cache`
 
-## Skills
+## Skills — OBLIGATOIRE : À LIRE AVANT TOUTE MODIFICATION
 
-Loaded from `.agents/skills/<name>/SKILL.md`. Use `skill(name="<name>")` when a task matches the skill description. Available: `dynamic-resources`, `e2e-testing`, `frontend-design`.
+**Règle absolue :** Avant d'écrire ou modifier du code, des tests, ou des fichiers de style, LOADER la skill correspondante avec `skill(name="<name>")` et appliquer SES RÈGLES.
+
+Skills disponibles :
+
+| Skill | Quand l'utiliser |
+|-------|-----------------|
+| `clean-code` | **SRP, DRY, KISS, YAGNI** — TOUTE écriture/refactor de code. Fonctions < 20 lignes, pas de duplication, noms révélateurs, guard clauses |
+| `clean-code-ui-ux` | **Style MUI/RA** — TOUTE modification UI. Architecture 3 couches (tokens → sx → theme), pas de valeurs hardcodées, pas d'overflow:hidden sur les conteneurs |
+| `e2e-testing` | **Tests Cypress** — TOUTE écriture/modification de test. Patterns d'interception, structure CRUD, responsive desktop/mobile |
+| `tdd` | **Développement piloté par les tests** — Cycle RED→GREEN→REFACTOR. Test d'abord, implémentation ensuite |
+| `dynamic-resources` | **URLs hiérarchiques** — data provider, résolution d'URL, contextes hiérarchiques |
+| `select-with-create` | **Références avec création inline** — ReferenceSelectWithCreate, SelectWithCreateProvider |
+| `id-management` | **UUID dans les formulaires** — Champ `id` caché avec UUID auto-généré |
+| `frontend-design` | **Interfaces utilisateur** — Composants React, pages, layouts de haute qualité |
+| `visual-inspect` | **Vérification visuelle** — Capture d'écran après modifications CSS (Playwright) |
+| `cron-input` | **Expressions cron** — Builders visuels d'expressions cron |
+| `skill-creator` | **Création de nouveau skill** — Documentation de pattern réutilisable |
+| `brand-guidelines` | **Couleurs et typographie** — Chartes graphiques officielles |
+
+**Checklist avant chaque tâche :**
+- [ ] Quelle skill correspond à mon travail ? (`grep -r "describes\|Use this" .agents/skills/<name>/SKILL.md`)
+- [ ] L'ai-je loadée avec `skill(name="<name>")` ?
+- [ ] Ma modification respecte-t-elle les règles de la skill ?

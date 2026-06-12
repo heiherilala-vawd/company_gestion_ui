@@ -23,7 +23,6 @@ describe('E2E: Incomes', () => {
         .first()
         .click()
       cy.wait('@getIncome')
-      cy.wait(500)
 
       cy.get('.RaEditButton-root').click()
     }
@@ -62,7 +61,6 @@ describe('E2E: Incomes', () => {
     cy.get('[data-testid="menu-incomes"]').click({ force: true })
     cy.wait('@getIncomes')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

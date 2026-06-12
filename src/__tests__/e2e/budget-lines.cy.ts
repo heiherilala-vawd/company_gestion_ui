@@ -6,13 +6,7 @@ import {
   crupdateBudgetLinesMock,
   createOrUpdateBudgetLines,
 } from '../mocks/responses/budget-lines-api'
-import {
-  expandMonetarySections,
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-  openMobileSidebar,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Budget Lines', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -27,7 +21,6 @@ describe('E2E: Budget Lines', () => {
       cy.get('[class*="RaDatagrid"]')
         .contains(<string>budgetLine1Mock.category)
         .click({ force: true })
-      cy.wait(500)
       cy.wait('@getBudgetLine')
       cy.get('.RaEditButton-root').click({ force: true })
     }
@@ -41,20 +34,17 @@ describe('E2E: Budget Lines', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-budgets"]').click({ force: true })
+    cy.window().then((win) => {
+      win.location.hash = '#/budget_lines'
+    })
     cy.wait('@getBudgetLines')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.visit('/')
-    cy.reload()
-    openMobileSidebar()
-    expandMonetarySections()
-    cy.get('[data-testid="menu-budgets"]').click({ force: true })
+    cy.window().then((win) => {
+      win.location.hash = '#/budget_lines'
+    })
     cy.wait('@getBudgetLines')
   }
 
@@ -75,7 +65,6 @@ describe('E2E: Budget Lines', () => {
     cy.get('[class*="RaDatagrid"]')
       .contains(<string>budgetLine1Mock.category)
       .click({ force: true })
-    cy.wait(500)
     cy.wait('@getBudgetLine')
     cy.contains(<string>budgetLine1Mock.category).should('exist')
     cy.contains(<string>budgetLine1Mock.description).should('exist')

@@ -4,15 +4,20 @@ describe('E2E: Material Dashboard', () => {
   beforeEach(() => {
     cy.clearLocalStorage()
     cy.clearCookies()
+    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    insertInToLocalStorage()
   })
 
   function navigateToDesktop() {
-    cy.contains('Dashboard stock').click({ force: true })
+    cy.contains('[class*="MuiBottomNavigationAction"]', 'Stock').click({ force: true })
+    cy.wait(1000)
+    cy.get('[data-testid="section-hub"]')
+      .first()
+      .within(() => {
+        cy.contains('Dashboard').click({ force: true })
+      })
     cy.wait(['@getMaterialDashboardSummary', '@getMaterialDashboardBreakdown'], { timeout: 15000 })
-    cy.wait(500)
   }
 
   it('should display material dashboard page', () => {
@@ -30,6 +35,6 @@ describe('E2E: Material Dashboard', () => {
 
   it('should display filter button', () => {
     navigateToDesktop()
-    cy.contains('button', 'Appliquer').should('be.visible')
+    cy.contains('Actualiser').should('be.visible')
   })
 })

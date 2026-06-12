@@ -7,7 +7,6 @@ import {
   createOrUpdateLoanRepayments,
 } from '../mocks/responses/loan-repayments-api'
 import {
-  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
@@ -40,30 +39,24 @@ describe('E2E: Loan Repayments', () => {
       .clear()
       .type(<string>(<unknown>crupdatedData.amount))
     if (isCreating) {
-      selectReferenceWithCreate('input-loan_id', 'loan_id', <string>loan1Mock.lender)
+      selectReferenceWithCreate('input-loan_id', 'loan_id', <string>loan1Mock.organization.name)
     }
     cy.get('button[type="submit"]').click({ force: true })
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-loan-repayments"]').click()
+    cy.window().then((win) => {
+      win.location.hash = '#/loan_repayments'
+    })
     cy.wait('@getLoanRepayments')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    expandMonetarySections()
-    cy.get('[data-testid="menu-loan-repayments"]').click({ force: true })
+    cy.window().then((win) => {
+      win.location.hash = '#/loan_repayments'
+    })
     cy.wait('@getLoanRepayments')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -84,7 +77,7 @@ describe('E2E: Loan Repayments', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/loans_repayment', (req) => {
+    cy.intercept('PUT', '**/loan_repayments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('createLoanRepayment')
     creatOrUpdate(true)
@@ -96,7 +89,7 @@ describe('E2E: Loan Repayments', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/loans_repayment', (req) => {
+    cy.intercept('PUT', '**/loan_repayments', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('updateLoanRepayment')
     creatOrUpdate(false)
@@ -109,17 +102,17 @@ describe('E2E: Loan Repayments', () => {
     cy.clearLocalStorage()
     cy.clearCookies()
     interceptGeneralEndpoint()
-    cy.intercept('GET', '**/loans_repayment*', mockSuccessResponse(loanRepaymentsMock)).as(
+    insertInToLocalStorage()
+    cy.intercept('GET', '**/loan_repayments*', mockSuccessResponse(loanRepaymentsMock)).as(
       'getLoanRepayments',
     )
-    cy.intercept('GET', '**/loans_repayment/lr1_id', mockSuccessResponse(loanRepayment1Mock)).as(
+    cy.intercept('GET', '**/loan_repayments/lr1_id', mockSuccessResponse(loanRepayment1Mock)).as(
       'getLoanRepayment',
     )
-    cy.intercept('GET', '**/loans_repayment/newId', mockSuccessResponse(loanRepayment1Mock)).as(
+    cy.intercept('GET', '**/loan_repayments/newId', mockSuccessResponse(loanRepayment1Mock)).as(
       'getLoanRepaymentCreate',
     )
     loginInPage()
-    insertInToLocalStorage()
   })
 
   it('should display loan repayments list', () => showList(true))
@@ -131,7 +124,7 @@ describe('E2E: Loan Repayments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/loans_repayment',
+      '**/loan_repayments',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createLoanRepaymentFail')
     creatOrUpdate(true)
@@ -143,7 +136,7 @@ describe('E2E: Loan Repayments', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/loans_repayment',
+      '**/loan_repayments',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateLoanRepaymentFail')
     creatOrUpdate(false)

@@ -18,9 +18,9 @@ describe('E2E: Warehouses', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
-      cy.contains(<string>warehouse1Mock.name).click()
-      cy.wait('@getWarehouse')
-      cy.get('.RaEditButton-root').click()
+      cy.contains('td', <string>warehouse1Mock.name).click({ force: true })
+      cy.wait('@getWarehouse', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
     }
     cy.get('[data-testid="input-name"] input')
       .clear()
@@ -62,8 +62,8 @@ describe('E2E: Warehouses', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>warehouse1Mock.name).click()
-    cy.wait('@getWarehouse')
+    cy.contains('td', <string>warehouse1Mock.name).click({ force: true })
+    cy.wait('@getWarehouse', { timeout: 15000 })
     cy.contains(<string>warehouse1Mock.name).should('be.visible')
     cy.contains(<string>warehouse1Mock.description).should('be.visible')
   }

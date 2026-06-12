@@ -7,7 +7,6 @@ import {
   createOrUpdateReceipts,
 } from '../mocks/responses/receipts-api'
 import {
-  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
@@ -48,24 +47,18 @@ describe('E2E: Receipts', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-receipts"]').click()
+    cy.window().then((win) => {
+      win.location.hash = '#/receipts'
+    })
     cy.wait('@getReceipts')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    expandMonetarySections()
-    cy.get('[data-testid="menu-receipts"]').click({ force: true })
+    cy.window().then((win) => {
+      win.location.hash = '#/receipts'
+    })
     cy.wait('@getReceipts')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

@@ -1,19 +1,17 @@
-
 # CrupdateTask
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`title` | string
-`description` | string
-`due_date` | Date
-`priority` | [TaskPriority](TaskPriority.md)
-`completed` | boolean
-`company_id` | string
-`assigned_user_ids` | Array&lt;string&gt;
+| Name                | Type                            |
+| ------------------- | ------------------------------- |
+| `id`                | string                          |
+| `title`             | string                          |
+| `description`       | string                          |
+| `due_date`          | Date                            |
+| `priority`          | [TaskPriority](TaskPriority.md) |
+| `completed`         | boolean                         |
+| `company_id`        | string                          |
+| `assigned_user_ids` | Array&lt;string&gt;             |
 
 ## Example
 
@@ -44,5 +42,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

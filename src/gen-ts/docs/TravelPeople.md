@@ -1,16 +1,14 @@
-
 # TravelPeople
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`travel` | [CrupdateTravelExpense](CrupdateTravelExpense.md)
-`user` | [User](User.md)
-`arrival_date` | Date
-`arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
+| Name               | Type                                              |
+| ------------------ | ------------------------------------------------- |
+| `id`               | string                                            |
+| `travel`           | [CrupdateTravelExpense](CrupdateTravelExpense.md) |
+| `user`             | [User](User.md)                                   |
+| `arrival_date`     | Date                                              |
+| `arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)         |
 
 ## Example
 
@@ -38,5 +36,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

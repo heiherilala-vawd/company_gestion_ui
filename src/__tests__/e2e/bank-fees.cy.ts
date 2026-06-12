@@ -60,7 +60,6 @@ describe('E2E: Bank Fees', () => {
     cy.get('[data-testid="menu-bank-fees"]').click()
     cy.wait('@getBankFees')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

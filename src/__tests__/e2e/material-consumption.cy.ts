@@ -12,8 +12,8 @@ import {
   loginInPage,
   selectReferenceWithCreate,
 } from '../support/utils.ts'
-import { material1Mock } from '../mocks/responses/materials-api'
-import { warehouse1Mock } from '../mocks/responses/warehouses-api'
+import { material1Mock, material2Mock } from '../mocks/responses/materials-api'
+import { warehouse1Mock, warehouse2Mock } from '../mocks/responses/warehouses-api'
 
 describe('E2E: Material Consumption', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -24,27 +24,27 @@ describe('E2E: Material Consumption', () => {
         $input.val('newId')
         $input.trigger('change')
       })
+      cy.get('[data-testid="input-warehouse_id"]').click()
+      cy.wait('@getWarehouses')
+      cy.get('[role="option"]', { timeout: 10000 }).should('have.length.of.at.least', 1)
+      cy.contains('[role="option"]', <string>warehouse1Mock.name).click()
     } else {
-      cy.contains(String(materialConsumption1Mock.material_id)).click()
-      cy.wait('@getMaterialConsumption')
-      cy.get('.RaEditButton-root').click()
+      cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+      cy.wait('@getMaterialConsumption', { timeout: 15000 })
+      cy.get('.RaEditButton-root').click({ force: true })
+      cy.get('[data-testid="input-warehouse_id"]').click()
+      cy.wait('@getWarehouses')
+      cy.get('[role="option"]', { timeout: 10000 }).should('have.length.of.at.least', 1)
+      cy.contains('[role="option"]', <string>warehouse2Mock.name).click()
     }
-    cy.wait('@getJobs')
-    cy.get('[data-testid="input-material_id"]').should('be.visible')
-    cy.get('[data-testid="input-warehouse_id"]').should('be.visible')
-    cy.get('[data-testid="input-job_id"]').should('be.visible')
-    selectReferenceWithCreate('input-material_id', 'material_id', <string>material1Mock.name)
-    selectReferenceWithCreate('input-warehouse_id', 'warehouse_id', <string>warehouse1Mock.name)
+    cy.wait('@getMaterialWarehousesSelection')
+    cy.get('[data-testid="input-material_id"]', { timeout: 10000 }).should('be.visible')
+    cy.get('[data-testid="input-material_id"]').click()
+    cy.get('[role="option"]', { timeout: 10000 }).should('be.visible')
+    cy.get('[role="option"]').first().click()
     cy.get('[data-testid="input-quantity"] input')
       .clear()
       .type(<string>(<unknown>crupdatedData.quantity))
-    cy.get('[data-testid="input-job_id"]')
-      .scrollIntoView()
-      .within(() => {
-        cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
-      })
-    cy.get('#menu-job_id li', { timeout: 10000 }).should('have.length.of.at.least', 1)
-    cy.get('#menu-job_id li').eq(1).click({ force: true })
     cy.get('button[type="submit"]').click({ force: true })
   }
 
@@ -78,8 +78,8 @@ describe('E2E: Material Consumption', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(materialConsumption1Mock.material_id)).click()
-    cy.wait('@getMaterialConsumption')
+    cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
+    cy.wait('@getMaterialConsumption', { timeout: 15000 })
     cy.contains(String(materialConsumption1Mock.material_id)).should('exist')
     cy.contains(<string>materialConsumption1Mock.reason).should('exist')
   }
@@ -87,7 +87,7 @@ describe('E2E: Material Consumption', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/material_consumption', (req) => {
+    cy.intercept('PUT', '**/material_consumptions', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaterialConsumptions(req.body)))
     }).as('createMaterialConsumption')
     creatOrUpdate(true)
@@ -99,7 +99,7 @@ describe('E2E: Material Consumption', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '**/material_consumption', (req) => {
+    cy.intercept('PUT', '**/material_consumptions', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateMaterialConsumptions(req.body)))
     }).as('updateMaterialConsumption')
     creatOrUpdate(false)
@@ -115,19 +115,35 @@ describe('E2E: Material Consumption', () => {
     interceptGeneralEndpoint()
     cy.intercept(
       'GET',
-      '**/material_consumption*',
+      '**/material_consumptions*',
       mockSuccessResponse(materialConsumptionsMock),
     ).as('getMaterialConsumptions')
     cy.intercept(
       'GET',
-      '**/material_consumption/mc1_id',
+      '**/material_consumptions/mc1_id',
       mockSuccessResponse(materialConsumption1Mock),
     ).as('getMaterialConsumption')
     cy.intercept(
       'GET',
-      '**/material_consumption/newId',
+      '**/material_consumptions/newId',
       mockSuccessResponse(materialConsumption1Mock),
     ).as('getMaterialConsumptionCreate')
+    cy.intercept(
+      'GET',
+      '**/material_warehouses*',
+      mockSuccessResponse([
+        {
+          material: { id: 'mat1_id', name: 'Cement', unit: 'SAC' },
+          warehouse: { id: 'wh1_id', name: 'Main Warehouse' },
+          quantity: 100,
+        },
+        {
+          material: { id: 'mat2_id', name: 'Sand', unit: 'KG' },
+          warehouse: { id: 'wh2_id', name: 'Secondary Warehouse' },
+          quantity: 50,
+        },
+      ]),
+    ).as('getMaterialWarehousesSelection')
     loginInPage()
   })
 
@@ -140,7 +156,7 @@ describe('E2E: Material Consumption', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/material_consumption',
+      '**/material_consumptions',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createMaterialConsumptionFail')
     creatOrUpdate(true)
@@ -152,7 +168,7 @@ describe('E2E: Material Consumption', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/material_consumption',
+      '**/material_consumptions',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateMaterialConsumptionFail')
     creatOrUpdate(false)

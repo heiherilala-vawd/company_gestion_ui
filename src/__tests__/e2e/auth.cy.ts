@@ -21,15 +21,14 @@ describe('E2E: Authentication', () => {
   it('remains on login page if login fails with wrong credentials', () => {
     cy.intercept('POST', '**/auth/login', failedLoginResponse).as('failedLogin')
 
-    cy.url().should('include', '/login')
-
-    cy.get('input').first().type('wrong@email.com')
-    cy.get('input[type="password"]').type('wrongpassword')
+    cy.get('input').first().should('exist')
+    cy.get('input').first().type('wrong@email.com', { force: true })
+    cy.get('input[type="password"]').type('wrongpassword', { force: true })
     cy.get('button[type="submit"]').click({ force: true })
 
     cy.wait('@failedLogin')
 
-    cy.url().should('include', '/login')
+    cy.get('input').first().should('exist')
     cy.get('.RaNotification-error').should('be.visible')
   })
 
@@ -41,9 +40,7 @@ describe('E2E: Authentication', () => {
       'whoamiRequest',
     )
 
-    cy.visit('/', { failOnStatusCode: false })
-    cy.url().should('include', '/login')
-
+    cy.get('input').first().should('be.visible')
     cy.get('input')
       .first()
       .type(<string>loginRequestMock.email)
@@ -57,11 +54,8 @@ describe('E2E: Authentication', () => {
   })
 
   it('redirects to login page when accessing protected route without auth', () => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-
-    cy.visit('/', { failOnStatusCode: false })
-    cy.url().should('include', '/login')
+    cy.url({ timeout: 15000 }).should('include', '/login')
+    cy.get('input').first().should('exist')
   })
 
   it('can logout and should be redirected to login page', () => {
@@ -70,7 +64,7 @@ describe('E2E: Authentication', () => {
       'whoamiRequest',
     )
 
-    cy.visit('/', { failOnStatusCode: false })
+    cy.get('input').first().should('be.visible')
     cy.get('input')
       .first()
       .type(<string>loginRequestMock.email)
@@ -82,9 +76,9 @@ describe('E2E: Authentication', () => {
     cy.url().should('not.include', '/login')
     cy.get('[class*="RaLayout"]').should('be.visible')
 
-    // Simuler le logout
     cy.clearLocalStorage()
     cy.visit('/', { failOnStatusCode: false })
-    cy.url().should('include', '/login')
+    cy.url({ timeout: 15000 }).should('include', '/login')
+    cy.get('input').first().should('exist')
   })
 })

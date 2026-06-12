@@ -7,7 +7,6 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
     insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
-    cy.wait(500)
   })
 
   function clickHubButton(desc: string) {

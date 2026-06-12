@@ -1,18 +1,16 @@
-
 # TravelEquipment
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`travel` | [CrupdateTravelExpense](CrupdateTravelExpense.md)
-`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
-`quantity` | number
-`status` | [TransportStatus](TransportStatus.md)
-`arrival_date` | Date
-`arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
+| Name               | Type                                              |
+| ------------------ | ------------------------------------------------- |
+| `id`               | string                                            |
+| `travel`           | [CrupdateTravelExpense](CrupdateTravelExpense.md) |
+| `equipment`        | [CrupdateEquipment](CrupdateEquipment.md)         |
+| `quantity`         | number                                            |
+| `status`           | [TransportStatus](TransportStatus.md)             |
+| `arrival_date`     | Date                                              |
+| `arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)         |
 
 ## Example
 
@@ -42,5 +40,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

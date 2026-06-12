@@ -1,15 +1,13 @@
-
 # ExpenseMoney
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`amount` | number
-`description` | string
-`id` | string
-`job` | [CrupdateJob](CrupdateJob.md)
+| Name          | Type                          |
+| ------------- | ----------------------------- |
+| `amount`      | number                        |
+| `description` | string                        |
+| `id`          | string                        |
+| `job`         | [CrupdateJob](CrupdateJob.md) |
 
 ## Example
 
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

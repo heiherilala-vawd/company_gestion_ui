@@ -61,7 +61,6 @@ describe('E2E: Fixed Costs Mobile', () => {
     cy.get('[data-testid="menu-fixed-costs"]').click({ force: true })
     cy.wait('@getFixedCosts')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {

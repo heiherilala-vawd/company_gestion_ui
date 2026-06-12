@@ -1,13 +1,11 @@
-
 # TimeSeriesResponseIntervalsInner
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`label` | string
-`value` | number
+| Name    | Type   |
+| ------- | ------ |
+| `label` | string |
+| `value` | number |
 
 ## Example
 
@@ -16,8 +14,8 @@ import type { TimeSeriesResponseIntervalsInner } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "label": null,
-  "value": null,
+  label: null,
+  value: null,
 } satisfies TimeSeriesResponseIntervalsInner
 
 console.log(example)
@@ -32,5 +30,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-
