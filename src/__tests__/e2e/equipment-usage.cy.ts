@@ -107,9 +107,6 @@ describe('E2E: Equipment Usage', () => {
       cy.log(`UNCAUGHT EXCEPTION: ${err.message}`)
       return false
     })
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/equipment_usages*', mockSuccessResponse(equipmentUsagesMock)).as(
       'getEquipmentUsages',
@@ -121,6 +118,7 @@ describe('E2E: Equipment Usage', () => {
       'getEquipmentUsageCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display equipment usage list', () => showList(true))

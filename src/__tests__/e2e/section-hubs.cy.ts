@@ -2,11 +2,9 @@ import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '.
 
 describe('E2E: Section Hub Pages → Activity Forms', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   function clickHubButton(desc: string) {

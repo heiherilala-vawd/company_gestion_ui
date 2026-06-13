@@ -85,11 +85,9 @@ describe('E2E: Income Types', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display income types list', () => showList(true))

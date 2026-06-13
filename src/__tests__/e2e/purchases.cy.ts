@@ -232,11 +232,9 @@ describe('E2E: Purchases', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   describe('default mode (Monetary menu)', () => {

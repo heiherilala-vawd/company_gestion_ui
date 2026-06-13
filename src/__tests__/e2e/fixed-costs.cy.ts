@@ -104,8 +104,6 @@ describe('E2E: Fixed Costs Mobile', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/fixed_costs*', mockSuccessResponse(fixedCostsMock)).as('getFixedCosts')
     cy.intercept('GET', '**/fixed_costs/fc1_id', mockSuccessResponse(fixedCost1Mock)).as(

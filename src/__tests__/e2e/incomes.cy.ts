@@ -108,11 +108,9 @@ describe('E2E: Incomes', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display incomes list', () => showList(true))

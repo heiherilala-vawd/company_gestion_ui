@@ -118,11 +118,9 @@ describe('E2E: Employee Payments', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display employee payments list', () => showList(true))

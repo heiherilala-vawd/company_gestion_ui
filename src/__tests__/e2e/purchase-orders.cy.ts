@@ -109,11 +109,9 @@ describe('E2E: Purchase Orders', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display purchase orders list', () => showList(true))

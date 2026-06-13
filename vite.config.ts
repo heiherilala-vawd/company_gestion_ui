@@ -17,8 +17,8 @@ export default defineConfig(({ mode }) => {
   return {
   plugins: [
     react(),
-    // Only enable istanbul when NYC_CAFEOBJECT_COVERAGE is set (for coverage builds)
-    ...(env.NYC_CAFEOBJECT_COVERAGE
+    // Only enable istanbul when VITE_COVERAGE is set (for coverage builds)
+    ...(env.VITE_COVERAGE
       ? [
           istanbul({
             include: 'src/**/*',

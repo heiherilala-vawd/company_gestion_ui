@@ -2,11 +2,9 @@ import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '.
 
 describe('E2E: Monetary Dashboard', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   function navigateToDashboard(): void {

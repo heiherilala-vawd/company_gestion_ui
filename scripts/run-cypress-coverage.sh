@@ -7,6 +7,7 @@ set -e
 # Sources .env.test if present for env var overrides.
 # Uses a dedicated port (default 5174) to never conflict with dev.
 # Usage: npm run cypress:coverage
+#        npm run cypress:coverage -- --skip-build   (reuse existing dist/)
 # ───────────────────────────────────────────
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -14,6 +15,14 @@ PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Default test port (dedicated — never conflicts with dev on 5173)
 TEST_APP_PORT=${TEST_APP_PORT:-5174}
+
+# Parse arguments
+SKIP_BUILD=false
+for arg in "$@"; do
+  case $arg in
+    --skip-build) SKIP_BUILD=true ;;
+  esac
+done
 
 # Load test environment variables if .env.test exists
 if [ -f "$PROJECT_DIR/.env.test" ]; then
@@ -25,10 +34,19 @@ if [ -f "$PROJECT_DIR/.env.test" ]; then
   TEST_APP_PORT=${TEST_APP_PORT:-5174}
 fi
 
-echo "Building the app with coverage instrumentation..."
 export NYC_CAFEOBJECT_COVERAGE=true
 export VITE_API_URL=''
-npm run build
+
+if [ "$SKIP_BUILD" = false ]; then
+  echo "Building the app with coverage instrumentation..."
+  npm run build
+else
+  echo "Skipping build (--skip-build), using existing dist/ ..."
+  if [ ! -d "$PROJECT_DIR/dist" ]; then
+    echo "ERROR: dist/ does not exist. Run without --skip-build first."
+    exit 1
+  fi
+fi
 
 echo "Starting static server on port $TEST_APP_PORT..."
 npx serve -s dist -l "$TEST_APP_PORT" &

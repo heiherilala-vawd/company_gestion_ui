@@ -75,7 +75,6 @@ describe('E2E: Warehouses', () => {
       req.reply(mockSuccessResponse(createOrUpdateWarehouses(req.body)))
     }).as('createWarehouse')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createWarehouse')
     cy.url().should('include', '/warehouses')
   }
@@ -87,17 +86,14 @@ describe('E2E: Warehouses', () => {
       req.reply(mockSuccessResponse(createOrUpdateWarehouses(req.body)))
     }).as('updateWarehouse')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateWarehouse')
     cy.url().should('include', '/warehouses')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display warehouses list', () => showList(true))

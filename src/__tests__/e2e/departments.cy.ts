@@ -91,9 +91,6 @@ describe('E2E: Departments', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/departments*', mockSuccessResponse(departmentsMock)).as(
       'getDepartments',
@@ -105,6 +102,7 @@ describe('E2E: Departments', () => {
       'getDepartmentCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display departments list', () => showList(true))

@@ -21,8 +21,6 @@ import { equipment1Mock } from '../mocks/responses/equipment-api'
 
 describe('E2E: Activity Pages', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()

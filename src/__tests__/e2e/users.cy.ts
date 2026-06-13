@@ -77,17 +77,14 @@ describe('E2E: Users', () => {
       req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
     }).as('updateUser')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateUser')
     cy.url().should('include', '/users')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display users list', () => showList(true))

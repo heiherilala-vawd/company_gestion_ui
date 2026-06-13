@@ -2,8 +2,6 @@ import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '.
 
 describe('E2E: HR Dashboard', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()

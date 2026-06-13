@@ -100,14 +100,12 @@ describe('E2E: Tasks', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/tasks*', mockSuccessResponse(tasksMock)).as('getTasks')
     cy.intercept('GET', '**/tasks/task1_id', mockSuccessResponse(task1Mock)).as('getTask')
     cy.intercept('GET', '**/tasks/newId', mockSuccessResponse(task1Mock)).as('getTaskCreate')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display tasks list', () => showList(true))
