@@ -39,6 +39,9 @@ export const AppBar = () => {
   const [showSelectors, setShowSelectors] = useState(false)
   const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null)
   const userEmail = localStorage.getItem('user_email') || 'Utilisateur'
+  const userRole = localStorage.getItem('user_role')
+  const isEmployee = userRole === 'EMPLOYEE'
+
   useEffect(() => {
     prevPathRef.current = location.pathname
   }, [location])
@@ -136,7 +139,7 @@ export const AppBar = () => {
               )}
             </IconButton>
           </Tooltip>
-          {isMobile ? (
+          {!isEmployee && isMobile ? (
             <Tooltip title={showSelectors ? 'Masquer les sélecteurs' : 'Afficher les sélecteurs'}>
               <IconButton
                 onClick={() => setShowSelectors((prev) => !prev)}
@@ -151,15 +154,15 @@ export const AppBar = () => {
                 )}
               </IconButton>
             </Tooltip>
-          ) : (
+          ) : !isEmployee ? (
             <>
               <CompanySelector />
               <JobSelector />
             </>
-          )}
+          ) : null}
         </Box>
       </RAAppBar>
-      {isMobile && (
+      {!isEmployee && isMobile && (
         <Collapse in={showSelectors}>
           <Box sx={appBarStyles.expandedSection}>
             <CompanySelector />

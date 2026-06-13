@@ -491,10 +491,12 @@ export function interceptGeneralEndpoint(): void {
     '/travel_materials_activity',
     '/travel_equipment_activity',
     '/employer_payments_activity',
+    '/employee_payments',
     '/employee_payment_activity',
     '/purchases_activity',
     '/team_activity',
     '/job_assignment_activity',
+    '/travel_people',
     '/travel_people_activity',
     '/purchases_material_activity',
     '/material_consumption_activity',
@@ -510,6 +512,7 @@ export function interceptGeneralEndpoint(): void {
     '/stock',
     '/equipment-hub',
     '/monetary',
+    '/tasks',
     '/suppliers',
     '/purchase_orders',
     '/departments',
@@ -568,12 +571,12 @@ export function loginInPage(): void {
   cy.viewport(1280, 720)
   cy.visit('/', { failOnStatusCode: false })
   cy.document().should('have.property', 'readyState', 'complete')
-  cy.get('input', { timeout: 10000 })
-    .first()
-    .should('exist')
-    .type(<string>loginRequestMock.email, { force: true })
-  cy.get('input[type="password"]').type(<string>loginRequestMock.password, { force: true })
-  cy.get('button[type="submit"]').click()
+  cy.contains('button', 'Se connecter', { timeout: 10000 }).click()
+  cy.get('#wp-email', { timeout: 10000 })
+    .should('be.visible')
+    .type(<string>loginRequestMock.email)
+  cy.get('#wp-password').type(<string>loginRequestMock.password)
+  cy.get('.wp-modal__submit').click()
   cy.wait(['@login', '@whoami'])
   cy.url().should('not.include', '/login')
 }

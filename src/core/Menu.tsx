@@ -138,7 +138,106 @@ const MenuRoot = () => {
   const toggleSection = (section: string) =>
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }))
 
+  const PAUSED_RESOURCES = new Set<string>([
+    'departments',
+    'receipts',
+    'loan_repayments',
+    'budget_lines',
+    'cash_accounts',
+    'cash_transactions',
+  ])
+
   if (!sidebarOpen) return null
+
+  const renderItems = (items: ResourceItem[]) =>
+    items
+      .filter((item) => {
+        const resource = item.resource || item.name
+        return canAccessResource(resource, 'list')
+      })
+      .map((item) => {
+        const resource = item.resource || item.name
+        const isPaused = PAUSED_RESOURCES.has(resource)
+
+        return (
+          <ListItemButton
+            key={item.name}
+            component={isPaused ? 'div' : Link}
+            to={isPaused ? undefined : item.to}
+            sx={{
+              ...menuStyles.listItem,
+              ...(isPaused ? pausedFeature : {}),
+              cursor: isPaused ? 'default' : 'pointer',
+            }}
+            data-testid={item.testId}
+            disableRipple={isPaused}
+          >
+            <ListItemIcon sx={menuStyles.listItemIcon}>
+              <item.icon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <Box
+                  component="span"
+                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.8 }}
+                >
+                  {item.label}
+                  {isPaused && (
+                    <Box component="span" sx={pausedBadge}>
+                      Bientôt
+                    </Box>
+                  )}
+                </Box>
+              }
+              primaryTypographyProps={menuStyles.listItemText}
+            />
+          </ListItemButton>
+        )
+      })
+
+  const userRole = localStorage.getItem('user_role')
+  if (userRole === 'EMPLOYEE') {
+    const employeeItems: ResourceItem[] = [
+      {
+        name: 'employee_payments',
+        label: 'Salaire',
+        icon: PaymentsIcon,
+        to: '/employee_payments',
+        testId: 'menu-employee-payments',
+      },
+      {
+        name: 'travel_people',
+        label: 'Transport personnel',
+        icon: PeopleAltIcon,
+        to: '/travel_people',
+        testId: 'menu-travel-peoples',
+      },
+      { name: 'tasks', label: 'Tâche', icon: AssignmentIcon, to: '/tasks', testId: 'menu-tasks' },
+      {
+        name: 'equipment_usage',
+        label: 'Emprunt équipement',
+        icon: TimelineIcon,
+        to: '/equipment_usage',
+        testId: 'menu-equipment-usage',
+      },
+    ]
+
+    return (
+      <Box sx={menuStyles.container} data-testid="menu-item-home">
+        <Box sx={menuStyles.headerBox}>
+          <Typography variant="h6" sx={menuStyles.appTitle}>
+            GestPro
+          </Typography>
+          <Typography variant="caption" sx={menuStyles.appSubtitle}>
+            Gestion d&apos;entreprise
+          </Typography>
+        </Box>
+        <List component="nav" dense sx={{ mb: 1 }}>
+          {renderItems(employeeItems)}
+        </List>
+      </Box>
+    )
+  }
 
   const generalItems: ResourceItem[] = [
     { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
@@ -514,61 +613,6 @@ const MenuRoot = () => {
       testId: 'menu-yearly-report',
     },
   ]
-
-  const PAUSED_RESOURCES = new Set<string>([
-    'departments',
-    'receipts',
-    'loan_repayments',
-    'budget_lines',
-    'cash_accounts',
-    'cash_transactions',
-  ])
-
-  const renderItems = (items: ResourceItem[]) =>
-    items
-      .filter((item) => {
-        const resource = item.resource || item.name
-        return canAccessResource(resource, 'list')
-      })
-      .map((item) => {
-        const resource = item.resource || item.name
-        const isPaused = PAUSED_RESOURCES.has(resource)
-
-        return (
-          <ListItemButton
-            key={item.name}
-            component={isPaused ? 'div' : Link}
-            to={isPaused ? undefined : item.to}
-            sx={{
-              ...menuStyles.listItem,
-              ...(isPaused ? pausedFeature : {}),
-              cursor: isPaused ? 'default' : 'pointer',
-            }}
-            data-testid={item.testId}
-            disableRipple={isPaused}
-          >
-            <ListItemIcon sx={menuStyles.listItemIcon}>
-              <item.icon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <Box
-                  component="span"
-                  sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.8 }}
-                >
-                  {item.label}
-                  {isPaused && (
-                    <Box component="span" sx={pausedBadge}>
-                      Bientôt
-                    </Box>
-                  )}
-                </Box>
-              }
-              primaryTypographyProps={menuStyles.listItemText}
-            />
-          </ListItemButton>
-        )
-      })
 
   return (
     <Box sx={menuStyles.container} data-testid="menu-item-home">
