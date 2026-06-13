@@ -43,7 +43,7 @@ describe('E2E: Employee Role', () => {
       cy.contains('Salaire').should('be.visible')
       cy.contains('Transport personnel').should('be.visible')
       cy.contains('Tâche').should('be.visible')
-      cy.contains('Emprunt équipement').should('be.visible')
+      cy.contains('Utilisation équipement').should('be.visible')
 
       cy.contains('Société').should('not.exist')
       cy.contains('RH').should('not.exist')
