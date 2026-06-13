@@ -1,4 +1,4 @@
-import { required, email, TextInput, SelectInput } from 'react-admin'
+import { required, email, TextInput, SelectInput, ReferenceArrayInput, SelectArrayInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderLeaveConfigSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
@@ -45,12 +45,9 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
         validate={[required()]}
         data-testid="input-sex"
       />
-      <TextInput
-        source="company_id"
-        label="ID Entreprise"
-        defaultValue={localStorage.getItem('currentCompanyId')}
-        sx={{ display: 'none' }}
-      />
+      <ReferenceArrayInput source="company_ids" reference="companies" label="Entreprises">
+        <SelectArrayInput optionText="name" />
+      </ReferenceArrayInput>
       <CollapsibleOptionalFields>
         {renderLeaveConfigSelect('leave_config_id', 'Configuration congés')}
         <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
