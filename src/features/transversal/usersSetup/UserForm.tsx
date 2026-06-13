@@ -45,6 +45,17 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
         validate={[required()]}
         data-testid="input-sex"
       />
+      <SelectInput
+        source="role"
+        label="Rôle"
+        choices={[
+          { id: 'ADMIN', name: 'Admin' },
+          { id: 'ADMINISTRATION', name: 'Administration' },
+          { id: 'WAREHOUSE_WORKER', name: 'Magasinier' },
+          { id: 'EMPLOYEE', name: 'Employé' },
+        ]}
+        data-testid="input-role"
+      />
       <ReferenceArrayInput source="company_ids" reference="companies" label="Entreprises">
         <SelectArrayInput optionText="name" />
       </ReferenceArrayInput>
