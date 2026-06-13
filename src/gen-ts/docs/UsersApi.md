@@ -2,16 +2,18 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                           | HTTP request                               | Description                               |
-| ------------------------------------------------ | ------------------------------------------ | ----------------------------------------- |
-| [**crupdateUsers**](UsersApi.md#crupdateusers)   | **PUT** /companies/{comp_id}/users         | Create new users or update existing users |
-| [**deleteUserById**](UsersApi.md#deleteuserbyid) | **DELETE** /companies/{comp_id}/users/{id} | Delete a user by identifier               |
-| [**getUserById**](UsersApi.md#getuserbyid)       | **GET** /companies/{comp_id}/users/{id}    | Get user by identifier                    |
-| [**getUsers**](UsersApi.md#getusers)             | **GET** /companies/{comp_id}/users         | Get all users                             |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**crupdateUsers**](UsersApi.md#crupdateusers) | **PUT** /users/{userId}/companies/{companyId}/users | Create new users or update existing users |
+| [**deleteUserById**](UsersApi.md#deleteuserbyid) | **DELETE** /users/{userId}/companies/{companyId}/users/{id} | Delete a user by identifier |
+| [**getUserById**](UsersApi.md#getuserbyid) | **GET** /users/{userId}/companies/{companyId}/users/{id} | Get user by identifier |
+| [**getUsers**](UsersApi.md#getusers) | **GET** /users/{userId}/companies/{companyId}/users | Get all users |
+
+
 
 ## crupdateUsers
 
-> Array&lt;User&gt; crupdateUsers(compId, crupdateUser)
+> Array&lt;User&gt; crupdateUsers(userId, companyId, crupdateUser)
 
 Create new users or update existing users
 
@@ -20,62 +22,49 @@ Update users when &#x60;id&#x60; are provided, create them otherwise.
 ### Example
 
 ```ts
-import { Configuration, UsersApi } from 'api-client'
-import type { CrupdateUsersRequest } from 'api-client'
+import {
+  Configuration,
+  UsersApi,
+} from 'api-client';
+import type { CrupdateUsersRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new UsersApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
-    compId: comp_001,
+    userId: user_123456,
+    // string
+    companyId: comp_001,
     // Array<CrupdateUser>
-    crupdateUser: [
-      {
-        id: 'usr_123456',
-        first_name: 'Jean',
-        last_name: 'Dupont',
-        email: 'jean.dupont@example.com',
-        role: 'EMPLOYEE',
-        sex: 'M',
-        password: 'newPassword123',
-        comment: 'Mise à jour du profil',
-      },
-      {
-        first_name: 'Pierre',
-        last_name: 'Durand',
-        email: 'pierre.durand@example.com',
-        role: 'WAREHOUSE_WORKER',
-        sex: 'M',
-        password: 'password123',
-        comment: "Nouvel employé d'entrepôt",
-      },
-    ],
-  } satisfies CrupdateUsersRequest
+    crupdateUser: [{"id":"usr_123456","first_name":"Jean","last_name":"Dupont","email":"jean.dupont@example.com","role":"EMPLOYEE","sex":"M","password":"newPassword123","comment":"Mise à jour du profil"},{"first_name":"Pierre","last_name":"Durand","email":"pierre.durand@example.com","role":"WAREHOUSE_WORKER","sex":"M","password":"password123","comment":"Nouvel employé d'entrepôt"}],
+  } satisfies CrupdateUsersRequest;
 
   try {
-    const data = await api.crupdateUsers(body)
-    console.log(data)
+    const data = await api.crupdateUsers(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name             | Type                  | Description | Notes                     |
-| ---------------- | --------------------- | ----------- | ------------------------- |
-| **compId**       | `string`              |             | [Defaults to `undefined`] |
-| **crupdateUser** | `Array<CrupdateUser>` |             |                           |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **crupdateUser** | `Array<CrupdateUser>` |  | |
 
 ### Return type
 
@@ -90,64 +79,72 @@ example().catch(console.error)
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | The created or updated users | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated users |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## deleteUserById
 
-> deleteUserById(compId, id)
+> deleteUserById(userId, companyId, id)
 
 Delete a user by identifier
 
 ### Example
 
 ```ts
-import { Configuration, UsersApi } from 'api-client'
-import type { DeleteUserByIdRequest } from 'api-client'
+import {
+  Configuration,
+  UsersApi,
+} from 'api-client';
+import type { DeleteUserByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new UsersApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
-    compId: comp_001,
+    userId: user_123456,
+    // string
+    companyId: comp_001,
     // string
     id: usr_123456,
-  } satisfies DeleteUserByIdRequest
+  } satisfies DeleteUserByIdRequest;
 
   try {
-    const data = await api.deleteUserById(body)
-    console.log(data)
+    const data = await api.deleteUserById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name       | Type     | Description | Notes                     |
-| ---------- | -------- | ----------- | ------------------------- |
-| **compId** | `string` |             | [Defaults to `undefined`] |
-| **id**     | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -162,64 +159,72 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **204**     | User deleted successfully    | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | User deleted successfully |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getUserById
 
-> User getUserById(compId, id)
+> User getUserById(userId, companyId, id)
 
 Get user by identifier
 
 ### Example
 
 ```ts
-import { Configuration, UsersApi } from 'api-client'
-import type { GetUserByIdRequest } from 'api-client'
+import {
+  Configuration,
+  UsersApi,
+} from 'api-client';
+import type { GetUserByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new UsersApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new UsersApi(config);
 
   const body = {
     // string
-    compId: comp_001,
+    userId: user_123456,
+    // string
+    companyId: comp_001,
     // string
     id: usr_123456,
-  } satisfies GetUserByIdRequest
+  } satisfies GetUserByIdRequest;
 
   try {
-    const data = await api.getUserById(body)
-    console.log(data)
+    const data = await api.getUserById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name       | Type     | Description | Notes                     |
-| ---------- | -------- | ----------- | ------------------------- |
-| **compId** | `string` |             | [Defaults to `undefined`] |
-| **id**     | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -234,22 +239,23 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | The identified user          | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The identified user |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getUsers
 
-> Array&lt;User&gt; getUsers(compId, page, pageSize, firstName, lastName, email, role)
+> Array&lt;User&gt; getUsers(userId, companyId, page, pageSize, firstName, lastName, email, role)
 
 Get all users
 
@@ -264,7 +270,7 @@ import type { GetUsersRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -272,7 +278,9 @@ async function example() {
 
   const body = {
     // string
-    compId: comp_001,
+    userId: user_123456,
+    // string
+    companyId: comp_001,
     // number (optional)
     page: 1,
     // number (optional)
@@ -301,15 +309,17 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name          | Type     | Description                                 | Notes                                                                                          |
-| ------------- | -------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **compId**    | `string` |                                             | [Defaults to `undefined`]                                                                      |
-| **page**      | `number` |                                             | [Optional] [Defaults to `undefined`]                                                           |
-| **pageSize**  | `number` |                                             | [Optional] [Defaults to `undefined`]                                                           |
-| **firstName** | `string` | Filter users by first name, case is ignored | [Optional] [Defaults to `undefined`]                                                           |
-| **lastName**  | `string` | Filter users by last name, case is ignored  | [Optional] [Defaults to `undefined`]                                                           |
-| **email**     | `string` | Filter users by email, case is ignored      | [Optional] [Defaults to `undefined`]                                                           |
-| **role**      | `Role`   | Filter users by role                        | [Optional] [Defaults to `undefined`] [Enum: ADMIN, WAREHOUSE_WORKER, EMPLOYEE, ADMINISTRATION] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **firstName** | `string` | Filter users by first name, case is ignored | [Optional] [Defaults to `undefined`] |
+| **lastName** | `string` | Filter users by last name, case is ignored | [Optional] [Defaults to `undefined`] |
+| **email** | `string` | Filter users by email, case is ignored | [Optional] [Defaults to `undefined`] |
+| **role** | `Role` | Filter users by role | [Optional] [Defaults to `undefined`] [Enum: ADMIN, WAREHOUSE_WORKER, EMPLOYEE, ADMINISTRATION] |
 
 ### Return type
 
@@ -324,15 +334,16 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of users                | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of users |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

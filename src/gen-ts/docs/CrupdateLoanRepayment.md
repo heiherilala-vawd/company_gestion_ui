@@ -1,16 +1,18 @@
+
 # CrupdateLoanRepayment
+
 
 ## Properties
 
-| Name                | Type   |
-| ------------------- | ------ |
-| `id`                | string |
-| `payment_date`      | Date   |
-| `amount`            | number |
-| `loan_id`           | string |
-| `principal_portion` | number |
-| `interest_portion`  | number |
-| `comment`           | string |
+Name | Type
+------------ | -------------
+`id` | string
+`payment_date` | Date
+`amount` | number
+`loan_id` | string
+`principal_portion` | number
+`interest_portion` | number
+`comment` | string
 
 ## Example
 
@@ -40,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

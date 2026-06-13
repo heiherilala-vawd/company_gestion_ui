@@ -26,8 +26,12 @@ describe('E2E: Activity Pages', () => {
     insertInToLocalStorage()
   })
 
-  function goHome() {
-    cy.visit('/')
+  function goHome(desktop: boolean) {
+    if (desktop) {
+      cy.get('[data-testid="menu-accueil"]', { timeout: 5000 }).click({ force: true })
+    } else {
+      cy.visit('/')
+    }
     cy.url({ timeout: 10000 }).should('not.include', '/login')
     cy.location('pathname').should('eq', '/')
     cy.wait(1000)
@@ -39,7 +43,7 @@ describe('E2E: Activity Pages', () => {
 
   function testHomePageButtons(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    goHome()
+    goHome(desktop)
     cy.get('main').contains('Actions rapides').should('be.visible')
     cy.get('main').contains('Validations').should('be.visible')
     const buttons = ['Acheter', 'Déplacer', 'Recevoir', 'Payer', 'Réception']
@@ -205,7 +209,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createBankFee', { timeout: 10000 })
 
-    goHome()
+    goHome(desktop)
     clickHomeButton('Payer')
     cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
     cy.wait(300)
@@ -228,7 +232,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createEmployeePayment', { timeout: 10000 })
 
-    goHome()
+    goHome(desktop)
     clickHomeButton('Payer')
     cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
     cy.wait(300)
@@ -271,7 +275,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createIncome', { timeout: 10000 })
 
-    goHome()
+    goHome(desktop)
     clickHomeButton('Recevoir')
     cy.url({ timeout: 15000 }).should('include', '/incomes_activity')
     cy.wait(300)

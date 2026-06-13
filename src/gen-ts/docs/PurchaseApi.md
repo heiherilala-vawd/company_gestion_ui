@@ -2,78 +2,70 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                      | HTTP request                                                               | Description                                  |
-| ----------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------- |
-| [**crupdatePurchases**](PurchaseApi.md#crupdatepurchases)   | **PUT** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases         | Create new purchases or update existing ones |
-| [**deletePurchaseById**](PurchaseApi.md#deletepurchasebyid) | **DELETE** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases/{id} | Delete purchase by identifier                |
-| [**getPurchaseById**](PurchaseApi.md#getpurchasebyid)       | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases/{id}    | Get purchase by identifier                   |
-| [**getPurchases**](PurchaseApi.md#getpurchases)             | **GET** /companies/{comp_id}/job/{job_id}/user/{user_id}/purchases         | Get all purchases                            |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**crupdatePurchases**](PurchaseApi.md#crupdatepurchases) | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/purchases | Create new purchases or update existing ones |
+| [**deletePurchaseById**](PurchaseApi.md#deletepurchasebyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/purchases/{id} | Delete purchase by identifier |
+| [**getPurchaseById**](PurchaseApi.md#getpurchasebyid) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/purchases/{id} | Get purchase by identifier |
+| [**getPurchases**](PurchaseApi.md#getpurchases) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/purchases | Get all purchases |
+
+
 
 ## crupdatePurchases
 
-> Array&lt;Purchase&gt; crupdatePurchases(compId, jobId, userId, crupdatePurchase)
+> Array&lt;Purchase&gt; crupdatePurchases(userId, companyId, jobId, crupdatePurchase)
 
 Create new purchases or update existing ones
 
 ### Example
 
 ```ts
-import { Configuration, PurchaseApi } from 'api-client'
-import type { CrupdatePurchasesRequest } from 'api-client'
+import {
+  Configuration,
+  PurchaseApi,
+} from 'api-client';
+import type { CrupdatePurchasesRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new PurchaseApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new PurchaseApi(config);
 
   const body = {
     // string
-    compId: comp_btp001,
+    userId: user_123456,
+    // string
+    companyId: comp_btp001,
     // string
     jobId: job_001,
-    // string
-    userId: usr_123456,
     // Array<CrupdatePurchase>
-    crupdatePurchase: [
-      {
-        id: 'purch_001',
-        expense: { id: 'exp_001', amount: 15000, job_id: 'job_001' },
-        supplier: {
-          id: 'supp_001',
-          name: 'Fournisseur A',
-          description: 'Fournisseur matériaux',
-          job_id: 'job_001',
-        },
-        material: 'mat_001',
-        quantity: 250,
-        is_equipment: false,
-      },
-    ],
-  } satisfies CrupdatePurchasesRequest
+    crupdatePurchase: [{"id":"purch_001","expense":{"id":"exp_001","amount":15000,"job_id":"job_001"},"supplier":{"id":"supp_001","name":"Fournisseur A","description":"Fournisseur matériaux","job_id":"job_001"},"material":"mat_001","quantity":250,"is_equipment":false}],
+  } satisfies CrupdatePurchasesRequest;
 
   try {
-    const data = await api.crupdatePurchases(body)
-    console.log(data)
+    const data = await api.crupdatePurchases(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name                 | Type                      | Description | Notes                     |
-| -------------------- | ------------------------- | ----------- | ------------------------- |
-| **compId**           | `string`                  |             | [Defaults to `undefined`] |
-| **jobId**            | `string`                  |             | [Defaults to `undefined`] |
-| **userId**           | `string`                  |             | [Defaults to `undefined`] |
-| **crupdatePurchase** | `Array<CrupdatePurchase>` |             |                           |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **crupdatePurchase** | `Array<CrupdatePurchase>` |  | |
 
 ### Return type
 
@@ -88,70 +80,75 @@ example().catch(console.error)
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                      | Response headers |
-| ----------- | -------------------------------- | ---------------- |
-| **200**     | The created or updated purchases | -                |
-| **400**     | Bad request                      | -                |
-| **403**     | Forbidden                        | -                |
-| **404**     | Not found                        | -                |
-| **429**     | Too many requests to the API     | -                |
-| **500**     | Internal server error            | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated purchases |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## deletePurchaseById
 
-> deletePurchaseById(compId, jobId, userId, id)
+> deletePurchaseById(userId, companyId, jobId, id)
 
 Delete purchase by identifier
 
 ### Example
 
 ```ts
-import { Configuration, PurchaseApi } from 'api-client'
-import type { DeletePurchaseByIdRequest } from 'api-client'
+import {
+  Configuration,
+  PurchaseApi,
+} from 'api-client';
+import type { DeletePurchaseByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new PurchaseApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new PurchaseApi(config);
 
   const body = {
     // string
-    compId: comp_btp001,
+    userId: user_123456,
+    // string
+    companyId: comp_btp001,
     // string
     jobId: job_001,
     // string
-    userId: usr_123456,
-    // string
     id: purch_001,
-  } satisfies DeletePurchaseByIdRequest
+  } satisfies DeletePurchaseByIdRequest;
 
   try {
-    const data = await api.deletePurchaseById(body)
-    console.log(data)
+    const data = await api.deletePurchaseById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name       | Type     | Description | Notes                     |
-| ---------- | -------- | ----------- | ------------------------- |
-| **compId** | `string` |             | [Defaults to `undefined`] |
-| **jobId**  | `string` |             | [Defaults to `undefined`] |
-| **userId** | `string` |             | [Defaults to `undefined`] |
-| **id**     | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -166,70 +163,75 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                   | Response headers |
-| ----------- | ----------------------------- | ---------------- |
-| **204**     | Purchase deleted successfully | -                |
-| **400**     | Bad request                   | -                |
-| **403**     | Forbidden                     | -                |
-| **404**     | Not found                     | -                |
-| **429**     | Too many requests to the API  | -                |
-| **500**     | Internal server error         | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Purchase deleted successfully |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getPurchaseById
 
-> Purchase getPurchaseById(compId, jobId, userId, id)
+> Purchase getPurchaseById(userId, companyId, jobId, id)
 
 Get purchase by identifier
 
 ### Example
 
 ```ts
-import { Configuration, PurchaseApi } from 'api-client'
-import type { GetPurchaseByIdRequest } from 'api-client'
+import {
+  Configuration,
+  PurchaseApi,
+} from 'api-client';
+import type { GetPurchaseByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new PurchaseApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new PurchaseApi(config);
 
   const body = {
     // string
-    compId: comp_btp001,
+    userId: user_123456,
+    // string
+    companyId: comp_btp001,
     // string
     jobId: job_001,
     // string
-    userId: usr_123456,
-    // string
     id: purch_001,
-  } satisfies GetPurchaseByIdRequest
+  } satisfies GetPurchaseByIdRequest;
 
   try {
-    const data = await api.getPurchaseById(body)
-    console.log(data)
+    const data = await api.getPurchaseById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name       | Type     | Description | Notes                     |
-| ---------- | -------- | ----------- | ------------------------- |
-| **compId** | `string` |             | [Defaults to `undefined`] |
-| **jobId**  | `string` |             | [Defaults to `undefined`] |
-| **userId** | `string` |             | [Defaults to `undefined`] |
-| **id**     | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -244,22 +246,23 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | The identified purchase      | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The identified purchase |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getPurchases
 
-> Array&lt;Purchase&gt; getPurchases(compId, jobId, userId, page, pageSize, sourceWarehouseId, supplierId, isEquipment, invoiceDateFrom, invoiceDateTo, paid)
+> Array&lt;Purchase&gt; getPurchases(userId, companyId, jobId, page, pageSize, sourceWarehouseId, supplierId, isEquipment, invoiceDateFrom, invoiceDateTo, paid)
 
 Get all purchases
 
@@ -274,7 +277,7 @@ import type { GetPurchasesRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -282,11 +285,11 @@ async function example() {
 
   const body = {
     // string
-    compId: comp_btp001,
+    userId: user_123456,
+    // string
+    companyId: comp_btp001,
     // string
     jobId: job_001,
-    // string
-    userId: usr_123456,
     // number (optional)
     page: 1,
     // number (optional)
@@ -319,19 +322,20 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name                  | Type      | Description                                                      | Notes                                |
-| --------------------- | --------- | ---------------------------------------------------------------- | ------------------------------------ |
-| **compId**            | `string`  |                                                                  | [Defaults to `undefined`]            |
-| **jobId**             | `string`  |                                                                  | [Defaults to `undefined`]            |
-| **userId**            | `string`  |                                                                  | [Defaults to `undefined`]            |
-| **page**              | `number`  |                                                                  | [Optional] [Defaults to `undefined`] |
-| **pageSize**          | `number`  |                                                                  | [Optional] [Defaults to `undefined`] |
-| **sourceWarehouseId** | `string`  | Filter purchases by source warehouse id                          | [Optional] [Defaults to `undefined`] |
-| **supplierId**        | `string`  | Filter purchases by supplier id                                  | [Optional] [Defaults to `undefined`] |
-| **isEquipment**       | `boolean` |                                                                  | [Optional] [Defaults to `undefined`] |
-| **invoiceDateFrom**   | `Date`    | Filter by invoice date from (inclusive)                          | [Optional] [Defaults to `undefined`] |
-| **invoiceDateTo**     | `Date`    | Filter by invoice date to (inclusive)                            | [Optional] [Defaults to `undefined`] |
-| **paid**              | `boolean` | Filter by payment status (true &#x3D; paid, false &#x3D; unpaid) | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **sourceWarehouseId** | `string` | Filter purchases by source warehouse id | [Optional] [Defaults to `undefined`] |
+| **supplierId** | `string` | Filter purchases by supplier id | [Optional] [Defaults to `undefined`] |
+| **isEquipment** | `boolean` |  | [Optional] [Defaults to `undefined`] |
+| **invoiceDateFrom** | `Date` | Filter by invoice date from (inclusive) | [Optional] [Defaults to `undefined`] |
+| **invoiceDateTo** | `Date` | Filter by invoice date to (inclusive) | [Optional] [Defaults to `undefined`] |
+| **paid** | `boolean` | Filter by payment status (true &#x3D; paid, false &#x3D; unpaid) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -346,15 +350,16 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of purchases            | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of purchases |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

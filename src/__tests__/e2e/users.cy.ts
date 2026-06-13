@@ -28,11 +28,6 @@ describe('E2E: Users', () => {
       .type(<string>crupdatedData.last_name)
     cy.get('[data-testid="input-sex"]').click()
     cy.contains('Femme').click({ force: true })
-    cy.get('[data-testid="input-role"]').click()
-    cy.contains('Employé').click({ force: true })
-    cy.get('[data-testid="input-password"] input')
-      .clear()
-      .type(<string>crupdatedData.password || 'password123')
     cy.get('button[type="submit"]').click({ force: true })
   }
 
