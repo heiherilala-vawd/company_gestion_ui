@@ -26,7 +26,7 @@ export const RegisterPage = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [sex, setSex] = useState<'M' | 'F'>('M')
-  const [id, setId] = useState('')
+  const [id] = useState(generateId)
 
   const [loading, setLoading] = useState(false)
   const notify = useNotify()
@@ -155,8 +155,7 @@ export const RegisterPage = () => {
           >
             <TextField
               label="ID"
-              value={generateId()}
-              onChange={(e) => setId(e.target.value)}
+              defaultValue={id}
               sx={{ display: 'none' }}
               fullWidth
             />
