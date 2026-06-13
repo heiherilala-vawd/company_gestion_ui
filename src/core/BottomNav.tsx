@@ -32,8 +32,11 @@ export const BottomNav = () => {
   const location = useLocation()
   const value = getActiveIndex(location.pathname)
 
+  const userRole = localStorage.getItem('user_role')
+  if (userRole === 'EMPLOYEE') return null
+
   return (
-    <Paper sx={bottomNavStyles.paper} elevation={4}>
+    <Paper sx={bottomNavStyles.paper} elevation={4} data-testid="bottom-nav">
       <BottomNavigation
         value={value === -1 ? false : value}
         onChange={(_, newValue) => navigate(navItems[newValue].to)}

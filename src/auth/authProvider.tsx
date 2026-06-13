@@ -154,6 +154,8 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
       'travel_people',
       'travel_materials',
       'travel_equipment',
+      'tasks',
+      'equipment_usage',
     ]
     if (personalResources.includes(resource) && canReadWrite(action)) {
       return true
@@ -315,6 +317,8 @@ const authProvider: AuthProvider = {
       'travel_people',
       'travel_materials',
       'travel_equipment',
+      'tasks',
+      'equipment_usage',
     ]
 
     if (personalResources.includes(resource) && record?.user_id) {
