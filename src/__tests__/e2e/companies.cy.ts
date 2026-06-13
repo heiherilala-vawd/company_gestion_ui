@@ -73,7 +73,7 @@ describe('E2E: Companies', () => {
   function canCreate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies*', (req) => {
+    cy.intercept('PUT', '**/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
     creatOrUpdate(true)
@@ -85,7 +85,7 @@ describe('E2E: Companies', () => {
   function canUpdate(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.intercept('PUT', '/companies*', (req) => {
+    cy.intercept('PUT', '**/companies*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
     creatOrUpdate(false)
@@ -109,7 +109,7 @@ describe('E2E: Companies', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '/companies*',
+      '**/companies*',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createCompanyFail')
     creatOrUpdate(true)
@@ -119,7 +119,7 @@ describe('E2E: Companies', () => {
 
   it('should show error on update failure', () => {
     navigateToDesktop()
-    cy.intercept('PUT', '/companies*', (req) => {
+    cy.intercept('PUT', '**/companies*', (req) => {
       req.reply(mockErrorResponse('BadRequestException', 'Update failed', 400))
     }).as('updateCompanyFail')
     creatOrUpdate(false)
