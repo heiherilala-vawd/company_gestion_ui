@@ -215,7 +215,7 @@ const MenuRoot = () => {
       { name: 'tasks', label: 'Tâche', icon: AssignmentIcon, to: '/tasks', testId: 'menu-tasks' },
       {
         name: 'equipment_usage',
-        label: 'Emprunt équipement',
+        label: 'Utilisation équipement',
         icon: TimelineIcon,
         to: '/equipment_usage',
         testId: 'menu-equipment-usage',
