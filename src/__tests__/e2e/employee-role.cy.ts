@@ -14,12 +14,18 @@ function loginAsEmployee(): void {
   cy.clearCookies()
   cy.viewport(1280, 720)
   cy.intercept('POST', '**/auth/login', mockSuccessResponse(employeeAuthMock)).as('employeeLogin')
-  cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(employeeWhoamiMock)).as('employeeWhoami')
-  cy.intercept('GET', '**/employee_payments*', mockSuccessResponse(employeePaymentsMock)).as('getEmployeePayments')
+  cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(employeeWhoamiMock)).as(
+    'employeeWhoami',
+  )
+  cy.intercept('GET', '**/employee_payments*', mockSuccessResponse(employeePaymentsMock)).as(
+    'getEmployeePayments',
+  )
 
   cy.visit('/', { failOnStatusCode: false })
   cy.contains('button', 'Se connecter', { timeout: 10000 }).click()
-  cy.get('#wp-email', { timeout: 10000 }).should('be.visible').type(<string>loginRequestMock.email)
+  cy.get('#wp-email', { timeout: 10000 })
+    .should('be.visible')
+    .type(<string>loginRequestMock.email)
   cy.get('#wp-password').type(<string>loginRequestMock.password)
   cy.get('.wp-modal__submit').click()
   cy.wait('@employeeLogin', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
@@ -71,4 +77,3 @@ describe('E2E: Employee Role', () => {
     cy.get('[class*="RaEditButton"]').should('not.exist')
   })
 })
-

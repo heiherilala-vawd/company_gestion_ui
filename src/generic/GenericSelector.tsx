@@ -96,7 +96,9 @@ export const GenericSelector: React.FC<GenericSelectorProps> = ({
 
         if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`)
 
-        const data: GenericEntity[] = await response.json()
+        const json = await response.json()
+        const raw = Array.isArray(json) ? json : json?.data
+        const data: GenericEntity[] = Array.isArray(raw) ? raw : []
         setEntities(data)
 
         if (autoSelectFirst && !currentId && data.length > 0) {

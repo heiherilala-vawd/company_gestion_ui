@@ -1,4 +1,11 @@
-import { required, email, TextInput, SelectInput, ReferenceArrayInput, SelectArrayInput } from 'react-admin'
+import {
+  required,
+  email,
+  TextInput,
+  SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
+} from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderLeaveConfigSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
