@@ -66,7 +66,9 @@ const CustomLoginForm = () => {
 
         // Stocker les infos d'authentification
         localStorage.setItem('token', data.token)
-        localStorage.setItem('user_id', data.id)
+        if (data.id != null && data.id !== '') {
+          localStorage.setItem('user_id', data.id)
+        }
         localStorage.setItem('user_email', data.email)
         localStorage.setItem('user_role', data.role)
         localStorage.removeItem('not_authenticated')

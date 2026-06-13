@@ -1,6 +1,9 @@
 const API_URL = import.meta.env.VITE_API_URL ?? ''
 
-const getUserId = (): string | null => localStorage.getItem('user_id')
+const getUserId = (): string | null => {
+  const id = localStorage.getItem('user_id')
+  return id && id !== '' ? id : null
+}
 
 const RESOURCE_URL_OVERRIDES: Record<string, string> = {
   receipts: 'incomes_receipts',
@@ -54,6 +57,11 @@ export const isDynamicCompanyResource = (resource: string): boolean => {
 export const getMiddleUrlDynamicCompanyResource = (resource: string): string => {
   const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
+  if (!userId || !companyId) {
+    console.warn(
+      `Missing context: userId=${userId}, companyId=${companyId} for resource=${resource}`,
+    )
+  }
   return `/users/${userId}/companies/${companyId}/${getUrlSegment(resource)}`
 }
 
@@ -70,6 +78,11 @@ export const getMiddleUrlDynamicCashAccountsResource = (): string => {
   const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
   const cashAccountId = localStorage.getItem('currentCashAccountId')
+  if (!userId || !companyId || !cashAccountId) {
+    console.warn(
+      `Missing context: userId=${userId}, companyId=${companyId}, cashAccountId=${cashAccountId}`,
+    )
+  }
   return `/users/${userId}/companies/${companyId}/cash_accounts/${cashAccountId}/transactions`
 }
 
@@ -102,6 +115,11 @@ export const getMiddleUrlDynamicJobResource = (resource: string): string => {
   const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')
   const jobId = localStorage.getItem('currentJobId')
+  if (!userId || !companyId || !jobId) {
+    console.warn(
+      `Missing context: userId=${userId}, companyId=${companyId}, jobId=${jobId} for resource=${resource}`,
+    )
+  }
   return `/users/${userId}/companies/${companyId}/jobs/${jobId}/${getUrlSegment(resource)}`
 }
 
