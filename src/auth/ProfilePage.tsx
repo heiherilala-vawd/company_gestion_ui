@@ -63,7 +63,7 @@ export default function ProfilePage() {
     try {
       const companyId = localStorage.getItem('currentCompanyId')
       const payload = [{ id: userId, ...form, company_ids: companyId ? [companyId] : [] }]
-      const response = await fetch(`${API_URL}/users/${userId}/companies/${companyId}/users`, {
+      const response = await fetch(`${API_URL}/users?company_id=${companyId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

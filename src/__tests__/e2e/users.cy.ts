@@ -93,7 +93,7 @@ describe('E2E: Users', () => {
     navigateToDesktop()
     cy.intercept(
       'PUT',
-      '**/users',
+      '**/users*',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateUserFail')
     creatOrUpdate(false)

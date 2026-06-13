@@ -45,8 +45,7 @@ export default function UserCreateBulk() {
 
     const API_URL = import.meta.env.VITE_API_URL ?? ''
     const companyId = localStorage.getItem('currentCompanyId')
-    const userId = localStorage.getItem('user_id')
-    const baseUrl = `${API_URL}/users/${userId}/companies/${companyId}/users`
+    const baseUrl = `${API_URL}/users${companyId ? `?company_id=${companyId}` : ''}`
 
     for (const user of users) {
       try {
