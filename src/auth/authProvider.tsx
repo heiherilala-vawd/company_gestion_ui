@@ -146,7 +146,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     if (resource === 'job_users' && action === 'list') return true
     if (resource === 'equipment' && ['list', 'get'].includes(action)) return true
 
-    // Données personnelles (le backend filtre par #user_id)
+    // Données personnelles — lecture seule (profil modifié via /auth/whoami)
     const personalResources = [
       'travel_expenses',
       'other_expenses',
@@ -157,7 +157,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
       'tasks',
       'equipment_usage',
     ]
-    if (personalResources.includes(resource) && canReadWrite(action)) {
+    if (personalResources.includes(resource) && readActions.includes(action)) {
       return true
     }
 
@@ -324,6 +324,9 @@ const authProvider: AuthProvider = {
     if (personalResources.includes(resource) && record?.user_id) {
       if (role === 'ADMIN' || role === 'ADMINISTRATION') {
         return true
+      }
+      if (role === 'EMPLOYEE') {
+        return ['list', 'get'].includes(action) && record.user_id === userId
       }
       return record.user_id === userId
     }

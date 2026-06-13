@@ -4,28 +4,33 @@ import {
   whoamiResponseMock,
   loginRequestMock,
 } from '../mocks/responses/auth-api'
+import { employeePaymentsMock } from '../mocks/responses/employee-payments-api'
 
 const employeeAuthMock = { ...authResponseMock, role: 'EMPLOYEE' }
 const employeeWhoamiMock = { ...whoamiResponseMock, role: 'EMPLOYEE' }
 
-describe('E2E: Employee Role', () => {
-  it('should hide bottom nav and selectors for employee', () => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    cy.viewport(1280, 720)
-    cy.intercept('POST', '**/auth/login', mockSuccessResponse(employeeAuthMock)).as('employeeLogin')
-    cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(employeeWhoamiMock)).as('employeeWhoami')
+function loginAsEmployee(): void {
+  cy.clearLocalStorage()
+  cy.clearCookies()
+  cy.viewport(1280, 720)
+  cy.intercept('POST', '**/auth/login', mockSuccessResponse(employeeAuthMock)).as('employeeLogin')
+  cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(employeeWhoamiMock)).as('employeeWhoami')
+  cy.intercept('GET', '**/employee_payments*', mockSuccessResponse(employeePaymentsMock)).as('getEmployeePayments')
 
-    cy.visit('/', { failOnStatusCode: false })
-    cy.contains('button', 'Se connecter', { timeout: 10000 }).click()
-    cy.get('#wp-email', { timeout: 10000 }).should('be.visible').type(<string>loginRequestMock.email)
-    cy.get('#wp-password').type(<string>loginRequestMock.password)
-    cy.get('.wp-modal__submit').click()
-    cy.wait('@employeeLogin', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
-    cy.wait('@employeeWhoami', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
-    cy.wait(3000)
-    cy.url().then((url) => cy.log('URL after login:', url))
-    cy.url({ timeout: 15000 }).should('not.include', '/login')
+  cy.visit('/', { failOnStatusCode: false })
+  cy.contains('button', 'Se connecter', { timeout: 10000 }).click()
+  cy.get('#wp-email', { timeout: 10000 }).should('be.visible').type(<string>loginRequestMock.email)
+  cy.get('#wp-password').type(<string>loginRequestMock.password)
+  cy.get('.wp-modal__submit').click()
+  cy.wait('@employeeLogin', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
+  cy.wait('@employeeWhoami', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
+  cy.url({ timeout: 15000 }).should('not.include', '/login')
+  cy.wait(2000)
+}
+
+describe('E2E: Employee Role', () => {
+  it('should restrict UI for employee role', () => {
+    loginAsEmployee()
 
     cy.get('[data-testid="bottom-nav"]').should('not.exist')
     cy.get('body').should('contain', 'GestPro')
@@ -52,4 +57,18 @@ describe('E2E: Employee Role', () => {
       cy.contains('Équipements').should('not.exist')
     })
   })
+
+  it('should not show create or edit buttons on employee pages', () => {
+    loginAsEmployee()
+
+    cy.get('[data-testid="menu-item-home"]').within(() => {
+      cy.contains('Salaire').click()
+    })
+    cy.wait('@getEmployeePayments', { timeout: 10000 })
+
+    cy.get('button').contains('Créer').should('not.exist')
+    cy.get('[class*="RaCreateButton"]').should('not.exist')
+    cy.get('[class*="RaEditButton"]').should('not.exist')
+  })
 })
+
