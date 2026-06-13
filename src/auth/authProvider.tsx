@@ -167,7 +167,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
 
 function localStorageInsertion(response: AuthResponse): void {
   localStorage.setItem('token', response.token as string)
-  if (response.id != null) {
+  if (response.id != null && response.id !== '') {
     localStorage.setItem('user_id', response.id)
   }
   if (response.email != null) {
