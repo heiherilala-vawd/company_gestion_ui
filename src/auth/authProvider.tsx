@@ -45,7 +45,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     return false
   }
 
-  const readActions = ['list', 'get']
+  const readActions = ['list', 'get', 'show']
   const writeActions = ['create', 'update', 'batch_create', 'batch_update']
   const crudActions = [...readActions, ...writeActions]
 
