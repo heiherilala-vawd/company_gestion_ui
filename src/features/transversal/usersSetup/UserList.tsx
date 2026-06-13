@@ -7,6 +7,7 @@ import {
   SearchInput,
   TextInput,
   SelectInput,
+  ReferenceInput,
   EditButton,
 } from 'react-admin'
 import { Role } from '../../../gen-ts/src/models/Role'
@@ -28,6 +29,9 @@ const UserFilters = [
     key="role"
     choices={Object.entries(Role).map(([k, v]) => ({ id: v, name: formatEnumLabel(k) }))}
   />,
+  <ReferenceInput source="company_id" reference="companies" perPage={100} key="company_id">
+    <SelectInput optionText="name" />
+  </ReferenceInput>,
 ]
 
 export default function UserList() {
