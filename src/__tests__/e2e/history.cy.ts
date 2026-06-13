@@ -9,12 +9,10 @@ import {
 
 describe('E2E: History', () => {
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/histories*', mockSuccessResponse(historiesMock)).as('getHistories')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   function navigateToDesktop(): void {

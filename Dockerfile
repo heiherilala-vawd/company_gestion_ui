@@ -12,9 +12,21 @@
 # ============================================
 FROM node:20-alpine AS build
 WORKDIR /app
+
+# Layer 1 : dépendances (caché si package*.json inchangé)
 COPY package*.json ./
 RUN npm ci
-COPY . .
+
+# Layer 2 : configuration build (rarement modifiée)
+COPY tsconfig*.json vite.config.ts ./
+COPY index.html ./
+COPY public/ ./public/
+COPY nginx.conf ./
+
+# Layer 3 : code source (change le plus souvent)
+COPY src/ ./src/
+COPY scripts/ ./scripts/
+
 ENV NYC_CAFEOBJECT_COVERAGE=true
 ENV VITE_API_URL=''
 ENV VITE_MUTATION_MODE=pessimistic

@@ -91,9 +91,6 @@ describe('E2E: Cash Accounts', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/cash_accounts*', mockSuccessResponse(cashAccountsMock)).as(
       'getCashAccounts',
@@ -105,6 +102,7 @@ describe('E2E: Cash Accounts', () => {
       'getCashAccountCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display cash accounts list', () => showList(true))

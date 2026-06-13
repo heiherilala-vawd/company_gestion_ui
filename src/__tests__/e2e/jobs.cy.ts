@@ -79,7 +79,6 @@ describe('E2E: Jobs', () => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('createJob')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createJob')
     cy.url().should('include', '/jobs')
   }
@@ -91,17 +90,14 @@ describe('E2E: Jobs', () => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('updateJob')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateJob')
     cy.url().should('include', '/jobs')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display jobs list', () => showList(true))

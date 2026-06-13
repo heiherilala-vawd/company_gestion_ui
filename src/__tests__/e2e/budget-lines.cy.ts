@@ -95,9 +95,6 @@ describe('E2E: Budget Lines', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/budget_lines*', mockSuccessResponse(budgetLinesMock)).as(
       'getBudgetLines',
@@ -109,6 +106,7 @@ describe('E2E: Budget Lines', () => {
       'getBudgetLineCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display budget lines list', () => showList(true))

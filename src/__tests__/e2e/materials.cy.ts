@@ -69,7 +69,6 @@ describe('E2E: Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('createMaterial')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createMaterial')
     cy.url().should('include', '/materials')
   }
@@ -81,17 +80,14 @@ describe('E2E: Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterials(req.body)))
     }).as('updateMaterial')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateMaterial')
     cy.url().should('include', '/materials')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display materials list', () => showList(true))

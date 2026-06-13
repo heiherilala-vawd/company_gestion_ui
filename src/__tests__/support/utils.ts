@@ -560,6 +560,8 @@ export function insertInToLocalStorage(): void {
 }
 
 export function loginInPage(): void {
+  cy.clearLocalStorage()
+  cy.clearCookies()
   cy.viewport(1280, 720)
   cy.visit('/', { failOnStatusCode: false })
   cy.document().should('have.property', 'readyState', 'complete')

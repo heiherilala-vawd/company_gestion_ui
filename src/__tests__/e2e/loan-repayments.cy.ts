@@ -99,10 +99,7 @@ describe('E2E: Loan Repayments', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
-    insertInToLocalStorage()
     cy.intercept('GET', '**/loan_repayments*', mockSuccessResponse(loanRepaymentsMock)).as(
       'getLoanRepayments',
     )
@@ -113,6 +110,7 @@ describe('E2E: Loan Repayments', () => {
       'getLoanRepaymentCreate',
     )
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display loan repayments list', () => showList(true))

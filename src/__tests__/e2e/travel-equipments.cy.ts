@@ -90,15 +90,11 @@ describe('E2E: Travel Equipments', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelEquipments([req.body])))
     }).as('updateTravelEquipment')
     updateRecord()
-    cy.wait(3000)
     cy.wait('@updateTravelEquipment')
     cy.url().should('include', '/travel_equipment')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept(
       'GET',
@@ -106,6 +102,7 @@ describe('E2E: Travel Equipments', () => {
       mockSuccessResponse(travelEquipment1Mock),
     ).as('getTravelEquipment')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display travel equipments list', () => showList(true))

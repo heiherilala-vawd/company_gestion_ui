@@ -109,9 +109,6 @@ describe('E2E: Material Consumption', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept(
       'GET',
@@ -145,6 +142,7 @@ describe('E2E: Material Consumption', () => {
       ]),
     ).as('getMaterialWarehousesSelection')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display material consumption list', () => showList(true))

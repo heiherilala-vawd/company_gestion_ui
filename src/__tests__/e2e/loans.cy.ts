@@ -111,8 +111,6 @@ describe('E2E: Loans', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/loans*', mockSuccessResponse([loan1Mock, loan3Mock])).as('getLoans')
     cy.intercept('GET', '**/loans/loan1_id', mockSuccessResponse(loan1Mock)).as('getLoan')

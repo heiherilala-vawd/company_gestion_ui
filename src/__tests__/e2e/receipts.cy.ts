@@ -96,8 +96,6 @@ describe('E2E: Receipts', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()

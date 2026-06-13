@@ -96,8 +96,6 @@ describe('E2E: Maintenances', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/maintenances*', mockSuccessResponse(maintenancesMock)).as(
       'getMaintenances',

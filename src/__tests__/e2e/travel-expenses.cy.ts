@@ -100,8 +100,6 @@ describe('E2E: Travel Expenses', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()

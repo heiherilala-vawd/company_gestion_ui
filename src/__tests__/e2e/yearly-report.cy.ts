@@ -31,8 +31,6 @@ describe('E2E: Yearly Report', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/yearly_report*', mockSuccessResponse(yearlyReportMock)).as(
       'getYearlyReport',

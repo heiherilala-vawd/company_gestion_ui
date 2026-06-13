@@ -22,11 +22,9 @@ describe('E2E: Main Menu and Selectors', () => {
   ]
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display all menu items on desktop', () => {

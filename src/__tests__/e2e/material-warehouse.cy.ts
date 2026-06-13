@@ -95,9 +95,6 @@ describe('E2E: Material Warehouse', () => {
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     cy.intercept('GET', '**/material_warehouse*', mockSuccessResponse(materialWarehousesMock)).as(
       'getMaterialWarehouses',
@@ -113,6 +110,7 @@ describe('E2E: Material Warehouse', () => {
       mockSuccessResponse(materialWarehouse1Mock),
     ).as('getMaterialWarehouseCreate')
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display material warehouse list', () => showList(true))

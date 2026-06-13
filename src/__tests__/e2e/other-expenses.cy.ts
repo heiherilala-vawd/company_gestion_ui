@@ -92,7 +92,6 @@ describe('E2E: Other Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateOtherExpenses(req.body)))
     }).as('createOtherExpense')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createOtherExpense')
     cy.url().should('include', '/other_expenses')
   }
@@ -104,17 +103,14 @@ describe('E2E: Other Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateOtherExpenses(req.body)))
     }).as('updateOtherExpense')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateOtherExpense')
     cy.url().should('include', '/other_expenses')
   }
 
   beforeEach(() => {
-    cy.clearLocalStorage()
-    cy.clearCookies()
-    insertInToLocalStorage()
     interceptGeneralEndpoint()
     loginInPage()
+    insertInToLocalStorage()
   })
 
   it('should display other expenses list', () => showList(true))
@@ -128,7 +124,6 @@ describe('E2E: Other Expenses', () => {
     cy.get('[data-testid="input-other_expense_types-id"] [role="combobox"]').as('combobox')
     cy.get('@combobox').should('not.be.disabled')
     cy.get('@combobox').click({ force: true })
-    cy.wait(2000)
     cy.get('[role="option"]', { timeout: 5000 }).should('be.visible')
     cy.get('[role="option"]').contains('Bureau').click()
   })
