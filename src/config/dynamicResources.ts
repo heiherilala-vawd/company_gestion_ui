@@ -24,7 +24,6 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'material_warehouse',
   'income_types',
   'materials',
-  'users',
   'other_expense_types',
   'teams',
   'fixed_costs',
@@ -127,7 +126,11 @@ export const getMiddleUrlDynamicJobResource = (resource: string): string => {
 
 export const getMiddleUrl = (resource: string): string => {
   let url = `${API_URL}/${resource}`
-  if (resource === 'companies') {
+  if (resource === 'users') {
+    const companyId = localStorage.getItem('currentCompanyId')
+    url = `${API_URL}/users`
+    if (companyId) url += `?company_id=${companyId}`
+  } else if (resource === 'companies') {
     const userId = getUserId()
     url = `${API_URL}/users/${userId}/companies`
   } else if (isDynamicCompanyResource(resource)) {

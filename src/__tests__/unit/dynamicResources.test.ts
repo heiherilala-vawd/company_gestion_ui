@@ -31,6 +31,10 @@ describe('DYNAMIC_COMPANY_RESOURCES', () => {
   it('does not include companies', () => {
     expect(DYNAMIC_COMPANY_RESOURCES.includes('companies')).toBe(false)
   })
+
+  it('does not include users', () => {
+    expect(DYNAMIC_COMPANY_RESOURCES.includes('users')).toBe(false)
+  })
 })
 
 describe('DYNAMIC_JOB_RESOURCES', () => {
@@ -61,6 +65,10 @@ describe('isDynamicCompanyResource', () => {
   it('returns false for companies', () => {
     expect(isDynamicCompanyResource('companies')).toBe(false)
   })
+
+  it('returns false for users', () => {
+    expect(isDynamicCompanyResource('users')).toBe(false)
+  })
 })
 
 describe('isDynamicJobResource', () => {
@@ -88,6 +96,10 @@ describe('isDynamicCashAccountsResource', () => {
 })
 
 describe('getMiddleUrl', () => {
+  it('returns flat URL with company_id for users', () => {
+    expect(getMiddleUrl('users')).toBe('/users?company_id=comp1')
+  })
+
   it('returns user-scoped URL for companies', () => {
     expect(getMiddleUrl('companies')).toBe('/users/user1/companies')
   })
@@ -137,6 +149,10 @@ describe('getMiddleUrl', () => {
 })
 
 describe('getMiddleUrlWithId', () => {
+  it('returns flat URL with id for users', () => {
+    expect(getMiddleUrlWithId('users', 'user456')).toBe('/users/user456')
+  })
+
   it('returns flat resource URL with id for companies', () => {
     expect(getMiddleUrlWithId('companies', 'comp123')).toBe('/users/user1/companies/comp123')
   })
