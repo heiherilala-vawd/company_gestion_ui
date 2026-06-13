@@ -127,7 +127,10 @@ export const getMiddleUrlDynamicJobResource = (resource: string): string => {
 
 export const getMiddleUrl = (resource: string): string => {
   let url = `${API_URL}/${resource}`
-  if (isDynamicCompanyResource(resource)) {
+  if (resource === 'companies') {
+    const userId = getUserId()
+    url = `${API_URL}/users/${userId}/companies`
+  } else if (isDynamicCompanyResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}`
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}`
@@ -159,7 +162,10 @@ export const getMiddleUrlWithQuery = (
 ): string => {
   void filterDefaultValues
   let url = `${API_URL}/${resource}${queryString ? `?${queryString}` : ''}`
-  if (isDynamicCompanyResource(resource)) {
+  if (resource === 'companies') {
+    const userId = getUserId()
+    url = `${API_URL}/users/${userId}/companies${queryString ? `?${queryString}` : ''}`
+  } else if (isDynamicCompanyResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicCompanyResource(resource)}${queryString ? `?${queryString}` : ''}`
   } else if (isDynamicJobResource(resource)) {
     url = `${API_URL}${getMiddleUrlDynamicJobResource(resource)}${queryString ? `?${queryString}` : ''}`

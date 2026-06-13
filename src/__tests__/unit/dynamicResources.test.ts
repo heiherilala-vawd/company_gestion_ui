@@ -88,8 +88,8 @@ describe('isDynamicCashAccountsResource', () => {
 })
 
 describe('getMiddleUrl', () => {
-  it('returns flat URL for companies', () => {
-    expect(getMiddleUrl('companies')).toBe('/companies')
+  it('returns user-scoped URL for companies', () => {
+    expect(getMiddleUrl('companies')).toBe('/users/user1/companies')
   })
 
   it('returns company-scoped URL for jobs', () => {
@@ -159,9 +159,9 @@ describe('getMiddleUrlWithId', () => {
 })
 
 describe('getMiddleUrlWithQuery', () => {
-  it('returns flat URL with query string for companies', () => {
+  it('returns user-scoped URL with query string for companies', () => {
     expect(getMiddleUrlWithQuery('companies', 'page=1&page_size=10')).toBe(
-      '/companies?page=1&page_size=10',
+      '/users/user1/companies?page=1&page_size=10',
     )
   })
 
