@@ -10,6 +10,8 @@ import {
   getPrimaryBg,
   getTableHeader,
   getBorder,
+  getTextSecondary,
+  spacing,
 } from './themeConfig'
 
 export const appBarStyles = {
@@ -970,3 +972,117 @@ export const pausedBadge: SxProps<Theme> = {
   lineHeight: 1.3,
   whiteSpace: 'nowrap',
 } as const
+
+export const profileStyles = {
+  page: {
+    display: 'flex',
+    justifyContent: 'center',
+    p: { xs: 2, sm: 4 },
+    minHeight: '100%',
+  } as const,
+
+  card: {
+    width: '100%',
+    maxWidth: 560,
+    borderRadius: br.xl,
+    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'card'),
+    border: (theme: Theme) => `1px solid ${getBorder(theme.palette.mode as 'light' | 'dark')}`,
+    overflow: 'visible',
+  } as const,
+
+  header: {
+    p: { xs: 3, sm: 4 },
+    pb: { xs: 2, sm: 3 },
+    textAlign: 'center',
+    borderBottom: (theme: Theme) =>
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+  } as const,
+
+  avatar: {
+    width: { xs: 72, sm: 88 },
+    height: { xs: 72, sm: 88 },
+    borderRadius: '50%',
+    background: gradients.primary,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    mx: 'auto',
+    mb: 2,
+    boxShadow: (theme: Theme) => getShadow(theme.palette.mode as 'light' | 'dark', 'primary'),
+  } as const,
+
+  avatarText: {
+    color: '#fff',
+    fontSize: { xs: '1.5rem', sm: '2rem' },
+    fontWeight: 700,
+    lineHeight: 1,
+  } as const,
+
+  name: {
+    fontWeight: 700,
+    fontSize: { xs: '1.25rem', sm: '1.5rem' },
+    letterSpacing: '-0.02em',
+    mb: 0.5,
+  } as const,
+
+  roleBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    px: 1.5,
+    py: 0.4,
+    borderRadius: br.pill,
+    background: (theme: Theme) => getPrimaryBg(theme.palette.mode as 'light' | 'dark'),
+    color: 'primary.main',
+    fontSize: '0.75rem',
+    fontWeight: 600,
+    letterSpacing: '0.02em',
+  } as const,
+
+  body: {
+    p: { xs: 2.5, sm: 4 },
+  } as const,
+
+  fieldRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    py: 1.75,
+    borderBottom: (theme: Theme) =>
+      `1px solid ${getDivider(theme.palette.mode as 'light' | 'dark')}`,
+    '&:last-child': {
+      borderBottom: 'none',
+    },
+  } as const,
+
+  fieldLabel: {
+    color: (theme: Theme) => getTextSecondary(theme.palette.mode as 'light' | 'dark'),
+    fontWeight: 500,
+    fontSize: '0.8125rem',
+  } as const,
+
+  fieldValue: {
+    fontWeight: 500,
+    fontSize: '0.9375rem',
+    textAlign: 'right' as const,
+  } as const,
+
+  actions: {
+    display: 'flex',
+    gap: spacing.sm,
+    mt: 3,
+    justifyContent: 'center',
+    flexWrap: 'wrap' as const,
+  } as const,
+
+  editFields: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: 2.5,
+  } as const,
+
+  editActions: {
+    display: 'flex',
+    gap: spacing.sm,
+    mt: 1,
+  } as const,
+}
