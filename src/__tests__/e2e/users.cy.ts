@@ -8,7 +8,7 @@ import {
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Users', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function creatOrUpdate(isCreating: boolean, isComputerView: boolean = true) {
     const crupdatedData = crupdateUsersMock[0]
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
@@ -16,6 +16,9 @@ describe('E2E: Users', () => {
       cy.contains(<string>user1Mock.first_name).click()
       cy.wait('@getUser')
       cy.get('.RaEditButton-root').click()
+    }
+    if (isComputerView) {
+      cy.contains('Entreprises').scrollIntoView().should('be.visible')
     }
     cy.get('[data-testid="input-email"] input')
       .clear()
@@ -71,7 +74,7 @@ describe('E2E: Users', () => {
     cy.intercept('PUT', '**/users*', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateUsers(req.body)))
     }).as('updateUser')
-    creatOrUpdate(false)
+    creatOrUpdate(false, isComputerView)
     cy.wait('@updateUser')
     cy.url().should('include', '/users')
   }

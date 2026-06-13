@@ -28,13 +28,14 @@ export default function UserCreateBulk() {
       const firstName = parts[0] || ''
       const lastName = parts.slice(1).join(' ') || ''
       const email = `${firstName.toLowerCase()}.${lastName.toLowerCase().replace(/\s+/g, '.')}@company.com`
+      const currentCompanyId = localStorage.getItem('currentCompanyId') || ''
       return {
         id: generateId(),
         first_name: firstName,
         last_name: lastName,
         email,
         sex: 'M',
-        company_id: localStorage.getItem('currentCompanyId') || '',
+        company_ids: currentCompanyId ? [currentCompanyId] : [],
       }
     })
 
