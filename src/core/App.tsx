@@ -91,7 +91,7 @@ import { LoanProvider } from '../features/money/loans/LoanContext.tsx'
 import { IncomeProvider } from '../features/money/incomes/IncomeContext.tsx'
 import { CashAccountProvider } from '../features/money/cash_accounts/CashAccountContext.tsx'
 import { Route } from 'react-router-dom'
-import { CustomLogin } from '../auth/CustomLogin'
+import { WelcomePage } from '../welcome/WelcomePage'
 import { RegisterPage } from '../auth/RegisterPage'
 import ProfilePage from '../auth/ProfilePage'
 import PasswordChangePage from '../auth/PasswordChangePage'
@@ -111,11 +111,12 @@ const ThemedAdmin = () => {
                   theme={theme}
                   dashboard={HomePage}
                   layout={Layout}
-                  loginPage={CustomLogin}
+                  loginPage={WelcomePage}
                   dataProvider={dataProvider}
                   authProvider={authProvider}
                 >
                   <CustomRoutes noLayout>
+                    <Route path="/" element={<WelcomePage />} />
                     <Route path="/register" element={<RegisterPage />} />
                   </CustomRoutes>
                   <CustomRoutes>
