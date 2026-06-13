@@ -1,18 +1,20 @@
+
 # CrupdateLoan
+
 
 ## Properties
 
-| Name            | Type   |
-| --------------- | ------ |
-| `comment`       | string |
-| `amount`        | number |
-| `description`   | string |
-| `id`            | string |
-| `lender`        | string |
-| `interest_rate` | number |
-| `start_date`    | Date   |
-| `due_date`      | Date   |
-| `job_id`        | string |
+Name | Type
+------------ | -------------
+`comment` | string
+`amount` | number
+`description` | string
+`id` | string
+`organization_id` | string
+`interest_rate` | number
+`start_date` | Date
+`due_date` | Date
+`job_id` | string
 
 ## Example
 
@@ -25,7 +27,7 @@ const example = {
   "amount": 15000,
   "description": Achat de matériaux pour le chantier,
   "id": loan_001,
-  "lender": BNI Madagascar,
+  "organization_id": org_001,
   "interest_rate": 1200,
   "start_date": Thu Feb 01 03:00:00 EAT 2024,
   "due_date": Thu Dec 31 03:00:00 EAT 2026,
@@ -44,3 +46,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

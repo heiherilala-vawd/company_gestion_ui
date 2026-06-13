@@ -45,24 +45,6 @@ export default function UserForm({ isCreate = false, isCreateForm = false }) {
         validate={[required()]}
         data-testid="input-sex"
       />
-      <SelectInput
-        source="role"
-        label="Rôle"
-        choices={[
-          { id: 'ADMIN', name: 'Admin' },
-          { id: 'ADMINISTRATION', name: 'Administration' },
-          { id: 'WAREHOUSE_WORKER', name: 'Magasinier' },
-          { id: 'EMPLOYEE', name: 'Employé' },
-        ]}
-        validate={[required()]}
-        data-testid="input-role"
-      />
-      <TextInput
-        source="password"
-        label="Mot de passe"
-        type="password"
-        data-testid="input-password"
-      />
       <TextInput
         source="company_id"
         label="ID Entreprise"

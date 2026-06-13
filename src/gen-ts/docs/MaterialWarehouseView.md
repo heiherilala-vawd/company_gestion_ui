@@ -1,12 +1,14 @@
+
 # MaterialWarehouseView
+
 
 ## Properties
 
-| Name        | Type                                    |
-| ----------- | --------------------------------------- |
-| `material`  | [CrupdateMaterial](CrupdateMaterial.md) |
-| `warehouse` | [Warehouse](Warehouse.md)               |
-| `quantity`  | number                                  |
+Name | Type
+------------ | -------------
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
+`warehouse` | [Warehouse](Warehouse.md)
+`quantity` | number
 
 ## Example
 
@@ -15,9 +17,9 @@ import type { MaterialWarehouseView } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  material: null,
-  warehouse: null,
-  quantity: 100,
+  "material": null,
+  "warehouse": null,
+  "quantity": 100,
 } satisfies MaterialWarehouseView
 
 console.log(example)
@@ -32,3 +34,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

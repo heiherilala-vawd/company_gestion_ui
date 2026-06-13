@@ -1,18 +1,25 @@
+
 # Task
+
 
 ## Properties
 
-| Name                | Type                            |
-| ------------------- | ------------------------------- |
-| `id`                | string                          |
-| `title`             | string                          |
-| `description`       | string                          |
-| `due_date`          | Date                            |
-| `priority`          | [TaskPriority](TaskPriority.md) |
-| `company_id`        | string                          |
-| `completed`         | boolean                         |
-| `completed_at`      | Date                            |
-| `assigned_user_ids` | Array&lt;string&gt;             |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`title` | string
+`description` | string
+`due_date` | Date
+`priority` | [TaskPriority](TaskPriority.md)
+`company_id` | string
+`completed` | boolean
+`completed_at` | Date
+`assigned_user_ids` | Array&lt;string&gt;
 
 ## Example
 
@@ -21,6 +28,11 @@ import type { Task } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
   "id": task_001,
   "title": Vérifier le matériel de chantier,
   "description": Faire l'inventaire du matériel sur le chantier A,
@@ -44,3 +56,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

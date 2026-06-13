@@ -1,16 +1,18 @@
+
 # History
+
 
 ## Properties
 
-| Name             | Type                        |
-| ---------------- | --------------------------- |
-| `id`             | string                      |
-| `previous_value` | string                      |
-| `new_value`      | string                      |
-| `user_id`        | string                      |
-| `modified_at`    | Date                        |
-| `entity_type`    | [EntityType](EntityType.md) |
-| `entity_id`      | string                      |
+Name | Type
+------------ | -------------
+`id` | string
+`previous_value` | string
+`new_value` | string
+`user_id` | string
+`modified_at` | Date
+`entity_type` | [EntityType](EntityType.md)
+`entity_id` | string
 
 ## Example
 
@@ -40,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

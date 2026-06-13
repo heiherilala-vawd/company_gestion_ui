@@ -1,13 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { AppBar as RAAppBar, TitlePortal } from 'react-admin'
-import { Box, IconButton, Button, Tooltip, useMediaQuery, Collapse } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  Button,
+  Tooltip,
+  useMediaQuery,
+  Collapse,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+} from '@mui/material'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import HomeIcon from '@mui/icons-material/Home'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LockIcon from '@mui/icons-material/Lock'
+import PersonIcon from '@mui/icons-material/Person'
 import { appBarStyles } from '../style/components'
 import { CompanySelector } from '../features/transversal/companies/CompanySelector'
 import { JobSelector } from '../features/transversal/jobs/JobSelector'
@@ -24,6 +37,8 @@ export const AppBar = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [showSelectors, setShowSelectors] = useState(false)
+  const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null)
+  const userEmail = localStorage.getItem('user_email') || 'Utilisateur'
   useEffect(() => {
     prevPathRef.current = location.pathname
   }, [location])
@@ -70,6 +85,47 @@ export const AppBar = () => {
         <TitlePortal />
         <Box sx={{ flex: 1 }} />
         <NotificationBell />
+        <Tooltip title={userEmail}>
+          <IconButton
+            onClick={(e) => setProfileAnchor(e.currentTarget)}
+            color="inherit"
+            sx={appBarStyles.iconButton}
+            data-testid="profile-menu-button"
+          >
+            <AccountCircleIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          anchorEl={profileAnchor}
+          open={Boolean(profileAnchor)}
+          onClose={() => setProfileAnchor(null)}
+          data-testid="profile-dropdown"
+        >
+          <MenuItem
+            onClick={() => {
+              setProfileAnchor(null)
+              navigate('/profile')
+            }}
+            data-testid="menu-profile"
+          >
+            <ListItemIcon>
+              <PersonIcon fontSize="small" />
+            </ListItemIcon>
+            Mon profil
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setProfileAnchor(null)
+              navigate('/profile/password')
+            }}
+            data-testid="menu-password-change"
+          >
+            <ListItemIcon>
+              <LockIcon fontSize="small" />
+            </ListItemIcon>
+            Changer le mot de passe
+          </MenuItem>
+        </Menu>
         <Box sx={appBarStyles.container}>
           <Tooltip title={mode === 'dark' ? 'Mode clair' : 'Mode sombre'}>
             <IconButton onClick={toggleMode} color="inherit" sx={appBarStyles.iconButton}>

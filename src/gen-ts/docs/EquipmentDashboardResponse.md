@@ -1,20 +1,22 @@
+
 # EquipmentDashboardResponse
+
 
 ## Properties
 
-| Name                            | Type                |
-| ------------------------------- | ------------------- |
-| `total_equipment`               | number              |
-| `broken_count`                  | number              |
-| `available_count`               | number              |
-| `usage_rate`                    | number              |
-| `avg_age_years`                 | number              |
-| `category_distribution`         | Array&lt;object&gt; |
-| `maintenance_cost_by_equipment` | Array&lt;object&gt; |
-| `scheduled_maintenances`        | Array&lt;object&gt; |
-| `leased_equipment`              | Array&lt;object&gt; |
-| `lost_count`                    | number              |
-| `usage_by_job`                  | Array&lt;object&gt; |
+Name | Type
+------------ | -------------
+`total_equipment` | number
+`broken_count` | number
+`available_count` | number
+`usage_rate` | number
+`avg_age_years` | number
+`category_distribution` | Array&lt;object&gt;
+`maintenance_cost_by_equipment` | Array&lt;object&gt;
+`scheduled_maintenances` | Array&lt;object&gt;
+`leased_equipment` | Array&lt;object&gt;
+`lost_count` | number
+`usage_by_job` | Array&lt;object&gt;
 
 ## Example
 
@@ -23,17 +25,17 @@ import type { EquipmentDashboardResponse } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  total_equipment: null,
-  broken_count: null,
-  available_count: null,
-  usage_rate: null,
-  avg_age_years: null,
-  category_distribution: null,
-  maintenance_cost_by_equipment: null,
-  scheduled_maintenances: null,
-  leased_equipment: null,
-  lost_count: null,
-  usage_by_job: null,
+  "total_equipment": null,
+  "broken_count": null,
+  "available_count": null,
+  "usage_rate": null,
+  "avg_age_years": null,
+  "category_distribution": null,
+  "maintenance_cost_by_equipment": null,
+  "scheduled_maintenances": null,
+  "leased_equipment": null,
+  "lost_count": null,
+  "usage_by_job": null,
 } satisfies EquipmentDashboardResponse
 
 console.log(example)
@@ -48,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

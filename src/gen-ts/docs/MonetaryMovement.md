@@ -1,11 +1,18 @@
+
 # MonetaryMovement
+
 
 ## Properties
 
-| Name          | Type   |
-| ------------- | ------ |
-| `amount`      | number |
-| `description` | string |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`amount` | number
+`description` | string
 
 ## Example
 
@@ -14,6 +21,11 @@ import type { MonetaryMovement } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
+  "comment": Commentaire sur cette entité,
+  "created_at": 2024-01-15T09:30Z,
+  "updated_at": 2024-02-20T15:45Z,
+  "created_by": null,
+  "updated_by": null,
   "amount": 15000,
   "description": Achat de matériaux pour le chantier,
 } satisfies MonetaryMovement
@@ -30,3 +42,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

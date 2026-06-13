@@ -1,13 +1,15 @@
+
 # PurchaseOrderLine
+
 
 ## Properties
 
-| Name          | Type   |
-| ------------- | ------ |
-| `id`          | string |
-| `material_id` | string |
-| `quantity`    | number |
-| `unit_price`  | number |
+Name | Type
+------------ | -------------
+`id` | string
+`material_id` | string
+`quantity` | number
+`unit_price` | number
 
 ## Example
 
@@ -16,10 +18,10 @@ import type { PurchaseOrderLine } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  id: null,
-  material_id: null,
-  quantity: null,
-  unit_price: null,
+  "id": null,
+  "material_id": null,
+  "quantity": null,
+  "unit_price": null,
 } satisfies PurchaseOrderLine
 
 console.log(example)
@@ -34,3 +36,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

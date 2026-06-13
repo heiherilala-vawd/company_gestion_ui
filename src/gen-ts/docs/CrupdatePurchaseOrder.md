@@ -1,18 +1,20 @@
+
 # CrupdatePurchaseOrder
+
 
 ## Properties
 
-| Name           | Type                                                                   |
-| -------------- | ---------------------------------------------------------------------- |
-| `id`           | string                                                                 |
-| `supplier_id`  | string                                                                 |
-| `order_date`   | Date                                                                   |
-| `status`       | [PurchaseOrderStatus](PurchaseOrderStatus.md)                          |
-| `total_amount` | number                                                                 |
-| `company_id`   | string                                                                 |
-| `job_id`       | string                                                                 |
-| `lines`        | [Array&lt;CrupdatePurchaseOrderLine&gt;](CrupdatePurchaseOrderLine.md) |
-| `comment`      | string                                                                 |
+Name | Type
+------------ | -------------
+`id` | string
+`supplier_id` | string
+`order_date` | Date
+`status` | [PurchaseOrderStatus](PurchaseOrderStatus.md)
+`total_amount` | number
+`company_id` | string
+`job_id` | string
+`lines` | [Array&lt;CrupdatePurchaseOrderLine&gt;](CrupdatePurchaseOrderLine.md)
+`comment` | string
 
 ## Example
 
@@ -44,3 +46,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNotify, useAuthProvider } from 'react-admin'
 import {
   Card,
@@ -11,28 +11,20 @@ import {
   InputLabel,
   FormControl,
   Box,
-  Autocomplete,
-  Chip,
-  CircularProgress,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '@mui/material/styles'
 import { colors, gradients, getShadow, transitions, borderRadius as br } from '../style/themeConfig'
 import generateId from '../utili/utils.tsx'
-
-interface CompanyOption {
-  id: string
-  name: string
-}
+import CollapsibleOptionalFields from '../generic/CollapsibleOptionalFields'
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [companyIds, setCompanyIds] = useState<string[]>([])
-  const [companies, setCompanies] = useState<CompanyOption[]>([])
-  const [companiesLoading, setCompaniesLoading] = useState(true)
   const [sex, setSex] = useState<'M' | 'F'>('M')
   const [id, setId] = useState('')
 
@@ -43,21 +35,14 @@ export const RegisterPage = () => {
   const theme = useTheme()
   const mode = theme.palette.mode as 'light' | 'dark'
 
-  useEffect(() => {
-    fetch('/companies')
-      .then((res) => {
-        if (!res.ok) throw new Error('Failed to fetch companies')
-        return res.json()
-      })
-      .then((data: CompanyOption[]) => setCompanies(data))
-      .catch(() => {
-        setCompanies([])
-      })
-      .finally(() => setCompaniesLoading(false))
-  }, [])
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (password !== confirmPassword) {
+      setPasswordError('Les mots de passe ne correspondent pas')
+      notify('Les mots de passe ne correspondent pas', { type: 'error' })
+      return
+    }
+    setPasswordError('')
     setLoading(true)
     try {
       await authProvider.register({
@@ -66,7 +51,6 @@ export const RegisterPage = () => {
         first_name: firstName,
         last_name: lastName,
         sex,
-        company_ids: companyIds,
         id,
       })
       notify('Compte créé avec succès', { type: 'success' })
@@ -201,59 +185,40 @@ export const RegisterPage = () => {
             <TextField
               label="Mot de passe"
               type="password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               fullWidth
             />
-            <Autocomplete
-              multiple
-              options={companies}
-              loading={companiesLoading}
-              value={companies.filter((c) => companyIds.includes(c.id))}
-              onChange={(_, newValue) => setCompanyIds(newValue.map((v) => v.id))}
-              getOptionLabel={(option) => `${option.name} (${option.id})`}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Entreprises"
-                  placeholder="Sélectionnez des entreprises"
-                  required
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {companiesLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                        {params.InputProps.endAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    label={option.name}
-                    size="small"
-                    {...getTagProps({ index })}
-                    key={option.id}
-                  />
-                ))
-              }
+            <TextField
+              label="Confirmer le mot de passe"
+              type="password"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value)
+                setPasswordError('')
+              }}
+              error={!!passwordError}
+              helperText={passwordError}
+              required
               fullWidth
             />
-            <FormControl fullWidth required>
-              <InputLabel>Sexe</InputLabel>
-              <Select
-                value={sex}
-                label="Sexe"
-                onChange={(e) => setSex(e.target.value as 'M' | 'F')}
-              >
-                <MenuItem value="M">Masculin</MenuItem>
-                <MenuItem value="F">Féminin</MenuItem>
-              </Select>
-            </FormControl>
+            <CollapsibleOptionalFields designation="">
+              <FormControl fullWidth>
+                <InputLabel>Sexe</InputLabel>
+                <Select
+                  value={sex}
+                  label="Sexe"
+                  onChange={(e) => setSex(e.target.value as 'M' | 'F')}
+                  inputProps={{ 'data-testid': 'input-sex' }}
+                >
+                  <MenuItem value="M">Masculin</MenuItem>
+                  <MenuItem value="F">Féminin</MenuItem>
+                </Select>
+              </FormControl>
+            </CollapsibleOptionalFields>
             <Button
               type="submit"
               variant="contained"

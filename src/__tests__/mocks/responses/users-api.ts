@@ -104,7 +104,6 @@ export const crupdateUsersMock: CrupdateUser[] = [
     last_name: 'Brown',
     sex: 'F' as Sex,
     email: 'alice.brown@company.com',
-    password: 'newPass456',
     comment: 'New employee',
   },
 ]

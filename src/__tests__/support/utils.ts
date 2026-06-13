@@ -101,6 +101,7 @@ export function interceptGeneralEndpoint(): void {
   // ---------------------- AUTH ------------------------------------------
   cy.intercept('POST', '**/auth/login', mockSuccessResponse(authResponseMock)).as('login')
   cy.intercept('GET', '**/auth/whoami', mockSuccessResponse(whoamiResponseMock)).as('whoami')
+  cy.intercept('PUT', '**/auth/password', mockSuccessResponse({})).as('changePassword')
 
   // ---------------------- USER ------------------------------------------
   cy.intercept('GET', '**/users*', mockSuccessResponse(usersMock)).as('getUsers')
@@ -520,6 +521,8 @@ export function interceptGeneralEndpoint(): void {
     '/hr-dashboard',
     '/monetary-dashboard',
     '/organizations',
+    '/profile',
+    '/profile/password',
   ]
   spaRoutes.forEach((route) => {
     cy.intercept({ method: 'GET', pathname: route }, (req) => req.continue())

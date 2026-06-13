@@ -93,6 +93,8 @@ import { CashAccountProvider } from '../features/money/cash_accounts/CashAccount
 import { Route } from 'react-router-dom'
 import { CustomLogin } from '../auth/CustomLogin'
 import { RegisterPage } from '../auth/RegisterPage'
+import ProfilePage from '../auth/ProfilePage'
+import PasswordChangePage from '../auth/PasswordChangePage'
 
 const ThemedAdmin = () => {
   const { mode } = useThemeMode()
@@ -175,6 +177,8 @@ const ThemedAdmin = () => {
                     <Route path="/hr-dashboard" element={<HrDashboard />} />
                     <Route path="/monetary-dashboard" element={<MonetaryDashboard />} />
                     <Route path="/notifications" element={<NotificationsList />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/profile/password" element={<PasswordChangePage />} />
                   </CustomRoutes>
                   <Resource name="jobs" {...JobResource} />
                   <Resource name="companies" {...CompanyResource} />

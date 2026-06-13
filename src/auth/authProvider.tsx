@@ -213,7 +213,6 @@ const authProvider: AuthProvider = {
     first_name: string
     last_name: string
     sex: 'M' | 'F'
-    company_ids?: string[]
   }) => {
     console.log("📝 Tentative d'inscription:", { email: params.email })
 
@@ -337,6 +336,21 @@ const authProvider: AuthProvider = {
 export const canAccessResource = (resource: string, action: string): boolean => {
   const role = (localStorage.getItem('user_role') as Role) || null
   return canAccess(role, resource, action)
+}
+
+// Helper pour changer le mot de passe
+export const changePassword = async (oldPassword: string, newPassword: string): Promise<void> => {
+  const response = await apiRequest<void>('/auth/password', {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    },
+    body: JSON.stringify({
+      old_password: oldPassword,
+      new_password: newPassword,
+    }),
+  })
+  return response
 }
 
 // Helper pour ajouter le token aux requêtes fetch
