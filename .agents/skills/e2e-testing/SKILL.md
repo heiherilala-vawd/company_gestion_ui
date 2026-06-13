@@ -1,74 +1,156 @@
 ---
 name: e2e-testing
 description: >
-  Cypress E2E testing for React Admin v5 + MUI v7 projects using a Build+Serve
-  approach with Istanbul code coverage. Covers CRUD test creation with responsive
-  desktop/mobile patterns, cy.intercept() mocking, data-testid selectors, and
-  systematic debugging. Use this whenever you need to create new E2E tests, fix
-  failing tests, debug CI test failures, set up or diagnose code coverage, write
-  API mocks, or understand the intercept-based testing architecture — especially
-  when tests pass locally but fail in CI, or coverage reports show unexpected gaps.
+  Testing strategy for React Admin v5 + MUI v7 projects using Cypress E2E (primary)
+  and Vitest unit tests (secondary). Covers CRUD E2E test creation with cy.intercept()
+  mocking, data-testid selectors, responsive patterns, and Vitest unit test patterns
+  for dataProvider, authProvider, and utility logic. Use whenever you need to create
+  new tests, fix failing tests, debug CI failures, write API mocks, or handle coverage.
 ---
 
-# E2E Testing (Cypress)
+# Testing (Cypress E2E + Vitest Unit)
 
-## Why This Approach
+## Overview
 
-This project uses **Cypress E2E only** — no unit tests, no Vitest. Every test runs against a fully built app served on a static port.
+This project uses **two testing layers**:
 
-**Why Build + Serve instead of the dev server?** Because Cypress intercepts (`cy.intercept()`) mock every API call. The dev server's Vite proxy would interfere, and running against a production-like build catches build-level issues (broken imports, missing env vars, tree-shaking problems) that the dev server masks. The tradeoff: you must `npm run build` before testing, which takes longer but catches more.
+| Layer | Tool | Scope | Speed |
+|-------|------|-------|-------|
+| **E2E** | Cypress 15 | Full UI flows through real browser | Slow (build + serve) |
+| **Unit** | Vitest 4 | Logic: dataProvider, auth, utils, config | Fast (no browser) |
 
-**Why no unit tests?** Every UI behavior is tested through the real component tree, the real router, and the real data layer. Mocking at the component level is replaced by mocking at the network level (`cy.intercept()`). This gives higher confidence that interactions work end-to-end, at the cost of slower feedback.
+**E2E is the primary testing strategy.** Unit tests cover pure logic that's faster and more reliable to test without a browser.
 
-## Quick Start
+---
+
+## Part 1: Unit Tests (Vitest)
+
+### When to Write Unit Tests
+
+- Pure functions and utilities (`src/utili/`)
+- Data provider logic (`src/auth/dataProvider.ts`)
+- Auth provider logic (`src/auth/authProvider.ts`)
+- URL resolution logic (`src/config/dynamicResources.ts`)
+- Style tokens and config (`src/style/`)
+- Generic components with little DOM interaction
+
+### Configuration
+
+```
+vitest.config.ts
+src/__tests__/unit/setup.ts    # localStorage mock, crypto mock, console mock
+```
+
+Test files follow the pattern `src/**/*.test.{ts,tsx}`.
+
+### Running
 
 ```bash
-# Full cycle: build + serve + run all tests + check coverage (60% threshold)
+# All unit tests
+npx vitest run
+
+# Watch mode
+npx vitest
+
+# Single file
+npx vitest run src/__tests__/unit/dataProvider.test.ts
+```
+
+### Patterns
+
+#### Mocking import dependencies
+
+```typescript
+// Mock URL helpers that use localStorage
+vi.mock('../../config/dynamicResources', () => ({
+  getMiddleUrl: vi.fn((resource: string) => `/api/${resource}`),
+  getMiddleUrlWithId: vi.fn((resource: string, id: string) => `/api/${resource}/${id}`),
+  getMiddleUrlWithQuery: vi.fn((resource: string, query: string) => `/api/${resource}?${query}`),
+}))
+
+// Mock fetch in dataProvider tests
+globalThis.fetch = vi.fn()
+;(globalThis.fetch as any).mockResolvedValueOnce(createMockResponse(mockData))
+```
+
+#### localStorage setup
+
+```typescript
+beforeEach(() => {
+  localStorage.clear()
+  localStorage.setItem('user_id', 'user1')
+  localStorage.setItem('currentCompanyId', 'comp1')
+  localStorage.setItem('currentJobId', 'job1')
+  localStorage.setItem('token', 'test-token')
+  vi.restoreAllMocks()
+})
+```
+
+The global `setup.ts` already mocks `localStorage`, `crypto.randomUUID()`, and `console` methods — no extra setup needed.
+
+#### Testing data provider
+
+```typescript
+it('sends pagination parameters', async () => {
+  ;(globalThis.fetch as any).mockResolvedValueOnce(
+    createMockResponse([{ id: '1', name: 'Company A' }]),
+  )
+  const result = await dataProvider.getList('companies', {
+    pagination: { page: 1, perPage: 10 },
+    sort: { field: 'name', order: 'ASC' },
+    filter: {},
+  })
+  expect(result.data).toHaveLength(1)
+  expect(result.total).toBe(1)
+})
+```
+
+---
+
+## Part 2: E2E Tests (Cypress)
+
+### Why Build + Serve
+
+Cypress intercepts (`cy.intercept()`) mock every API call. The dev server's Vite proxy would interfere, and running against a production-like build catches build-level issues (broken imports, missing env vars, tree-shaking problems) that the dev server masks.
+
+### Quick Start
+
+```bash
+# Full cycle: build + serve + run all tests + check coverage
 npm run cypress:coverage
 
-# Run a single test file headless
+# Single test file headless
 npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__tests__/e2e/auth.cy.ts"
 
-# Open Cypress UI for interactive debugging (requires dev server on 5173)
+# Interactive debug (requires dev server on 5173)
 npm run cypress:open
 ```
 
-## Test Architecture
+### Test Architecture
 
 ```
 src/__tests__/
-├── e2e/                       # Test files (*.cy.ts)
-├── mocks/responses/           # Mock API responses per resource
+├── e2e/                       # Test files (*.cy.ts) — 44 files
+├── mocks/responses/           # Mock API responses per resource (42 files)
 │   ├── auth-api.ts            # Helpers: mockSuccessResponse, mockErrorResponse
 │   └── <resource>-api.ts      # Entity mocks + createOrUpdate* functions
 ├── support/
 │   ├── utils.ts               # interceptGeneralEndpoint, loginInPage, selectors
-│   ├── mappers.ts             # Entity → Crupdate type converters
-│   └── commands.ts            # Custom Cypress commands
-├── cypress.config.ts          # Cypress config (spec pattern, support, video)
-└── GUIDE_TESTS.md             # French-language comprehensive testing guide
+│   ├── commands.ts            # Custom Cypress commands (cy.login, etc.)
+│   └── e2e.ts                 # Support file (imports commands + coverage)
+├── unit/                      # Vitest unit tests (10 files)
+├── cypress.config.ts          # Cypress config
+└── GUIDE_TESTS.md             # French comprehensive testing guide
 ```
 
-The key insight: **all API calls are intercepted**. The backend never runs. Every `GET`, `PUT`, `DELETE` is matched by a `cy.intercept()` in the test or in `interceptGeneralEndpoint()`. This makes tests fast, deterministic, and self-contained.
+**All API calls are intercepted.** The backend never runs.
 
-## Core Workflow
+### Scaffolding a New E2E Test
 
-### Scaffolding a New Test
-
-1. **Create mock file** at `src/__tests__/mocks/responses/<resource>-api.ts` — define entity mocks, a `crupdate*Mock` array (one item with existing ID for update, one with new ID for create), and a `createOrUpdate*()` function that dynamically reconstructs full entities from the request body
+1. **Create mock file** at `src/__tests__/mocks/responses/<resource>-api.ts` — entity mocks, `crupdate*Mock` array, `createOrUpdate*()` function
 2. **Export from index** at `mocks/responses/index.ts`
 3. **Add intercepts** for the new resource in `interceptGeneralEndpoint()` in `support/utils.ts`
 4. **Create test file** at `src/__tests__/e2e/<resource>.cy.ts`
-
-### Test Structure
-
-Every resource test follows the same pattern:
-
-- `describe('E2E: ResourceName', () => { ... })` with `beforeEach` calling `interceptGeneralEndpoint()`, `insertInToLocalStorage()`, `loginInPage()`
-- A **`creatOrUpdate(isCreating)`** function — clicks "Create" button or navigates to edit an existing entity, fills form fields, submits
-- **`navigateToDesktop()`** and **`navigateToMobile()`** helpers for responsive testing
-- Functions for each scenario: `showList()`, `showDetails()`, `canCreate()`, `canUpdate()`, error scenarios
-- Each scenario tested on both desktop (1280x720) and mobile (375x667)
 
 ### The Intercept Pattern
 
@@ -76,89 +158,61 @@ Every resource test follows the same pattern:
 // For listing: use wildcard paths
 cy.intercept('GET', '**/jobs*', mockSuccessResponse(jobsMock)).as('getJobs')
 
-// For create/update: use a callback so the mock responds with the actual form data
+// For create/update: callback responds with form data
 cy.intercept('PUT', '**/jobs', (req) => {
   req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
 }).as('createJob')
 
-// For error scenarios: override before the action
+// For error scenarios: override before action
 cy.intercept('PUT', '**/jobs', mockErrorResponse('BadRequestException', 'Invalid data', 400)).as('createJobFail')
 ```
 
-**Why the callback pattern for create/update?** React Admin sends the form data in the request body. The `createOrUpdate*()` function reconstructs what the real backend would return (including computed fields like `created_at`, nested relations like `company`). This gives the test realistic data to assert against after creation.
+### Test Structure
+
+Every resource test follows the same pattern:
+
+- `describe('E2E: ResourceName', () => { ... })` with `beforeEach` calling `interceptGeneralEndpoint()`, `insertInToLocalStorage()`, `loginInPage()`
+- A **`creatOrUpdate(isCreating)`** function — clicks "Create" or navigates to edit, fills form, submits
+- **`navigateToDesktop()`** and **`navigateToMobile()`** for responsive testing
+- Each scenario tested on both desktop (1280x720) and mobile (375x667)
+
+---
 
 ## Running Tests
 
 | Command | Description |
 |---------|-------------|
-| `npm run cypress:coverage` | Build → serve → run all tests → check coverage |
-| `npm run cypress:open` | Interactive Cypress UI (dev server must run on 5173) |
-| `npx cypress run --config-file src/__tests__/cypress.config.ts` | Headless, no coverage |
-| `npx cypress run --config-file src/__tests__/cypress.config.ts --spec "src/__tests__/e2e/foo.cy.ts"` | Single test file |
-| `npm run cypress:docker` | Docker-based (no host Cypress) |
-| `npm run lint && npm run type-check` | Always run before committing |
+| `npm run cypress:coverage` | **Full cycle**: build → serve → E2E → coverage |
+| `npm run cypress:coverage -- --skip-build` | Reuse existing `dist/` |
+| `npx vitest run` | Unit tests only (fast) |
+| `npx cypress run --config-file src/__tests__/cypress.config.ts` | E2E headless, no coverage |
+| `npx cypress open --config-file src/__tests__/cypress.config.ts` | Interactive E2E (dev server needed) |
+| `npm run cypress:docker` | Docker-based E2E |
+| `npm run lint && npm run type-check` | Always before commit |
 
-**Important:** `npm run cypress:run` requires a running dev server on 5173 and does NOT collect coverage. Always prefer `npm run cypress:coverage` for CI or final validation.
+## Environment Variables for Tests
 
-## Debugging (Systematic)
-
-When a test fails, follow this diagnostic tree:
-
-### 1. Does the test time out waiting for an intercept?
-```
-→ Check that the cy.intercept() URL pattern matches the actual API call
-  → Check your browser's Network tab in Cypress to see the actual request URL
-  → Does it use the right HTTP method? (PUT vs POST vs GET)
-  → Does the path contain the correct hierarchy prefixes?
-  → Wildcard **/jobs vs specific /companies/*/jobs — which matches?
-```
-
-### 2. Does the selector fail?
-```
-→ Is the data-testid correct in both component and test?
-→ For textarea: add :visible suffix (hidden duplicates exist)
-→ For overlapped elements: add { force: true } to click()
-→ For dropdowns: wait for the menu to appear before selecting
-→ For the login form: use input[name="username"] (not email)
-```
-
-### 3. Does the test pass locally but fail in CI?
-```
-→ CI uses Docker — check Dockerfile for missing system dependencies
-→ CI runs headless (Electron) — screenshots may reveal different rendering
-→ CI uses different env vars — is VITE_API_URL empty in CI?
-→ CI video artifacts: download and watch for visual clues
-```
-
-### 4. Are coverage numbers lower than expected?
-```
-→ Is VITE_API_URL empty? If it's set, requests go to real backend and aren't intercepted
-→ Is NYC_CAFEOBJECT_COVERAGE=true set at build time?
-→ Are new files covered by .nycrc includes/excludes?
-→ Run with --browser chrome for accurate source maps
-```
+| Variable | Purpose |
+|----------|---------|
+| `VITE_API_URL` | Must be **empty** — all requests intercepted |
+| `VITE_COVERAGE` | `true` enables Istanbul build instrumentation |
+| `VITE_MUTATION_MODE` | `pessimistic` disables undoable (5s wait) mutations |
+| `NYC_CAFEOBJECT_COVERAGE` | `true` enables coverage task in Cypress |
 
 ## Common Pitfalls
 
 | Symptom | Likely Cause | Fix |
 |---------|-------------|-----|
-| `cy.wait('@alias')` times out | Intercept URL pattern doesn't match | Check Network tab, widen wildcard |
-| Test randomly fails/flakes | No `cy.wait(3000)` before asserting after create/update | Add wait for React Admin to process response |
-| `cy.contains(text)` matches wrong element | Multiple elements with same text | Scope with `.first()` or use `data-testid` |
-| `cy.intercept` never fires | URL mismatch or wrong HTTP method | Verify actual request in Cypress Network tab |
-| Login always fails | `input[name="username"]` not used | Login form uses `username` field (not email) |
-| Coverage is 0% | `NYC_CAFEOBJECT_COVERAGE` not set | Set before build, must be `true` |
-| Mobile test fails | Sidebar modal covers the element | Close sidebar: `cy.get('body').click(0, 0)` |
-
-## CI/CD
-
-Docker-based in CI: `npm run cypress:docker:ci`. The workflow builds inside Docker, runs tests, uploads coverage artifacts, and captures video on failure.
-
-The `lint-and-typecheck` workflow runs separately (not in Docker) to give faster feedback on type errors.
+| `cy.wait('@alias')` times out | Intercept URL doesn't match real API call | Check Cypress Network tab |
+| E2E test passes locally but fails in CI | Docker env differs or timing | Check Dockerfile, CI env vars |
+| Coverage is 0% | `VITE_COVERAGE` not set | Must be `true` at build time |
+| Unit test `localStorage` fails | Setup mocks before test | `localStorage.clear()` in beforeEach |
+| Unit test `fetch` fails | fetch not mocked | Mock via `globalThis.fetch = vi.fn()` |
+| Mobile E2E test fails | Sidebar modal covers element | Close sidebar: `cy.get('body').click(0, 0)` |
 
 ## Reference Files
 
-- `references/test-pattern.md` — Complete CRUD test template with responsive support
-- `references/mock-pattern.md` — Mock file structure, entity creation, `createOrUpdate*` functions
+- `references/test-pattern.md` — Complete CRUD E2E test template
+- `references/mock-pattern.md` — Mock file structure
 - `references/selectors.md` — MUI v7 / React Admin selector quirks
-- `references/env-vars.md` — All environment variables for E2E testing
+- `references/env-vars.md` — All environment variables
