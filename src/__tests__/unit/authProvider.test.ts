@@ -137,26 +137,59 @@ describe('canAccessResource', () => {
       'material_warehouse',
       'equipment',
       'purchases',
+      'travel_materials',
+      'material_consumption',
     ]
 
-    it.each(stockResources)('allows create on stock resource %s', (resource) => {
-      expect(canAccessResource(resource, 'create')).toBe(true)
-    })
+    const equipmentResources = ['travel_equipment', 'equipment_usage', 'maintenances', 'voitures']
 
-    it.each(stockResources)('allows update on stock resource %s', (resource) => {
-      expect(canAccessResource(resource, 'update')).toBe(true)
-    })
+    const rhResources = ['tasks', 'employee_payments', 'travel_people', 'teams']
 
-    it.each(stockResources)('allows get on stock resource %s', (resource) => {
+    const oneTimeExpenses = ['expenses', 'travel_expenses']
+
+    const readOnlyResources = [
+      ...stockResources,
+      ...equipmentResources,
+      ...rhResources,
+      ...oneTimeExpenses,
+    ]
+
+    it.each(readOnlyResources)('allows get on resource %s', (resource) => {
       expect(canAccessResource(resource, 'get')).toBe(true)
     })
 
-    it.each(stockResources)('allows list on stock resource %s', (resource) => {
+    it.each(readOnlyResources)('allows list on resource %s', (resource) => {
       expect(canAccessResource(resource, 'list')).toBe(true)
     })
 
-    it.each(stockResources)('denies delete on stock resource %s', (resource) => {
+    it.each(readOnlyResources)('denies create on resource %s', (resource) => {
+      expect(canAccessResource(resource, 'create')).toBe(false)
+    })
+
+    it.each(readOnlyResources)('denies update on resource %s', (resource) => {
+      expect(canAccessResource(resource, 'update')).toBe(false)
+    })
+
+    const noDeleteResources = readOnlyResources.filter((r) => r !== 'travel_expenses')
+
+    it.each(noDeleteResources)('denies delete on resource %s', (resource) => {
       expect(canAccessResource(resource, 'delete')).toBe(false)
+    })
+
+    it('allows get on jobs', () => {
+      expect(canAccessResource('jobs', 'get')).toBe(true)
+    })
+
+    it('allows list on jobs', () => {
+      expect(canAccessResource('jobs', 'list')).toBe(true)
+    })
+
+    it('denies create on jobs', () => {
+      expect(canAccessResource('jobs', 'create')).toBe(false)
+    })
+
+    it('denies update on jobs', () => {
+      expect(canAccessResource('jobs', 'update')).toBe(false)
     })
 
     it('allows list on companies', () => {
@@ -171,20 +204,40 @@ describe('canAccessResource', () => {
       expect(canAccessResource('companies', 'create')).toBe(false)
     })
 
-    it('denies list on expenses', () => {
-      expect(canAccessResource('expenses', 'list')).toBe(false)
-    })
-
-    it('allows list on jobs', () => {
-      expect(canAccessResource('jobs', 'list')).toBe(true)
-    })
-
-    it('allows create on purchase_operations', () => {
-      expect(canAccessResource('purchase_operations', 'create')).toBe(true)
-    })
-
     it('allows delete on travel_expenses (special exception)', () => {
       expect(canAccessResource('travel_expenses', 'delete')).toBe(true)
+    })
+
+    it('denies create on purchase_operations', () => {
+      expect(canAccessResource('purchase_operations', 'create')).toBe(false)
+    })
+
+    it('denies list on leaves', () => {
+      expect(canAccessResource('leaves', 'list')).toBe(false)
+    })
+
+    it('denies list on maintenance_schedules', () => {
+      expect(canAccessResource('maintenance_schedules', 'list')).toBe(false)
+    })
+
+    it('denies list on task_schedules', () => {
+      expect(canAccessResource('task_schedules', 'list')).toBe(false)
+    })
+
+    it('denies list on loan_repayments', () => {
+      expect(canAccessResource('loan_repayments', 'list')).toBe(false)
+    })
+
+    it('denies list on other_expenses', () => {
+      expect(canAccessResource('other_expenses', 'list')).toBe(false)
+    })
+
+    it('denies list on bank_fees', () => {
+      expect(canAccessResource('bank_fees', 'list')).toBe(false)
+    })
+
+    it('denies list on incomes', () => {
+      expect(canAccessResource('incomes', 'list')).toBe(false)
     })
   })
 
@@ -234,20 +287,20 @@ describe('canAccessResource', () => {
       'travel_equipment',
     ]
 
-    it.each(personalResources)('allows create on personal resource %s', (resource) => {
-      expect(canAccessResource(resource, 'create')).toBe(true)
-    })
-
-    it.each(personalResources)('allows update on personal resource %s', (resource) => {
-      expect(canAccessResource(resource, 'update')).toBe(true)
-    })
-
     it.each(personalResources)('allows get on personal resource %s', (resource) => {
       expect(canAccessResource(resource, 'get')).toBe(true)
     })
 
     it.each(personalResources)('allows list on personal resource %s', (resource) => {
       expect(canAccessResource(resource, 'list')).toBe(true)
+    })
+
+    it.each(personalResources)('denies create on personal resource %s', (resource) => {
+      expect(canAccessResource(resource, 'create')).toBe(false)
+    })
+
+    it.each(personalResources)('denies update on personal resource %s', (resource) => {
+      expect(canAccessResource(resource, 'update')).toBe(false)
     })
   })
 })
@@ -410,12 +463,12 @@ describe('authProvider', () => {
       expect(result).toBe(true)
     })
 
-    it('returns true for EMPLOYEE on personal resource with matching user_id', async () => {
+    it('returns true for EMPLOYEE on personal resource with matching user_id and read action', async () => {
       localStorage.setItem('user_role', 'EMPLOYEE')
       localStorage.setItem('user_id', 'user-123')
       const result = await authProvider.canAccess({
         resource: 'travel_expenses',
-        action: 'create',
+        action: 'list',
         record: { user_id: 'user-123' },
       })
       expect(result).toBe(true)

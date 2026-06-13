@@ -649,41 +649,52 @@ const MenuRoot = () => {
         {renderItems(equipmentItems)}
       </List>
 
-      <SectionHeader label="Base de déplacement" />
-      <List component="nav" dense sx={{ mb: 1 }}>
-        <SubSectionHeader
-          label="Entrées"
-          open={openSections['Entrées']}
-          onClick={() => toggleSection('Entrées')}
-        />
-        <Collapse in={openSections['Entrées']} timeout={200}>
-          {renderItems(monetaryInItems)}
-        </Collapse>
-        <SubSectionHeader
-          label="Sorties ponctuelles"
-          open={openSections['Sorties ponctuelles']}
-          onClick={() => toggleSection('Sorties ponctuelles')}
-        />
-        <Collapse in={openSections['Sorties ponctuelles']} timeout={200}>
-          {renderItems(monetaryOutPonctuelItems)}
-        </Collapse>
-        <SubSectionHeader
-          label="Sorties continues"
-          open={openSections['Sorties continues']}
-          onClick={() => toggleSection('Sorties continues')}
-        />
-        <Collapse in={openSections['Sorties continues']} timeout={200}>
-          {renderItems(monetaryOutContinueItems)}
-        </Collapse>
-        <SubSectionHeader
-          label="Trésorerie"
-          open={openSections['Trésorerie']}
-          onClick={() => toggleSection('Trésorerie')}
-        />
-        <Collapse in={openSections['Trésorerie']} timeout={200}>
-          {renderItems(monetaryOtherItems)}
-        </Collapse>
-      </List>
+      {userRole === 'WAREHOUSE_WORKER' ? (
+        <>
+          <SectionHeader label="Base de déplacement" />
+          <List component="nav" dense sx={{ mb: 1 }}>
+            {renderItems(monetaryOutPonctuelItems)}
+          </List>
+        </>
+      ) : (
+        <>
+          <SectionHeader label="Base de déplacement" />
+          <List component="nav" dense sx={{ mb: 1 }}>
+            <SubSectionHeader
+              label="Entrées"
+              open={openSections['Entrées']}
+              onClick={() => toggleSection('Entrées')}
+            />
+            <Collapse in={openSections['Entrées']} timeout={200}>
+              {renderItems(monetaryInItems)}
+            </Collapse>
+            <SubSectionHeader
+              label="Sorties ponctuelles"
+              open={openSections['Sorties ponctuelles']}
+              onClick={() => toggleSection('Sorties ponctuelles')}
+            />
+            <Collapse in={openSections['Sorties ponctuelles']} timeout={200}>
+              {renderItems(monetaryOutPonctuelItems)}
+            </Collapse>
+            <SubSectionHeader
+              label="Sorties continues"
+              open={openSections['Sorties continues']}
+              onClick={() => toggleSection('Sorties continues')}
+            />
+            <Collapse in={openSections['Sorties continues']} timeout={200}>
+              {renderItems(monetaryOutContinueItems)}
+            </Collapse>
+            <SubSectionHeader
+              label="Trésorerie"
+              open={openSections['Trésorerie']}
+              onClick={() => toggleSection('Trésorerie')}
+            />
+            <Collapse in={openSections['Trésorerie']} timeout={200}>
+              {renderItems(monetaryOtherItems)}
+            </Collapse>
+          </List>
+        </>
+      )}
     </Box>
   )
 }

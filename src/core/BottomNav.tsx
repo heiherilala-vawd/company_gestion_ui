@@ -8,7 +8,7 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import EuroSymbolIcon from '@mui/icons-material/EuroSymbol'
 import { bottomNavStyles } from '../style/components'
 
-const navItems = [
+const allNavItems = [
   { label: 'Accueil', icon: HomeIcon, to: '/' },
   { label: 'Société', icon: BusinessIcon, to: '/company' },
   { label: 'RH', icon: BadgeIcon, to: '/rh' },
@@ -17,20 +17,33 @@ const navItems = [
   { label: 'Base de déplacement', icon: EuroSymbolIcon, to: '/monetary' },
 ]
 
-function getActiveIndex(pathname: string): number {
-  if (pathname === '/' || pathname === '/home') return 0
-  if (pathname.startsWith('/company')) return 1
-  if (pathname.startsWith('/rh')) return 2
-  if (pathname.startsWith('/stock')) return 3
-  if (pathname.startsWith('/equipment-hub')) return 4
-  if (pathname.startsWith('/monetary')) return 5
+function getNavItems(): typeof allNavItems {
+  const userRole = localStorage.getItem('user_role')
+  if (userRole === 'WAREHOUSE_WORKER') {
+    return allNavItems.filter(
+      (item) => item.label !== 'Société' && item.label !== 'Base de déplacement',
+    )
+  }
+  return allNavItems
+}
+
+function getActiveIndex(pathname: string, items: typeof allNavItems): number {
+  if (pathname === '/' || pathname === '/home') {
+    return items.findIndex((i) => i.to === '/')
+  }
+  for (let i = 0; i < items.length; i++) {
+    if (pathname.startsWith(items[i].to) && items[i].to !== '/') {
+      return i
+    }
+  }
   return -1
 }
 
 export const BottomNav = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const value = getActiveIndex(location.pathname)
+  const navItems = getNavItems()
+  const value = getActiveIndex(location.pathname, navItems)
 
   const userRole = localStorage.getItem('user_role')
   if (userRole === 'EMPLOYEE') return null

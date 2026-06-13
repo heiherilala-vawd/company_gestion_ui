@@ -117,21 +117,32 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     if (resource === 'companies' && readActions.includes(action)) return true
     if (resource === 'users' && readActions.includes(action)) return true
 
-    // CRUD (sauf delete) sur stock et achats
+    // Lecture seule sur stock et achats
     const stockResources = [
       'warehouses',
       'materials',
       'material_warehouse',
       'equipment',
       'purchases',
+      'travel_materials',
+      'material_consumption',
     ]
-    if (stockResources.includes(resource) && canReadWrite(action)) return true
+    if (stockResources.includes(resource) && readActions.includes(action)) return true
 
-    // Jobs : tout accès
-    if (resource === 'jobs' && canReadWrite(action)) return true
+    // Lecture seule sur équipement (hors planification maintenance)
+    const equipmentResources = ['travel_equipment', 'equipment_usage', 'maintenances', 'voitures']
+    if (equipmentResources.includes(resource) && readActions.includes(action)) return true
 
-    // Opérations d'achat
-    if (resource === 'purchase_operations' && action === 'create') return true
+    // Lecture seule sur ressources RH
+    const rhResources = ['tasks', 'employee_payments', 'travel_people', 'teams']
+    if (rhResources.includes(resource) && readActions.includes(action)) return true
+
+    // Lecture seule sur sorties ponctuelles (monétaire)
+    const oneTimeExpenses = ['expenses', 'travel_expenses']
+    if (oneTimeExpenses.includes(resource) && readActions.includes(action)) return true
+
+    // Jobs : lecture seule
+    if (resource === 'jobs' && readActions.includes(action)) return true
 
     return false
   }

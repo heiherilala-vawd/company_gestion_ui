@@ -153,12 +153,7 @@ export const RegisterPage = () => {
             onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}
           >
-            <TextField
-              label="ID"
-              defaultValue={id}
-              sx={{ display: 'none' }}
-              fullWidth
-            />
+            <TextField label="ID" defaultValue={id} sx={{ display: 'none' }} fullWidth />
             <TextField
               label="Prénom"
               value={firstName}

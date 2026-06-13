@@ -8,7 +8,7 @@ import ScheduleIcon from '@mui/icons-material/Schedule'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 
-const items = [
+const allItems = [
   {
     label: 'Véhicules',
     icon: DirectionsCarIcon,
@@ -67,6 +67,16 @@ const items = [
   },
 ]
 
+const hiddenForWarehouseWorker = new Set(['/scheduled_maintenance_activity'])
+
+function getEquipmentItems() {
+  const userRole = localStorage.getItem('user_role')
+  if (userRole === 'WAREHOUSE_WORKER') {
+    return allItems.filter((item) => !hiddenForWarehouseWorker.has(item.to))
+  }
+  return allItems
+}
+
 export default function EquipmentPage() {
-  return <SectionHub title="Actions Équipement" items={items} />
+  return <SectionHub title="Actions Équipement" items={getEquipmentItems()} />
 }
