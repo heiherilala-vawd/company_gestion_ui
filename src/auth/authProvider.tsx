@@ -144,6 +144,10 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     // Jobs : lecture seule
     if (resource === 'jobs' && readActions.includes(action)) return true
 
+    // Opérations d'écriture pour les managers
+    const managerWriteResources = ['employee_payments', 'purchases', 'maintenances']
+    if (managerWriteResources.includes(resource) && action === 'create') return true
+
     return false
   }
 
