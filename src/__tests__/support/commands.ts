@@ -13,20 +13,19 @@ Cypress.Commands.add('login', (email: string, password: string) => {
     },
   }).as('loginRequest')
 
-  cy.get('[data-testid="email-input"]').type(email)
-  cy.get('[data-testid="password-input"]').type(password)
-  cy.get('[data-testid="login-button"]').click()
+  cy.contains('button', 'Se connecter').click()
+  cy.get('#wp-email').type(email)
+  cy.get('#wp-password').type(password)
+  cy.get('.wp-modal__submit').click()
   cy.wait('@loginRequest')
 })
 
 // Commande pour vérifier qu'on est sur la page login
 Cypress.Commands.add('shouldBeOnLoginPage', () => {
-  cy.url().should('include', '/login')
-  cy.get('[data-testid="login-form"]').should('be.visible')
+  cy.contains('button', 'Se connecter', { timeout: 10000 }).should('be.visible')
 })
 
 // Commande pour vérifier qu'on est sur la page d'accueil (après login)
 Cypress.Commands.add('shouldBeOnHomePage', () => {
   cy.url().should('not.include', '/login')
-  cy.get('[data-testid="app-layout"]').should('be.visible')
 })

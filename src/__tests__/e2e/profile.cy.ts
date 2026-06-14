@@ -13,9 +13,7 @@ describe('E2E: Profile', () => {
     insertInToLocalStorage()
     loginInPage()
     // SPA passthrough for profile routes
-    cy.intercept('GET', '**/profile*', { fixture: 'index.html', statusCode: 200 }).as(
-      'profilePassthrough',
-    )
+    cy.intercept('GET', '**/profile*', (req) => req.continue()).as('profilePassthrough')
   })
 
   it('should display user profile and navigate to edit', () => {
@@ -24,8 +22,8 @@ describe('E2E: Profile', () => {
 
     cy.url().should('include', '/profile')
 
-    cy.contains('Mon profil').should('be.visible')
     cy.contains(user1Mock.email).should('be.visible')
+    cy.contains(`${user1Mock.first_name} ${user1Mock.last_name}`).should('be.visible')
 
     cy.get('[data-testid="edit-profile-button"]').click()
 
