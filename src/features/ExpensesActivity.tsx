@@ -45,7 +45,31 @@ export default function ExpensesActivity() {
       </ToggleButtonGroup>
 
       <ResourceContextProvider value={resource}>
-        <GenericCreate title=" ">
+        <GenericCreate
+          title=" "
+          transform={(data) => {
+            const expense = { ...data.expense }
+            if (!expense.description && expense._generated_desc) {
+              expense.description = expense._generated_desc
+            }
+            delete expense._generated_desc
+            const transformed: any = { ...data, expense }
+            if ('bank_name' in data && !transformed.description && expense.description) {
+              transformed.description = expense.description
+            }
+            if ('payment_type' in data && !transformed.payment_description && expense.description) {
+              transformed.payment_description = expense.description
+            }
+            if (
+              'other_expense_type_id' in data &&
+              !transformed.description &&
+              expense.description
+            ) {
+              transformed.description = expense.description
+            }
+            return transformed
+          }}
+        >
           <SimpleForm id="expenses-activity-form" toolbar={<FormToolbar />}>
             <FormComponent isCreate />
           </SimpleForm>

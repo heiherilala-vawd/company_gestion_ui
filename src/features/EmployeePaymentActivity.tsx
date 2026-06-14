@@ -11,7 +11,21 @@ export default function EmployeePaymentActivity() {
         Paiement salarié
       </Typography>
       <ResourceContextProvider value="employee_payments">
-        <GenericCreate title=" ">
+        <GenericCreate
+          title=" "
+          transform={(data) => {
+            const expense = { ...data.expense }
+            if (!expense.description && expense._generated_desc) {
+              expense.description = expense._generated_desc
+            }
+            delete expense._generated_desc
+            const transformed: any = { ...data, expense }
+            if (!transformed.payment_description && expense.description) {
+              transformed.payment_description = expense.description
+            }
+            return transformed
+          }}
+        >
           <SimpleForm id="employee-payment-activity-form" toolbar={<FormToolbar />}>
             <EmployeePaymentForm isCreate />
           </SimpleForm>
