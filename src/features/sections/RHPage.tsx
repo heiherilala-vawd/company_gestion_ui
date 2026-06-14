@@ -24,9 +24,9 @@ const allItems = [
   {
     label: 'Équipe',
     icon: GroupIcon,
-    to: '/teams',
+    to: '/teams/create',
     color: 'violet' as const,
-    desc: 'Gérer équipe',
+    desc: 'Créer équipe',
   },
   {
     label: 'Travail',
