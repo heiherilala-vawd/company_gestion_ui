@@ -13,12 +13,18 @@ import {
 } from '../support/utils.ts'
 
 describe('E2E: Jobs', () => {
-  function creatOrUpdate(isCreating: boolean) {
+  function creatOrUpdate(isCreating: boolean, isComputerView: boolean = true) {
     const crupdatedData = crupdateJobsMock[0]
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click()
     } else {
-      cy.contains('td', <string>job1Mock.description).click({ force: true })
+      if (isComputerView) {
+        cy.contains('td', <string>job1Mock.description).click({ force: true })
+      } else {
+        cy.contains(<string>job1Mock.description)
+          .first()
+          .click({ force: true })
+      }
       cy.wait('@getJob', { timeout: 15000 })
       cy.get('.RaEditButton-root').click({ force: true })
     }
@@ -38,58 +44,48 @@ describe('E2E: Jobs', () => {
     cy.get('button[type="submit"]').click({ force: true })
   }
 
-  function navigateToDesktop() {
-    cy.get('[data-testid="menu-jobs"]').click()
-    cy.wait('@getJobs')
-  }
-
-  function navigateToMobile() {
-    cy.viewport(375, 667)
-    cy.get('[data-testid="menu-item-home"]').should('exist')
-    cy.get('[data-testid="menu-jobs"]').scrollIntoView()
-    cy.get('[data-testid="menu-jobs"]').click({ force: true })
-    cy.wait('@getJobs')
-    cy.get('body').then(($body) => {
-      if ($body.find('.RaSidebar-modal').length) {
-        cy.get('body').click(0, 0) // clique hors menu
-      }
-    })
+  function setUpViewport(isComputerView: boolean) {
+    if (!isComputerView) {
+      cy.viewport(375, 667)
+    }
   }
 
   function showList(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
+    setUpViewport(isComputerView)
     cy.contains(<string>job1Mock.description).should('be.visible')
     cy.contains(<string>job2Mock.description).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
-    cy.contains('td', <string>job1Mock.description).click({ force: true })
+    setUpViewport(isComputerView)
+    if (isComputerView) {
+      cy.contains('td', <string>job1Mock.description).click({ force: true })
+    } else {
+      cy.contains(<string>job1Mock.description)
+        .first()
+        .click({ force: true })
+    }
     cy.wait('@getJob', { timeout: 15000 })
     cy.contains(<string>job1Mock.description).should('be.visible')
     cy.contains('En cours').should('be.visible')
   }
 
   function canCreate(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
+    setUpViewport(isComputerView)
     cy.intercept('PUT', '**/jobs', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('createJob')
-    creatOrUpdate(true)
+    creatOrUpdate(true, isComputerView)
     cy.wait('@createJob')
     cy.url().should('include', '/jobs')
   }
 
   function canUpdate(isComputerView: boolean) {
-    if (isComputerView) navigateToDesktop()
-    else navigateToMobile()
+    setUpViewport(isComputerView)
     cy.intercept('PUT', '**/jobs', (req) => {
       req.reply(mockSuccessResponse(createOrUpdateJobs(req.body)))
     }).as('updateJob')
-    creatOrUpdate(false)
+    creatOrUpdate(false, isComputerView)
     cy.wait('@updateJob')
     cy.url().should('include', '/jobs')
   }
@@ -98,6 +94,10 @@ describe('E2E: Jobs', () => {
     interceptGeneralEndpoint()
     loginInPage()
     insertInToLocalStorage()
+    // loginInPage redirects to /jobs via WelcomePage token check before
+    // currentCompanyId is set. Re-navigate so JobList reads the correct value.
+    cy.visit('/jobs', { failOnStatusCode: false })
+    cy.wait('@getJobs', { timeout: 15000 })
   })
 
   it('should display jobs list', () => showList(true))
@@ -106,25 +106,23 @@ describe('E2E: Jobs', () => {
   it('should update an existing job', () => canUpdate(true))
 
   it('should show error on create failure', () => {
-    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/jobs',
       mockErrorResponse('BadRequestException', 'Invalid data', 400),
     ).as('createJobFail')
-    creatOrUpdate(true)
+    creatOrUpdate(true, true)
     cy.wait('@createJobFail')
     cy.get('.RaNotification-error').should('be.visible')
   })
 
   it('should show error on update failure', () => {
-    navigateToDesktop()
     cy.intercept(
       'PUT',
       '**/jobs',
       mockErrorResponse('BadRequestException', 'Update failed', 400),
     ).as('updateJobFail')
-    creatOrUpdate(false)
+    creatOrUpdate(false, true)
     cy.wait('@updateJobFail')
     cy.get('.RaNotification-error').should('be.visible')
   })

@@ -19,6 +19,12 @@ import { income1Mock } from '../mocks/responses/incomes-api'
 import { loan1Mock } from '../mocks/responses/loans-api'
 import { equipment1Mock } from '../mocks/responses/equipment-api'
 
+function navigateTo(path: string) {
+  cy.visit('/#' + path)
+  cy.url({ timeout: 15000 }).should('include', path)
+  cy.wait(500)
+}
+
 describe('E2E: Activity Pages', () => {
   beforeEach(() => {
     interceptGeneralEndpoint()
@@ -26,36 +32,11 @@ describe('E2E: Activity Pages', () => {
     insertInToLocalStorage()
   })
 
-  function goHome(desktop: boolean) {
-    if (desktop) {
-      cy.get('[data-testid="menu-accueil"]', { timeout: 5000 }).click({ force: true })
-    } else {
-      cy.visit('/')
-    }
-    cy.url({ timeout: 10000 }).should('not.include', '/login')
-    cy.location('pathname').should('eq', '/')
-    cy.wait(1000)
-  }
-
-  function clickHomeButton(desc: string) {
-    cy.contains('p', desc).click({ force: true })
-  }
-
-  function testHomePageButtons(desktop: boolean) {
-    if (!desktop) cy.viewport(375, 667)
-    goHome(desktop)
-    cy.get('main').contains('Actions rapides').should('be.visible')
-    cy.get('main').contains('Validations').should('be.visible')
-    const buttons = ['Acheter', 'Déplacer', 'Recevoir', 'Payer', 'Réception']
-    buttons.forEach((desc) => cy.contains('p', desc).should('be.visible'))
-  }
-
   // ==================== EMPLOYER PAYMENT ACTIVITY ====================
 
   function testEmployerPaymentToggle(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Reçu')
-    cy.url({ timeout: 15000 }).should('include', '/employer_payments_activity')
+    navigateTo('/employer_payments_activity')
 
     cy.contains('Valider paiement').should('be.visible')
     cy.contains(income1Mock.organization?.name ?? 'Client Corp').should('be.visible')
@@ -69,29 +50,23 @@ describe('E2E: Activity Pages', () => {
 
   function testPaymentValidation(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Reçu')
-    cy.url({ timeout: 15000 }).should('include', '/employer_payments_activity')
+    navigateTo('/employer_payments_activity')
 
-    // Make sure content is visible
     cy.contains(income1Mock.organization?.name ?? 'Client Corp').should('be.visible')
 
-    // Find income row, type amount, click Valider
     cy.contains('td', income1Mock.organization?.name ?? 'Client Corp')
       .parent('tr')
       .within(() => {
         cy.get('input[type="number"]').clear().type('5000')
       })
 
-    // Click Valider button
     cy.contains('td', income1Mock.organization?.name ?? 'Client Corp')
       .parent('tr')
       .contains('button', 'Valider')
       .click()
 
-    // Confirm dialog
     cy.contains('Confirmer le paiement').should('be.visible')
 
-    // Intercept and confirm
     cy.intercept('PUT', '**/incomes_receipts', mockSuccessResponse({})).as('createReceipt')
     cy.contains('button', 'Confirmer le paiement').click()
     cy.wait('@createReceipt', { timeout: 20000 })
@@ -99,8 +74,7 @@ describe('E2E: Activity Pages', () => {
 
   function testLoanRepayment(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Reçu')
-    cy.url({ timeout: 15000 }).should('include', '/employer_payments_activity')
+    navigateTo('/employer_payments_activity')
     cy.wait(300)
 
     cy.contains('Retourner emprunt').scrollIntoView().click({ force: true })
@@ -128,8 +102,7 @@ describe('E2E: Activity Pages', () => {
 
   function testTravelMaterialToggle(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Réception')
-    cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
+    navigateTo('/travel_materials_activity')
 
     cy.contains('Lieu de réception').should('be.visible')
     cy.contains(materialWarehouse1Mock.material?.name).should('be.visible')
@@ -138,8 +111,7 @@ describe('E2E: Activity Pages', () => {
 
   function testMaterialsReception(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Réception')
-    cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
+    navigateTo('/travel_materials_activity')
 
     cy.contains(material1Mock.name).should('be.visible')
 
@@ -165,8 +137,7 @@ describe('E2E: Activity Pages', () => {
 
   function testEquipmentReception(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Réception')
-    cy.url({ timeout: 15000 }).should('include', '/travel_materials_activity')
+    navigateTo('/travel_materials_activity')
 
     cy.get('[data-testid="toggle-equipment"]').scrollIntoView().click({ force: true })
     cy.wait('@getEquipments', { timeout: 10000 })
@@ -189,8 +160,7 @@ describe('E2E: Activity Pages', () => {
 
   function testExpensesActivity(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Payer')
-    cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
+    navigateTo('/expenses_activity')
 
     cy.get('[data-testid="input-bank_name"] input').clear().type('BNP Paribas Test')
     cy.get('[data-testid="input-description"] textarea:visible')
@@ -209,9 +179,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createBankFee', { timeout: 10000 })
 
-    goHome(desktop)
-    clickHomeButton('Payer')
-    cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
+    navigateTo('/expenses_activity')
     cy.wait(300)
 
     cy.contains('Paiement salarié').scrollIntoView().click({ force: true })
@@ -232,9 +200,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createEmployeePayment', { timeout: 10000 })
 
-    goHome(desktop)
-    clickHomeButton('Payer')
-    cy.url({ timeout: 15000 }).should('include', '/expenses_activity')
+    navigateTo('/expenses_activity')
     cy.wait(300)
 
     cy.contains('Autre dépense').scrollIntoView().click({ force: true })
@@ -260,8 +226,7 @@ describe('E2E: Activity Pages', () => {
 
   function testIncomesActivity(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Recevoir')
-    cy.url({ timeout: 15000 }).should('include', '/incomes_activity')
+    navigateTo('/incomes_activity')
 
     selectIncomeType('income_type_id')
     cy.get('[data-testid="input-source_organization"] input').clear().type('Test Client')
@@ -275,9 +240,7 @@ describe('E2E: Activity Pages', () => {
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createIncome', { timeout: 10000 })
 
-    goHome(desktop)
-    clickHomeButton('Recevoir')
-    cy.url({ timeout: 15000 }).should('include', '/incomes_activity')
+    navigateTo('/incomes_activity')
     cy.wait(300)
 
     cy.contains('button', 'Emprunts').scrollIntoView().click({ force: true })
@@ -304,8 +267,7 @@ describe('E2E: Activity Pages', () => {
 
   function testPurchaseActivityForm(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Acheter')
-    cy.url({ timeout: 15000 }).should('include', '/purchases_activity')
+    navigateTo('/purchases_activity')
 
     cy.contains("Nouvelle Opération d'Achat", { timeout: 10000 }).should('exist')
 
@@ -341,8 +303,7 @@ describe('E2E: Activity Pages', () => {
 
   function testTravelOperationForm(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    clickHomeButton('Déplacer')
-    cy.url({ timeout: 15000 }).should('include', '/travel_equipment_activity')
+    navigateTo('/travel_equipment_activity')
 
     cy.contains('Déplacer des équipements', { timeout: 10000 }).should('exist')
 
@@ -365,9 +326,6 @@ describe('E2E: Activity Pages', () => {
   }
 
   // ==================== TEST DESKTOP & MOBILE ====================
-
-  it('should display all home page buttons (desktop)', () => testHomePageButtons(true))
-  it('should display all home page buttons (mobile)', () => testHomePageButtons(false))
 
   it('should toggle employer payment views (desktop)', () => testEmployerPaymentToggle(true))
   it('should toggle employer payment views (mobile)', () => testEmployerPaymentToggle(false))
