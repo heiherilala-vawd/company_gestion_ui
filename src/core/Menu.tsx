@@ -240,7 +240,7 @@ const MenuRoot = () => {
   }
 
   const generalItems: ResourceItem[] = [
-    { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/', testId: 'menu-accueil' },
+    { name: 'home', label: 'Accueil', icon: HomeIcon, to: '/home', testId: 'menu-accueil' },
   ]
 
   const companyItems: ResourceItem[] = [
@@ -653,7 +653,11 @@ const MenuRoot = () => {
         <>
           <SectionHeader label="Base de déplacement" />
           <List component="nav" dense sx={{ mb: 1 }}>
-            {renderItems(monetaryOutPonctuelItems)}
+            {renderItems(
+              monetaryOutPonctuelItems.map((item) =>
+                item.name === 'expenses' ? { ...item, to: '/expenses_activity' } : item,
+              ),
+            )}
           </List>
         </>
       ) : (

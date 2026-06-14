@@ -170,6 +170,7 @@ const ThemedAdmin = () => {
                     <Route path="/rh" element={<RHPage />} />
                     <Route path="/stock" element={<StockPage />} />
                     <Route path="/equipment-hub" element={<EquipmentPage />} />
+                    <Route path="/home" element={<HomePage />} />
                     <Route path="/monetary" element={<MonetaryPage />} />
                     <Route path="/yearly-report" element={<YearlyReport />} />
                     <Route path="/leave_balances" element={<LeaveBalanceResource.list />} />

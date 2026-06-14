@@ -9,7 +9,7 @@ import EuroSymbolIcon from '@mui/icons-material/EuroSymbol'
 import { bottomNavStyles } from '../style/components'
 
 const allNavItems = [
-  { label: 'Accueil', icon: HomeIcon, to: '/' },
+  { label: 'Accueil', icon: HomeIcon, to: '/home' },
   { label: 'Société', icon: BusinessIcon, to: '/company' },
   { label: 'RH', icon: BadgeIcon, to: '/rh' },
   { label: 'Stock', icon: InventoryIcon, to: '/stock' },

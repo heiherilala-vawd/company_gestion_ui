@@ -138,14 +138,20 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     if (rhResources.includes(resource) && readActions.includes(action)) return true
 
     // Lecture seule sur sorties ponctuelles (monétaire)
-    const oneTimeExpenses = ['expenses', 'travel_expenses']
+    const oneTimeExpenses = ['expenses', 'travel_expenses', 'other_expenses']
     if (oneTimeExpenses.includes(resource) && readActions.includes(action)) return true
 
     // Jobs : lecture seule
     if (resource === 'jobs' && readActions.includes(action)) return true
 
     // Opérations d'écriture pour les managers
-    const managerWriteResources = ['employee_payments', 'purchases', 'maintenances', 'teams']
+    const managerWriteResources = [
+      'employee_payments',
+      'purchases',
+      'maintenances',
+      'teams',
+      'other_expenses',
+    ]
     if (managerWriteResources.includes(resource) && action === 'create') return true
 
     return false
