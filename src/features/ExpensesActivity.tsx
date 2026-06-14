@@ -10,8 +10,10 @@ import GenericCreate from '../generic/GenericCreate'
 
 export default function ExpensesActivity() {
   useNavigate()
+  const userRole = localStorage.getItem('user_role')
+  const isWarehouseWorker = userRole === 'WAREHOUSE_WORKER'
   const [entityType, setEntityType] = useState<'bank_fee' | 'employee_payment' | 'other_expense'>(
-    'bank_fee',
+    isWarehouseWorker ? 'employee_payment' : 'bank_fee',
   )
 
   const handleEntityChange = (_: any, value: any) => {
@@ -39,7 +41,7 @@ export default function ExpensesActivity() {
       </Typography>
 
       <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange} sx={{ mb: 3 }}>
-        <ToggleButton value="bank_fee">Frais bancaires</ToggleButton>
+        {!isWarehouseWorker && <ToggleButton value="bank_fee">Frais bancaires</ToggleButton>}
         <ToggleButton value="employee_payment">Paiement salarié</ToggleButton>
         <ToggleButton value="other_expense">Autre dépense</ToggleButton>
       </ToggleButtonGroup>

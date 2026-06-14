@@ -57,7 +57,11 @@ export const AppBar = () => {
     <>
       <RAAppBar sx={appBarStyles.appBar} data-testid={'menu-item-selector-home'}>
         <Tooltip title="Accueil">
-          <IconButton onClick={() => navigate('/')} color="inherit" sx={appBarStyles.iconButton}>
+          <IconButton
+            onClick={() => navigate('/home')}
+            color="inherit"
+            sx={appBarStyles.iconButton}
+          >
             <HomeIcon fontSize="small" />
           </IconButton>
         </Tooltip>
