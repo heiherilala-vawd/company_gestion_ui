@@ -142,8 +142,11 @@ export const dataProvider = {
     const start = (page - 1) * perPage
 
     return {
-      data: data.slice(start, start + perPage),
-      total: data.length,
+      data:
+        !Array.isArray(response) && response.total != null
+          ? data
+          : data.slice(start, start + perPage),
+      total: !Array.isArray(response) && response.total != null ? response.total : data.length,
     }
   },
 

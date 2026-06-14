@@ -13,12 +13,19 @@ export default function PurchaseMaterialActivity() {
       <ResourceContextProvider value="purchases">
         <GenericCreate
           title=" "
-          transform={(data) => ({
-            ...data,
-            quantity: data.quantity ? data.quantity : 1,
-            supplier: { id: data.supplier_id },
-            expense: { ...data.expense, job_id: localStorage.getItem('currentJobId') },
-          })}
+          transform={(data) => {
+            const expense = { ...data.expense, job_id: localStorage.getItem('currentJobId') }
+            if (!expense.description && expense._generated_desc) {
+              expense.description = expense._generated_desc
+            }
+            delete expense._generated_desc
+            return {
+              ...data,
+              quantity: data.quantity ? data.quantity : 1,
+              supplier: { id: data.supplier_id },
+              expense,
+            }
+          }}
         >
           <SimpleForm
             id="purchase-material-activity-form"

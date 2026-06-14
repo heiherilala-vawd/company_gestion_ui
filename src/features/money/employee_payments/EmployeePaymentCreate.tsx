@@ -16,6 +16,9 @@ export default function EmployeePaymentCreate() {
           ...data,
           expense,
         }
+        if (!transformed.payment_description && expense.description) {
+          transformed.payment_description = expense.description
+        }
         if (data.is_for_team) {
           transformed.user_ids = data.user_ids || []
           delete transformed.employee_id

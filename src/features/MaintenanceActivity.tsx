@@ -11,7 +11,21 @@ export default function MaintenanceActivity() {
         Faire une maintenance
       </Typography>
       <ResourceContextProvider value="maintenances">
-        <GenericCreate title=" ">
+        <GenericCreate
+          title=" "
+          transform={(data) => {
+            const expense = { ...data.expense }
+            if (!expense.description && expense._generated_desc) {
+              expense.description = expense._generated_desc
+            }
+            delete expense._generated_desc
+            const transformed: any = { ...data, expense }
+            if (!transformed.description && expense.description) {
+              transformed.description = expense.description
+            }
+            return transformed
+          }}
+        >
           <SimpleForm id="maintenance-activity-form" toolbar={<FormToolbar />}>
             <MaintenanceForm isCreate />
           </SimpleForm>
