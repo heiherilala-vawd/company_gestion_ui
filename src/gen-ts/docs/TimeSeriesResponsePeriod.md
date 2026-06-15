@@ -1,13 +1,11 @@
-
 # TimeSeriesResponsePeriod
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`from` | string
-`to` | string
+| Name   | Type   |
+| ------ | ------ |
+| `from` | string |
+| `to`   | string |
 
 ## Example
 
@@ -16,8 +14,8 @@ import type { TimeSeriesResponsePeriod } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "from": null,
-  "to": null,
+  from: null,
+  to: null,
 } satisfies TimeSeriesResponsePeriod
 
 console.log(example)
@@ -32,5 +30,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

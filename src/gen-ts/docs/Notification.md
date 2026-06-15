@@ -1,26 +1,24 @@
-
 # Notification
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`created_at` | Date
-`updated_at` | Date
-`created_by` | [AuditUser](AuditUser.md)
-`updated_by` | [AuditUser](AuditUser.md)
-`id` | string
-`user` | [CrupdateUser](CrupdateUser.md)
-`task_id` | string
-`title` | string
-`message` | string
-`read` | boolean
-`read_at` | Date
-`completed` | boolean
-`completed_at` | Date
-`effective_completed` | boolean
+| Name                  | Type                            |
+| --------------------- | ------------------------------- |
+| `comment`             | string                          |
+| `created_at`          | Date                            |
+| `updated_at`          | Date                            |
+| `created_by`          | [AuditUser](AuditUser.md)       |
+| `updated_by`          | [AuditUser](AuditUser.md)       |
+| `id`                  | string                          |
+| `user`                | [CrupdateUser](CrupdateUser.md) |
+| `task_id`             | string                          |
+| `title`               | string                          |
+| `message`             | string                          |
+| `read`                | boolean                         |
+| `read_at`             | Date                            |
+| `completed`           | boolean                         |
+| `completed_at`        | Date                            |
+| `effective_completed` | boolean                         |
 
 ## Example
 
@@ -58,5 +56,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

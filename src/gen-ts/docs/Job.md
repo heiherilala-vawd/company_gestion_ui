@@ -1,23 +1,21 @@
-
 # Job
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`created_at` | Date
-`updated_at` | Date
-`created_by` | [AuditUser](AuditUser.md)
-`updated_by` | [AuditUser](AuditUser.md)
-`id` | string
-`company` | [CrupdateCompany](CrupdateCompany.md)
-`description` | string
-`contract_signature_date` | Date
-`start_date` | Date
-`end_date` | Date
-`status` | [JobStatus](JobStatus.md)
+| Name                      | Type                                  |
+| ------------------------- | ------------------------------------- |
+| `comment`                 | string                                |
+| `created_at`              | Date                                  |
+| `updated_at`              | Date                                  |
+| `created_by`              | [AuditUser](AuditUser.md)             |
+| `updated_by`              | [AuditUser](AuditUser.md)             |
+| `id`                      | string                                |
+| `company`                 | [CrupdateCompany](CrupdateCompany.md) |
+| `description`             | string                                |
+| `contract_signature_date` | Date                                  |
+| `start_date`              | Date                                  |
+| `end_date`                | Date                                  |
+| `status`                  | [JobStatus](JobStatus.md)             |
 
 ## Example
 
@@ -52,5 +50,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

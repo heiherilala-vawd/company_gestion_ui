@@ -35,3 +35,4 @@ src/__tests__/.nyc_output/
 .env.*.local
 .env.production
 .env.ci
+.vercel

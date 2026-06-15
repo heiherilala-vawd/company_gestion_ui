@@ -1,24 +1,22 @@
-
 # BudgetLine
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`created_at` | Date
-`updated_at` | Date
-`created_by` | [AuditUser](AuditUser.md)
-`updated_by` | [AuditUser](AuditUser.md)
-`id` | string
-`company_id` | string
-`category` | string
-`planned_amount` | number
-`actual_amount` | number
-`period_start` | Date
-`period_end` | Date
-`description` | string
+| Name             | Type                      |
+| ---------------- | ------------------------- |
+| `comment`        | string                    |
+| `created_at`     | Date                      |
+| `updated_at`     | Date                      |
+| `created_by`     | [AuditUser](AuditUser.md) |
+| `updated_by`     | [AuditUser](AuditUser.md) |
+| `id`             | string                    |
+| `company_id`     | string                    |
+| `category`       | string                    |
+| `planned_amount` | number                    |
+| `actual_amount`  | number                    |
+| `period_start`   | Date                      |
+| `period_end`     | Date                      |
+| `description`    | string                    |
 
 ## Example
 
@@ -54,5 +52,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

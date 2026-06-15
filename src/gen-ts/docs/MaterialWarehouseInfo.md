@@ -1,15 +1,13 @@
-
 # MaterialWarehouseInfo
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`warehouse` | [Warehouse](Warehouse.md)
-`quantity` | number
-`min_stock` | number
-`max_stock` | number
+| Name        | Type                      |
+| ----------- | ------------------------- |
+| `warehouse` | [Warehouse](Warehouse.md) |
+| `quantity`  | number                    |
+| `min_stock` | number                    |
+| `max_stock` | number                    |
 
 ## Example
 
@@ -18,10 +16,10 @@ import type { MaterialWarehouseInfo } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "warehouse": null,
-  "quantity": 50,
-  "min_stock": 10,
-  "max_stock": 200,
+  warehouse: null,
+  quantity: 50,
+  min_stock: 10,
+  max_stock: 200,
 } satisfies MaterialWarehouseInfo
 
 console.log(example)
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

@@ -2,16 +2,14 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**completeMaterialConsumption**](MaterialConsumptionApi.md#completematerialconsumption) | **PUT** /users/{userId}/companies/{companyId}/material_consumptions/{id}/complete | Complete a material consumption |
-| [**crupdateMaterialConsumptions**](MaterialConsumptionApi.md#crupdatematerialconsumptions) | **PUT** /users/{userId}/companies/{companyId}/material_consumptions | Create new material consumption records or update existing ones |
-| [**deleteMaterialConsumptionById**](MaterialConsumptionApi.md#deletematerialconsumptionbyid) | **DELETE** /users/{userId}/companies/{companyId}/material_consumptions/{id} | Delete a material consumption record by identifier |
-| [**getMaterialConsumptionById**](MaterialConsumptionApi.md#getmaterialconsumptionbyid) | **GET** /users/{userId}/companies/{companyId}/material_consumptions/{id} | Get a material consumption record by identifier |
-| [**getMaterialConsumptions**](MaterialConsumptionApi.md#getmaterialconsumptions) | **GET** /users/{userId}/companies/{companyId}/material_consumptions | Get all material consumption records |
-| [**returnMaterialsFromConsumption**](MaterialConsumptionApi.md#returnmaterialsfromconsumption) | **PUT** /users/{userId}/companies/{companyId}/material_consumptions/{id}/return | Return materials from a consumption |
-
-
+| Method                                                                                         | HTTP request                                                                      | Description                                                     |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [**completeMaterialConsumption**](MaterialConsumptionApi.md#completematerialconsumption)       | **PUT** /users/{userId}/companies/{companyId}/material_consumptions/{id}/complete | Complete a material consumption                                 |
+| [**crupdateMaterialConsumptions**](MaterialConsumptionApi.md#crupdatematerialconsumptions)     | **PUT** /users/{userId}/companies/{companyId}/material_consumptions               | Create new material consumption records or update existing ones |
+| [**deleteMaterialConsumptionById**](MaterialConsumptionApi.md#deletematerialconsumptionbyid)   | **DELETE** /users/{userId}/companies/{companyId}/material_consumptions/{id}       | Delete a material consumption record by identifier              |
+| [**getMaterialConsumptionById**](MaterialConsumptionApi.md#getmaterialconsumptionbyid)         | **GET** /users/{userId}/companies/{companyId}/material_consumptions/{id}          | Get a material consumption record by identifier                 |
+| [**getMaterialConsumptions**](MaterialConsumptionApi.md#getmaterialconsumptions)               | **GET** /users/{userId}/companies/{companyId}/material_consumptions               | Get all material consumption records                            |
+| [**returnMaterialsFromConsumption**](MaterialConsumptionApi.md#returnmaterialsfromconsumption) | **PUT** /users/{userId}/companies/{companyId}/material_consumptions/{id}/return   | Return materials from a consumption                             |
 
 ## completeMaterialConsumption
 
@@ -22,19 +20,16 @@ Complete a material consumption
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialConsumptionApi,
-} from 'api-client';
-import type { CompleteMaterialConsumptionRequest } from 'api-client';
+import { Configuration, MaterialConsumptionApi } from 'api-client'
+import type { CompleteMaterialConsumptionRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialConsumptionApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialConsumptionApi(config)
 
   const body = {
     // string
@@ -43,28 +38,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: mc_001,
-  } satisfies CompleteMaterialConsumptionRequest;
+  } satisfies CompleteMaterialConsumptionRequest
 
   try {
-    const data = await api.completeMaterialConsumption(body);
-    console.log(data);
+    const data = await api.completeMaterialConsumption(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -79,19 +73,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Material consumption completed |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                    | Response headers |
+| ----------- | ------------------------------ | ---------------- |
+| **200**     | Material consumption completed | -                |
+| **400**     | Bad request                    | -                |
+| **403**     | Forbidden                      | -                |
+| **404**     | Not found                      | -                |
+| **429**     | Too many requests to the API   | -                |
+| **500**     | Internal server error          | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## crupdateMaterialConsumptions
 
@@ -110,7 +103,7 @@ import type { CrupdateMaterialConsumptionsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -139,12 +132,11 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateMaterialConsumption** | `Array<CrupdateMaterialConsumption>` |  | |
+| Name                            | Type                                 | Description | Notes                     |
+| ------------------------------- | ------------------------------------ | ----------- | ------------------------- |
+| **userId**                      | `string`                             |             | [Defaults to `undefined`] |
+| **companyId**                   | `string`                             |             | [Defaults to `undefined`] |
+| **crupdateMaterialConsumption** | `Array<CrupdateMaterialConsumption>` |             |                           |
 
 ### Return type
 
@@ -159,19 +151,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated material consumption records |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                                         | Response headers |
+| ----------- | --------------------------------------------------- | ---------------- |
+| **200**     | The created or updated material consumption records | -                |
+| **400**     | Bad request                                         | -                |
+| **403**     | Forbidden                                           | -                |
+| **404**     | Not found                                           | -                |
+| **429**     | Too many requests to the API                        | -                |
+| **500**     | Internal server error                               | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteMaterialConsumptionById
 
@@ -182,19 +173,16 @@ Delete a material consumption record by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialConsumptionApi,
-} from 'api-client';
-import type { DeleteMaterialConsumptionByIdRequest } from 'api-client';
+import { Configuration, MaterialConsumptionApi } from 'api-client'
+import type { DeleteMaterialConsumptionByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialConsumptionApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialConsumptionApi(config)
 
   const body = {
     // string
@@ -203,28 +191,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: mc_001,
-  } satisfies DeleteMaterialConsumptionByIdRequest;
+  } satisfies DeleteMaterialConsumptionByIdRequest
 
   try {
-    const data = await api.deleteMaterialConsumptionById(body);
-    console.log(data);
+    const data = await api.deleteMaterialConsumptionById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -239,19 +226,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Material consumption record deleted |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                         | Response headers |
+| ----------- | ----------------------------------- | ---------------- |
+| **204**     | Material consumption record deleted | -                |
+| **400**     | Bad request                         | -                |
+| **403**     | Forbidden                           | -                |
+| **404**     | Not found                           | -                |
+| **429**     | Too many requests to the API        | -                |
+| **500**     | Internal server error               | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getMaterialConsumptionById
 
@@ -262,19 +248,16 @@ Get a material consumption record by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialConsumptionApi,
-} from 'api-client';
-import type { GetMaterialConsumptionByIdRequest } from 'api-client';
+import { Configuration, MaterialConsumptionApi } from 'api-client'
+import type { GetMaterialConsumptionByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialConsumptionApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialConsumptionApi(config)
 
   const body = {
     // string
@@ -283,28 +266,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: mc_001,
-  } satisfies GetMaterialConsumptionByIdRequest;
+  } satisfies GetMaterialConsumptionByIdRequest
 
   try {
-    const data = await api.getMaterialConsumptionById(body);
-    console.log(data);
+    const data = await api.getMaterialConsumptionById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -319,19 +301,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The material consumption record |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                     | Response headers |
+| ----------- | ------------------------------- | ---------------- |
+| **200**     | The material consumption record | -                |
+| **400**     | Bad request                     | -                |
+| **403**     | Forbidden                       | -                |
+| **404**     | Not found                       | -                |
+| **429**     | Too many requests to the API    | -                |
+| **500**     | Internal server error           | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getMaterialConsumptions
 
@@ -342,19 +323,16 @@ Get all material consumption records
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialConsumptionApi,
-} from 'api-client';
-import type { GetMaterialConsumptionsRequest } from 'api-client';
+import { Configuration, MaterialConsumptionApi } from 'api-client'
+import type { GetMaterialConsumptionsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialConsumptionApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialConsumptionApi(config)
 
   const body = {
     // string
@@ -369,31 +347,30 @@ async function example() {
     consumptionStatus: IN_PROGRESS,
     // string (optional)
     jobId: job_001,
-  } satisfies GetMaterialConsumptionsRequest;
+  } satisfies GetMaterialConsumptionsRequest
 
   try {
-    const data = await api.getMaterialConsumptions(body);
-    console.log(data);
+    const data = await api.getMaterialConsumptions(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **consumptionStatus** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| Name                  | Type     | Description | Notes                                |
+| --------------------- | -------- | ----------- | ------------------------------------ |
+| **userId**            | `string` |             | [Defaults to `undefined`]            |
+| **companyId**         | `string` |             | [Defaults to `undefined`]            |
+| **page**              | `number` |             | [Optional] [Defaults to `undefined`] |
+| **pageSize**          | `number` |             | [Optional] [Defaults to `undefined`] |
+| **consumptionStatus** | `string` |             | [Optional] [Defaults to `undefined`] |
+| **jobId**             | `string` |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -408,19 +385,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of material consumption records |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                          | Response headers |
+| ----------- | ------------------------------------ | ---------------- |
+| **200**     | List of material consumption records | -                |
+| **400**     | Bad request                          | -                |
+| **403**     | Forbidden                            | -                |
+| **404**     | Not found                            | -                |
+| **429**     | Too many requests to the API         | -                |
+| **500**     | Internal server error                | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## returnMaterialsFromConsumption
 
@@ -431,19 +407,16 @@ Return materials from a consumption
 ### Example
 
 ```ts
-import {
-  Configuration,
-  MaterialConsumptionApi,
-} from 'api-client';
-import type { ReturnMaterialsFromConsumptionRequest } from 'api-client';
+import { Configuration, MaterialConsumptionApi } from 'api-client'
+import type { ReturnMaterialsFromConsumptionRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new MaterialConsumptionApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new MaterialConsumptionApi(config)
 
   const body = {
     // string
@@ -454,29 +427,28 @@ async function example() {
     id: mc_001,
     // number
     quantity: 10,
-  } satisfies ReturnMaterialsFromConsumptionRequest;
+  } satisfies ReturnMaterialsFromConsumptionRequest
 
   try {
-    const data = await api.returnMaterialsFromConsumption(body);
-    console.log(data);
+    const data = await api.returnMaterialsFromConsumption(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
-| **quantity** | `number` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
+| **quantity**  | `number` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -491,16 +463,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | Materials returned |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | Materials returned           | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-

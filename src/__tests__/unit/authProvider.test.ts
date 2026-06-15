@@ -136,16 +136,23 @@ describe('canAccessResource', () => {
       'materials',
       'material_warehouse',
       'equipment',
-      'purchases',
       'travel_materials',
       'material_consumption',
     ]
 
-    const equipmentResources = ['travel_equipment', 'equipment_usage', 'maintenances', 'voitures']
+    const equipmentResources = ['travel_equipment', 'equipment_usage', 'voitures']
 
-    const rhResources = ['tasks', 'employee_payments', 'travel_people', 'teams']
+    const rhResources = ['tasks', 'travel_people']
 
     const oneTimeExpenses = ['expenses', 'travel_expenses']
+
+    const managerWriteResources = [
+      'purchases',
+      'maintenances',
+      'employee_payments',
+      'teams',
+      'other_expenses',
+    ]
 
     const readOnlyResources = [
       ...stockResources,
@@ -173,6 +180,26 @@ describe('canAccessResource', () => {
     const noDeleteResources = readOnlyResources.filter((r) => r !== 'travel_expenses')
 
     it.each(noDeleteResources)('denies delete on resource %s', (resource) => {
+      expect(canAccessResource(resource, 'delete')).toBe(false)
+    })
+
+    it.each(managerWriteResources)('allows get on manager resource %s', (resource) => {
+      expect(canAccessResource(resource, 'get')).toBe(true)
+    })
+
+    it.each(managerWriteResources)('allows list on manager resource %s', (resource) => {
+      expect(canAccessResource(resource, 'list')).toBe(true)
+    })
+
+    it.each(managerWriteResources)('allows create on manager resource %s', (resource) => {
+      expect(canAccessResource(resource, 'create')).toBe(true)
+    })
+
+    it.each(managerWriteResources)('denies update on manager resource %s', (resource) => {
+      expect(canAccessResource(resource, 'update')).toBe(false)
+    })
+
+    it.each(managerWriteResources)('denies delete on manager resource %s', (resource) => {
       expect(canAccessResource(resource, 'delete')).toBe(false)
     })
 
@@ -226,10 +253,6 @@ describe('canAccessResource', () => {
 
     it('denies list on loan_repayments', () => {
       expect(canAccessResource('loan_repayments', 'list')).toBe(false)
-    })
-
-    it('denies list on other_expenses', () => {
-      expect(canAccessResource('other_expenses', 'list')).toBe(false)
     })
 
     it('denies list on bank_fees', () => {

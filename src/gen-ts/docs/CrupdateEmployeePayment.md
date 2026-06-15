@@ -1,18 +1,16 @@
-
 # CrupdateEmployeePayment
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`expense_id` | string
-`user_ids` | Array&lt;string&gt;
-`is_for_team` | boolean
-`team_id` | string
-`payment_description` | string
-`payment_type` | [PaymentType](PaymentType.md)
+| Name                  | Type                          |
+| --------------------- | ----------------------------- |
+| `id`                  | string                        |
+| `expense_id`          | string                        |
+| `user_ids`            | Array&lt;string&gt;           |
+| `is_for_team`         | boolean                       |
+| `team_id`             | string                        |
+| `payment_description` | string                        |
+| `payment_type`        | [PaymentType](PaymentType.md) |
 
 ## Example
 
@@ -42,5 +40,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

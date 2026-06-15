@@ -85,7 +85,7 @@ describe('RegisterPage', () => {
         first_name: 'John',
         last_name: 'Doe',
         sex: 'M',
-        id: '',
+        id: 'mocked-uuid',
       })
     })
   })

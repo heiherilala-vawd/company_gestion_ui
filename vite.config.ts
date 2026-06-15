@@ -86,7 +86,8 @@ export default defineConfig(({ mode }) => {
   },
   build: {
     sourcemap: mode === 'development',
+    minify: env.VITE_COVERAGE ? false : 'esbuild',
   },
-  base: './',
+  base: '/',
   }
 })
