@@ -1,15 +1,13 @@
-
 # PurchaseOperationRequest
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`equipment_lines` | [Array&lt;PurchaseOperationEquipmentLine&gt;](PurchaseOperationEquipmentLine.md)
-`material_lines` | [Array&lt;PurchaseOperationMaterialLine&gt;](PurchaseOperationMaterialLine.md)
-`travel` | [PurchaseOperationTravel](PurchaseOperationTravel.md)
+| Name              | Type                                                                             |
+| ----------------- | -------------------------------------------------------------------------------- |
+| `comment`         | string                                                                           |
+| `equipment_lines` | [Array&lt;PurchaseOperationEquipmentLine&gt;](PurchaseOperationEquipmentLine.md) |
+| `material_lines`  | [Array&lt;PurchaseOperationMaterialLine&gt;](PurchaseOperationMaterialLine.md)   |
+| `travel`          | [PurchaseOperationTravel](PurchaseOperationTravel.md)                            |
 
 ## Example
 
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

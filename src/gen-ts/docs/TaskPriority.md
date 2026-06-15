@@ -1,11 +1,9 @@
-
 # TaskPriority
-
 
 ## Properties
 
-Name | Type
------------- | -------------
+| Name | Type |
+| ---- | ---- |
 
 ## Example
 
@@ -13,8 +11,7 @@ Name | Type
 import type { TaskPriority } from 'api-client'
 
 // TODO: Update the object below with actual values
-const example = {
-} satisfies TaskPriority
+const example = {} satisfies TaskPriority
 
 console.log(example)
 
@@ -28,5 +25,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

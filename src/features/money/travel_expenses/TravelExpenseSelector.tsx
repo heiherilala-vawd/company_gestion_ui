@@ -2,7 +2,7 @@
 import React from 'react'
 import { GenericSelector } from '../../../generic/GenericSelector.tsx'
 import { useTravelExpense } from './TravelExpenseContext.tsx'
-import { getMiddleUrlDynamicExpensesResource } from '../../../config/dynamicResources.ts'
+import { getMiddleUrlDynamicJobResource } from '../../../config/dynamicResources.ts'
 
 interface TravelExpenseSelectorProps {
   className?: string
@@ -12,7 +12,7 @@ interface TravelExpenseSelectorProps {
 }
 
 export const TravelExpenseSelector: React.FC<TravelExpenseSelectorProps> = ({ ...props }) => {
-  const endpoint = getMiddleUrlDynamicExpensesResource('travel_expenses')
+  const endpoint = getMiddleUrlDynamicJobResource('travel_expenses')
 
   return (
     <GenericSelector

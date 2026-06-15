@@ -2,22 +2,20 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**crupdateEmployeeLeaveConfigs**](HRApi.md#crupdateemployeeleaveconfigs) | **PUT** /users/{userId}/companies/{companyId}/leave_configs | Create or update employee leave configs |
-| [**crupdateLeaveTypes**](HRApi.md#crupdateleavetypes) | **PUT** /users/{userId}/companies/{companyId}/leave_types | Create or update leave types |
-| [**crupdateLeaves**](HRApi.md#crupdateleaves) | **PUT** /users/{userId}/companies/{companyId}/leaves | Create or update leaves |
-| [**deleteLeaveById**](HRApi.md#deleteleavebyid) | **DELETE** /users/{userId}/companies/{companyId}/leaves/{id} | Delete leave by identifier |
-| [**getEmployeeLeaveConfigById**](HRApi.md#getemployeeleaveconfigbyid) | **GET** /users/{userId}/companies/{companyId}/leave_configs/{id} | Get a leave config by id |
-| [**getEmployeeLeaveConfigs**](HRApi.md#getemployeeleaveconfigs) | **GET** /users/{userId}/companies/{companyId}/leave_configs | Get all employee leave configs |
-| [**getEmployeesWithoutLeave**](HRApi.md#getemployeeswithoutleave) | **GET** /users/{userId}/companies/{companyId}/leave_balances/employees_without_leave | Get employees who haven\&#39;t taken any leave |
-| [**getLeaveBalances**](HRApi.md#getleavebalances) | **GET** /users/{userId}/companies/{companyId}/leave_balances | Get leave balances for all employees in a company |
-| [**getLeaveById**](HRApi.md#getleavebyid) | **GET** /users/{userId}/companies/{companyId}/leaves/{id} | Get leave by identifier |
-| [**getLeaveTypeById**](HRApi.md#getleavetypebyid) | **GET** /users/{userId}/companies/{companyId}/leave_types/{id} | Get a leave type by id |
-| [**getLeaveTypes**](HRApi.md#getleavetypes) | **GET** /users/{userId}/companies/{companyId}/leave_types | Get all leave types |
-| [**getLeaves**](HRApi.md#getleaves) | **GET** /users/{userId}/companies/{companyId}/leaves | Get all leaves |
-
-
+| Method                                                                    | HTTP request                                                                         | Description                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| [**crupdateEmployeeLeaveConfigs**](HRApi.md#crupdateemployeeleaveconfigs) | **PUT** /users/{userId}/companies/{companyId}/leave_configs                          | Create or update employee leave configs           |
+| [**crupdateLeaveTypes**](HRApi.md#crupdateleavetypes)                     | **PUT** /users/{userId}/companies/{companyId}/leave_types                            | Create or update leave types                      |
+| [**crupdateLeaves**](HRApi.md#crupdateleaves)                             | **PUT** /users/{userId}/companies/{companyId}/leaves                                 | Create or update leaves                           |
+| [**deleteLeaveById**](HRApi.md#deleteleavebyid)                           | **DELETE** /users/{userId}/companies/{companyId}/leaves/{id}                         | Delete leave by identifier                        |
+| [**getEmployeeLeaveConfigById**](HRApi.md#getemployeeleaveconfigbyid)     | **GET** /users/{userId}/companies/{companyId}/leave_configs/{id}                     | Get a leave config by id                          |
+| [**getEmployeeLeaveConfigs**](HRApi.md#getemployeeleaveconfigs)           | **GET** /users/{userId}/companies/{companyId}/leave_configs                          | Get all employee leave configs                    |
+| [**getEmployeesWithoutLeave**](HRApi.md#getemployeeswithoutleave)         | **GET** /users/{userId}/companies/{companyId}/leave_balances/employees_without_leave | Get employees who haven\&#39;t taken any leave    |
+| [**getLeaveBalances**](HRApi.md#getleavebalances)                         | **GET** /users/{userId}/companies/{companyId}/leave_balances                         | Get leave balances for all employees in a company |
+| [**getLeaveById**](HRApi.md#getleavebyid)                                 | **GET** /users/{userId}/companies/{companyId}/leaves/{id}                            | Get leave by identifier                           |
+| [**getLeaveTypeById**](HRApi.md#getleavetypebyid)                         | **GET** /users/{userId}/companies/{companyId}/leave_types/{id}                       | Get a leave type by id                            |
+| [**getLeaveTypes**](HRApi.md#getleavetypes)                               | **GET** /users/{userId}/companies/{companyId}/leave_types                            | Get all leave types                               |
+| [**getLeaves**](HRApi.md#getleaves)                                       | **GET** /users/{userId}/companies/{companyId}/leaves                                 | Get all leaves                                    |
 
 ## crupdateEmployeeLeaveConfigs
 
@@ -36,7 +34,7 @@ import type { CrupdateEmployeeLeaveConfigsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -65,12 +63,11 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateEmployeeLeaveConfig** | `Array<CrupdateEmployeeLeaveConfig>` |  | |
+| Name                            | Type                                 | Description | Notes                     |
+| ------------------------------- | ------------------------------------ | ----------- | ------------------------- |
+| **userId**                      | `string`                             |             | [Defaults to `undefined`] |
+| **companyId**                   | `string`                             |             | [Defaults to `undefined`] |
+| **crupdateEmployeeLeaveConfig** | `Array<CrupdateEmployeeLeaveConfig>` |             |                           |
 
 ### Return type
 
@@ -85,19 +82,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated configs |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                    | Response headers |
+| ----------- | ------------------------------ | ---------------- |
+| **200**     | The created or updated configs | -                |
+| **400**     | Bad request                    | -                |
+| **403**     | Forbidden                      | -                |
+| **404**     | Not found                      | -                |
+| **429**     | Too many requests to the API   | -                |
+| **500**     | Internal server error          | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## crupdateLeaveTypes
 
@@ -116,7 +112,7 @@ import type { CrupdateLeaveTypesRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -145,12 +141,11 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateLeaveType** | `Array<CrupdateLeaveType>` |  | |
+| Name                  | Type                       | Description | Notes                     |
+| --------------------- | -------------------------- | ----------- | ------------------------- |
+| **userId**            | `string`                   |             | [Defaults to `undefined`] |
+| **companyId**         | `string`                   |             | [Defaults to `undefined`] |
+| **crupdateLeaveType** | `Array<CrupdateLeaveType>` |             |                           |
 
 ### Return type
 
@@ -165,19 +160,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated leave types |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                        | Response headers |
+| ----------- | ---------------------------------- | ---------------- |
+| **200**     | The created or updated leave types | -                |
+| **400**     | Bad request                        | -                |
+| **403**     | Forbidden                          | -                |
+| **404**     | Not found                          | -                |
+| **429**     | Too many requests to the API       | -                |
+| **500**     | Internal server error              | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## crupdateLeaves
 
@@ -196,7 +190,7 @@ import type { CrupdateLeavesRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -225,12 +219,11 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateLeave** | `Array<CrupdateLeave>` |  | |
+| Name              | Type                   | Description | Notes                     |
+| ----------------- | ---------------------- | ----------- | ------------------------- |
+| **userId**        | `string`               |             | [Defaults to `undefined`] |
+| **companyId**     | `string`               |             | [Defaults to `undefined`] |
+| **crupdateLeave** | `Array<CrupdateLeave>` |             |                           |
 
 ### Return type
 
@@ -245,19 +238,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated leaves |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                   | Response headers |
+| ----------- | ----------------------------- | ---------------- |
+| **200**     | The created or updated leaves | -                |
+| **400**     | Bad request                   | -                |
+| **403**     | Forbidden                     | -                |
+| **404**     | Not found                     | -                |
+| **429**     | Too many requests to the API  | -                |
+| **500**     | Internal server error         | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteLeaveById
 
@@ -268,19 +260,16 @@ Delete leave by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { DeleteLeaveByIdRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { DeleteLeaveByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -289,28 +278,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: leave_1,
-  } satisfies DeleteLeaveByIdRequest;
+  } satisfies DeleteLeaveByIdRequest
 
   try {
-    const data = await api.deleteLeaveById(body);
-    console.log(data);
+    const data = await api.deleteLeaveById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -325,19 +313,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Leave deleted successfully |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **204**     | Leave deleted successfully   | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getEmployeeLeaveConfigById
 
@@ -348,19 +335,16 @@ Get a leave config by id
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetEmployeeLeaveConfigByIdRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetEmployeeLeaveConfigByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -369,28 +353,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: config_1,
-  } satisfies GetEmployeeLeaveConfigByIdRequest;
+  } satisfies GetEmployeeLeaveConfigByIdRequest
 
   try {
-    const data = await api.getEmployeeLeaveConfigById(body);
-    console.log(data);
+    const data = await api.getEmployeeLeaveConfigById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -405,19 +388,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The employee leave config |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The employee leave config    | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getEmployeeLeaveConfigs
 
@@ -428,46 +410,42 @@ Get all employee leave configs
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetEmployeeLeaveConfigsRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetEmployeeLeaveConfigsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
     userId: user_123456,
     // string
     companyId: comp_btp001,
-  } satisfies GetEmployeeLeaveConfigsRequest;
+  } satisfies GetEmployeeLeaveConfigsRequest
 
   try {
-    const data = await api.getEmployeeLeaveConfigs(body);
-    console.log(data);
+    const data = await api.getEmployeeLeaveConfigs(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -482,19 +460,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of employee leave configs |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                    | Response headers |
+| ----------- | ------------------------------ | ---------------- |
+| **200**     | List of employee leave configs | -                |
+| **400**     | Bad request                    | -                |
+| **403**     | Forbidden                      | -                |
+| **404**     | Not found                      | -                |
+| **429**     | Too many requests to the API   | -                |
+| **500**     | Internal server error          | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getEmployeesWithoutLeave
 
@@ -505,19 +482,16 @@ Get employees who haven\&#39;t taken any leave
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetEmployeesWithoutLeaveRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetEmployeesWithoutLeaveRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -526,28 +500,27 @@ async function example() {
     companyId: comp_btp001,
     // number
     year: 2026,
-  } satisfies GetEmployeesWithoutLeaveRequest;
+  } satisfies GetEmployeesWithoutLeaveRequest
 
   try {
-    const data = await api.getEmployeesWithoutLeave(body);
-    console.log(data);
+    const data = await api.getEmployeesWithoutLeave(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **year** | `number` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **year**      | `number` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -562,19 +535,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of users with no leave taken |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                       | Response headers |
+| ----------- | --------------------------------- | ---------------- |
+| **200**     | List of users with no leave taken | -                |
+| **400**     | Bad request                       | -                |
+| **403**     | Forbidden                         | -                |
+| **404**     | Not found                         | -                |
+| **429**     | Too many requests to the API      | -                |
+| **500**     | Internal server error             | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getLeaveBalances
 
@@ -585,19 +557,16 @@ Get leave balances for all employees in a company
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetLeaveBalancesRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeaveBalancesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -606,28 +575,27 @@ async function example() {
     companyId: comp_btp001,
     // number
     year: 2026,
-  } satisfies GetLeaveBalancesRequest;
+  } satisfies GetLeaveBalancesRequest
 
   try {
-    const data = await api.getLeaveBalances(body);
-    console.log(data);
+    const data = await api.getLeaveBalances(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **year** | `number` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **year**      | `number` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -642,19 +610,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of leave balances |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of leave balances       | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getLeaveById
 
@@ -665,19 +632,16 @@ Get leave by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetLeaveByIdRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeaveByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -686,28 +650,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: leave_1,
-  } satisfies GetLeaveByIdRequest;
+  } satisfies GetLeaveByIdRequest
 
   try {
-    const data = await api.getLeaveById(body);
-    console.log(data);
+    const data = await api.getLeaveById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -722,19 +685,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The identified leave |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The identified leave         | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getLeaveTypeById
 
@@ -745,19 +707,16 @@ Get a leave type by id
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetLeaveTypeByIdRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeaveTypeByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -766,28 +725,27 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: leave_type_1,
-  } satisfies GetLeaveTypeByIdRequest;
+  } satisfies GetLeaveTypeByIdRequest
 
   try {
-    const data = await api.getLeaveTypeById(body);
-    console.log(data);
+    const data = await api.getLeaveTypeById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
+| **id**        | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -802,19 +760,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The leave type |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | The leave type               | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getLeaveTypes
 
@@ -825,46 +782,42 @@ Get all leave types
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetLeaveTypesRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeaveTypesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
     userId: user_123456,
     // string
     companyId: comp_btp001,
-  } satisfies GetLeaveTypesRequest;
+  } satisfies GetLeaveTypesRequest
 
   try {
-    const data = await api.getLeaveTypes(body);
-    console.log(data);
+    const data = await api.getLeaveTypes(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                     |
+| ------------- | -------- | ----------- | ------------------------- |
+| **userId**    | `string` |             | [Defaults to `undefined`] |
+| **companyId** | `string` |             | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -879,19 +832,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of leave types |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of leave types          | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getLeaves
 
@@ -902,19 +854,16 @@ Get all leaves
 ### Example
 
 ```ts
-import {
-  Configuration,
-  HRApi,
-} from 'api-client';
-import type { GetLeavesRequest } from 'api-client';
+import { Configuration, HRApi } from 'api-client'
+import type { GetLeavesRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new HRApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new HRApi(config)
 
   const body = {
     // string
@@ -933,33 +882,32 @@ async function example() {
     page: 1,
     // number (optional)
     pageSize: 20,
-  } satisfies GetLeavesRequest;
+  } satisfies GetLeavesRequest
 
   try {
-    const data = await api.getLeaves(body);
-    console.log(data);
+    const data = await api.getLeaves(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **userId2** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **leaveTypeId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **status** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **year** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| Name            | Type     | Description | Notes                                |
+| --------------- | -------- | ----------- | ------------------------------------ |
+| **userId**      | `string` |             | [Defaults to `undefined`]            |
+| **companyId**   | `string` |             | [Defaults to `undefined`]            |
+| **userId2**     | `string` |             | [Optional] [Defaults to `undefined`] |
+| **leaveTypeId** | `string` |             | [Optional] [Defaults to `undefined`] |
+| **status**      | `string` |             | [Optional] [Defaults to `undefined`] |
+| **year**        | `number` |             | [Optional] [Defaults to `undefined`] |
+| **page**        | `number` |             | [Optional] [Defaults to `undefined`] |
+| **pageSize**    | `number` |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -974,16 +922,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of leaves |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of leaves               | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-

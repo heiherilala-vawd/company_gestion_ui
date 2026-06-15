@@ -1,16 +1,14 @@
-
 # TravelOperationRequest
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`travel` | [TravelOperationTravel](TravelOperationTravel.md)
-`equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md)
-`material_lines` | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)
-`people_lines` | [Array&lt;TravelOperationPeopleLine&gt;](TravelOperationPeopleLine.md)
+| Name              | Type                                                                         |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `comment`         | string                                                                       |
+| `travel`          | [TravelOperationTravel](TravelOperationTravel.md)                            |
+| `equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md) |
+| `material_lines`  | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)   |
+| `people_lines`    | [Array&lt;TravelOperationPeopleLine&gt;](TravelOperationPeopleLine.md)       |
 
 ## Example
 
@@ -38,5 +36,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

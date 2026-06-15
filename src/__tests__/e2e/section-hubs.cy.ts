@@ -163,9 +163,9 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
     cy.get('[data-testid="section-hub"]')
       .contains('Actions RH', { timeout: 10000 })
       .should('be.visible')
-    clickHubButton('Gérer équipe')
-    cy.url({ timeout: 15000 }).should('include', '/teams')
-    cy.contains('Team Alpha', { timeout: 10000 }).should('exist')
+    clickHubButton('Créer équipe')
+    cy.url({ timeout: 15000 }).should('include', '/team_activity')
+    cy.contains('Nouvelle Équipe', { timeout: 10000 }).should('exist')
   }
 
   function testRHTravailRedirect(desktop: boolean) {

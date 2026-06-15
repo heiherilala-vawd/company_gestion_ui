@@ -1,19 +1,17 @@
-
 # CrupdateOrganization
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`id` | string
-`name` | string
-`address` | string
-`email` | string
-`phone` | string
-`contact_name` | string
-`company_id` | string
-`comment` | string
+| Name           | Type   |
+| -------------- | ------ |
+| `id`           | string |
+| `name`         | string |
+| `address`      | string |
+| `email`        | string |
+| `phone`        | string |
+| `contact_name` | string |
+| `company_id`   | string |
+| `comment`      | string |
 
 ## Example
 
@@ -44,5 +42,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

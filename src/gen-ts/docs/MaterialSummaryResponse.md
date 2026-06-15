@@ -1,15 +1,13 @@
-
 # MaterialSummaryResponse
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`stock_value_total` | number
-`consumption_cost_total` | number
-`total_materials_count` | number
-`expiring_count` | number
+| Name                     | Type   |
+| ------------------------ | ------ |
+| `stock_value_total`      | number |
+| `consumption_cost_total` | number |
+| `total_materials_count`  | number |
+| `expiring_count`         | number |
 
 ## Example
 
@@ -18,10 +16,10 @@ import type { MaterialSummaryResponse } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "stock_value_total": null,
-  "consumption_cost_total": null,
-  "total_materials_count": null,
-  "expiring_count": null,
+  stock_value_total: null,
+  consumption_cost_total: null,
+  total_materials_count: null,
+  expiring_count: null,
 } satisfies MaterialSummaryResponse
 
 console.log(example)
@@ -36,5 +34,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

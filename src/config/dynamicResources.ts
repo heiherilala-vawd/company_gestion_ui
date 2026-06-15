@@ -53,6 +53,11 @@ export const isDynamicCompanyResource = (resource: string): boolean => {
   return DYNAMIC_COMPANY_RESOURCES.includes(resource as DynamicCompanyResource)
 }
 
+export const getCompanyPath = (): string => {
+  const userId = getUserId()
+  return `/users/${userId}/companies`
+}
+
 export const getMiddleUrlDynamicCompanyResource = (resource: string): string => {
   const userId = getUserId()
   const companyId = localStorage.getItem('currentCompanyId')

@@ -1,12 +1,10 @@
-
 # UnreadNotificationCountResponse
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`unread_count` | number
+| Name           | Type   |
+| -------------- | ------ |
+| `unread_count` | number |
 
 ## Example
 
@@ -15,7 +13,7 @@ import type { UnreadNotificationCountResponse } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "unread_count": 3,
+  unread_count: 3,
 } satisfies UnreadNotificationCountResponse
 
 console.log(example)
@@ -30,5 +28,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

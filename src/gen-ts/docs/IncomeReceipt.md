@@ -1,20 +1,18 @@
-
 # IncomeReceipt
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`created_at` | Date
-`updated_at` | Date
-`created_by` | [AuditUser](AuditUser.md)
-`updated_by` | [AuditUser](AuditUser.md)
-`id` | string
-`payment_date` | Date
-`amount` | number
-`income` | [IncomeMoney](IncomeMoney.md)
+| Name           | Type                          |
+| -------------- | ----------------------------- |
+| `comment`      | string                        |
+| `created_at`   | Date                          |
+| `updated_at`   | Date                          |
+| `created_by`   | [AuditUser](AuditUser.md)     |
+| `updated_by`   | [AuditUser](AuditUser.md)     |
+| `id`           | string                        |
+| `payment_date` | Date                          |
+| `amount`       | number                        |
+| `income`       | [IncomeMoney](IncomeMoney.md) |
 
 ## Example
 
@@ -46,5 +44,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

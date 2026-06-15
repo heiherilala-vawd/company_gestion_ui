@@ -2,14 +2,12 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method | HTTP request | Description |
-|------------- | ------------- | -------------|
-| [**crupdateIncomeReceipts**](IncomeReceiptApi.md#crupdateincomereceipts) | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts | Create new income receipts or update existing ones |
-| [**deleteIncomeReceiptById**](IncomeReceiptApi.md#deleteincomereceiptbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts/{id} | Delete income receipt by identifier |
-| [**getIncomeReceiptById**](IncomeReceiptApi.md#getincomereceiptbyid) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts/{id} | Get income receipt by identifier |
-| [**getIncomeReceipts**](IncomeReceiptApi.md#getincomereceipts) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts | Get all income receipts |
-
-
+| Method                                                                     | HTTP request                                                                        | Description                                        |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------- |
+| [**crupdateIncomeReceipts**](IncomeReceiptApi.md#crupdateincomereceipts)   | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts         | Create new income receipts or update existing ones |
+| [**deleteIncomeReceiptById**](IncomeReceiptApi.md#deleteincomereceiptbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts/{id} | Delete income receipt by identifier                |
+| [**getIncomeReceiptById**](IncomeReceiptApi.md#getincomereceiptbyid)       | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts/{id}    | Get income receipt by identifier                   |
+| [**getIncomeReceipts**](IncomeReceiptApi.md#getincomereceipts)             | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/incomes_receipts         | Get all income receipts                            |
 
 ## crupdateIncomeReceipts
 
@@ -28,7 +26,7 @@ import type { CrupdateIncomeReceiptsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -61,14 +59,13 @@ example().catch(console.error);
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **crupdateIncomeReceipt** | `Array<CrupdateIncomeReceipt>` |  | |
-| **incomeId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| Name                      | Type                           | Description | Notes                                |
+| ------------------------- | ------------------------------ | ----------- | ------------------------------------ |
+| **userId**                | `string`                       |             | [Defaults to `undefined`]            |
+| **companyId**             | `string`                       |             | [Defaults to `undefined`]            |
+| **jobId**                 | `string`                       |             | [Defaults to `undefined`]            |
+| **crupdateIncomeReceipt** | `Array<CrupdateIncomeReceipt>` |             |                                      |
+| **incomeId**              | `string`                       |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -83,19 +80,18 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The created or updated income receipts |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                            | Response headers |
+| ----------- | -------------------------------------- | ---------------- |
+| **200**     | The created or updated income receipts | -                |
+| **400**     | Bad request                            | -                |
+| **403**     | Forbidden                              | -                |
+| **404**     | Not found                              | -                |
+| **429**     | Too many requests to the API           | -                |
+| **500**     | Internal server error                  | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## deleteIncomeReceiptById
 
@@ -106,19 +102,16 @@ Delete income receipt by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  IncomeReceiptApi,
-} from 'api-client';
-import type { DeleteIncomeReceiptByIdRequest } from 'api-client';
+import { Configuration, IncomeReceiptApi } from 'api-client'
+import type { DeleteIncomeReceiptByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new IncomeReceiptApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeReceiptApi(config)
 
   const body = {
     // string
@@ -131,30 +124,29 @@ async function example() {
     id: receipt_001,
     // string (optional)
     incomeId: inc_001,
-  } satisfies DeleteIncomeReceiptByIdRequest;
+  } satisfies DeleteIncomeReceiptByIdRequest
 
   try {
-    const data = await api.deleteIncomeReceiptById(body);
-    console.log(data);
+    const data = await api.deleteIncomeReceiptById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
-| **incomeId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                                |
+| ------------- | -------- | ----------- | ------------------------------------ |
+| **userId**    | `string` |             | [Defaults to `undefined`]            |
+| **companyId** | `string` |             | [Defaults to `undefined`]            |
+| **jobId**     | `string` |             | [Defaults to `undefined`]            |
+| **id**        | `string` |             | [Defaults to `undefined`]            |
+| **incomeId**  | `string` |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -169,19 +161,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **204** | Income receipt deleted successfully |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                         | Response headers |
+| ----------- | ----------------------------------- | ---------------- |
+| **204**     | Income receipt deleted successfully | -                |
+| **400**     | Bad request                         | -                |
+| **403**     | Forbidden                           | -                |
+| **404**     | Not found                           | -                |
+| **429**     | Too many requests to the API        | -                |
+| **500**     | Internal server error               | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getIncomeReceiptById
 
@@ -192,19 +183,16 @@ Get income receipt by identifier
 ### Example
 
 ```ts
-import {
-  Configuration,
-  IncomeReceiptApi,
-} from 'api-client';
-import type { GetIncomeReceiptByIdRequest } from 'api-client';
+import { Configuration, IncomeReceiptApi } from 'api-client'
+import type { GetIncomeReceiptByIdRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new IncomeReceiptApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeReceiptApi(config)
 
   const body = {
     // string
@@ -217,30 +205,29 @@ async function example() {
     id: receipt_001,
     // string (optional)
     incomeId: inc_001,
-  } satisfies GetIncomeReceiptByIdRequest;
+  } satisfies GetIncomeReceiptByIdRequest
 
   try {
-    const data = await api.getIncomeReceiptById(body);
-    console.log(data);
+    const data = await api.getIncomeReceiptById(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **id** | `string` |  | [Defaults to `undefined`] |
-| **incomeId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                                |
+| ------------- | -------- | ----------- | ------------------------------------ |
+| **userId**    | `string` |             | [Defaults to `undefined`]            |
+| **companyId** | `string` |             | [Defaults to `undefined`]            |
+| **jobId**     | `string` |             | [Defaults to `undefined`]            |
+| **id**        | `string` |             | [Defaults to `undefined`]            |
+| **incomeId**  | `string` |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -255,19 +242,18 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | The identified income receipt |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                   | Response headers |
+| ----------- | ----------------------------- | ---------------- |
+| **200**     | The identified income receipt | -                |
+| **400**     | Bad request                   | -                |
+| **403**     | Forbidden                     | -                |
+| **404**     | Not found                     | -                |
+| **429**     | Too many requests to the API  | -                |
+| **500**     | Internal server error         | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
 
 ## getIncomeReceipts
 
@@ -278,19 +264,16 @@ Get all income receipts
 ### Example
 
 ```ts
-import {
-  Configuration,
-  IncomeReceiptApi,
-} from 'api-client';
-import type { GetIncomeReceiptsRequest } from 'api-client';
+import { Configuration, IncomeReceiptApi } from 'api-client'
+import type { GetIncomeReceiptsRequest } from 'api-client'
 
 async function example() {
-  console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({ 
+  console.log('🚀 Testing api-client SDK...')
+  const config = new Configuration({
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: "YOUR BEARER TOKEN",
-  });
-  const api = new IncomeReceiptApi(config);
+    accessToken: 'YOUR BEARER TOKEN',
+  })
+  const api = new IncomeReceiptApi(config)
 
   const body = {
     // string
@@ -305,31 +288,30 @@ async function example() {
     page: 1,
     // number (optional)
     pageSize: 20,
-  } satisfies GetIncomeReceiptsRequest;
+  } satisfies GetIncomeReceiptsRequest
 
   try {
-    const data = await api.getIncomeReceipts(body);
-    console.log(data);
+    const data = await api.getIncomeReceipts(body)
+    console.log(data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 // Run the test
-example().catch(console.error);
+example().catch(console.error)
 ```
 
 ### Parameters
 
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **userId** | `string` |  | [Defaults to `undefined`] |
-| **companyId** | `string` |  | [Defaults to `undefined`] |
-| **jobId** | `string` |  | [Defaults to `undefined`] |
-| **incomeId** | `string` |  | [Optional] [Defaults to `undefined`] |
-| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
-| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| Name          | Type     | Description | Notes                                |
+| ------------- | -------- | ----------- | ------------------------------------ |
+| **userId**    | `string` |             | [Defaults to `undefined`]            |
+| **companyId** | `string` |             | [Defaults to `undefined`]            |
+| **jobId**     | `string` |             | [Defaults to `undefined`]            |
+| **incomeId**  | `string` |             | [Optional] [Defaults to `undefined`] |
+| **page**      | `number` |             | [Optional] [Defaults to `undefined`] |
+| **pageSize**  | `number` |             | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -344,16 +326,15 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-
 ### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | List of income receipts |  -  |
-| **400** | Bad request |  -  |
-| **403** | Forbidden |  -  |
-| **404** | Not found |  -  |
-| **429** | Too many requests to the API |  -  |
-| **500** | Internal server error |  -  |
+
+| Status code | Description                  | Response headers |
+| ----------- | ---------------------------- | ---------------- |
+| **200**     | List of income receipts      | -                |
+| **400**     | Bad request                  | -                |
+| **403**     | Forbidden                    | -                |
+| **404**     | Not found                    | -                |
+| **429**     | Too many requests to the API | -                |
+| **500**     | Internal server error        | -                |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-

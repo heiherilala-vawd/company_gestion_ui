@@ -1,19 +1,17 @@
-
 # CrupdateJob
-
 
 ## Properties
 
-Name | Type
------------- | -------------
-`comment` | string
-`id` | string
-`company_id` | string
-`description` | string
-`contract_signature_date` | Date
-`start_date` | Date
-`end_date` | Date
-`status` | [JobStatus](JobStatus.md)
+| Name                      | Type                      |
+| ------------------------- | ------------------------- |
+| `comment`                 | string                    |
+| `id`                      | string                    |
+| `company_id`              | string                    |
+| `description`             | string                    |
+| `contract_signature_date` | Date                      |
+| `start_date`              | Date                      |
+| `end_date`                | Date                      |
+| `status`                  | [JobStatus](JobStatus.md) |
 
 ## Example
 
@@ -44,5 +42,3 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
-
-

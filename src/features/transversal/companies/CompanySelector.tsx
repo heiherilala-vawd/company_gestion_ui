@@ -2,7 +2,7 @@ import React from 'react'
 import BusinessIcon from '@mui/icons-material/Business'
 import { GenericSelector } from '../../../generic/GenericSelector.tsx'
 import { useCompany } from './CompanyContext.tsx'
-import { getMiddleUrl } from '../../../config/dynamicResources.ts'
+import { getCompanyPath } from '../../../config/dynamicResources.ts'
 
 interface CompanySelectorProps {
   className?: string
@@ -14,7 +14,7 @@ export const CompanySelector: React.FC<CompanySelectorProps> = (props) => {
   return (
     <GenericSelector
       entityType="company"
-      apiEndpoint={getMiddleUrl('companies')}
+      apiEndpoint={getCompanyPath()}
       label="Company"
       labelPrefix="Company: "
       icon={<BusinessIcon fontSize="small" />}
