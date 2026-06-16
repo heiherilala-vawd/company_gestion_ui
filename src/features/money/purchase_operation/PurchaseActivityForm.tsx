@@ -28,9 +28,23 @@ import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreat
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
 import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { operationFormStyles } from '../../../style/components'
 import { transitions } from '../../../style/themeConfig'
+
+type PurchaseMode = 'full' | 'equipment' | 'materials'
+
+const modeTitles: Record<PurchaseMode, { title: string; docTitle: string }> = {
+  full: { title: "Nouvelle Opération d'Achat", docTitle: "Nouvelle Opération d'Achat" },
+  equipment: {
+    title: "Nouvel Achat d'Équipement",
+    docTitle: "Nouvelle Opération d'Achat Équipement",
+  },
+  materials: {
+    title: 'Nouvel Achat de Matériau',
+    docTitle: "Nouvelle Opération d'Achat Matériau",
+  },
+}
 
 const initialEquipmentLine = {
   equipment_id: generateId(),
@@ -50,10 +64,20 @@ const initialMaterialLine = {
   unit_price: '',
 }
 
-const PurchaseActivityForm = () => {
+interface PurchaseActivityFormProps {
+  mode?: PurchaseMode
+}
+
+const PurchaseActivityForm = ({ mode: propMode }: PurchaseActivityFormProps = {}) => {
   const notify = useNotify()
 
   const { isLoading: identityLoading } = useGetIdentity()
+  const [searchParams] = useSearchParams()
+  const modeParam = propMode || searchParams.get('mode') || 'full'
+  const mode: PurchaseMode = ['equipment', 'materials', 'full'].includes(modeParam)
+    ? (modeParam as PurchaseMode)
+    : 'full'
+  const { title: pageTitle, docTitle } = modeTitles[mode]
 
   const toInstant = (date: string) => {
     if (!date) return null
@@ -68,32 +92,39 @@ const PurchaseActivityForm = () => {
   const [isTravelOpen, setIsTravelOpen] = useState(false)
   const navigate = useNavigate()
 
+  const showEquipment = mode === 'full' || mode === 'equipment'
+  const showMaterials = mode === 'full' || mode === 'materials'
+
   const onSubmit = async (data: any) => {
     const payload = {
       id: data?.id,
       supplier_id: data.departure_warehouse,
-      equipment_lines: (data.equipment_lines || []).map((line: any) => ({
-        equipment: {
-          id: line.equipment_id,
-          name: line.equipment_name || null,
-          description: line.description || null,
-        },
-        expense_id: line.expense_id,
-        purchase_id: line.purchase_id,
-        travel_equipment_id: line.travel_equipment_id,
-        unit_price: parseFloat(line.unit_price) || 0,
-      })),
+      equipment_lines: showEquipment
+        ? (data.equipment_lines || []).map((line: any) => ({
+            equipment: {
+              id: line.equipment_id,
+              name: line.equipment_name || null,
+              description: line.description || null,
+            },
+            expense_id: line.expense_id,
+            purchase_id: line.purchase_id,
+            travel_equipment_id: line.travel_equipment_id,
+            unit_price: parseFloat(line.unit_price) || 0,
+          }))
+        : [],
 
-      material_lines: (data.material_lines || []).map((line: any) => ({
-        material: {
-          id: line.material,
-        },
-        expense_id: line.expense_id,
-        purchase_id: line.purchase_id,
-        travel_material_id: line.travel_material_id,
-        quantity: parseFloat(line.quantity) || 0,
-        unit_price: parseFloat(line.unit_price) || 0,
-      })),
+      material_lines: showMaterials
+        ? (data.material_lines || []).map((line: any) => ({
+            material: {
+              id: line.material,
+            },
+            expense_id: line.expense_id,
+            purchase_id: line.purchase_id,
+            travel_material_id: line.travel_material_id,
+            quantity: parseFloat(line.quantity) || 0,
+            unit_price: parseFloat(line.unit_price) || 0,
+          }))
+        : [],
 
       travel: isTravelOpen
         ? {
@@ -140,7 +171,14 @@ const PurchaseActivityForm = () => {
       }
 
       await response.json()
-      notify("Opération d'achat créée avec succès !", { type: 'success' })
+      notify(
+        mode === 'equipment'
+          ? "Achat d'équipement créé avec succès !"
+          : mode === 'materials'
+            ? 'Achat de matériau créé avec succès !'
+            : "Opération d'achat créée avec succès !",
+        { type: 'success' },
+      )
       navigate('/')
     } catch (error) {
       console.error(error)
@@ -154,15 +192,15 @@ const PurchaseActivityForm = () => {
     <ResourceContextProvider value="purchases_activity">
       <Card sx={operationFormStyles.card}>
         <CardContent>
-          <Title title="Nouvelle Opération d'Achat" />
+          <Title title={docTitle} />
           <Form
             id="purchase-activity-form"
             onSubmit={onSubmit}
             defaultValues={{
               supplier_id: '',
               comment: '',
-              equipment_lines: [initialEquipmentLine],
-              material_lines: [initialMaterialLine],
+              equipment_lines: showEquipment ? [initialEquipmentLine] : [],
+              material_lines: showMaterials ? [initialMaterialLine] : [],
               departure_warehouse: null,
               arrival_warehouse: null,
               departure_date: new Date().toISOString(),
@@ -170,6 +208,12 @@ const PurchaseActivityForm = () => {
               travel_fee: '',
             }}
           >
+            <Typography variant="h5" sx={{ fontWeight: 600, mb: 2 }}>
+              {pageTitle}
+            </Typography>
+
+            <Divider sx={operationFormStyles.divider} />
+
             <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
               📋 Informations Générales
             </Typography>
@@ -186,80 +230,87 @@ const PurchaseActivityForm = () => {
                 data-testid="input-comment"
               />
             </Box>
-            <Divider sx={operationFormStyles.divider} />
+            {showEquipment && (
+              <>
+                <Divider sx={operationFormStyles.divider} />
+                <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
+                  🔧 Équipements
+                </Typography>
+                <ArrayInput source="equipment_lines" label="">
+                  <SimpleFormIterator inline>
+                    <Box sx={operationFormStyles.flexRowTight}>
+                      <TextInput
+                        source="equipment_id"
+                        label="ID Équipement"
+                        sx={{ display: 'none' }}
+                        defaultValue={generateId()}
+                      />
+                      <TextInput
+                        source="equipment_name"
+                        label="Nom"
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-equipment_name"
+                      />
+                      <TextInput
+                        source="description"
+                        label="Description"
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-equipment_description"
+                      />
+                      <NumberInput
+                        source="unit_price"
+                        label="Prix"
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-unit_price"
+                      />
+                      {add_autogenaration_id('expense_id')}
+                      {add_autogenaration_id('purchase_id')}
+                      {add_autogenaration_id('travel_equipment_id')}
+                    </Box>
+                  </SimpleFormIterator>
+                </ArrayInput>
+              </>
+            )}
 
-            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-              🔧 Équipements
-            </Typography>
-            <ArrayInput source="equipment_lines" label="">
-              <SimpleFormIterator inline>
-                <Box sx={operationFormStyles.flexRowTight}>
-                  <TextInput
-                    source="equipment_id"
-                    label="ID Équipement"
-                    sx={{ display: 'none' }}
-                    defaultValue={generateId()}
-                  />
-                  <TextInput
-                    source="equipment_name"
-                    label="Nom"
-                    sx={operationFormStyles.flexFull}
-                    data-testid="input-equipment_name"
-                  />
-                  <TextInput
-                    source="description"
-                    label="Description"
-                    sx={operationFormStyles.flexFull}
-                    data-testid="input-equipment_description"
-                  />
-                  <NumberInput
-                    source="unit_price"
-                    label="Prix"
-                    sx={operationFormStyles.flexFull}
-                    data-testid="input-unit_price"
-                  />
-                  {add_autogenaration_id('expense_id')}
-                  {add_autogenaration_id('purchase_id')}
-                  {add_autogenaration_id('travel_equipment_id')}
-                </Box>
-              </SimpleFormIterator>
-            </ArrayInput>
-            <Divider sx={operationFormStyles.divider} />
-
-            <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-              📦 Matériaux
-            </Typography>
-            <ArrayInput source="material_lines" label="">
-              <SimpleFormIterator inline>
-                <Box sx={operationFormStyles.flexRowAlign}>
-                  <ReferenceSelectWithCreate
-                    source="material"
-                    reference="materials"
-                    label="Matériau"
-                    optionText={(record) => `${record.name} / ${record.unit}`}
-                    createUrlEnd={getMiddleUrl('materials')}
-                    createForm={<MaterialForm isCreateForm />}
-                    sx={operationFormStyles.flexFull}
-                    extractionPath={'material_lines'}
-                  />
-                  <NumberInput
-                    source="quantity"
-                    label="Quantité"
-                    sx={operationFormStyles.flexFull}
-                    data-testid="input-material_quantity"
-                  />
-                  <NumberInput
-                    source="unit_price"
-                    label="Prix Unitaire"
-                    sx={operationFormStyles.flexFull}
-                    data-testid="input-material_unit_price"
-                  />
-                  {add_autogenaration_id('expense_id')}
-                  {add_autogenaration_id('purchase_id')}
-                  {add_autogenaration_id('travel_material_id')}
-                </Box>
-              </SimpleFormIterator>
-            </ArrayInput>
+            {showMaterials && (
+              <>
+                <Divider sx={operationFormStyles.divider} />
+                <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
+                  📦 Matériaux
+                </Typography>
+                <ArrayInput source="material_lines" label="">
+                  <SimpleFormIterator inline>
+                    <Box sx={operationFormStyles.flexRowAlign}>
+                      <ReferenceSelectWithCreate
+                        source="material"
+                        reference="materials"
+                        label="Matériau"
+                        optionText={(record) => `${record.name} / ${record.unit}`}
+                        createUrlEnd={getMiddleUrl('materials')}
+                        createForm={<MaterialForm isCreateForm />}
+                        sx={operationFormStyles.flexFull}
+                        extractionPath={'material_lines'}
+                      />
+                      <NumberInput
+                        source="quantity"
+                        label="Quantité"
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-material_quantity"
+                      />
+                      <NumberInput
+                        source="unit_price"
+                        label="Prix Unitaire"
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-material_unit_price"
+                      />
+                      {add_autogenaration_id('expense_id')}
+                      {add_autogenaration_id('purchase_id')}
+                      {add_autogenaration_id('travel_material_id')}
+                    </Box>
+                  </SimpleFormIterator>
+                </ArrayInput>
+              </>
+            )}
             <Divider sx={operationFormStyles.divider} />
 
             <Box sx={{ mb: 2 }}>

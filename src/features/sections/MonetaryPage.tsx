@@ -13,14 +13,14 @@ const activityItems = [
   {
     label: 'Acheter',
     icon: ShoppingCartIcon,
-    to: '/purchases_activity',
+    to: '/purchase_operation?mode=full',
     color: 'sapphire' as const,
     desc: 'Achat équipement / matériau',
   },
   {
     label: 'Déplacer',
     icon: LocalShippingIcon,
-    to: '/travel_equipment_activity',
+    to: '/travel_operation?mode=full',
     color: 'emerald' as const,
     desc: 'Transport équipement / matériau',
   },

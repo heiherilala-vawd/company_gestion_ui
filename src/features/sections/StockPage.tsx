@@ -9,7 +9,7 @@ const items = [
   {
     label: 'Acheter du matériau',
     icon: ShoppingCartIcon,
-    to: '/purchases_material_activity',
+    to: '/purchase_operation?mode=materials',
     color: 'sapphire' as const,
     desc: 'Acheter',
   },
@@ -30,7 +30,7 @@ const items = [
   {
     label: 'Déplacer des matériaux',
     icon: LocalShippingIcon,
-    to: '/travel_material_activity',
+    to: '/travel_operation?mode=materials',
     color: 'teal' as const,
     desc: 'Déplacer',
   },

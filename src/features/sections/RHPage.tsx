@@ -38,7 +38,7 @@ const allItems = [
   {
     label: 'Déplacement',
     icon: FlightTakeoffIcon,
-    to: '/travel_people_activity',
+    to: '/travel_operation?mode=people',
     color: 'teal' as const,
     desc: 'Transport personnel',
   },
