@@ -482,11 +482,11 @@ const MenuRoot = () => {
       testId: 'menu-maintenance-schedules',
     },
     {
-      name: 'cras',
+      name: 'cars',
       label: 'Véhicules',
       icon: DirectionsCarIcon,
-      to: '/cras',
-      testId: 'menu-cras',
+      to: '/cars',
+      testId: 'menu-cars',
     },
     {
       name: 'equipment-dashboard',
