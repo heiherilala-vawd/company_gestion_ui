@@ -52,7 +52,14 @@ export default function HistoryShow() {
         <TextField source="id" />
         <SelectField source="entity_type" label="Entité" choices={entityTypeChoices} />
         <TextField source="entity_id" label="ID Entité" />
-        <TextField source="user_id" label="ID Utilisateur" />
+        <FunctionField
+          label="Utilisateur"
+          render={(record) => (
+            <span>
+              {record.user?.first_name} {record.user?.last_name}
+            </span>
+          )}
+        />
         <DateField source="modified_at" label="Date de modification" showTime />
         <FunctionField
           label="Ancienne valeur"

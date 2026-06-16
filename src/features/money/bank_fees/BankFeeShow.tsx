@@ -18,7 +18,7 @@ export default function BankFeeShow() {
           options={{ style: 'currency', currency: 'MGA' }}
         />
         <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+        <TextField source="expense.job.description" label="Travail" />
         <TextField source="bank_name" label="Banque" />
         <TextField source="description" label="Description" />
         <DateField source="created_at" label="Créé le" showTime />
