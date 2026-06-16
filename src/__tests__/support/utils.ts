@@ -94,6 +94,7 @@ import {
   monetaryDashboardBreakdownMock,
   monetaryTimeSeriesMock,
   organization1Mock,
+  organization2Mock,
   organizationsMock,
   cars1Mock,
   cars2Mock,
@@ -338,6 +339,9 @@ export function interceptGeneralEndpoint(): void {
   ).as('getOrganizations')
   cy.intercept('GET', '**/organizations/org_001*', mockSuccessResponse(organization1Mock)).as(
     'getOrganization',
+  )
+  cy.intercept('GET', '**/organizations/org_002*', mockSuccessResponse(organization2Mock)).as(
+    'getOrganization2',
   )
 
   // ---------------------- SUPPLIERS ------------------------------------------

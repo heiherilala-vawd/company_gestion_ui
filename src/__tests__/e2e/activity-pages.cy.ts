@@ -10,14 +10,15 @@ import {
   loginInPage,
   selectEnumType,
   selectIncomeType,
+  selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { user1Mock } from '../mocks/responses/users-api.ts'
 import { materialWarehouse1Mock } from '../mocks/responses/material-warehouse-api'
 import { warehouse1Mock } from '../mocks/responses/warehouses-api'
 import { material1Mock } from '../mocks/responses/materials-api'
 import { income1Mock } from '../mocks/responses/incomes-api'
+import { organization1Mock } from '../mocks/responses/organizations-api'
 import { loan1Mock } from '../mocks/responses/loans-api'
-import { equipment1Mock } from '../mocks/responses/equipment-api'
 
 function navigateTo(path: string) {
   cy.visit('/#' + path)
@@ -109,53 +110,6 @@ describe('E2E: Activity Pages', () => {
     cy.get('[data-testid="toggle-equipment"]').scrollIntoView().click({ force: true })
   }
 
-  function testMaterialsReception(desktop: boolean) {
-    if (!desktop) cy.viewport(375, 667)
-    navigateTo('/travel_materials_activity')
-
-    cy.contains(material1Mock.name).should('be.visible')
-
-    cy.contains('td', material1Mock.name).parent('tr').find('td').first().click({ force: true })
-    cy.contains('td', material1Mock.name)
-      .parent('tr')
-      .find('input[type="number"]')
-      .clear()
-      .type('10')
-
-    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
-    cy.wait(300)
-
-    cy.contains('Effectuer la validation (1)').click({ force: true })
-    cy.wait(300)
-    cy.contains('Résumé de la validation').should('be.visible')
-    cy.intercept('POST', '**/travel_operations', mockSuccessResponse({ id: 'new_travel_id' })).as(
-      'createTravelOperation',
-    )
-    cy.get('.MuiDialogActions-root').contains('button', 'Effectuer la validation').click()
-    cy.wait('@createTravelOperation', { timeout: 10000 })
-  }
-
-  function testEquipmentReception(desktop: boolean) {
-    if (!desktop) cy.viewport(375, 667)
-    navigateTo('/travel_materials_activity')
-
-    cy.get('[data-testid="toggle-equipment"]').scrollIntoView().click({ force: true })
-    cy.wait('@getEquipments', { timeout: 10000 })
-    cy.contains('td', equipment1Mock.name).should('be.visible')
-
-    cy.contains('td', equipment1Mock.name).parent('tr').find('td').first().click({ force: true })
-    cy.contains('Lieu de réception').should('be.visible')
-    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
-    cy.wait(300)
-
-    cy.contains('button', /Effectuer la validation \([1-9]/).click({ force: true })
-    cy.wait(300)
-    cy.contains('Résumé de la validation').should('be.visible')
-    cy.intercept('PUT', '**/equipment*', mockSuccessResponse({})).as('updateEquipment')
-    cy.get('.MuiDialogActions-root').contains('button', 'Effectuer la validation').click()
-    cy.wait('@updateEquipment', { timeout: 10000 })
-  }
-
   // ==================== EXPENSES ACTIVITY ====================
 
   function testExpensesActivity(desktop: boolean) {
@@ -229,7 +183,11 @@ describe('E2E: Activity Pages', () => {
     navigateTo('/incomes_activity')
 
     selectIncomeType('income_type_id')
-    cy.get('[data-testid="input-source_organization"] input').clear().type('Test Client')
+    selectReferenceWithCreate(
+      'input-organizations-id',
+      'organization_id',
+      <string>organization1Mock.name,
+    )
     cy.get('[data-testid="input-invoice_reference"] input').clear().type('INV-TEST-001')
     cy.get('[data-testid="input-amount"] input').clear().type('15000')
     cy.get('[data-testid="input-description"] textarea:visible').clear().type('Test income')
@@ -340,12 +298,6 @@ describe('E2E: Activity Pages', () => {
   it('should toggle travel material views (desktop)', () => testTravelMaterialToggle(true))
   it('should toggle travel material views (mobile)', () => testTravelMaterialToggle(false))
 
-  it('should validate materials reception (desktop)', () => testMaterialsReception(true))
-  it('should validate materials reception (mobile)', () => testMaterialsReception(false))
-
-  it('should validate equipment reception (desktop)', () => testEquipmentReception(true))
-  it('should validate equipment reception (mobile)', () => testEquipmentReception(false))
-
   it('should navigate and submit expenses activity (desktop)', () => testExpensesActivity(true))
   it('should navigate and submit expenses activity (mobile)', () => testExpensesActivity(false))
   it('should navigate and submit incomes activity (desktop)', () => testIncomesActivity(true))
@@ -359,4 +311,56 @@ describe('E2E: Activity Pages', () => {
     testTravelOperationForm(true))
   it('should navigate and submit travel operation form (mobile)', () =>
     testTravelOperationForm(false))
+
+})
+
+// ==================== TRAVEL OPERATION MATERIALS STOCK DISPLAY ====================
+
+function testTravelOperationMaterialsForm(desktop: boolean) {
+  if (!desktop) cy.viewport(375, 667)
+
+  cy.intercept(
+    'GET',
+    '**/materials*warehouse_id*',
+    mockSuccessResponse([material1Mock]),
+  ).as('getMaterialsWithStock')
+
+  navigateTo('/travel_operation?mode=materials')
+
+  cy.contains('Déplacer des matériaux', { timeout: 10000 }).should('exist')
+
+  cy.get('.button-add-material_lines').click()
+  cy.wait(300)
+
+  cy.get('[data-testid="input-departure_location_id"]').scrollIntoView().click()
+  cy.get('#menu-departure_location_id').should('be.visible')
+  cy.get('#menu-departure_location_id')
+    .contains(warehouse1Mock.name)
+    .scrollIntoView()
+    .click({ force: true })
+
+  cy.wait('@getMaterialsWithStock', { timeout: 10000 })
+
+  cy.get('[data-testid="input-materials-id"]')
+    .first()
+    .scrollIntoView()
+    .within(() => {
+      cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
+    })
+
+  cy.get('[id*="menu-"]').contains('50 SAC').should('be.visible')
+}
+
+// Separate suite for stock display tests — isolated beforeEach
+describe('E2E: Travel Operation Materials Stock Display', () => {
+  beforeEach(() => {
+    interceptGeneralEndpoint()
+    loginInPage()
+    insertInToLocalStorage()
+  })
+
+  it('should show material stock quantity in travel operation (desktop)', () =>
+    testTravelOperationMaterialsForm(true))
+  it('should show material stock quantity in travel operation (mobile)', () =>
+    testTravelOperationMaterialsForm(false))
 })

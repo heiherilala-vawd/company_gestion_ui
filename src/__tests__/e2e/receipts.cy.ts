@@ -41,7 +41,7 @@ describe('E2E: Receipts', () => {
     selectReferenceWithCreate(
       'input-income_id',
       'income_id',
-      <string>income1Mock.source_organization,
+      <string>income1Mock.organization.name,
     )
     cy.get('button[type="submit"]').click({ force: true })
   }

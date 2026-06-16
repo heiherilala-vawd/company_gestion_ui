@@ -3,6 +3,7 @@ import generateId from '../../../utili/utils.tsx'
 import {
   renderIncomeTypeSelect,
   renderJobSelect,
+  renderOrganizationSelect,
 } from '../../../generic/SelectWithCreateProvider.tsx'
 import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
 
@@ -20,11 +21,7 @@ export default function IncomeForm({ isCreate = false, isCreateForm = false }) {
       {isCreateForm && (
         <TextInput source="newId" sx={{ display: 'none' }} defaultValue={generateId()} />
       )}
-      <TextInput
-        source="source_organization"
-        label="Organisation source"
-        data-testid="input-source_organization"
-      />
+      {renderOrganizationSelect('organization_id', 'Organisation')}
       {renderIncomeTypeSelect('income_type_id', 'Type de revenu')}
       {!isCreate && renderJobSelect('job_id', 'Travail')}
       <NumberInput source="amount" label="Montant" data-testid="input-amount" />

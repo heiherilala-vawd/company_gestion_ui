@@ -1,5 +1,6 @@
 import { Material, CrupdateMaterial, MaterialUnit } from '../../../gen-ts/src'
 import { user1Mock } from './users-api.ts'
+import { warehouse1Mock } from './warehouses-api.ts'
 import { toAuditUserMapper } from '../../support/mappers.ts'
 
 export const material1Mock: Material = {
@@ -8,6 +9,9 @@ export const material1Mock: Material = {
   description: 'Portland cement 50kg bags',
   unit: 'SAC' as MaterialUnit,
   comment: 'Standard construction cement',
+  material_warehouses: [
+    { warehouse: warehouse1Mock, quantity: 50 },
+  ],
   created_at: '2022-01-10T08:00:00Z',
   updated_at: '2022-06-15T10:00:00Z',
   created_by: toAuditUserMapper(user1Mock),

@@ -25,6 +25,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import generateId from '../../../utili/utils.tsx'
 import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
+import { renderSupplierSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
 import MaterialForm from '../../storage/materials/MaterialForm.tsx'
 import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
@@ -98,7 +99,7 @@ const PurchaseActivityForm = ({ mode: propMode }: PurchaseActivityFormProps = {}
   const onSubmit = async (data: any) => {
     const payload = {
       id: data?.id,
-      supplier_id: data.departure_warehouse,
+      supplier_id: data.supplier_id,
       equipment_lines: showEquipment
         ? (data.equipment_lines || []).map((line: any) => ({
             equipment: {
@@ -221,6 +222,7 @@ const PurchaseActivityForm = ({ mode: propMode }: PurchaseActivityFormProps = {}
             {add_autogenaration_id('travel_expense_id')}
             {add_autogenaration_id('travel_id')}
             <Box sx={operationFormStyles.flexRow}>
+              {renderSupplierSelect('supplier_id', 'Fournisseur')}
               <TextInput
                 source="comment"
                 label="Commentaire"

@@ -5,12 +5,14 @@ import {
   income1Mock,
   income2Mock,
 } from '../mocks/responses/incomes-api'
+import { organization1Mock } from '../mocks/responses/organizations-api'
 import {
   expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
   selectIncomeType,
+  selectReferenceWithCreate,
 } from '../support/utils.ts'
 
 describe('E2E: Incomes', () => {
@@ -19,7 +21,7 @@ describe('E2E: Incomes', () => {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
     } else {
-      cy.contains(<string>income1Mock.source_organization)
+      cy.contains(<string>income1Mock.organization.name)
         .first()
         .click()
       cy.wait('@getIncome')
@@ -28,9 +30,11 @@ describe('E2E: Incomes', () => {
     }
     cy.wait('@getIncomeTypes')
     selectIncomeType('income_type_id')
-    cy.get('[data-testid="input-source_organization"] input')
-      .clear()
-      .type(<string>crupdatedData.source_organization)
+    selectReferenceWithCreate(
+      'input-organizations-id',
+      'organization_id',
+      <string>organization1Mock.name,
+    )
     cy.get('[data-testid="input-invoice_reference"] input')
       .clear()
       .type(<string>crupdatedData.invoice_reference)
@@ -66,8 +70,8 @@ describe('E2E: Incomes', () => {
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>income1Mock.source_organization).should('be.visible')
-    cy.contains(<string>income2Mock.source_organization).should('be.visible')
+    cy.contains(<string>income1Mock.organization.name).should('be.visible')
+    cy.contains(<string>income2Mock.organization.name).should('be.visible')
     cy.contains(<number>income1Mock.amount).should('be.visible')
     cy.contains(<number>income2Mock.amount).should('be.visible')
   }
@@ -75,12 +79,12 @@ describe('E2E: Incomes', () => {
   function showDetails(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(<string>income1Mock.source_organization)
+    cy.contains(<string>income1Mock.organization.name)
       .first()
       .click({ force: true })
     cy.wait('@getIncome')
     cy.contains(<string>income1Mock.description).should('exist')
-    cy.contains(<string>income1Mock.source_organization).should('exist')
+    cy.contains(<string>income1Mock.organization.name).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {

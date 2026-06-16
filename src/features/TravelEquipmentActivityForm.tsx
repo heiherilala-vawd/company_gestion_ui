@@ -12,6 +12,7 @@ import {
   TextInput,
   NumberInput,
   SelectInput,
+  BooleanInput,
 } from 'react-admin'
 import {
   Card,
@@ -62,7 +63,7 @@ const TravelEquipmentActivityForm = () => {
         arrival_date: toInstant(data.arrival_date),
         fee: parseFloat(data.fee) || 0,
       },
-      direct_arrival: false,
+      direct_arrival: data.direct_arrival ?? false,
       equipment_lines: (data.equipment_lines || []).map((line: any) => ({
         id: line.travel_equipment_id,
         equipment: { id: line.equipment_id },
@@ -199,6 +200,15 @@ const TravelEquipmentActivityForm = () => {
                     fullWidth
                     sx={{ mt: 2 }}
                     data-testid="input-fee"
+                  />
+
+                  <BooleanInput
+                    source="direct_arrival"
+                    label="Arrivée directe"
+                    helperText="Activé : les matériaux/équipements arrivent directement à destination. Désactivé : ils sont en route."
+                    defaultValue={false}
+                    sx={{ mt: 2 }}
+                    data-testid="input-direct_arrival"
                   />
                 </Box>
               </Collapse>
