@@ -400,10 +400,10 @@ export function interceptGeneralEndpoint(): void {
     ).as(`getMonetaryDashboard${type.charAt(0).toUpperCase() + type.slice(1)}`)
   })
 
-  // ---------------------- CRAS (Véhicules) ------------------------------------------
-  cy.intercept('GET', '**/cras*', mockSuccessResponse(carsMock)).as('getCars')
-  cy.intercept('GET', '**/cras/cras1_id*', mockSuccessResponse(cars1Mock)).as('getCarsDetail')
-  cy.intercept('GET', '**/cras/cras2_id*', mockSuccessResponse(cars2Mock)).as('getCarsDetail2')
+  // ---------------------- CARS (Véhicules) ------------------------------------------
+  cy.intercept('GET', '**/cars*', mockSuccessResponse(carsMock)).as('getCars')
+  cy.intercept('GET', '**/cars/cars1_id*', mockSuccessResponse(cars1Mock)).as('getCarsDetail')
+  cy.intercept('GET', '**/cars/cars2_id*', mockSuccessResponse(cars2Mock)).as('getCarsDetail2')
 
   // ---------------------- CASH TRANSACTIONS ------------------------------------------
   cy.intercept('GET', '**/cash_transactions*', mockSuccessResponse(cashTransactionsMock)).as(

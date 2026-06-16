@@ -12,7 +12,6 @@ const RESOURCE_URL_OVERRIDES: Record<string, string> = {
   equipment_usage: 'equipment_usages',
   material_consumption: 'material_consumptions',
   travel_equipment: 'travel_equipments',
-  cars: 'cras',
 }
 
 const getUrlSegment = (resource: string): string => RESOURCE_URL_OVERRIDES[resource] || resource
