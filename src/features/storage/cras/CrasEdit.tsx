@@ -1,9 +1,9 @@
 import { SimpleForm, TextInput } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
-import VoitureForm from './VoitureForm'
+import CrasForm from './CrasForm'
 import GenericEdit from '../../../generic/GenericEdit'
 
-export default function VoitureEdit() {
+export default function CrasEdit() {
   return (
     <GenericEdit
       queryOptions={{
@@ -25,9 +25,9 @@ export default function VoitureEdit() {
         warehouse_name: data.equipment_name,
       })}
     >
-      <SimpleForm id="voiture-edit-form" toolbar={<FormToolbar />}>
+      <SimpleForm id="cras-edit-form" toolbar={<FormToolbar />}>
         <TextInput source="id" sx={{ display: 'none' }} />
-        <VoitureForm />
+        <CrasForm />
       </SimpleForm>
     </GenericEdit>
   )

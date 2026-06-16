@@ -43,7 +43,7 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'suppliers',
   'purchase_orders',
   'organizations',
-  'voitures',
+  'cras',
   'notifications',
 ] as const
 

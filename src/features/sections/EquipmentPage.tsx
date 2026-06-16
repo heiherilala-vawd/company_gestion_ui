@@ -12,14 +12,14 @@ const allItems = [
   {
     label: 'Véhicules',
     icon: DirectionsCarIcon,
-    to: '/voitures',
+    to: '/cras',
     color: 'sapphire' as const,
     desc: 'Gérer',
   },
   {
     label: 'Acheter un équipement',
     icon: ShoppingCartIcon,
-    to: '/purchases_equipment_activity',
+    to: '/purchase_operation?mode=equipment',
     color: 'sapphire' as const,
     desc: 'Acheter',
   },
@@ -40,7 +40,7 @@ const allItems = [
   {
     label: 'Déplacer des équipements',
     icon: LocalShippingIcon,
-    to: '/travel_equipment_activity',
+    to: '/travel_operation?mode=equipment',
     color: 'teal' as const,
     desc: 'Déplacer',
   },

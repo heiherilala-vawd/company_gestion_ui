@@ -130,7 +130,7 @@ function canAccess(role: Role | null, resource: string, action: string): boolean
     if (stockResources.includes(resource) && readActions.includes(action)) return true
 
     // Lecture seule sur équipement (hors planification maintenance)
-    const equipmentResources = ['travel_equipment', 'equipment_usage', 'maintenances', 'voitures']
+    const equipmentResources = ['travel_equipment', 'equipment_usage', 'maintenances', 'cras']
     if (equipmentResources.includes(resource) && readActions.includes(action)) return true
 
     // Lecture seule sur ressources RH
