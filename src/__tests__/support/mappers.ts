@@ -133,7 +133,7 @@ export function toCrupdateIncomeMoneyMapper(income: IncomeMoney): CrupdateIncome
     id: income?.id,
     amount: income.amount,
     description: income.description,
-    source_organization: income.source_organization || (income as any).organization?.name,
+    organization_id: income.organization_id || (income as any).organization?.id,
     invoice_reference: income.invoice_reference,
     job_id: income.job?.id,
     income_type_id: income.income_type?.id,

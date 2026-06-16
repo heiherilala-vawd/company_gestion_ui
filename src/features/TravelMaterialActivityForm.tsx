@@ -12,6 +12,7 @@ import {
   TextInput,
   NumberInput,
   SelectInput,
+  BooleanInput,
 } from 'react-admin'
 import {
   Card,
@@ -63,7 +64,7 @@ const TravelMaterialActivityForm = () => {
         fee: parseFloat(data.fee) || 0,
       },
       equipment_lines: [],
-      direct_arrival: false,
+      direct_arrival: data.direct_arrival ?? false,
       material_lines: (data.material_lines || []).map((line: any) => ({
         id: line.travel_material_id,
         material: { id: line.material_id },
@@ -191,6 +192,15 @@ const TravelMaterialActivityForm = () => {
                     sx={{ mt: 2 }}
                     data-testid="input-fee"
                   />
+
+                  <BooleanInput
+                    source="direct_arrival"
+                    label="Arrivée directe"
+                    helperText="Activé : les matériaux/équipements arrivent directement à destination. Désactivé : ils sont en route."
+                    defaultValue={false}
+                    sx={{ mt: 2 }}
+                    data-testid="input-direct_arrival"
+                  />
                 </Box>
               </Collapse>
             </Box>
@@ -209,7 +219,12 @@ const TravelMaterialActivityForm = () => {
                     source="material_id"
                     reference="materials"
                     label="Matériau"
-                    optionText={(record: any) => `${record.name} / ${record.unit}`}
+                    optionText={(record: any) => {
+                      const qty = departureLocationId
+                        ? record.material_warehouses?.[0]?.quantity
+                        : undefined
+                      return `${record.name} / ${qty ?? ' '} ${record.unit}`
+                    }}
                     createUrlEnd={getMiddleUrl('materials')}
                     createForm={<MaterialForm isCreateForm />}
                     filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}

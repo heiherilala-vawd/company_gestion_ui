@@ -7,6 +7,7 @@ import {
   BooleanInput,
   BooleanField,
   EditButton,
+  ReferenceField,
 } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
@@ -24,9 +25,11 @@ export default function IncomeList() {
   return (
     <List filters={IncomeFilters}>
       <ResponsiveDatagrid
-        priorityFields={['source_organization', 'amount', 'invoice_reference', 'description']}
+        priorityFields={['organization_id', 'amount', 'invoice_reference', 'description']}
       >
-        <TextField source="source_organization" label="Organisation" />
+        <ReferenceField source="organization_id" reference="organizations" label="Organisation" link={false}>
+          <TextField source="name" />
+        </ReferenceField>
         <NumberField
           source="amount"
           label="Montant"

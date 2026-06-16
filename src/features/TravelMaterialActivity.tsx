@@ -52,6 +52,7 @@ export default function TravelMaterialActivity() {
   const [showFilters, setShowFilters] = useState(false)
   const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
   const [showSummary, setShowSummary] = useState(false)
+  const [quantityReceived, setQuantityReceived] = useState<Record<string, number>>({})
   const [quantityLost, setQuantityLost] = useState<Record<string, number>>({})
   const [equipmentStatuses, setEquipmentStatuses] = useState<Record<string, string>>({})
 
@@ -132,10 +133,16 @@ export default function TravelMaterialActivity() {
       setPage(0)
       setServerFilters({})
       setSearch('')
+      setQuantityReceived({})
       setQuantityLost({})
       setEquipmentStatuses({})
     }
   }
+
+  const handleQuantityReceivedChange =
+    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQuantityReceived((prev) => ({ ...prev, [id]: Number(e.target.value) }))
+    }
 
   const handleQuantityLostChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantityLost((prev) => ({ ...prev, [id]: Number(e.target.value) }))
@@ -150,8 +157,9 @@ export default function TravelMaterialActivity() {
       if (entityType === 'materials') {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
-          quantity_received: item.quantity - (quantityLost[item.id] || 0),
-          quantity_lost: quantityLost[item.id] || 0,
+          quantity_received:
+            quantityReceived[item.id] ?? item.quantity_received ?? item.quantity,
+          quantity_lost: quantityLost[item.id] ?? item.quantity_lost ?? 0,
         }))
         await confirmArrival('travel_materials_arrival', body)
       } else {
@@ -170,6 +178,7 @@ export default function TravelMaterialActivity() {
     setShowSummary(false)
     setSelectedItems([])
     setSelectedLocation('')
+    setQuantityReceived({})
     setQuantityLost({})
     setEquipmentStatuses({})
     refetch()
@@ -325,12 +334,23 @@ export default function TravelMaterialActivity() {
                         <TableCell>
                           {item.quantity} {item.material?.unit}
                         </TableCell>
-                        <TableCell>{item.quantity_received ?? 0}</TableCell>
                         <TableCell>
                           <TextField
                             type="number"
                             size="small"
-                            value={quantityLost[item.id] ?? ''}
+                            value={
+                              quantityReceived[item.id] ?? item.quantity_received ?? item.quantity
+                            }
+                            onChange={handleQuantityReceivedChange(item.id)}
+                            inputProps={{ min: 0, style: { width: 70 } }}
+                            disabled={!selectedItems.some((i) => i.id === item.id)}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <TextField
+                            type="number"
+                            size="small"
+                            value={quantityLost[item.id] ?? item.quantity_lost ?? 0}
                             onChange={handleQuantityLostChange(item.id)}
                             inputProps={{ min: 0, style: { width: 70 } }}
                             disabled={!selectedItems.some((i) => i.id === item.id)}
@@ -407,7 +427,7 @@ export default function TravelMaterialActivity() {
           {selectedItems.map((item: any) => (
             <Typography key={item.id} sx={{ mb: 0.5 }}>
               {entityType === 'materials'
-                ? `• ${item.material?.name || '?'} — Perdu: ${quantityLost[item.id] || 0} / ${item.quantity}`
+                ? `• ${item.material?.name || '?'} — Reçu: ${quantityReceived[item.id] ?? item.quantity_received ?? item.quantity}, Perdu: ${quantityLost[item.id] ?? item.quantity_lost ?? 0}`
                 : `• ${item.equipment?.name || item.equipment?.id} → ${equipmentStatuses[item.id] || 'ARRIVED'}`}
             </Typography>
           ))}

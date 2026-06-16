@@ -12,7 +12,14 @@ export interface Cars {
   couleur?: string
   kilometrage?: number
   statut?: string
-  equipment?: { id: string; name: string; category: string; purchase_price?: number; purchase_date?: string; est_en_panne?: boolean }
+  equipment?: {
+    id: string
+    name: string
+    category: string
+    purchase_price?: number
+    purchase_date?: string
+    est_en_panne?: boolean
+  }
   warehouse?: { id: string; name: string; description?: string; job_id?: string }
   created_at: string
   updated_at: string

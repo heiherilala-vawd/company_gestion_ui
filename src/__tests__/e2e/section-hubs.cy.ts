@@ -211,7 +211,7 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .should('be.visible')
     clickHubButton("Entrée d'argent")
     cy.url({ timeout: 15000 }).should('include', '/incomes_activity')
-    cy.get('[data-testid="input-source_organization"]', { timeout: 10000 }).should('exist')
+    cy.get('[data-testid="input-organizations-id"]', { timeout: 10000 }).should('exist')
   }
 
   // ==================== Tests ====================
