@@ -3,6 +3,7 @@ import { getMiddleUrlDynamicCompanyResource } from '../../config/dynamicResource
 export interface Notification {
   id: string
   user: { id: string; first_name: string; last_name: string }
+  task?: { id: string; title: string }
   task_id: string | null
   title: string
   message: string

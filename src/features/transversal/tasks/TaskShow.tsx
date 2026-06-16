@@ -37,9 +37,8 @@ export default function TaskShow() {
         <FunctionField
           label="Assigné à"
           render={(record) =>
-            record.assigned_to
-              ? `${record.assigned_to.first_name} ${record.assigned_to.last_name}`
-              : ''
+            record.assigned_users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') ||
+            ''
           }
         />
         <TextField source="due_date" label="Date échéance" />

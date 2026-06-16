@@ -1,12 +1,4 @@
-import {
-  List,
-  SearchInput,
-  TextField,
-  SelectField,
-  DateField,
-  ReferenceField,
-  EditButton,
-} from 'react-admin'
+import { List, SearchInput, TextField, SelectField, DateField, EditButton } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const MaintenanceScheduleFilters = [<SearchInput source="q" alwaysOn key="search" />]
@@ -15,9 +7,7 @@ export default function MaintenanceScheduleList() {
   return (
     <List resource="maintenance_schedules" filters={MaintenanceScheduleFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['equipment_id', 'scheduled_date']}>
-        <ReferenceField source="equipment_id" reference="equipment" label="Équipement">
-          <TextField source="name" />
-        </ReferenceField>
+        <TextField source="equipment.name" label="Équipement" />
         <TextField source="description" label="Description" />
         <TextField source="frequency" label="Fréquence" />
         <DateField source="scheduled_date" label="Date planifiée" />

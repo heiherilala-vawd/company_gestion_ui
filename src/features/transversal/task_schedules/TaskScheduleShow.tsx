@@ -35,6 +35,13 @@ export default function TaskScheduleShow() {
             { id: 'DONE', name: 'Terminé' },
           ]}
         />
+        <FunctionField
+          label="Assigné à"
+          render={(record) =>
+            record.assigned_users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') ||
+            ''
+          }
+        />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         <FunctionField

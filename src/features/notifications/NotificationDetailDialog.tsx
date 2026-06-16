@@ -69,9 +69,10 @@ export default function NotificationDetailDialog({ notification, onClose, onActi
   }
 
   const handleViewTask = () => {
-    if (!notification.task_id) return
+    const taskId = notification.task?.id || notification.task_id
+    if (!taskId) return
     onClose()
-    navigate(`/tasks/${notification.task_id}`)
+    navigate(`/tasks/${taskId}`)
   }
 
   const formatDateTime = (dateStr: string | null) => {
@@ -131,7 +132,9 @@ export default function NotificationDetailDialog({ notification, onClose, onActi
               <Typography variant="caption" color="text.secondary" fontWeight={600}>
                 Tâche associée
               </Typography>
-              <Typography variant="body2">{notification.task_id || 'Aucune'}</Typography>
+              <Typography variant="body2">
+                {notification.task?.title || notification.task_id || 'Aucune'}
+              </Typography>
             </Box>
           </Box>
         </Stack>
@@ -140,7 +143,7 @@ export default function NotificationDetailDialog({ notification, onClose, onActi
         <Button onClick={onClose} startIcon={<CloseIcon />} color="inherit">
           Fermer
         </Button>
-        {notification.task_id && (
+        {(notification.task?.id || notification.task_id) && (
           <Button onClick={handleViewTask} startIcon={<VisibilityIcon />} color="info">
             Voir la tâche
           </Button>

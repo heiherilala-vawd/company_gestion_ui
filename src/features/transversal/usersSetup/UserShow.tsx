@@ -34,6 +34,14 @@ export default function UserShow() {
             { id: 'F', name: 'Femme' },
           ]}
         />
+        <TextField source="company.name" label="Entreprise" />
+        <FunctionField
+          label="Manager"
+          render={(record) =>
+            record.manager ? `${record.manager.first_name} ${record.manager.last_name}` : ''
+          }
+        />
+        <TextField source="department.name" label="Département" />
         <ReferenceField
           source="leave_config_id"
           reference="leave_configs"

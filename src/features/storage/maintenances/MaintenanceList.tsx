@@ -10,7 +10,7 @@ export default function MaintenanceList() {
         <FunctionField
           source="equipment_id"
           label="Équipement"
-          render={(record) => record.equipment?.name || record.equipment_id || ''}
+          render={(record) => record.equipment?.name || ''}
         />
         <TextField source="description" label="Description" />
         <NumberField
