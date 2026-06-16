@@ -5,7 +5,6 @@ import {
   SimpleShowLayout,
   TextField,
   SelectField,
-  ReferenceField,
 } from 'react-admin'
 
 export default function MaintenanceScheduleShow() {
@@ -13,9 +12,7 @@ export default function MaintenanceScheduleShow() {
     <Show title="Détails planification de maintenance">
       <SimpleShowLayout>
         <TextField source="id" />
-        <ReferenceField source="equipment_id" reference="equipment" label="Équipement">
-          <TextField source="name" />
-        </ReferenceField>
+        <TextField source="equipment.name" label="Équipement" />
         <TextField source="description" label="Description" />
         <TextField source="frequency" label="Fréquence (cron)" />
         <TextField source="scheduled_date" label="Date planifiée" />

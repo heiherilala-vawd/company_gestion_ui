@@ -53,12 +53,12 @@ export default function MaterialConsumptionList() {
         <FunctionField
           source="material_id"
           label="Matériau"
-          render={(record) => record.material?.name || record.material_id || ''}
+          render={(record) => record.material?.name || ''}
         />
         <FunctionField
           source="warehouse_id"
           label="Entrepôt"
-          render={(record) => record.warehouse?.name || record.warehouse_id || ''}
+          render={(record) => record.warehouse?.name || ''}
         />
         <NumberField source="quantity" label="Quantité" />
         <SelectField
@@ -74,7 +74,7 @@ export default function MaterialConsumptionList() {
         <FunctionField
           source="job_id"
           label="Travail"
-          render={(record) => record.job?.description || record.job_id || ''}
+          render={(record) => record.job?.description || ''}
         />
         <EditButton />
       </ResponsiveDatagrid>

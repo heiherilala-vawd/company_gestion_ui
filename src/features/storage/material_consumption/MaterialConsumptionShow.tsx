@@ -121,14 +121,8 @@ export default function MaterialConsumptionShow() {
     <Show title="Détails consommation matériau">
       <SimpleShowLayout>
         <TextField source="id" />
-        <FunctionField
-          label="Matériau"
-          render={(record) => record.material?.name || record.material_id || ''}
-        />
-        <FunctionField
-          label="Entrepôt"
-          render={(record) => record.warehouse?.name || record.warehouse_id || ''}
-        />
+        <FunctionField label="Matériau" render={(record) => record.material?.name || ''} />
+        <FunctionField label="Entrepôt" render={(record) => record.warehouse?.name || ''} />
         <NumberField source="quantity" label="Quantité" />
         <FunctionField
           label="Date consommation"
@@ -138,10 +132,7 @@ export default function MaterialConsumptionShow() {
               : ''
           }
         />
-        <FunctionField
-          label="Travail"
-          render={(record) => record.job?.description || record.job_id || ''}
-        />
+        <FunctionField label="Travail" render={(record) => record.job?.description || ''} />
         <FunctionField
           label="Statut"
           render={(record) => {

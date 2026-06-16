@@ -6,7 +6,6 @@ import {
   BooleanField,
   DateField,
   FunctionField,
-  ReferenceField,
 } from 'react-admin'
 
 export default function IncomeShow() {
@@ -14,9 +13,7 @@ export default function IncomeShow() {
     <Show title="Détails revenu">
       <SimpleShowLayout>
         <TextField source="id" />
-        <ReferenceField source="organization_id" reference="organizations" label="Organisation">
-          <TextField source="name" />
-        </ReferenceField>
+        <TextField source="organization.name" label="Organisation" />
         <TextField source="invoice_reference" label="Référence facture" />
         <NumberField
           source="amount"

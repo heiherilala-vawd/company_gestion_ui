@@ -18,7 +18,7 @@ export default function CashTransactionList() {
         <FunctionField
           source="cash_account_id"
           label="Compte caisse"
-          render={(record) => record.cash_account?.name || record.cash_account_id || ''}
+          render={(record) => record.cash_account?.name || ''}
         />
         <NumberField
           source="amount"

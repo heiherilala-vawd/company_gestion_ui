@@ -75,9 +75,7 @@ export default function HistoryList() {
           source="user_id"
           label="Utilisateur"
           render={(record) =>
-            record.user
-              ? `${record.user.first_name} ${record.user.last_name}`
-              : record.user_id || ''
+            record.user ? `${record.user.first_name} ${record.user.last_name}` : ''
           }
         />
         <DateField source="modified_at" label="Date" showTime />

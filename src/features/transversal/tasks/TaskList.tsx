@@ -30,12 +30,10 @@ export default function TaskList() {
           ]}
         />
         <FunctionField
-          source="assigned_to"
           label="Assigné à"
           render={(record) =>
-            record.assigned_to
-              ? `${record.assigned_to.first_name} ${record.assigned_to.last_name}`
-              : ''
+            record.assigned_users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') ||
+            ''
           }
         />
         <EditButton />

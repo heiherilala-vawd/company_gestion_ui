@@ -1,4 +1,4 @@
-import { List, TextField, SearchInput, EditButton, SelectField } from 'react-admin'
+import { List, TextField, SearchInput, EditButton, SelectField, FunctionField } from 'react-admin'
 import { ResponsiveDatagrid } from '../../../generic/ResponsiveDatagrid'
 
 const TaskScheduleFilters = [<SearchInput source="q" alwaysOn key="search" />]
@@ -29,6 +29,13 @@ export default function TaskScheduleList() {
             { id: 'PAUSED', name: 'En pause' },
             { id: 'DONE', name: 'Terminé' },
           ]}
+        />
+        <FunctionField
+          label="Assigné à"
+          render={(record) =>
+            record.assigned_users?.map((u: any) => `${u.first_name} ${u.last_name}`).join(', ') ||
+            ''
+          }
         />
         <EditButton />
       </ResponsiveDatagrid>

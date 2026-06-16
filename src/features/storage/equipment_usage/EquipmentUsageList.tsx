@@ -10,12 +10,12 @@ export default function EquipmentUsageList() {
         <FunctionField
           source="equipment_id"
           label="Équipement"
-          render={(record) => record.equipment?.name || record.equipment_id || ''}
+          render={(record) => record.equipment?.name || ''}
         />
         <FunctionField
           source="job_id"
           label="Travail"
-          render={(record) => record.job?.description || record.job_id || ''}
+          render={(record) => record.job?.description || ''}
         />
         <TextField source="start_time" label="Début" />
         <TextField source="end_time" label="Fin" />

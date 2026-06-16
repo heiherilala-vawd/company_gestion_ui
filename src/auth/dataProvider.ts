@@ -26,6 +26,24 @@ const convertDates = (obj: any): any => {
   return toInstant(obj)
 }
 
+const isNestedRef = (value: any): boolean =>
+  value && typeof value === 'object' && !Array.isArray(value) && 'id' in value
+
+const isNestedRefArray = (value: any): boolean =>
+  Array.isArray(value) && value.length > 0 && typeof value[0] === 'object' && 'id' in value[0]
+
+const stripNestedRefs = (data: any): any => {
+  if (!data || typeof data !== 'object') return data
+  if (Array.isArray(data)) return data.map(stripNestedRefs)
+  const result: Record<string, any> = {}
+  for (const [key, value] of Object.entries(data)) {
+    if (isNestedRef(value)) continue
+    if (isNestedRefArray(value)) continue
+    result[key] = stripNestedRefs(value)
+  }
+  return result
+}
+
 const FLATTEN_TO_ID = new Set(['source_location', 'used_by'])
 
 const normalizeRecord = (record: any): any => {
@@ -178,7 +196,7 @@ export const dataProvider = {
     const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
-      body: JSON.stringify([convertDates(params.data)]),
+      body: JSON.stringify([convertDates(stripNestedRefs(params.data))]),
     })
 
     return { data: normalizeRecord(json[0]) }
@@ -189,7 +207,7 @@ export const dataProvider = {
     const url = getMiddleUrl(resource)
     const json = await fetchWithToken<T>(url, {
       method: 'PUT',
-      body: JSON.stringify([convertDates({ ...params.data, id: params.id })]),
+      body: JSON.stringify([convertDates(stripNestedRefs({ ...params.data, id: params.id }))]),
     })
 
     return { data: normalizeRecord(json[0]) }
