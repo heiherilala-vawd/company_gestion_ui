@@ -46,22 +46,25 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await fetch(`${API_URL}/auth/whoami`, {
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        })
-        if (response.ok) {
-          const data = await response.json()
-          setUser(data)
-          setForm({
-            first_name: data.first_name || '',
-            last_name: data.last_name || '',
-            email: data.email || '',
-            sex: data.sex || 'M',
-          })
+        const headers = {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         }
+        const whoamiRes = await fetch(`${API_URL}/auth/whoami`, { headers })
+        if (!whoamiRes.ok) throw new Error('whoami failed')
+        const whoami = await whoamiRes.json()
+        const userIdFromWhoami = whoami.id || userId
+        if (!userIdFromWhoami) throw new Error('no user id')
+        const userRes = await fetch(`${API_URL}/users/${userIdFromWhoami}`, { headers })
+        if (!userRes.ok) throw new Error('user fetch failed')
+        const data = await userRes.json()
+        setUser(data)
+        setForm({
+          first_name: data.first_name || '',
+          last_name: data.last_name || '',
+          email: data.email || '',
+          sex: data.sex || 'M',
+        })
       } catch {
         setUser({
           email: localStorage.getItem('user_email'),
@@ -114,11 +117,22 @@ export default function ProfilePage() {
 
   const roleLabel = ROLE_LABELS[user.role || localStorage.getItem('user_role') || ''] || user.role
 
+  const formatDate = (d: string | null | undefined) =>
+    d ? new Date(d).toLocaleDateString('fr-FR') : '—'
+
   const fieldData = [
     { label: 'Email', value: form.email },
     { label: 'Prénom', value: form.first_name },
     { label: 'Nom', value: form.last_name },
     { label: 'Sexe', value: SEX_LABELS[form.sex] || form.sex },
+    { label: 'Entreprise', value: user.company?.name || '—' },
+    {
+      label: 'Manager',
+      value: user.manager ? `${user.manager.first_name} ${user.manager.last_name}` : '—',
+    },
+    { label: 'Département', value: user.department?.name || '—' },
+    { label: 'Date naissance', value: formatDate(user.birth_date) },
+    { label: 'Commentaire', value: user.comment || '—' },
   ]
 
   return (
