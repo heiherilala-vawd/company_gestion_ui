@@ -61,7 +61,7 @@ export const quickActionButtons: HomeButton[] = [
   {
     label: 'Achats',
     icon: ShoppingCartIcon,
-    to: '/purchases_activity',
+    to: '/purchase_operation?mode=full',
     desc: 'Acheter',
     color: 'sapphire',
     checkResources: ['purchases', 'expenses'],
@@ -69,7 +69,7 @@ export const quickActionButtons: HomeButton[] = [
   {
     label: 'Déplacements',
     icon: LocalShippingIcon,
-    to: '/travel_equipment_activity',
+    to: '/travel_operation?mode=full',
     desc: 'Déplacer',
     color: 'emerald',
     checkResources: ['travel_expenses', 'equipment'],

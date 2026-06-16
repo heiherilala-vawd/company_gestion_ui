@@ -25,8 +25,8 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .contains('Actions Stock', { timeout: 10000 })
       .should('be.visible')
     clickHubButton('Acheter du matériau')
-    cy.url({ timeout: 15000 }).should('include', '/purchases_material_activity')
-    cy.contains("Nouvelle Opération d'Achat Matériau", { timeout: 10000 }).should('exist')
+    cy.url({ timeout: 15000 }).should('include', '/purchase_operation?mode=materials')
+    cy.contains('Nouvel Achat de Matériau', { timeout: 10000 }).should('exist')
   }
 
   function testStockMaterialConsumptionRedirect(desktop: boolean) {
@@ -61,7 +61,7 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .contains('Actions Stock', { timeout: 10000 })
       .should('be.visible')
     clickHubButton('Déplacer des matériaux')
-    cy.url({ timeout: 15000 }).should('include', '/travel_material_activity')
+    cy.url({ timeout: 15000 }).should('include', '/travel_operation?mode=materials')
     cy.contains('Déplacer des matériaux', { timeout: 10000 }).should('be.visible')
   }
 
@@ -74,8 +74,8 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .contains('Actions Équipement', { timeout: 10000 })
       .should('be.visible')
     clickHubButton('Acheter un équipement')
-    cy.url({ timeout: 15000 }).should('include', '/purchases_equipment_activity')
-    cy.contains("Nouvelle Opération d'Achat Équipement", { timeout: 10000 }).should('exist')
+    cy.url({ timeout: 15000 }).should('include', '/purchase_operation?mode=equipment')
+    cy.contains("Nouvel Achat d'Équipement", { timeout: 10000 }).should('exist')
   }
 
   function testEquipmentUsageRedirect(desktop: boolean) {
@@ -107,7 +107,7 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .contains('Actions Équipement', { timeout: 10000 })
       .should('be.visible')
     clickHubButton('Déplacer des équipements')
-    cy.url({ timeout: 15000 }).should('include', '/travel_equipment_activity')
+    cy.url({ timeout: 15000 }).should('include', '/travel_operation?mode=equipment')
     cy.contains('Déplacer des équipements', { timeout: 10000 }).should('be.visible')
   }
 
@@ -186,8 +186,8 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
       .contains('Actions RH', { timeout: 10000 })
       .should('be.visible')
     clickHubButton('Transport personnel')
-    cy.url({ timeout: 15000 }).should('include', '/travel_people_activity')
-    cy.contains('Déplacement personnel', { timeout: 10000 }).should('be.visible')
+    cy.url({ timeout: 15000 }).should('include', '/travel_operation?mode=people')
+    cy.contains('Déplacement du personnel', { timeout: 10000 }).should('be.visible')
   }
 
   // ==================== MonetaryPage ====================

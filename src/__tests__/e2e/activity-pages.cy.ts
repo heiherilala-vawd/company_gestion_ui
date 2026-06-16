@@ -267,7 +267,7 @@ describe('E2E: Activity Pages', () => {
 
   function testPurchaseActivityForm(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    navigateTo('/purchases_activity')
+    navigateTo('/purchase_operation?mode=full')
 
     cy.contains("Nouvelle Opération d'Achat", { timeout: 10000 }).should('exist')
 
@@ -303,10 +303,11 @@ describe('E2E: Activity Pages', () => {
 
   function testTravelOperationForm(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
-    navigateTo('/travel_equipment_activity')
+    navigateTo('/travel_operation?mode=equipment')
 
     cy.contains('Déplacer des équipements', { timeout: 10000 }).should('exist')
 
+    cy.get('[data-testid="toggle-comment"]').click()
     cy.get('textarea[name="comment"]').clear().type('Test travel comment')
 
     cy.get('[data-testid="input-departure_location_id"]').scrollIntoView().click()
