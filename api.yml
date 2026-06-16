@@ -2914,6 +2914,12 @@ paths:
           schema:
             $ref: '#/components/schemas/MaterialUnit'
           example: "SAC"
+        - name: warehouse_id
+          in: query
+          description: "Filter materials by warehouse (only materials with quantity >= 1 in that warehouse)"
+          schema:
+            type: string
+          example: "warehouse1_id"
         - name: not_arrived
           in: query
           description: "Filter materials not yet arrived (with quantity > 0 in route or at seller warehouse)"
@@ -12046,9 +12052,8 @@ components:
         description:
           type: string
           example: "Département en charge des travaux de génie civil"
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateDepartment:
       required:
         - name
@@ -12089,9 +12094,8 @@ components:
         description:
           type: string
           example: "Compte bancaire principal"
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateCashAccount:
       required:
         - name
@@ -12133,9 +12137,8 @@ components:
         id:
           type: string
           example: "ct_001"
-        cash_account_id:
-          type: string
-          example: "ca_001"
+        cash_account:
+          $ref: '#/components/schemas/CrupdateCashAccount'
         amount:
           type: number
           example: 500000.00
@@ -12187,9 +12190,8 @@ components:
         id:
           type: string
           example: "bl_001"
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
         category:
           type: string
           example: "Matériaux"
@@ -12269,12 +12271,10 @@ components:
         id:
           type: string
           example: "eu_001"
-        equipment_id:
-          type: string
-          example: "eq_001"
-        job_id:
-          type: string
-          example: "job_001"
+        equipment:
+          $ref: '#/components/schemas/CrupdateEquipment'
+        job:
+          $ref: '#/components/schemas/CrupdateJob'
         start_time:
           type: string
           format: date-time
@@ -12341,12 +12341,10 @@ components:
         id:
           type: string
           example: "mc_001"
-        material_id:
-          type: string
-          example: "mat_001"
-        warehouse_id:
-          type: string
-          example: "wh_001"
+        material:
+          $ref: '#/components/schemas/CrupdateMaterial'
+        warehouse:
+          $ref: '#/components/schemas/CrupdateWarehouse'
         quantity:
           type: integer
           example: 50
@@ -12354,9 +12352,8 @@ components:
           type: string
           format: date
           example: "2024-06-15"
-        job_id:
-          type: string
-          example: "job_001"
+        job:
+          $ref: '#/components/schemas/CrupdateJob'
         reason:
           type: string
           example: "Utilisation pour fondations"
@@ -12458,19 +12455,16 @@ components:
         email:
           type: string
           example: "jean.dupont@example.com"
-        company_id:
-          type: string
-          example: "comp_001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
         birth_date:
           type: string
           format: date
           example: "1990-05-15"
-        manager_id:
-          type: string
-          example: "usr_admin001"
-        department_id:
-          type: string
-          example: "dept_001"
+        manager:
+          $ref: '#/components/schemas/CrupdateUser'
+        department:
+          $ref: '#/components/schemas/CrupdateDepartment'
     CrupdateUser:
       required:
         - first_name
@@ -12539,9 +12533,8 @@ components:
           example: "Équipe chantier A"
         leader:
           $ref: '#/components/schemas/User'
-        job_id:
-          type: string
-          example: "job_001"
+        job:
+          $ref: '#/components/schemas/CrupdateJob'
         members:
           type: array
           items:
@@ -12810,10 +12803,8 @@ components:
           example: "maint_001"
         expense:
           $ref: '#/components/schemas/CrupdateExpenseMoney'
-        equipment_id:
-          type: string
-          description: "ID of the equipment this maintenance belongs to"
-          example: "eq_001"
+        equipment:
+          $ref: '#/components/schemas/CrupdateEquipment'
         description:
           type: string
           example: "Révision moteur périodique"
@@ -12849,10 +12840,8 @@ components:
         description:
           type: string
           example: "Frais logistiques et transport"
-        company_id:
-          type: string
-          description: "ID of the company this other expense type belongs to"
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateOtherExpenseType:
       required:
         - name
@@ -12894,8 +12883,8 @@ components:
         description:
           type: string
           example: "Loyer mensuel des locaux"
-        company_id:
-          type: string
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
           description: "ID of the company this fixed cost belongs to"
           example: "comp_btp001"
         start_date:
@@ -12981,9 +12970,8 @@ components:
           example: 12.50
         unit:
           $ref: '#/components/schemas/MaterialUnit'
-        company_id:
-          type: string
-          example: "comp_001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
         material_warehouses:
           type: array
           items:
@@ -13097,10 +13085,8 @@ components:
         description:
           type: string
           example: "Revenus issus de la facturation client"
-        company_id:
-          type: string
-          description: "ID of the company this income type belongs to"
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateIncomeType:
       required:
         - name
@@ -13133,9 +13119,8 @@ components:
         id:
           type: string
           example: "inc_001"
-        organization_id:
-          type: string
-          example: "org_001"
+        organization:
+          $ref: '#/components/schemas/CrupdateOrganization'
         invoice_reference:
           type: string
           example: "FACT-2024-001"
@@ -13281,9 +13266,8 @@ components:
         id:
           type: string
           example: "loan_001"
-        organization_id:
-          type: string
-          example: "org_001"
+        organization:
+          $ref: '#/components/schemas/CrupdateOrganization'
         interest_rate:
           type: integer
           description: "Annual interest rate in basis points (e.g., 1200 = 12%)"
@@ -14474,10 +14458,8 @@ components:
           type: string
           description: "Serialized new value of the entity"
           example: '{"status":"IN_PROGRESS"}'
-        user_id:
-          type: string
-          description: "ID of the user who made the modification"
-          example: "usr_123456"
+        user:
+          $ref: '#/components/schemas/CrupdateUser'
         modified_at:
           type: string
           format: date-time
@@ -14635,9 +14617,8 @@ components:
         days_per_year:
           type: integer
           example: 30
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateLeaveType:
       type: object
       required:
@@ -14876,9 +14857,8 @@ components:
           example: "2026-06-15"
         priority:
           $ref: '#/components/schemas/TaskPriority'
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
         completed:
           type: boolean
           example: false
@@ -14886,10 +14866,10 @@ components:
           type: string
           format: date-time
           example: "2026-06-15T14:30:00Z"
-        assigned_user_ids:
+        assigned_users:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/CrupdateUser'
           example:
             - "usr_123456"
             - "usr_789012"
@@ -14967,13 +14947,12 @@ components:
           example: "2026-07-01"
         status:
           $ref: '#/components/schemas/ScheduleStatus'
-        company_id:
-          type: string
-          example: "comp_btp001"
-        assigned_user_ids:
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
+        assigned_users:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/CrupdateUser'
           example:
             - "usr_123456"
             - "usr_789012"
@@ -15047,9 +15026,8 @@ components:
         contact_name:
           type: string
           example: "Jean Dupont"
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateSupplier:
       required:
         - name
@@ -15114,9 +15092,8 @@ components:
         contact_name:
           type: string
           example: "John Doe"
-        company_id:
-          type: string
-          example: "comp_btp001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateOrganization:
       required:
         - name
@@ -15165,8 +15142,8 @@ components:
       properties:
         id:
           type: string
-        material_id:
-          type: string
+        material:
+          $ref: '#/components/schemas/CrupdateMaterial'
         quantity:
           type: integer
         unit_price:
@@ -15200,9 +15177,8 @@ components:
         id:
           type: string
           example: "po_001"
-        supplier_id:
-          type: string
-          example: "supplier_001"
+        supplier:
+          $ref: '#/components/schemas/Supplier'
         order_date:
           type: string
           format: date
@@ -15212,12 +15188,10 @@ components:
         total_amount:
           type: number
           example: 5000.00
-        company_id:
-          type: string
-          example: "comp_btp001"
-        job_id:
-          type: string
-          example: "job_001"
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
+        job:
+          $ref: '#/components/schemas/CrupdateJob'
         lines:
           type: array
           items:
@@ -15276,8 +15250,8 @@ components:
       properties:
         id:
           type: string
-        equipment_id:
-          type: string
+        equipment:
+          $ref: '#/components/schemas/CrupdateEquipment'
         description:
           type: string
         scheduled_date:
@@ -15287,8 +15261,8 @@ components:
           type: string
         status:
           $ref: '#/components/schemas/MaintenanceScheduleStatus'
-        company_id:
-          type: string
+        company:
+          $ref: '#/components/schemas/CrupdateCompany'
     CrupdateMaintenanceSchedule:
       type: object
       required:
@@ -15329,10 +15303,8 @@ components:
           example: "notif_001"
         user:
           $ref: '#/components/schemas/CrupdateUser'
-        task_id:
-          type: string
-          nullable: true
-          example: "task_001"
+        task:
+          $ref: '#/components/schemas/CrupdateTask'
         title:
           type: string
           example: "Nouvelle t\u00e2che assign\u00e9e"

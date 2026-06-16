@@ -38,11 +38,7 @@ describe('E2E: Receipts', () => {
     cy.get('[data-testid="input-amount"] input')
       .clear()
       .type(<string>(<unknown>crupdatedData.amount))
-    selectReferenceWithCreate(
-      'input-income_id',
-      'income_id',
-      <string>income1Mock.organization.name,
-    )
+    selectReferenceWithCreate('input-income_id', 'income_id', <string>income1Mock.organization.name)
     cy.get('button[type="submit"]').click({ force: true })
   }
 

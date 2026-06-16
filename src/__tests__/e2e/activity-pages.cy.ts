@@ -311,7 +311,6 @@ describe('E2E: Activity Pages', () => {
     testTravelOperationForm(true))
   it('should navigate and submit travel operation form (mobile)', () =>
     testTravelOperationForm(false))
-
 })
 
 // ==================== TRAVEL OPERATION MATERIALS STOCK DISPLAY ====================
@@ -319,11 +318,9 @@ describe('E2E: Activity Pages', () => {
 function testTravelOperationMaterialsForm(desktop: boolean) {
   if (!desktop) cy.viewport(375, 667)
 
-  cy.intercept(
-    'GET',
-    '**/materials*warehouse_id*',
-    mockSuccessResponse([material1Mock]),
-  ).as('getMaterialsWithStock')
+  cy.intercept('GET', '**/materials*warehouse_id*', mockSuccessResponse([material1Mock])).as(
+    'getMaterialsWithStock',
+  )
 
   navigateTo('/travel_operation?mode=materials')
 
