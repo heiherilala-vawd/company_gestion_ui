@@ -139,10 +139,9 @@ export default function TravelMaterialActivity() {
     }
   }
 
-  const handleQuantityReceivedChange =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setQuantityReceived((prev) => ({ ...prev, [id]: Number(e.target.value) }))
-    }
+  const handleQuantityReceivedChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantityReceived((prev) => ({ ...prev, [id]: Number(e.target.value) }))
+  }
 
   const handleQuantityLostChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantityLost((prev) => ({ ...prev, [id]: Number(e.target.value) }))
@@ -157,8 +156,7 @@ export default function TravelMaterialActivity() {
       if (entityType === 'materials') {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
-          quantity_received:
-            quantityReceived[item.id] ?? item.quantity_received ?? item.quantity,
+          quantity_received: quantityReceived[item.id] ?? item.quantity_received ?? item.quantity,
           quantity_lost: quantityLost[item.id] ?? item.quantity_lost ?? 0,
         }))
         await confirmArrival('travel_materials_arrival', body)

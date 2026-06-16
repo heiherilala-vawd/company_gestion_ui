@@ -27,7 +27,12 @@ export default function IncomeList() {
       <ResponsiveDatagrid
         priorityFields={['organization_id', 'amount', 'invoice_reference', 'description']}
       >
-        <ReferenceField source="organization_id" reference="organizations" label="Organisation" link={false}>
+        <ReferenceField
+          source="organization_id"
+          reference="organizations"
+          label="Organisation"
+          link={false}
+        >
           <TextField source="name" />
         </ReferenceField>
         <NumberField
