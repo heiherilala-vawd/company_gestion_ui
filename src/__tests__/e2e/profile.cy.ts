@@ -10,6 +10,7 @@ describe('E2E: Profile', () => {
       '**/auth/whoami',
       mockSuccessResponse({ ...authResponseMock, ...user1Mock }),
     ).as('whoami')
+    cy.intercept('GET', '**/users/user1_id', mockSuccessResponse(user1Mock)).as('getUser')
     insertInToLocalStorage()
     loginInPage()
     // SPA passthrough for profile routes
