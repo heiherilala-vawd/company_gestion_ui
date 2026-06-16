@@ -42,7 +42,7 @@ export interface CrupdateCars {
 }
 
 export const cars1Mock: Cars = {
-  id: 'cras1_id',
+  id: 'cars1_id',
   immatriculation: 'AB-123-CD',
   type_carburant: 'DIESEL',
   marque: 'Renault',
@@ -72,7 +72,7 @@ export const cars1Mock: Cars = {
 }
 
 export const cars2Mock: Cars = {
-  id: 'cras2_id',
+  id: 'cars2_id',
   immatriculation: 'EF-456-GH',
   type_carburant: 'ESSENCE',
   marque: 'Peugeot',
@@ -105,7 +105,7 @@ export const carsMock: Cars[] = [cars1Mock, cars2Mock]
 
 export const crupdateCarsMock: CrupdateCars[] = [
   {
-    id: 'cras1_id',
+    id: 'cars1_id',
     immatriculation: 'AB-123-CD-Updated',
     type_carburant: 'DIESEL',
     equipment_id: 'eq1_id',
@@ -119,7 +119,7 @@ export const crupdateCarsMock: CrupdateCars[] = [
     statut: 'DISPONIBLE',
   },
   {
-    id: 'cras3_id',
+    id: 'cars3_id',
     immatriculation: 'GH-789-IJ',
     type_carburant: 'HYBRIDE',
     equipment_id: 'eq3_id',
