@@ -71,6 +71,7 @@ const configItems = [
     to: '/organizations',
     color: 'teal' as const,
     desc: 'Gérer organisations',
+    disabled: true,
   },
   {
     label: 'Départements',
