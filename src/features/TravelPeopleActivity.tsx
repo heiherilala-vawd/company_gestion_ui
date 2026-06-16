@@ -60,6 +60,7 @@ const TravelPeopleActivity = () => {
         arrival_date: toInstant(data.arrival_date),
         fee: parseFloat(data.fee) || 0,
       },
+      direct_arrival: false,
       equipment_lines: [],
       material_lines: [],
       people_lines: (data.people_lines || []).map((line: any) => ({

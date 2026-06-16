@@ -63,6 +63,7 @@ const TravelMaterialActivityForm = () => {
         fee: parseFloat(data.fee) || 0,
       },
       equipment_lines: [],
+      direct_arrival: false,
       material_lines: (data.material_lines || []).map((line: any) => ({
         id: line.travel_material_id,
         material: { id: line.material_id },

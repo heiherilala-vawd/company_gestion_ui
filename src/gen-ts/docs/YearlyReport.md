@@ -1,12 +1,14 @@
+
 # YearlyReport
+
 
 ## Properties
 
-| Name                   | Type                                                   |
-| ---------------------- | ------------------------------------------------------ |
-| `year`                 | number                                                 |
-| `jobs_with_financials` | [Array&lt;JobWithFinancials&gt;](JobWithFinancials.md) |
-| `summary`              | [YearlyReportSummary](YearlyReportSummary.md)          |
+Name | Type
+------------ | -------------
+`year` | number
+`jobs_with_financials` | [Array&lt;JobWithFinancials&gt;](JobWithFinancials.md)
+`summary` | [YearlyReportSummary](YearlyReportSummary.md)
 
 ## Example
 
@@ -15,9 +17,9 @@ import type { YearlyReport } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  year: 2024,
-  jobs_with_financials: null,
-  summary: null,
+  "year": 2024,
+  "jobs_with_financials": null,
+  "summary": null,
 } satisfies YearlyReport
 
 console.log(example)
@@ -32,3 +34,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -1,22 +1,24 @@
+
 # EquipmentUsage
+
 
 ## Properties
 
-| Name              | Type                          |
-| ----------------- | ----------------------------- |
-| `comment`         | string                        |
-| `created_at`      | Date                          |
-| `updated_at`      | Date                          |
-| `created_by`      | [AuditUser](AuditUser.md)     |
-| `updated_by`      | [AuditUser](AuditUser.md)     |
-| `id`              | string                        |
-| `equipment_id`    | string                        |
-| `job_id`          | string                        |
-| `start_time`      | Date                          |
-| `end_time`        | Date                          |
-| `source_location` | string                        |
-| `usage_status`    | [UsageStatus](UsageStatus.md) |
-| `used_by`         | string                        |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`equipment_id` | string
+`job_id` | string
+`start_time` | Date
+`end_time` | Date
+`source_location` | string
+`usage_status` | [UsageStatus](UsageStatus.md)
+`used_by` | string
 
 ## Example
 
@@ -52,3 +54,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

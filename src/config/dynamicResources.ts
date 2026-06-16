@@ -12,6 +12,8 @@ const RESOURCE_URL_OVERRIDES: Record<string, string> = {
   equipment_usage: 'equipment_usages',
   material_consumption: 'material_consumptions',
   travel_equipment: 'travel_equipments',
+  travel_materials_arrival: 'travel_materials/arrival',
+  travel_equipments_arrival: 'travel_equipments/arrival',
 }
 
 const getUrlSegment = (resource: string): string => RESOURCE_URL_OVERRIDES[resource] || resource
@@ -45,6 +47,8 @@ export const DYNAMIC_COMPANY_RESOURCES = [
   'organizations',
   'cars',
   'notifications',
+  'travel_materials_arrival',
+  'travel_equipments_arrival',
 ] as const
 
 export type DynamicCompanyResource = (typeof DYNAMIC_COMPANY_RESOURCES)[number]

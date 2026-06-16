@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useGetList } from 'react-admin'
+import { useGetList, useNotify } from 'react-admin'
 import { getMiddleUrl } from '../config/dynamicResources'
-import generateId from '../utili/utils.tsx'
 import {
   Box,
   Button,
@@ -24,6 +22,9 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   InputAdornment,
+  MenuItem,
+  Select,
+  FormControl,
 } from '@mui/material'
 
 import SearchIcon from '@mui/icons-material/Search'
@@ -40,7 +41,7 @@ function cleanFilters(raw: Record<string, string | boolean>) {
 }
 
 export default function TravelMaterialActivity() {
-  useNavigate()
+  const notify = useNotify()
 
   const [entityType, setEntityType] = useState<'materials' | 'equipment'>('materials')
   const [selectedItems, setSelectedItems] = useState<any[]>([])
@@ -51,16 +52,12 @@ export default function TravelMaterialActivity() {
   const [showFilters, setShowFilters] = useState(false)
   const [serverFilters, setServerFilters] = useState<Record<string, string>>({})
   const [showSummary, setShowSummary] = useState(false)
-  const [quantities, setQuantities] = useState<Record<string, number>>({})
-  const [pendingIds, setPendingIds] = useState<{
-    travelId: string
-    expenseId: string
-    materialLineIds: string[]
-  } | null>(null)
+  const [quantityLost, setQuantityLost] = useState<Record<string, number>>({})
+  const [equipmentStatuses, setEquipmentStatuses] = useState<Record<string, string>>({})
 
   const getToken = () => localStorage.getItem('token')
 
-  const putItems = async (resource: string, body: any[]) => {
+  const confirmArrival = async (resource: string, body: any[]) => {
     const token = getToken()
     const url = getMiddleUrl(resource)
     const response = await fetch(url, {
@@ -71,11 +68,14 @@ export default function TravelMaterialActivity() {
       },
       body: JSON.stringify(body),
     })
-    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
+    }
     return response.json()
   }
 
-  const resource = entityType === 'materials' ? 'material_warehouse' : 'equipment'
+  const resource = entityType === 'materials' ? 'travel_materials' : 'travel_equipment'
   const queryFilters = useMemo(
     () => cleanFilters({ ...serverFilters, not_arrived: true }),
     [serverFilters],
@@ -132,80 +132,46 @@ export default function TravelMaterialActivity() {
       setPage(0)
       setServerFilters({})
       setSearch('')
-      setQuantities({})
+      setQuantityLost({})
+      setEquipmentStatuses({})
     }
   }
 
-  const handleQuantityChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantities((prev) => ({ ...prev, [id]: Number(e.target.value) }))
+  const handleQuantityLostChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantityLost((prev) => ({ ...prev, [id]: Number(e.target.value) }))
+  }
+
+  const handleEquipmentStatusChange = (id: string) => (e: any) => {
+    setEquipmentStatuses((prev) => ({ ...prev, [id]: e.target.value }))
   }
 
   const handleValidate = async () => {
-    const token = getToken()
-
     try {
-      if (entityType === 'equipment') {
+      if (entityType === 'materials') {
         const body = selectedItems.map((item: any) => ({
-          id: item?.id,
-          name: item.name,
-          description: item.description,
-          warehouse_id: selectedLocation,
-          floor_number: item.floor_number,
-          storage_number: item.storage_number,
-          comment: item.comment,
+          id: item.id,
+          quantity_received: item.quantity - (quantityLost[item.id] || 0),
+          quantity_lost: quantityLost[item.id] || 0,
         }))
-        const result = await putItems('equipment', body)
-        console.log('Equipment updated:', result)
+        await confirmArrival('travel_materials_arrival', body)
       } else {
-        const departureWarehouseId = selectedItems[0]?.warehouse?.id
-        if (!departureWarehouseId) {
-          console.error('No departure warehouse found')
-          return
-        }
-
-        const payload = {
-          comment: null,
-          travel: {
-            id: pendingIds!.travelId,
-            expense_id: pendingIds!.expenseId,
-            departure_location: { id: departureWarehouseId },
-            arrival_location: { id: selectedLocation },
-            departure_date: new Date().toISOString(),
-            arrival_date: new Date().toISOString(),
-            fee: 0,
-          },
-          material_lines: selectedItems.map((item: any, index: number) => ({
-            id: pendingIds!.materialLineIds[index],
-            material: { id: item.material?.id },
-            quantity: quantities[item.id] || 0,
-          })),
-          equipment_lines: [],
-          people_lines: [],
-        }
-
-        const url = getMiddleUrl('travel_operations')
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify(payload),
-        })
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}))
-          throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
-        }
-        console.log('Travel operation created:', await response.json())
+        const body = selectedItems.map((item: any) => ({
+          id: item.id,
+          status: equipmentStatuses[item.id] || 'ARRIVED',
+        }))
+        await confirmArrival('travel_equipments_arrival', body)
       }
-    } catch (err) {
+      notify('Réception confirmée avec succès !', { type: 'success' })
+    } catch (err: any) {
       console.error('Validation failed:', err)
+      notify(`Erreur : ${err.message}`, { type: 'error' })
     }
 
     setShowSummary(false)
     setSelectedItems([])
     setSelectedLocation('')
-    setQuantities({})
+    setQuantityLost({})
+    setEquipmentStatuses({})
     refetch()
   }
 
@@ -297,10 +263,10 @@ export default function TravelMaterialActivity() {
           }}
         >
           <TextField
-            label="Description"
+            label="Commentaire"
             size="small"
-            value={serverFilters.description || ''}
-            onChange={handleFilterChange('description')}
+            value={serverFilters.comment || ''}
+            onChange={handleFilterChange('comment')}
           />
         </Box>
       )}
@@ -320,18 +286,17 @@ export default function TravelMaterialActivity() {
                   </TableCell>
                   {entityType === 'materials' ? (
                     <>
-                      <TableCell sx={{ fontWeight: 600 }}>Lieu</TableCell>
                       <TableCell sx={{ fontWeight: 600 }}>Matériau</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Quantité actuelle</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Quantité à déplacer</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Quantité</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Qté reçue</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Qté perdue</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
                     </>
                   ) : (
                     <>
-                      <TableCell sx={{ fontWeight: 600 }}>Nom</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Description</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Entrepôt</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Étage</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Emplacement</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Équipement</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Statut</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
                     </>
                   )}
                   <TableCell sx={{ fontWeight: 600 }}>Créé le</TableCell>
@@ -343,45 +308,58 @@ export default function TravelMaterialActivity() {
                     key={item.id}
                     hover
                     selected={selectedItems.some((i) => i.id === item.id)}
+                    onClick={() => toggleSelect(item)}
+                    sx={{ cursor: 'pointer' }}
                   >
-                    <TableCell
-                      padding="checkbox"
-                      sx={{ cursor: 'pointer' }}
-                      onClick={() => toggleSelect(item)}
-                    >
+                    <TableCell padding="checkbox">
                       <input
                         type="checkbox"
                         checked={selectedItems.some((i) => i.id === item.id)}
-                        onChange={() => toggleSelect(item)}
+                        readOnly
                         data-testid={'checkbox-' + item.id}
                       />
                     </TableCell>
                     {entityType === 'materials' ? (
                       <>
-                        <TableCell>{item.warehouse?.name}</TableCell>
                         <TableCell>{item.material?.name}</TableCell>
                         <TableCell>
                           {item.quantity} {item.material?.unit}
                         </TableCell>
+                        <TableCell>{item.quantity_received ?? 0}</TableCell>
                         <TableCell>
                           <TextField
                             type="number"
                             size="small"
-                            value={quantities[item.id] ?? ''}
-                            onChange={handleQuantityChange(item.id)}
+                            value={quantityLost[item.id] ?? ''}
+                            onChange={handleQuantityLostChange(item.id)}
                             inputProps={{ min: 0, style: { width: 70 } }}
+                            disabled={!selectedItems.some((i) => i.id === item.id)}
                           />
                         </TableCell>
                       </>
                     ) : (
                       <>
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell>{item.description}</TableCell>
-                        <TableCell>{item.warehouse?.name}</TableCell>
-                        <TableCell>{item.floor_number}</TableCell>
-                        <TableCell>{item.storage_number}</TableCell>
+                        <TableCell>{item.equipment?.name}</TableCell>
+                        <TableCell>
+                          <FormControl size="small" sx={{ minWidth: 140 }}>
+                            <Select
+                              value={equipmentStatuses[item.id] || 'ARRIVED'}
+                              onChange={handleEquipmentStatusChange(item.id)}
+                              disabled={!selectedItems.some((i) => i.id === item.id)}
+                              data-testid={'status-select-' + item.id}
+                            >
+                              <MenuItem value="ARRIVED">Arrivé</MenuItem>
+                              <MenuItem value="LOST">Perdu</MenuItem>
+                              <MenuItem value="DAMAGED">Endommagé</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </TableCell>
                       </>
                     )}
+                    <TableCell>
+                      {item.travel?.departure_location?.name} →{' '}
+                      {item.travel?.arrival_location?.name}
+                    </TableCell>
                     <TableCell>
                       {item.created_at ? new Date(item.created_at).toLocaleDateString('fr-FR') : ''}
                     </TableCell>
@@ -409,15 +387,9 @@ export default function TravelMaterialActivity() {
         variant="contained"
         color="primary"
         disabled={selectedItems.length === 0 || !selectedLocation}
-        onClick={() => {
-          setPendingIds({
-            travelId: generateId(),
-            expenseId: generateId(),
-            materialLineIds: selectedItems.map(() => generateId()),
-          })
-          setShowSummary(true)
-        }}
+        onClick={() => setShowSummary(true)}
         sx={{ mt: 2 }}
+        data-testid="validate-btn"
       >
         Effectuer la validation ({selectedItems.length})
       </Button>
@@ -435,15 +407,15 @@ export default function TravelMaterialActivity() {
           {selectedItems.map((item: any) => (
             <Typography key={item.id} sx={{ mb: 0.5 }}>
               {entityType === 'materials'
-                ? `• ${item.warehouse?.name || '?'} → ${item.material?.name || '?'} — Qté: ${quantities[item.id] || 0}`
-                : `• ${item.name || item.description} → ${locationName || selectedLocation}`}
+                ? `• ${item.material?.name || '?'} — Perdu: ${quantityLost[item.id] || 0} / ${item.quantity}`
+                : `• ${item.equipment?.name || item.equipment?.id} → ${equipmentStatuses[item.id] || 'ARRIVED'}`}
             </Typography>
           ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowSummary(false)}>Annuler</Button>
-          <Button variant="contained" onClick={handleValidate}>
-            Effectuer la validation
+          <Button variant="contained" onClick={handleValidate} data-testid="dialog-confirm-arrival">
+            Confirmer la réception
           </Button>
         </DialogActions>
       </Dialog>

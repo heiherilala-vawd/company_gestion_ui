@@ -1,4 +1,9 @@
-import { TravelEquipment, CrupdateTravelEquipment, TransportStatus } from '../../../gen-ts/src'
+import {
+  TravelEquipment,
+  CrupdateTravelEquipment,
+  TransportStatus,
+  ConfirmEquipmentArrival,
+} from '../../../gen-ts/src'
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { equipment1Mock, equipment2Mock } from './equipment-api.ts'
 import { user1Mock } from './users-api.ts'
@@ -55,6 +60,21 @@ export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
     comment: 'New equipment transport',
   },
 ]
+
+export const notArrivedTravelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock]
+
+export const confirmEquipmentArrivals = (
+  confirmations: ConfirmEquipmentArrival[],
+): TravelEquipment[] => {
+  return confirmations.map((c) => {
+    const original = travelEquipmentMock.find((te) => te.id === c.id) || travelEquipment1Mock
+    return {
+      ...original,
+      status: c.status,
+      updated_at: new Date().toISOString(),
+    }
+  })
+}
 
 export const createOrUpdateTravelEquipments = (
   travelEquipments: CrupdateTravelEquipment[],

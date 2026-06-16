@@ -1,24 +1,26 @@
+
 # Leave
+
 
 ## Properties
 
-| Name            | Type                            |
-| --------------- | ------------------------------- |
-| `comment`       | string                          |
-| `created_at`    | Date                            |
-| `updated_at`    | Date                            |
-| `created_by`    | [AuditUser](AuditUser.md)       |
-| `updated_by`    | [AuditUser](AuditUser.md)       |
-| `id`            | string                          |
-| `user`          | [CrupdateUser](CrupdateUser.md) |
-| `leave_type`    | [LeaveType](LeaveType.md)       |
-| `start_date`    | Date                            |
-| `end_date`      | Date                            |
-| `duration_days` | number                          |
-| `status`        | [LeaveStatus](LeaveStatus.md)   |
-| `reason`        | string                          |
-| `approved_by`   | [CrupdateUser](CrupdateUser.md) |
-| `approved_at`   | Date                            |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`user` | [CrupdateUser](CrupdateUser.md)
+`leave_type` | [LeaveType](LeaveType.md)
+`start_date` | Date
+`end_date` | Date
+`duration_days` | number
+`status` | [LeaveStatus](LeaveStatus.md)
+`reason` | string
+`approved_by` | [CrupdateUser](CrupdateUser.md)
+`approved_at` | Date
 
 ## Example
 
@@ -56,3 +58,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

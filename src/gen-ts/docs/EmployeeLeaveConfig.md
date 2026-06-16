@@ -1,20 +1,22 @@
+
 # EmployeeLeaveConfig
+
 
 ## Properties
 
-| Name                      | Type                      |
-| ------------------------- | ------------------------- |
-| `comment`                 | string                    |
-| `created_at`              | Date                      |
-| `updated_at`              | Date                      |
-| `created_by`              | [AuditUser](AuditUser.md) |
-| `updated_by`              | [AuditUser](AuditUser.md) |
-| `id`                      | string                    |
-| `hire_date`               | Date                      |
-| `contract_type`           | string                    |
-| `vacation_days_per_month` | number                    |
-| `end_date`                | Date                      |
-| `weekly_hours`            | number                    |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`hire_date` | Date
+`contract_type` | string
+`vacation_days_per_month` | number
+`end_date` | Date
+`weekly_hours` | number
 
 ## Example
 
@@ -48,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

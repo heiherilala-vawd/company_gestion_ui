@@ -1,17 +1,19 @@
+
 # CrupdateTravelEquipment
+
 
 ## Properties
 
-| Name               | Type                                  |
-| ------------------ | ------------------------------------- |
-| `comment`          | string                                |
-| `id`               | string                                |
-| `travel_id`        | string                                |
-| `equipment`        | string                                |
-| `quantity`         | number                                |
-| `status`           | [TransportStatus](TransportStatus.md) |
-| `arrival_date`     | Date                                  |
-| `arrival_location` | string                                |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`travel_id` | string
+`equipment` | string
+`quantity` | number
+`status` | [TransportStatus](TransportStatus.md)
+`arrival_date` | Date
+`arrival_location` | string
 
 ## Example
 
@@ -42,3 +44,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

@@ -1,11 +1,13 @@
+
 # PasswordChangeRequest
+
 
 ## Properties
 
-| Name           | Type   |
-| -------------- | ------ |
-| `old_password` | string |
-| `new_password` | string |
+Name | Type
+------------ | -------------
+`old_password` | string
+`new_password` | string
 
 ## Example
 
@@ -14,8 +16,8 @@ import type { PasswordChangeRequest } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  old_password: oldPassword123,
-  new_password: newSecurePassword123,
+  "old_password": oldPassword123,
+  "new_password": newSecurePassword123,
 } satisfies PasswordChangeRequest
 
 console.log(example)
@@ -30,3 +32,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
