@@ -20,7 +20,7 @@ export default function EmployeePaymentShow() {
           options={{ style: 'currency', currency: 'MGA' }}
         />
         <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+        <TextField source="expense.job.description" label="Travail" />
         <BooleanField source="is_for_team" label="Paiement pour équipe" />
         <FunctionField
           label="Employés"

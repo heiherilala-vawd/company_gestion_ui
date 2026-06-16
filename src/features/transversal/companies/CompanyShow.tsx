@@ -57,7 +57,6 @@ export default function CompanyShow() {
           ) : record?.id ? (
             <ReferenceManyField reference="jobs" target="company_id" record={record} perPage={25}>
               <TextField source="id" />
-              <TextField source="company_id" label="ID Entreprise" />
               <TextField source="description" label="Description" />
               <DateField source="contract_signature_date" label="Signature contrat" />
               <DateField source="start_date" label="Date début" />

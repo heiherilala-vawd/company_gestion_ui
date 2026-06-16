@@ -11,7 +11,7 @@ export default function TravelExpenseShow() {
           options={{ style: 'currency', currency: 'MGA' }}
         />
         <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+        <TextField source="expense.job.description" label="Travail" />
         <TextField source="departure_location.name" label="Lieu de départ" />
         <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <DateField source="departure_date" label="Date de départ" showTime />

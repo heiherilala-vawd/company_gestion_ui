@@ -11,7 +11,7 @@ export default function PurchaseShow() {
           options={{ style: 'currency', currency: 'MGA' }}
         />
         <TextField source="expense.comment" label="Commentaire" />
-        <TextField source="expense.job_id" label="Id travail" />
+        <TextField source="expense.job.description" label="Travail" />
         <TextField source="supplier.name" label="Fournisseur" />
         <TextField source="equipment.name" label="Équipement" />
         <TextField source="material.name" label="Matériau" />

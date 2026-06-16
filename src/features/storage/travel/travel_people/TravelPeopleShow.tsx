@@ -19,9 +19,8 @@ export default function TravelPeopleShow() {
           <DateField source="travel.departure_date" label="Date de départ transport" />
           <DateField source="travel.arrival_date" label="Date d'arivé transport" />
         </SimpleShowLayout>
-        <TextField source="user.id" label="Id de la personne" />
         <FunctionField
-          label="Nom de la personne"
+          label="Personne"
           render={(record) => (
             <span>
               {record.user?.first_name} {record.user?.last_name}

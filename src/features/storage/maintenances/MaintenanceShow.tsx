@@ -12,7 +12,7 @@ export default function MaintenanceShow() {
     <Show title="Détails maintenance">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="equipment_id" label="Équipement" />
+        <TextField source="equipment.name" label="Équipement" />
         <TextField source="description" label="Description" />
         <NumberField
           source="expense.amount"

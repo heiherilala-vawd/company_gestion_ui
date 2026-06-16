@@ -5,8 +5,8 @@ export default function EquipmentUsageShow() {
     <Show title="Détails utilisation équipement">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="equipment_id" label="Équipement" />
-        <TextField source="job_id" label="Travail" />
+        <TextField source="equipment.name" label="Équipement" />
+        <TextField source="job.description" label="Travail" />
         <TextField source="start_time" label="Début" />
         <TextField source="end_time" label="Fin" />
         <DateField source="created_at" label="Créé le" showTime />

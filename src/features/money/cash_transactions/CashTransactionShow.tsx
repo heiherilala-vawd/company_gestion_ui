@@ -13,7 +13,7 @@ export default function CashTransactionShow() {
     <Show title="Détails transaction caisse">
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="cash_account_id" label="Compte caisse" />
+        <TextField source="cash_account.name" label="Compte caisse" />
         <NumberField
           source="amount"
           label="Montant"
