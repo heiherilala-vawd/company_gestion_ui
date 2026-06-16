@@ -24,7 +24,7 @@ const TYPE_CARBURANT_CHOICES = [
   { id: 'HYBRIDE', name: 'Hybride' },
 ]
 
-const CrasFilters = [
+const CarsFilters = [
   <SearchInput source="q" alwaysOn key="q" />,
   <TextInput source="immatriculation" label="Immatriculation" key="immatriculation" />,
   <TextInput source="marque" label="Marque" key="marque" />,
@@ -37,9 +37,9 @@ const CrasFilters = [
   </ReferenceInput>,
 ]
 
-export default function CrasList() {
+export default function CarsList() {
   return (
-    <List resource="cras" filters={CrasFilters} perPage={25}>
+    <List resource="cars" filters={CarsFilters} perPage={25}>
       <ResponsiveDatagrid priorityFields={['immatriculation', 'marque', 'modele', 'statut']}>
         <FunctionField label="Immatriculation" render={(record) => record.immatriculation || ''} />
         <FunctionField label="Marque" render={(record) => record.marque || ''} />

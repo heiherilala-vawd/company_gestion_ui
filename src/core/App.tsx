@@ -41,7 +41,7 @@ import EquipmentUsageResource from '../features/storage/equipment_usage'
 import MaterialConsumptionResource from '../features/storage/material_consumption'
 import MaterialWarehouseResource from '../features/storage/material_warehouse'
 import MaintenanceResource from '../features/storage/maintenances'
-import CrasResource from '../features/storage/cras'
+import CarsResource from '../features/storage/cars'
 import LeaveBalanceResource from '../features/hr/leave_balances'
 import SupplierResource from '../features/transversal/suppliers'
 import PurchaseOrderResource from '../features/transversal/purchase_orders'
@@ -224,7 +224,7 @@ const ThemedAdmin = () => {
                   <Resource name="material_consumption" {...MaterialConsumptionResource} />
                   <Resource name="material_warehouse" {...MaterialWarehouseResource} />
                   <Resource name="maintenances" {...MaintenanceResource} />
-                  <Resource name="cras" {...CrasResource} />
+                  <Resource name="cars" {...CarsResource} />
                   <Resource name="histories" {...HistoryResource} />
                   <Resource name="leaves" {...LeavesResource} />
                 </Admin>

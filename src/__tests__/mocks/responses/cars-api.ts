@@ -2,7 +2,7 @@ import { user1Mock } from './users-api.ts'
 import { warehouse1Mock } from './warehouses-api.ts'
 import { toAuditUserMapper } from '../../support/mappers.ts'
 
-export interface Cras {
+export interface Cars {
   id: string
   immatriculation: string
   type_carburant: string
@@ -20,7 +20,7 @@ export interface Cras {
   updated_by: ReturnType<typeof toAuditUserMapper>
 }
 
-export interface CrupdateCras {
+export interface CrupdateCars {
   id: string
   immatriculation: string
   type_carburant: string
@@ -41,7 +41,7 @@ export interface CrupdateCras {
   statut?: string
 }
 
-export const cras1Mock: Cras = {
+export const cars1Mock: Cars = {
   id: 'cras1_id',
   immatriculation: 'AB-123-CD',
   type_carburant: 'DIESEL',
@@ -71,7 +71,7 @@ export const cras1Mock: Cras = {
   updated_by: toAuditUserMapper(user1Mock),
 }
 
-export const cras2Mock: Cras = {
+export const cars2Mock: Cars = {
   id: 'cras2_id',
   immatriculation: 'EF-456-GH',
   type_carburant: 'ESSENCE',
@@ -101,9 +101,9 @@ export const cras2Mock: Cras = {
   updated_by: toAuditUserMapper(user1Mock),
 }
 
-export const crasMock: Cras[] = [cras1Mock, cras2Mock]
+export const carsMock: Cars[] = [cars1Mock, cars2Mock]
 
-export const crupdateCrasMock: CrupdateCras[] = [
+export const crupdateCarsMock: CrupdateCars[] = [
   {
     id: 'cras1_id',
     immatriculation: 'AB-123-CD-Updated',
@@ -134,8 +134,8 @@ export const crupdateCrasMock: CrupdateCras[] = [
   },
 ]
 
-export const createOrUpdateCras = (crasData: CrupdateCras[]): Cras[] => {
-  return crasData.map((c) => ({
+export const createOrUpdateCars = (carsData: CrupdateCars[]): Cars[] => {
+  return carsData.map((c) => ({
     ...c,
     id: 'newId',
     equipment: {
@@ -152,7 +152,7 @@ export const createOrUpdateCras = (crasData: CrupdateCras[]): Cras[] => {
       description: c.warehouse_description || warehouse1Mock.description,
       job_id: c.job_id || warehouse1Mock.job?.id,
     },
-    created_at: c.id ? cras1Mock.created_at : new Date().toISOString(),
+    created_at: c.id ? cars1Mock.created_at : new Date().toISOString(),
     updated_at: new Date().toISOString(),
     created_by: toAuditUserMapper(user1Mock),
     updated_by: toAuditUserMapper(user1Mock),

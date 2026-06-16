@@ -12,7 +12,7 @@ const allItems = [
   {
     label: 'Véhicules',
     icon: DirectionsCarIcon,
-    to: '/cras',
+    to: '/cars',
     color: 'sapphire' as const,
     desc: 'Gérer',
   },

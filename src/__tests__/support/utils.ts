@@ -95,9 +95,9 @@ import {
   monetaryTimeSeriesMock,
   organization1Mock,
   organizationsMock,
-  cras1Mock,
-  cras2Mock,
-  crasMock,
+  cars1Mock,
+  cars2Mock,
+  carsMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -401,9 +401,9 @@ export function interceptGeneralEndpoint(): void {
   })
 
   // ---------------------- CRAS (Véhicules) ------------------------------------------
-  cy.intercept('GET', '**/cras*', mockSuccessResponse(crasMock)).as('getCras')
-  cy.intercept('GET', '**/cras/cras1_id*', mockSuccessResponse(cras1Mock)).as('getCrasDetail')
-  cy.intercept('GET', '**/cras/cras2_id*', mockSuccessResponse(cras2Mock)).as('getCrasDetail2')
+  cy.intercept('GET', '**/cras*', mockSuccessResponse(carsMock)).as('getCars')
+  cy.intercept('GET', '**/cras/cras1_id*', mockSuccessResponse(cars1Mock)).as('getCarsDetail')
+  cy.intercept('GET', '**/cras/cras2_id*', mockSuccessResponse(cars2Mock)).as('getCarsDetail2')
 
   // ---------------------- CASH TRANSACTIONS ------------------------------------------
   cy.intercept('GET', '**/cash_transactions*', mockSuccessResponse(cashTransactionsMock)).as(
@@ -534,7 +534,7 @@ export function interceptGeneralEndpoint(): void {
     '/hr-dashboard',
     '/monetary-dashboard',
     '/organizations',
-    '/cras',
+    '/cars',
     '/profile',
     '/profile/password',
   ]
