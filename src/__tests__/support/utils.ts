@@ -98,6 +98,10 @@ import {
   cars1Mock,
   cars2Mock,
   carsMock,
+  notArrivedTravelMaterialsMock,
+  notArrivedTravelEquipmentsMock,
+  confirmMaterialArrivals,
+  confirmEquipmentArrivals,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -204,6 +208,14 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/travel_materials/tm1_id*', mockSuccessResponse(travelMaterials1Mock)).as(
     'getTravelMaterial',
   )
+  cy.intercept(
+    'GET',
+    '**/travel_materials*not_arrived*',
+    mockSuccessResponse(notArrivedTravelMaterialsMock),
+  ).as('getTravelMaterialsNotArrived')
+  cy.intercept('PUT', '**/travel_materials/arrival', (req) => {
+    req.reply(mockSuccessResponse(confirmMaterialArrivals(req.body)))
+  }).as('confirmMaterialArrival')
 
   // ---------------------- TRAVEL PEOPLES ------------------------------------------
   cy.intercept('GET', '**/travel_people*', mockSuccessResponse(travelPeoplesMock)).as(
@@ -220,6 +232,14 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/travel_equipment/teq1_id*', mockSuccessResponse(travelEquipment1Mock)).as(
     'getTravelEquipment',
   )
+  cy.intercept(
+    'GET',
+    '**/travel_equipment*not_arrived*',
+    mockSuccessResponse(notArrivedTravelEquipmentsMock),
+  ).as('getTravelEquipmentsNotArrived')
+  cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
+    req.reply(mockSuccessResponse(confirmEquipmentArrivals(req.body)))
+  }).as('confirmEquipmentArrival')
 
   // ---------------------- LOANS ------------------------------------------
   cy.intercept('GET', '**/loans*', mockSuccessResponse(loansActiveMock)).as('getLoansGeneral')

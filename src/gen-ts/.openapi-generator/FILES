@@ -23,6 +23,8 @@ docs/CompanyApi.md
 docs/CompanyFixedCost.md
 docs/CompanyFixedCostApi.md
 docs/CompanyType.md
+docs/ConfirmEquipmentArrival.md
+docs/ConfirmMaterialArrival.md
 docs/CrupdateBankFee.md
 docs/CrupdateBudgetLine.md
 docs/CrupdateCashAccount.md
@@ -137,6 +139,7 @@ docs/OtherExpense.md
 docs/OtherExpenseApi.md
 docs/OtherExpenseType.md
 docs/OtherExpenseTypeApi.md
+docs/PaginatedResponse.md
 docs/PasswordChangeRequest.md
 docs/PaymentType.md
 docs/Purchase.md
@@ -252,6 +255,8 @@ src/models/Comment.ts
 src/models/Company.ts
 src/models/CompanyFixedCost.ts
 src/models/CompanyType.ts
+src/models/ConfirmEquipmentArrival.ts
+src/models/ConfirmMaterialArrival.ts
 src/models/CrupdateBankFee.ts
 src/models/CrupdateBudgetLine.ts
 src/models/CrupdateCashAccount.ts
@@ -344,6 +349,7 @@ src/models/Notification.ts
 src/models/Organization.ts
 src/models/OtherExpense.ts
 src/models/OtherExpenseType.ts
+src/models/PaginatedResponse.ts
 src/models/PasswordChangeRequest.ts
 src/models/PaymentType.ts
 src/models/Purchase.ts

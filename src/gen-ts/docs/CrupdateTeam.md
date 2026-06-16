@@ -1,14 +1,17 @@
+
 # CrupdateTeam
+
 
 ## Properties
 
-| Name         | Type                |
-| ------------ | ------------------- |
-| `comment`    | string              |
-| `id`         | string              |
-| `name`       | string              |
-| `leader_id`  | string              |
-| `member_ids` | Array&lt;string&gt; |
+Name | Type
+------------ | -------------
+`comment` | string
+`id` | string
+`name` | string
+`leader_id` | string
+`job_id` | string
+`member_ids` | Array&lt;string&gt;
 
 ## Example
 
@@ -21,6 +24,7 @@ const example = {
   "id": team_001,
   "name": Équipe chantier A,
   "leader_id": usr_123456,
+  "job_id": job_001,
   "member_ids": ["usr_123456","usr_789012"],
 } satisfies CrupdateTeam
 
@@ -36,3 +40,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

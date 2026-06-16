@@ -2,12 +2,14 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                                     | HTTP request                                                                       | Description                                        |
-| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [**crupdateLoanRepayments**](LoanRepaymentApi.md#crupdateloanrepayments)   | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments         | Create new loan repayments or update existing ones |
-| [**deleteLoanRepaymentById**](LoanRepaymentApi.md#deleteloanrepaymentbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments/{id} | Delete loan repayment by identifier                |
-| [**getLoanRepaymentById**](LoanRepaymentApi.md#getloanrepaymentbyid)       | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments/{id}    | Get loan repayment by identifier                   |
-| [**getLoanRepayments**](LoanRepaymentApi.md#getloanrepayments)             | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments         | Get all loan repayments                            |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**crupdateLoanRepayments**](LoanRepaymentApi.md#crupdateloanrepayments) | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments | Create new loan repayments or update existing ones |
+| [**deleteLoanRepaymentById**](LoanRepaymentApi.md#deleteloanrepaymentbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments/{id} | Delete loan repayment by identifier |
+| [**getLoanRepaymentById**](LoanRepaymentApi.md#getloanrepaymentbyid) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments/{id} | Get loan repayment by identifier |
+| [**getLoanRepayments**](LoanRepaymentApi.md#getloanrepayments) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/loan_repayments | Get all loan repayments |
+
+
 
 ## crupdateLoanRepayments
 
@@ -26,7 +28,7 @@ import type { CrupdateLoanRepaymentsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -59,13 +61,14 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name                      | Type                           | Description | Notes                                |
-| ------------------------- | ------------------------------ | ----------- | ------------------------------------ |
-| **userId**                | `string`                       |             | [Defaults to `undefined`]            |
-| **companyId**             | `string`                       |             | [Defaults to `undefined`]            |
-| **jobId**                 | `string`                       |             | [Defaults to `undefined`]            |
-| **crupdateLoanRepayment** | `Array<CrupdateLoanRepayment>` |             |                                      |
-| **loanId**                | `string`                       |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **crupdateLoanRepayment** | `Array<CrupdateLoanRepayment>` |  | |
+| **loanId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -80,18 +83,19 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                            | Response headers |
-| ----------- | -------------------------------------- | ---------------- |
-| **200**     | The created or updated loan repayments | -                |
-| **400**     | Bad request                            | -                |
-| **403**     | Forbidden                              | -                |
-| **404**     | Not found                              | -                |
-| **429**     | Too many requests to the API           | -                |
-| **500**     | Internal server error                  | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated loan repayments |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## deleteLoanRepaymentById
 
@@ -102,16 +106,19 @@ Delete loan repayment by identifier
 ### Example
 
 ```ts
-import { Configuration, LoanRepaymentApi } from 'api-client'
-import type { DeleteLoanRepaymentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  LoanRepaymentApi,
+} from 'api-client';
+import type { DeleteLoanRepaymentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new LoanRepaymentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new LoanRepaymentApi(config);
 
   const body = {
     // string
@@ -124,29 +131,30 @@ async function example() {
     id: repayment_001,
     // string (optional)
     loanId: loan_001,
-  } satisfies DeleteLoanRepaymentByIdRequest
+  } satisfies DeleteLoanRepaymentByIdRequest;
 
   try {
-    const data = await api.deleteLoanRepaymentById(body)
-    console.log(data)
+    const data = await api.deleteLoanRepaymentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                                |
-| ------------- | -------- | ----------- | ------------------------------------ |
-| **userId**    | `string` |             | [Defaults to `undefined`]            |
-| **companyId** | `string` |             | [Defaults to `undefined`]            |
-| **jobId**     | `string` |             | [Defaults to `undefined`]            |
-| **id**        | `string` |             | [Defaults to `undefined`]            |
-| **loanId**    | `string` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **loanId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -161,18 +169,19 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                         | Response headers |
-| ----------- | ----------------------------------- | ---------------- |
-| **204**     | Loan repayment deleted successfully | -                |
-| **400**     | Bad request                         | -                |
-| **403**     | Forbidden                           | -                |
-| **404**     | Not found                           | -                |
-| **429**     | Too many requests to the API        | -                |
-| **500**     | Internal server error               | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Loan repayment deleted successfully |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## getLoanRepaymentById
 
@@ -183,16 +192,19 @@ Get loan repayment by identifier
 ### Example
 
 ```ts
-import { Configuration, LoanRepaymentApi } from 'api-client'
-import type { GetLoanRepaymentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  LoanRepaymentApi,
+} from 'api-client';
+import type { GetLoanRepaymentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new LoanRepaymentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new LoanRepaymentApi(config);
 
   const body = {
     // string
@@ -205,29 +217,30 @@ async function example() {
     id: repayment_001,
     // string (optional)
     loanId: loan_001,
-  } satisfies GetLoanRepaymentByIdRequest
+  } satisfies GetLoanRepaymentByIdRequest;
 
   try {
-    const data = await api.getLoanRepaymentById(body)
-    console.log(data)
+    const data = await api.getLoanRepaymentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                                |
-| ------------- | -------- | ----------- | ------------------------------------ |
-| **userId**    | `string` |             | [Defaults to `undefined`]            |
-| **companyId** | `string` |             | [Defaults to `undefined`]            |
-| **jobId**     | `string` |             | [Defaults to `undefined`]            |
-| **id**        | `string` |             | [Defaults to `undefined`]            |
-| **loanId**    | `string` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **loanId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -242,38 +255,42 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                   | Response headers |
-| ----------- | ----------------------------- | ---------------- |
-| **200**     | The identified loan repayment | -                |
-| **400**     | Bad request                   | -                |
-| **403**     | Forbidden                     | -                |
-| **404**     | Not found                     | -                |
-| **429**     | Too many requests to the API  | -                |
-| **500**     | Internal server error         | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The identified loan repayment |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getLoanRepayments
 
-> Array&lt;LoanRepayment&gt; getLoanRepayments(userId, companyId, jobId, loanId, page, pageSize)
+> PaginatedResponse getLoanRepayments(userId, companyId, jobId, loanId, page, pageSize)
 
 Get all loan repayments
 
 ### Example
 
 ```ts
-import { Configuration, LoanRepaymentApi } from 'api-client'
-import type { GetLoanRepaymentsRequest } from 'api-client'
+import {
+  Configuration,
+  LoanRepaymentApi,
+} from 'api-client';
+import type { GetLoanRepaymentsRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new LoanRepaymentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new LoanRepaymentApi(config);
 
   const body = {
     // string
@@ -288,34 +305,35 @@ async function example() {
     page: 1,
     // number (optional)
     pageSize: 20,
-  } satisfies GetLoanRepaymentsRequest
+  } satisfies GetLoanRepaymentsRequest;
 
   try {
-    const data = await api.getLoanRepayments(body)
-    console.log(data)
+    const data = await api.getLoanRepayments(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                                |
-| ------------- | -------- | ----------- | ------------------------------------ |
-| **userId**    | `string` |             | [Defaults to `undefined`]            |
-| **companyId** | `string` |             | [Defaults to `undefined`]            |
-| **jobId**     | `string` |             | [Defaults to `undefined`]            |
-| **loanId**    | `string` |             | [Optional] [Defaults to `undefined`] |
-| **page**      | `number` |             | [Optional] [Defaults to `undefined`] |
-| **pageSize**  | `number` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **loanId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**Array&lt;LoanRepayment&gt;**](LoanRepayment.md)
+[**PaginatedResponse**](PaginatedResponse.md)
 
 ### Authorization
 
@@ -326,15 +344,16 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of loan repayments      | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of loan repayments |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

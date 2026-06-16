@@ -16,6 +16,7 @@ export const travelMaterials1Mock: TravelMaterials = {
   material: toCrupdateMaterialMapper(material1Mock),
   quantity: 10,
   quantity_received: 8,
+  quantity_lost: 0,
   comment: 'Cement bags for construction',
   created_at: '2022-02-11T10:00:00Z',
   updated_at: '2022-02-15T14:00:00Z',
@@ -56,6 +57,22 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
     comment: 'New material shipment',
   },
 ]
+
+export const notArrivedTravelMaterialsMock: TravelMaterials[] = [travelMaterials1Mock]
+
+export const confirmMaterialArrivals = (
+  confirmations: Array<{ id: string; quantity_received?: number; quantity_lost?: number }>,
+): TravelMaterials[] => {
+  return confirmations.map((c) => {
+    const original = travelMaterialsMock.find((tm) => tm.id === c.id) || travelMaterials1Mock
+    return {
+      ...original,
+      quantity_received: c.quantity_received ?? original.quantity_received,
+      quantity_lost: c.quantity_lost ?? original.quantity_lost ?? 0,
+      updated_at: new Date().toISOString(),
+    }
+  })
+}
 
 export const createOrUpdateTravelMaterials = (
   travelMaterials: CrupdateTravelMaterials[],

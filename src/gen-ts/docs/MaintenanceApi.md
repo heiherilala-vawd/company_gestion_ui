@@ -2,12 +2,14 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                               | HTTP request                                                       | Description                                     |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------- |
-| [**crupdateMaintenances**](MaintenanceApi.md#crupdatemaintenances)   | **PUT** /users/{userId}/companies/{companyId}/maintenances         | Create new maintenances or update existing ones |
-| [**deleteMaintenanceById**](MaintenanceApi.md#deletemaintenancebyid) | **DELETE** /users/{userId}/companies/{companyId}/maintenances/{id} | Delete maintenance by identifier                |
-| [**getMaintenanceById**](MaintenanceApi.md#getmaintenancebyid)       | **GET** /users/{userId}/companies/{companyId}/maintenances/{id}    | Get maintenance by identifier                   |
-| [**getMaintenances**](MaintenanceApi.md#getmaintenances)             | **GET** /users/{userId}/companies/{companyId}/maintenances         | Get all maintenances                            |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**crupdateMaintenances**](MaintenanceApi.md#crupdatemaintenances) | **PUT** /users/{userId}/companies/{companyId}/maintenances | Create new maintenances or update existing ones |
+| [**deleteMaintenanceById**](MaintenanceApi.md#deletemaintenancebyid) | **DELETE** /users/{userId}/companies/{companyId}/maintenances/{id} | Delete maintenance by identifier |
+| [**getMaintenanceById**](MaintenanceApi.md#getmaintenancebyid) | **GET** /users/{userId}/companies/{companyId}/maintenances/{id} | Get maintenance by identifier |
+| [**getMaintenances**](MaintenanceApi.md#getmaintenances) | **GET** /users/{userId}/companies/{companyId}/maintenances | Get all maintenances |
+
+
 
 ## crupdateMaintenances
 
@@ -18,16 +20,19 @@ Create new maintenances or update existing ones
 ### Example
 
 ```ts
-import { Configuration, MaintenanceApi } from 'api-client'
-import type { CrupdateMaintenancesRequest } from 'api-client'
+import {
+  Configuration,
+  MaintenanceApi,
+} from 'api-client';
+import type { CrupdateMaintenancesRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new MaintenanceApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MaintenanceApi(config);
 
   const body = {
     // string
@@ -35,34 +40,29 @@ async function example() {
     // string
     companyId: comp_btp001,
     // Array<CrupdateMaintenance>
-    crupdateMaintenance: [
-      {
-        id: 'maint_001',
-        expense: { id: 'exp_002', amount: 5000, job_id: 'job_002' },
-        description: 'Révision moteur périodique',
-      },
-    ],
-  } satisfies CrupdateMaintenancesRequest
+    crupdateMaintenance: [{"id":"maint_001","expense":{"id":"exp_002","amount":5000,"job_id":"job_002"},"description":"Révision moteur périodique"}],
+  } satisfies CrupdateMaintenancesRequest;
 
   try {
-    const data = await api.crupdateMaintenances(body)
-    console.log(data)
+    const data = await api.crupdateMaintenances(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name                    | Type                         | Description | Notes                     |
-| ----------------------- | ---------------------------- | ----------- | ------------------------- |
-| **userId**              | `string`                     |             | [Defaults to `undefined`] |
-| **companyId**           | `string`                     |             | [Defaults to `undefined`] |
-| **crupdateMaintenance** | `Array<CrupdateMaintenance>` |             |                           |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **crupdateMaintenance** | `Array<CrupdateMaintenance>` |  | |
 
 ### Return type
 
@@ -77,18 +77,19 @@ example().catch(console.error)
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                         | Response headers |
-| ----------- | ----------------------------------- | ---------------- |
-| **200**     | The created or updated maintenances | -                |
-| **400**     | Bad request                         | -                |
-| **403**     | Forbidden                           | -                |
-| **404**     | Not found                           | -                |
-| **429**     | Too many requests to the API        | -                |
-| **500**     | Internal server error               | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated maintenances |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## deleteMaintenanceById
 
@@ -99,16 +100,19 @@ Delete maintenance by identifier
 ### Example
 
 ```ts
-import { Configuration, MaintenanceApi } from 'api-client'
-import type { DeleteMaintenanceByIdRequest } from 'api-client'
+import {
+  Configuration,
+  MaintenanceApi,
+} from 'api-client';
+import type { DeleteMaintenanceByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new MaintenanceApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MaintenanceApi(config);
 
   const body = {
     // string
@@ -119,28 +123,29 @@ async function example() {
     id: maint_001,
     // string (optional)
     equipmentId: eq_001,
-  } satisfies DeleteMaintenanceByIdRequest
+  } satisfies DeleteMaintenanceByIdRequest;
 
   try {
-    const data = await api.deleteMaintenanceById(body)
-    console.log(data)
+    const data = await api.deleteMaintenanceById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name            | Type     | Description | Notes                                |
-| --------------- | -------- | ----------- | ------------------------------------ |
-| **userId**      | `string` |             | [Defaults to `undefined`]            |
-| **companyId**   | `string` |             | [Defaults to `undefined`]            |
-| **id**          | `string` |             | [Defaults to `undefined`]            |
-| **equipmentId** | `string` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **equipmentId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -155,18 +160,19 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                             | Response headers |
-| ----------- | --------------------------------------- | ---------------- |
-| **204**     | Maintenance record deleted successfully | -                |
-| **400**     | Bad request                             | -                |
-| **403**     | Forbidden                               | -                |
-| **404**     | Not found                               | -                |
-| **429**     | Too many requests to the API            | -                |
-| **500**     | Internal server error                   | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Maintenance record deleted successfully |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## getMaintenanceById
 
@@ -177,16 +183,19 @@ Get maintenance by identifier
 ### Example
 
 ```ts
-import { Configuration, MaintenanceApi } from 'api-client'
-import type { GetMaintenanceByIdRequest } from 'api-client'
+import {
+  Configuration,
+  MaintenanceApi,
+} from 'api-client';
+import type { GetMaintenanceByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new MaintenanceApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MaintenanceApi(config);
 
   const body = {
     // string
@@ -197,28 +206,29 @@ async function example() {
     id: maint_001,
     // string (optional)
     equipmentId: eq_001,
-  } satisfies GetMaintenanceByIdRequest
+  } satisfies GetMaintenanceByIdRequest;
 
   try {
-    const data = await api.getMaintenanceById(body)
-    console.log(data)
+    const data = await api.getMaintenanceById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name            | Type     | Description | Notes                                |
-| --------------- | -------- | ----------- | ------------------------------------ |
-| **userId**      | `string` |             | [Defaults to `undefined`]            |
-| **companyId**   | `string` |             | [Defaults to `undefined`]            |
-| **id**          | `string` |             | [Defaults to `undefined`]            |
-| **equipmentId** | `string` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
+| **equipmentId** | `string` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
@@ -233,38 +243,42 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                       | Response headers |
-| ----------- | --------------------------------- | ---------------- |
-| **200**     | The identified maintenance record | -                |
-| **400**     | Bad request                       | -                |
-| **403**     | Forbidden                         | -                |
-| **404**     | Not found                         | -                |
-| **429**     | Too many requests to the API      | -                |
-| **500**     | Internal server error             | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The identified maintenance record |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getMaintenances
 
-> Array&lt;Maintenance&gt; getMaintenances(userId, companyId, equipmentId, page, pageSize, description)
+> PaginatedResponse getMaintenances(userId, companyId, equipmentId, page, pageSize, description)
 
 Get all maintenances
 
 ### Example
 
 ```ts
-import { Configuration, MaintenanceApi } from 'api-client'
-import type { GetMaintenancesRequest } from 'api-client'
+import {
+  Configuration,
+  MaintenanceApi,
+} from 'api-client';
+import type { GetMaintenancesRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new MaintenanceApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new MaintenanceApi(config);
 
   const body = {
     // string
@@ -279,34 +293,35 @@ async function example() {
     pageSize: 20,
     // string | Filter maintenances by description, case is ignored (optional)
     description: révision,
-  } satisfies GetMaintenancesRequest
+  } satisfies GetMaintenancesRequest;
 
   try {
-    const data = await api.getMaintenances(body)
-    console.log(data)
+    const data = await api.getMaintenances(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name            | Type     | Description                                         | Notes                                |
-| --------------- | -------- | --------------------------------------------------- | ------------------------------------ |
-| **userId**      | `string` |                                                     | [Defaults to `undefined`]            |
-| **companyId**   | `string` |                                                     | [Defaults to `undefined`]            |
-| **equipmentId** | `string` |                                                     | [Optional] [Defaults to `undefined`] |
-| **page**        | `number` |                                                     | [Optional] [Defaults to `undefined`] |
-| **pageSize**    | `number` |                                                     | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **equipmentId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **description** | `string` | Filter maintenances by description, case is ignored | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**Array&lt;Maintenance&gt;**](Maintenance.md)
+[**PaginatedResponse**](PaginatedResponse.md)
 
 ### Authorization
 
@@ -317,15 +332,16 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of maintenances         | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of maintenances |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

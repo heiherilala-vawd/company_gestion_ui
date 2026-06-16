@@ -62,6 +62,7 @@ const TravelEquipmentActivityForm = () => {
         arrival_date: toInstant(data.arrival_date),
         fee: parseFloat(data.fee) || 0,
       },
+      direct_arrival: false,
       equipment_lines: (data.equipment_lines || []).map((line: any) => ({
         id: line.travel_equipment_id,
         equipment: { id: line.equipment_id },

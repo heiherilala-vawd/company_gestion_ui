@@ -1,21 +1,24 @@
+
 # TravelMaterials
+
 
 ## Properties
 
-| Name                | Type                                              |
-| ------------------- | ------------------------------------------------- |
-| `comment`           | string                                            |
-| `created_at`        | Date                                              |
-| `updated_at`        | Date                                              |
-| `created_by`        | [AuditUser](AuditUser.md)                         |
-| `updated_by`        | [AuditUser](AuditUser.md)                         |
-| `id`                | string                                            |
-| `travel`            | [CrupdateTravelExpense](CrupdateTravelExpense.md) |
-| `material`          | [CrupdateMaterial](CrupdateMaterial.md)           |
-| `quantity`          | number                                            |
-| `quantity_received` | number                                            |
-| `arrival_date`      | Date                                              |
-| `arrival_location`  | [CrupdateWarehouse](CrupdateWarehouse.md)         |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`travel` | [CrupdateTravelExpense](CrupdateTravelExpense.md)
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
+`quantity` | number
+`quantity_received` | number
+`quantity_lost` | number
+`arrival_date` | Date
+`arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
 
 ## Example
 
@@ -34,6 +37,7 @@ const example = {
   "material": null,
   "quantity": 100,
   "quantity_received": 100,
+  "quantity_lost": 0,
   "arrival_date": 2024-02-20T18:00Z,
   "arrival_location": null,
 } satisfies TravelMaterials
@@ -50,3 +54,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

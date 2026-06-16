@@ -1,20 +1,22 @@
+
 # CashTransaction
+
 
 ## Properties
 
-| Name               | Type                                          |
-| ------------------ | --------------------------------------------- |
-| `comment`          | string                                        |
-| `created_at`       | Date                                          |
-| `updated_at`       | Date                                          |
-| `created_by`       | [AuditUser](AuditUser.md)                     |
-| `updated_by`       | [AuditUser](AuditUser.md)                     |
-| `id`               | string                                        |
-| `cash_account_id`  | string                                        |
-| `amount`           | number                                        |
-| `transaction_date` | Date                                          |
-| `description`      | string                                        |
-| `type`             | [CashTransactionType](CashTransactionType.md) |
+Name | Type
+------------ | -------------
+`comment` | string
+`created_at` | Date
+`updated_at` | Date
+`created_by` | [AuditUser](AuditUser.md)
+`updated_by` | [AuditUser](AuditUser.md)
+`id` | string
+`cash_account_id` | string
+`amount` | number
+`transaction_date` | Date
+`description` | string
+`type` | [CashTransactionType](CashTransactionType.md)
 
 ## Example
 
@@ -48,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

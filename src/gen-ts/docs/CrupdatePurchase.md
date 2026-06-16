@@ -1,20 +1,22 @@
+
 # CrupdatePurchase
+
 
 ## Properties
 
-| Name                  | Type    |
-| --------------------- | ------- |
-| `id`                  | string  |
-| `expense_id`          | string  |
-| `source_warehouse_id` | string  |
-| `supplier_id`         | string  |
-| `equipment`           | string  |
-| `material`            | string  |
-| `quantity`            | number  |
-| `is_equipment`        | boolean |
-| `invoice_date`        | Date    |
-| `due_date`            | Date    |
-| `paid_at`             | Date    |
+Name | Type
+------------ | -------------
+`id` | string
+`expense` | [CrupdateExpenseMoney](CrupdateExpenseMoney.md)
+`source_warehouse_id` | string
+`supplier_id` | string
+`equipment` | string
+`material` | string
+`quantity` | number
+`is_equipment` | boolean
+`invoice_date` | Date
+`due_date` | Date
+`paid_at` | Date
 
 ## Example
 
@@ -24,7 +26,7 @@ import type { CrupdatePurchase } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": purch_001,
-  "expense_id": exp_001,
+  "expense": null,
   "source_warehouse_id": wh_001,
   "supplier_id": supplier_001,
   "equipment": eq_001,
@@ -48,3 +50,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+

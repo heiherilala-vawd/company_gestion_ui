@@ -2,73 +2,68 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                                           | HTTP request                                                                         | Description                                         |
-| -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| [**crupdateTravelEquipment**](TravelEquipmentApi.md#crupdatetravelequipment)     | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments         | Create new travel equipment or update existing ones |
-| [**deleteTravelEquipmentById**](TravelEquipmentApi.md#deletetravelequipmentbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments/{id} | Delete travel equipment by identifier               |
-| [**getTravelEquipment**](TravelEquipmentApi.md#gettravelequipment)               | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments         | Get all travel equipment                            |
-| [**getTravelEquipmentById**](TravelEquipmentApi.md#gettravelequipmentbyid)       | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments/{id}    | Get travel equipment by identifier                  |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**confirmEquipmentArrival**](TravelEquipmentApi.md#confirmequipmentarrival) | **PUT** /users/{userId}/companies/{companyId}/travel_equipments/arrival | Confirm arrival of travel equipment (ARRIVED, LOST or DAMAGED) |
+| [**crupdateTravelEquipment**](TravelEquipmentApi.md#crupdatetravelequipment) | **PUT** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments | Create new travel equipment or update existing ones |
+| [**deleteTravelEquipmentById**](TravelEquipmentApi.md#deletetravelequipmentbyid) | **DELETE** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments/{id} | Delete travel equipment by identifier |
+| [**getTravelEquipment**](TravelEquipmentApi.md#gettravelequipment) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments | Get all travel equipment |
+| [**getTravelEquipmentById**](TravelEquipmentApi.md#gettravelequipmentbyid) | **GET** /users/{userId}/companies/{companyId}/jobs/{jobId}/travel_equipments/{id} | Get travel equipment by identifier |
 
-## crupdateTravelEquipment
 
-> Array&lt;TravelEquipment&gt; crupdateTravelEquipment(userId, companyId, jobId, crupdateTravelEquipment)
 
-Create new travel equipment or update existing ones
+## confirmEquipmentArrival
+
+> Array&lt;TravelEquipment&gt; confirmEquipmentArrival(userId, companyId, confirmEquipmentArrival)
+
+Confirm arrival of travel equipment (ARRIVED, LOST or DAMAGED)
 
 ### Example
 
 ```ts
-import { Configuration, TravelEquipmentApi } from 'api-client'
-import type { CrupdateTravelEquipmentRequest } from 'api-client'
+import {
+  Configuration,
+  TravelEquipmentApi,
+} from 'api-client';
+import type { ConfirmEquipmentArrivalRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new TravelEquipmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TravelEquipmentApi(config);
 
   const body = {
     // string
     userId: user_123456,
     // string
     companyId: comp_btp001,
-    // string
-    jobId: job_001,
-    // Array<CrupdateTravelEquipment>
-    crupdateTravelEquipment: [
-      {
-        id: 'te_001',
-        travel_id: 'travel_001',
-        equipment: 'eq_001',
-        quantity: 1,
-        status: 'ARRIVED',
-        comment: 'Pelleteuse réceptionnée en bon état',
-      },
-    ],
-  } satisfies CrupdateTravelEquipmentRequest
+    // Array<ConfirmEquipmentArrival>
+    confirmEquipmentArrival: [{"id":"travel_eq_010","status":"ARRIVED"},{"id":"travel_eq_011","status":"LOST"}],
+  } satisfies ConfirmEquipmentArrivalRequest;
 
   try {
-    const data = await api.crupdateTravelEquipment(body)
-    console.log(data)
+    const data = await api.confirmEquipmentArrival(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name                        | Type                             | Description | Notes                     |
-| --------------------------- | -------------------------------- | ----------- | ------------------------- |
-| **userId**                  | `string`                         |             | [Defaults to `undefined`] |
-| **companyId**               | `string`                         |             | [Defaults to `undefined`] |
-| **jobId**                   | `string`                         |             | [Defaults to `undefined`] |
-| **crupdateTravelEquipment** | `Array<CrupdateTravelEquipment>` |             |                           |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **confirmEquipmentArrival** | `Array<ConfirmEquipmentArrival>` |  | |
 
 ### Return type
 
@@ -83,18 +78,102 @@ example().catch(console.error)
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                             | Response headers |
-| ----------- | --------------------------------------- | ---------------- |
-| **200**     | The created or updated travel equipment | -                |
-| **400**     | Bad request                             | -                |
-| **403**     | Forbidden                               | -                |
-| **404**     | Not found                               | -                |
-| **429**     | Too many requests to the API            | -                |
-| **500**     | Internal server error                   | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Arrival confirmed |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
+## crupdateTravelEquipment
+
+> Array&lt;TravelEquipment&gt; crupdateTravelEquipment(userId, companyId, jobId, crupdateTravelEquipment)
+
+Create new travel equipment or update existing ones
+
+### Example
+
+```ts
+import {
+  Configuration,
+  TravelEquipmentApi,
+} from 'api-client';
+import type { CrupdateTravelEquipmentRequest } from 'api-client';
+
+async function example() {
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
+    // Configure HTTP bearer authorization: BearerAuth
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TravelEquipmentApi(config);
+
+  const body = {
+    // string
+    userId: user_123456,
+    // string
+    companyId: comp_btp001,
+    // string
+    jobId: job_001,
+    // Array<CrupdateTravelEquipment>
+    crupdateTravelEquipment: [{"id":"te_001","travel_id":"travel_001","equipment":"eq_001","quantity":1,"status":"ARRIVED","comment":"Pelleteuse réceptionnée en bon état"}],
+  } satisfies CrupdateTravelEquipmentRequest;
+
+  try {
+    const data = await api.crupdateTravelEquipment(body);
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Run the test
+example().catch(console.error);
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **crupdateTravelEquipment** | `Array<CrupdateTravelEquipment>` |  | |
+
+### Return type
+
+[**Array&lt;TravelEquipment&gt;**](TravelEquipment.md)
+
+### Authorization
+
+[BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated travel equipment |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## deleteTravelEquipmentById
 
@@ -105,16 +184,19 @@ Delete travel equipment by identifier
 ### Example
 
 ```ts
-import { Configuration, TravelEquipmentApi } from 'api-client'
-import type { DeleteTravelEquipmentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  TravelEquipmentApi,
+} from 'api-client';
+import type { DeleteTravelEquipmentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new TravelEquipmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TravelEquipmentApi(config);
 
   const body = {
     // string
@@ -125,28 +207,29 @@ async function example() {
     jobId: job_001,
     // string
     id: te_001,
-  } satisfies DeleteTravelEquipmentByIdRequest
+  } satisfies DeleteTravelEquipmentByIdRequest;
 
   try {
-    const data = await api.deleteTravelEquipmentById(body)
-    console.log(data)
+    const data = await api.deleteTravelEquipmentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                     |
-| ------------- | -------- | ----------- | ------------------------- |
-| **userId**    | `string` |             | [Defaults to `undefined`] |
-| **companyId** | `string` |             | [Defaults to `undefined`] |
-| **jobId**     | `string` |             | [Defaults to `undefined`] |
-| **id**        | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -161,22 +244,23 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                           | Response headers |
-| ----------- | ------------------------------------- | ---------------- |
-| **204**     | Travel equipment deleted successfully | -                |
-| **400**     | Bad request                           | -                |
-| **403**     | Forbidden                             | -                |
-| **404**     | Not found                             | -                |
-| **429**     | Too many requests to the API          | -                |
-| **500**     | Internal server error                 | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Travel equipment deleted successfully |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getTravelEquipment
 
-> Array&lt;TravelEquipment&gt; getTravelEquipment(userId, companyId, jobId, page, pageSize, travelId, equipmentId, quantity, status, arrivalLocation, arrivalDateMin, arrivalDateMax, notArrived)
+> PaginatedResponse getTravelEquipment(userId, companyId, jobId, page, pageSize, travelId, equipmentId, quantity, status, arrivalLocation, arrivalDateMin, arrivalDateMax, notArrived)
 
 Get all travel equipment
 
@@ -191,7 +275,7 @@ import type { GetTravelEquipmentRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -240,25 +324,26 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name                | Type              | Description                                                                     | Notes                                                                   |
-| ------------------- | ----------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| **userId**          | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
-| **companyId**       | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
-| **jobId**           | `string`          |                                                                                 | [Defaults to `undefined`]                                               |
-| **page**            | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
-| **pageSize**        | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
-| **travelId**        | `string`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
-| **equipmentId**     | `string`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
-| **quantity**        | `number`          |                                                                                 | [Optional] [Defaults to `undefined`]                                    |
-| **status**          | `TransportStatus` |                                                                                 | [Optional] [Defaults to `undefined`] [Enum: IN_PROGRESS, LOST, ARRIVED] |
-| **arrivalLocation** | `string`          | Filter travel equipment by arrival warehouse id                                 | [Optional] [Defaults to `undefined`]                                    |
-| **arrivalDateMin**  | `Date`            | Filter travel equipment by minimum arrival date                                 | [Optional] [Defaults to `undefined`]                                    |
-| **arrivalDateMax**  | `Date`            | Filter travel equipment by maximum arrival date                                 | [Optional] [Defaults to `undefined`]                                    |
-| **notArrived**      | `boolean`         | Filter travel equipment that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`]                                    |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **travelId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **equipmentId** | `string` |  | [Optional] [Defaults to `undefined`] |
+| **quantity** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **status** | `TransportStatus` |  | [Optional] [Defaults to `undefined`] [Enum: IN_PROGRESS, LOST, ARRIVED, DAMAGED] |
+| **arrivalLocation** | `string` | Filter travel equipment by arrival warehouse id | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMin** | `Date` | Filter travel equipment by minimum arrival date | [Optional] [Defaults to `undefined`] |
+| **arrivalDateMax** | `Date` | Filter travel equipment by maximum arrival date | [Optional] [Defaults to `undefined`] |
+| **notArrived** | `boolean` | Filter travel equipment that have not arrived yet (no arrival date or location) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**Array&lt;TravelEquipment&gt;**](TravelEquipment.md)
+[**PaginatedResponse**](PaginatedResponse.md)
 
 ### Authorization
 
@@ -269,18 +354,19 @@ example().catch(console.error);
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of travel equipment     | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of travel equipment |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## getTravelEquipmentById
 
@@ -291,16 +377,19 @@ Get travel equipment by identifier
 ### Example
 
 ```ts
-import { Configuration, TravelEquipmentApi } from 'api-client'
-import type { GetTravelEquipmentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  TravelEquipmentApi,
+} from 'api-client';
+import type { GetTravelEquipmentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new TravelEquipmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new TravelEquipmentApi(config);
 
   const body = {
     // string
@@ -311,28 +400,29 @@ async function example() {
     jobId: job_001,
     // string
     id: te_001,
-  } satisfies GetTravelEquipmentByIdRequest
+  } satisfies GetTravelEquipmentByIdRequest;
 
   try {
-    const data = await api.getTravelEquipmentById(body)
-    console.log(data)
+    const data = await api.getTravelEquipmentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                     |
-| ------------- | -------- | ----------- | ------------------------- |
-| **userId**    | `string` |             | [Defaults to `undefined`] |
-| **companyId** | `string` |             | [Defaults to `undefined`] |
-| **jobId**     | `string` |             | [Defaults to `undefined`] |
-| **id**        | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **jobId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -347,15 +437,16 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                     | Response headers |
-| ----------- | ------------------------------- | ---------------- |
-| **200**     | The identified travel equipment | -                |
-| **400**     | Bad request                     | -                |
-| **403**     | Forbidden                       | -                |
-| **404**     | Not found                       | -                |
-| **429**     | Too many requests to the API    | -                |
-| **500**     | Internal server error           | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The identified travel equipment |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

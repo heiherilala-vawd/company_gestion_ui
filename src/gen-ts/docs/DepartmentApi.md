@@ -2,12 +2,14 @@
 
 All URIs are relative to *https://api-dev.company.com*
 
-| Method                                                            | HTTP request                                                      | Description                                    |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------- |
-| [**crupdateDepartments**](DepartmentApi.md#crupdatedepartments)   | **PUT** /users/{userId}/companies/{companyId}/departments         | Create new departments or update existing ones |
-| [**deleteDepartmentById**](DepartmentApi.md#deletedepartmentbyid) | **DELETE** /users/{userId}/companies/{companyId}/departments/{id} | Delete a department by identifier              |
-| [**getDepartmentById**](DepartmentApi.md#getdepartmentbyid)       | **GET** /users/{userId}/companies/{companyId}/departments/{id}    | Get a department by identifier                 |
-| [**getDepartments**](DepartmentApi.md#getdepartments)             | **GET** /users/{userId}/companies/{companyId}/departments         | Get all departments                            |
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**crupdateDepartments**](DepartmentApi.md#crupdatedepartments) | **PUT** /users/{userId}/companies/{companyId}/departments | Create new departments or update existing ones |
+| [**deleteDepartmentById**](DepartmentApi.md#deletedepartmentbyid) | **DELETE** /users/{userId}/companies/{companyId}/departments/{id} | Delete a department by identifier |
+| [**getDepartmentById**](DepartmentApi.md#getdepartmentbyid) | **GET** /users/{userId}/companies/{companyId}/departments/{id} | Get a department by identifier |
+| [**getDepartments**](DepartmentApi.md#getdepartments) | **GET** /users/{userId}/companies/{companyId}/departments | Get all departments |
+
+
 
 ## crupdateDepartments
 
@@ -26,7 +28,7 @@ import type { CrupdateDepartmentsRequest } from 'api-client';
 
 async function example() {
   console.log("🚀 Testing api-client SDK...");
-  const config = new Configuration({
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
     accessToken: "YOUR BEARER TOKEN",
   });
@@ -55,11 +57,12 @@ example().catch(console.error);
 
 ### Parameters
 
-| Name                   | Type                        | Description | Notes                     |
-| ---------------------- | --------------------------- | ----------- | ------------------------- |
-| **userId**             | `string`                    |             | [Defaults to `undefined`] |
-| **companyId**          | `string`                    |             | [Defaults to `undefined`] |
-| **crupdateDepartment** | `Array<CrupdateDepartment>` |             |                           |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **crupdateDepartment** | `Array<CrupdateDepartment>` |  | |
 
 ### Return type
 
@@ -74,18 +77,19 @@ example().catch(console.error);
 - **Content-Type**: `application/json`
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                        | Response headers |
-| ----------- | ---------------------------------- | ---------------- |
-| **200**     | The created or updated departments | -                |
-| **400**     | Bad request                        | -                |
-| **403**     | Forbidden                          | -                |
-| **404**     | Not found                          | -                |
-| **429**     | Too many requests to the API       | -                |
-| **500**     | Internal server error              | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The created or updated departments |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## deleteDepartmentById
 
@@ -96,16 +100,19 @@ Delete a department by identifier
 ### Example
 
 ```ts
-import { Configuration, DepartmentApi } from 'api-client'
-import type { DeleteDepartmentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  DepartmentApi,
+} from 'api-client';
+import type { DeleteDepartmentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new DepartmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new DepartmentApi(config);
 
   const body = {
     // string
@@ -114,27 +121,28 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: dept_001,
-  } satisfies DeleteDepartmentByIdRequest
+  } satisfies DeleteDepartmentByIdRequest;
 
   try {
-    const data = await api.deleteDepartmentById(body)
-    console.log(data)
+    const data = await api.deleteDepartmentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                     |
-| ------------- | -------- | ----------- | ------------------------- |
-| **userId**    | `string` |             | [Defaults to `undefined`] |
-| **companyId** | `string` |             | [Defaults to `undefined`] |
-| **id**        | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -149,18 +157,19 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **204**     | Department deleted           | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Department deleted |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
 
 ## getDepartmentById
 
@@ -171,16 +180,19 @@ Get a department by identifier
 ### Example
 
 ```ts
-import { Configuration, DepartmentApi } from 'api-client'
-import type { GetDepartmentByIdRequest } from 'api-client'
+import {
+  Configuration,
+  DepartmentApi,
+} from 'api-client';
+import type { GetDepartmentByIdRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new DepartmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new DepartmentApi(config);
 
   const body = {
     // string
@@ -189,27 +201,28 @@ async function example() {
     companyId: comp_btp001,
     // string
     id: dept_001,
-  } satisfies GetDepartmentByIdRequest
+  } satisfies GetDepartmentByIdRequest;
 
   try {
-    const data = await api.getDepartmentById(body)
-    console.log(data)
+    const data = await api.getDepartmentById(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                     |
-| ------------- | -------- | ----------- | ------------------------- |
-| **userId**    | `string` |             | [Defaults to `undefined`] |
-| **companyId** | `string` |             | [Defaults to `undefined`] |
-| **id**        | `string` |             | [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **id** | `string` |  | [Defaults to `undefined`] |
 
 ### Return type
 
@@ -224,38 +237,42 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | The department               | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The department |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
 
+
 ## getDepartments
 
-> Array&lt;Department&gt; getDepartments(userId, companyId, page, pageSize)
+> PaginatedResponse getDepartments(userId, companyId, page, pageSize)
 
 Get all departments
 
 ### Example
 
 ```ts
-import { Configuration, DepartmentApi } from 'api-client'
-import type { GetDepartmentsRequest } from 'api-client'
+import {
+  Configuration,
+  DepartmentApi,
+} from 'api-client';
+import type { GetDepartmentsRequest } from 'api-client';
 
 async function example() {
-  console.log('🚀 Testing api-client SDK...')
-  const config = new Configuration({
+  console.log("🚀 Testing api-client SDK...");
+  const config = new Configuration({ 
     // Configure HTTP bearer authorization: BearerAuth
-    accessToken: 'YOUR BEARER TOKEN',
-  })
-  const api = new DepartmentApi(config)
+    accessToken: "YOUR BEARER TOKEN",
+  });
+  const api = new DepartmentApi(config);
 
   const body = {
     // string
@@ -266,32 +283,33 @@ async function example() {
     page: 1,
     // number (optional)
     pageSize: 20,
-  } satisfies GetDepartmentsRequest
+  } satisfies GetDepartmentsRequest;
 
   try {
-    const data = await api.getDepartments(body)
-    console.log(data)
+    const data = await api.getDepartments(body);
+    console.log(data);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 }
 
 // Run the test
-example().catch(console.error)
+example().catch(console.error);
 ```
 
 ### Parameters
 
-| Name          | Type     | Description | Notes                                |
-| ------------- | -------- | ----------- | ------------------------------------ |
-| **userId**    | `string` |             | [Defaults to `undefined`]            |
-| **companyId** | `string` |             | [Defaults to `undefined`]            |
-| **page**      | `number` |             | [Optional] [Defaults to `undefined`] |
-| **pageSize**  | `number` |             | [Optional] [Defaults to `undefined`] |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **userId** | `string` |  | [Defaults to `undefined`] |
+| **companyId** | `string` |  | [Defaults to `undefined`] |
+| **page** | `number` |  | [Optional] [Defaults to `undefined`] |
+| **pageSize** | `number` |  | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**Array&lt;Department&gt;**](Department.md)
+[**PaginatedResponse**](PaginatedResponse.md)
 
 ### Authorization
 
@@ -302,15 +320,16 @@ example().catch(console.error)
 - **Content-Type**: Not defined
 - **Accept**: `application/json`
 
-### HTTP response details
 
-| Status code | Description                  | Response headers |
-| ----------- | ---------------------------- | ---------------- |
-| **200**     | List of departments          | -                |
-| **400**     | Bad request                  | -                |
-| **403**     | Forbidden                    | -                |
-| **404**     | Not found                    | -                |
-| **429**     | Too many requests to the API | -                |
-| **500**     | Internal server error        | -                |
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | List of departments |  -  |
+| **400** | Bad request |  -  |
+| **403** | Forbidden |  -  |
+| **404** | Not found |  -  |
+| **429** | Too many requests to the API |  -  |
+| **500** | Internal server error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+

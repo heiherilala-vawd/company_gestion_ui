@@ -95,6 +95,7 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
         arrival_date: toInstant(data.arrival_date),
         fee: parseFloat(data.fee) || 0,
       },
+      direct_arrival: false,
       equipment_lines:
         mode === 'full' || mode === 'equipment'
           ? (data.equipment_lines || []).map((line: any) => ({

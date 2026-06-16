@@ -1,14 +1,17 @@
+
 # TravelOperationRequest
+
 
 ## Properties
 
-| Name              | Type                                                                         |
-| ----------------- | ---------------------------------------------------------------------------- |
-| `comment`         | string                                                                       |
-| `travel`          | [TravelOperationTravel](TravelOperationTravel.md)                            |
-| `equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md) |
-| `material_lines`  | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)   |
-| `people_lines`    | [Array&lt;TravelOperationPeopleLine&gt;](TravelOperationPeopleLine.md)       |
+Name | Type
+------------ | -------------
+`comment` | string
+`travel` | [TravelOperationTravel](TravelOperationTravel.md)
+`direct_arrival` | boolean
+`equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md)
+`material_lines` | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)
+`people_lines` | [Array&lt;TravelOperationPeopleLine&gt;](TravelOperationPeopleLine.md)
 
 ## Example
 
@@ -19,6 +22,7 @@ import type { TravelOperationRequest } from 'api-client'
 const example = {
   "comment": Commentaire sur cette entité,
   "travel": null,
+  "direct_arrival": null,
   "equipment_lines": null,
   "material_lines": null,
   "people_lines": null,
@@ -36,3 +40,5 @@ console.log(exampleParsed)
 ```
 
 [[Back to top]](#) [[Back to API list]](../README.md#api-endpoints) [[Back to Model list]](../README.md#models) [[Back to README]](../README.md)
+
+
