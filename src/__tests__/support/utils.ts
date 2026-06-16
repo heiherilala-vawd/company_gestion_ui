@@ -95,6 +95,9 @@ import {
   monetaryTimeSeriesMock,
   organization1Mock,
   organizationsMock,
+  cras1Mock,
+  cras2Mock,
+  crasMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -397,6 +400,11 @@ export function interceptGeneralEndpoint(): void {
     ).as(`getMonetaryDashboard${type.charAt(0).toUpperCase() + type.slice(1)}`)
   })
 
+  // ---------------------- CRAS (Véhicules) ------------------------------------------
+  cy.intercept('GET', '**/cras*', mockSuccessResponse(crasMock)).as('getCras')
+  cy.intercept('GET', '**/cras/cras1_id*', mockSuccessResponse(cras1Mock)).as('getCrasDetail')
+  cy.intercept('GET', '**/cras/cras2_id*', mockSuccessResponse(cras2Mock)).as('getCrasDetail2')
+
   // ---------------------- CASH TRANSACTIONS ------------------------------------------
   cy.intercept('GET', '**/cash_transactions*', mockSuccessResponse(cashTransactionsMock)).as(
     'getCashTransactions',
@@ -494,6 +502,7 @@ export function interceptGeneralEndpoint(): void {
     '/employee_payments',
     '/employee_payment_activity',
     '/purchases_activity',
+    '/purchase_operation',
     '/team_activity',
     '/job_assignment_activity',
     '/travel_people',
@@ -502,6 +511,7 @@ export function interceptGeneralEndpoint(): void {
     '/material_consumption_activity',
     '/material_return_activity',
     '/travel_material_activity',
+    '/travel_operation',
     '/purchases_equipment_activity',
     '/equipment_usage_activity',
     '/equipment_return_activity',
@@ -524,6 +534,7 @@ export function interceptGeneralEndpoint(): void {
     '/hr-dashboard',
     '/monetary-dashboard',
     '/organizations',
+    '/cras',
     '/profile',
     '/profile/password',
   ]

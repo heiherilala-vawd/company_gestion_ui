@@ -21,9 +21,9 @@ const TYPE_CARBURANT_CHOICES: Record<string, string> = {
   HYBRIDE: 'Hybride',
 }
 
-export default function VoitureShow() {
+export default function CrasShow() {
   return (
-    <Show title="Détails voiture">
+    <Show title="Détails véhicule">
       <SimpleShowLayout>
         <TextField source="immatriculation" label="Immatriculation" />
         <FunctionField

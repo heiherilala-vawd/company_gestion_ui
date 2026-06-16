@@ -140,7 +140,7 @@ describe('canAccessResource', () => {
       'material_consumption',
     ]
 
-    const equipmentResources = ['travel_equipment', 'equipment_usage', 'voitures']
+    const equipmentResources = ['travel_equipment', 'equipment_usage', 'cras']
 
     const rhResources = ['tasks', 'travel_people']
 

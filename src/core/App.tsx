@@ -41,7 +41,7 @@ import EquipmentUsageResource from '../features/storage/equipment_usage'
 import MaterialConsumptionResource from '../features/storage/material_consumption'
 import MaterialWarehouseResource from '../features/storage/material_warehouse'
 import MaintenanceResource from '../features/storage/maintenances'
-import VoitureResource from '../features/storage/voitures'
+import CrasResource from '../features/storage/cras'
 import LeaveBalanceResource from '../features/hr/leave_balances'
 import SupplierResource from '../features/transversal/suppliers'
 import PurchaseOrderResource from '../features/transversal/purchase_orders'
@@ -76,6 +76,7 @@ import PurchaseEquipmentActivity from '../features/PurchaseEquipmentActivity'
 import EquipmentUsageActivity from '../features/EquipmentUsageActivity'
 import EquipmentReturnActivity from '../features/EquipmentReturnActivity'
 import TravelEquipmentActivityForm from '../features/TravelEquipmentActivityForm'
+import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
 import MaintenanceActivity from '../features/MaintenanceActivity'
 import ScheduledMaintenanceActivity from '../features/ScheduledMaintenanceActivity'
 import CompanyPage from '../features/sections/CompanyPage'
@@ -121,6 +122,7 @@ const ThemedAdmin = () => {
                   </CustomRoutes>
                   <CustomRoutes>
                     <Route path="/purchases_activity" element={<PurchaseActivityForm />} />
+                    <Route path="/purchase_operation" element={<PurchaseActivityForm />} />
                     <Route
                       path="/travel_equipment_activity"
                       element={<TravelEquipmentActivityForm />}
@@ -170,6 +172,7 @@ const ThemedAdmin = () => {
                     <Route path="/rh" element={<RHPage />} />
                     <Route path="/stock" element={<StockPage />} />
                     <Route path="/equipment-hub" element={<EquipmentPage />} />
+                    <Route path="/travel_operation" element={<TravelOperationForm />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/monetary" element={<MonetaryPage />} />
                     <Route path="/yearly-report" element={<YearlyReport />} />
@@ -221,7 +224,7 @@ const ThemedAdmin = () => {
                   <Resource name="material_consumption" {...MaterialConsumptionResource} />
                   <Resource name="material_warehouse" {...MaterialWarehouseResource} />
                   <Resource name="maintenances" {...MaintenanceResource} />
-                  <Resource name="voitures" {...VoitureResource} />
+                  <Resource name="cras" {...CrasResource} />
                   <Resource name="histories" {...HistoryResource} />
                   <Resource name="leaves" {...LeavesResource} />
                 </Admin>

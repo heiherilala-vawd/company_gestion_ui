@@ -1,9 +1,9 @@
 import { SimpleForm } from 'react-admin'
 import FormToolbar from '../../../generic/FormToolbar'
-import VoitureForm from './VoitureForm'
+import CrasForm from './CrasForm'
 import GenericCreate from '../../../generic/GenericCreate'
 
-export default function VoitureCreate() {
+export default function CrasCreate() {
   return (
     <GenericCreate
       transform={(data) => ({
@@ -11,8 +11,8 @@ export default function VoitureCreate() {
         warehouse_name: data.equipment_name,
       })}
     >
-      <SimpleForm id="voiture-create-form" toolbar={<FormToolbar />}>
-        <VoitureForm isCreate />
+      <SimpleForm id="cras-create-form" toolbar={<FormToolbar />}>
+        <CrasForm isCreate />
       </SimpleForm>
     </GenericCreate>
   )

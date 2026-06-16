@@ -17,7 +17,7 @@ const STATUT_CHOICES = [
   { id: 'REFORME', name: 'Réformé' },
 ]
 
-export default function VoitureForm({ isCreate = false, isCreateForm = false }) {
+export default function CrasForm({ isCreate = false, isCreateForm = false }) {
   return (
     <>
       {isCreate && (
