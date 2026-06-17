@@ -9,7 +9,7 @@ vi.mock('react-router-dom', () => ({
 }))
 
 vi.mock('react-admin', () => ({
-  Toolbar: ({ children, sx }: any) => <div data-testid="mock-toolbar">{children}</div>,
+  Toolbar: ({ children }: any) => <div data-testid="mock-toolbar">{children}</div>,
   SaveButton: () => <button data-testid="save-button">Save</button>,
 }))
 

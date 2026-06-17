@@ -26,14 +26,20 @@ const convertDates = (obj: any): any => {
   return toInstant(obj)
 }
 
-const isNestedRef = (value: any): boolean =>
-  value && typeof value === 'object' && !Array.isArray(value) && 'id' in value
+const REFERENCE_KEYS = new Set(['id', 'name', 'first_name', 'last_name', 'email', 'role', 'sex'])
+const isNestedRef = (value: any): boolean => {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false
+  if (!('id' in value)) return false
+  const keys = Object.keys(value)
+  return keys.every((k) => REFERENCE_KEYS.has(k))
+}
 
 const isNestedRefArray = (value: any): boolean =>
   Array.isArray(value) && value.length > 0 && typeof value[0] === 'object' && 'id' in value[0]
 
 const stripNestedRefs = (data: any): any => {
   if (!data || typeof data !== 'object') return data
+  if (data instanceof Date) return data
   if (Array.isArray(data)) return data.map(stripNestedRefs)
   const result: Record<string, any> = {}
   for (const [key, value] of Object.entries(data)) {

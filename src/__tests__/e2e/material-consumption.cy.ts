@@ -6,13 +6,7 @@ import {
   crupdateMaterialConsumptionsMock,
   createOrUpdateMaterialConsumptions,
 } from '../mocks/responses/material-consumption-api'
-import {
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-  selectReferenceWithCreate,
-} from '../support/utils.ts'
-import { material1Mock, material2Mock } from '../mocks/responses/materials-api'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 import { warehouse1Mock, warehouse2Mock } from '../mocks/responses/warehouses-api'
 
 describe('E2E: Material Consumption', () => {
