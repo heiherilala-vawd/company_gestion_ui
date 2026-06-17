@@ -5,6 +5,8 @@ import {
   NumberField,
   DateField,
   FunctionField,
+  ArrayField,
+  Datagrid,
 } from 'react-admin'
 
 export default function TravelMaterialShow() {
@@ -16,8 +18,14 @@ export default function TravelMaterialShow() {
         <TextField source="material.name" label="Matériau" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Quantité reçue" />
-        <TextField source="arrival_location.name" label="Lieu d'arivé" />
-        <DateField source="arrival_date" label="Date d'arivé" />
+        <ArrayField source="arrival_logs" label="Historique des réceptions">
+          <Datagrid bulkActionButtons={false}>
+            <DateField source="arrival_date" label="Date d'arrivée" />
+            <TextField source="arrival_location.name" label="Lieu d'arrivée" />
+            <NumberField source="quantity_received" label="Qté reçue" />
+            <NumberField source="quantity_lost" label="Qté perdue" />
+          </Datagrid>
+        </ArrayField>
         <SimpleShowLayout>
           <FunctionField label="Déplacement id" render={(record) => `${record.travel?.id || ''}`} />
           <FunctionField

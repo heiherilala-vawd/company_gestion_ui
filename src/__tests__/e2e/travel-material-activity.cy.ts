@@ -22,12 +22,13 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
     cy.contains('th', 'Matériau').should('be.visible')
   })
 
-  it('should confirm material arrival successfully', () => {
+  it('should confirm material arrival successfully with arrival_location', () => {
     cy.intercept('PUT', '**/travel_materials/arrival', (req) => {
       const body = req.body as Array<{
         id: string
         quantity_received?: number
         quantity_lost?: number
+        arrival_location?: string | null
       }>
       const updated = body.map((c) => ({
         ...travelMaterials1Mock,
@@ -42,13 +43,46 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
     cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="new-arrival-location-select"]').select('wh2_id')
     cy.get('[data-testid="checkbox-tm1_id"]').click()
     cy.get('[data-testid="validate-btn"]').should('contain', '1')
     cy.get('[data-testid="validate-btn"]').should('not.be.disabled').click()
     cy.contains('h2', 'Résumé de la validation').should('be.visible')
     cy.get('[data-testid="dialog-confirm-arrival"]').click()
 
-    cy.wait('@confirmMaterialArrival')
+    cy.wait('@confirmMaterialArrival').its('request.body.0.arrival_location').should('eq', 'wh2_id')
+  })
+
+  it('should confirm material arrival with null arrival_location', () => {
+    cy.intercept('PUT', '**/travel_materials/arrival', (req) => {
+      const body = req.body as Array<{
+        id: string
+        quantity_received?: number
+        quantity_lost?: number
+        arrival_location?: string | null
+      }>
+      const updated = body.map((c) => ({
+        ...travelMaterials1Mock,
+        quantity_received: c.quantity_received ?? travelMaterials1Mock.quantity_received,
+        quantity_lost: c.quantity_lost ?? 0,
+        updated_at: new Date().toISOString(),
+      }))
+      req.reply(mockSuccessResponse(updated))
+    }).as('confirmMaterialArrivalNoLocation')
+
+    navigateToPage()
+
+    cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
+    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="checkbox-tm1_id"]').click()
+    cy.get('[data-testid="validate-btn"]').should('contain', '1')
+    cy.get('[data-testid="validate-btn"]').should('not.be.disabled').click()
+    cy.contains('h2', 'Résumé de la validation').should('be.visible')
+    cy.get('[data-testid="dialog-confirm-arrival"]').click()
+
+    cy.wait('@confirmMaterialArrivalNoLocation')
+      .its('request.body.0.arrival_location')
+      .should('be.null')
   })
 
   it('should switch to equipment mode and display travel equipment', () => {
@@ -63,7 +97,11 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
   it('should confirm equipment arrival successfully', () => {
     cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
-      const body = req.body as Array<{ id: string; status: string }>
+      const body = req.body as Array<{
+        id: string
+        status: string
+        arrival_location?: string | null
+      }>
       const updated = body.map((c) => ({
         ...travelEquipment1Mock,
         status: c.status,
@@ -78,6 +116,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
     cy.wait('@getTravelEquipmentsNotArrived', { timeout: 20000 })
 
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="new-arrival-location-select"]').select('wh2_id')
     cy.get('[data-testid="checkbox-teq1_id"]').click()
 
     cy.contains('button', /Effectuer la validation/).click()
@@ -85,5 +124,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
     cy.get('[data-testid="dialog-confirm-arrival"]').click()
 
     cy.wait('@confirmEquipmentArrival')
+      .its('request.body.0.arrival_location')
+      .should('eq', 'wh2_id')
   })
 })
