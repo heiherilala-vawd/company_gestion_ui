@@ -1,7 +1,6 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   purchaseOrder1Mock,
-  purchaseOrder2Mock,
   createOrUpdatePurchaseOrders,
   crupdatePurchaseOrdersMock,
 } from '../mocks/responses/purchase-orders-api'

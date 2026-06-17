@@ -19,7 +19,7 @@ vi.mock('../../../style/components', () => ({
 }))
 
 vi.mock('react-admin', () => ({
-  Datagrid: ({ children, sx, rowClick, bulkActionButtons }: any) => (
+  Datagrid: ({ children, rowClick, bulkActionButtons }: any) => (
     <div data-testid="mock-datagrid" data-row-click={rowClick} data-bulk={bulkActionButtons}>
       {children}
     </div>
@@ -47,9 +47,13 @@ describe('ResponsiveDatagrid', () => {
   })
 
   const children = [
+    // eslint-disable-next-line react/no-unknown-property
     <div key="id" data-testid="field-id" source="id" />,
+    // eslint-disable-next-line react/no-unknown-property
     <div key="name" data-testid="field-name" source="name" />,
+    // eslint-disable-next-line react/no-unknown-property
     <div key="email" data-testid="field-email" source="email" />,
+    // eslint-disable-next-line react/no-unknown-property
     <div key="phone" data-testid="field-phone" source="phone" />,
     <div key="actions" data-testid="field-actions" />,
   ]
@@ -70,7 +74,7 @@ describe('ResponsiveDatagrid', () => {
 
   it('shows only priority fields up to descriptionNumber on XS', () => {
     renderWithBreakpoint('xs')
-    const { container } = render(
+    render(
       <ResponsiveDatagrid priorityFields={['name', 'email']} descriptionNumber={2}>
         {children}
       </ResponsiveDatagrid>,

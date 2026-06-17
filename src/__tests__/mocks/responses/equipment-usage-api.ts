@@ -1,7 +1,9 @@
 export const equipmentUsage1Mock = {
   id: 'eu1_id',
   equipment_id: 'eq1_id',
+  equipment: { id: 'eq1_id', name: 'Excavator XL200' },
   job_id: 'job1_id',
+  job: { id: 'job1_id', description: 'Construction of Building A' },
   start_time: '2024-06-01T08:00:00Z',
   end_time: null,
   usage_status: 'IN_USE',
@@ -11,7 +13,9 @@ export const equipmentUsage1Mock = {
 export const equipmentUsage2Mock = {
   id: 'eu2_id',
   equipment_id: 'eq2_id',
+  equipment: { id: 'eq2_id', name: 'Concrete Mixer' },
   job_id: 'job1_id',
+  job: { id: 'job1_id', description: 'Construction of Building A' },
   start_time: '2024-06-02T09:00:00Z',
   end_time: '2024-06-02T16:00:00Z',
   usage_status: 'COMPLETED',

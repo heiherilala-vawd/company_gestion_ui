@@ -24,7 +24,7 @@ export default function IncomeList() {
   return (
     <List filters={IncomeFilters}>
       <ResponsiveDatagrid
-        priorityFields={['organization_id', 'amount', 'invoice_reference', 'description']}
+        priorityFields={['organization.name', 'amount', 'invoice_reference', 'description']}
       >
         <TextField source="organization.name" label="Organisation" />
         <NumberField

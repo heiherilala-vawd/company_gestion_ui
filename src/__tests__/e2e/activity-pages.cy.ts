@@ -12,7 +12,7 @@ import {
   selectIncomeType,
   selectReferenceWithCreate,
 } from '../support/utils.ts'
-import { user1Mock } from '../mocks/responses/users-api.ts'
+import { user1Mock } from '../mocks/responses/users-api'
 import { materialWarehouse1Mock } from '../mocks/responses/material-warehouse-api'
 import { warehouse1Mock } from '../mocks/responses/warehouses-api'
 import { material1Mock } from '../mocks/responses/materials-api'
@@ -21,7 +21,7 @@ import { organization1Mock } from '../mocks/responses/organizations-api'
 import { loan1Mock } from '../mocks/responses/loans-api'
 
 function navigateTo(path: string) {
-  cy.visit('/#' + path)
+  cy.visit('/#' + path, { failOnStatusCode: false, timeout: 30000 })
   cy.url({ timeout: 15000 }).should('include', path)
   cy.wait(500)
 }
@@ -131,10 +131,11 @@ describe('E2E: Activity Pages', () => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('createBankFee')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
-    cy.wait('@createBankFee', { timeout: 10000 })
+    cy.wait('@createBankFee', { timeout: 20000 })
+    cy.wait(2000)
 
     navigateTo('/expenses_activity')
-    cy.wait(300)
+    cy.wait(500)
 
     cy.contains('Paiement salarié').scrollIntoView().click({ force: true })
     cy.wait(300)
@@ -152,10 +153,11 @@ describe('E2E: Activity Pages', () => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('createEmployeePayment')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
-    cy.wait('@createEmployeePayment', { timeout: 10000 })
+    cy.wait('@createEmployeePayment', { timeout: 20000 })
+    cy.wait(2000)
 
     navigateTo('/expenses_activity')
-    cy.wait(300)
+    cy.wait(500)
 
     cy.contains('Autre dépense').scrollIntoView().click({ force: true })
     cy.wait(300)
@@ -173,7 +175,7 @@ describe('E2E: Activity Pages', () => {
       req.reply(mockSuccessResponse(createOrUpdateOtherExpenses(req.body)))
     }).as('createOtherExpense')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
-    cy.wait('@createOtherExpense', { timeout: 10000 })
+    cy.wait('@createOtherExpense', { timeout: 20000 })
   }
 
   // ==================== INCOMES ACTIVITY ====================

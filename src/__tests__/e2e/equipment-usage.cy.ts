@@ -65,8 +65,8 @@ describe('E2E: Equipment Usage', () => {
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(equipmentUsage1Mock.equipment_id)).should('be.visible')
-    cy.contains(String(equipmentUsage2Mock.equipment_id)).should('be.visible')
+    cy.contains(String(equipmentUsage1Mock.equipment?.name)).should('be.visible')
+    cy.contains(String(equipmentUsage2Mock.equipment?.name)).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
@@ -74,7 +74,7 @@ describe('E2E: Equipment Usage', () => {
     else navigateToMobile()
     cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
     cy.wait('@getEquipmentUsage', { timeout: 15000 })
-    cy.contains(String(equipmentUsage1Mock.equipment_id)).should('exist')
+    cy.contains(String(equipmentUsage1Mock.equipment?.name)).should('exist')
     cy.contains(String(equipmentUsage1Mock.start_time)).should('exist')
   }
 

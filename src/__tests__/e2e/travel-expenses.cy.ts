@@ -10,7 +10,6 @@ import {
   interceptGeneralEndpoint,
   loginInPage,
   selectJob,
-  selectEnumType,
 } from '../support/utils.ts'
 
 describe('E2E: Travel Expenses', () => {

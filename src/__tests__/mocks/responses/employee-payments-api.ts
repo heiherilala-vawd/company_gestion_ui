@@ -49,11 +49,11 @@ export const createOrUpdateEmployeePayments = (
     ...ep,
     id: `newId`,
     expense: {
-      id: ep.expense.id || expense1Mock?.id,
-      amount: expense1Mock.amount,
-      description: expense1Mock.description,
-      job_id: expense1Mock.job?.id,
-      comment: expense1Mock.comment,
+      id: ep.expense?.id || expense1Mock?.id || '',
+      amount: ep.expense?.amount || expense1Mock.amount,
+      description: ep.expense?.description || expense1Mock.description,
+      job_id: ep.expense?.job_id || expense1Mock.job?.id,
+      comment: ep.expense?.comment || expense1Mock.comment,
     },
     users: [user2Mock],
   }))
