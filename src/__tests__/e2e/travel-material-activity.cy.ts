@@ -42,7 +42,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
     cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
-    cy.contains('td', travelMaterials1Mock.material?.name as string).click()
+    cy.get('[data-testid="checkbox-tm1_id"]').click()
     cy.get('[data-testid="validate-btn"]').should('contain', '1')
     cy.get('[data-testid="validate-btn"]').should('not.be.disabled').click()
     cy.contains('h2', 'Résumé de la validation').should('be.visible')
@@ -78,7 +78,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
     cy.wait('@getTravelEquipmentsNotArrived', { timeout: 20000 })
 
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
-    cy.contains('td', travelEquipment1Mock.equipment?.name as string).click()
+    cy.get('[data-testid="checkbox-teq1_id"]').click()
 
     cy.contains('button', /Effectuer la validation/).click()
     cy.contains('h2', 'Résumé de la validation').should('be.visible')
