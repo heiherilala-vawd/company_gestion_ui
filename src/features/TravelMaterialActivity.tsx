@@ -157,7 +157,7 @@ export default function TravelMaterialActivity() {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
           quantity_received: quantityReceived[item.id] ?? 0,
-          quantity_lost: quantityLost[item.id] ?? item.quantity_lost ?? 0,
+          quantity_lost: quantityLost[item.id] ?? 0,
         }))
         await confirmArrival('travel_materials_arrival', body)
       } else {
@@ -328,7 +328,12 @@ export default function TravelMaterialActivity() {
                       <>
                         <TableCell>{item.material?.name}</TableCell>
                         <TableCell>
-                          {Math.max(0, (item.quantity || 0) - (item.quantity_received || 0))}{' '}
+                          {Math.max(
+                            0,
+                            (item.quantity || 0) -
+                              (item.quantity_received || 0) -
+                              (item.quantity_lost || 0),
+                          )}{' '}
                           {item.material?.unit}
                         </TableCell>
                         <TableCell>
@@ -345,7 +350,7 @@ export default function TravelMaterialActivity() {
                           <TextField
                             type="number"
                             size="small"
-                            value={quantityLost[item.id] ?? item.quantity_lost ?? 0}
+                            value={quantityLost[item.id] ?? 0}
                             onChange={handleQuantityLostChange(item.id)}
                             inputProps={{ min: 0, style: { width: 70 } }}
                             disabled={!selectedItems.some((i) => i.id === item.id)}
