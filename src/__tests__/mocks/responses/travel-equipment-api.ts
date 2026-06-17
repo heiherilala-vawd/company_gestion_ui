@@ -64,7 +64,7 @@ export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
 export const notArrivedTravelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock]
 
 export const confirmEquipmentArrivals = (
-  confirmations: ConfirmEquipmentArrival[],
+  confirmations: Array<ConfirmEquipmentArrival & { arrival_location?: string | null }>,
 ): TravelEquipment[] => {
   return confirmations.map((c) => {
     const original = travelEquipmentMock.find((te) => te.id === c.id) || travelEquipment1Mock

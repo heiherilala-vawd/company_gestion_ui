@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useGetList, useNotify } from 'react-admin'
 import { getMiddleUrl } from '../config/dynamicResources'
 import {
@@ -18,6 +18,7 @@ import {
   DialogActions,
   Typography,
   Paper,
+  Alert,
   CircularProgress,
   ToggleButtonGroup,
   ToggleButton,
@@ -29,6 +30,7 @@ import {
 
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import generateId from '../utili/utils'
 
 function cleanFilters(raw: Record<string, string | boolean>) {
   const out: Record<string, string | boolean> = {}
@@ -46,6 +48,7 @@ export default function TravelMaterialActivity() {
   const [entityType, setEntityType] = useState<'materials' | 'equipment'>('materials')
   const [selectedItems, setSelectedItems] = useState<any[]>([])
   const [selectedLocation, setSelectedLocation] = useState('')
+  const [newArrivalLocation, setNewArrivalLocation] = useState('')
   const [page, setPage] = useState(0)
   const [perPage, setPerPage] = useState(25)
   const [search, setSearch] = useState('')
@@ -55,6 +58,7 @@ export default function TravelMaterialActivity() {
   const [quantityReceived, setQuantityReceived] = useState<Record<string, number>>({})
   const [quantityLost, setQuantityLost] = useState<Record<string, number>>({})
   const [equipmentStatuses, setEquipmentStatuses] = useState<Record<string, string>>({})
+  const [logIds, setLogIds] = useState<Record<string, string>>({})
 
   const getToken = () => localStorage.getItem('token')
 
@@ -78,8 +82,8 @@ export default function TravelMaterialActivity() {
 
   const resource = entityType === 'materials' ? 'travel_materials' : 'travel_equipment'
   const queryFilters = useMemo(
-    () => cleanFilters({ ...serverFilters, not_arrived: true }),
-    [serverFilters],
+    () => cleanFilters({ ...serverFilters, not_arrived: true, arrival_location: selectedLocation }),
+    [serverFilters, selectedLocation],
   )
 
   const {
@@ -90,6 +94,16 @@ export default function TravelMaterialActivity() {
     pagination: { page: 1, perPage: 400 },
     filter: queryFilters,
   })
+
+  useEffect(() => {
+    setLogIds((prev) => {
+      const next = { ...prev }
+      allItems.forEach((item: any) => {
+        if (!next[item.id]) next[item.id] = generateId()
+      })
+      return next
+    })
+  }, [allItems])
 
   const filteredItems = useMemo(() => {
     if (!search) return allItems
@@ -132,10 +146,12 @@ export default function TravelMaterialActivity() {
       setSelectedItems([])
       setPage(0)
       setServerFilters({})
+      setNewArrivalLocation('')
       setSearch('')
       setQuantityReceived({})
       setQuantityLost({})
       setEquipmentStatuses({})
+      setLogIds({})
     }
   }
 
@@ -156,14 +172,17 @@ export default function TravelMaterialActivity() {
       if (entityType === 'materials') {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
+          log_id: logIds[item.id] || generateId(),
           quantity_received: quantityReceived[item.id] ?? 0,
           quantity_lost: quantityLost[item.id] ?? 0,
+          arrival_location: newArrivalLocation || null,
         }))
         await confirmArrival('travel_materials_arrival', body)
       } else {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
           status: equipmentStatuses[item.id] || 'ARRIVED',
+          arrival_location: newArrivalLocation || null,
         }))
         await confirmArrival('travel_equipments_arrival', body)
       }
@@ -176,13 +195,16 @@ export default function TravelMaterialActivity() {
     setShowSummary(false)
     setSelectedItems([])
     setSelectedLocation('')
+    setNewArrivalLocation('')
     setQuantityReceived({})
     setQuantityLost({})
     setEquipmentStatuses({})
+    setLogIds({})
     refetch()
   }
 
   const locationName = warehouses.find((w: any) => w.id === selectedLocation)?.name
+  const newLocationName = warehouses.find((w: any) => w.id === newArrivalLocation)?.name
 
   return (
     <Box sx={{ p: 2 }}>
@@ -199,6 +221,31 @@ export default function TravelMaterialActivity() {
             value={selectedLocation}
             onChange={(e) => setSelectedLocation(e.target.value)}
             data-testid="warehouse-select"
+            style={{
+              width: '100%',
+              padding: '8px',
+              fontSize: '0.875rem',
+              borderRadius: '4px',
+              border: '1px solid #bdbdbd',
+              background: '#fff',
+            }}
+          >
+            <option value="">Aucun</option>
+            {warehouses.map((w: any) => (
+              <option key={w.id} value={w.id}>
+                {w.name}
+              </option>
+            ))}
+          </select>
+        </Box>
+        <Box sx={{ minWidth: 200 }}>
+          <Typography variant="body2" sx={{ mb: 0.5, fontWeight: 500, color: 'text.secondary' }}>
+            Changement de lieu de réception
+          </Typography>
+          <select
+            value={newArrivalLocation}
+            onChange={(e) => setNewArrivalLocation(e.target.value)}
+            data-testid="new-arrival-location-select"
             style={{
               width: '100%',
               padding: '8px',
@@ -278,6 +325,12 @@ export default function TravelMaterialActivity() {
         </Box>
       )}
 
+      {!selectedLocation && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Veuillez sélectionner un lieu de réception pour afficher et valider des éléments.
+        </Alert>
+      )}
+
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
           <CircularProgress />
@@ -306,6 +359,7 @@ export default function TravelMaterialActivity() {
                       <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
                     </>
                   )}
+                  <TableCell sx={{ display: 'none' }}>log_id</TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>Créé le</TableCell>
                 </TableRow>
               </TableHead>
@@ -321,6 +375,8 @@ export default function TravelMaterialActivity() {
                         type="checkbox"
                         checked={selectedItems.some((i) => i.id === item.id)}
                         onChange={() => toggleSelect(item)}
+                        disabled={!selectedLocation}
+                        title={!selectedLocation ? "Sélectionnez d'abord un lieu de réception" : ''}
                         data-testid={'checkbox-' + item.id}
                       />
                     </TableCell>
@@ -328,12 +384,14 @@ export default function TravelMaterialActivity() {
                       <>
                         <TableCell>{item.material?.name}</TableCell>
                         <TableCell>
-                          {Math.max(
-                            0,
-                            (item.quantity || 0) -
-                              (item.quantity_received || 0) -
-                              (item.quantity_lost || 0),
-                          )}{' '}
+                          {(() => {
+                            const totalLogs = (item.arrival_logs || []).reduce(
+                              (sum: number, log: any) =>
+                                sum + (log.quantity_received || 0) + (log.quantity_lost || 0),
+                              0,
+                            )
+                            return Math.max(0, (item.quantity || 0) - totalLogs)
+                          })()}{' '}
                           {item.material?.unit}
                         </TableCell>
                         <TableCell>
@@ -380,6 +438,9 @@ export default function TravelMaterialActivity() {
                       {item.travel?.departure_location?.name} →{' '}
                       {item.travel?.arrival_location?.name}
                     </TableCell>
+                    <TableCell sx={{ display: 'none' }}>
+                      {logIds[item.id] || generateId()}
+                    </TableCell>
                     <TableCell>
                       {item.created_at ? new Date(item.created_at).toLocaleDateString('fr-FR') : ''}
                     </TableCell>
@@ -421,6 +482,10 @@ export default function TravelMaterialActivity() {
             Lieu de réception :
           </Typography>
           <Typography sx={{ mb: 2 }}>{locationName || 'Non spécifié'}</Typography>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 600 }}>
+            Changement de lieu de réception :
+          </Typography>
+          <Typography sx={{ mb: 2 }}>{newLocationName || 'Non spécifié'}</Typography>
           <Typography variant="subtitle1" sx={{ mb: 1, fontWeight: 600 }}>
             Éléments sélectionnés ({selectedItems.length}) :
           </Typography>

@@ -61,7 +61,12 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
 export const notArrivedTravelMaterialsMock: TravelMaterials[] = [travelMaterials1Mock]
 
 export const confirmMaterialArrivals = (
-  confirmations: Array<{ id: string; quantity_received?: number; quantity_lost?: number }>,
+  confirmations: Array<{
+    id: string
+    quantity_received?: number
+    quantity_lost?: number
+    arrival_location?: string | null
+  }>,
 ): TravelMaterials[] => {
   return confirmations.map((c) => {
     const original = travelMaterialsMock.find((tm) => tm.id === c.id) || travelMaterials1Mock
