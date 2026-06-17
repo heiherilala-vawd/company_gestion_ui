@@ -156,7 +156,7 @@ export default function TravelMaterialActivity() {
       if (entityType === 'materials') {
         const body = selectedItems.map((item: any) => ({
           id: item.id,
-          quantity_received: quantityReceived[item.id] ?? item.quantity_received ?? item.quantity,
+          quantity_received: quantityReceived[item.id] ?? 0,
           quantity_lost: quantityLost[item.id] ?? item.quantity_lost ?? 0,
         }))
         await confirmArrival('travel_materials_arrival', body)
@@ -294,8 +294,8 @@ export default function TravelMaterialActivity() {
                   {entityType === 'materials' ? (
                     <>
                       <TableCell sx={{ fontWeight: 600 }}>Matériau</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Quantité</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Qté reçue</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Reste</TableCell>
+                      <TableCell sx={{ fontWeight: 600 }}>Qté à recevoir</TableCell>
                       <TableCell sx={{ fontWeight: 600 }}>Qté perdue</TableCell>
                       <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
                     </>
@@ -315,14 +315,12 @@ export default function TravelMaterialActivity() {
                     key={item.id}
                     hover
                     selected={selectedItems.some((i) => i.id === item.id)}
-                    onClick={() => toggleSelect(item)}
-                    sx={{ cursor: 'pointer' }}
                   >
                     <TableCell padding="checkbox">
                       <input
                         type="checkbox"
                         checked={selectedItems.some((i) => i.id === item.id)}
-                        readOnly
+                        onChange={() => toggleSelect(item)}
                         data-testid={'checkbox-' + item.id}
                       />
                     </TableCell>
@@ -330,15 +328,14 @@ export default function TravelMaterialActivity() {
                       <>
                         <TableCell>{item.material?.name}</TableCell>
                         <TableCell>
-                          {item.quantity} {item.material?.unit}
+                          {Math.max(0, (item.quantity || 0) - (item.quantity_received || 0))}{' '}
+                          {item.material?.unit}
                         </TableCell>
                         <TableCell>
                           <TextField
                             type="number"
                             size="small"
-                            value={
-                              quantityReceived[item.id] ?? item.quantity_received ?? item.quantity
-                            }
+                            value={quantityReceived[item.id] ?? 0}
                             onChange={handleQuantityReceivedChange(item.id)}
                             inputProps={{ min: 0, style: { width: 70 } }}
                             disabled={!selectedItems.some((i) => i.id === item.id)}
@@ -425,7 +422,7 @@ export default function TravelMaterialActivity() {
           {selectedItems.map((item: any) => (
             <Typography key={item.id} sx={{ mb: 0.5 }}>
               {entityType === 'materials'
-                ? `• ${item.material?.name || '?'} — Reçu: ${quantityReceived[item.id] ?? item.quantity_received ?? item.quantity}, Perdu: ${quantityLost[item.id] ?? item.quantity_lost ?? 0}`
+                ? `• ${item.material?.name || '?'} — Reçu: ${quantityReceived[item.id] ?? 0}, Perdu: ${quantityLost[item.id] ?? item.quantity_lost ?? 0}`
                 : `• ${item.equipment?.name || item.equipment?.id} → ${equipmentStatuses[item.id] || 'ARRIVED'}`}
             </Typography>
           ))}
