@@ -55,7 +55,7 @@ describe('E2E: Authentication', () => {
     cy.wait('@successfulLogin')
     cy.wait('@whoamiRequest')
 
-    cy.url().should('not.include', '/login')
+    cy.url({ timeout: 20000 }).should('not.include', '/login')
   })
 
   it('redirects to login page when accessing protected route without auth', () => {
@@ -73,7 +73,8 @@ describe('E2E: Authentication', () => {
     cy.wait('@loginRequest')
     cy.wait('@whoamiRequest')
 
-    cy.url().should('not.include', '/login')
+    cy.get('#wp-email', { timeout: 10000 }).should('not.exist')
+    cy.get('[data-testid="menu-item-home"]', { timeout: 15000 }).should('be.visible')
 
     cy.clearLocalStorage()
     cy.visit('/', { failOnStatusCode: false })

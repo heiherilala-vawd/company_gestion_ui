@@ -71,7 +71,7 @@ describe('E2E: Travel Expenses', () => {
     cy.contains(<string>travelExpense1Mock.arrival_location?.name).should('be.visible')
     cy.contains(<string>travelExpense1Mock.expense?.comment).should('be.visible')
     cy.contains(<number>travelExpense1Mock.expense?.amount).should('be.visible')
-    cy.contains(<string>travelExpense1Mock.expense?.job_id).should('be.visible')
+    cy.contains(<string>travelExpense1Mock.expense?.job?.description).should('be.visible')
   }
 
   function canCreate(isComputerView: boolean) {

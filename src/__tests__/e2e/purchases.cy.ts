@@ -37,6 +37,7 @@ describe('E2E: Purchases', () => {
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
+      cy.wait(2000)
     } else {
       cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
