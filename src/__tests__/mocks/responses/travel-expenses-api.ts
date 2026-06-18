@@ -5,7 +5,10 @@ import { toCrupdateExpenseMoneyMapper } from '../../support/mappers.ts'
 
 export const travelExpense1Mock: TravelExpense = {
   id: 'te1_id',
-  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
+  expense: {
+    ...toCrupdateExpenseMoneyMapper(expense1Mock),
+    job: { id: expense1Mock.job?.id, description: expense1Mock.job?.description },
+  },
   departure_location: warehouse1Mock,
   arrival_location: warehouse2Mock,
   departure_date: '2022-02-10T06:00:00Z',
@@ -14,7 +17,10 @@ export const travelExpense1Mock: TravelExpense = {
 
 export const travelExpense2Mock: TravelExpense = {
   id: 'te2_id',
-  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
+  expense: {
+    ...toCrupdateExpenseMoneyMapper(expense1Mock),
+    job: { id: expense1Mock.job?.id, description: expense1Mock.job?.description },
+  },
   departure_location: warehouse1Mock,
   arrival_location: warehouse2Mock,
   departure_date: '2022-03-20T08:00:00Z',
@@ -53,6 +59,7 @@ export const createOrUpdateTravelExpenses = (
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job?.id,
+      job: { id: expense1Mock.job?.id, description: expense1Mock.job?.description },
       comment: expense1Mock.comment,
     },
     created_at: te.id ? travelExpense1Mock.departure_date : new Date().toISOString(),
