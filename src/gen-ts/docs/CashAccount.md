@@ -15,7 +15,7 @@ Name | Type
 `name` | string
 `balance` | number
 `description` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -33,7 +33,7 @@ const example = {
   "name": Compte courant BNI,
   "balance": 1500000.0,
   "description": Compte bancaire principal,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies CashAccount
 
 console.log(example)

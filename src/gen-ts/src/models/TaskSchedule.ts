@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateUser } from './CrupdateUser';
+import {
+    CrupdateUserFromJSON,
+    CrupdateUserFromJSONTyped,
+    CrupdateUserToJSON,
+    CrupdateUserToJSONTyped,
+} from './CrupdateUser';
 import type { TaskPriority } from './TaskPriority';
 import {
     TaskPriorityFromJSON,
@@ -27,6 +34,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 import type { ScheduleStatus } from './ScheduleStatus';
 import {
     ScheduleStatusFromJSON,
@@ -115,16 +129,16 @@ export interface TaskSchedule {
     status?: ScheduleStatus;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof TaskSchedule
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<CrupdateUser>}
      * @memberof TaskSchedule
      */
-    assigned_user_ids?: Array<string>;
+    assigned_users?: Array<CrupdateUser>;
 }
 
 
@@ -158,8 +172,8 @@ export function TaskScheduleFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'frequency': json['frequency'] == null ? undefined : json['frequency'],
         'scheduled_date': json['scheduled_date'] == null ? undefined : (new Date(json['scheduled_date'])),
         'status': json['status'] == null ? undefined : ScheduleStatusFromJSON(json['status']),
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
-        'assigned_user_ids': json['assigned_user_ids'] == null ? undefined : json['assigned_user_ids'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
+        'assigned_users': json['assigned_users'] == null ? undefined : ((json['assigned_users'] as Array<any>).map(CrupdateUserFromJSON)),
     };
 }
 
@@ -186,8 +200,8 @@ export function TaskScheduleToJSONTyped(value?: TaskSchedule | null, ignoreDiscr
         'frequency': value['frequency'],
         'scheduled_date': value['scheduled_date'] == null ? value['scheduled_date'] : value['scheduled_date'].toISOString().substring(0,10),
         'status': ScheduleStatusToJSON(value['status']),
-        'company_id': value['company_id'],
-        'assigned_user_ids': value['assigned_user_ids'],
+        'company': CrupdateCompanyToJSON(value['company']),
+        'assigned_users': value['assigned_users'] == null ? undefined : ((value['assigned_users'] as Array<any>).map(CrupdateUserToJSON)),
     };
 }
 

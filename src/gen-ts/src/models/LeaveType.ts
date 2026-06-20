@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -101,10 +108,10 @@ export interface LeaveType {
     days_per_year?: number;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof LeaveType
      */
-    company_id?: string;
+    company?: CrupdateCompany;
 }
 
 /**
@@ -136,7 +143,7 @@ export function LeaveTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'deduct_from_balance': json['deduct_from_balance'] == null ? undefined : json['deduct_from_balance'],
         'color': json['color'] == null ? undefined : json['color'],
         'days_per_year': json['days_per_year'] == null ? undefined : json['days_per_year'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
     };
 }
 
@@ -163,7 +170,7 @@ export function LeaveTypeToJSONTyped(value?: LeaveType | null, ignoreDiscriminat
         'deduct_from_balance': value['deduct_from_balance'],
         'color': value['color'],
         'days_per_year': value['days_per_year'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
     };
 }
 

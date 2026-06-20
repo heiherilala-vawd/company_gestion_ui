@@ -10,6 +10,7 @@ Name | Type
 `id` | string
 `material` | [CrupdateMaterial](CrupdateMaterial.md)
 `quantity` | number
+`container` | [CrupdateTravelOperationContainer](CrupdateTravelOperationContainer.md)
 
 ## Example
 
@@ -22,6 +23,7 @@ const example = {
   "id": travel_mat_010,
   "material": null,
   "quantity": 100,
+  "container": null,
 } satisfies TravelOperationMaterialLine
 
 console.log(example)

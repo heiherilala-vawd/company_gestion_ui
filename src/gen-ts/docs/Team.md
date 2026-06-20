@@ -14,7 +14,7 @@ Name | Type
 `id` | string
 `name` | string
 `leader` | [User](User.md)
-`job_id` | string
+`job` | [CrupdateJob](CrupdateJob.md)
 `members` | [Array&lt;User&gt;](User.md)
 
 ## Example
@@ -32,7 +32,7 @@ const example = {
   "id": team_001,
   "name": Équipe chantier A,
   "leader": null,
-  "job_id": job_001,
+  "job": null,
   "members": null,
 } satisfies Team
 

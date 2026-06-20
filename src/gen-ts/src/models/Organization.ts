@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -95,10 +102,10 @@ export interface Organization {
     contact_name?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof Organization
      */
-    company_id?: string;
+    company?: CrupdateCompany;
 }
 
 /**
@@ -129,7 +136,7 @@ export function OrganizationFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'email': json['email'] == null ? undefined : json['email'],
         'phone': json['phone'] == null ? undefined : json['phone'],
         'contact_name': json['contact_name'] == null ? undefined : json['contact_name'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
     };
 }
 
@@ -155,7 +162,7 @@ export function OrganizationToJSONTyped(value?: Organization | null, ignoreDiscr
         'email': value['email'],
         'phone': value['phone'],
         'contact_name': value['contact_name'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
     };
 }
 

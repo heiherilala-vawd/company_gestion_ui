@@ -16,6 +16,7 @@ export default function TravelMaterialShow() {
         <TextField source="id" />
 
         <TextField source="material.name" label="Matériau" />
+        <TextField source="container.name" label="Conteneur" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Quantité reçue" />
         <ArrayField source="arrival_logs" label="Historique des réceptions">

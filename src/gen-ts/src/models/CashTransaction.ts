@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCashAccount } from './CrupdateCashAccount';
+import {
+    CrupdateCashAccountFromJSON,
+    CrupdateCashAccountFromJSONTyped,
+    CrupdateCashAccountToJSON,
+    CrupdateCashAccountToJSONTyped,
+} from './CrupdateCashAccount';
 import type { CashTransactionType } from './CashTransactionType';
 import {
     CashTransactionTypeFromJSON,
@@ -72,10 +79,10 @@ export interface CashTransaction {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCashAccount}
      * @memberof CashTransaction
      */
-    cash_account_id?: string;
+    cash_account?: CrupdateCashAccount;
     /**
      * 
      * @type {number}
@@ -127,7 +134,7 @@ export function CashTransactionFromJSONTyped(json: any, ignoreDiscriminator: boo
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'cash_account_id': json['cash_account_id'] == null ? undefined : json['cash_account_id'],
+        'cash_account': json['cash_account'] == null ? undefined : CrupdateCashAccountFromJSON(json['cash_account']),
         'amount': json['amount'] == null ? undefined : json['amount'],
         'transaction_date': json['transaction_date'] == null ? undefined : (new Date(json['transaction_date'])),
         'description': json['description'] == null ? undefined : json['description'],
@@ -152,7 +159,7 @@ export function CashTransactionToJSONTyped(value?: CashTransaction | null, ignor
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'cash_account_id': value['cash_account_id'],
+        'cash_account': CrupdateCashAccountToJSON(value['cash_account']),
         'amount': value['amount'],
         'transaction_date': value['transaction_date'] == null ? value['transaction_date'] : value['transaction_date'].toISOString().substring(0,10),
         'description': value['description'],

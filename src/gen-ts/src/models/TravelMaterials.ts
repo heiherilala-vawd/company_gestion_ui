@@ -34,6 +34,13 @@ import {
     CrupdateTravelExpenseToJSON,
     CrupdateTravelExpenseToJSONTyped,
 } from './CrupdateTravelExpense';
+import type { CrupdateTravelOperationContainer } from './CrupdateTravelOperationContainer';
+import {
+    CrupdateTravelOperationContainerFromJSON,
+    CrupdateTravelOperationContainerFromJSONTyped,
+    CrupdateTravelOperationContainerToJSON,
+    CrupdateTravelOperationContainerToJSONTyped,
+} from './CrupdateTravelOperationContainer';
 import type { CrupdateMaterial } from './CrupdateMaterial';
 import {
     CrupdateMaterialFromJSON,
@@ -126,6 +133,12 @@ export interface TravelMaterials {
      * @memberof TravelMaterials
      */
     arrival_location?: CrupdateWarehouse;
+    /**
+     * 
+     * @type {CrupdateTravelOperationContainer}
+     * @memberof TravelMaterials
+     */
+    container?: CrupdateTravelOperationContainer;
 }
 
 /**
@@ -158,6 +171,7 @@ export function TravelMaterialsFromJSONTyped(json: any, ignoreDiscriminator: boo
         'quantity_lost': json['quantity_lost'] == null ? undefined : json['quantity_lost'],
         'arrival_date': json['arrival_date'] == null ? undefined : (new Date(json['arrival_date'])),
         'arrival_location': json['arrival_location'] == null ? undefined : CrupdateWarehouseFromJSON(json['arrival_location']),
+        'container': json['container'] == null ? undefined : CrupdateTravelOperationContainerFromJSON(json['container']),
     };
 }
 
@@ -185,6 +199,7 @@ export function TravelMaterialsToJSONTyped(value?: TravelMaterials | null, ignor
         'quantity_lost': value['quantity_lost'],
         'arrival_date': value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
         'arrival_location': CrupdateWarehouseToJSON(value['arrival_location']),
+        'container': CrupdateTravelOperationContainerToJSON(value['container']),
     };
 }
 

@@ -20,6 +20,13 @@ import {
     CrupdateEquipmentToJSON,
     CrupdateEquipmentToJSONTyped,
 } from './CrupdateEquipment';
+import type { CrupdateTravelOperationContainer } from './CrupdateTravelOperationContainer';
+import {
+    CrupdateTravelOperationContainerFromJSON,
+    CrupdateTravelOperationContainerFromJSONTyped,
+    CrupdateTravelOperationContainerToJSON,
+    CrupdateTravelOperationContainerToJSONTyped,
+} from './CrupdateTravelOperationContainer';
 
 /**
  * 
@@ -45,6 +52,12 @@ export interface TravelOperationEquipmentLine {
      * @memberof TravelOperationEquipmentLine
      */
     equipment?: CrupdateEquipment;
+    /**
+     * 
+     * @type {CrupdateTravelOperationContainer}
+     * @memberof TravelOperationEquipmentLine
+     */
+    container?: CrupdateTravelOperationContainer;
 }
 
 /**
@@ -67,6 +80,7 @@ export function TravelOperationEquipmentLineFromJSONTyped(json: any, ignoreDiscr
         'comment': json['comment'] == null ? undefined : json['comment'],
         'id': json['id'] == null ? undefined : json['id'],
         'equipment': json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
+        'container': json['container'] == null ? undefined : CrupdateTravelOperationContainerFromJSON(json['container']),
     };
 }
 
@@ -84,6 +98,7 @@ export function TravelOperationEquipmentLineToJSONTyped(value?: TravelOperationE
         'comment': value['comment'],
         'id': value['id'],
         'equipment': CrupdateEquipmentToJSON(value['equipment']),
+        'container': CrupdateTravelOperationContainerToJSON(value['container']),
     };
 }
 

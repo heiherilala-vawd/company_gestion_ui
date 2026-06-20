@@ -20,8 +20,6 @@ import {
   Paper,
   Alert,
   CircularProgress,
-  ToggleButtonGroup,
-  ToggleButton,
   InputAdornment,
   MenuItem,
   Select,
@@ -42,10 +40,19 @@ function cleanFilters(raw: Record<string, string | boolean>) {
   return out
 }
 
+interface ContainerGroup {
+  id: string
+  name: string
+  description: string
+  equipmentItems: any[]
+  materialItems: any[]
+}
+
+const NO_CONTAINER_KEY = '__none__'
+
 export default function TravelMaterialActivity() {
   const notify = useNotify()
 
-  const [entityType, setEntityType] = useState<'materials' | 'equipment'>('materials')
   const [selectedItems, setSelectedItems] = useState<any[]>([])
   const [selectedLocation, setSelectedLocation] = useState('')
   const [newArrivalLocation, setNewArrivalLocation] = useState('')
@@ -80,17 +87,25 @@ export default function TravelMaterialActivity() {
     return response.json()
   }
 
-  const resource = entityType === 'materials' ? 'travel_materials' : 'travel_equipment'
   const queryFilters = useMemo(
     () => cleanFilters({ ...serverFilters, not_arrived: true, arrival_location: selectedLocation }),
     [serverFilters, selectedLocation],
   )
 
   const {
-    data: allItems = [],
-    isLoading,
-    refetch,
-  } = useGetList(resource, {
+    data: allMaterials = [],
+    isLoading: materialsLoading,
+    refetch: refetchMaterials,
+  } = useGetList('travel_materials', {
+    pagination: { page: 1, perPage: 400 },
+    filter: queryFilters,
+  })
+
+  const {
+    data: allEquipment = [],
+    isLoading: equipmentLoading,
+    refetch: refetchEquipment,
+  } = useGetList('travel_equipment', {
     pagination: { page: 1, perPage: 400 },
     filter: queryFilters,
   })
@@ -98,27 +113,85 @@ export default function TravelMaterialActivity() {
   useEffect(() => {
     setLogIds((prev) => {
       const next = { ...prev }
-      allItems.forEach((item: any) => {
+      ;[...allMaterials, ...allEquipment].forEach((item: any) => {
         if (!next[item.id]) next[item.id] = generateId()
       })
       return next
     })
-  }, [allItems])
+  }, [allMaterials, allEquipment])
 
-  const filteredItems = useMemo(() => {
-    if (!search) return allItems
+  const containerGroups = useMemo(() => {
+    const groupsMap = new Map<string, ContainerGroup>()
+
+    const addItem = (item: any, type: 'equipment' | 'material') => {
+      const container = item.container
+      const groupKey = container?.id || NO_CONTAINER_KEY
+      if (!groupsMap.has(groupKey)) {
+        groupsMap.set(groupKey, {
+          id: groupKey,
+          name: container?.name || 'Sans conteneur',
+          description: container?.description || '',
+          equipmentItems: [],
+          materialItems: [],
+        })
+      }
+      const group = groupsMap.get(groupKey)!
+      if (type === 'equipment') {
+        group.equipmentItems.push(item)
+      } else {
+        group.materialItems.push(item)
+      }
+    }
+
+    allEquipment.forEach((item: any) => addItem(item, 'equipment'))
+    allMaterials.forEach((item: any) => addItem(item, 'material'))
+
+    return Array.from(groupsMap.values())
+  }, [allEquipment, allMaterials])
+
+  const filteredContainers = useMemo(() => {
+    if (!search) return containerGroups
     const q = search.toLowerCase()
-    return allItems.filter((item: any) =>
-      Object.values(item).some((v) =>
-        String(v ?? '')
-          .toLowerCase()
-          .includes(q),
-      ),
-    )
-  }, [allItems, search])
+    return containerGroups
+      .map((group) => {
+        const filteredEq = group.equipmentItems.filter((item: any) =>
+          Object.values(item).some((v) =>
+            String(v ?? '')
+              .toLowerCase()
+              .includes(q),
+          ),
+        )
+        const filteredMat = group.materialItems.filter((item: any) =>
+          Object.values(item).some((v) =>
+            String(v ?? '')
+              .toLowerCase()
+              .includes(q),
+          ),
+        )
+        return { ...group, equipmentItems: filteredEq, materialItems: filteredMat }
+      })
+      .filter((g) => g.equipmentItems.length > 0 || g.materialItems.length > 0)
+  }, [containerGroups, search])
 
-  const total = filteredItems.length
-  const items = filteredItems.slice(page * perPage, (page + 1) * perPage)
+  const totalItems = filteredContainers.reduce(
+    (sum, g) => sum + g.equipmentItems.length + g.materialItems.length,
+    0,
+  )
+  const paginatedContainers = useMemo(() => {
+    const start = page * perPage
+    let count = 0
+    return filteredContainers
+      .map((g) => {
+        const eqStart = Math.max(0, start - count)
+        const eqSlice = g.equipmentItems.slice(eqStart, eqStart + perPage)
+        count += g.equipmentItems.length
+        const matStart = Math.max(0, start - count)
+        const matSlice = g.materialItems.slice(matStart, matStart + perPage)
+        count += g.materialItems.length
+        return { ...g, equipmentItems: eqSlice, materialItems: matSlice }
+      })
+      .filter((g) => g.equipmentItems.length > 0 || g.materialItems.length > 0)
+  }, [filteredContainers, page, perPage])
 
   const { data: warehouses = [] } = useGetList('warehouses', {
     pagination: { page: 1, perPage: 100 },
@@ -140,21 +213,6 @@ export default function TravelMaterialActivity() {
     setPage(0)
   }
 
-  const handleEntityChange = (_: any, value: 'materials' | 'equipment' | null) => {
-    if (value) {
-      setEntityType(value)
-      setSelectedItems([])
-      setPage(0)
-      setServerFilters({})
-      setNewArrivalLocation('')
-      setSearch('')
-      setQuantityReceived({})
-      setQuantityLost({})
-      setEquipmentStatuses({})
-      setLogIds({})
-    }
-  }
-
   const handleQuantityReceivedChange = (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuantityReceived((prev) => ({ ...prev, [id]: Number(e.target.value) }))
   }
@@ -169,23 +227,31 @@ export default function TravelMaterialActivity() {
 
   const handleValidate = async () => {
     try {
-      if (entityType === 'materials') {
-        const body = selectedItems.map((item: any) => ({
+      const materialConfirmations = selectedItems
+        .filter((item: any) => item.material !== undefined)
+        .map((item: any) => ({
           id: item.id,
           log_id: logIds[item.id] || generateId(),
           quantity_received: quantityReceived[item.id] ?? 0,
           quantity_lost: quantityLost[item.id] ?? 0,
           arrival_location: newArrivalLocation || null,
         }))
-        await confirmArrival('travel_materials_arrival', body)
-      } else {
-        const body = selectedItems.map((item: any) => ({
+
+      const equipmentConfirmations = selectedItems
+        .filter((item: any) => item.equipment !== undefined)
+        .map((item: any) => ({
           id: item.id,
           status: equipmentStatuses[item.id] || 'ARRIVED',
           arrival_location: newArrivalLocation || null,
         }))
-        await confirmArrival('travel_equipments_arrival', body)
+
+      if (materialConfirmations.length > 0) {
+        await confirmArrival('travel_materials_arrival', materialConfirmations)
       }
+      if (equipmentConfirmations.length > 0) {
+        await confirmArrival('travel_equipments_arrival', equipmentConfirmations)
+      }
+
       notify('Réception confirmée avec succès !', { type: 'success' })
     } catch (err: any) {
       console.error('Validation failed:', err)
@@ -200,11 +266,14 @@ export default function TravelMaterialActivity() {
     setQuantityLost({})
     setEquipmentStatuses({})
     setLogIds({})
-    refetch()
+    refetchMaterials()
+    refetchEquipment()
   }
 
   const locationName = warehouses.find((w: any) => w.id === selectedLocation)?.name
   const newLocationName = warehouses.find((w: any) => w.id === newArrivalLocation)?.name
+
+  const isLoading = materialsLoading || equipmentLoading
 
   return (
     <Box sx={{ p: 2 }}>
@@ -263,14 +332,6 @@ export default function TravelMaterialActivity() {
             ))}
           </select>
         </Box>
-        <ToggleButtonGroup value={entityType} exclusive onChange={handleEntityChange}>
-          <ToggleButton value="materials" data-testid="toggle-materials">
-            Matériaux
-          </ToggleButton>
-          <ToggleButton value="equipment" data-testid="toggle-equipment">
-            Équipement
-          </ToggleButton>
-        </ToggleButtonGroup>
       </Box>
 
       <Box
@@ -335,134 +396,186 @@ export default function TravelMaterialActivity() {
         <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
           <CircularProgress />
         </Box>
+      ) : paginatedContainers.length === 0 ? (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Aucun élément en attente de réception.
+        </Alert>
       ) : (
-        <>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell padding="checkbox" sx={{ fontWeight: 600 }}>
-                    Valider
-                  </TableCell>
-                  {entityType === 'materials' ? (
-                    <>
-                      <TableCell sx={{ fontWeight: 600 }}>Matériau</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Reste</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Qté à recevoir</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Qté perdue</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
-                    </>
-                  ) : (
-                    <>
-                      <TableCell sx={{ fontWeight: 600 }}>Équipement</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Statut</TableCell>
-                      <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
-                    </>
-                  )}
-                  <TableCell sx={{ display: 'none' }}>log_id</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Créé le</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {items.map((item: any) => (
-                  <TableRow
-                    key={item.id}
-                    hover
-                    selected={selectedItems.some((i) => i.id === item.id)}
-                  >
-                    <TableCell padding="checkbox">
-                      <input
-                        type="checkbox"
-                        checked={selectedItems.some((i) => i.id === item.id)}
-                        onChange={() => toggleSelect(item)}
-                        disabled={!selectedLocation}
-                        title={!selectedLocation ? "Sélectionnez d'abord un lieu de réception" : ''}
-                        data-testid={'checkbox-' + item.id}
-                      />
+        paginatedContainers.map((group) => (
+          <Box key={group.id} sx={{ mb: 3 }}>
+            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, color: 'primary.main' }}>
+              {group.id !== NO_CONTAINER_KEY ? '📦 ' : ''}
+              {group.name}
+              {group.description ? (
+                <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
+                  {group.description}
+                </Typography>
+              ) : null}
+            </Typography>
+
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell padding="checkbox" sx={{ fontWeight: 600 }}>
+                      Valider
                     </TableCell>
-                    {entityType === 'materials' ? (
-                      <>
-                        <TableCell>{item.material?.name}</TableCell>
-                        <TableCell>
-                          {(() => {
-                            const totalLogs = (item.arrival_logs || []).reduce(
-                              (sum: number, log: any) =>
-                                sum + (log.quantity_received || 0) + (log.quantity_lost || 0),
-                              0,
-                            )
-                            return Math.max(0, (item.quantity || 0) - totalLogs)
-                          })()}{' '}
-                          {item.material?.unit}
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            type="number"
-                            size="small"
-                            value={quantityReceived[item.id] ?? 0}
-                            onChange={handleQuantityReceivedChange(item.id)}
-                            inputProps={{ min: 0, style: { width: 70 } }}
-                            disabled={!selectedItems.some((i) => i.id === item.id)}
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <TextField
-                            type="number"
-                            size="small"
-                            value={quantityLost[item.id] ?? 0}
-                            onChange={handleQuantityLostChange(item.id)}
-                            inputProps={{ min: 0, style: { width: 70 } }}
-                            disabled={!selectedItems.some((i) => i.id === item.id)}
-                          />
-                        </TableCell>
-                      </>
-                    ) : (
-                      <>
-                        <TableCell>{item.equipment?.name}</TableCell>
-                        <TableCell>
-                          <FormControl size="small" sx={{ minWidth: 140 }}>
-                            <Select
-                              value={equipmentStatuses[item.id] || 'ARRIVED'}
-                              onChange={handleEquipmentStatusChange(item.id)}
-                              disabled={!selectedItems.some((i) => i.id === item.id)}
-                              data-testid={'status-select-' + item.id}
-                            >
-                              <MenuItem value="ARRIVED">Arrivé</MenuItem>
-                              <MenuItem value="LOST">Perdu</MenuItem>
-                              <MenuItem value="DAMAGED">Endommagé</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </TableCell>
-                      </>
-                    )}
-                    <TableCell>
-                      {item.travel?.departure_location?.name} →{' '}
-                      {item.travel?.arrival_location?.name}
-                    </TableCell>
-                    <TableCell sx={{ display: 'none' }}>
-                      {logIds[item.id] || generateId()}
-                    </TableCell>
-                    <TableCell>
-                      {item.created_at ? new Date(item.created_at).toLocaleDateString('fr-FR') : ''}
-                    </TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Type</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Élément</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Reste</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Qté à recevoir / Statut</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Qté perdue</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Trajet</TableCell>
+                    <TableCell sx={{ display: 'none' }}>log_id</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Créé le</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            component="div"
-            count={total || 0}
-            page={page}
-            onPageChange={(_, p) => setPage(p)}
-            rowsPerPage={perPage}
-            onRowsPerPageChange={(e) => {
-              setPerPage(parseInt(e.target.value, 10))
-              setPage(0)
-            }}
-            labelRowsPerPage="Lignes par page"
-          />
-        </>
+                </TableHead>
+                <TableBody>
+                  {group.equipmentItems.map((item: any) => (
+                    <TableRow
+                      key={item.id}
+                      hover
+                      selected={selectedItems.some((i) => i.id === item.id)}
+                    >
+                      <TableCell padding="checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.some((i) => i.id === item.id)}
+                          onChange={() => toggleSelect(item)}
+                          disabled={!selectedLocation}
+                          title={
+                            !selectedLocation ? "Sélectionnez d'abord un lieu de réception" : ''
+                          }
+                          data-testid={'checkbox-' + item.id}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" color="info.main" sx={{ fontWeight: 600 }}>
+                          Équipement
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{item.equipment?.name}</TableCell>
+                      <TableCell>-</TableCell>
+                      <TableCell>
+                        <FormControl size="small" sx={{ minWidth: 140 }}>
+                          <Select
+                            value={equipmentStatuses[item.id] || 'ARRIVED'}
+                            onChange={handleEquipmentStatusChange(item.id)}
+                            disabled={!selectedItems.some((i) => i.id === item.id)}
+                            data-testid={'status-select-' + item.id}
+                          >
+                            <MenuItem value="ARRIVED">Arrivé</MenuItem>
+                            <MenuItem value="LOST">Perdu</MenuItem>
+                            <MenuItem value="DAMAGED">Endommagé</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </TableCell>
+                      <TableCell>-</TableCell>
+                      <TableCell>
+                        {item.travel?.departure_location?.name} →{' '}
+                        {item.travel?.arrival_location?.name}
+                      </TableCell>
+                      <TableCell sx={{ display: 'none' }}>
+                        {logIds[item.id] || generateId()}
+                      </TableCell>
+                      <TableCell>
+                        {item.created_at
+                          ? new Date(item.created_at).toLocaleDateString('fr-FR')
+                          : ''}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {group.materialItems.map((item: any) => (
+                    <TableRow
+                      key={item.id}
+                      hover
+                      selected={selectedItems.some((i) => i.id === item.id)}
+                    >
+                      <TableCell padding="checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.some((i) => i.id === item.id)}
+                          onChange={() => toggleSelect(item)}
+                          disabled={!selectedLocation}
+                          title={
+                            !selectedLocation ? "Sélectionnez d'abord un lieu de réception" : ''
+                          }
+                          data-testid={'checkbox-' + item.id}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Typography variant="body2" color="success.main" sx={{ fontWeight: 600 }}>
+                          Matériau
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{item.material?.name}</TableCell>
+                      <TableCell>
+                        {(() => {
+                          const totalLogs = (item.arrival_logs || []).reduce(
+                            (sum: number, log: any) =>
+                              sum + (log.quantity_received || 0) + (log.quantity_lost || 0),
+                            0,
+                          )
+                          return (
+                            Math.max(0, (item.quantity || 0) - totalLogs) +
+                            ' ' +
+                            (item.material?.unit || '')
+                          )
+                        })()}
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          type="number"
+                          size="small"
+                          value={quantityReceived[item.id] ?? 0}
+                          onChange={handleQuantityReceivedChange(item.id)}
+                          inputProps={{ min: 0, style: { width: 70 } }}
+                          disabled={!selectedItems.some((i) => i.id === item.id)}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <TextField
+                          type="number"
+                          size="small"
+                          value={quantityLost[item.id] ?? 0}
+                          onChange={handleQuantityLostChange(item.id)}
+                          inputProps={{ min: 0, style: { width: 70 } }}
+                          disabled={!selectedItems.some((i) => i.id === item.id)}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {item.travel?.departure_location?.name} →{' '}
+                        {item.travel?.arrival_location?.name}
+                      </TableCell>
+                      <TableCell sx={{ display: 'none' }}>
+                        {logIds[item.id] || generateId()}
+                      </TableCell>
+                      <TableCell>
+                        {item.created_at
+                          ? new Date(item.created_at).toLocaleDateString('fr-FR')
+                          : ''}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
+        ))
       )}
+
+      <TablePagination
+        component="div"
+        count={totalItems || 0}
+        page={page}
+        onPageChange={(_, p) => setPage(p)}
+        rowsPerPage={perPage}
+        onRowsPerPageChange={(e) => {
+          setPerPage(parseInt(e.target.value, 10))
+          setPage(0)
+        }}
+        labelRowsPerPage="Lignes par page"
+      />
 
       <Button
         variant="contained"
@@ -491,9 +604,11 @@ export default function TravelMaterialActivity() {
           </Typography>
           {selectedItems.map((item: any) => (
             <Typography key={item.id} sx={{ mb: 0.5 }}>
-              {entityType === 'materials'
-                ? `• ${item.material?.name || '?'} — Reçu: ${quantityReceived[item.id] ?? 0}, Perdu: ${quantityLost[item.id] ?? item.quantity_lost ?? 0}`
-                : `• ${item.equipment?.name || item.equipment?.id} → ${equipmentStatuses[item.id] || 'ARRIVED'}`}
+              {item.material
+                ? `📦 ${item.material?.name || '?'} — Reçu: ${quantityReceived[item.id] ?? 0}, Perdu: ${quantityLost[item.id] ?? 0}`
+                : item.equipment
+                  ? `🔧 ${item.equipment?.name || item.equipment?.id} → ${equipmentStatuses[item.id] || 'ARRIVED'}`
+                  : `• ${item.id}`}
             </Typography>
           ))}
         </DialogContent>

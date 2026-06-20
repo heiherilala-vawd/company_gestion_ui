@@ -20,6 +20,13 @@ import {
     RoleToJSON,
     RoleToJSONTyped,
 } from './Role';
+import type { CrupdateUser } from './CrupdateUser';
+import {
+    CrupdateUserFromJSON,
+    CrupdateUserFromJSONTyped,
+    CrupdateUserToJSON,
+    CrupdateUserToJSONTyped,
+} from './CrupdateUser';
 import type { AuditUser } from './AuditUser';
 import {
     AuditUserFromJSON,
@@ -27,6 +34,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateDepartment } from './CrupdateDepartment';
+import {
+    CrupdateDepartmentFromJSON,
+    CrupdateDepartmentFromJSONTyped,
+    CrupdateDepartmentToJSON,
+    CrupdateDepartmentToJSONTyped,
+} from './CrupdateDepartment';
 import type { Sex } from './Sex';
 import {
     SexFromJSON,
@@ -34,6 +48,13 @@ import {
     SexToJSON,
     SexToJSONTyped,
 } from './Sex';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -109,10 +130,10 @@ export interface User {
     email?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof User
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
      * @type {Date}
@@ -121,16 +142,16 @@ export interface User {
     birth_date?: Date;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateUser}
      * @memberof User
      */
-    manager_id?: string;
+    manager?: CrupdateUser;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateDepartment}
      * @memberof User
      */
-    department_id?: string;
+    department?: CrupdateDepartment;
 }
 
 
@@ -163,10 +184,10 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         'last_name': json['last_name'] == null ? undefined : json['last_name'],
         'sex': json['sex'] == null ? undefined : SexFromJSON(json['sex']),
         'email': json['email'] == null ? undefined : json['email'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
         'birth_date': json['birth_date'] == null ? undefined : (new Date(json['birth_date'])),
-        'manager_id': json['manager_id'] == null ? undefined : json['manager_id'],
-        'department_id': json['department_id'] == null ? undefined : json['department_id'],
+        'manager': json['manager'] == null ? undefined : CrupdateUserFromJSON(json['manager']),
+        'department': json['department'] == null ? undefined : CrupdateDepartmentFromJSON(json['department']),
     };
 }
 
@@ -192,10 +213,10 @@ export function UserToJSONTyped(value?: User | null, ignoreDiscriminator: boolea
         'last_name': value['last_name'],
         'sex': SexToJSON(value['sex']),
         'email': value['email'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
         'birth_date': value['birth_date'] == null ? value['birth_date'] : value['birth_date'].toISOString().substring(0,10),
-        'manager_id': value['manager_id'],
-        'department_id': value['department_id'],
+        'manager': CrupdateUserToJSON(value['manager']),
+        'department': CrupdateDepartmentToJSON(value['department']),
     };
 }
 

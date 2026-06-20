@@ -18,8 +18,8 @@ Name | Type
 `frequency` | string
 `scheduled_date` | Date
 `status` | [ScheduleStatus](ScheduleStatus.md)
-`company_id` | string
-`assigned_user_ids` | Array&lt;string&gt;
+`company` | [CrupdateCompany](CrupdateCompany.md)
+`assigned_users` | [Array&lt;CrupdateUser&gt;](CrupdateUser.md)
 
 ## Example
 
@@ -40,8 +40,8 @@ const example = {
   "frequency": 0 0 8 1 * ?,
   "scheduled_date": Wed Jul 01 03:00:00 EAT 2026,
   "status": null,
-  "company_id": comp_btp001,
-  "assigned_user_ids": ["usr_123456","usr_789012"],
+  "company": null,
+  "assigned_users": ["usr_123456","usr_789012"],
 } satisfies TaskSchedule
 
 console.log(example)

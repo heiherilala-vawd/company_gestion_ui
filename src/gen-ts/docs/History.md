@@ -9,7 +9,7 @@ Name | Type
 `id` | string
 `previous_value` | string
 `new_value` | string
-`user_id` | string
+`user` | [CrupdateUser](CrupdateUser.md)
 `modified_at` | Date
 `entity_type` | [EntityType](EntityType.md)
 `entity_id` | string
@@ -24,7 +24,7 @@ const example = {
   "id": hist_001,
   "previous_value": {"status":"PENDING_SIGNATURE"},
   "new_value": {"status":"IN_PROGRESS"},
-  "user_id": usr_123456,
+  "user": null,
   "modified_at": 2024-02-01T09:00Z,
   "entity_type": null,
   "entity_id": job_001,

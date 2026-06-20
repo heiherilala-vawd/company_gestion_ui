@@ -12,7 +12,7 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`cash_account_id` | string
+`cash_account` | [CrupdateCashAccount](CrupdateCashAccount.md)
 `amount` | number
 `transaction_date` | Date
 `description` | string
@@ -31,7 +31,7 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": ct_001,
-  "cash_account_id": ca_001,
+  "cash_account": null,
   "amount": 500000.0,
   "transaction_date": Sat Jun 15 03:00:00 EAT 2024,
   "description": Dépôt chèque client,

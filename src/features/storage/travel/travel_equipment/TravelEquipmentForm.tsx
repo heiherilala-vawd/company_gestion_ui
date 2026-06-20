@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, SelectInput, DateTimeInput } from 'react-admin'
+import { TextInput, NumberInput, SelectInput, DateTimeInput, FunctionField } from 'react-admin'
 import generateId from '../../../../utili/utils.tsx'
 import {
   renderEquipmentSelect,
@@ -29,6 +29,7 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
       )}
       {renderTravelExpenseSelect(null, null, !isCreate)}
       {renderEquipmentSelect('equipment', null)}
+      <FunctionField label="Conteneur" render={(record: any) => record.container?.name || '-'} />
       {renderWarehouseSelect('arrival_location', "Lieu d'arrivée")}
       <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <SelectInput

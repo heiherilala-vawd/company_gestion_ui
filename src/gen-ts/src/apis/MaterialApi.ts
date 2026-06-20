@@ -85,6 +85,7 @@ export interface GetMaterialsRequest {
     name?: string;
     description?: string;
     unit?: MaterialUnit;
+    warehouseId?: string;
     notArrived?: boolean;
 }
 
@@ -339,6 +340,10 @@ export class MaterialApi extends runtime.BaseAPI {
 
         if (requestParameters['unit'] != null) {
             queryParameters['unit'] = requestParameters['unit'];
+        }
+
+        if (requestParameters['warehouseId'] != null) {
+            queryParameters['warehouse_id'] = requestParameters['warehouseId'];
         }
 
         if (requestParameters['notArrived'] != null) {

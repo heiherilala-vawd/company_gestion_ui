@@ -3,6 +3,7 @@ import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { material1Mock } from './materials-api.ts'
 import { expense1Mock } from './expenses-api.ts'
 import { user1Mock } from './users-api.ts'
+import { container1Mock, container2Mock } from './travel-containers-api.ts'
 import {
   toCrupdateExpenseMoneyMapper,
   toCrupdateMaterialMapper,
@@ -18,6 +19,7 @@ export const travelMaterials1Mock: TravelMaterials = {
   quantity_received: 8,
   quantity_lost: 0,
   comment: 'Cement bags for construction',
+  container: container1Mock,
   created_at: '2022-02-11T10:00:00Z',
   updated_at: '2022-02-15T14:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
@@ -31,13 +33,18 @@ export const travelMaterials2Mock: TravelMaterials = {
   quantity: 20,
   quantity_received: 20,
   comment: 'Full delivery received',
+  container: container2Mock,
   created_at: '2022-03-21T11:00:00Z',
   updated_at: '2022-03-21T11:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
   updated_by: toAuditUserMapper(user1Mock),
 }
 
-export const travelMaterialsMock: TravelMaterials[] = [travelMaterials1Mock, travelMaterials2Mock]
+export const travelMaterialsMock: TravelMaterials[] = [
+  travelMaterials1Mock,
+  travelMaterials2Mock,
+  travelMaterials3Mock,
+]
 
 export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
   {
@@ -58,7 +65,25 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
   },
 ]
 
-export const notArrivedTravelMaterialsMock: TravelMaterials[] = [travelMaterials1Mock]
+export const travelMaterials3Mock: TravelMaterials = {
+  id: 'tm3_id',
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  material: toCrupdateMaterialMapper(material1Mock),
+  quantity: 15,
+  quantity_received: 0,
+  quantity_lost: 0,
+  comment: 'Extra bricks in red crate',
+  container: container2Mock,
+  created_at: '2022-04-01T08:00:00Z',
+  updated_at: '2022-04-01T08:00:00Z',
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
+}
+
+export const notArrivedTravelMaterialsMock: TravelMaterials[] = [
+  travelMaterials1Mock,
+  travelMaterials3Mock,
+]
 
 export const confirmMaterialArrivals = (
   confirmations: Array<{

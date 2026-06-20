@@ -1,28 +1,28 @@
 
-# Maintenance
+# CrupdateTravelOperationContainer
 
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`comment` | string
 `id` | string
-`expense` | [CrupdateExpenseMoney](CrupdateExpenseMoney.md)
-`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
+`name` | string
 `description` | string
 
 ## Example
 
 ```typescript
-import type { Maintenance } from 'api-client'
+import type { CrupdateTravelOperationContainer } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
-  "id": maint_001,
-  "expense": null,
-  "equipment": null,
-  "description": Révision moteur périodique,
-} satisfies Maintenance
+  "comment": Commentaire sur cette entité,
+  "id": tc_010,
+  "name": Blue Box,
+  "description": Grande boîte plastique,
+} satisfies CrupdateTravelOperationContainer
 
 console.log(example)
 
@@ -31,7 +31,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as Maintenance
+const exampleParsed = JSON.parse(exampleJSON) as CrupdateTravelOperationContainer
 console.log(exampleParsed)
 ```
 

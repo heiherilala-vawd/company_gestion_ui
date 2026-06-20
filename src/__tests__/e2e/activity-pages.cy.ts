@@ -13,7 +13,6 @@ import {
   selectReferenceWithCreate,
 } from '../support/utils.ts'
 import { user1Mock } from '../mocks/responses/users-api'
-import { materialWarehouse1Mock } from '../mocks/responses/material-warehouse-api'
 import { warehouse1Mock } from '../mocks/responses/warehouses-api'
 import { material1Mock } from '../mocks/responses/materials-api'
 import { income1Mock } from '../mocks/responses/incomes-api'
@@ -101,13 +100,16 @@ describe('E2E: Activity Pages', () => {
 
   // ==================== TRAVEL MATERIAL ACTIVITY ====================
 
-  function testTravelMaterialToggle(desktop: boolean) {
+  function testTravelMaterialContainerGrouping(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
     navigateTo('/travel_materials_activity')
 
     cy.contains('Lieu de réception').should('be.visible')
-    cy.contains(materialWarehouse1Mock.material?.name).should('be.visible')
-    cy.get('[data-testid="toggle-equipment"]').scrollIntoView().click({ force: true })
+    cy.contains('Cement').should('be.visible')
+    cy.contains('Excavator XL200').should('be.visible')
+    cy.contains('Équipement').should('be.visible')
+    cy.contains('Matériau').should('be.visible')
+    cy.contains('Blue Box').should('be.visible')
   }
 
   // ==================== EXPENSES ACTIVITY ====================
@@ -296,9 +298,11 @@ describe('E2E: Activity Pages', () => {
 
   it('should repay loan on employer payment (desktop)', () => testLoanRepayment(true))
   it('should repay loan on employer payment (mobile)', () => testLoanRepayment(false))
+  it('should display travel materials grouped by container (desktop)', () =>
+    testTravelMaterialContainerGrouping(true))
 
-  it('should toggle travel material views (desktop)', () => testTravelMaterialToggle(true))
-  it('should toggle travel material views (mobile)', () => testTravelMaterialToggle(false))
+  it('should display travel materials grouped by container (mobile)', () =>
+    testTravelMaterialContainerGrouping(false))
 
   it('should navigate and submit expenses activity (desktop)', () => testExpensesActivity(true))
   it('should navigate and submit expenses activity (mobile)', () => testExpensesActivity(false))

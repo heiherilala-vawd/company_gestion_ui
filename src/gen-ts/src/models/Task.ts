@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateUser } from './CrupdateUser';
+import {
+    CrupdateUserFromJSON,
+    CrupdateUserFromJSONTyped,
+    CrupdateUserToJSON,
+    CrupdateUserToJSONTyped,
+} from './CrupdateUser';
 import type { TaskPriority } from './TaskPriority';
 import {
     TaskPriorityFromJSON,
@@ -27,6 +34,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -96,10 +110,10 @@ export interface Task {
     priority?: TaskPriority;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof Task
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
      * @type {boolean}
@@ -114,10 +128,10 @@ export interface Task {
     completed_at?: Date;
     /**
      * 
-     * @type {Array<string>}
+     * @type {Array<CrupdateUser>}
      * @memberof Task
      */
-    assigned_user_ids?: Array<string>;
+    assigned_users?: Array<CrupdateUser>;
 }
 
 
@@ -149,10 +163,10 @@ export function TaskFromJSONTyped(json: any, ignoreDiscriminator: boolean): Task
         'description': json['description'] == null ? undefined : json['description'],
         'due_date': json['due_date'] == null ? undefined : (new Date(json['due_date'])),
         'priority': json['priority'] == null ? undefined : TaskPriorityFromJSON(json['priority']),
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
         'completed': json['completed'] == null ? undefined : json['completed'],
         'completed_at': json['completed_at'] == null ? undefined : (new Date(json['completed_at'])),
-        'assigned_user_ids': json['assigned_user_ids'] == null ? undefined : json['assigned_user_ids'],
+        'assigned_users': json['assigned_users'] == null ? undefined : ((json['assigned_users'] as Array<any>).map(CrupdateUserFromJSON)),
     };
 }
 
@@ -177,10 +191,10 @@ export function TaskToJSONTyped(value?: Task | null, ignoreDiscriminator: boolea
         'description': value['description'],
         'due_date': value['due_date'] == null ? value['due_date'] : value['due_date'].toISOString().substring(0,10),
         'priority': TaskPriorityToJSON(value['priority']),
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
         'completed': value['completed'],
         'completed_at': value['completed_at'] == null ? value['completed_at'] : value['completed_at'].toISOString(),
-        'assigned_user_ids': value['assigned_user_ids'],
+        'assigned_users': value['assigned_users'] == null ? undefined : ((value['assigned_users'] as Array<any>).map(CrupdateUserToJSON)),
     };
 }
 

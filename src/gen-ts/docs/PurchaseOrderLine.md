@@ -7,7 +7,7 @@
 Name | Type
 ------------ | -------------
 `id` | string
-`material_id` | string
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
 `quantity` | number
 `unit_price` | number
 
@@ -19,7 +19,7 @@ import type { PurchaseOrderLine } from 'api-client'
 // TODO: Update the object below with actual values
 const example = {
   "id": null,
-  "material_id": null,
+  "material": null,
   "quantity": null,
   "unit_price": null,
 } satisfies PurchaseOrderLine

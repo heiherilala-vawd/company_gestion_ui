@@ -15,7 +15,7 @@ Name | Type
 `name` | string
 `amount` | number
 `description` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 `start_date` | Date
 `end_date` | Date
 
@@ -35,7 +35,7 @@ const example = {
   "name": Loyer bureau,
   "amount": 2000.0,
   "description": Loyer mensuel des locaux,
-  "company_id": comp_btp001,
+  "company": null,
   "start_date": Mon Jan 01 03:00:00 EAT 2024,
   "end_date": Tue Dec 31 03:00:00 EAT 2024,
 } satisfies CompanyFixedCost

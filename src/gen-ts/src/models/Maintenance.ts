@@ -20,6 +20,13 @@ import {
     CrupdateExpenseMoneyToJSON,
     CrupdateExpenseMoneyToJSONTyped,
 } from './CrupdateExpenseMoney';
+import type { CrupdateEquipment } from './CrupdateEquipment';
+import {
+    CrupdateEquipmentFromJSON,
+    CrupdateEquipmentFromJSONTyped,
+    CrupdateEquipmentToJSON,
+    CrupdateEquipmentToJSONTyped,
+} from './CrupdateEquipment';
 
 /**
  * 
@@ -40,11 +47,11 @@ export interface Maintenance {
      */
     expense?: CrupdateExpenseMoney;
     /**
-     * ID of the equipment this maintenance belongs to
-     * @type {string}
+     * 
+     * @type {CrupdateEquipment}
      * @memberof Maintenance
      */
-    equipment_id?: string;
+    equipment?: CrupdateEquipment;
     /**
      * 
      * @type {string}
@@ -72,7 +79,7 @@ export function MaintenanceFromJSONTyped(json: any, ignoreDiscriminator: boolean
         
         'id': json['id'] == null ? undefined : json['id'],
         'expense': json['expense'] == null ? undefined : CrupdateExpenseMoneyFromJSON(json['expense']),
-        'equipment_id': json['equipment_id'] == null ? undefined : json['equipment_id'],
+        'equipment': json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
         'description': json['description'] == null ? undefined : json['description'],
     };
 }
@@ -90,7 +97,7 @@ export function MaintenanceToJSONTyped(value?: Maintenance | null, ignoreDiscrim
         
         'id': value['id'],
         'expense': CrupdateExpenseMoneyToJSON(value['expense']),
-        'equipment_id': value['equipment_id'],
+        'equipment': CrupdateEquipmentToJSON(value['equipment']),
         'description': value['description'],
     };
 }

@@ -5,6 +5,8 @@ import {
   DateTimeInput,
   ArrayInput,
   SimpleFormIterator,
+  ReferenceArrayInput,
+  AutocompleteArrayInput,
   useNotify,
   ResourceContextProvider,
   useGetIdentity,
@@ -27,12 +29,8 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import generateId from '../../../utili/utils.tsx'
-import ReferenceSelectWithCreate from '../../../generic/ReferenceSelectWithCreate.tsx'
 import { getMiddleUrl } from '../../../config/dynamicResources.ts'
-import MaterialForm from '../../storage/materials/MaterialForm.tsx'
-import WarehouseForm from '../../storage/warehouses/WarehouseForm.tsx'
 import { useNavigate, useSearchParams } from 'react-router'
-import EquipmentForm from '../equipment/EquipmentForm.tsx'
 import { operationFormStyles } from '../../../style/components'
 import { transitions } from '../../../style/themeConfig'
 
@@ -64,68 +62,63 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
   const { title: pageTitle, docTitle } = modeTitles[mode]
 
   const [departureLocationId, setDepartureLocationId] = useState<string | null>(null)
+  const [isCommentOpen, setIsCommentOpen] = useState(false)
 
   const toInstant = (date: string) => {
     if (!date) return null
     return new Date(date).toISOString()
   }
 
-  const add_autogenaration_id = (source: string) => {
-    return <TextInput source={source} sx={{ display: 'none' }} defaultValue={generateId()} />
-  }
-
-  const [isCommentOpen, setIsCommentOpen] = useState(false)
+  const addAutoId = (source: string) => (
+    <TextInput source={source} sx={{ display: 'none' }} defaultValue={generateId()} />
+  )
 
   const onSubmit = async (data: any) => {
-    const payload = {
+    const payload: Record<string, any> = {
       comment: data.comment || null,
       travel: {
         id: data.travel_id,
         expense_id: data.expense_id,
-        departure_location: data.departure_location_id
-          ? {
-              id: data.departure_location_id,
-            }
-          : null,
-        arrival_location: data.arrival_location_id
-          ? {
-              id: data.arrival_location_id,
-            }
-          : null,
+        departure_location: data.departure_location_id ? { id: data.departure_location_id } : null,
+        arrival_location: data.arrival_location_id ? { id: data.arrival_location_id } : null,
         departure_date: toInstant(data.departure_date),
         arrival_date: toInstant(data.arrival_date),
         fee: parseFloat(data.fee) || 0,
       },
       direct_arrival: data.direct_arrival ?? false,
-      equipment_lines:
-        mode === 'full' || mode === 'equipment'
-          ? (data.equipment_lines || []).map((line: any) => ({
-              id: line.travel_equipment_id,
-              equipment: {
-                id: line.equipment_id,
-              },
-            }))
-          : [],
-      material_lines:
-        mode === 'full' || mode === 'materials'
-          ? (data.material_lines || []).map((line: any) => ({
-              id: line.travel_material_id,
-              material: {
-                id: line.material_id,
-              },
-              quantity: parseFloat(line.material_quantity) || 0,
-            }))
-          : [],
-      people_lines:
-        mode === 'full' || mode === 'people'
-          ? (data.people_lines || []).map((line: any) => ({
-              id: line.travel_people_id,
-              user_id: line.user_id,
-            }))
-          : [],
     }
 
-    const url = getMiddleUrl(`travel_operations`)
+    if (mode === 'full' || mode === 'equipment' || mode === 'materials') {
+      payload.containers = (data.containers || []).map((c: any) => ({
+        id: c.container_id || generateId(),
+        name: c.container_name || '',
+        description: c.container_description || '',
+        equipment_lines:
+          mode === 'full' || mode === 'equipment'
+            ? (c.equipment_ids || []).map((eqId: string) => ({
+                id: generateId(),
+                equipment: { id: eqId },
+              }))
+            : [],
+        material_lines:
+          mode === 'full' || mode === 'materials'
+            ? (c.material_lines || []).map((ml: any) => ({
+                id: ml.travel_material_id || generateId(),
+                material: { id: ml.material_id },
+                quantity: parseFloat(ml.material_quantity) || 0,
+              }))
+            : [],
+      }))
+    }
+
+    if (mode === 'full' || mode === 'people') {
+      payload.people_lines = (data.people_lines || []).map((line: any) => ({
+        id: line.travel_people_id || generateId(),
+        user_id: line.user_id,
+      }))
+    }
+
+    const url = getMiddleUrl('travel_operations')
     const token = localStorage.getItem('token')
 
     if (!token) {
@@ -160,7 +153,7 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
               : 'Opération de déplacement créée avec succès !',
         { type: 'success' },
       )
-      navigate(`/`)
+      navigate('/')
     } catch (error: any) {
       console.error(error)
       notify(`Erreur : ${error.message}`, { type: 'error' })
@@ -224,8 +217,8 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
               </Typography>
 
               <Box sx={operationFormStyles.collapseContent}>
-                {add_autogenaration_id('travel_id')}
-                {add_autogenaration_id('expense_id')}
+                {addAutoId('travel_id')}
+                {addAutoId('expense_id')}
 
                 <Box sx={operationFormStyles.flexRow}>
                   <ReferenceInput source="departure_location_id" reference="warehouses">
@@ -242,15 +235,16 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
                     />
                   </ReferenceInput>
 
-                  <ReferenceSelectWithCreate
-                    source="arrival_location_id"
-                    reference="warehouses"
-                    label="Lieu d'arrivée"
-                    optionText="name"
-                    createUrlEnd={getMiddleUrl('warehouses')}
-                    createForm={<WarehouseForm isCreateForm />}
-                    sx={operationFormStyles.flexFull}
-                  />
+                  <ReferenceInput source="arrival_location_id" reference="warehouses">
+                    <SelectInput
+                      source="arrival_location_id"
+                      label="Lieu d'arrivée"
+                      optionText="name"
+                      fullWidth
+                      sx={operationFormStyles.flexFull}
+                      data-testid="input-arrival_location_id"
+                    />
+                  </ReferenceInput>
                 </Box>
 
                 <Box sx={operationFormStyles.collapseRow}>
@@ -289,72 +283,97 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
               </Box>
             </Box>
 
-            {(mode === 'full' || mode === 'equipment') && (
+            {(mode === 'full' || mode === 'equipment' || mode === 'materials') && (
               <>
                 <Divider sx={operationFormStyles.divider} />
                 <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-                  🔧 Équipements à déplacer
+                  📦 Conteneurs
                 </Typography>
-                <ArrayInput source="equipment_lines" label="">
-                  <SimpleFormIterator inline>
-                    <Box sx={operationFormStyles.flexRowAlign}>
-                      {add_autogenaration_id('travel_equipment_id')}
-
-                      <ReferenceSelectWithCreate
-                        source="equipment_id"
-                        reference="equipment"
-                        label="Équipement"
-                        optionText={(record) => `${record.name} - ${record.description || ''}`}
-                        createUrlEnd={getMiddleUrl('equipment')}
-                        createForm={<EquipmentForm isCreateForm />}
-                        filter={
-                          departureLocationId ? { warehouse_id: departureLocationId } : undefined
-                        }
-                        sx={operationFormStyles.flexDouble}
-                        extractionPath={'equipment_lines'}
+                <ArrayInput source="containers" label="">
+                  <SimpleFormIterator inline={false}>
+                    <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1, mb: 2 }}>
+                      {addAutoId('container_id')}
+                      <TextInput
+                        source="container_name"
+                        label="Nom du conteneur"
+                        fullWidth
+                        data-testid="input-container_name"
                       />
-                    </Box>
-                  </SimpleFormIterator>
-                </ArrayInput>
-              </>
-            )}
-
-            {(mode === 'full' || mode === 'materials') && (
-              <>
-                <Divider sx={operationFormStyles.divider} />
-                <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-                  📦 Matériaux à déplacer
-                </Typography>
-                <ArrayInput source="material_lines" label="">
-                  <SimpleFormIterator inline>
-                    <Box sx={operationFormStyles.flexRowAlign}>
-                      {add_autogenaration_id('travel_material_id')}
-
-                      <ReferenceSelectWithCreate
-                        source="material_id"
-                        reference="materials"
-                        label="Matériau"
-                        optionText={(record: any) => {
-                          const qty = departureLocationId
-                            ? record.material_warehouses?.[0]?.quantity
-                            : undefined
-                          return `${record.name} / ${qty ?? ' '} ${record.unit}`
-                        }}
-                        createUrlEnd={getMiddleUrl('materials')}
-                        createForm={<MaterialForm isCreateForm />}
-                        filter={
-                          departureLocationId ? { warehouse_id: departureLocationId } : undefined
-                        }
-                        sx={operationFormStyles.flexDouble}
-                        extractionPath={'material_lines'}
+                      <TextInput
+                        source="container_description"
+                        label="Description"
+                        fullWidth
+                        data-testid="input-container_description"
                       />
 
-                      <NumberInput
-                        source="material_quantity"
-                        label="Quantité"
-                        sx={operationFormStyles.flexFull}
-                        data-testid="input-material_quantity"
-                      />
+                      {(mode === 'full' || mode === 'equipment') && (
+                        <Box sx={{ mt: 2 }}>
+                          <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                            🔧 Équipements
+                          </Typography>
+                          <ReferenceArrayInput
+                            source="equipment_ids"
+                            reference="equipment"
+                            label="Équipements"
+                            filter={
+                              departureLocationId
+                                ? { warehouse_id: departureLocationId }
+                                : undefined
+                            }
+                          >
+                            <AutocompleteArrayInput
+                              fullWidth
+                              optionText={(record: any) =>
+                                `${record.name} - ${record.description || ''}`
+                              }
+                              data-testid="input-equipment_ids"
+                            />
+                          </ReferenceArrayInput>
+                        </Box>
+                      )}
+
+                      {(mode === 'full' || mode === 'materials') && (
+                        <Box sx={{ mt: 2 }}>
+                          <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                            📦 Matériaux
+                          </Typography>
+                          <ArrayInput source="material_lines" label="">
+                            <SimpleFormIterator inline>
+                              <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                                {addAutoId('travel_material_id')}
+                                <ReferenceInput
+                                  source="material_id"
+                                  reference="materials"
+                                  filter={
+                                    departureLocationId
+                                      ? { warehouse_id: departureLocationId }
+                                      : undefined
+                                  }
+                                >
+                                  <SelectInput
+                                    source="material_id"
+                                    label="Matériau"
+                                    optionText={(record: any) => {
+                                      const qty = departureLocationId
+                                        ? record.material_warehouses?.[0]?.quantity
+                                        : undefined
+                                      return `${record.name} / ${qty ?? ' '} ${record.unit}`
+                                    }}
+                                    sx={{ minWidth: 250 }}
+                                    data-testid="input-material_id"
+                                  />
+                                </ReferenceInput>
+                                <NumberInput
+                                  source="material_quantity"
+                                  label="Quantité"
+                                  sx={{ minWidth: 120 }}
+                                  data-testid="input-material_quantity"
+                                />
+                              </Box>
+                            </SimpleFormIterator>
+                          </ArrayInput>
+                        </Box>
+                      )}
                     </Box>
                   </SimpleFormIterator>
                 </ArrayInput>
@@ -370,19 +389,19 @@ const TravelOperationForm = ({ mode: propMode }: TravelOperationFormProps = {}) 
                 <ArrayInput source="people_lines" label="">
                   <SimpleFormIterator inline>
                     <Box sx={operationFormStyles.flexRowAlign}>
-                      {add_autogenaration_id('travel_people_id')}
+                      {addAutoId('travel_people_id')}
 
-                      <ReferenceSelectWithCreate
-                        source="user_id"
-                        reference="users"
-                        label="Utilisateur"
-                        optionText={(record) =>
-                          `${record.first_name} ${record.last_name} - ${record.email || ''}`
-                        }
-                        createUrlEnd={getMiddleUrl('users')}
-                        createForm={<div>Formulaire de création d'utilisateur à définir</div>}
-                        sx={operationFormStyles.flexDouble}
-                      />
+                      <ReferenceInput source="user_id" reference="users">
+                        <SelectInput
+                          source="user_id"
+                          label="Utilisateur"
+                          optionText={(record: any) =>
+                            `${record.first_name} ${record.last_name} - ${record.email || ''}`
+                          }
+                          sx={operationFormStyles.flexDouble}
+                          data-testid="input-user_id"
+                        />
+                      </ReferenceInput>
                     </Box>
                   </SimpleFormIterator>
                 </ArrayInput>

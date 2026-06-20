@@ -17,7 +17,7 @@ Name | Type
 `email` | string
 `phone` | string
 `contact_name` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -37,7 +37,7 @@ const example = {
   "email": contact@acme.com,
   "phone": +261 12 345 6789,
   "contact_name": John Doe,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies Organization
 
 console.log(example)

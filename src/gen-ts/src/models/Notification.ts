@@ -27,6 +27,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateTask } from './CrupdateTask';
+import {
+    CrupdateTaskFromJSON,
+    CrupdateTaskFromJSONTyped,
+    CrupdateTaskToJSON,
+    CrupdateTaskToJSONTyped,
+} from './CrupdateTask';
 
 /**
  * 
@@ -78,10 +85,10 @@ export interface Notification {
     user?: CrupdateUser;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateTask}
      * @memberof Notification
      */
-    task_id?: string | null;
+    task?: CrupdateTask;
     /**
      * 
      * @type {string}
@@ -150,7 +157,7 @@ export function NotificationFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
         'user': json['user'] == null ? undefined : CrupdateUserFromJSON(json['user']),
-        'task_id': json['task_id'] == null ? undefined : json['task_id'],
+        'task': json['task'] == null ? undefined : CrupdateTaskFromJSON(json['task']),
         'title': json['title'] == null ? undefined : json['title'],
         'message': json['message'] == null ? undefined : json['message'],
         'read': json['read'] == null ? undefined : json['read'],
@@ -179,7 +186,7 @@ export function NotificationToJSONTyped(value?: Notification | null, ignoreDiscr
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
         'user': CrupdateUserToJSON(value['user']),
-        'task_id': value['task_id'],
+        'task': CrupdateTaskToJSON(value['task']),
         'title': value['title'],
         'message': value['message'],
         'read': value['read'],

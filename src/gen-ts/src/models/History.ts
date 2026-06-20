@@ -20,6 +20,13 @@ import {
     EntityTypeToJSON,
     EntityTypeToJSONTyped,
 } from './EntityType';
+import type { CrupdateUser } from './CrupdateUser';
+import {
+    CrupdateUserFromJSON,
+    CrupdateUserFromJSONTyped,
+    CrupdateUserToJSON,
+    CrupdateUserToJSONTyped,
+} from './CrupdateUser';
 
 /**
  * 
@@ -46,11 +53,11 @@ export interface History {
      */
     new_value?: string;
     /**
-     * ID of the user who made the modification
-     * @type {string}
+     * 
+     * @type {CrupdateUser}
      * @memberof History
      */
-    user_id?: string;
+    user?: CrupdateUser;
     /**
      * Date and time of the modification
      * @type {Date}
@@ -93,7 +100,7 @@ export function HistoryFromJSONTyped(json: any, ignoreDiscriminator: boolean): H
         'id': json['id'] == null ? undefined : json['id'],
         'previous_value': json['previous_value'] == null ? undefined : json['previous_value'],
         'new_value': json['new_value'] == null ? undefined : json['new_value'],
-        'user_id': json['user_id'] == null ? undefined : json['user_id'],
+        'user': json['user'] == null ? undefined : CrupdateUserFromJSON(json['user']),
         'modified_at': json['modified_at'] == null ? undefined : (new Date(json['modified_at'])),
         'entity_type': json['entity_type'] == null ? undefined : EntityTypeFromJSON(json['entity_type']),
         'entity_id': json['entity_id'] == null ? undefined : json['entity_id'],
@@ -114,7 +121,7 @@ export function HistoryToJSONTyped(value?: History | null, ignoreDiscriminator: 
         'id': value['id'],
         'previous_value': value['previous_value'],
         'new_value': value['new_value'],
-        'user_id': value['user_id'],
+        'user': CrupdateUserToJSON(value['user']),
         'modified_at': value['modified_at'] == null ? value['modified_at'] : value['modified_at'].toISOString(),
         'entity_type': EntityTypeToJSON(value['entity_type']),
         'entity_id': value['entity_id'],

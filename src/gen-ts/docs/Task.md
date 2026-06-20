@@ -16,10 +16,10 @@ Name | Type
 `description` | string
 `due_date` | Date
 `priority` | [TaskPriority](TaskPriority.md)
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 `completed` | boolean
 `completed_at` | Date
-`assigned_user_ids` | Array&lt;string&gt;
+`assigned_users` | [Array&lt;CrupdateUser&gt;](CrupdateUser.md)
 
 ## Example
 
@@ -38,10 +38,10 @@ const example = {
   "description": Faire l'inventaire du matériel sur le chantier A,
   "due_date": Mon Jun 15 03:00:00 EAT 2026,
   "priority": null,
-  "company_id": comp_btp001,
+  "company": null,
   "completed": false,
   "completed_at": 2026-06-15T14:30Z,
-  "assigned_user_ids": ["usr_123456","usr_789012"],
+  "assigned_users": ["usr_123456","usr_789012"],
 } satisfies Task
 
 console.log(example)

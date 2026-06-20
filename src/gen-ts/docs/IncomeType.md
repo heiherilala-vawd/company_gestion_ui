@@ -14,7 +14,7 @@ Name | Type
 `id` | string
 `name` | string
 `description` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -31,7 +31,7 @@ const example = {
   "id": income_type_001,
   "name": Facturation client,
   "description": Revenus issus de la facturation client,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies IncomeType
 
 console.log(example)

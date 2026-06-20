@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -65,10 +72,10 @@ export interface BudgetLine {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof BudgetLine
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
      * @type {string}
@@ -130,7 +137,7 @@ export function BudgetLineFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
         'category': json['category'] == null ? undefined : json['category'],
         'planned_amount': json['planned_amount'] == null ? undefined : json['planned_amount'],
         'actual_amount': json['actual_amount'] == null ? undefined : json['actual_amount'],
@@ -157,7 +164,7 @@ export function BudgetLineToJSONTyped(value?: BudgetLine | null, ignoreDiscrimin
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
         'category': value['category'],
         'planned_amount': value['planned_amount'],
         'actual_amount': value['actual_amount'],

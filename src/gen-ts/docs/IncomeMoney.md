@@ -14,7 +14,7 @@ Name | Type
 `amount` | number
 `description` | string
 `id` | string
-`organization_id` | string
+`organization` | [CrupdateOrganization](CrupdateOrganization.md)
 `invoice_reference` | string
 `billing_start_date` | Date
 `facturation_date` | Date
@@ -40,7 +40,7 @@ const example = {
   "amount": 15000,
   "description": Achat de matériaux pour le chantier,
   "id": inc_001,
-  "organization_id": org_001,
+  "organization": null,
   "invoice_reference": FACT-2024-001,
   "billing_start_date": Mon Jan 15 03:00:00 EAT 2024,
   "facturation_date": 2024-01-10T08:00Z,

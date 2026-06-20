@@ -14,7 +14,7 @@ Name | Type
 `amount` | number
 `description` | string
 `id` | string
-`organization_id` | string
+`organization` | [CrupdateOrganization](CrupdateOrganization.md)
 `interest_rate` | number
 `start_date` | Date
 `due_date` | Date
@@ -38,7 +38,7 @@ const example = {
   "amount": 15000,
   "description": Achat de matériaux pour le chantier,
   "id": loan_001,
-  "organization_id": org_001,
+  "organization": null,
   "interest_rate": 1200,
   "start_date": Thu Feb 01 03:00:00 EAT 2024,
   "due_date": Thu Dec 31 03:00:00 EAT 2026,

@@ -14,7 +14,7 @@ Name | Type
 `id` | string
 `name` | string
 `description` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -31,7 +31,7 @@ const example = {
   "id": other_exp_type_001,
   "name": Logistique,
   "description": Frais logistiques et transport,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies OtherExpenseType
 
 console.log(example)

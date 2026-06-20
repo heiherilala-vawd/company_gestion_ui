@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -82,11 +89,11 @@ export interface CompanyFixedCost {
      */
     description?: string;
     /**
-     * ID of the company this fixed cost belongs to
-     * @type {string}
+     * 
+     * @type {CrupdateCompany}
      * @memberof CompanyFixedCost
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
      * @type {Date}
@@ -127,7 +134,7 @@ export function CompanyFixedCostFromJSONTyped(json: any, ignoreDiscriminator: bo
         'name': json['name'] == null ? undefined : json['name'],
         'amount': json['amount'] == null ? undefined : json['amount'],
         'description': json['description'] == null ? undefined : json['description'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
         'start_date': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
         'end_date': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
     };
@@ -153,7 +160,7 @@ export function CompanyFixedCostToJSONTyped(value?: CompanyFixedCost | null, ign
         'name': value['name'],
         'amount': value['amount'],
         'description': value['description'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
         'start_date': value['start_date'] == null ? value['start_date'] : value['start_date'].toISOString().substring(0,10),
         'end_date': value['end_date'] == null ? value['end_date'] : value['end_date'].toISOString().substring(0,10),
     };

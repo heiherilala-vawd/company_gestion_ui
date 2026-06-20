@@ -12,8 +12,8 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`equipment_id` | string
-`job_id` | string
+`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
+`job` | [CrupdateJob](CrupdateJob.md)
 `start_time` | Date
 `end_time` | Date
 `source_location` | string
@@ -33,8 +33,8 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": eu_001,
-  "equipment_id": eq_001,
-  "job_id": job_001,
+  "equipment": null,
+  "job": null,
   "start_time": 2024-06-10T08:00Z,
   "end_time": 2024-06-10T17:00Z,
   "source_location": wh_001,

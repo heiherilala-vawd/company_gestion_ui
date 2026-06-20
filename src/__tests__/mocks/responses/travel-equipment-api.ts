@@ -7,6 +7,7 @@ import {
 import { travelExpense1Mock } from './travel-expenses-api.ts'
 import { equipment1Mock, equipment2Mock } from './equipment-api.ts'
 import { user1Mock } from './users-api.ts'
+import { container1Mock, container2Mock } from './travel-containers-api.ts'
 import {
   toCrupdateEquipmentMapper,
   toCrupdateTravelExpenseMapper,
@@ -20,6 +21,7 @@ export const travelEquipment1Mock: TravelEquipment = {
   quantity: 1,
   status: 'IN_PROGRESS' as TransportStatus,
   comment: 'Excavator transport to site',
+  container: container1Mock,
   created_at: '2022-02-11T09:00:00Z',
   updated_at: '2022-02-12T14:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
@@ -33,14 +35,23 @@ export const travelEquipment2Mock: TravelEquipment = {
   quantity: 2,
   status: 'ARRIVED' as TransportStatus,
   comment: 'Equipment arrived safely',
+  container: container2Mock,
   created_at: '2022-03-22T10:00:00Z',
   updated_at: '2022-03-22T10:00:00Z',
   created_by: toAuditUserMapper(user1Mock),
   updated_by: toAuditUserMapper(user1Mock),
 }
 
-export const travelEquipmentMock: TravelEquipment[] = [travelEquipment1Mock, travelEquipment2Mock]
-export const travelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock, travelEquipment2Mock]
+export const travelEquipmentMock: TravelEquipment[] = [
+  travelEquipment1Mock,
+  travelEquipment2Mock,
+  travelEquipment3Mock,
+]
+export const travelEquipmentsMock: TravelEquipment[] = [
+  travelEquipment1Mock,
+  travelEquipment2Mock,
+  travelEquipment3Mock,
+]
 
 export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
   {
@@ -61,7 +72,24 @@ export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
   },
 ]
 
-export const notArrivedTravelEquipmentsMock: TravelEquipment[] = [travelEquipment1Mock]
+export const travelEquipment3Mock: TravelEquipment = {
+  id: 'teq3_id',
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  equipment: toCrupdateEquipmentMapper(equipment2Mock),
+  quantity: 1,
+  status: 'IN_PROGRESS' as TransportStatus,
+  comment: 'Generator transport in red crate',
+  container: container2Mock,
+  created_at: '2022-04-01T08:00:00Z',
+  updated_at: '2022-04-01T08:00:00Z',
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
+}
+
+export const notArrivedTravelEquipmentsMock: TravelEquipment[] = [
+  travelEquipment1Mock,
+  travelEquipment3Mock,
+]
 
 export const confirmEquipmentArrivals = (
   confirmations: Array<ConfirmEquipmentArrival & { arrival_location?: string | null }>,
