@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -76,11 +83,11 @@ export interface IncomeType {
      */
     description?: string;
     /**
-     * ID of the company this income type belongs to
-     * @type {string}
+     * 
+     * @type {CrupdateCompany}
      * @memberof IncomeType
      */
-    company_id?: string;
+    company?: CrupdateCompany;
 }
 
 /**
@@ -108,7 +115,7 @@ export function IncomeTypeFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'id': json['id'] == null ? undefined : json['id'],
         'name': json['name'] == null ? undefined : json['name'],
         'description': json['description'] == null ? undefined : json['description'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
     };
 }
 
@@ -131,7 +138,7 @@ export function IncomeTypeToJSONTyped(value?: IncomeType | null, ignoreDiscrimin
         'id': value['id'],
         'name': value['name'],
         'description': value['description'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
     };
 }
 

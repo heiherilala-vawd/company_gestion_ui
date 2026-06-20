@@ -2,7 +2,7 @@ import { mockSuccessResponse } from '../mocks/responses/auth-api'
 import { travelMaterials1Mock, travelEquipment1Mock } from '../mocks/responses'
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
-describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', () => {
+describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés par conteneur)', () => {
   beforeEach(() => {
     interceptGeneralEndpoint()
     loginInPage()
@@ -12,17 +12,28 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
   function navigateToPage() {
     cy.visit('/#/travel_materials_activity', { failOnStatusCode: false })
     cy.wait('@getTravelMaterialsNotArrived', { timeout: 20000 })
+    cy.wait('@getTravelEquipmentsNotArrived', { timeout: 20000 })
   }
 
-  it('should display travel materials with not_arrived filter', () => {
+  it('should display items grouped by container', () => {
     navigateToPage()
 
     cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
+
+    // Should display both containers
+    cy.contains('Blue Box').should('be.visible')
+    cy.contains('Red Crate').should('be.visible')
+
+    // Should display equipment and material items
+    cy.contains(travelEquipment1Mock.equipment?.name as string).should('be.visible')
     cy.contains(travelMaterials1Mock.material?.name as string).should('be.visible')
-    cy.contains('th', 'Matériau').should('be.visible')
+
+    // Should show type labels
+    cy.contains('Équipement').should('be.visible')
+    cy.contains('Matériau').should('be.visible')
   })
 
-  it('should confirm material arrival successfully with arrival_location', () => {
+  it('should confirm material arrival within a container', () => {
     cy.intercept('PUT', '**/travel_materials/arrival', (req) => {
       const body = req.body as Array<{
         id: string
@@ -41,7 +52,6 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
     navigateToPage()
 
-    cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
     cy.get('[data-testid="new-arrival-location-select"]').select('wh2_id')
     cy.get('[data-testid="checkbox-tm1_id"]').click()
@@ -72,7 +82,6 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
     navigateToPage()
 
-    cy.contains('h5', 'Réception - Éléments non arrivés').should('be.visible')
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
     cy.get('[data-testid="checkbox-tm1_id"]').click()
     cy.get('[data-testid="validate-btn"]').should('contain', '1')
@@ -85,17 +94,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
       .should('be.null')
   })
 
-  it('should switch to equipment mode and display travel equipment', () => {
-    navigateToPage()
-
-    cy.get('[data-testid="toggle-equipment"]').click()
-    cy.wait('@getTravelEquipmentsNotArrived', { timeout: 20000 })
-
-    cy.contains('th', 'Équipement').should('be.visible')
-    cy.contains(travelEquipment1Mock.equipment?.name as string).should('be.visible')
-  })
-
-  it('should confirm equipment arrival successfully', () => {
+  it('should confirm equipment arrival within a container', () => {
     cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
       const body = req.body as Array<{
         id: string
@@ -112,9 +111,6 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
 
     navigateToPage()
 
-    cy.get('[data-testid="toggle-equipment"]').click()
-    cy.wait('@getTravelEquipmentsNotArrived', { timeout: 20000 })
-
     cy.get('[data-testid="warehouse-select"]').select('wh1_id')
     cy.get('[data-testid="new-arrival-location-select"]').select('wh2_id')
     cy.get('[data-testid="checkbox-teq1_id"]').click()
@@ -126,5 +122,28 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés)', (
     cy.wait('@confirmEquipmentArrival')
       .its('request.body.0.arrival_location')
       .should('eq', 'wh2_id')
+  })
+
+  it('should confirm both material and equipment in same validation', () => {
+    cy.intercept('PUT', '**/travel_materials/arrival', (req) => {
+      req.reply(mockSuccessResponse([travelMaterials1Mock]))
+    }).as('confirmMultiMaterial')
+    cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
+      req.reply(mockSuccessResponse([travelEquipment1Mock]))
+    }).as('confirmMultiEquipment')
+
+    navigateToPage()
+
+    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="checkbox-tm1_id"]').click()
+    cy.get('[data-testid="checkbox-teq1_id"]').click()
+
+    cy.get('[data-testid="validate-btn"]').should('contain', '2')
+    cy.get('[data-testid="validate-btn"]').click()
+    cy.contains('h2', 'Résumé de la validation').should('be.visible')
+    cy.get('[data-testid="dialog-confirm-arrival"]').click()
+
+    cy.wait('@confirmMultiMaterial')
+    cy.wait('@confirmMultiEquipment')
   })
 })

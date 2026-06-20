@@ -14,6 +14,7 @@ Name | Type
 `status` | [TransportStatus](TransportStatus.md)
 `arrival_date` | Date
 `arrival_location` | string
+`conteneur_id` | string
 
 ## Example
 
@@ -30,6 +31,7 @@ const example = {
   "status": null,
   "arrival_date": 2024-02-20T18:00Z,
   "arrival_location": wh_001,
+  "conteneur_id": tc_010,
 } satisfies CrupdateTravelEquipment
 
 console.log(example)

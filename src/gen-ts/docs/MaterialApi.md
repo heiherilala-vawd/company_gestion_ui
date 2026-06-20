@@ -253,7 +253,7 @@ example().catch(console.error);
 
 ## getMaterials
 
-> PaginatedResponse getMaterials(userId, companyId, page, pageSize, name, description, unit, notArrived)
+> PaginatedResponse getMaterials(userId, companyId, page, pageSize, name, description, unit, warehouseId, notArrived)
 
 Get all materials
 
@@ -289,6 +289,8 @@ async function example() {
     description: béton,
     // MaterialUnit (optional)
     unit: SAC,
+    // string | Filter materials by warehouse (only materials with quantity >= 1 in that warehouse) (optional)
+    warehouseId: warehouse1_id,
     // boolean | Filter materials not yet arrived (with quantity > 0 in route or at seller warehouse) (optional)
     notArrived: true,
   } satisfies GetMaterialsRequest;
@@ -317,6 +319,7 @@ example().catch(console.error);
 | **name** | `string` | Filter materials by name, case is ignored | [Optional] [Defaults to `undefined`] |
 | **description** | `string` | Filter materials by description, case is ignored | [Optional] [Defaults to `undefined`] |
 | **unit** | `MaterialUnit` |  | [Optional] [Defaults to `undefined`] [Enum: SAC, L, KG, M2, M3, KIT, POT, PNL, FEU, BAR, T, M, FFT, U] |
+| **warehouseId** | `string` | Filter materials by warehouse (only materials with quantity &gt;&#x3D; 1 in that warehouse) | [Optional] [Defaults to `undefined`] |
 | **notArrived** | `boolean` | Filter materials not yet arrived (with quantity &gt; 0 in route or at seller warehouse) | [Optional] [Defaults to `undefined`] |
 
 ### Return type

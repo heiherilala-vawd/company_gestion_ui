@@ -16,7 +16,7 @@ Name | Type
 `description` | string
 `unit_price` | number
 `unit` | [MaterialUnit](MaterialUnit.md)
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 `material_warehouses` | [Array&lt;MaterialWarehouseInfo&gt;](MaterialWarehouseInfo.md)
 
 ## Example
@@ -36,7 +36,7 @@ const example = {
   "description": Ciment Portland de qualité supérieure pour béton armé,
   "unit_price": 12.5,
   "unit": null,
-  "company_id": comp_001,
+  "company": null,
   "material_warehouses": null,
 } satisfies Material
 

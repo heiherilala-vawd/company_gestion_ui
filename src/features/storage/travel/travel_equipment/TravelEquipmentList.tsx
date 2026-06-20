@@ -94,6 +94,7 @@ export default function TravelEquipmentList() {
           }
         />
         <TextField source="equipment.name" label="Équipement" />
+        <TextField source="container.name" label="Conteneur" />
         <TextField source="arrival_location.name" label="Lieu d'arrivée" />
         <DateField source="arrival_date" label="Date d'arrivée" />
         <NumberField source="quantity" label="Quantité" />

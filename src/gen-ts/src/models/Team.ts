@@ -20,6 +20,13 @@ import {
     UserToJSON,
     UserToJSONTyped,
 } from './User';
+import type { CrupdateJob } from './CrupdateJob';
+import {
+    CrupdateJobFromJSON,
+    CrupdateJobFromJSONTyped,
+    CrupdateJobToJSON,
+    CrupdateJobToJSONTyped,
+} from './CrupdateJob';
 import type { AuditUser } from './AuditUser';
 import {
     AuditUserFromJSON,
@@ -84,10 +91,10 @@ export interface Team {
     leader?: User;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateJob}
      * @memberof Team
      */
-    job_id?: string;
+    job?: CrupdateJob;
     /**
      * 
      * @type {Array<User>}
@@ -121,7 +128,7 @@ export function TeamFromJSONTyped(json: any, ignoreDiscriminator: boolean): Team
         'id': json['id'] == null ? undefined : json['id'],
         'name': json['name'] == null ? undefined : json['name'],
         'leader': json['leader'] == null ? undefined : UserFromJSON(json['leader']),
-        'job_id': json['job_id'] == null ? undefined : json['job_id'],
+        'job': json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
         'members': json['members'] == null ? undefined : ((json['members'] as Array<any>).map(UserFromJSON)),
     };
 }
@@ -145,7 +152,7 @@ export function TeamToJSONTyped(value?: Team | null, ignoreDiscriminator: boolea
         'id': value['id'],
         'name': value['name'],
         'leader': UserToJSON(value['leader']),
-        'job_id': value['job_id'],
+        'job': CrupdateJobToJSON(value['job']),
         'members': value['members'] == null ? undefined : ((value['members'] as Array<any>).map(UserToJSON)),
     };
 }

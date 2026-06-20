@@ -12,12 +12,12 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`supplier_id` | string
+`supplier` | [Supplier](Supplier.md)
 `order_date` | Date
 `status` | [PurchaseOrderStatus](PurchaseOrderStatus.md)
 `total_amount` | number
-`company_id` | string
-`job_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
+`job` | [CrupdateJob](CrupdateJob.md)
 `lines` | [Array&lt;PurchaseOrderLine&gt;](PurchaseOrderLine.md)
 
 ## Example
@@ -33,12 +33,12 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": po_001,
-  "supplier_id": supplier_001,
+  "supplier": null,
   "order_date": Mon May 25 03:00:00 EAT 2026,
   "status": null,
   "total_amount": 5000.0,
-  "company_id": comp_btp001,
-  "job_id": job_001,
+  "company": null,
+  "job": null,
   "lines": null,
 } satisfies PurchaseOrder
 

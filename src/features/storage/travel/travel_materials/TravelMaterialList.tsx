@@ -89,6 +89,7 @@ export default function TravelMaterialList() {
           }
         />
         <TextField source="material.name" label="Matériau" />
+        <TextField source="container.name" label="Conteneur" />
         <NumberField source="quantity" label="Quantité" />
         <NumberField source="quantity_received" label="Reçue" />
         <TextField source="arrival_location.name" label="Lieu d'arrivée" />

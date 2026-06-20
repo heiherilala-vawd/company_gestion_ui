@@ -67,6 +67,12 @@ export interface CrupdateTravelMaterials {
      * @memberof CrupdateTravelMaterials
      */
     arrival_location?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrupdateTravelMaterials
+     */
+    conteneur_id?: string;
 }
 
 /**
@@ -97,6 +103,7 @@ export function CrupdateTravelMaterialsFromJSONTyped(json: any, ignoreDiscrimina
         'quantity_received': json['quantity_received'] == null ? undefined : json['quantity_received'],
         'arrival_date': json['arrival_date'] == null ? undefined : (new Date(json['arrival_date'])),
         'arrival_location': json['arrival_location'] == null ? undefined : json['arrival_location'],
+        'conteneur_id': json['conteneur_id'] == null ? undefined : json['conteneur_id'],
     };
 }
 
@@ -119,6 +126,7 @@ export function CrupdateTravelMaterialsToJSONTyped(value?: CrupdateTravelMateria
         'quantity_received': value['quantity_received'],
         'arrival_date': value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
         'arrival_location': value['arrival_location'],
+        'conteneur_id': value['conteneur_id'],
     };
 }
 

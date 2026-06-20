@@ -34,6 +34,13 @@ import {
     IncomeTypeToJSON,
     IncomeTypeToJSONTyped,
 } from './IncomeType';
+import type { CrupdateOrganization } from './CrupdateOrganization';
+import {
+    CrupdateOrganizationFromJSON,
+    CrupdateOrganizationFromJSONTyped,
+    CrupdateOrganizationToJSON,
+    CrupdateOrganizationToJSONTyped,
+} from './CrupdateOrganization';
 import type { IncomeReceipt } from './IncomeReceipt';
 import {
     IncomeReceiptFromJSON,
@@ -98,10 +105,10 @@ export interface IncomeMoney {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateOrganization}
      * @memberof IncomeMoney
      */
-    organization_id?: string;
+    organization?: CrupdateOrganization;
     /**
      * 
      * @type {string}
@@ -183,7 +190,7 @@ export function IncomeMoneyFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'amount': json['amount'] == null ? undefined : json['amount'],
         'description': json['description'] == null ? undefined : json['description'],
         'id': json['id'] == null ? undefined : json['id'],
-        'organization_id': json['organization_id'] == null ? undefined : json['organization_id'],
+        'organization': json['organization'] == null ? undefined : CrupdateOrganizationFromJSON(json['organization']),
         'invoice_reference': json['invoice_reference'] == null ? undefined : json['invoice_reference'],
         'billing_start_date': json['billing_start_date'] == null ? undefined : (new Date(json['billing_start_date'])),
         'facturation_date': json['facturation_date'] == null ? undefined : (new Date(json['facturation_date'])),
@@ -215,7 +222,7 @@ export function IncomeMoneyToJSONTyped(value?: IncomeMoney | null, ignoreDiscrim
         'amount': value['amount'],
         'description': value['description'],
         'id': value['id'],
-        'organization_id': value['organization_id'],
+        'organization': CrupdateOrganizationToJSON(value['organization']),
         'invoice_reference': value['invoice_reference'],
         'billing_start_date': value['billing_start_date'] == null ? value['billing_start_date'] : value['billing_start_date'].toISOString().substring(0,10),
         'facturation_date': value['facturation_date'] == null ? value['facturation_date'] : value['facturation_date'].toISOString(),

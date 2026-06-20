@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { TravelOperationMaterialLine } from './TravelOperationMaterialLine';
+import type { TravelOperationContainerLine } from './TravelOperationContainerLine';
 import {
-    TravelOperationMaterialLineFromJSON,
-    TravelOperationMaterialLineFromJSONTyped,
-    TravelOperationMaterialLineToJSON,
-    TravelOperationMaterialLineToJSONTyped,
-} from './TravelOperationMaterialLine';
+    TravelOperationContainerLineFromJSON,
+    TravelOperationContainerLineFromJSONTyped,
+    TravelOperationContainerLineToJSON,
+    TravelOperationContainerLineToJSONTyped,
+} from './TravelOperationContainerLine';
 import type { TravelOperationPeopleLine } from './TravelOperationPeopleLine';
 import {
     TravelOperationPeopleLineFromJSON,
@@ -34,13 +34,6 @@ import {
     TravelOperationTravelToJSON,
     TravelOperationTravelToJSONTyped,
 } from './TravelOperationTravel';
-import type { TravelOperationEquipmentLine } from './TravelOperationEquipmentLine';
-import {
-    TravelOperationEquipmentLineFromJSON,
-    TravelOperationEquipmentLineFromJSONTyped,
-    TravelOperationEquipmentLineToJSON,
-    TravelOperationEquipmentLineToJSONTyped,
-} from './TravelOperationEquipmentLine';
 
 /**
  * 
@@ -68,16 +61,10 @@ export interface TravelOperationRequest {
     direct_arrival?: boolean;
     /**
      * 
-     * @type {Array<TravelOperationEquipmentLine>}
+     * @type {Array<TravelOperationContainerLine>}
      * @memberof TravelOperationRequest
      */
-    equipment_lines?: Array<TravelOperationEquipmentLine>;
-    /**
-     * 
-     * @type {Array<TravelOperationMaterialLine>}
-     * @memberof TravelOperationRequest
-     */
-    material_lines?: Array<TravelOperationMaterialLine>;
+    containers?: Array<TravelOperationContainerLine>;
     /**
      * 
      * @type {Array<TravelOperationPeopleLine>}
@@ -106,8 +93,7 @@ export function TravelOperationRequestFromJSONTyped(json: any, ignoreDiscriminat
         'comment': json['comment'] == null ? undefined : json['comment'],
         'travel': json['travel'] == null ? undefined : TravelOperationTravelFromJSON(json['travel']),
         'direct_arrival': json['direct_arrival'] == null ? undefined : json['direct_arrival'],
-        'equipment_lines': json['equipment_lines'] == null ? undefined : ((json['equipment_lines'] as Array<any>).map(TravelOperationEquipmentLineFromJSON)),
-        'material_lines': json['material_lines'] == null ? undefined : ((json['material_lines'] as Array<any>).map(TravelOperationMaterialLineFromJSON)),
+        'containers': json['containers'] == null ? undefined : ((json['containers'] as Array<any>).map(TravelOperationContainerLineFromJSON)),
         'people_lines': json['people_lines'] == null ? undefined : ((json['people_lines'] as Array<any>).map(TravelOperationPeopleLineFromJSON)),
     };
 }
@@ -126,8 +112,7 @@ export function TravelOperationRequestToJSONTyped(value?: TravelOperationRequest
         'comment': value['comment'],
         'travel': TravelOperationTravelToJSON(value['travel']),
         'direct_arrival': value['direct_arrival'],
-        'equipment_lines': value['equipment_lines'] == null ? undefined : ((value['equipment_lines'] as Array<any>).map(TravelOperationEquipmentLineToJSON)),
-        'material_lines': value['material_lines'] == null ? undefined : ((value['material_lines'] as Array<any>).map(TravelOperationMaterialLineToJSON)),
+        'containers': value['containers'] == null ? undefined : ((value['containers'] as Array<any>).map(TravelOperationContainerLineToJSON)),
         'people_lines': value['people_lines'] == null ? undefined : ((value['people_lines'] as Array<any>).map(TravelOperationPeopleLineToJSON)),
     };
 }

@@ -18,6 +18,7 @@ Name | Type
 `status` | [TransportStatus](TransportStatus.md)
 `arrival_date` | Date
 `arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
+`container` | [CrupdateTravelOperationContainer](CrupdateTravelOperationContainer.md)
 
 ## Example
 
@@ -38,6 +39,7 @@ const example = {
   "status": null,
   "arrival_date": 2024-02-20T18:00Z,
   "arrival_location": null,
+  "container": null,
 } satisfies TravelEquipment
 
 console.log(example)

@@ -12,11 +12,11 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`material_id` | string
-`warehouse_id` | string
+`material` | [CrupdateMaterial](CrupdateMaterial.md)
+`warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
 `quantity` | number
 `consumption_date` | Date
-`job_id` | string
+`job` | [CrupdateJob](CrupdateJob.md)
 `reason` | string
 `consumption_status` | string
 
@@ -33,11 +33,11 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": mc_001,
-  "material_id": mat_001,
-  "warehouse_id": wh_001,
+  "material": null,
+  "warehouse": null,
   "quantity": 50,
   "consumption_date": Sat Jun 15 03:00:00 EAT 2024,
-  "job_id": job_001,
+  "job": null,
   "reason": Utilisation pour fondations,
   "consumption_status": COMPLETED,
 } satisfies MaterialConsumption

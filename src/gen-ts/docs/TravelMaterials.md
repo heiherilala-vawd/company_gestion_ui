@@ -19,6 +19,7 @@ Name | Type
 `quantity_lost` | number
 `arrival_date` | Date
 `arrival_location` | [CrupdateWarehouse](CrupdateWarehouse.md)
+`container` | [CrupdateTravelOperationContainer](CrupdateTravelOperationContainer.md)
 
 ## Example
 
@@ -40,6 +41,7 @@ const example = {
   "quantity_lost": 0,
   "arrival_date": 2024-02-20T18:00Z,
   "arrival_location": null,
+  "container": null,
 } satisfies TravelMaterials
 
 console.log(example)

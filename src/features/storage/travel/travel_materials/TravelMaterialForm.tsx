@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, DateTimeInput } from 'react-admin'
+import { TextInput, NumberInput, DateTimeInput, FunctionField } from 'react-admin'
 import generateId from '../../../../utili/utils.tsx'
 import {
   renderMaterialSelect,
@@ -24,6 +24,7 @@ export default function TravelMaterialForm({ isCreate = false, isCreateForm = fa
       )}
       {renderTravelExpenseSelect(null, null, !isCreate)}
       {renderMaterialSelect('material', null)}
+      <FunctionField label="Conteneur" render={(record: any) => record.container?.name || '-'} />
       {renderWarehouseSelect('arrival_location', "Lieu d'arrivée")}
       <NumberInput source="quantity" label="Quantité" data-testid="input-quantity" />
       <CollapsibleOptionalFields>

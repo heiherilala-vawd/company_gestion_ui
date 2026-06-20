@@ -13,7 +13,7 @@ Name | Type
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
 `user` | [CrupdateUser](CrupdateUser.md)
-`task_id` | string
+`task` | [CrupdateTask](CrupdateTask.md)
 `title` | string
 `message` | string
 `read` | boolean
@@ -36,7 +36,7 @@ const example = {
   "updated_by": null,
   "id": notif_001,
   "user": null,
-  "task_id": task_001,
+  "task": null,
   "title": Nouvelle tâche assignée,
   "message": Vous avez été assigné à la tâche 'Réparation moteur',
   "read": false,

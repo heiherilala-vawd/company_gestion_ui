@@ -20,6 +20,20 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
+import type { CrupdateEquipment } from './CrupdateEquipment';
+import {
+    CrupdateEquipmentFromJSON,
+    CrupdateEquipmentFromJSONTyped,
+    CrupdateEquipmentToJSON,
+    CrupdateEquipmentToJSONTyped,
+} from './CrupdateEquipment';
 import type { MaintenanceScheduleStatus } from './MaintenanceScheduleStatus';
 import {
     MaintenanceScheduleStatusFromJSON,
@@ -72,10 +86,10 @@ export interface MaintenanceSchedule {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateEquipment}
      * @memberof MaintenanceSchedule
      */
-    equipment_id?: string;
+    equipment?: CrupdateEquipment;
     /**
      * 
      * @type {string}
@@ -102,10 +116,10 @@ export interface MaintenanceSchedule {
     status?: MaintenanceScheduleStatus;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof MaintenanceSchedule
      */
-    company_id?: string;
+    company?: CrupdateCompany;
 }
 
 
@@ -133,12 +147,12 @@ export function MaintenanceScheduleFromJSONTyped(json: any, ignoreDiscriminator:
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'equipment_id': json['equipment_id'] == null ? undefined : json['equipment_id'],
+        'equipment': json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
         'description': json['description'] == null ? undefined : json['description'],
         'scheduled_date': json['scheduled_date'] == null ? undefined : (new Date(json['scheduled_date'])),
         'frequency': json['frequency'] == null ? undefined : json['frequency'],
         'status': json['status'] == null ? undefined : MaintenanceScheduleStatusFromJSON(json['status']),
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
     };
 }
 
@@ -159,12 +173,12 @@ export function MaintenanceScheduleToJSONTyped(value?: MaintenanceSchedule | nul
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'equipment_id': value['equipment_id'],
+        'equipment': CrupdateEquipmentToJSON(value['equipment']),
         'description': value['description'],
         'scheduled_date': value['scheduled_date'] == null ? value['scheduled_date'] : value['scheduled_date'].toISOString().substring(0,10),
         'frequency': value['frequency'],
         'status': MaintenanceScheduleStatusToJSON(value['status']),
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
     };
 }
 

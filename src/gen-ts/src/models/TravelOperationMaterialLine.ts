@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateTravelOperationContainer } from './CrupdateTravelOperationContainer';
+import {
+    CrupdateTravelOperationContainerFromJSON,
+    CrupdateTravelOperationContainerFromJSONTyped,
+    CrupdateTravelOperationContainerToJSON,
+    CrupdateTravelOperationContainerToJSONTyped,
+} from './CrupdateTravelOperationContainer';
 import type { CrupdateMaterial } from './CrupdateMaterial';
 import {
     CrupdateMaterialFromJSON,
@@ -51,6 +58,12 @@ export interface TravelOperationMaterialLine {
      * @memberof TravelOperationMaterialLine
      */
     quantity?: number;
+    /**
+     * 
+     * @type {CrupdateTravelOperationContainer}
+     * @memberof TravelOperationMaterialLine
+     */
+    container?: CrupdateTravelOperationContainer;
 }
 
 /**
@@ -74,6 +87,7 @@ export function TravelOperationMaterialLineFromJSONTyped(json: any, ignoreDiscri
         'id': json['id'] == null ? undefined : json['id'],
         'material': json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
         'quantity': json['quantity'] == null ? undefined : json['quantity'],
+        'container': json['container'] == null ? undefined : CrupdateTravelOperationContainerFromJSON(json['container']),
     };
 }
 
@@ -92,6 +106,7 @@ export function TravelOperationMaterialLineToJSONTyped(value?: TravelOperationMa
         'id': value['id'],
         'material': CrupdateMaterialToJSON(value['material']),
         'quantity': value['quantity'],
+        'container': CrupdateTravelOperationContainerToJSON(value['container']),
     };
 }
 

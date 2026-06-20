@@ -9,6 +9,7 @@ Name | Type
 `comment` | string
 `id` | string
 `equipment` | [CrupdateEquipment](CrupdateEquipment.md)
+`container` | [CrupdateTravelOperationContainer](CrupdateTravelOperationContainer.md)
 
 ## Example
 
@@ -20,6 +21,7 @@ const example = {
   "comment": Commentaire sur cette entité,
   "id": travel_eq_010,
   "equipment": null,
+  "container": null,
 } satisfies TravelOperationEquipmentLine
 
 console.log(example)

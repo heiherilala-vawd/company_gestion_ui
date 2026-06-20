@@ -12,7 +12,7 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 `category` | string
 `planned_amount` | number
 `actual_amount` | number
@@ -33,7 +33,7 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": bl_001,
-  "company_id": comp_btp001,
+  "company": null,
   "category": Matériaux,
   "planned_amount": 1000000.0,
   "actual_amount": 950000.0,

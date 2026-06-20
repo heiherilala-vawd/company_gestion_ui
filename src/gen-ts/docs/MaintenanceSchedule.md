@@ -12,12 +12,12 @@ Name | Type
 `created_by` | [AuditUser](AuditUser.md)
 `updated_by` | [AuditUser](AuditUser.md)
 `id` | string
-`equipment_id` | string
+`equipment` | [CrupdateEquipment](CrupdateEquipment.md)
 `description` | string
 `scheduled_date` | Date
 `frequency` | string
 `status` | [MaintenanceScheduleStatus](MaintenanceScheduleStatus.md)
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -32,12 +32,12 @@ const example = {
   "created_by": null,
   "updated_by": null,
   "id": null,
-  "equipment_id": null,
+  "equipment": null,
   "description": null,
   "scheduled_date": null,
   "frequency": null,
   "status": null,
-  "company_id": null,
+  "company": null,
 } satisfies MaintenanceSchedule
 
 console.log(example)

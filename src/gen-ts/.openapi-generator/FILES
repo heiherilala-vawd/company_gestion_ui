@@ -65,6 +65,7 @@ docs/CrupdateTeam.md
 docs/CrupdateTravelEquipment.md
 docs/CrupdateTravelExpense.md
 docs/CrupdateTravelMaterials.md
+docs/CrupdateTravelOperationContainer.md
 docs/CrupdateTravelPeople.md
 docs/CrupdateUser.md
 docs/CrupdateWarehouse.md
@@ -179,6 +180,7 @@ docs/TravelExpenseApi.md
 docs/TravelMaterials.md
 docs/TravelMaterialsApi.md
 docs/TravelOperationApi.md
+docs/TravelOperationContainerLine.md
 docs/TravelOperationEquipmentLine.md
 docs/TravelOperationMaterialLine.md
 docs/TravelOperationPeopleLine.md
@@ -297,6 +299,7 @@ src/models/CrupdateTeam.ts
 src/models/CrupdateTravelEquipment.ts
 src/models/CrupdateTravelExpense.ts
 src/models/CrupdateTravelMaterials.ts
+src/models/CrupdateTravelOperationContainer.ts
 src/models/CrupdateTravelPeople.ts
 src/models/CrupdateUser.ts
 src/models/CrupdateWarehouse.ts
@@ -377,6 +380,7 @@ src/models/TransportStatus.ts
 src/models/TravelEquipment.ts
 src/models/TravelExpense.ts
 src/models/TravelMaterials.ts
+src/models/TravelOperationContainerLine.ts
 src/models/TravelOperationEquipmentLine.ts
 src/models/TravelOperationMaterialLine.ts
 src/models/TravelOperationPeopleLine.ts

@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 
 /**
  * 
@@ -83,10 +90,10 @@ export interface CashAccount {
     description?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof CashAccount
      */
-    company_id?: string;
+    company?: CrupdateCompany;
 }
 
 /**
@@ -115,7 +122,7 @@ export function CashAccountFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'name': json['name'] == null ? undefined : json['name'],
         'balance': json['balance'] == null ? undefined : json['balance'],
         'description': json['description'] == null ? undefined : json['description'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
     };
 }
 
@@ -139,7 +146,7 @@ export function CashAccountToJSONTyped(value?: CashAccount | null, ignoreDiscrim
         'name': value['name'],
         'balance': value['balance'],
         'description': value['description'],
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
     };
 }
 

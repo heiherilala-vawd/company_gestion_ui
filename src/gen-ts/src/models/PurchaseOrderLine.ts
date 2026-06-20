@@ -13,6 +13,14 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateMaterial } from './CrupdateMaterial';
+import {
+    CrupdateMaterialFromJSON,
+    CrupdateMaterialFromJSONTyped,
+    CrupdateMaterialToJSON,
+    CrupdateMaterialToJSONTyped,
+} from './CrupdateMaterial';
+
 /**
  * 
  * @export
@@ -27,10 +35,10 @@ export interface PurchaseOrderLine {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateMaterial}
      * @memberof PurchaseOrderLine
      */
-    material_id?: string;
+    material?: CrupdateMaterial;
     /**
      * 
      * @type {number}
@@ -63,7 +71,7 @@ export function PurchaseOrderLineFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'id': json['id'] == null ? undefined : json['id'],
-        'material_id': json['material_id'] == null ? undefined : json['material_id'],
+        'material': json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
         'quantity': json['quantity'] == null ? undefined : json['quantity'],
         'unit_price': json['unit_price'] == null ? undefined : json['unit_price'],
     };
@@ -81,7 +89,7 @@ export function PurchaseOrderLineToJSONTyped(value?: PurchaseOrderLine | null, i
     return {
         
         'id': value['id'],
-        'material_id': value['material_id'],
+        'material': CrupdateMaterialToJSON(value['material']),
         'quantity': value['quantity'],
         'unit_price': value['unit_price'],
     };

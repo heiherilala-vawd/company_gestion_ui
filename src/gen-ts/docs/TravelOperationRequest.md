@@ -9,8 +9,7 @@ Name | Type
 `comment` | string
 `travel` | [TravelOperationTravel](TravelOperationTravel.md)
 `direct_arrival` | boolean
-`equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md)
-`material_lines` | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)
+`containers` | [Array&lt;TravelOperationContainerLine&gt;](TravelOperationContainerLine.md)
 `people_lines` | [Array&lt;TravelOperationPeopleLine&gt;](TravelOperationPeopleLine.md)
 
 ## Example
@@ -23,8 +22,7 @@ const example = {
   "comment": Commentaire sur cette entité,
   "travel": null,
   "direct_arrival": null,
-  "equipment_lines": null,
-  "material_lines": null,
+  "containers": null,
   "people_lines": null,
 } satisfies TravelOperationRequest
 

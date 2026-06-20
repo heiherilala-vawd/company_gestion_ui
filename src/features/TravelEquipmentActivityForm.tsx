@@ -5,6 +5,8 @@ import {
   DateTimeInput,
   ArrayInput,
   SimpleFormIterator,
+  ReferenceArrayInput,
+  AutocompleteArrayInput,
   useNotify,
   ResourceContextProvider,
   useGetIdentity,
@@ -27,9 +29,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import generateId from '../utili/utils'
-import ReferenceSelectWithCreate from '../generic/ReferenceSelectWithCreate'
 import { getMiddleUrl } from '../config/dynamicResources'
-import EquipmentForm from './storage/equipment/EquipmentForm'
 import { useNavigate } from 'react-router'
 import { operationFormStyles } from '../style/components'
 import { transitions } from '../style/themeConfig'
@@ -52,7 +52,7 @@ const TravelEquipmentActivityForm = () => {
   )
 
   const onSubmit = async (data: any) => {
-    const payload = {
+    const payload: Record<string, any> = {
       comment: data.comment || null,
       travel: {
         id: data.travel_id,
@@ -64,11 +64,16 @@ const TravelEquipmentActivityForm = () => {
         fee: parseFloat(data.fee) || 0,
       },
       direct_arrival: data.direct_arrival ?? false,
-      equipment_lines: (data.equipment_lines || []).map((line: any) => ({
-        id: line.travel_equipment_id,
-        equipment: { id: line.equipment_id },
+      containers: (data.containers || []).map((c: any) => ({
+        id: c.container_id || generateId(),
+        name: c.container_name || '',
+        description: c.container_description || '',
+        equipment_lines: (c.equipment_ids || []).map((eqId: string) => ({
+          id: generateId(),
+          equipment: { id: eqId },
+        })),
+        material_lines: [],
       })),
-      material_lines: [],
       people_lines: [],
     }
 
@@ -166,15 +171,15 @@ const TravelEquipmentActivityForm = () => {
                       />
                     </ReferenceInput>
 
-                    <ReferenceSelectWithCreate
-                      source="arrival_location_id"
-                      reference="warehouses"
-                      label="Lieu d'arrivée"
-                      optionText="name"
-                      createUrlEnd={getMiddleUrl('warehouses')}
-                      createForm={<div />}
-                      sx={operationFormStyles.flexFull}
-                    />
+                    <ReferenceInput source="arrival_location_id" reference="warehouses">
+                      <SelectInput
+                        label="Lieu d'arrivée"
+                        optionText="name"
+                        fullWidth
+                        sx={operationFormStyles.flexFull}
+                        data-testid="input-arrival_location_id"
+                      />
+                    </ReferenceInput>
                   </Box>
 
                   <Box sx={operationFormStyles.collapseRow}>
@@ -217,24 +222,43 @@ const TravelEquipmentActivityForm = () => {
             <Divider sx={operationFormStyles.divider} />
 
             <Typography variant="h6" color="primary" sx={operationFormStyles.sectionHeader}>
-              Équipements à déplacer
+              📦 Conteneurs
             </Typography>
-            <ArrayInput source="equipment_lines" label="">
-              <SimpleFormIterator inline>
-                <Box sx={operationFormStyles.flexRowAlign}>
-                  {addAutoId('travel_equipment_id')}
-
-                  <ReferenceSelectWithCreate
-                    source="equipment_id"
-                    reference="equipment"
-                    label="Équipement"
-                    optionText={(record: any) => `${record.name} - ${record.description || ''}`}
-                    createUrlEnd={getMiddleUrl('equipment')}
-                    createForm={<EquipmentForm isCreateForm />}
-                    filter={departureLocationId ? { warehouse_id: departureLocationId } : undefined}
-                    sx={operationFormStyles.flexDouble}
-                    extractionPath={'equipment_lines'}
+            <ArrayInput source="containers" label="">
+              <SimpleFormIterator inline={false}>
+                <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1, mb: 2 }}>
+                  {addAutoId('container_id')}
+                  <TextInput
+                    source="container_name"
+                    label="Nom du conteneur"
+                    fullWidth
+                    data-testid="input-container_name"
                   />
+                  <TextInput
+                    source="container_description"
+                    label="Description"
+                    fullWidth
+                    data-testid="input-container_description"
+                  />
+                  <Box sx={{ mt: 2 }}>
+                    <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                      🔧 Équipements
+                    </Typography>
+                    <ReferenceArrayInput
+                      source="equipment_ids"
+                      reference="equipment"
+                      label="Équipements"
+                      filter={
+                        departureLocationId ? { warehouse_id: departureLocationId } : undefined
+                      }
+                    >
+                      <AutocompleteArrayInput
+                        fullWidth
+                        optionText={(record: any) => `${record.name} - ${record.description || ''}`}
+                        data-testid="input-equipment_ids"
+                      />
+                    </ReferenceArrayInput>
+                  </Box>
                 </Box>
               </SimpleFormIterator>
             </ArrayInput>

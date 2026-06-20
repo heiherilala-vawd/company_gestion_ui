@@ -1,5 +1,5 @@
 
-# CrupdateTravelMaterials
+# TravelOperationContainerLine
 
 
 ## Properties
@@ -8,31 +8,25 @@ Name | Type
 ------------ | -------------
 `comment` | string
 `id` | string
-`travel_id` | string
-`material` | string
-`quantity` | number
-`quantity_received` | number
-`arrival_date` | Date
-`arrival_location` | string
-`conteneur_id` | string
+`name` | string
+`description` | string
+`equipment_lines` | [Array&lt;TravelOperationEquipmentLine&gt;](TravelOperationEquipmentLine.md)
+`material_lines` | [Array&lt;TravelOperationMaterialLine&gt;](TravelOperationMaterialLine.md)
 
 ## Example
 
 ```typescript
-import type { CrupdateTravelMaterials } from 'api-client'
+import type { TravelOperationContainerLine } from 'api-client'
 
 // TODO: Update the object below with actual values
 const example = {
   "comment": Commentaire sur cette entité,
-  "id": tm_001,
-  "travel_id": travel_001,
-  "material": mat_001,
-  "quantity": 100,
-  "quantity_received": 100,
-  "arrival_date": 2024-02-20T18:00Z,
-  "arrival_location": wh_001,
-  "conteneur_id": tc_010,
-} satisfies CrupdateTravelMaterials
+  "id": tc_010,
+  "name": Blue Box,
+  "description": Grande boîte plastique,
+  "equipment_lines": null,
+  "material_lines": null,
+} satisfies TravelOperationContainerLine
 
 console.log(example)
 
@@ -41,7 +35,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as CrupdateTravelMaterials
+const exampleParsed = JSON.parse(exampleJSON) as TravelOperationContainerLine
 console.log(exampleParsed)
 ```
 

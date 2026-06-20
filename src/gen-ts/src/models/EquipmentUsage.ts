@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateJob } from './CrupdateJob';
+import {
+    CrupdateJobFromJSON,
+    CrupdateJobFromJSONTyped,
+    CrupdateJobToJSON,
+    CrupdateJobToJSONTyped,
+} from './CrupdateJob';
 import type { AuditUser } from './AuditUser';
 import {
     AuditUserFromJSON,
@@ -20,6 +27,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateEquipment } from './CrupdateEquipment';
+import {
+    CrupdateEquipmentFromJSON,
+    CrupdateEquipmentFromJSONTyped,
+    CrupdateEquipmentToJSON,
+    CrupdateEquipmentToJSONTyped,
+} from './CrupdateEquipment';
 import type { UsageStatus } from './UsageStatus';
 import {
     UsageStatusFromJSON,
@@ -72,16 +86,16 @@ export interface EquipmentUsage {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateEquipment}
      * @memberof EquipmentUsage
      */
-    equipment_id?: string;
+    equipment?: CrupdateEquipment;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateJob}
      * @memberof EquipmentUsage
      */
-    job_id?: string;
+    job?: CrupdateJob;
     /**
      * 
      * @type {Date}
@@ -139,8 +153,8 @@ export function EquipmentUsageFromJSONTyped(json: any, ignoreDiscriminator: bool
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'equipment_id': json['equipment_id'] == null ? undefined : json['equipment_id'],
-        'job_id': json['job_id'] == null ? undefined : json['job_id'],
+        'equipment': json['equipment'] == null ? undefined : CrupdateEquipmentFromJSON(json['equipment']),
+        'job': json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
         'start_time': json['start_time'] == null ? undefined : (new Date(json['start_time'])),
         'end_time': json['end_time'] == null ? undefined : (new Date(json['end_time'])),
         'source_location': json['source_location'] == null ? undefined : json['source_location'],
@@ -166,8 +180,8 @@ export function EquipmentUsageToJSONTyped(value?: EquipmentUsage | null, ignoreD
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'equipment_id': value['equipment_id'],
-        'job_id': value['job_id'],
+        'equipment': CrupdateEquipmentToJSON(value['equipment']),
+        'job': CrupdateJobToJSON(value['job']),
         'start_time': value['start_time'] == null ? value['start_time'] : value['start_time'].toISOString(),
         'end_time': value['end_time'] == null ? value['end_time'] : value['end_time'].toISOString(),
         'source_location': value['source_location'],

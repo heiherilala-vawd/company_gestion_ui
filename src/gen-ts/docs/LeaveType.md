@@ -18,7 +18,7 @@ Name | Type
 `deduct_from_balance` | boolean
 `color` | string
 `days_per_year` | number
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -39,7 +39,7 @@ const example = {
   "deduct_from_balance": true,
   "color": #4CAF50,
   "days_per_year": 30,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies LeaveType
 
 console.log(example)

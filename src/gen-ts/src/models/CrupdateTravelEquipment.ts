@@ -75,6 +75,12 @@ export interface CrupdateTravelEquipment {
      * @memberof CrupdateTravelEquipment
      */
     arrival_location?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CrupdateTravelEquipment
+     */
+    conteneur_id?: string;
 }
 
 
@@ -107,6 +113,7 @@ export function CrupdateTravelEquipmentFromJSONTyped(json: any, ignoreDiscrimina
         'status': json['status'] == null ? undefined : TransportStatusFromJSON(json['status']),
         'arrival_date': json['arrival_date'] == null ? undefined : (new Date(json['arrival_date'])),
         'arrival_location': json['arrival_location'] == null ? undefined : json['arrival_location'],
+        'conteneur_id': json['conteneur_id'] == null ? undefined : json['conteneur_id'],
     };
 }
 
@@ -129,6 +136,7 @@ export function CrupdateTravelEquipmentToJSONTyped(value?: CrupdateTravelEquipme
         'status': TransportStatusToJSON(value['status']),
         'arrival_date': value['arrival_date'] == null ? value['arrival_date'] : value['arrival_date'].toISOString(),
         'arrival_location': value['arrival_location'],
+        'conteneur_id': value['conteneur_id'],
     };
 }
 

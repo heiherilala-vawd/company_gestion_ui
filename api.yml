@@ -13598,6 +13598,8 @@ components:
           example: "2024-02-20T18:00:00Z"
         arrival_location:
           $ref: '#/components/schemas/CrupdateWarehouse'
+        container:
+          $ref: '#/components/schemas/CrupdateTravelOperationContainer'
     CrupdateTravelMaterials:
       required:
         - travel_id
@@ -13629,6 +13631,9 @@ components:
         arrival_location:
           type: string
           example: "wh_001"
+        conteneur_id:
+          type: string
+          example: "tc_010"
 
     # =========================
     # TRAVEL EQUIPMENT
@@ -13655,6 +13660,8 @@ components:
           example: "2024-02-20T18:00:00Z"
         arrival_location:
           $ref: '#/components/schemas/CrupdateWarehouse'
+        container:
+          $ref: '#/components/schemas/CrupdateTravelOperationContainer'
     CrupdateTravelEquipment:
       required:
         - travel_id
@@ -13685,6 +13692,23 @@ components:
         arrival_location:
           type: string
           example: "wh_001"
+        conteneur_id:
+          type: string
+          example: "tc_010"
+
+    CrupdateTravelOperationContainer:
+      allOf:
+        - $ref: '#/components/schemas/comment'
+      properties:
+        id:
+          type: string
+          example: "tc_010"
+        name:
+          type: string
+          example: "Blue Box"
+        description:
+          type: string
+          example: "Grande boîte plastique"
 
     # =========================
     # PURCHASE
@@ -13864,6 +13888,27 @@ components:
         fee:
           type: number
           example: 500
+    TravelOperationContainerLine:
+      allOf:
+        - $ref: '#/components/schemas/comment'
+      properties:
+        id:
+          type: string
+          example: "tc_010"
+        name:
+          type: string
+          example: "Blue Box"
+        description:
+          type: string
+          example: "Grande boîte plastique"
+        equipment_lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/TravelOperationEquipmentLine'
+        material_lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/TravelOperationMaterialLine'
     TravelOperationEquipmentLine:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -13873,6 +13918,8 @@ components:
           example: "travel_eq_010"
         equipment:
           $ref: '#/components/schemas/CrupdateEquipment'
+        container:
+          $ref: '#/components/schemas/CrupdateTravelOperationContainer'
     TravelOperationMaterialLine:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -13885,6 +13932,8 @@ components:
         quantity:
           type: integer
           example: 100
+        container:
+          $ref: '#/components/schemas/CrupdateTravelOperationContainer'
     TravelOperationPeopleLine:
       allOf:
         - $ref: '#/components/schemas/comment'
@@ -13905,14 +13954,10 @@ components:
           type: boolean
           default: false
           description: "If true, all equipment and materials arrive directly at destination. If false (default), they are en route."
-        equipment_lines:
+        containers:
           type: array
           items:
-            $ref: '#/components/schemas/TravelOperationEquipmentLine'
-        material_lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/TravelOperationMaterialLine'
+            $ref: '#/components/schemas/TravelOperationContainerLine'
         people_lines:
           type: array
           items:

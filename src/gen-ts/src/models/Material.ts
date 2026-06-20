@@ -20,6 +20,13 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
 import type { MaterialUnit } from './MaterialUnit';
 import {
     MaterialUnitFromJSON,
@@ -103,10 +110,10 @@ export interface Material {
     unit?: MaterialUnit;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof Material
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
      * @type {Array<MaterialWarehouseInfo>}
@@ -144,7 +151,7 @@ export function MaterialFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'description': json['description'] == null ? undefined : json['description'],
         'unit_price': json['unit_price'] == null ? undefined : json['unit_price'],
         'unit': json['unit'] == null ? undefined : MaterialUnitFromJSON(json['unit']),
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
         'material_warehouses': json['material_warehouses'] == null ? undefined : ((json['material_warehouses'] as Array<any>).map(MaterialWarehouseInfoFromJSON)),
     };
 }
@@ -170,7 +177,7 @@ export function MaterialToJSONTyped(value?: Material | null, ignoreDiscriminator
         'description': value['description'],
         'unit_price': value['unit_price'],
         'unit': MaterialUnitToJSON(value['unit']),
-        'company_id': value['company_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
         'material_warehouses': value['material_warehouses'] == null ? undefined : ((value['material_warehouses'] as Array<any>).map(MaterialWarehouseInfoToJSON)),
     };
 }

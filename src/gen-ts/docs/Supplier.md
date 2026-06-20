@@ -18,7 +18,7 @@ Name | Type
 `email` | string
 `phone` | string
 `contact_name` | string
-`company_id` | string
+`company` | [CrupdateCompany](CrupdateCompany.md)
 
 ## Example
 
@@ -39,7 +39,7 @@ const example = {
   "email": contact@fournitures-btp.fr,
   "phone": 01 23 45 67 89,
   "contact_name": Jean Dupont,
-  "company_id": comp_btp001,
+  "company": null,
 } satisfies Supplier
 
 console.log(example)

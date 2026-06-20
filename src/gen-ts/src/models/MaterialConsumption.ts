@@ -13,6 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { CrupdateJob } from './CrupdateJob';
+import {
+    CrupdateJobFromJSON,
+    CrupdateJobFromJSONTyped,
+    CrupdateJobToJSON,
+    CrupdateJobToJSONTyped,
+} from './CrupdateJob';
 import type { AuditUser } from './AuditUser';
 import {
     AuditUserFromJSON,
@@ -20,6 +27,20 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateWarehouse } from './CrupdateWarehouse';
+import {
+    CrupdateWarehouseFromJSON,
+    CrupdateWarehouseFromJSONTyped,
+    CrupdateWarehouseToJSON,
+    CrupdateWarehouseToJSONTyped,
+} from './CrupdateWarehouse';
+import type { CrupdateMaterial } from './CrupdateMaterial';
+import {
+    CrupdateMaterialFromJSON,
+    CrupdateMaterialFromJSONTyped,
+    CrupdateMaterialToJSON,
+    CrupdateMaterialToJSONTyped,
+} from './CrupdateMaterial';
 
 /**
  * 
@@ -65,16 +86,16 @@ export interface MaterialConsumption {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateMaterial}
      * @memberof MaterialConsumption
      */
-    material_id?: string;
+    material?: CrupdateMaterial;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateWarehouse}
      * @memberof MaterialConsumption
      */
-    warehouse_id?: string;
+    warehouse?: CrupdateWarehouse;
     /**
      * 
      * @type {number}
@@ -89,10 +110,10 @@ export interface MaterialConsumption {
     consumption_date?: Date;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateJob}
      * @memberof MaterialConsumption
      */
-    job_id?: string;
+    job?: CrupdateJob;
     /**
      * 
      * @type {string}
@@ -130,11 +151,11 @@ export function MaterialConsumptionFromJSONTyped(json: any, ignoreDiscriminator:
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'material_id': json['material_id'] == null ? undefined : json['material_id'],
-        'warehouse_id': json['warehouse_id'] == null ? undefined : json['warehouse_id'],
+        'material': json['material'] == null ? undefined : CrupdateMaterialFromJSON(json['material']),
+        'warehouse': json['warehouse'] == null ? undefined : CrupdateWarehouseFromJSON(json['warehouse']),
         'quantity': json['quantity'] == null ? undefined : json['quantity'],
         'consumption_date': json['consumption_date'] == null ? undefined : (new Date(json['consumption_date'])),
-        'job_id': json['job_id'] == null ? undefined : json['job_id'],
+        'job': json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
         'reason': json['reason'] == null ? undefined : json['reason'],
         'consumption_status': json['consumption_status'] == null ? undefined : json['consumption_status'],
     };
@@ -157,11 +178,11 @@ export function MaterialConsumptionToJSONTyped(value?: MaterialConsumption | nul
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'material_id': value['material_id'],
-        'warehouse_id': value['warehouse_id'],
+        'material': CrupdateMaterialToJSON(value['material']),
+        'warehouse': CrupdateWarehouseToJSON(value['warehouse']),
         'quantity': value['quantity'],
         'consumption_date': value['consumption_date'] == null ? value['consumption_date'] : value['consumption_date'].toISOString().substring(0,10),
-        'job_id': value['job_id'],
+        'job': CrupdateJobToJSON(value['job']),
         'reason': value['reason'],
         'consumption_status': value['consumption_status'],
     };

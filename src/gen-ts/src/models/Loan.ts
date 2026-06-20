@@ -41,6 +41,13 @@ import {
     LoanStatusToJSON,
     LoanStatusToJSONTyped,
 } from './LoanStatus';
+import type { CrupdateOrganization } from './CrupdateOrganization';
+import {
+    CrupdateOrganizationFromJSON,
+    CrupdateOrganizationFromJSONTyped,
+    CrupdateOrganizationToJSON,
+    CrupdateOrganizationToJSONTyped,
+} from './CrupdateOrganization';
 
 /**
  * 
@@ -98,10 +105,10 @@ export interface Loan {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateOrganization}
      * @memberof Loan
      */
-    organization_id?: string;
+    organization?: CrupdateOrganization;
     /**
      * Annual interest rate in basis points (e.g., 1200 = 12%)
      * @type {number}
@@ -173,7 +180,7 @@ export function LoanFromJSONTyped(json: any, ignoreDiscriminator: boolean): Loan
         'amount': json['amount'] == null ? undefined : json['amount'],
         'description': json['description'] == null ? undefined : json['description'],
         'id': json['id'] == null ? undefined : json['id'],
-        'organization_id': json['organization_id'] == null ? undefined : json['organization_id'],
+        'organization': json['organization'] == null ? undefined : CrupdateOrganizationFromJSON(json['organization']),
         'interest_rate': json['interest_rate'] == null ? undefined : json['interest_rate'],
         'start_date': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
         'due_date': json['due_date'] == null ? undefined : (new Date(json['due_date'])),
@@ -203,7 +210,7 @@ export function LoanToJSONTyped(value?: Loan | null, ignoreDiscriminator: boolea
         'amount': value['amount'],
         'description': value['description'],
         'id': value['id'],
-        'organization_id': value['organization_id'],
+        'organization': CrupdateOrganizationToJSON(value['organization']),
         'interest_rate': value['interest_rate'],
         'start_date': value['start_date'] == null ? value['start_date'] : value['start_date'].toISOString().substring(0,10),
         'due_date': value['due_date'] == null ? value['due_date'] : value['due_date'].toISOString().substring(0,10),

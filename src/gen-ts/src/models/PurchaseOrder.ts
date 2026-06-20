@@ -20,6 +20,13 @@ import {
     PurchaseOrderLineToJSON,
     PurchaseOrderLineToJSONTyped,
 } from './PurchaseOrderLine';
+import type { CrupdateJob } from './CrupdateJob';
+import {
+    CrupdateJobFromJSON,
+    CrupdateJobFromJSONTyped,
+    CrupdateJobToJSON,
+    CrupdateJobToJSONTyped,
+} from './CrupdateJob';
 import type { PurchaseOrderStatus } from './PurchaseOrderStatus';
 import {
     PurchaseOrderStatusFromJSON,
@@ -34,6 +41,20 @@ import {
     AuditUserToJSON,
     AuditUserToJSONTyped,
 } from './AuditUser';
+import type { CrupdateCompany } from './CrupdateCompany';
+import {
+    CrupdateCompanyFromJSON,
+    CrupdateCompanyFromJSONTyped,
+    CrupdateCompanyToJSON,
+    CrupdateCompanyToJSONTyped,
+} from './CrupdateCompany';
+import type { Supplier } from './Supplier';
+import {
+    SupplierFromJSON,
+    SupplierFromJSONTyped,
+    SupplierToJSON,
+    SupplierToJSONTyped,
+} from './Supplier';
 
 /**
  * 
@@ -79,10 +100,10 @@ export interface PurchaseOrder {
     id?: string;
     /**
      * 
-     * @type {string}
+     * @type {Supplier}
      * @memberof PurchaseOrder
      */
-    supplier_id?: string;
+    supplier?: Supplier;
     /**
      * 
      * @type {Date}
@@ -103,16 +124,16 @@ export interface PurchaseOrder {
     total_amount?: number;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateCompany}
      * @memberof PurchaseOrder
      */
-    company_id?: string;
+    company?: CrupdateCompany;
     /**
      * 
-     * @type {string}
+     * @type {CrupdateJob}
      * @memberof PurchaseOrder
      */
-    job_id?: string;
+    job?: CrupdateJob;
     /**
      * 
      * @type {Array<PurchaseOrderLine>}
@@ -146,12 +167,12 @@ export function PurchaseOrderFromJSONTyped(json: any, ignoreDiscriminator: boole
         'created_by': json['created_by'] == null ? undefined : AuditUserFromJSON(json['created_by']),
         'updated_by': json['updated_by'] == null ? undefined : AuditUserFromJSON(json['updated_by']),
         'id': json['id'] == null ? undefined : json['id'],
-        'supplier_id': json['supplier_id'] == null ? undefined : json['supplier_id'],
+        'supplier': json['supplier'] == null ? undefined : SupplierFromJSON(json['supplier']),
         'order_date': json['order_date'] == null ? undefined : (new Date(json['order_date'])),
         'status': json['status'] == null ? undefined : PurchaseOrderStatusFromJSON(json['status']),
         'total_amount': json['total_amount'] == null ? undefined : json['total_amount'],
-        'company_id': json['company_id'] == null ? undefined : json['company_id'],
-        'job_id': json['job_id'] == null ? undefined : json['job_id'],
+        'company': json['company'] == null ? undefined : CrupdateCompanyFromJSON(json['company']),
+        'job': json['job'] == null ? undefined : CrupdateJobFromJSON(json['job']),
         'lines': json['lines'] == null ? undefined : ((json['lines'] as Array<any>).map(PurchaseOrderLineFromJSON)),
     };
 }
@@ -173,12 +194,12 @@ export function PurchaseOrderToJSONTyped(value?: PurchaseOrder | null, ignoreDis
         'created_by': AuditUserToJSON(value['created_by']),
         'updated_by': AuditUserToJSON(value['updated_by']),
         'id': value['id'],
-        'supplier_id': value['supplier_id'],
+        'supplier': SupplierToJSON(value['supplier']),
         'order_date': value['order_date'] == null ? value['order_date'] : value['order_date'].toISOString().substring(0,10),
         'status': PurchaseOrderStatusToJSON(value['status']),
         'total_amount': value['total_amount'],
-        'company_id': value['company_id'],
-        'job_id': value['job_id'],
+        'company': CrupdateCompanyToJSON(value['company']),
+        'job': CrupdateJobToJSON(value['job']),
         'lines': value['lines'] == null ? undefined : ((value['lines'] as Array<any>).map(PurchaseOrderLineToJSON)),
     };
 }
