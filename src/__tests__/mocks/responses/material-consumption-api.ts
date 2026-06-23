@@ -50,3 +50,15 @@ export const crupdateMaterialConsumptionsMock = [
 
 export const createOrUpdateMaterialConsumptions = (consumptions: any[]) =>
   consumptions.map((c: any) => ({ ...c, id: c.id || 'newId' }))
+
+export const returnMaterialConsumptionMock = (consumptionId: string, quantity: number) => ({
+  ...materialConsumption1Mock,
+  id: consumptionId,
+  quantity: (materialConsumption1Mock.quantity || 0) - quantity,
+})
+
+export const completeMaterialConsumptionMock = (consumptionId: string) => ({
+  ...materialConsumption1Mock,
+  id: consumptionId,
+  consumption_status: 'COMPLETED',
+})

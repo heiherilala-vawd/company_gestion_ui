@@ -20,7 +20,6 @@ import {
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router'
 import { getMiddleUrl } from '../config/dynamicResources'
-import generateId from '../utili/utils'
 import { operationFormStyles } from '../style/components'
 
 export default function MaterialReturnActivity() {
@@ -49,15 +48,8 @@ export default function MaterialReturnActivity() {
   const token = localStorage.getItem('token')
 
   const processReturn = async (consumption: any, qty: number) => {
-    const url = getMiddleUrl('material_warehouse')
-    const payload = [
-      {
-        id: generateId(),
-        material_id: consumption.material_id,
-        warehouse_id: consumption.warehouse_id,
-        quantity: qty,
-      },
-    ]
+    const url =
+      getMiddleUrl('material_consumption') + '/' + consumption.id + '/return?quantity=' + qty
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -65,19 +57,12 @@ export default function MaterialReturnActivity() {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
     })
     if (!response.ok) throw new Error(`Erreur retour HTTP ${response.status}`)
   }
 
   const processFinish = async (consumption: any) => {
-    const url = getMiddleUrl('material_consumption')
-    const payload = [
-      {
-        id: consumption.id,
-        consumption_status: 'COMPLETED',
-      },
-    ]
+    const url = getMiddleUrl('material_consumption') + '/' + consumption.id + '/complete'
     const response = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -85,7 +70,6 @@ export default function MaterialReturnActivity() {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
     })
     if (!response.ok) throw new Error(`Erreur fin HTTP ${response.status}`)
   }

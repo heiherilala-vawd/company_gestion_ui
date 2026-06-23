@@ -18,7 +18,6 @@ export interface Cars {
     category: string
     purchase_price?: number
     purchase_date?: string
-    est_en_panne?: boolean
   }
   warehouse?: { id: string; name: string; description?: string; job_id?: string }
   created_at: string
@@ -37,7 +36,6 @@ export interface CrupdateCars {
   purchase_price?: number
   purchase_date?: string
   equipment_category?: string
-  est_en_panne?: boolean
   warehouse_description?: string
   job_id?: string
   marque?: string
@@ -64,7 +62,6 @@ export const cars1Mock: Cars = {
     category: 'Véhicule',
     purchase_price: 35000,
     purchase_date: '2022-01-15',
-    est_en_panne: false,
   },
   warehouse: {
     id: warehouse1Mock.id,
@@ -94,7 +91,6 @@ export const cars2Mock: Cars = {
     category: 'Véhicule',
     purchase_price: 22000,
     purchase_date: '2023-03-20',
-    est_en_panne: false,
   },
   warehouse: {
     id: warehouse1Mock.id,
@@ -151,7 +147,6 @@ export const createOrUpdateCars = (carsData: CrupdateCars[]): Cars[] => {
       category: c.equipment_category || 'Véhicule',
       purchase_price: c.purchase_price,
       purchase_date: c.purchase_date,
-      est_en_panne: c.est_en_panne || false,
     },
     warehouse: {
       id: c.warehouse_id || warehouse1Mock.id,

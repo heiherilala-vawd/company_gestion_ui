@@ -100,6 +100,7 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés par 
         id: string
         status: string
         arrival_location?: string | null
+        incident_id?: string
       }>
       const updated = body.map((c) => ({
         ...travelEquipment1Mock,
@@ -145,5 +146,96 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés par 
 
     cy.wait('@confirmMultiMaterial')
     cy.wait('@confirmMultiEquipment')
+  })
+
+  it('should send incident_id when equipment status is LOST', () => {
+    cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
+      const body = req.body as Array<{
+        id: string
+        status: string
+        arrival_location?: string | null
+        incident_id?: string
+      }>
+      expect(body[0].status).to.eq('LOST')
+      expect(body[0].incident_id != null).to.eq(true)
+      expect(body[0].incident_id).to.match(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      )
+      const updated = body.map((c) => ({
+        ...travelEquipment1Mock,
+        status: c.status,
+        updated_at: new Date().toISOString(),
+      }))
+      req.reply(mockSuccessResponse(updated))
+    }).as('confirmEquipmentLost')
+
+    navigateToPage()
+
+    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="checkbox-teq1_id"]').click()
+    cy.get('[data-testid="status-select-teq1_id"]').click()
+    cy.get('[role="menuitem"][data-value="LOST"]').click()
+    cy.get('[data-testid="validate-btn"]').click()
+    cy.contains('h2', 'Résumé de la validation').should('be.visible')
+    cy.get('[data-testid="dialog-confirm-arrival"]').click()
+    cy.wait('@confirmEquipmentLost')
+  })
+
+  it('should send incident_id when equipment status is DAMAGED', () => {
+    cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
+      const body = req.body as Array<{
+        id: string
+        status: string
+        arrival_location?: string | null
+        incident_id?: string
+      }>
+      expect(body[0].status).to.eq('DAMAGED')
+      expect(body[0].incident_id != null).to.eq(true)
+      const updated = body.map((c) => ({
+        ...travelEquipment1Mock,
+        status: c.status,
+        updated_at: new Date().toISOString(),
+      }))
+      req.reply(mockSuccessResponse(updated))
+    }).as('confirmEquipmentDamaged')
+
+    navigateToPage()
+
+    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="checkbox-teq1_id"]').click()
+    cy.get('[data-testid="status-select-teq1_id"]').click()
+    cy.get('[role="menuitem"][data-value="DAMAGED"]').click()
+    cy.get('[data-testid="validate-btn"]').click()
+    cy.contains('h2', 'Résumé de la validation').should('be.visible')
+    cy.get('[data-testid="dialog-confirm-arrival"]').click()
+    cy.wait('@confirmEquipmentDamaged')
+  })
+
+  it('should NOT send incident_id when equipment status is ARRIVED', () => {
+    cy.intercept('PUT', '**/travel_equipments/arrival', (req) => {
+      const body = req.body as Array<{
+        id: string
+        status: string
+        arrival_location?: string | null
+        incident_id?: string
+      }>
+      expect(body[0].status).to.eq('ARRIVED')
+      expect(body[0].incident_id === undefined).to.eq(true)
+      const updated = body.map((c) => ({
+        ...travelEquipment1Mock,
+        status: c.status,
+        updated_at: new Date().toISOString(),
+      }))
+      req.reply(mockSuccessResponse(updated))
+    }).as('confirmEquipmentArrived')
+
+    navigateToPage()
+
+    cy.get('[data-testid="warehouse-select"]').select('wh1_id')
+    cy.get('[data-testid="checkbox-teq1_id"]').click()
+    cy.get('[data-testid="validate-btn"]').click()
+    cy.contains('h2', 'Résumé de la validation').should('be.visible')
+    cy.get('[data-testid="dialog-confirm-arrival"]').click()
+    cy.wait('@confirmEquipmentArrived')
   })
 })

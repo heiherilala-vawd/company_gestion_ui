@@ -48,6 +48,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree'
 import GroupIcon from '@mui/icons-material/Group'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
+import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import { menuStyles, pausedFeature, pausedBadge } from '../style/components'
 import { canAccessResource } from '../auth/authProvider'
 
@@ -488,6 +489,13 @@ const MenuRoot = () => {
       icon: DirectionsCarIcon,
       to: '/cars',
       testId: 'menu-cars',
+    },
+    {
+      name: 'equipment_incident',
+      label: 'Incidents',
+      icon: WarningAmberIcon,
+      to: '/equipment_incident',
+      testId: 'menu-equipment-incidents',
     },
     {
       name: 'equipment-dashboard',

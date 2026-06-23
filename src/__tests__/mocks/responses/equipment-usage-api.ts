@@ -43,3 +43,10 @@ export const crupdateEquipmentUsagesMock = [
 
 export const createOrUpdateEquipmentUsages = (usages: any[]) =>
   usages.map((u: any) => ({ ...u, id: u.id || 'newId' }))
+
+export const returnEquipmentUsageMock = (usageId: string, status: string) => ({
+  ...equipmentUsage1Mock,
+  id: usageId,
+  usage_status: status,
+  end_time: new Date().toISOString(),
+})

@@ -12945,10 +12945,6 @@ components:
         storage_number:
           type: integer
           example: 5
-        est_en_panne:
-          type: boolean
-          description: "Whether the equipment is broken"
-          example: false
         is_damaged:
           type: boolean
           default: false
@@ -13001,10 +12997,6 @@ components:
         storage_number:
           type: integer
           example: 5
-        est_en_panne:
-          type: boolean
-          description: "Whether the equipment is broken"
-          example: false
         is_damaged:
           type: boolean
           default: false
