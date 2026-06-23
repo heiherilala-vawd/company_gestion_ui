@@ -76,6 +76,7 @@ import TravelMaterialActivityForm from '../features/TravelMaterialActivityForm'
 import PurchaseEquipmentActivity from '../features/PurchaseEquipmentActivity'
 import EquipmentUsageActivity from '../features/EquipmentUsageActivity'
 import EquipmentReturnActivity from '../features/EquipmentReturnActivity'
+import EquipmentCreateBulk from '../features/storage/equipment/EquipmentCreateBulk'
 import TravelEquipmentActivityForm from '../features/TravelEquipmentActivityForm'
 import TravelOperationForm from '../features/storage/travel_operation/TravelOperationForm'
 import MaintenanceActivity from '../features/MaintenanceActivity'
@@ -164,6 +165,7 @@ const ThemedAdmin = () => {
                       path="/equipment_return_activity"
                       element={<EquipmentReturnActivity />}
                     />
+                    <Route path="/equipment_bulk_create" element={<EquipmentCreateBulk />} />
                     <Route path="/maintenance_activity" element={<MaintenanceActivity />} />
                     <Route
                       path="/scheduled_maintenance_activity"

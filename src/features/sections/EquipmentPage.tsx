@@ -2,6 +2,7 @@ import { SectionHub } from '../../generic/SectionHub'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import TimelineIcon from '@mui/icons-material/Timeline'
 import BuildIcon from '@mui/icons-material/Build'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import LocalShippingIcon from '@mui/icons-material/LocalShipping'
 import BuildCircleIcon from '@mui/icons-material/BuildCircle'
 import ScheduleIcon from '@mui/icons-material/Schedule'
@@ -22,6 +23,13 @@ const allItems = [
     to: '/purchase_operation?mode=equipment',
     color: 'sapphire' as const,
     desc: 'Acheter',
+  },
+  {
+    label: 'Création en masse',
+    icon: ContentCopyIcon,
+    to: '/equipment_bulk_create',
+    color: 'sapphire' as const,
+    desc: 'Multi-création',
   },
   {
     label: 'Utiliser un équipement',
