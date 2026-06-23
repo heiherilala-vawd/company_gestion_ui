@@ -29,8 +29,8 @@ describe('E2E: TravelMaterialActivity (Réception - Éléments non arrivés par 
     cy.contains(travelMaterials1Mock.material?.name as string).should('be.visible')
 
     // Should show type labels
-    cy.contains('Équipement').should('be.visible')
-    cy.contains('Matériau').should('be.visible')
+    cy.contains('Équipement').scrollIntoView().should('be.visible')
+    cy.contains('Matériau').scrollIntoView().should('be.visible')
   })
 
   it('should confirm material arrival within a container', () => {

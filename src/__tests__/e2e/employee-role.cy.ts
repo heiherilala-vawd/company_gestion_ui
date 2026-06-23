@@ -31,7 +31,6 @@ function loginAsEmployee(): void {
   cy.wait('@employeeLogin', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
   cy.wait('@employeeWhoami', { timeout: 10000 }).its('response.statusCode').should('eq', 200)
   cy.url({ timeout: 15000 }).should('not.include', '/login')
-  cy.wait(2000)
 }
 
 describe('E2E: Employee Role', () => {

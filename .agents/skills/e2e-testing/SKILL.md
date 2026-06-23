@@ -199,6 +199,38 @@ Every resource test follows the same pattern:
 | `VITE_MUTATION_MODE` | `pessimistic` disables undoable (5s wait) mutations |
 | `NYC_CAFEOBJECT_COVERAGE` | `true` enables coverage task in Cypress |
 
+## Critical Rule: NEVER Use Hardcoded `cy.wait()`
+
+**NEVER use `cy.wait(<number>)` with a hardcoded millisecond value.** This creates flaky tests that fail under load or in CI.
+
+### ❌ Bad
+```typescript
+cy.wait(2000)           // fragile, fails in CI
+cy.wait(3000)           // slow, pointless
+```
+
+### ✅ Good — use one of these instead
+
+| Instead of | Use |
+|-----------|-----|
+| `cy.wait(200)` after page load | `cy.contains('Title').should('exist')` or `cy.get('[data-testid="x"]').should('be.visible')` |
+| `cy.wait(3000)` after form submit | `cy.wait('@createAlias')` to wait for the actual API response |
+| `cy.wait(1000)` between two form fields | Just type directly — Cypress auto-retries each command |
+| `cy.wait(500)` in `navigateTo` helper | Remove — the URL assertion already ensures the page loaded |
+
+### Why it matters
+- Hardcoded waits are **brittle**: they pass locally but fail in CI (different CPU/network)
+- They **slow down** tests unnecessarily
+- Cypress already retries commands until the DOM matches the assertion — trust the framework
+
+### Exception (rare)
+When you truly need to wait for an animation to complete, use:
+```typescript
+cy.get('@some-animation').should('not.exist')
+// or
+cy.get('[data-testid="animation-target"]').should('have.class', 'ready')
+```
+
 ## Common Pitfalls
 
 | Symptom | Likely Cause | Fix |
@@ -209,6 +241,7 @@ Every resource test follows the same pattern:
 | Unit test `localStorage` fails | Setup mocks before test | `localStorage.clear()` in beforeEach |
 | Unit test `fetch` fails | fetch not mocked | Mock via `globalThis.fetch = vi.fn()` |
 | Mobile E2E test fails | Sidebar modal covers element | Close sidebar: `cy.get('body').click(0, 0)` |
+| Test uses `cy.wait(3000)` | Flaky, not a real wait | Replace with `cy.wait('@alias')` or a DOM assertion |
 
 ## Reference Files
 

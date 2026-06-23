@@ -1,4 +1,11 @@
-import { DateField, FunctionField, Show, SimpleShowLayout, TextField } from 'react-admin'
+import {
+  DateField,
+  FunctionField,
+  SelectField,
+  Show,
+  SimpleShowLayout,
+  TextField,
+} from 'react-admin'
 
 export default function EquipmentUsageShow() {
   return (
@@ -7,6 +14,16 @@ export default function EquipmentUsageShow() {
         <TextField source="id" />
         <TextField source="equipment.name" label="Équipement" />
         <TextField source="job.description" label="Travail" />
+        <SelectField
+          source="usage_status"
+          label="Statut"
+          choices={[
+            { id: 'IN_USE', name: 'En cours' },
+            { id: 'BROKEN', name: 'En panne' },
+            { id: 'RETURNED', name: 'Retourné' },
+            { id: 'LOST', name: 'Perdu' },
+          ]}
+        />
         <TextField source="start_time" label="Début" />
         <TextField source="end_time" label="Fin" />
         <DateField source="created_at" label="Créé le" showTime />

@@ -5,12 +5,7 @@ import {
   crupdateLoanMock,
   createOrUpdateLoans,
 } from '../mocks/responses/loans-api'
-import {
-  expandMonetarySections,
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Loans', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -51,23 +46,16 @@ describe('E2E: Loans', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-loans"]').click()
+    cy.visit('/#/loans', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/loans')
     cy.wait('@getLoans')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    expandMonetarySections()
-    cy.get('[data-testid="menu-loans"]').click({ force: true })
+    cy.visit('/#/loans', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/loans')
     cy.wait('@getLoans')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
   }
 
   function showList(isComputerView: boolean) {
@@ -93,7 +81,6 @@ describe('E2E: Loans', () => {
       req.reply(mockSuccessResponse(createOrUpdateLoans(req.body)))
     }).as('createLoan')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createLoan')
     cy.url().should('include', '/loans')
   }
@@ -105,7 +92,6 @@ describe('E2E: Loans', () => {
       req.reply(mockSuccessResponse(createOrUpdateLoans(req.body)))
     }).as('updateLoan')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateLoan')
     cy.url().should('include', '/loans')
   }

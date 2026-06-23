@@ -73,7 +73,6 @@ describe('E2E: Departments', () => {
       req.reply(mockSuccessResponse(createOrUpdateDepartments(req.body)))
     }).as('createDepartment')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createDepartment')
     cy.url().should('include', '/departments')
   }
@@ -85,7 +84,6 @@ describe('E2E: Departments', () => {
       req.reply(mockSuccessResponse(createOrUpdateDepartments(req.body)))
     }).as('updateDepartment')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateDepartment')
     cy.url().should('include', '/departments')
   }

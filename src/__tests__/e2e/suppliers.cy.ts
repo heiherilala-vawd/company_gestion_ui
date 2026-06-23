@@ -79,7 +79,6 @@ describe('E2E: Suppliers', () => {
       req.reply(mockSuccessResponse(createOrUpdateSuppliers(req.body)))
     }).as('createSupplier')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createSupplier')
     cy.url().should('include', '/suppliers')
   }
@@ -91,7 +90,6 @@ describe('E2E: Suppliers', () => {
       req.reply(mockSuccessResponse(createOrUpdateSuppliers(req.body)))
     }).as('updateSupplier')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateSupplier')
     cy.url().should('include', '/suppliers')
   }

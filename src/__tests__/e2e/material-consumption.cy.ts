@@ -1,11 +1,11 @@
 import { mockSuccessResponse, mockErrorResponse } from '../mocks/responses/auth-api'
 import {
   materialConsumption1Mock,
-  materialConsumption2Mock,
   materialConsumptionsMock,
   crupdateMaterialConsumptionsMock,
   createOrUpdateMaterialConsumptions,
 } from '../mocks/responses/material-consumption-api'
+import { material1Mock, material2Mock } from '../mocks/responses/materials-api'
 import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 import { warehouse1Mock, warehouse2Mock } from '../mocks/responses/warehouses-api'
 
@@ -44,7 +44,6 @@ describe('E2E: Material Consumption', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-material-consumption"]').click()
     cy.wait('@getMaterialConsumptions')
   }
@@ -65,8 +64,8 @@ describe('E2E: Material Consumption', () => {
   function showList(isComputerView: boolean) {
     if (isComputerView) navigateToDesktop()
     else navigateToMobile()
-    cy.contains(String(materialConsumption1Mock.material_id)).should('be.visible')
-    cy.contains(String(materialConsumption2Mock.material_id)).should('be.visible')
+    cy.contains(<string>material1Mock.name).should('be.visible')
+    cy.contains(<string>material2Mock.name).should('be.visible')
   }
 
   function showDetails(isComputerView: boolean) {
@@ -74,7 +73,7 @@ describe('E2E: Material Consumption', () => {
     else navigateToMobile()
     cy.get('.MuiTableBody-root > .MuiTableRow-root').first().click({ force: true })
     cy.wait('@getMaterialConsumption', { timeout: 15000 })
-    cy.contains(String(materialConsumption1Mock.material_id)).should('exist')
+    cy.contains(<string>material1Mock.name).should('exist')
     cy.contains(<string>materialConsumption1Mock.reason).should('exist')
   }
 
@@ -85,7 +84,6 @@ describe('E2E: Material Consumption', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterialConsumptions(req.body)))
     }).as('createMaterialConsumption')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createMaterialConsumption')
     cy.url().should('include', '/material_consumption')
   }
@@ -97,7 +95,6 @@ describe('E2E: Material Consumption', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaterialConsumptions(req.body)))
     }).as('updateMaterialConsumption')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateMaterialConsumption')
     cy.url().should('include', '/material_consumption')
   }

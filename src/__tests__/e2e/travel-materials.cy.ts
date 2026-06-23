@@ -80,7 +80,6 @@ describe('E2E: Travel Materials', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelMaterials(req.body)))
     }).as('updateTravelMaterial')
     updateRecord()
-    cy.wait(3000)
     cy.wait('@updateTravelMaterial')
     cy.url().should('include', '/travel_materials')
   }

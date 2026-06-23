@@ -54,6 +54,18 @@ export default function EquipmentForm({ isCreate = false, isCreateForm = false }
           defaultValue={false}
           data-testid="input-est_en_panne"
         />
+        <BooleanInput
+          source="is_damaged"
+          label="Endommagé"
+          defaultValue={false}
+          data-testid="input-is_damaged"
+        />
+        <BooleanInput
+          source="is_lost"
+          label="Perdu"
+          defaultValue={false}
+          data-testid="input-is_lost"
+        />
         <TextInput source="comment" label="Commentaire" multiline data-testid="input-comment" />
       </CollapsibleOptionalFields>
     </>

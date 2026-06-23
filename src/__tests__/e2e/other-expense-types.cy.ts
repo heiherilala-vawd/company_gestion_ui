@@ -62,7 +62,6 @@ describe('E2E: Other Expense Types', () => {
       req.reply(mockSuccessResponse([{ id: 'newOetId', ...req.body[0], name: 'Type test' }]))
     }).as('createOtherExpenseType')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createOtherExpenseType')
     cy.url().should('include', '/other_expense_types')
   }
@@ -74,7 +73,6 @@ describe('E2E: Other Expense Types', () => {
       req.reply(mockSuccessResponse([{ id: 'oet1_id', ...req.body[0], name: 'Type test' }]))
     }).as('updateOtherExpenseType')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateOtherExpenseType')
     cy.url().should('include', '/other_expense_types')
   }

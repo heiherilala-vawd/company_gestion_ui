@@ -39,6 +39,12 @@ export interface ConfirmEquipmentArrival {
      * @memberof ConfirmEquipmentArrival
      */
     status: TransportStatus;
+    /**
+     * ID provided by client for the incident. Generated automatically if absent.
+     * @type {string}
+     * @memberof ConfirmEquipmentArrival
+     */
+    incident_id?: string;
 }
 
 
@@ -64,6 +70,7 @@ export function ConfirmEquipmentArrivalFromJSONTyped(json: any, ignoreDiscrimina
         
         'id': json['id'],
         'status': TransportStatusFromJSON(json['status']),
+        'incident_id': json['incident_id'] == null ? undefined : json['incident_id'],
     };
 }
 
@@ -80,6 +87,7 @@ export function ConfirmEquipmentArrivalToJSONTyped(value?: ConfirmEquipmentArriv
         
         'id': value['id'],
         'status': TransportStatusToJSON(value['status']),
+        'incident_id': value['incident_id'],
     };
 }
 

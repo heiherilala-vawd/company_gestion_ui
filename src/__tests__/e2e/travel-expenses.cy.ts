@@ -5,7 +5,6 @@ import {
   travelExpense2Mock,
 } from '../mocks/responses/travel-expenses-api'
 import {
-  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
@@ -32,23 +31,16 @@ describe('E2E: Travel Expenses', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-travel-expenses"]').click()
+    cy.visit('/#/travel_expenses', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/travel_expenses')
     cy.wait('@getTravelExpenses')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    expandMonetarySections()
-    cy.get('[data-testid="menu-travel-expenses"]').click({ force: true })
+    cy.visit('/#/travel_expenses', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/travel_expenses')
     cy.wait('@getTravelExpenses')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
   }
 
   function showList(isComputerView: boolean) {
@@ -81,7 +73,6 @@ describe('E2E: Travel Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('createTravelExpense')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createTravelExpense')
     cy.url().should('include', '/travel_expenses')
   }
@@ -93,7 +84,6 @@ describe('E2E: Travel Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelExpenses(req.body)))
     }).as('updateTravelExpense')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateTravelExpense')
     cy.url().should('include', '/travel_expenses')
   }

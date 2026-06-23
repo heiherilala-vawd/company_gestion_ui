@@ -17,7 +17,6 @@ describe('E2E: History', () => {
 
   function navigateToDesktop(): void {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-history"]').scrollIntoView()
     cy.get('[data-testid="menu-history"]').should('be.visible')

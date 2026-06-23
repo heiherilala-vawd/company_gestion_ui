@@ -1,6 +1,10 @@
+import { material1Mock, material2Mock } from './materials-api.ts'
+import { toCrupdateMaterialMapper } from '../../support/mappers.ts'
+
 export const materialConsumption1Mock = {
   id: 'mc1_id',
   material_id: 'mat1_id',
+  material: toCrupdateMaterialMapper(material1Mock),
   warehouse_id: 'wh1_id',
   quantity: 50,
   consumption_date: new Date('2024-06-01'),
@@ -12,6 +16,7 @@ export const materialConsumption1Mock = {
 export const materialConsumption2Mock = {
   id: 'mc2_id',
   material_id: 'mat2_id',
+  material: toCrupdateMaterialMapper(material2Mock),
   warehouse_id: 'wh2_id',
   quantity: 100,
   consumption_date: new Date('2024-06-05'),

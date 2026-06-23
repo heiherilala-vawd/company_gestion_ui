@@ -103,6 +103,9 @@ import {
   notArrivedTravelEquipmentsMock,
   confirmMaterialArrivals,
   confirmEquipmentArrivals,
+  equipmentIncidentsMock,
+  equipmentIncident1Mock,
+  createOrUpdateEquipmentIncidents,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -437,6 +440,19 @@ export function interceptGeneralEndpoint(): void {
     'getCashTransaction',
   )
 
+  // ---------------------- EQUIPMENT INCIDENT ------------------------------------------
+  cy.intercept('GET', '**/equipment_incidents*', mockSuccessResponse(equipmentIncidentsMock)).as(
+    'getEquipmentIncidents',
+  )
+  cy.intercept(
+    'GET',
+    '**/equipment_incidents/inc_001*',
+    mockSuccessResponse(equipmentIncident1Mock),
+  ).as('getEquipmentIncident')
+  cy.intercept('PUT', '**/equipment_incidents', (req) => {
+    req.reply(mockSuccessResponse(createOrUpdateEquipmentIncidents(req.body)))
+  }).as('crupdateEquipmentIncidents')
+
   // ---------------------- EQUIPMENT USAGE ------------------------------------------
   cy.intercept('GET', '**/equipment_usage*', mockSuccessResponse(equipmentUsagesMock)).as(
     'getEquipmentUsages',
@@ -537,6 +553,7 @@ export function interceptGeneralEndpoint(): void {
     '/travel_material_activity',
     '/travel_operation',
     '/purchases_equipment_activity',
+    '/equipment_incident',
     '/equipment_usage_activity',
     '/equipment_return_activity',
     '/maintenance_activity',
@@ -580,13 +597,13 @@ export function expandMonetarySections(): void {
     cy.contains('Sorties continues').click({ force: true })
     cy.contains('Trésorerie').click({ force: true })
   })
-  cy.wait(100)
 }
 
 export function openMobileSidebar(): void {
-  cy.wait(1000)
-  cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-  cy.wait(1000)
+  cy.get('[class*="RaSidebarToggleButton"]', { timeout: 10000 })
+    .first()
+    .should('be.visible')
+    .click({ force: true })
   cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
 }
 
@@ -647,7 +664,6 @@ export function selectReferenceWithCreate(
   })
   cy.contains('[role="option"]', entitySelection).scrollIntoView().click({ force: true })
   cy.get('[role="option"]').should('not.exist')
-  cy.wait(200)
 }
 
 export function selectEnumType(testId: string, selection: string): void {

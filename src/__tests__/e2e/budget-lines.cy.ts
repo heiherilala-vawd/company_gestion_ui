@@ -77,7 +77,6 @@ describe('E2E: Budget Lines', () => {
       req.reply(mockSuccessResponse(createOrUpdateBudgetLines(req.body)))
     }).as('createBudgetLine')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createBudgetLine')
     cy.url().should('include', '/budget_lines')
   }
@@ -89,7 +88,6 @@ describe('E2E: Budget Lines', () => {
       req.reply(mockSuccessResponse(createOrUpdateBudgetLines(req.body)))
     }).as('updateBudgetLine')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateBudgetLine')
     cy.url().should('include', '/budget_lines')
   }

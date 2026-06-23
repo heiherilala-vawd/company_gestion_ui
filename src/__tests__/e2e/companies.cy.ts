@@ -77,7 +77,6 @@ describe('E2E: Companies', () => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('createCompany')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createCompany')
     cy.url().should('include', '/companies')
   }
@@ -89,7 +88,6 @@ describe('E2E: Companies', () => {
       req.reply(mockSuccessResponse(createOrUpdateCompanies(req.body)))
     }).as('updateCompany')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateCompany')
     cy.url().should('include', '/companies')
   }

@@ -10,6 +10,7 @@ export * from './CompanyFixedCostApi';
 export * from './DepartmentApi';
 export * from './EmployeePaymentApi';
 export * from './EquipmentApi';
+export * from './EquipmentIncidentApi';
 export * from './EquipmentUsageApi';
 export * from './ExpenseApi';
 export * from './HRApi';

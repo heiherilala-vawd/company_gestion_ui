@@ -42,6 +42,20 @@ export const travelEquipment2Mock: TravelEquipment = {
   updated_by: toAuditUserMapper(user1Mock),
 }
 
+export const travelEquipment3Mock: TravelEquipment = {
+  id: 'teq3_id',
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  equipment: toCrupdateEquipmentMapper(equipment2Mock),
+  quantity: 1,
+  status: 'IN_PROGRESS' as TransportStatus,
+  comment: 'Generator transport in red crate',
+  container: container2Mock,
+  created_at: '2022-04-01T08:00:00Z',
+  updated_at: '2022-04-01T08:00:00Z',
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
+}
+
 export const travelEquipmentMock: TravelEquipment[] = [
   travelEquipment1Mock,
   travelEquipment2Mock,
@@ -71,20 +85,6 @@ export const crupdateTravelEquipmentMock: CrupdateTravelEquipment[] = [
     comment: 'New equipment transport',
   },
 ]
-
-export const travelEquipment3Mock: TravelEquipment = {
-  id: 'teq3_id',
-  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
-  equipment: toCrupdateEquipmentMapper(equipment2Mock),
-  quantity: 1,
-  status: 'IN_PROGRESS' as TransportStatus,
-  comment: 'Generator transport in red crate',
-  container: container2Mock,
-  created_at: '2022-04-01T08:00:00Z',
-  updated_at: '2022-04-01T08:00:00Z',
-  created_by: toAuditUserMapper(user1Mock),
-  updated_by: toAuditUserMapper(user1Mock),
-}
 
 export const notArrivedTravelEquipmentsMock: TravelEquipment[] = [
   travelEquipment1Mock,

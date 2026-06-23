@@ -35,6 +35,7 @@ docs/CrupdateDepartment.md
 docs/CrupdateEmployeeLeaveConfig.md
 docs/CrupdateEmployeePayment.md
 docs/CrupdateEquipment.md
+docs/CrupdateEquipmentIncident.md
 docs/CrupdateEquipmentUsage.md
 docs/CrupdateExpenseMoney.md
 docs/CrupdateIncomeMoney.md
@@ -79,6 +80,8 @@ docs/Equipment.md
 docs/EquipmentApi.md
 docs/EquipmentBreakdownResponse.md
 docs/EquipmentDashboardResponse.md
+docs/EquipmentIncident.md
+docs/EquipmentIncidentApi.md
 docs/EquipmentSummaryResponse.md
 docs/EquipmentUsage.md
 docs/EquipmentUsageApi.md
@@ -91,6 +94,7 @@ docs/HistoryApi.md
 docs/HrBreakdownResponse.md
 docs/HrDashboardResponse.md
 docs/HrSummaryResponse.md
+docs/IncidentType.md
 docs/IncomeApi.md
 docs/IncomeMoney.md
 docs/IncomeReceipt.md
@@ -207,6 +211,7 @@ src/apis/CompanyFixedCostApi.ts
 src/apis/DepartmentApi.ts
 src/apis/EmployeePaymentApi.ts
 src/apis/EquipmentApi.ts
+src/apis/EquipmentIncidentApi.ts
 src/apis/EquipmentUsageApi.ts
 src/apis/ExpenseApi.ts
 src/apis/HRApi.ts
@@ -269,6 +274,7 @@ src/models/CrupdateDepartment.ts
 src/models/CrupdateEmployeeLeaveConfig.ts
 src/models/CrupdateEmployeePayment.ts
 src/models/CrupdateEquipment.ts
+src/models/CrupdateEquipmentIncident.ts
 src/models/CrupdateEquipmentUsage.ts
 src/models/CrupdateExpenseMoney.ts
 src/models/CrupdateIncomeMoney.ts
@@ -310,6 +316,7 @@ src/models/EntityType.ts
 src/models/Equipment.ts
 src/models/EquipmentBreakdownResponse.ts
 src/models/EquipmentDashboardResponse.ts
+src/models/EquipmentIncident.ts
 src/models/EquipmentSummaryResponse.ts
 src/models/EquipmentUsage.ts
 src/models/ExpenseMoney.ts
@@ -317,6 +324,7 @@ src/models/History.ts
 src/models/HrBreakdownResponse.ts
 src/models/HrDashboardResponse.ts
 src/models/HrSummaryResponse.ts
+src/models/IncidentType.ts
 src/models/IncomeMoney.ts
 src/models/IncomeReceipt.ts
 src/models/IncomeType.ts

@@ -68,7 +68,6 @@ describe('E2E: Teams', () => {
       req.reply(mockSuccessResponse([{ id: 'newTeamId', ...req.body[0], name: 'Équipe test' }]))
     }).as('createTeam')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createTeam')
     cy.url().should('include', '/teams')
   }
@@ -80,7 +79,6 @@ describe('E2E: Teams', () => {
       req.reply(mockSuccessResponse([{ id: 'team1_id', ...req.body[0], name: 'Équipe test' }]))
     }).as('updateTeam')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateTeam')
     cy.url().should('include', '/teams')
   }

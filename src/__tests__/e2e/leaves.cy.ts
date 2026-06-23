@@ -6,7 +6,6 @@ import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '.
 describe('E2E: Leaves', () => {
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-leaves"]').click()
     cy.wait('@getLeaves')
   }
@@ -42,7 +41,6 @@ describe('E2E: Leaves', () => {
       .clear({ force: true })
       .type(String(crupdateLeavesMock[0].duration_days), { force: true })
     cy.get('button[type="submit"]').click({ force: true })
-    cy.wait(3000)
     cy.wait('@createLeave')
     cy.url().should('include', '/leaves')
   })

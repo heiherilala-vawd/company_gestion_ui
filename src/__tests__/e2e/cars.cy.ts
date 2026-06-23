@@ -70,7 +70,6 @@ describe('E2E: Cars', () => {
       req.reply(mockSuccessResponse(createOrUpdateCars(req.body)))
     }).as('createCars')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createCars')
     cy.url().should('include', '/cars')
   }
@@ -82,7 +81,6 @@ describe('E2E: Cars', () => {
       req.reply(mockSuccessResponse(createOrUpdateCars(req.body)))
     }).as('updateCars')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateCars')
     cy.url().should('include', '/cars')
   }

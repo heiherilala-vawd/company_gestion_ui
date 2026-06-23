@@ -5,6 +5,7 @@ import {
   crupdatePurchasesMock,
   createOrUpdatePurchases,
 } from '../mocks/responses/purchases-api'
+import { expense1Mock } from '../mocks/responses/expenses-api'
 import { supplier1Mock } from '../mocks/responses/suppliers-api'
 import {
   expandMonetarySections,
@@ -27,7 +28,6 @@ describe('E2E: Purchases', () => {
     cy.get('[role="option"]', { timeout: 10000 }).should('be.visible')
     cy.contains('[role="option"]', optionText).click({ force: true })
     cy.get('[role="option"]').should('not.exist')
-    cy.wait(200)
   }
 
   function selectSupplier() {
@@ -37,12 +37,10 @@ describe('E2E: Purchases', () => {
   function creatOrUpdateEquipment(isCreating: boolean) {
     if (isCreating) {
       cy.get('[class*="RaCreateButton"]').click({ force: true })
-      cy.wait(2000)
     } else {
       cy.contains(<string>purchase1Mock.equipment?.name).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click({ force: true })
-      cy.wait(1000)
     }
     selectSupplier()
     cy.get('[data-testid="input-is_equipment"]').click({ force: true })
@@ -66,7 +64,6 @@ describe('E2E: Purchases', () => {
       cy.contains(<number>purchase1Mock.quantity).click({ force: true })
       cy.wait('@getPurchase')
       cy.get('.RaEditButton-root').click({ force: true })
-      cy.wait(1000)
     }
     selectSupplier()
     selectReferenceMobile('input-materials-id', 'Cement')
@@ -85,7 +82,6 @@ describe('E2E: Purchases', () => {
   }
 
   function selectSupplierForced() {
-    cy.wait(1000)
     selectReferenceWithCreate('input-suppliers-id', 'supplier', <string>supplier1Mock.name)
   }
 
@@ -137,7 +133,6 @@ describe('E2E: Purchases', () => {
 
   function navigateToDesktop(_menuIndex = 2) {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-purchases"]').eq(_menuIndex).click()
     cy.wait('@getPurchases')
@@ -145,7 +140,6 @@ describe('E2E: Purchases', () => {
 
   function navigateToMobile(_menuIndex = 2) {
     cy.viewport(375, 667)
-    cy.wait(1000)
     cy.get('[class*="RaSidebarToggleButton"]').first().should('be.visible')
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
     expandMonetarySections()
@@ -173,7 +167,7 @@ describe('E2E: Purchases', () => {
     cy.contains(<number>purchase1Mock.expense?.amount).should('exist')
     cy.contains(<string>purchase1Mock.material?.name).should('exist')
     cy.contains(<string>purchase1Mock.equipment?.name).should('exist')
-    cy.contains(<string>purchase1Mock.expense?.job_id).should('exist')
+    cy.contains(<string>expense1Mock.job?.description).should('exist')
     cy.contains(<string>purchase1Mock.expense?.comment).should('exist')
   }
 
@@ -183,7 +177,6 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateEquipment(true)
-    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -194,7 +187,6 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateEquipmentForced(true)
-    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -205,7 +197,6 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateMaterial(true)
-    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -216,7 +207,6 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('createPurchase')
     creatOrUpdateMaterialForced(true)
-    cy.wait(3000)
     cy.wait('@createPurchase')
     cy.url().should('include', '/purchases')
   }
@@ -227,7 +217,6 @@ describe('E2E: Purchases', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
     }).as('updatePurchase')
     creatOrUpdateMaterial(false)
-    cy.wait(3000)
     cy.wait('@updatePurchase')
     cy.url().should('include', '/purchases')
   }
@@ -291,7 +280,6 @@ describe('E2E: Purchases', () => {
         req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
       }).as('createPurchase')
       creatOrUpdateEquipment(true)
-      cy.wait(3000)
       cy.wait('@createPurchase')
       cy.url().should('include', '/purchases')
     })
@@ -302,7 +290,6 @@ describe('E2E: Purchases', () => {
         req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
       }).as('createPurchase')
       creatOrUpdateMaterial(true)
-      cy.wait(3000)
       cy.wait('@createPurchase')
       cy.url().should('include', '/purchases')
     })
@@ -313,7 +300,6 @@ describe('E2E: Purchases', () => {
         req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
       }).as('updatePurchase')
       creatOrUpdateMaterial(false)
-      cy.wait(3000)
       cy.wait('@updatePurchase')
       cy.url().should('include', '/purchases')
     })
@@ -336,7 +322,6 @@ describe('E2E: Purchases', () => {
         req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
       }).as('updatePurchase')
       creatOrUpdateEquipmentForced(false)
-      cy.wait(3000)
       cy.wait('@updatePurchase')
       cy.url().should('include', '/purchases')
     })
@@ -359,7 +344,6 @@ describe('E2E: Purchases', () => {
         req.reply(mockSuccessResponse(createOrUpdatePurchases(req.body)))
       }).as('updatePurchase')
       creatOrUpdateMaterialForced(false)
-      cy.wait(3000)
       cy.wait('@updatePurchase')
       cy.url().should('include', '/purchases')
     })

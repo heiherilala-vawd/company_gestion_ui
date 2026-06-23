@@ -5,11 +5,9 @@ import {
   createOrUpdateBankFees,
 } from '../mocks/responses/bank-fees-api'
 import {
-  expandMonetarySections,
   insertInToLocalStorage,
   interceptGeneralEndpoint,
   loginInPage,
-  openMobileSidebar,
   selectJob,
 } from '../support/utils.ts'
 
@@ -46,20 +44,16 @@ describe('E2E: Bank Fees', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    expandMonetarySections()
-    cy.get('[data-testid="menu-bank-fees"]').click()
+    cy.visit('/#/bank_fees', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/bank_fees')
     cy.wait('@getBankFees')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    openMobileSidebar()
-    expandMonetarySections()
-    cy.get('[data-testid="menu-bank-fees"]').click()
+    cy.visit('/#/bank_fees', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/bank_fees')
     cy.wait('@getBankFees')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
   }
 
   function showList(isComputerView: boolean) {
@@ -84,7 +78,6 @@ describe('E2E: Bank Fees', () => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('createBankFee')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createBankFee')
     cy.url().should('include', '/bank_fees')
   }
@@ -96,7 +89,6 @@ describe('E2E: Bank Fees', () => {
       req.reply(mockSuccessResponse(createOrUpdateBankFees(req.body)))
     }).as('updateBankFee')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateBankFee')
     cy.url().should('include', '/bank_fees')
   }

@@ -44,7 +44,6 @@ describe('E2E: Equipment Usage', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-equipment-usage"]').click()
     cy.wait('@getEquipmentUsages')
   }
@@ -85,7 +84,6 @@ describe('E2E: Equipment Usage', () => {
       req.reply(mockSuccessResponse(createOrUpdateEquipmentUsages(req.body)))
     }).as('createEquipmentUsage')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createEquipmentUsage')
     cy.url().should('include', '/equipment_usage')
   }
@@ -97,7 +95,6 @@ describe('E2E: Equipment Usage', () => {
       req.reply(mockSuccessResponse(createOrUpdateEquipmentUsages(req.body)))
     }).as('updateEquipmentUsage')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateEquipmentUsage')
     cy.url().should('include', '/equipment_usage')
   }

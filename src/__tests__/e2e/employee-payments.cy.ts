@@ -44,7 +44,6 @@ describe('E2E: Employee Payments', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-employee-payments"]').click()
     cy.wait('@getEmployeePayments')
   }
@@ -100,7 +99,6 @@ describe('E2E: Employee Payments', () => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('createEmployeePayment')
     creatOrUpdate(true, isComputerView)
-    cy.wait(3000)
     cy.wait('@createEmployeePayment')
     cy.url().should('include', '/employee_payments')
   }
@@ -112,7 +110,6 @@ describe('E2E: Employee Payments', () => {
       req.reply(mockSuccessResponse(createOrUpdateEmployeePayments(req.body)))
     }).as('updateEmployeePayment')
     creatOrUpdate(false, isComputerView)
-    cy.wait(3000)
     cy.wait('@updateEmployeePayment')
     cy.url().should('include', '/employee_payments')
   }

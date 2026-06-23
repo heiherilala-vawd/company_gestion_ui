@@ -40,6 +40,21 @@ export const travelMaterials2Mock: TravelMaterials = {
   updated_by: toAuditUserMapper(user1Mock),
 }
 
+export const travelMaterials3Mock: TravelMaterials = {
+  id: 'tm3_id',
+  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
+  material: toCrupdateMaterialMapper(material1Mock),
+  quantity: 15,
+  quantity_received: 0,
+  quantity_lost: 0,
+  comment: 'Extra bricks in red crate',
+  container: container2Mock,
+  created_at: '2022-04-01T08:00:00Z',
+  updated_at: '2022-04-01T08:00:00Z',
+  created_by: toAuditUserMapper(user1Mock),
+  updated_by: toAuditUserMapper(user1Mock),
+}
+
 export const travelMaterialsMock: TravelMaterials[] = [
   travelMaterials1Mock,
   travelMaterials2Mock,
@@ -64,21 +79,6 @@ export const crupdateTravelMaterialsMock: CrupdateTravelMaterials[] = [
     comment: 'New material shipment',
   },
 ]
-
-export const travelMaterials3Mock: TravelMaterials = {
-  id: 'tm3_id',
-  travel: toCrupdateTravelExpenseMapper(travelExpense1Mock),
-  material: toCrupdateMaterialMapper(material1Mock),
-  quantity: 15,
-  quantity_received: 0,
-  quantity_lost: 0,
-  comment: 'Extra bricks in red crate',
-  container: container2Mock,
-  created_at: '2022-04-01T08:00:00Z',
-  updated_at: '2022-04-01T08:00:00Z',
-  created_by: toAuditUserMapper(user1Mock),
-  updated_by: toAuditUserMapper(user1Mock),
-}
 
 export const notArrivedTravelMaterialsMock: TravelMaterials[] = [
   travelMaterials1Mock,

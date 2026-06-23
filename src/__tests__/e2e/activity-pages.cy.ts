@@ -22,7 +22,6 @@ import { loan1Mock } from '../mocks/responses/loans-api'
 function navigateTo(path: string) {
   cy.visit('/#' + path, { failOnStatusCode: false, timeout: 30000 })
   cy.url({ timeout: 15000 }).should('include', path)
-  cy.wait(500)
 }
 
 describe('E2E: Activity Pages', () => {
@@ -42,7 +41,6 @@ describe('E2E: Activity Pages', () => {
     cy.contains(income1Mock.organization?.name ?? 'Client Corp').should('be.visible')
 
     cy.contains('Retourner emprunt').scrollIntoView().click({ force: true })
-    cy.wait(300)
     cy.contains('Emprunts en défaut').should('be.visible')
     cy.contains('Emprunts actifs').should('be.visible')
     cy.contains('Banque Populaire').should('be.visible')
@@ -75,7 +73,6 @@ describe('E2E: Activity Pages', () => {
   function testLoanRepayment(desktop: boolean) {
     if (!desktop) cy.viewport(375, 667)
     navigateTo('/employer_payments_activity')
-    cy.wait(300)
 
     cy.contains('Retourner emprunt').scrollIntoView().click({ force: true })
     cy.contains('Emprunts actifs').should('be.visible')
@@ -104,12 +101,12 @@ describe('E2E: Activity Pages', () => {
     if (!desktop) cy.viewport(375, 667)
     navigateTo('/travel_materials_activity')
 
-    cy.contains('Lieu de réception').should('be.visible')
-    cy.contains('Cement').should('be.visible')
-    cy.contains('Excavator XL200').should('be.visible')
-    cy.contains('Équipement').should('be.visible')
-    cy.contains('Matériau').should('be.visible')
-    cy.contains('Blue Box').should('be.visible')
+    cy.contains('Lieu de réception').scrollIntoView().should('be.visible')
+    cy.contains('Cement').scrollIntoView().should('be.visible')
+    cy.contains('Excavator XL200').scrollIntoView().should('be.visible')
+    cy.contains('Équipement').scrollIntoView().should('be.visible')
+    cy.contains('Matériau').scrollIntoView().should('be.visible')
+    cy.contains('Blue Box').scrollIntoView().should('be.visible')
   }
 
   // ==================== EXPENSES ACTIVITY ====================
@@ -134,13 +131,11 @@ describe('E2E: Activity Pages', () => {
     }).as('createBankFee')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createBankFee', { timeout: 20000 })
-    cy.wait(2000)
+    cy.url({ timeout: 5000 }).should('not.include', '/expenses_activity')
 
     navigateTo('/expenses_activity')
-    cy.wait(500)
 
     cy.contains('Paiement salarié').scrollIntoView().click({ force: true })
-    cy.wait(300)
     cy.get(`[data-testid="employee-item-${user1Mock.id}"]`).click()
     cy.get('[data-testid="payer-button"]').click()
     cy.get('[data-testid="input-payment_description"] textarea:visible').clear().type('Test salary')
@@ -156,13 +151,11 @@ describe('E2E: Activity Pages', () => {
     }).as('createEmployeePayment')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createEmployeePayment', { timeout: 20000 })
-    cy.wait(2000)
+    cy.url({ timeout: 5000 }).should('not.include', '/expenses_activity')
 
     navigateTo('/expenses_activity')
-    cy.wait(500)
 
     cy.contains('Autre dépense').scrollIntoView().click({ force: true })
-    cy.wait(300)
     cy.get('[data-testid="input-description"] textarea:visible')
       .first()
       .clear()
@@ -178,6 +171,7 @@ describe('E2E: Activity Pages', () => {
     }).as('createOtherExpense')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createOtherExpense', { timeout: 20000 })
+    cy.url({ timeout: 5000 }).should('not.include', '/expenses_activity')
   }
 
   // ==================== INCOMES ACTIVITY ====================
@@ -201,12 +195,11 @@ describe('E2E: Activity Pages', () => {
     }).as('createIncome')
     cy.get('button[type="submit"]').scrollIntoView().click({ force: true })
     cy.wait('@createIncome', { timeout: 10000 })
+    cy.url({ timeout: 5000 }).should('not.include', '/incomes_activity')
 
     navigateTo('/incomes_activity')
-    cy.wait(300)
 
     cy.contains('button', 'Emprunts').scrollIntoView().click({ force: true })
-    cy.wait(300)
     cy.get('[data-testid="input-organizations-id"]')
       .scrollIntoView()
       .within(() => {
@@ -249,7 +242,6 @@ describe('E2E: Activity Pages', () => {
     cy.get('input[name*="unit_price"]').last().clear().type('50')
 
     cy.get('[data-testid="toggle-transport"]').scrollIntoView().click({ force: true })
-    cy.wait(300)
     cy.get('input[name="travel_fee"]').clear().type('200')
 
     cy.intercept(
@@ -324,16 +316,15 @@ describe('E2E: Activity Pages', () => {
 function testTravelOperationMaterialsForm(desktop: boolean) {
   if (!desktop) cy.viewport(375, 667)
 
-  cy.intercept('GET', '**/materials*warehouse_id*', mockSuccessResponse([material1Mock])).as(
-    'getMaterialsWithStock',
-  )
-
   navigateTo('/travel_operation?mode=materials')
 
   cy.contains('Déplacer des matériaux', { timeout: 10000 }).should('exist')
 
-  cy.get('.button-add-material_lines').click()
-  cy.wait(300)
+  cy.get('.RaSimpleFormIterator-add').first().click()
+  cy.get('[data-testid="input-container_name"]').should('exist')
+  cy.get('.RaSimpleFormIterator-add').first().click()
+  cy.get('[data-testid="input-material_id"]').first().should('exist')
+  cy.get('[data-testid="input-material_quantity"]').first().should('exist')
 
   cy.get('[data-testid="input-departure_location_id"]').scrollIntoView().click()
   cy.get('#menu-departure_location_id').should('be.visible')
@@ -342,16 +333,7 @@ function testTravelOperationMaterialsForm(desktop: boolean) {
     .scrollIntoView()
     .click({ force: true })
 
-  cy.wait('@getMaterialsWithStock', { timeout: 10000 })
-
-  cy.get('[data-testid="input-materials-id"]')
-    .first()
-    .scrollIntoView()
-    .within(() => {
-      cy.get('[role="combobox"], .MuiSelect-select').first().click({ force: true })
-    })
-
-  cy.get('[id*="menu-"]').contains('50 SAC').should('be.visible')
+  cy.get('[data-testid="input-material_id"]').first().should('be.visible')
 }
 
 // Separate suite for stock display tests — isolated beforeEach

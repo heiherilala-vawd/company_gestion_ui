@@ -94,6 +94,10 @@ All URIs are relative to *https://api-dev.company.com*
 *EquipmentApi* | [**deleteEquipmentById**](docs/EquipmentApi.md#deleteequipmentbyid) | **DELETE** /users/{userId}/companies/{companyId}/equipments/{id} | Delete equipment by identifier
 *EquipmentApi* | [**getEquipment**](docs/EquipmentApi.md#getequipment) | **GET** /users/{userId}/companies/{companyId}/equipments | Get all equipment
 *EquipmentApi* | [**getEquipmentById**](docs/EquipmentApi.md#getequipmentbyid) | **GET** /users/{userId}/companies/{companyId}/equipments/{id} | Get equipment by identifier
+*EquipmentIncidentApi* | [**crupdateEquipmentIncidents**](docs/EquipmentIncidentApi.md#crupdateequipmentincidents) | **PUT** /users/{userId}/companies/{companyId}/equipment_incidents | Create new equipment incident or update existing equipment incident
+*EquipmentIncidentApi* | [**deleteEquipmentIncidentById**](docs/EquipmentIncidentApi.md#deleteequipmentincidentbyid) | **DELETE** /users/{userId}/companies/{companyId}/equipment_incidents/{id} | Delete equipment incident by identifier (Admin only)
+*EquipmentIncidentApi* | [**getEquipmentIncidentById**](docs/EquipmentIncidentApi.md#getequipmentincidentbyid) | **GET** /users/{userId}/companies/{companyId}/equipment_incidents/{id} | Get equipment incident by identifier
+*EquipmentIncidentApi* | [**getEquipmentIncidents**](docs/EquipmentIncidentApi.md#getequipmentincidents) | **GET** /users/{userId}/companies/{companyId}/equipment_incidents | Get all equipment incidents
 *EquipmentUsageApi* | [**crupdateEquipmentUsages**](docs/EquipmentUsageApi.md#crupdateequipmentusages) | **PUT** /users/{userId}/companies/{companyId}/equipment_usages | Create new equipment usage records or update existing ones
 *EquipmentUsageApi* | [**deleteEquipmentUsageById**](docs/EquipmentUsageApi.md#deleteequipmentusagebyid) | **DELETE** /users/{userId}/companies/{companyId}/equipment_usages/{id} | Delete an equipment usage record by identifier
 *EquipmentUsageApi* | [**getEquipmentUsageById**](docs/EquipmentUsageApi.md#getequipmentusagebyid) | **GET** /users/{userId}/companies/{companyId}/equipment_usages/{id} | Get an equipment usage record by identifier
@@ -282,6 +286,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [CrupdateEmployeeLeaveConfig](docs/CrupdateEmployeeLeaveConfig.md)
 - [CrupdateEmployeePayment](docs/CrupdateEmployeePayment.md)
 - [CrupdateEquipment](docs/CrupdateEquipment.md)
+- [CrupdateEquipmentIncident](docs/CrupdateEquipmentIncident.md)
 - [CrupdateEquipmentUsage](docs/CrupdateEquipmentUsage.md)
 - [CrupdateExpenseMoney](docs/CrupdateExpenseMoney.md)
 - [CrupdateIncomeMoney](docs/CrupdateIncomeMoney.md)
@@ -323,6 +328,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [Equipment](docs/Equipment.md)
 - [EquipmentBreakdownResponse](docs/EquipmentBreakdownResponse.md)
 - [EquipmentDashboardResponse](docs/EquipmentDashboardResponse.md)
+- [EquipmentIncident](docs/EquipmentIncident.md)
 - [EquipmentSummaryResponse](docs/EquipmentSummaryResponse.md)
 - [EquipmentUsage](docs/EquipmentUsage.md)
 - [ExpenseMoney](docs/ExpenseMoney.md)
@@ -330,6 +336,7 @@ All URIs are relative to *https://api-dev.company.com*
 - [HrBreakdownResponse](docs/HrBreakdownResponse.md)
 - [HrDashboardResponse](docs/HrDashboardResponse.md)
 - [HrSummaryResponse](docs/HrSummaryResponse.md)
+- [IncidentType](docs/IncidentType.md)
 - [IncomeMoney](docs/IncomeMoney.md)
 - [IncomeReceipt](docs/IncomeReceipt.md)
 - [IncomeType](docs/IncomeType.md)

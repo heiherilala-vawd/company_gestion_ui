@@ -41,7 +41,6 @@ describe('E2E: Tasks', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-tasks"]').click()
     cy.wait('@getTasks')
   }
@@ -82,7 +81,6 @@ describe('E2E: Tasks', () => {
       req.reply(mockSuccessResponse(createOrUpdateTasks(req.body)))
     }).as('createTask')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createTask')
     cy.url().should('include', '/tasks')
   }
@@ -94,7 +92,6 @@ describe('E2E: Tasks', () => {
       req.reply(mockSuccessResponse(createOrUpdateTasks(req.body)))
     }).as('updateTask')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateTask')
     cy.url().should('include', '/tasks')
   }

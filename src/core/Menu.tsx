@@ -146,7 +146,6 @@ const MenuRoot = () => {
     'cash_accounts',
     'cash_transactions',
     'organizations',
-    'purchase_orders',
   ])
 
   if (!sidebarOpen) return null

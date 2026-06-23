@@ -9,7 +9,6 @@ describe('E2E: Material Dashboard', () => {
 
   function navigateToDesktop() {
     cy.contains('[class*="MuiBottomNavigationAction"]', 'Stock').click({ force: true })
-    cy.wait(1000)
     cy.get('[data-testid="section-hub"]')
       .first()
       .within(() => {

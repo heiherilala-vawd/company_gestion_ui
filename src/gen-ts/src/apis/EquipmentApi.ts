@@ -77,6 +77,8 @@ export interface GetEquipmentRequest {
     floorNumber?: number;
     storageNumber?: number;
     notArrived?: boolean;
+    isDamaged?: boolean;
+    isLost?: boolean;
 }
 
 export interface GetEquipmentByIdRequest {
@@ -279,6 +281,14 @@ export class EquipmentApi extends runtime.BaseAPI {
 
         if (requestParameters['notArrived'] != null) {
             queryParameters['not_arrived'] = requestParameters['notArrived'];
+        }
+
+        if (requestParameters['isDamaged'] != null) {
+            queryParameters['is_damaged'] = requestParameters['isDamaged'];
+        }
+
+        if (requestParameters['isLost'] != null) {
+            queryParameters['is_lost'] = requestParameters['isLost'];
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
