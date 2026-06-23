@@ -68,6 +68,18 @@ export interface CrupdateEquipment {
      */
     est_en_panne?: boolean;
     /**
+     * Whether the equipment is damaged
+     * @type {boolean}
+     * @memberof CrupdateEquipment
+     */
+    is_damaged?: boolean;
+    /**
+     * Whether the equipment is lost
+     * @type {boolean}
+     * @memberof CrupdateEquipment
+     */
+    is_lost?: boolean;
+    /**
      * 
      * @type {number}
      * @memberof CrupdateEquipment
@@ -114,6 +126,8 @@ export function CrupdateEquipmentFromJSONTyped(json: any, ignoreDiscriminator: b
         'floor_number': json['floor_number'] == null ? undefined : json['floor_number'],
         'storage_number': json['storage_number'] == null ? undefined : json['storage_number'],
         'est_en_panne': json['est_en_panne'] == null ? undefined : json['est_en_panne'],
+        'is_damaged': json['is_damaged'] == null ? undefined : json['is_damaged'],
+        'is_lost': json['is_lost'] == null ? undefined : json['is_lost'],
         'purchase_price': json['purchase_price'] == null ? undefined : json['purchase_price'],
         'purchase_date': json['purchase_date'] == null ? undefined : (new Date(json['purchase_date'])),
         'category': json['category'] == null ? undefined : json['category'],
@@ -139,6 +153,8 @@ export function CrupdateEquipmentToJSONTyped(value?: CrupdateEquipment | null, i
         'floor_number': value['floor_number'],
         'storage_number': value['storage_number'],
         'est_en_panne': value['est_en_panne'],
+        'is_damaged': value['is_damaged'],
+        'is_lost': value['is_lost'],
         'purchase_price': value['purchase_price'],
         'purchase_date': value['purchase_date'] == null ? value['purchase_date'] : value['purchase_date'].toISOString().substring(0,10),
         'category': value['category'],

@@ -38,21 +38,20 @@ describe('E2E: Maintenances', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-maintenances"]').click()
     cy.wait('@getMaintenances')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
     cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    cy.get('[data-testid="menu-maintenances"]').scrollIntoView()
     cy.get('[data-testid="menu-maintenances"]').click({ force: true })
     cy.wait('@getMaintenances')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
+    cy.get('body').then(($body) => {
+      if ($body.find('.RaSidebar-modal').length) {
+        cy.get('body').click(0, 0)
+      }
+    })
   }
 
   function showList(isComputerView: boolean) {
@@ -68,7 +67,7 @@ describe('E2E: Maintenances', () => {
     cy.contains(<string>maintenance1Mock.description).click()
     cy.wait('@getMaintenance')
     cy.contains(<string>maintenance1Mock.description).should('exist')
-    cy.contains(<string>maintenance1Mock.equipment_id).should('exist')
+    cy.contains(<string>equipment1Mock.name).should('exist')
   }
 
   function canCreate(isComputerView: boolean) {
@@ -78,7 +77,6 @@ describe('E2E: Maintenances', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaintenances(req.body)))
     }).as('createMaintenance')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createMaintenance')
     cy.url().should('include', '/maintenances')
   }
@@ -90,7 +88,6 @@ describe('E2E: Maintenances', () => {
       req.reply(mockSuccessResponse(createOrUpdateMaintenances(req.body)))
     }).as('updateMaintenance')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateMaintenance')
     cy.url().should('include', '/maintenances')
   }

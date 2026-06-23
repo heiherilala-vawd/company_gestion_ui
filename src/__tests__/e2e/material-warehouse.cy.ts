@@ -34,7 +34,6 @@ describe('E2E: Material Warehouse', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     cy.get('[data-testid="menu-stock"]').click()
     cy.wait('@getMaterialWarehouses')
   }
@@ -77,7 +76,6 @@ describe('E2E: Material Warehouse', () => {
       req.reply(mockSuccessResponse([{ ...materialWarehouse1Mock, id: 'newId' }]))
     }).as('createMaterialWarehouse')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createMaterialWarehouse')
     cy.url().should('include', '/material_warehouse')
   }
@@ -89,7 +87,6 @@ describe('E2E: Material Warehouse', () => {
       req.reply(mockSuccessResponse([materialWarehouse1Mock]))
     }).as('updateMaterialWarehouse')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateMaterialWarehouse')
     cy.url().should('include', '/material_warehouse')
   }

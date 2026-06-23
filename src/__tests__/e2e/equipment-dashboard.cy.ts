@@ -9,7 +9,6 @@ describe('E2E: Equipment Dashboard', () => {
 
   function navigateToDesktop() {
     cy.contains('[class*="MuiBottomNavigationAction"]', 'Équipement').click({ force: true })
-    cy.wait(1000)
     cy.get('[data-testid="section-hub"]')
       .first()
       .within(() => {

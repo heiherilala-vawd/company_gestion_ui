@@ -73,7 +73,6 @@ describe('E2E: Cash Accounts', () => {
       req.reply(mockSuccessResponse(createOrUpdateCashAccounts(req.body)))
     }).as('createCashAccount')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createCashAccount')
     cy.url().should('include', '/cash_accounts')
   }
@@ -85,7 +84,6 @@ describe('E2E: Cash Accounts', () => {
       req.reply(mockSuccessResponse(createOrUpdateCashAccounts(req.body)))
     }).as('updateCashAccount')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateCashAccount')
     cy.url().should('include', '/cash_accounts')
   }

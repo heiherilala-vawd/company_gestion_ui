@@ -82,7 +82,6 @@ describe('E2E: Travel People', () => {
       req.reply(mockSuccessResponse(createOrUpdateTravelPeoples(req.body)))
     }).as('updateTravelPeople')
     updateRecord()
-    cy.wait(3000)
     cy.wait('@updateTravelPeople')
     cy.url().should('include', '/travel_people')
   }

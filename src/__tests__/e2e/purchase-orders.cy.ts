@@ -90,7 +90,6 @@ describe('E2E: Purchase Orders', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchaseOrders(req.body)))
     }).as('createPurchaseOrder')
     creatOrUpdate(true, isComputerView)
-    cy.wait(3000)
     cy.wait('@createPurchaseOrder')
     cy.url().should('include', '/purchase_orders')
   }
@@ -102,7 +101,6 @@ describe('E2E: Purchase Orders', () => {
       req.reply(mockSuccessResponse(createOrUpdatePurchaseOrders(req.body)))
     }).as('updatePurchaseOrder')
     creatOrUpdate(false, isComputerView)
-    cy.wait(3000)
     cy.wait('@updatePurchaseOrder')
     cy.url().should('include', '/purchase_orders')
   }

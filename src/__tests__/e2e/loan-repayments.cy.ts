@@ -81,7 +81,6 @@ describe('E2E: Loan Repayments', () => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('createLoanRepayment')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createLoanRepayment')
     cy.url().should('include', '/loan_repayments')
   }
@@ -93,7 +92,6 @@ describe('E2E: Loan Repayments', () => {
       req.reply(mockSuccessResponse(createOrUpdateLoanRepayments(req.body)))
     }).as('updateLoanRepayment')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateLoanRepayment')
     cy.url().should('include', '/loan_repayments')
   }

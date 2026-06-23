@@ -67,7 +67,6 @@ describe('E2E: Income Types', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomeTypes(req.body)))
     }).as('createIncomeType')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createIncomeType')
     cy.url().should('include', '/income_types')
   }
@@ -79,7 +78,6 @@ describe('E2E: Income Types', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomeTypes(req.body)))
     }).as('updateIncomeType')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateIncomeType')
     cy.url().should('include', '/income_types')
   }

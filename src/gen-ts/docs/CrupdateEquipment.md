@@ -14,6 +14,8 @@ Name | Type
 `floor_number` | number
 `storage_number` | number
 `est_en_panne` | boolean
+`is_damaged` | boolean
+`is_lost` | boolean
 `purchase_price` | number
 `purchase_date` | Date
 `category` | string
@@ -33,6 +35,8 @@ const example = {
   "floor_number": 1,
   "storage_number": 5,
   "est_en_panne": false,
+  "is_damaged": false,
+  "is_lost": false,
   "purchase_price": 150000.0,
   "purchase_date": Mon Jan 15 03:00:00 EAT 2024,
   "category": Engins de terrassement,

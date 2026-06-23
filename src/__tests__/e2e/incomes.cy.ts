@@ -49,7 +49,6 @@ describe('E2E: Incomes', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-incomes"]').click()
     cy.wait('@getIncomes')
@@ -58,14 +57,11 @@ describe('E2E: Incomes', () => {
   function navigateToMobile() {
     cy.viewport(375, 667)
     cy.reload()
-    cy.wait(1000)
     cy.get('[class*="RaSidebarToggleButton"]').first().click()
-    cy.wait(1000)
     expandMonetarySections()
     cy.get('[data-testid="menu-incomes"]').click({ force: true })
     cy.wait('@getIncomes')
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(500)
   }
 
   function showList(isComputerView: boolean) {
@@ -95,7 +91,6 @@ describe('E2E: Incomes', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('createIncome')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createIncome')
     cy.url().should('include', '/incomes')
   }
@@ -107,7 +102,6 @@ describe('E2E: Incomes', () => {
       req.reply(mockSuccessResponse(createOrUpdateIncomes(req.body)))
     }).as('updateIncome')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateIncome')
     cy.url().should('include', '/incomes')
   }

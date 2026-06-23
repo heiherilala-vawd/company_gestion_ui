@@ -38,6 +38,7 @@ import BudgetLineResource from '../features/money/budget_lines'
 import CashAccountResource from '../features/money/cash_accounts'
 import CashTransactionResource from '../features/money/cash_transactions'
 import EquipmentUsageResource from '../features/storage/equipment_usage'
+import EquipmentIncidentResource from '../features/storage/equipment_incident'
 import MaterialConsumptionResource from '../features/storage/material_consumption'
 import MaterialWarehouseResource from '../features/storage/material_warehouse'
 import MaintenanceResource from '../features/storage/maintenances'
@@ -221,6 +222,7 @@ const ThemedAdmin = () => {
                   <Resource name="cash_accounts" {...CashAccountResource} />
                   <Resource name="cash_transactions" {...CashTransactionResource} />
                   <Resource name="equipment_usage" {...EquipmentUsageResource} />
+                  <Resource name="equipment_incident" {...EquipmentIncidentResource} />
                   <Resource name="material_consumption" {...MaterialConsumptionResource} />
                   <Resource name="material_warehouse" {...MaterialWarehouseResource} />
                   <Resource name="maintenances" {...MaintenanceResource} />

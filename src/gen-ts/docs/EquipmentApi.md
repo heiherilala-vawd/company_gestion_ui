@@ -173,7 +173,7 @@ example().catch(console.error);
 
 ## getEquipment
 
-> PaginatedResponse getEquipment(userId, companyId, page, pageSize, warehouseId, name, description, floorNumber, storageNumber, notArrived)
+> PaginatedResponse getEquipment(userId, companyId, page, pageSize, warehouseId, name, description, floorNumber, storageNumber, notArrived, isDamaged, isLost)
 
 Get all equipment
 
@@ -215,6 +215,10 @@ async function example() {
     storageNumber: 5,
     // boolean | Filter equipment not yet arrived (in route or at seller warehouse) (optional)
     notArrived: true,
+    // boolean | Filter equipment by damaged status (optional)
+    isDamaged: true,
+    // boolean | Filter equipment by lost status (optional)
+    isLost: true,
   } satisfies GetEquipmentRequest;
 
   try {
@@ -244,6 +248,8 @@ example().catch(console.error);
 | **floorNumber** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **storageNumber** | `number` |  | [Optional] [Defaults to `undefined`] |
 | **notArrived** | `boolean` | Filter equipment not yet arrived (in route or at seller warehouse) | [Optional] [Defaults to `undefined`] |
+| **isDamaged** | `boolean` | Filter equipment by damaged status | [Optional] [Defaults to `undefined`] |
+| **isLost** | `boolean` | Filter equipment by lost status | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 

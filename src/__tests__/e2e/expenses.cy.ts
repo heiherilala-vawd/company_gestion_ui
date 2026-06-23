@@ -39,7 +39,6 @@ describe('E2E: Expenses', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-expenses"]').click()
     cy.wait('@getExpenses')
@@ -50,7 +49,6 @@ describe('E2E: Expenses', () => {
     cy.visit('/')
     cy.reload()
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
     expandMonetarySections()
     cy.get('[data-testid="menu-expenses"]').click({ force: true })
     cy.wait('@getExpenses')
@@ -85,7 +83,6 @@ describe('E2E: Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateExpenses(req.body)))
     }).as('createExpense')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createExpense')
     cy.url().should('include', '/expenses')
   }
@@ -97,7 +94,6 @@ describe('E2E: Expenses', () => {
       req.reply(mockSuccessResponse(createOrUpdateExpenses(req.body)))
     }).as('updateExpense')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateExpense')
     cy.url().should('include', '/expenses')
   }

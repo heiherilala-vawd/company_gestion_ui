@@ -8,6 +8,7 @@ Name | Type
 ------------ | -------------
 `id` | string
 `status` | [TransportStatus](TransportStatus.md)
+`incident_id` | string
 
 ## Example
 
@@ -18,6 +19,7 @@ import type { ConfirmEquipmentArrival } from 'api-client'
 const example = {
   "id": travel_eq_010,
   "status": null,
+  "incident_id": inc_001,
 } satisfies ConfirmEquipmentArrival
 
 console.log(example)

@@ -1,6 +1,7 @@
 export const maintenance1Mock = {
   id: 'maint1_id',
   equipment_id: 'eq1_id',
+  equipment: { id: 'eq1_id', name: 'Excavator XL200' },
   description: 'Révision annuelle excavatrice',
   expense: {
     amount: 2500,

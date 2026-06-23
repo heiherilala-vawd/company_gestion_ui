@@ -5,17 +5,24 @@ import { material1Mock } from './materials-api.ts'
 import { user1Mock } from './users-api.ts'
 import { warehouse1Mock } from './warehouses-api.ts'
 import { supplier1Mock } from './suppliers-api.ts'
+import { job1Mock } from './jobs-api.ts'
 import {
   toCrupdateExpenseMoneyMapper,
   toCrupdateWarehouseMapper,
   toCrupdateEquipmentMapper,
   toCrupdateMaterialMapper,
+  toCrupdateJobMapper,
   toAuditUserMapper,
 } from '../../support/mappers.ts'
 
+const nestedExpense = {
+  ...toCrupdateExpenseMoneyMapper(expense1Mock),
+  job: toCrupdateJobMapper(job1Mock),
+}
+
 export const purchase1Mock: Purchase = {
   id: 'pur1_id',
-  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
+  expense: nestedExpense,
   supplier: { ...toCrupdateWarehouseMapper(warehouse1Mock), id: supplier1Mock.id },
   equipment: toCrupdateEquipmentMapper(equipment1Mock),
   material: toCrupdateMaterialMapper(material1Mock),
@@ -25,7 +32,7 @@ export const purchase1Mock: Purchase = {
 
 export const purchase2Mock: Purchase = {
   id: 'pur2_id',
-  expense: toCrupdateExpenseMoneyMapper(expense1Mock),
+  expense: nestedExpense,
   supplier: { ...toCrupdateWarehouseMapper(warehouse1Mock), id: supplier1Mock.id },
   equipment: toCrupdateEquipmentMapper(equipment1Mock),
   material: toCrupdateMaterialMapper(material1Mock),
@@ -89,6 +96,7 @@ export const createOrUpdatePurchases = (purchases: CrupdatePurchase[]): Purchase
       amount: expense1Mock.amount,
       description: expense1Mock.description,
       job_id: expense1Mock.job?.id,
+      job: toCrupdateJobMapper(job1Mock),
       comment: expense1Mock.comment,
     },
     equipment: {

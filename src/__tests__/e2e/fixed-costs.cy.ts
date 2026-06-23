@@ -6,12 +6,7 @@ import {
   crupdateFixedCostsMock,
   createOrUpdateFixedCosts,
 } from '../mocks/responses/fixed-costs-api'
-import {
-  expandMonetarySections,
-  insertInToLocalStorage,
-  interceptGeneralEndpoint,
-  loginInPage,
-} from '../support/utils.ts'
+import { insertInToLocalStorage, interceptGeneralEndpoint, loginInPage } from '../support/utils.ts'
 
 describe('E2E: Fixed Costs Mobile', () => {
   function creatOrUpdate(isCreating: boolean) {
@@ -41,26 +36,16 @@ describe('E2E: Fixed Costs Mobile', () => {
   }
 
   function navigateToDesktop() {
-    cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
-    cy.get('[data-testid="menu-item-home"]').within(() => {
-      cy.contains('Entrées').click({ force: true })
-      cy.contains('Sorties continues').click({ force: true })
-    })
-    cy.get('[data-testid="menu-fixed-costs"]').click()
+    cy.visit('/#/fixed_costs', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/fixed_costs')
     cy.wait('@getFixedCosts')
   }
 
   function navigateToMobile() {
     cy.viewport(375, 667)
-    cy.wait(1000)
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
-    cy.get('[data-testid="menu-item-home"]', { timeout: 10000 }).should('exist')
-    expandMonetarySections()
-    cy.get('[data-testid="menu-fixed-costs"]').click({ force: true })
+    cy.visit('/#/fixed_costs', { failOnStatusCode: false, timeout: 30000 })
+    cy.url({ timeout: 15000 }).should('include', '/fixed_costs')
     cy.wait('@getFixedCosts')
-    cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
   }
 
   function showList(isComputerView: boolean) {
@@ -86,7 +71,6 @@ describe('E2E: Fixed Costs Mobile', () => {
       req.reply(mockSuccessResponse(createOrUpdateFixedCosts(req.body)))
     }).as('createFixedCost')
     creatOrUpdate(true)
-    cy.wait(3000)
     cy.wait('@createFixedCost')
     cy.url().should('include', '/fixed_costs')
   }
@@ -98,7 +82,6 @@ describe('E2E: Fixed Costs Mobile', () => {
       req.reply(mockSuccessResponse(createOrUpdateFixedCosts(req.body)))
     }).as('updateFixedCost')
     creatOrUpdate(false)
-    cy.wait(3000)
     cy.wait('@updateFixedCost')
     cy.url().should('include', '/fixed_costs')
   }

@@ -54,7 +54,6 @@ describe('E2E: Other Expenses', () => {
 
   function navigateToDesktop() {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-other-expenses"]').click()
     cy.wait('@getOtherExpenses')
@@ -65,7 +64,6 @@ describe('E2E: Other Expenses', () => {
     cy.visit('/')
     cy.reload()
     cy.get('[class*="RaSidebarToggleButton"]').first().click({ force: true })
-    cy.wait(1000)
     expandMonetarySections()
     cy.get('[data-testid="menu-other-expenses"]').click({ force: true })
     cy.wait('@getOtherExpenses')

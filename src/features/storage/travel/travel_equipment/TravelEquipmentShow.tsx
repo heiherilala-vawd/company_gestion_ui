@@ -25,6 +25,7 @@ export default function TravelEquipmentShow() {
             { id: 'IN_PROGRESS', name: 'En cours' },
             { id: 'LOST', name: 'Perdu' },
             { id: 'ARRIVED', name: 'Arrivé' },
+            { id: 'DAMAGED', name: 'Endommagé' },
           ]}
         />
         <SimpleShowLayout>

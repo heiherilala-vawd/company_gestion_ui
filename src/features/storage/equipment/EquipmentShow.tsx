@@ -146,6 +146,8 @@ function ShowContent() {
         <NumberField source="storage_number" label="Emplacement" />
         <TextField source="comment" label="Commentaire" />
         <BooleanField source="est_en_panne" label="Hors d'usage" />
+        <BooleanField source="is_damaged" label="Endommagé" />
+        <BooleanField source="is_lost" label="Perdu" />
         <DateField source="created_at" label="Créé le" showTime />
         <DateField source="updated_at" label="Modifié le" showTime />
         <FunctionField

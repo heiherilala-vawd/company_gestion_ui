@@ -41,7 +41,6 @@ describe('E2E: Yearly Report', () => {
 
   function navigateToDesktop(): void {
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
     expandMonetarySections()
     cy.get('[data-testid="menu-yearly-report"]').click()
     cy.wait('@getYearlyReport')

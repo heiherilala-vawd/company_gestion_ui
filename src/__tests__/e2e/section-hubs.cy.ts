@@ -13,7 +13,6 @@ describe('E2E: Section Hub Pages → Activity Forms', () => {
 
   function navigateViaBottomNav(label: string) {
     cy.contains('[class*="MuiBottomNavigationAction"]', label).click({ force: true })
-    cy.wait(1000)
   }
 
   // ==================== StockPage ====================

@@ -39,6 +39,7 @@ export default function TravelEquipmentForm({ isCreate = false, isCreateForm = f
           { id: 'IN_PROGRESS', name: 'En cours' },
           { id: 'LOST', name: 'Perdu' },
           { id: 'ARRIVED', name: 'Arrivé' },
+          { id: 'DAMAGED', name: 'Endommagé' },
         ]}
         data-testid="input-status"
       />

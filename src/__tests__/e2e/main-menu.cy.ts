@@ -38,7 +38,6 @@ describe('E2E: Main Menu and Selectors', () => {
     })
 
     cy.get('[data-testid="menu-item-home"]').scrollTo('bottom', { duration: 500 })
-    cy.wait(200)
 
     // Expand Base de déplacement sub-sections to check collapsed items
     cy.contains('Base de déplacement').scrollIntoView()
@@ -46,7 +45,6 @@ describe('E2E: Main Menu and Selectors', () => {
     cy.contains('Sorties ponctuelles').click()
     cy.contains('Sorties continues').click()
     cy.contains('Trésorerie').click()
-    cy.wait(300)
 
     const expectedMenuItemsPart2 = [
       'Achats',
@@ -190,7 +188,6 @@ describe('E2E: Main Menu and Selectors', () => {
       cy.contains('[data-testid="menu-item-home"]', item).scrollIntoView().should('be.visible')
     })
     // ferme le menu
-    cy.wait(200)
     cy.get('body').then(($body) => {
       if ($body.find('.RaSidebar-modal').length) {
         cy.get('body').click(0, 0) // clique hors menu
@@ -199,7 +196,6 @@ describe('E2E: Main Menu and Selectors', () => {
 
     // Sur mobile, les sélecteurs sont masqués par défaut - cliquer pour les afficher
     cy.get('[data-testid="toggle-selectors"]').should('exist').click({ force: true })
-    cy.wait(1000)
     // Sur mobile (<600px), le label "Company:" n'est pas rendu (isXs=true dans GenericSelector)
     // On vérifie que le Collapse s'est ouvert
     cy.get('.MuiCollapse-entered').should('exist')
