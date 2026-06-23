@@ -49,12 +49,6 @@ export default function EquipmentForm({ isCreate = false, isCreateForm = false }
         />
         <DateInput source="purchase_date" label="Date d'achat" data-testid="input-purchase_date" />
         <BooleanInput
-          source="est_en_panne"
-          label="Hors d'usage"
-          defaultValue={false}
-          data-testid="input-est_en_panne"
-        />
-        <BooleanInput
           source="is_damaged"
           label="Endommagé"
           defaultValue={false}

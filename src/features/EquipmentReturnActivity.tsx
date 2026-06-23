@@ -14,17 +14,21 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { useNavigate } from 'react-router'
 import { getMiddleUrl } from '../config/dynamicResources'
 import { operationFormStyles } from '../style/components'
+import generateId from '../utili/utils'
 
 export default function EquipmentReturnActivity() {
   const notify = useNotify()
   const navigate = useNavigate()
 
   const [selectedIds, setSelectedIds] = useState<Record<string, boolean>>({})
+  const [returnStatuses, setReturnStatuses] = useState<Record<string, string>>({})
 
   const { data: usages = [] } = useGetList('equipment_usage', {
     pagination: { page: 1, perPage: 100 },
@@ -47,6 +51,10 @@ export default function EquipmentReturnActivity() {
     setSelectedIds((prev) => ({ ...prev, [id]: !prev[id] }))
   }
 
+  const setStatus = (id: string, status: string) => {
+    setReturnStatuses((prev) => ({ ...prev, [id]: status }))
+  }
+
   const onSubmit = async () => {
     if (!token) {
       notify("Token d'authentification manquant", { type: 'error' })
@@ -59,40 +67,39 @@ export default function EquipmentReturnActivity() {
       return
     }
 
-    const now = new Date().toISOString()
-    const url = getMiddleUrl('equipment_usage')
-    const payload = selected.map((usage: any) => ({
-      id: usage.id,
-      equipment_id: usage.equipment_id,
-      job_id: usage.job_id,
-      start_time: usage.start_time,
-      end_time: now,
-      usage_status: 'RETURNED',
-      used_by: usage.used_by,
-    }))
+    for (const usage of selected) {
+      const status = returnStatuses[usage.id] || 'RETURNED'
+      const url =
+        getMiddleUrl('equipment_usage') +
+        '/' +
+        usage.id +
+        '/return?status=' +
+        status +
+        (status !== 'RETURNED' ? '&incident_id=' + generateId() : '')
 
-    try {
-      const response = await fetch(url, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      })
+      try {
+        const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}))
+          throw new Error(errorData.message || `Erreur HTTP ${response.status}`)
+        }
+      } catch (error: any) {
+        console.error(error)
+        notify(`Erreur pour ${usage.id} : ${error.message}`, { type: 'error' })
+        return
       }
-
-      notify(`${selected.length} équipement(s) retourné(s) avec succès !`, { type: 'success' })
-      navigate('/')
-    } catch (error: any) {
-      console.error(error)
-      notify(`Erreur : ${error.message}`, { type: 'error' })
     }
+
+    notify(`${selected.length} équipement(s) retourné(s) avec succès !`, { type: 'success' })
+    navigate('/')
   }
 
   const selectedCount = inProgressUsages.filter((u: any) => selectedIds[u.id]).length
@@ -122,6 +129,7 @@ export default function EquipmentReturnActivity() {
                     </TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>Équipement</TableCell>
                     <TableCell sx={{ fontWeight: 600 }}>Début</TableCell>
+                    <TableCell sx={{ fontWeight: 600 }}>Statut retour</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -130,6 +138,7 @@ export default function EquipmentReturnActivity() {
                     const startStr = usage.start_time
                       ? new Date(usage.start_time).toLocaleDateString('fr-FR')
                       : '-'
+                    const currentStatus = returnStatuses[usage.id] || 'RETURNED'
                     return (
                       <TableRow key={usage.id} hover>
                         <TableCell padding="checkbox">
@@ -141,6 +150,19 @@ export default function EquipmentReturnActivity() {
                         </TableCell>
                         <TableCell>{equipName}</TableCell>
                         <TableCell>{startStr}</TableCell>
+                        <TableCell>
+                          <Select
+                            size="small"
+                            value={currentStatus}
+                            onChange={(e) => setStatus(usage.id, e.target.value)}
+                            data-testid={`status-select-${usage.id}`}
+                            sx={{ minWidth: 130 }}
+                          >
+                            <MenuItem value="RETURNED">Retourné</MenuItem>
+                            <MenuItem value="LOST">Perdu</MenuItem>
+                            <MenuItem value="BROKEN">Cassé</MenuItem>
+                          </Select>
+                        </TableCell>
                       </TableRow>
                     )
                   })}

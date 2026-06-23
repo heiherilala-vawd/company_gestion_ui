@@ -1,4 +1,4 @@
-import { required, TextInput, NumberInput, SelectInput, BooleanInput, DateInput } from 'react-admin'
+import { required, TextInput, NumberInput, SelectInput, DateInput } from 'react-admin'
 import generateId from '../../../utili/utils.tsx'
 import { renderJobSelect } from '../../../generic/SelectWithCreateProvider.tsx'
 import CollapsibleOptionalFields from '../../../generic/CollapsibleOptionalFields'
@@ -73,12 +73,6 @@ export default function CarsForm({ isCreate = false, isCreateForm = false }) {
           label="Catégorie équipement"
           defaultValue="Véhicule"
           data-testid="input-equipment_category"
-        />
-        <BooleanInput
-          source="est_en_panne"
-          label="Hors d'usage"
-          defaultValue={false}
-          data-testid="input-est_en_panne"
         />
         <TextInput
           source="warehouse_description"

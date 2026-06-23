@@ -86,7 +86,6 @@ export function toCrupdateEquipmentMapper(equipment: Equipment): CrupdateEquipme
     floor_number: equipment.floor_number,
     storage_number: equipment.storage_number,
     comment: equipment.comment,
-    est_en_panne: equipment.est_en_panne,
     purchase_price: equipment.purchase_price,
     purchase_date: equipment.purchase_date,
     category: equipment.category,

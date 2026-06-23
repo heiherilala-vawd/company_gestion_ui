@@ -62,12 +62,6 @@ export interface CrupdateEquipment {
      */
     storage_number?: number;
     /**
-     * Whether the equipment is broken
-     * @type {boolean}
-     * @memberof CrupdateEquipment
-     */
-    est_en_panne?: boolean;
-    /**
      * Whether the equipment is damaged
      * @type {boolean}
      * @memberof CrupdateEquipment
@@ -125,7 +119,6 @@ export function CrupdateEquipmentFromJSONTyped(json: any, ignoreDiscriminator: b
         'warehouse_id': json['warehouse_id'],
         'floor_number': json['floor_number'] == null ? undefined : json['floor_number'],
         'storage_number': json['storage_number'] == null ? undefined : json['storage_number'],
-        'est_en_panne': json['est_en_panne'] == null ? undefined : json['est_en_panne'],
         'is_damaged': json['is_damaged'] == null ? undefined : json['is_damaged'],
         'is_lost': json['is_lost'] == null ? undefined : json['is_lost'],
         'purchase_price': json['purchase_price'] == null ? undefined : json['purchase_price'],
@@ -152,7 +145,6 @@ export function CrupdateEquipmentToJSONTyped(value?: CrupdateEquipment | null, i
         'warehouse_id': value['warehouse_id'],
         'floor_number': value['floor_number'],
         'storage_number': value['storage_number'],
-        'est_en_panne': value['est_en_panne'],
         'is_damaged': value['is_damaged'],
         'is_lost': value['is_lost'],
         'purchase_price': value['purchase_price'],

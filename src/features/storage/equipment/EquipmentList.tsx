@@ -21,7 +21,6 @@ const EquipmentFilters = [
   <TextInput source="floor_number" label="N° étage" key="floor_number" />,
   <TextInput source="storage_number" label="N° rangement" key="storage_number" />,
   <BooleanInput source="not_arrived" label="Non arrivé" key="not_arrived" />,
-  <BooleanInput source="est_en_panne" label="Hors d'usage" key="est_en_panne" />,
   <BooleanInput source="is_damaged" label="Endommagé" key="is_damaged" />,
   <BooleanInput source="is_lost" label="Perdu" key="is_lost" />,
 ]
@@ -37,7 +36,6 @@ export default function EquipmentList() {
         <TextField source="warehouse.name" label="Entrepôt" />
         <NumberField source="floor_number" label="Étage" />
         <NumberField source="storage_number" label="Emplacement" />
-        <BooleanField source="est_en_panne" label="Hors d'usage" />
         <BooleanField source="is_damaged" label="Endommagé" />
         <BooleanField source="is_lost" label="Perdu" />
         <EditButton />

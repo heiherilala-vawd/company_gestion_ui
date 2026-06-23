@@ -15,7 +15,6 @@ export default function CarsEdit() {
           equipment_category: data.equipment?.category,
           purchase_price: data.equipment?.purchase_price,
           purchase_date: data.equipment?.purchase_date,
-          est_en_panne: data.equipment?.est_en_panne,
           warehouse_description: data.warehouse?.description,
           job_id: data.warehouse?.job_id,
         }),

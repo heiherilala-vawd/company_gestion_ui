@@ -239,11 +239,15 @@ export default function TravelMaterialActivity() {
 
       const equipmentConfirmations = selectedItems
         .filter((item: any) => item.equipment !== undefined)
-        .map((item: any) => ({
-          id: item.id,
-          status: equipmentStatuses[item.id] || 'ARRIVED',
-          arrival_location: newArrivalLocation || null,
-        }))
+        .map((item: any) => {
+          const status = equipmentStatuses[item.id] || 'ARRIVED'
+          return {
+            id: item.id,
+            status,
+            arrival_location: newArrivalLocation || null,
+            ...(status !== 'ARRIVED' ? { incident_id: generateId() } : {}),
+          }
+        })
 
       if (materialConfirmations.length > 0) {
         await confirmArrival('travel_materials_arrival', materialConfirmations)

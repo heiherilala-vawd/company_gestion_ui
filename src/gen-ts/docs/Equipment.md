@@ -17,7 +17,6 @@ Name | Type
 `warehouse` | [CrupdateWarehouse](CrupdateWarehouse.md)
 `floor_number` | number
 `storage_number` | number
-`est_en_panne` | boolean
 `is_damaged` | boolean
 `is_lost` | boolean
 `purchase_price` | number
@@ -43,7 +42,6 @@ const example = {
   "warehouse": null,
   "floor_number": 1,
   "storage_number": 5,
-  "est_en_panne": false,
   "is_damaged": false,
   "is_lost": false,
   "purchase_price": 150000.0,

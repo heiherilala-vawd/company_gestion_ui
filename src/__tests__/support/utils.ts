@@ -106,6 +106,9 @@ import {
   equipmentIncidentsMock,
   equipmentIncident1Mock,
   createOrUpdateEquipmentIncidents,
+  returnEquipmentUsageMock,
+  returnMaterialConsumptionMock,
+  completeMaterialConsumptionMock,
 } from '../mocks/responses'
 
 export function interceptGeneralEndpoint(): void {
@@ -460,6 +463,13 @@ export function interceptGeneralEndpoint(): void {
   cy.intercept('GET', '**/equipment_usage/eu1_id*', mockSuccessResponse(equipmentUsage1Mock)).as(
     'getEquipmentUsage',
   )
+  cy.intercept('PUT', '**/equipment_usages/*/return*', (req) => {
+    const urlParts = req.url.split('/')
+    const usageIdx = urlParts.indexOf('equipment_usages') + 1
+    const usageId = usageIdx > 0 && usageIdx < urlParts.length ? urlParts[usageIdx] : 'eu1_id'
+    const status = (req.query.status as string) || 'RETURNED'
+    req.reply(mockSuccessResponse(returnEquipmentUsageMock(usageId, status)))
+  }).as('returnEquipment')
 
   // ---------------------- MATERIAL CONSUMPTION ------------------------------------------
   cy.intercept('GET', '**/material_consumption*', mockSuccessResponse(materialConsumptionsMock)).as(
@@ -470,6 +480,19 @@ export function interceptGeneralEndpoint(): void {
     '**/material_consumption/mc1_id*',
     mockSuccessResponse(materialConsumption1Mock),
   ).as('getMaterialConsumption')
+  cy.intercept('PUT', '**/material_consumptions/*/return*', (req) => {
+    const urlParts = req.url.split('/')
+    const consIdx = urlParts.indexOf('material_consumptions') + 1
+    const consumptionId = consIdx > 0 && consIdx < urlParts.length ? urlParts[consIdx] : 'mc1_id'
+    const quantity = parseInt(req.query.quantity as string, 10) || 0
+    req.reply(mockSuccessResponse(returnMaterialConsumptionMock(consumptionId, quantity)))
+  }).as('returnMaterial')
+  cy.intercept('PUT', '**/material_consumptions/*/complete', (req) => {
+    const urlParts = req.url.split('/')
+    const consIdx = urlParts.indexOf('material_consumptions') + 1
+    const consumptionId = consIdx > 0 && consIdx < urlParts.length ? urlParts[consIdx] : 'mc1_id'
+    req.reply(mockSuccessResponse(completeMaterialConsumptionMock(consumptionId)))
+  }).as('completeMaterial')
 
   // ---------------------- MAINTENANCES ------------------------------------------
   cy.intercept('GET', '**/maintenances*', mockSuccessResponse(maintenancesMock)).as(
