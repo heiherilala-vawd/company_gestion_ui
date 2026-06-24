@@ -15,7 +15,7 @@ describe('E2E: EquipmentReturnActivity', () => {
   function navigateToPage() {
     cy.visit('/#/equipment_return_activity', { failOnStatusCode: false })
     cy.wait('@getEquipmentUsages', { timeout: 20000 })
-    cy.wait('@getEquipment', { timeout: 20000 })
+    cy.wait('@getEquipments', { timeout: 20000 })
   }
 
   it('should display equipment in use', () => {
@@ -58,7 +58,7 @@ describe('E2E: EquipmentReturnActivity', () => {
 
     cy.get(`[data-testid="checkbox-return-${usageId}"]`).click()
     cy.get(`[data-testid="status-select-${usageId}"]`).click()
-    cy.get('[role="menuitem"][data-value="LOST"]').click()
+    cy.get('[role="option"][data-value="LOST"]').click()
     cy.get('[data-testid="submit-return-equipment"]').click()
 
     cy.wait('@returnEquipmentLOST')
@@ -79,7 +79,7 @@ describe('E2E: EquipmentReturnActivity', () => {
 
     cy.get(`[data-testid="checkbox-return-${usageId}"]`).click()
     cy.get(`[data-testid="status-select-${usageId}"]`).click()
-    cy.get('[role="menuitem"][data-value="BROKEN"]').click()
+    cy.get('[role="option"][data-value="BROKEN"]').click()
     cy.get('[data-testid="submit-return-equipment"]').click()
 
     cy.wait('@returnEquipmentBROKEN')
